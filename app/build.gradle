@@ -5,15 +5,19 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.rz.circled"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
 
     signingConfigs {
@@ -37,14 +41,44 @@ android {
     buildTypes {
 
         release {
+            //isFlag 1 表示真实环境  2 表示mo环境 3 表示测试环境 4 15环境 5 17环境
+            buildConfigField "int", "isFlag", "1"
+            buildConfigField "boolean", "isDebug", "false"
+            buildConfigField "boolean", "addServerPrefix", "true"
+            buildConfigField "String", "BaseUrl", "\"https://api.yryz.com/api/\""
+            buildConfigField "String", "NoticeBaseUrl", "\"https://m.yryz.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"https://web.haidao86.com\""
+            buildConfigField "String", "YYLUrl", "\"https://opus.yryz.com/yyl\""
+            buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
-            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        mo {
+            //isFlag 1 表示真实环境  2 表示mo环境 3 表示测试环境 4 15环境 5 17环境
+            buildConfigField "int", "isFlag", "1"
+            buildConfigField "boolean", "isDebug", "true"
+            buildConfigField "boolean", "addServerPrefix", "true"
+            buildConfigField "String", "BaseUrl", "\"https://api-mo.yryz.com/api/\""
+            buildConfigField "String", "NoticeBaseUrl", "\"https://m-mo.yryz.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"https://web-mo.haidao86.com\""
+            buildConfigField "String", "YYLUrl", "\"https://opus-mo.yryz.com/yyl\""
+            buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         debug {
+            //isFlag 1 表示真实环境  2 表示mo环境 3 表示测试环境 4 15环境 5 17环境
+            buildConfigField "int", "isFlag", "5"
+            buildConfigField "boolean", "isDebug", "true"
+            buildConfigField "boolean", "addServerPrefix", "true"
+            buildConfigField "String", "BaseUrl", "\"http://api-dev.yryz.com/api/\""
+            buildConfigField "String", "NoticeBaseUrl", "\"http://m-dev.yryz.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"http://web-dev.haidao86.com\""
+            buildConfigField "String", "YYLUrl", "\"https://opus-dev.yryz.com/yyl\""
+            buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
-            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -63,10 +97,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
+
+//    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+    compile project(':common')
+    compile project(':httpapi')
 }
