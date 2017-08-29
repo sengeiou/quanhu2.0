@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">Circled</string>
+    <string name="app_name">圈乎</string>
+
+    <string name="exit_app_toast">再按一次退出圈乎</string>
+
+
+    <string name="tab_home">首页</string>
+    <string name="tab_find">发现</string>
+    <string name="tab_reward">悬赏</string>
+    <string name="tab_private_circle">私圈</string>
+    <string name="tab_mine">我的</string>
+
+    <!--最多选择多少张图片-->
+    <string name="max_size_choose_pic_hint">做多选择%1$d张</string>
+    <string name="comment">评论</string>
+    <string name="send">发送</string>
+    <string name="upload_pic">上传图片</string>
+    <string name="upload_video">上传视频</string>
+    <string name="click_to_try_again">点击重试</string>
+
+
+    <string name="sd_card_un_exist">SD卡不存在</string>
+    <string name="file_too_big">文件大小不得超过500M</string>
+    <string name="video_format">格式: </string>
+    <string name="video_time">时长: </string>
+    <string name="video_size">大小: </string>
+    <string name="is_processing">正在处理，请稍后</string>
+    <string name="is_upload_video">视频上传中</string>
+    <string name="is_upload_pic">图片上传中</string>
+    <string name="all_pic">所有图片</string>
+    <string name="publish">发布</string>
+    <string name="pic">图片</string>
+    <string name="finish">完成</string>
+    <string name="zhang">张</string>
 </resources>

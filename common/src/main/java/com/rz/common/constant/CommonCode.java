@@ -50,4 +50,43 @@ public interface CommonCode {
         String APP_ID = "w2oqkv4yi892";
         String APP_SECRET = "78cba16f947e4c7bb9579196c6126851";
     }
+
+    interface EventType {
+        int FINISH_LOADING = 10001;
+    }
+
+    /**
+     * 一些请求
+     */
+    interface REQUEST {
+        /**
+         * 去拍照
+         */
+        int TAKE_PICTURE = 210;
+        /**
+         * 选取照片
+         */
+        int CHOOSE_TRUE = 211;
+        /**
+         * 公共请求code
+         */
+        int PUBLISH_REQUEST = 310;
+
+        /**
+         * 点击相册选择回调
+         */
+        int PUBLISH_RESULT = 311;
+
+        /**
+         * 照相机回调
+         */
+        int PUBLISH_RESULT_CAMERA = 312;
+
+        /**
+         * 删除相片
+         */
+        int PUBLISH_RESULT_DEL_PIC = 313;
+    }
+
+
 }

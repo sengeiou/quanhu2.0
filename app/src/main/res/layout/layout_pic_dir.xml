@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/comm_item_selector"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/iv_pic_dir_img"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/pic_dir"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_pic_dir_img"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_pic_dir_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_gray_l"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_pic_dir_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:textColor="@color/font_gray_s"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_pic_dir_choose_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/r_choose"
+        android:visibility="gone" />
+
+</RelativeLayout>
