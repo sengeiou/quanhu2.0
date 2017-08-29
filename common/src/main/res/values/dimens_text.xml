@@ -1,0 +1,24 @@
+<resources>
+    <!--标题栏字体大小-->
+    <dimen name="font_title_size">@dimen/px52</dimen>
+    <!--列表标题字体大小-->
+    <!--列表详情字体大小-->
+    <!--详情正文字体大小-->
+    <!--超大号文字-->
+    <dimen name="font_xl">@dimen/px80</dimen>
+    <!--大号文字-->
+    <dimen name="font_l">@dimen/px72</dimen>
+    <!--中号文字-->
+    <dimen name="font_m">@dimen/px50</dimen>
+    <!--小号文字-->
+    <dimen name="font_s">@dimen/px38</dimen>
+    <!--超小号文字字体-->
+    <dimen name="font_xs">@dimen/px32</dimen>
+    <dimen name="font_44">@dimen/px44</dimen>
+    <dimen name="font_40">@dimen/px40</dimen>
+    <dimen name="font_52">@dimen/px52</dimen>
+    <dimen name="font_50">@dimen/px50</dimen>
+    <dimen name="font_38">@dimen/px38</dimen>
+    <dimen name="font_34">@dimen/px34</dimen>
+
+</resources>
