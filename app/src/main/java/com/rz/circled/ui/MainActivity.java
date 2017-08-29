@@ -1,10 +1,11 @@
-package com.rz.circled;
+package com.rz.circled.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
+import com.rz.circled.R;
 import com.rz.circled.presenter.UserPresenter;
 import com.rz.common.ui.activity.BaseActivity;
 
