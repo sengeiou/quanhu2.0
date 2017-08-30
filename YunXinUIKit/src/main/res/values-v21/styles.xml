@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">#F9F9F9</item>
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="actionBarSize">@dimen/action_bar_height</item>
+        <item name="colorPrimary">#F9F9F9</item>
+        <item name="colorPrimaryDark">#F9F9F9</item>
+        <item name="colorAccent">@color/color_main</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:windowBackground">@color/color_background</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

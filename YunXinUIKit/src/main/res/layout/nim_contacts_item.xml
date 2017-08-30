@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/nim_contact_list_item_selecter"
+    android:minHeight="@dimen/px182">
+
+    <RelativeLayout
+        android:id="@+id/head_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px182"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingLeft="@dimen/px44">
+
+        <com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView
+            android:id="@+id/contacts_item_head"
+            android:layout_width="@dimen/avatar_size_in_contact"
+            android:layout_height="@dimen/avatar_size_in_contact"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/contacts_item_name_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/px182"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_toRightOf="@id/head_layout"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/contacts_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
+                android:textColor="#999999"
+                android:textSize="10sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/contacts_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/contacts_item_time"
+                android:drawablePadding="4dip"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_50" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/contacts_item_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="1dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/id_remind_num_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/unread_count_bg"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_16"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/bottom_line"
+        style="@style/horizontal_light_thin_divider"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20" />
+
+</RelativeLayout>

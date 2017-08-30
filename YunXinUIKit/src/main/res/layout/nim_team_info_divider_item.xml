@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/nim_bottom_divider_match_parent_selector"
+    android:clickable="true"
+    android:onClick="onClick"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/px22"
+    android:paddingRight="@dimen/px22">
+
+    <RelativeLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="@dimen/px1"
+        android:paddingLeft="@dimen/px20"
+        android:paddingRight="@dimen/px20">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@string/empty"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_50" />
+
+        <TextView
+            android:id="@+id/item_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/item_more"
+            android:layout_toRightOf="@id/item_title"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/empty"
+            android:textColor="@color/color_black_666666"
+            android:textSize="@dimen/font_44" />
+
+        <ImageView
+            android:id="@+id/item_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/nim_arrow_right"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/color_split_line_f4f4f4" />
+
+</LinearLayout>

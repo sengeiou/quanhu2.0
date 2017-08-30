@@ -1,1 +1,6 @@
-include ':app', ':common', ':httpapi', ':jsbridge'
+include ':app'
+include 'common'
+include 'httpapi'
+include 'jsbridge'
+include 'YunXinIM'
+include 'YunXinUIKit'

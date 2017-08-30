@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_background">
+
+    <RelativeLayout
+        android:id="@+id/rlRoot"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+            <com.yryz.yunxinim.uikit.CustomToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:paddingEnd="0dp"
+                app:paddingStart="0dp"
+                app:titleMarginStart="0dp"
+                app:titleTextAppearance="@style/Toolbar.TitleText">
+
+                <include layout="@layout/nim_action_bar_title" />
+            </com.yryz.yunxinim.uikit.CustomToolbar>
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/id_search_key_rela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/app_bar_layout"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_bg_white_stoke_f4f4f4"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <EditText
+                android:id="@+id/id_search_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:background="@color/transparent"
+                android:drawableLeft="@drawable/search_key_icon"
+                android:hint="@string/hint_contacts_search"
+                android:imeOptions="actionSearch"
+                android:inputType="textImeMultiLine"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:textColor="@color/font_gray_xl"
+                android:textColorHint="@color/font_gray_s"
+                android:textSize="@dimen/font_44" />
+
+            <ImageView
+                android:id="@+id/id_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_clear"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_below="@id/id_search_key_rela"
+            android:background="@android:color/white" />
+
+        <RelativeLayout
+            android:id="@+id/contactsLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/rlCtrl"
+            android:layout_below="@id/divider"
+            android:background="@color/transparent">
+
+            <ListView
+                android:id="@+id/contact_list_view"
+                style="@style/list_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/white"
+                android:cacheColorHint="@color/white"
+                android:divider="@color/transparent"
+                android:listSelector="@color/transparent"
+                android:nextFocusLeft="@+id/contact_select_back"
+                android:nextFocusRight="@+id/btnAlSelected"
+                android:nextFocusUp="@+id/contact_select_back"
+                android:scrollbars="none" />
+
+            <ImageView
+                android:id="@+id/img_hit_letter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/nim_contact_hit_letter_bg"
+                android:contentDescription="@string/empty"
+                android:padding="40dip"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tv_hit_letter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="#ffffff"
+                android:textSize="40sp"
+                android:visibility="invisible" />
+
+            <com.yryz.yunxinim.uikit.common.ui.liv.LetterIndexView
+                android:id="@+id/liv_index"
+                android:layout_width="15dip"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:background="#00000000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlCtrl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            android:minHeight="55dp"
+            android:visibility="visible">
+
+            <View
+                style="@style/horizontal_light_thin_divider"
+                android:layout_alignLeft="@+id/name_layout" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:paddingLeft="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cotacts_selected"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="@dimen/font_44" />
+
+                <TextView
+                    android:id="@+id/tvSelectNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px26"
+                    android:layout_marginRight="@dimen/px26"
+                    android:text="0"
+                    android:textColor="@color/color_main"
+                    android:textSize="@dimen/px58" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cotacts_people"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="@dimen/font_44" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSelect"
+                android:layout_width="@dimen/px320"
+                android:layout_height="@dimen/px86"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dip"
+                android:layout_marginRight="6dip"
+                android:background="@drawable/shape_bg_blue_sel"
+                android:text="@string/contacts_sure"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_44"
+                android:visibility="visible" />
+
+            <HorizontalScrollView
+                android:id="@+id/contact_select_area"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/btnSelect"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="6dip"
+                    android:paddingRight="6dip">
+
+                    <GridView
+                        android:id="@+id/contact_select_area_grid"
+                        style="@style/grid_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:horizontalSpacing="0dip"
+                        android:listSelector="@android:color/transparent"
+                        android:paddingTop="6dp"
+                        android:verticalSpacing="0dip" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

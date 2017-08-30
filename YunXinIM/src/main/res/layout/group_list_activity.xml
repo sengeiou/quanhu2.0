@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/group_list_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/color_background">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <com.yryz.yunxinim.uikit.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/id_search_key_rela"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar_layout"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/shape_bg_white_stoke_f4f4f4"
+        android:paddingBottom="7dp"
+        android:paddingTop="7dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/search_key_icon" />
+
+        <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
+            android:id="@+id/team_search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/transparent"
+            android:hint="@string/team_search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="textImeMultiLine"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/color_000000"
+            android:textColorHint="@color/color_666666"
+            android:textSize="@dimen/font_44" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/group_tip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/id_search_key_rela"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@android:color/white"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/group_create_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/px100"
+                android:layout_height="@dimen/px100"
+                android:layout_marginBottom="@dimen/px40"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px30"
+                android:layout_marginTop="@dimen/px40"
+                android:src="@drawable/tribeadd" />
+
+            <TextView
+                android:id="@+id/group_create_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="创建群"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/font_44" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/group_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="选择群"
+            android:textColor="#666666"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_tip_layout"
+        android:background="@color/white">
+
+        <ListView
+            android:id="@+id/group_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@color/transparent"
+            android:dividerHeight="0dp"
+            android:scrollbars="none"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_search_null" />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px70"
+                android:text="没有您要搜索的内容!"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/font_50" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>

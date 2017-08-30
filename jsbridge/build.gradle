@@ -2,15 +2,17 @@ apply plugin: 'com.android.library'
 
 android {
     publishNonDefault true
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,8 +23,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile "com.android.support:appcompat-v7:$rootProject.ext.supportVersion"
     testCompile 'junit:junit:4.12'
     //json解析
     compile 'com.google.code.gson:gson:2.6.1'
