@@ -120,7 +120,6 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.facebook.fresco:animated-gif:0.12.0'
     compile project(':common')
-    compile project(':common')
     compile project(':YunXinIM')
     compile project(':httpapi')
     compile project(':jsbridge')
