@@ -10,40 +10,32 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.bumptech.glide.Glide;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
-import com.rz.rz_rrz.R;
-import com.rz.rz_rrz.cache.preference.Session;
-import com.rz.rz_rrz.constant.CodeStatus;
-import com.rz.rz_rrz.constant.Constants;
-import com.rz.rz_rrz.constant.IntentCode;
-import com.rz.rz_rrz.constant.IntentKey;
-import com.rz.rz_rrz.constant.Type;
-import com.rz.rz_rrz.model.BankCardModel;
-import com.rz.rz_rrz.model.UserInfoModel;
-import com.rz.rz_rrz.presenter.impl.BankPresenter;
-import com.rz.rz_rrz.presenter.impl.PayPresenter;
-import com.rz.rz_rrz.utils.CountDownTimer;
-import com.rz.rz_rrz.utils.StringUtils;
-import com.rz.rz_rrz.utils.UnitUtil;
-import com.rz.rz_rrz.view.base.BaseCommonAty;
-import com.rz.rz_rrz.widget.CommonAdapter;
-import com.rz.rz_rrz.widget.GlideCircleImage;
-import com.rz.rz_rrz.widget.PopupView;
-import com.rz.rz_rrz.widget.ViewHolder;
-import com.rz.rz_rrz.widget.XListView;
+import com.rz.circled.modle.BankCardModel;
+import com.rz.circled.widget.XListView;
+import com.rz.common.adapter.CommonAdapter;
+import com.rz.common.adapter.ViewHolder;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.IntentKey;
+import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.CountDownTimer;
+import com.rz.common.utils.StringUtils;
+import com.rz.common.widget.svp.SVProgressHUD;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
+import static com.xiaomi.push.thrift.a.R;
+
 /**
  * 银行卡列表
  */
-public class BankCardListAty extends BaseCommonAty implements XListView.IXListViewListener {
+public class BankCardListAty extends BaseActivity implements XListView.IXListViewListener {
 
     @BindView(R.id.id_bank_listv)
     XListView mListview;
@@ -57,10 +49,10 @@ public class BankCardListAty extends BaseCommonAty implements XListView.IXListVi
     //弹出框
     private PopupView mPopupView;
 
-    private String[] mTitle = {getString(R.string.unbind_bank_card), getString(com.rz.rz_rrz.R.string.set_default)};
+    private String[] mTitle = {getString(R.string.unbind_bank_card), getString(R.string.set_default)};
     private String[] mTitleColor = {"#333333", "#1bc2b8"};
 
-    private PayPresenter mPayPresenter;
+//    private PayPresenter mPayPresenter;
 
     //绑定银行关联ID
     private String mCust2BankId;
@@ -75,7 +67,7 @@ public class BankCardListAty extends BaseCommonAty implements XListView.IXListVi
      */
     public static void startBankCardList(Activity activity, int type) {
         Intent intent = new Intent(activity, BankCardListAty.class);
-        intent.putExtra(IntentKey.General.KEY_TYPE, type);
+        intent.putExtra(IntentKey.KEY_TYPE, type);
         activity.startActivityForResult(intent, IntentCode.BankCard.BankCard_REQUEST_CODE);
     }
 
@@ -91,9 +83,9 @@ public class BankCardListAty extends BaseCommonAty implements XListView.IXListVi
 
     @Override
     public void initPresenter() {
-        presenter = new BankPresenter();
-        mPayPresenter = new PayPresenter(false);
-        mPayPresenter.attachView(this);
+//        presenter = new BankPresenter();
+//        mPayPresenter = new PayPresenter(false);
+//        mPayPresenter.attachView(this);
     }
 
     @Override

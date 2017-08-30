@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.rz.common.ui.activity.BaseActivity;
 import com.rz.rz_rrz.R;
 import com.rz.rz_rrz.constant.Type;
 import com.rz.rz_rrz.view.base.BaseCommonAty;
@@ -20,8 +21,10 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.xiaomi.push.thrift.a.R;
 
-public class MyReceiveMoneyListAty extends BaseCommonAty {
+
+public class MyReceiveMoneyListAty extends BaseActivity {
 
     //我收到的和我发出的红包按钮自定义控件
     @BindView(R.id.segment_myreceiverred)
@@ -33,15 +36,11 @@ public class MyReceiveMoneyListAty extends BaseCommonAty {
 
     List<Fragment> views = new ArrayList<>();
 
-    @Nullable
     @Override
-    public View loadView(LayoutInflater inflater, View childView) {
-        View root = inflater.inflate(R.layout.activity_my_receive_money_list_aty, null);
-        return super.loadView(inflater, root);
+    protected View loadView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.activity_my_receive_money_list_aty, null);
     }
-
-
-//    @Override
+    //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_my_receive_money_list_aty);

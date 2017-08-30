@@ -15,16 +15,14 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.rz.rz_rrz.R;
-import com.rz.rz_rrz.cache.preference.Session;
-import com.rz.rz_rrz.constant.IntentKey;
-import com.rz.rz_rrz.model.AreaModel;
-import com.rz.rz_rrz.permission.AppSettingsDialog;
-import com.rz.rz_rrz.permission.EasyPermissions;
-import com.rz.rz_rrz.presenter.impl.PersonInfoPresenter;
-import com.rz.rz_rrz.view.base.BaseCommonAty;
-import com.rz.rz_rrz.widget.CommonAdapter;
-import com.rz.rz_rrz.widget.ViewHolder;
+import com.rz.circled.modle.AreaModel;
+import com.rz.common.adapter.CommonAdapter;
+import com.rz.common.adapter.ViewHolder;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentKey;
+import com.rz.common.permission.AppSettingsDialog;
+import com.rz.common.permission.EasyPermissions;
+import com.rz.common.ui.activity.BaseActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,10 +33,13 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.xiaomi.push.thrift.a.R;
+
+
 /**
  * Created by xiayumo on 16/8/16.
  */
-public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class PersonAreaAty extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     @BindView(R.id.id_prov_list)
     ListView idProvListView;
@@ -63,14 +64,14 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
     private String keyType;
 
     @Override
-    public View loadView(LayoutInflater inflater, View childView) {
-        return super.loadView(inflater, inflater.inflate(R.layout.aty_my_area, null));
+    protected View loadView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.aty_my_area, null);
     }
 
     @Override
     public void initView() {
         setTitleText(getString(R.string.mine_person_area), null);
-        setTitleRight(getString(R.string.mine_person_save), this);
+        setTitleRightText(getString(R.string.mine_person_save), this);
 
         keyType = getIntent().getStringExtra(IntentKey.KEY_TYPE);
 
@@ -84,13 +85,11 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
         mAdapter = new CommonAdapter<AreaModel>(this, areaList, R.layout.layout_area_item) {
 
             @Override
-            public void convert(ViewHolder helper, AreaModel item) {
-
+            public void convert(ViewHolder helper, AreaModel item, int position) {
                 ((TextView) helper.getView(R.id.id_area_text)).setText(item.name);
 
                 if (TextUtils.isEmpty(keyType))
                     ((TextView) helper.getView(R.id.id_area_check)).setText(item.isChecked ? getString(R.string.had_check) : "");
-
             }
         };
 
@@ -109,7 +108,7 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
     @Override
     public void initPresenter() {
         super.initPresenter();
-        presenter = new PersonInfoPresenter();
+//        presenter = new PersonInfoPresenter();
     }
 
     @Override
@@ -119,7 +118,7 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
         if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
             String area = t.toString();
             Intent mIntent = new Intent();
-            mIntent.putExtra(IntentKey.General.KEY_POSITION, area);
+            mIntent.putExtra(IntentKey.KEY_POSITION, area);
             setResult(RESULT_CODE1, mIntent);
         } else {
             Session.setUser_area(t.toString());
@@ -165,7 +164,7 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.titlebar_right_text:
-                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "location", paramas);
+//                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "location", paramas);
                 break;
             default:
                 break;
@@ -205,7 +204,7 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
                         paramas = paramas + " " + index[i];
                     }
                     paramas = paramas.trim();
-                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "location", paramas);
+//                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "location", paramas);
                 }
             }
         }
@@ -354,7 +353,7 @@ public class PersonAreaAty extends BaseCommonAty implements View.OnClickListener
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this, getString(com.rz.rz_rrz.R.string.location_permission_run))
+            new AppSettingsDialog.Builder(this, getString(R.string.location_permission_run))
                     .setPositiveButton(getString(R.string.setting))
                     .setNegativeButton(getString(R.string.cancel), null /* click listener */)
                     .setRequestCode(RC_LOCATION_CONTACTS_PERM)

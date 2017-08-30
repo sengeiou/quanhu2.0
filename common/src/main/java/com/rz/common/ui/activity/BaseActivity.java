@@ -1,6 +1,8 @@
 package com.rz.common.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -46,6 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     private ImageView ivCommonLeft;
     private ImageView ivCommonRight;
     private BaseLoadView mLoadView;
+    public Activity aty;
 
     private InputMethodManager mImm;
 
@@ -53,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        this.aty=this;
         TAG = getClass().getSimpleName();
         setContentView(R.layout.activity_base);
 
@@ -68,8 +72,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         initTitleView(llTitle, flTransTitle);
         initContentView(llContent);
         ButterKnife.bind(this);
+        initPresenter();
         initView();
         initData();
+    }
+
+    public void initPresenter() {
+
     }
 
     public abstract void initView();
@@ -112,6 +121,22 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         }
         if (loadView(getLayoutInflater()) != null)
             llContent.addView(loadView(getLayoutInflater()));
+    }
+    /**
+     * show to @param(cls)，but can't finish activity
+     */
+
+    public void showActivity(Activity aty, Class<?> cls) {
+        Intent intent = new Intent();
+        intent.setClass(aty, cls);
+        aty.startActivity(intent);
+    }
+
+    /**
+     * show to @param(cls)，but can't finish activity
+     */
+    public void showActivity(Activity aty, Intent it) {
+        aty.startActivity(it);
     }
 
     /**

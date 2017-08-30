@@ -4,6 +4,14 @@ package com.rz.common.constant;
  * 接口返回数据 类别标识
  */
 public interface Type {
+    //收益流水
+    public static final int TYPE_SCORE = 2;
+    //消费流水
+    int TYPE_BALANCE = 1;
+    /**
+     * 红包记录
+     */
+    int TYPE_RECORD_BAG = 6;
     /**
      * 视频
      */

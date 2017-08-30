@@ -1,7 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -12,9 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.rz.circled.R;
 
-import java.util.List;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.rz.circled.application.QHApplication;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.Protect;
+import com.rz.common.utils.StringUtils;
+import com.rz.common.utils.SystemUtils;
+import com.zhuge.analysis.stat.ZhugeSDK;
+
+import static com.rz.common.utils.SystemUtils.trackUser;
+import static com.xiaomi.push.thrift.a.R;
 
 /**
  * 作者：Administrator on 2016/6/22 0022 11:07
@@ -68,53 +76,17 @@ public class SplashAty extends BaseActivity {
 
     @Override
     public View loadView(LayoutInflater inflater) {
-        ZhugeSDK.getInstance().init(App.getContext());
+        ZhugeSDK.getInstance().init(QHApplication.getContext());
         ZhugeSDK.getInstance().openLog();
         trackUser("启动APP","","");
 //        initMainRequest();
         return inflater.inflate(R.layout.aty_splash, null);
     }
 
-    @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)
-    private void initMainRequest() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-            if (ACache.get(this).file(LauncherService.CACHE_KEY) == null) {
-                startService(new Intent(this, LauncherService.class));
-            }
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.contacts_permission), RC_LOCATION_CONTACTS_PERM, Manifest.permission.READ_CONTACTS);
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        super.onPermissionsGranted(requestCode, perms);
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        super.onPermissionsDenied(requestCode, perms);
-        if (ACache.get(this).file(LauncherService.CACHE_KEY) == null) {
-            startService(new Intent(this, LauncherService.class));
-        }
-    }
-
-    @Override
-    protected boolean isTitleBarShow() {
+    protected boolean needShowTitle() {
         return false;
     }
-
-    @Override
-    protected boolean isSupportSwipeback() {
-        return false;
-    }
-
 
     @Override
     public void initView() {
@@ -146,7 +118,7 @@ public class SplashAty extends BaseActivity {
     }
 
     private void initV() {
-        loadRewardGiftList();
+//        loadRewardGiftList();
         //当前日期
         long currentTime = System.currentTimeMillis();
         //上刊日期
@@ -257,47 +229,39 @@ public class SplashAty extends BaseActivity {
         }
     }
 
-    @AfterPermissionGranted(RC_LOCATION_CONTACTS_PERM)
-    public void readContacts() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-            BackGroundService.getPhoneContacts(aty);
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.contacts_permission), RC_LOCATION_CONTACTS_PERM, Manifest.permission.READ_CONTACTS);
-        }
-    }
 
-    public void loadRewardGiftList() {
-        Call<ResponseData<List<RewardGiftModel>>> call = Http.getNewService(this).v3CircleGetTransferPrice(
-                Session.getUserId());
-        CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<RewardGiftModel>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<RewardGiftModel>>> call, Response<ResponseData<List<RewardGiftModel>>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    ResponseData<List<RewardGiftModel>> res = response.body();
-                    if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<RewardGiftModel> mGifts = res.getData();
-                        if (mGifts != null && !mGifts.isEmpty()) {
-                            try {
-                                EntityCache<RewardGiftModel> entityCache = new EntityCache<RewardGiftModel>(SplashAty.this, RewardGiftModel.class);
-                                entityCache.putListEntityAddTag(mGifts, "transfer");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            return;
-                        } else {
-                            return;
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<List<RewardGiftModel>>> call, Throwable t) {
-                super.onFailure(call, t);
-            }
-        });
-    }
+//    public void loadRewardGiftList() {
+//        Call<ResponseData<List<RewardGiftModel>>> call = Http.getNewService(this).v3CircleGetTransferPrice(
+//                Session.getUserId());
+//        CallManager.add(call);
+//        call.enqueue(new BaseCallback<ResponseData<List<RewardGiftModel>>>() {
+//            @Override
+//            public void onResponse(Call<ResponseData<List<RewardGiftModel>>> call, Response<ResponseData<List<RewardGiftModel>>> response) {
+//                super.onResponse(call, response);
+//                if (response.isSuccessful()) {
+//                    ResponseData<List<RewardGiftModel>> res = response.body();
+//                    if (res.getRet() == ReturnCode.SUCCESS) {
+//                        List<RewardGiftModel> mGifts = res.getData();
+//                        if (mGifts != null && !mGifts.isEmpty()) {
+//                            try {
+//                                EntityCache<RewardGiftModel> entityCache = new EntityCache<RewardGiftModel>(SplashAty.this, RewardGiftModel.class);
+//                                entityCache.putListEntityAddTag(mGifts, "transfer");
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                            return;
+//                        } else {
+//                            return;
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseData<List<RewardGiftModel>>> call, Throwable t) {
+//                super.onFailure(call, t);
+//            }
+//        });
+//    }
 
 }

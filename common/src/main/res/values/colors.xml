@@ -26,6 +26,11 @@
     <color name="color_315ac1">#315ac1</color>
     <color name="color_f5f5f5">#f5f5f5</color>
     <color name="color_E7E7E7">#E7E7E7</color>
+    <color name="color_F5F5F5">#F5F5F5</color>
+    <color name="v3_text_color_main_blue">#1bc2b8</color>
+    <color name="color_1bc2b8">#1bc2b8</color>
+    <color name="color_333333">#333333</color>
+    <color name="light_gray">#cccccc</color>
 
 
 </resources>
