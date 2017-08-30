@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.rz.circled.MainActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_main"
+    <FrameLayout
+        android:id="@+id/fl_main_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-    <TextView
-        android:id="@+id/tv_main_two"
+    <com.rz.circled.widget.CustomFragmentTabHost
+        android:id="@+id/tab_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Hello World!"/>
-</RelativeLayout>
+        android:layout_height="@dimen/px150"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:id="@+id/fl_main_tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"/>
+
+    </com.rz.circled.widget.CustomFragmentTabHost>
+
+</LinearLayout>
