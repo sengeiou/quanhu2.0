@@ -5,6 +5,16 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.HttpDataSource;
+import com.google.android.exoplayer2.util.Util;
 import com.rz.circled.BuildConfig;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
@@ -30,6 +40,9 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class QHApplication extends BaseApplication {
 
     private static QHApplication instance;
+    public static String userAgent;
+
+    public static int isFlag = BuildConfig.isFlag;
 
     @Override
     public void onCreate() {
@@ -51,6 +64,20 @@ public class QHApplication extends BaseApplication {
 
     private void init() {
         configOkHttp();
+        configExo();
+    }
+
+    public void configExo() {
+        userAgent = Util.getUserAgent(this, "rz.sgt");
+    }
+
+    public DataSource.Factory buildDataSourceFactory(DefaultBandwidthMeter bandwidthMeter) {
+        return new DefaultDataSourceFactory(this, bandwidthMeter,
+                buildHttpDataSourceFactory(bandwidthMeter));
+    }
+
+    public HttpDataSource.Factory buildHttpDataSourceFactory(DefaultBandwidthMeter bandwidthMeter) {
+        return new DefaultHttpDataSourceFactory(userAgent, bandwidthMeter);
     }
 
     private void configOkHttp() {
@@ -128,13 +155,13 @@ public class QHApplication extends BaseApplication {
      * @param builder
      */
     private static void setCookieJar(OkHttpClient.Builder builder) {
-//        Context context = getContext();
-//        if (context != null) {
-//            ClearableCookieJar cookieJar = new PersistentCookieJar(
-//                    new SetCookieCache(),
-//                    new SharedPrefsCookiePersistor(context));
-//            builder.cookieJar(cookieJar);
-//        }
+        Context context = getContext();
+        if (context != null) {
+            ClearableCookieJar cookieJar = new PersistentCookieJar(
+                    new SetCookieCache(),
+                    new SharedPrefsCookiePersistor(context));
+            builder.cookieJar(cookieJar);
+        }
     }
 
     /**

@@ -20,16 +20,25 @@ import android.widget.TextView;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
 import com.rz.common.permission.EasyPermissions;
-import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.ui.inter.IViewController;
+import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.widget.SwipeBackLayout;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks {
+    protected static final int RC_CAMERA_PERM = 123;
+    protected static final int RC_LOCATION_CONTACTS_PERM = 124;
+    protected static final int RC_SETTINGS_SCREEN = 125;
+    protected static final int RC_AUDIO_AND_EXTENER = 126;
+    protected static final int RC_VIDEO_AND_EXTENER = 127;
+    protected static final int RC_EXTENER = 130;
+
     public String TAG;
 
-    private Context mContext;
+    protected Context mContext;
 
     private View commonTitle;
     private TextView tvCommonTitle;
@@ -56,9 +65,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
         initTitleView(llTitle, flTransTitle);
         initContentView(llContent);
+        ButterKnife.bind(this);
         initView();
         initData();
     }
@@ -99,8 +108,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (needLoadingView()) {
             View loadView = getLayoutInflater().inflate(R.layout.layout_base_load, null);
             mLoadView = new BaseLoadView(mContext, loadView, llContent);
+            llContent.addView(loadView);
         }
-        llContent.addView(loadView(getLayoutInflater()));
+        if (loadView(getLayoutInflater()) != null)
+            llContent.addView(loadView(getLayoutInflater()));
     }
 
     /**

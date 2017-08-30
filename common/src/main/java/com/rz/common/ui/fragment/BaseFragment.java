@@ -59,8 +59,10 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         if (needLoadingView()) {
             View loadView = inflater.inflate(R.layout.layout_base_load, null);
             mLoadView = new BaseLoadView(mActivity, loadView, llContent);
+            llContent.addView(loadView);
         }
-        llContent.addView(loadView(inflater));
+        if (loadView(inflater) != null)
+            llContent.addView(loadView(inflater));
     }
 
     @Nullable
@@ -69,9 +71,9 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     }
 
 
-    abstract void initView();
+    public abstract void initView();
 
-    abstract void initData();
+    public abstract void initData();
 
 
     @Override

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_f5f5f5"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f5f5f5"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/gv_sel_pic"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:cacheColorHint="@color/transparent"
+            android:focusable="false"
+            android:listSelector="@color/transparent"
+            android:overScrollMode="never"
+            android:padding="5dp"
+            android:scrollbars="none"/>
+
+        <View
+            android:id="@+id/id_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_gray_s"/>
+
+        <RelativeLayout
+            android:id="@+id/id_mag_rela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/id_look_all_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector"
+                android:clickable="true"
+                android:drawableRight="@mipmap/r_bottom_arrow"
+                android:padding="15dp"
+                android:text="@string/all_pic"
+                android:textColor="@color/font_gray_l"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_look_all_pic"
+                android:background="@color/color_f5f5f5"/>
+
+            <TextView
+                android:id="@+id/id_all_pic_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="15dp"
+                android:textColor="@color/font_gray_l"
+                android:textSize="15sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
