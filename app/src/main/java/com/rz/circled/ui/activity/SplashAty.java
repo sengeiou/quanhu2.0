@@ -12,37 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.rz.rz_rrz.R;
-import com.rz.rz_rrz.app.App;
-import com.rz.rz_rrz.cache.ACache;
-import com.rz.rz_rrz.cache.preference.EntityCache;
-import com.rz.rz_rrz.cache.preference.Session;
-import com.rz.rz_rrz.constant.ReturnCode;
-import com.rz.rz_rrz.http.BaseCallback;
-import com.rz.rz_rrz.http.CallManager;
-import com.rz.rz_rrz.http.Http;
-import com.rz.rz_rrz.model.ResponseData;
-import com.rz.rz_rrz.model.RewardGiftModel;
-import com.rz.rz_rrz.permission.AfterPermissionGranted;
-import com.rz.rz_rrz.permission.EasyPermissions;
-import com.rz.rz_rrz.service.BackGroundService;
-import com.rz.rz_rrz.service.LauncherService;
-import com.rz.rz_rrz.utils.ClearCacheUtil;
-import com.rz.rz_rrz.utils.Protect;
-import com.rz.rz_rrz.utils.StringUtils;
-import com.rz.rz_rrz.utils.SystemUtils;
-import com.rz.rz_rrz.view.base.BaseActivity;
-import com.zhuge.analysis.stat.ZhugeSDK;
+import com.rz.circled.R;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
-
-import static com.rz.rz_rrz.utils.CommomUtils.trackUser;
 
 /**
  * 作者：Administrator on 2016/6/22 0022 11:07
