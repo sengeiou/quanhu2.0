@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/px22"
+    android:paddingRight="@dimen/px22">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="@dimen/px20"
+        android:paddingRight="@dimen/px20">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:singleLine="true"
+            android:text="TITLE"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_50" />
+
+        <TextView
+            android:id="@+id/item_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/item_title"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/nim_arrow_right"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical"
+            android:hint="@string/click_set"
+            android:singleLine="true"
+            android:textColor="@color/color_black_666666"
+            android:textColorHint="@color/color_black_666666"
+            android:textSize="@dimen/font_44" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/content_layout"
+        android:background="@color/color_split_line_f4f4f4" />
+
+</LinearLayout>

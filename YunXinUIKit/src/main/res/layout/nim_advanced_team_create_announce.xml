@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <com.yryz.yunxinim.uikit.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/Toolbar.TitleText">
+
+            <include layout="@layout/nim_action_bar_right_clickable_tv" />
+        </com.yryz.yunxinim.uikit.CustomToolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px44"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/team_announce_title"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/px126"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/team_announce_title"
+            android:maxLength="20"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44"
+            android:textColor="@color/font_gray_xl"
+            android:textColorHint="@color/font_gray_s"
+            android:textSize="@dimen/font_52" />
+
+        <TextView
+            android:id="@+id/tv_title_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="@color/color_main"
+            android:textSize="@dimen/font_44" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/px44"
+            android:text="/20"
+            android:textColor="@color/font_gray_s"
+            android:textSize="@dimen/font_44" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px30"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/team_announce_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="@string/announcement_add_content"
+            android:maxLength="300"
+            android:minLines="9"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44"
+            android:paddingTop="@dimen/px44"
+            android:textColor="@color/font_gray_xl"
+            android:textColorHint="@color/font_gray_s"
+            android:textSize="@dimen/font_44" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px30">
+
+            <TextView
+                android:id="@+id/tv_desc_last"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/font_44" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/px44"
+                android:text="/300"
+                android:textColor="@color/font_gray_s"
+                android:textSize="@dimen/font_44" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

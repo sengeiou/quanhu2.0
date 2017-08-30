@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/nim_message_item_text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/px28"
+        android:paddingRight="@dimen/px28"
+        android:paddingTop="@dimen/px34"
+        android:paddingBottom="@dimen/px12"
+        android:gravity="center_vertical|left"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="3dip"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_52" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/px28"
+        android:paddingBottom="@dimen/px24"
+        android:paddingRight="@dimen/px28"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="@dimen/px210"
+            android:layout_marginTop="@dimen/px8"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_ligh_stork"
+            android:padding="1dp">
+
+            <ImageView
+                android:id="@+id/nim_message_item_img_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/nim_message_item_img_type"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/nim_message_item_text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:lines="4"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_44" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_d1d1d1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px72"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/px28"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_share_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:text="悠然一指"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_34" />
+    </LinearLayout>
+</LinearLayout>

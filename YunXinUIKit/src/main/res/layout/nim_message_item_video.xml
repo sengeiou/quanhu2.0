@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.yryz.yunxinim.uikit.common.ui.imageview.MsgThumbImageView
+        android:id="@+id/message_item_thumb_thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:padding="0dip"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/message_item_thumb_thumbnail_cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/message_item_thumb_thumbnail"
+        android:scaleType="fitXY"
+        android:layout_alignLeft="@id/message_item_thumb_thumbnail"
+        android:layout_alignRight="@id/message_item_thumb_thumbnail"
+        android:layout_alignTop="@id/message_item_thumb_thumbnail" />
+
+    <LinearLayout
+        android:id="@+id/message_item_video_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/empty"
+            android:focusable="false"
+            android:gravity="center"
+            android:scaleType="center"
+            android:src="@drawable/nim_play_btn_select" />
+    </LinearLayout>
+
+    <include
+        layout="@layout/nim_message_item_thumb_progress_bar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

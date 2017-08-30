@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px28"
+        android:layout_marginLeft="@dimen/px28"
+        android:layout_marginRight="@dimen/px28"
+        android:layout_marginTop="@dimen/px20"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/px210"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/px8"
+            android:background="@drawable/shape_ligh_stork"
+            android:padding="1dp">
+
+            <ImageView
+                android:id="@+id/nim_message_item_img_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/nim_message_item_img_type"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/nim_message_item_text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:lines="4"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_44" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_gray_d1d1d1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="2.5dp"
+        android:paddingTop="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:text="来自悠友圈"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_34" />
+    </LinearLayout>
+</LinearLayout>

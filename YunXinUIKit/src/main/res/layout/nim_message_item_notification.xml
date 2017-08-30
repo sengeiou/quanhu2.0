@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/message_item_notification_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dip"
+        android:layout_marginRight="7dip"
+        android:background="@drawable/nim_bg_message_tip"
+        android:gravity="center"
+        android:minHeight="@dimen/px66"
+        android:paddingLeft="@dimen/px28"
+        android:paddingRight="@dimen/px28"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/font_40" />
+
+</merge>

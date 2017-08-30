@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/nim_list_item_selector"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/top_line"
+        style="@style/horizontal_light_thin_divider"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="71dip">
+
+        <FrameLayout
+            android:id="@+id/portrait_panel"
+            android:layout_width="@dimen/px230"
+            android:layout_height="@dimen/px230"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView
+                android:id="@+id/img_head"
+                android:layout_width="@dimen/avatar_size_default"
+                android:layout_height="@dimen/avatar_size_default"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px30" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="16dip"
+            android:layout_toLeftOf="@+id/tv_date_time"
+            android:layout_toRightOf="@id/portrait_panel"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_50" />
+
+        <ImageView
+            android:id="@+id/img_msg_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nickname"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/portrait_panel"
+            android:contentDescription="@string/empty"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_nickname"
+            android:layout_marginRight="40dip"
+            android:layout_marginTop="@dimen/px12"
+            android:layout_toRightOf="@+id/img_msg_status"
+            android:autoLink="none"
+            android:ellipsize="end"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_50" />
+
+        <TextView
+            android:id="@+id/tv_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="16dip"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_34" />
+
+        <com.yryz.yunxinim.uikit.common.ui.drop.DropFake
+            android:id="@+id/unread_number_tip"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_nickname"
+            android:layout_marginRight="6dip"
+            android:layout_marginTop="@dimen/px8"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/unread_number_explosion"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_nickname"
+            android:layout_marginRight="6dip"
+            android:layout_marginTop="@dimen/px8"
+            android:gravity="center"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/bottom_line"
+        style="@style/horizontal_light_thin_divider"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+</LinearLayout>

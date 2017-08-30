@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_layout_check_pwd"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/transparent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_pop_white_btn"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minEms="10"
+            android:layout_marginTop="@dimen/px60"
+            android:text="群验证消息"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_50" />
+
+        <com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView
+            android:id="@+id/contacts_item_head"
+            android:layout_marginTop="@dimen/px44"
+            android:layout_width="@dimen/avatar_size_in_contact"
+            android:layout_height="@dimen/avatar_size_in_contact"
+            android:scaleType="centerCrop" />
+
+        <EditText
+            android:id="@+id/id_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/px44"
+            android:background="@null"
+            android:inputType="textMultiLine"
+            android:maxLength="20"
+            android:paddingBottom="@dimen/px30"
+            android:textColorHint="@color/font_gray_s"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_44" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginBottom="@dimen/px44"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="#dddddd" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#dddddd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_pop_gray_btn"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_tv_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="取消"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/font_44" />
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:background="#dddddd" />
+
+            <TextView
+                android:id="@+id/id_tv_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="发送"
+                android:textColor="@color/txt_pop_blue"
+                android:textSize="@dimen/font_44" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

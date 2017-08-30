@@ -1,1 +1,3 @@
 include ':app', ':common', ':httpapi'
+include 'YunXinIM'
+include 'YunXinUIKit'
