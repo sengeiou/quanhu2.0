@@ -2054,7 +2054,8 @@ var yryz = {
     openAPP: sdk.registerNative('openAPP'),
     finishWeb: sdk.registerNative('finishWeb'),
     mapNavigation: sdk.registerNative('mapNavigation'),
-    report: sdk.registerNative('report')
+    report: sdk.registerNative('report'),
+    saveImage: sdk.registerNative('saveImage')
 };
 
 window.yryz = yryz;
