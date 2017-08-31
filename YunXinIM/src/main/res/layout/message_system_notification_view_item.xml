@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/top_line"
+        style="@style/horizontal_light_thin_divider"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/px230"
+        android:paddingLeft="@dimen/px40"
+        android:paddingRight="@dimen/px40">
+
+        <com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView
+            android:id="@+id/from_account_head_image"
+            android:layout_width="@dimen/avatar_size_default"
+            android:layout_height="@dimen/avatar_size_default"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:id="@+id/operator_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <Button
+                android:id="@+id/agree"
+                android:layout_width="48dip"
+                android:layout_height="30dip"
+                android:background="@drawable/shape_bg_easy_dialog_cancel"
+                android:text="@string/agree"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14" />
+
+            <Button
+                android:id="@+id/reject"
+                android:layout_width="48dip"
+                android:layout_height="30dip"
+                android:layout_marginLeft="@dimen/px30"
+                android:background="@drawable/rolle_white_bg_f5f5f5"
+                android:text="@string/reject"
+                android:textColor="#666666"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/operator_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="已处理"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/title_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:layout_toLeftOf="@id/operator_layout"
+            android:layout_toRightOf="@id/from_account_head_image"
+            android:gravity="left">
+
+            <TextView
+                android:id="@+id/from_account_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxWidth="120dp"
+                android:singleLine="true"
+                android:text="name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_44" />
+
+            <TextView
+                android:id="@+id/notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/from_account_text"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/from_account_text"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="time"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_34" />
+
+            <TextView
+                android:id="@+id/content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/from_account_text"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="3dip"
+                android:singleLine="true"
+                android:text="content"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44" />
+
+            <TextView
+                android:id="@+id/follow_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content_text"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="3dip"
+                android:singleLine="true"
+                android:text="content"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/bottom_line"
+        style="@style/horizontal_light_thin_divider"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20" />
+
+</LinearLayout>

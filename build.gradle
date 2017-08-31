@@ -5,6 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'com.android.tools.build:gradle:2.1.2'
 //        classpath 'com.mcxiaoke.packer-ng:plugin:2.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
@@ -32,6 +33,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
 
 ext {
     compileSdkVersion = 23

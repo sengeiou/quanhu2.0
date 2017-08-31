@@ -46,7 +46,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_base_fragment, null);
-        LinearLayout llRoot = rootView.findViewById(R.id.ll_base_fragment_root);
+        LinearLayout llRoot = (LinearLayout) rootView.findViewById(R.id.ll_base_fragment_root);
         initContentView(inflater, llRoot);
         unbinder = ButterKnife.bind(this, rootView);
         isViewInit = true;

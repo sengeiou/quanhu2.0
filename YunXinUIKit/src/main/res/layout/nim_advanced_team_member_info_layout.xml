@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <com.yryz.yunxinim.uikit.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/Toolbar.TitleText">
+
+        </com.yryz.yunxinim.uikit.CustomToolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px144"
+        android:orientation="vertical">
+
+        <com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView
+            android:id="@+id/team_member_head_view"
+            android:layout_width="@dimen/px200"
+            android:layout_height="@dimen/px200"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/team_member_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/px24"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_52" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20"
+        android:layout_marginTop="@dimen/px72"
+        android:background="@color/color_split_line_d9d9d9" />
+
+    <RelativeLayout
+        android:id="@+id/nickname_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:padding="@dimen/px20">
+
+        <TextView
+            android:id="@+id/team_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px22"
+            android:text="@string/team_nickname"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_44" />
+
+        <TextView
+            android:id="@+id/team_nickname_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px22"
+            android:layout_toRightOf="@id/team_nickname"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/nim_arrow_right"
+            android:gravity="right|center_vertical"
+            android:hint="@string/team_nickname_none"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_44" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20"
+        android:background="@color/color_split_line_d9d9d9" />
+
+    <RelativeLayout
+        android:id="@+id/identity_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:padding="@dimen/px20">
+
+        <TextView
+            android:id="@+id/team_member_identity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px22"
+            android:text="@string/team_identity"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_44" />
+
+        <TextView
+            android:id="@+id/team_member_identity_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px22"
+            android:layout_toRightOf="@id/team_member_identity"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/nim_arrow_right"
+            android:gravity="right|center_vertical"
+            android:hint="@string/team_nickname_none"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_44" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px22"
+        android:layout_marginRight="@dimen/px22"
+        android:background="@color/color_split_line_d9d9d9" />
+
+    <LinearLayout
+        android:id="@+id/toggle_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+
+    <Button
+        android:id="@+id/team_remove_member"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/nim_message_button_bottom_send_selector"
+        android:text="@string/remove_member"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</LinearLayout>
