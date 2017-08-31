@@ -10,9 +10,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rz.yryz.api.BaseCallback;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.common.activity.UI;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -122,10 +122,9 @@ public class AdvancedTeamSearchActivity extends UI {
      */
     private void updateTeamInfo(final Team team) {
         if (team.getId().equals(searchEditText.getText().toString())) {
-            Http.getNewService(ImService.class).getAllTeam(team.getId()).enqueue(new BaseCallback<ResponseData<List<CircleTeamModel>>>() {
+            Http.getApiService(ImService.class).getAllTeam(team.getId()).enqueue(new Callback<ResponseData<List<CircleTeamModel>>>() {
                 @Override
                 public void onResponse(Call<ResponseData<List<CircleTeamModel>>> call, Response<ResponseData<List<CircleTeamModel>>> response) {
-                    super.onResponse(call, response);
                     if (response.isSuccessful() && response.body().isSuccessful() && response.body().getData().size() > 0 && !TextUtils.isEmpty(response.body().getData().get(0).getAppId())) {
                         Toast.makeText(AdvancedTeamSearchActivity.this, "没有搜索结果", Toast.LENGTH_LONG).show();
                     } else {
@@ -135,7 +134,6 @@ public class AdvancedTeamSearchActivity extends UI {
 
                 @Override
                 public void onFailure(Call<ResponseData<List<CircleTeamModel>>> call, Throwable t) {
-                    super.onFailure(call, t);
                     AdvancedTeamJoinActivity.start(AdvancedTeamSearchActivity.this, team.getId());
                 }
             });

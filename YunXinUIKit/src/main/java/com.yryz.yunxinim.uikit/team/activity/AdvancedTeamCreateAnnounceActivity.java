@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px10" />
+        <!--android:background="@drawable/v3_shape_bg_gift_top"-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_F4F4F4"
+            android:visibility="visible" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.rz.circled.widget.BounceBackViewPager
+                android:id="@+id/id_red_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_F4F4F4" />
+
+            <ProgressBar
+                android:id="@+id/id_gift_loading_pb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_F4F4F4"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ll_transfer_gift_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px62"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/px32"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44"
+            android:paddingTop="@dimen/px32">
+
+
+            <TextView
+                android:id="@+id/tv_transfer_gift_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_bg_blue_sel"
+                android:paddingBottom="@dimen/px24"
+                android:paddingLeft="@dimen/px110"
+                android:paddingRight="@dimen/px110"
+                android:paddingTop="@dimen/px24"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_44" />
+            <!--android:text="@string/pay"-->
+
+            <TextView
+                android:id="@+id/tv_transfer_gift_recharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tv_transfer_gift_pay"
+                android:paddingBottom="@dimen/px20"
+                android:paddingLeft="@dimen/px44"
+                android:paddingRight="@dimen/px44"
+                android:paddingTop="@dimen/px20"
+            android:textColor="@color/color_main"
+            android:textSize="@dimen/font_44" />
+            <!--android:text="@string/recharge"-->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_44" />
+                <!--android:text="@string/balance"-->
+
+                <TextView
+                    android:id="@+id/tv_transfer_gift_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="10"
+                    android:paddingLeft="@dimen/px10"
+                    android:text="0.00"
+                    android:textSize="@dimen/px56" />
+                <!--android:textColor="@color/color_FFB446"-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_40" />
+                <!--android:text="@string/youranbi"-->
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

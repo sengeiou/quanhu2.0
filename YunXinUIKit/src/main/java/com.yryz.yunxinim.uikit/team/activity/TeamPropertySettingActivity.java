@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.netease.nimlib.sdk.team.constant.TeamTypeEnum;
 import com.netease.nimlib.sdk.team.model.Team;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
@@ -258,7 +258,7 @@ public class TeamPropertySettingActivity extends UI implements View.OnClickListe
     private void saveTeamProperty() {
         switch (filed) {
             case Name:
-                Http.getNewService(ImService.class).updateTeam(NimUIKit.getAccount(), teamId, editText.getText().toString(), null, null, null).enqueue(callback);
+                Http.getApiService(ImService.class).updateTeam(NimUIKit.getAccount(), teamId, editText.getText().toString(), null, null, null).enqueue(callback);
                 break;
 //            case Introduce:
 //                Http.getNewService(ImService.class).updateTeam(NimUIKit.getAccount(), teamId, null, null, null, editText.getText().toString()).enqueue(callback);
