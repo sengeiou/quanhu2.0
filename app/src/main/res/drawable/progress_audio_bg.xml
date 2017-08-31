@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item-->
+        <!--android:id="@android:id/background"-->
+        <!--android:drawable="@drawable/ic_audio_bg">-->
+
+    <!--</item>-->
+
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="15dp"></corners>
+            </shape>
+            <nine-patch android:src="@drawable/ic_audio_bg_uploaded" />
+        </clip>
+    </item>
+    <!--<item android:id="@android:id/secondaryProgress">-->
+    <!--<clip>-->
+    <!--<shape>-->
+    <!--<corners android:radius="15dp"></corners>-->
+    <!--</shape>-->
+    <!--<nine-patch android:src="@drawable/ic_audio_bg_uploaded" />-->
+    <!--</clip>-->
+    <!--</item>-->
+
+    <!-- progress -->
+    <!--<item-->
+    <!--android:id="@android:id/progress">-->
+    <!--<clip>-->
+    <!--<shape>-->
+    <!--<corners android:radius="15dp"></corners>-->
+    <!--</shape>-->
+    <!--<nine-patch android:src="@drawable/ic_audio_bg_uploaded" />-->
+    <!--</clip>-->
+    <!--</item>-->
+    <!-- second progress -->
+
+    <!--<item android:id="@android:id/secondaryProgress">-->
+    <!--<clip>-->
+    <!--<shape>-->
+    <!--<corners android:radius="15dp"></corners>-->
+    <!--</shape>-->
+    <!--<nine-patch android:src="@drawable/ic_audio_bg_uploaded" />-->
+    <!--</clip>-->
+    <!--</item>-->
+
+</layer-list>

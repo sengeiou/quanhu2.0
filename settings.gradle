@@ -1,1 +1,1 @@
-include ':app', ':common', ':httpapi', ':jsbridge'
+include ':app', ':common', ':httpapi', ':jsbridge', ':audio', ':TimePickerDialog'

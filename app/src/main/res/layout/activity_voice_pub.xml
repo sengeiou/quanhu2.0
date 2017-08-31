@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="点击开始录音，最长时间可以录制120”"
+        android:textColor="@color/font_gray_m"
+        android:textSize="@dimen/font_52"/>
+
+    <FrameLayout
+        android:layout_width="@dimen/px418"
+        android:layout_height="@dimen/px418"
+        android:layout_marginTop="@dimen/px114">
+
+        <com.rz.rz_rrz.widget.RoundProgressBar
+            android:id="@+id/progress_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:_max="1000"
+            app:_roundColor="#e1e1e1"
+            app:_roundProgressColor="#ff6060"
+            app:_roundWidth="8dp"
+            app:_textIsDisplayable="false"/>
+
+        <ImageView
+            android:id="@+id/img_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/px90"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_voice_record"/>
+
+        <ImageView
+            android:id="@+id/img_record1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/px120"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_voice_record_ing"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/img_record2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/px120"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bg_progress"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/img_record3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/px120"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_voice_play"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px30"
+        android:textColor="#FF6060"
+        android:textSize="@dimen/font_44"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px116"
+        android:layout_marginTop="@dimen/px110"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px50"
+        android:paddingRight="@dimen/px50">
+
+        <TextView
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_round_gray"
+            android:gravity="center"
+            android:text="重录"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_50"/>
+
+        <TextView
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px70"
+            android:layout_weight="1"
+            android:background="@drawable/shape_round_gray"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_50"/>
+    </LinearLayout>
+</LinearLayout>

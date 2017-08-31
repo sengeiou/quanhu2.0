@@ -14,6 +14,7 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.ClickCounter;
 
 import butterknife.BindView;
 

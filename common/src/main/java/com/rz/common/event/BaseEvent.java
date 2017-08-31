@@ -26,6 +26,11 @@ public class BaseEvent {
         this.data = data;
     }
 
+    public BaseEvent(int type, Object data) {
+        this.type = type;
+        this.data = data;
+    }
+
     @Override
     public String toString() {
         return "BaseEvent{" +

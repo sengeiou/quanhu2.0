@@ -84,18 +84,18 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
 
     private boolean checkVideoFile(String videoPath) {
         if (TextUtils.isEmpty(videoPath)) {
-            Toasty.info(getApplicationContext(), getString(R.string.sd_card_un_exist));
+            Toasty.info(getApplicationContext(), getString(R.string.sd_card_un_exist)).show();
             return false;
         }
 
         File file = new File(videoPath);
         if (file.exists()) {
             if (maxSize < file.length()) {
-                Toasty.info(getApplicationContext(), getString(R.string.file_too_big));
+                Toasty.info(getApplicationContext(), getString(R.string.file_too_big)).show();
                 return false;
             }
         } else {
-            Toasty.info(getApplicationContext(), getString(R.string.not_found_video));
+            Toasty.info(getApplicationContext(), getString(R.string.not_found_video)).show();
             return false;
         }
         return true;
@@ -111,7 +111,7 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
             @Override
             public void onClick(View v) {
                 if (selectPos == -1) {
-                    Toasty.info(getApplicationContext(), getString(R.string.please_choose_video));
+                    Toasty.info(getApplicationContext(), getString(R.string.please_choose_video)).show();
                 } else {
                     if (checkVideoFile(localMediaInfoList.get(selectPos).filePath)) {
                         Intent intent = new Intent();
@@ -265,7 +265,7 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
      */
     private void getFiles() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            Toasty.info(getApplicationContext(), getString(R.string.sd_card_un_exist));
+            Toasty.info(getApplicationContext(), getString(R.string.sd_card_un_exist)).show();
             return;
         }
         // 扫描图片文件夹

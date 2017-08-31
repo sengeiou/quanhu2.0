@@ -80,20 +80,6 @@
         <attr name="border_color" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="RoundProgressBar">
-        <attr name="_roundColor" format="color" />
-        <attr name="_roundProgressColor" format="color" />
-        <attr name="_roundWidth" format="dimension" />
-        <attr name="_textColor" format="color" />
-        <attr name="_textSize" format="dimension" />
-        <attr name="_max" format="integer" />
-        <attr name="_textIsDisplayable" format="boolean" />
-        <attr name="_style">
-            <enum name="_STROKE" value="0" />
-            <enum name="_FILL" value="1" />
-        </attr>
-    </declare-styleable>
-
     <declare-styleable name="SwitchButton">
         <attr name="kswThumbDrawable" format="reference" />
         <attr name="kswThumbColor" format="color|reference" />

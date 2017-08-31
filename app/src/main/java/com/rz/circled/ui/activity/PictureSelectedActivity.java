@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CacheUtils;
 import com.rz.common.utils.DensityUtils;
+import com.rz.common.utils.ImageUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.ImageFloder;
@@ -85,7 +87,7 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
 
     private PicManagerAdapter picManagerAdapter;
 
-
+    private PictureModel mAddCameraPic;
     /**
      * 头像图片路径
      */
@@ -192,7 +194,7 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         }
         Log.e(TAG, "end");
         Collections.sort(mShowPictures, new FileComparator());
-
+        initCameraPic();
         picManagerAdapter.setData(mShowPictures);
 
         ImageFloder floder = new ImageFloder();
@@ -288,6 +290,21 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         mGridView.setOnItemClickListener(this);
 
         doImages();
+    }
+
+    /**
+     * 添加照相机图片
+     */
+    private void initCameraPic() {
+        if (null != mAddCameraPic) {
+            mAddCameraPic = null;
+        }
+        mAddCameraPic = new PictureModel();
+        mAddCameraPic.setmBitmap(ImageUtils.drawableToBitmap(ContextCompat.getDrawable(mContext, R.mipmap.r_pic_carmer)));
+
+        if (!mShowPictures.contains(mAddCameraPic)) {
+            mShowPictures.add(0, mAddCameraPic);
+        }
     }
 
 
@@ -466,7 +483,10 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         PictureModel model = picManagerAdapter.getItem(position);
-        if (!isSingle) {
+        if (model == mAddCameraPic) {
+            // 执行拍照前，应该先判断SD卡是否存在
+            doCamera();
+        } else if (!isSingle) {
             for (PictureModel mp : mSaveScanAllPics) {
                 if (model.getmPicPath().equals(mp.getmPicPath())) {
                     if (model.isSelect()) {
@@ -677,6 +697,7 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
                 }
 
                 Collections.sort(mShowPictures, new FileComparator());
+                initCameraPic();
                 picManagerAdapter.notifyDataSetChanged();
 
                 mTxtPicNum.setText(imageFloder.getmPicCount()

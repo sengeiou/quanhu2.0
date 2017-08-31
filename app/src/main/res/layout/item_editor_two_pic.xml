@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_item_editor_two_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tv_item_editor_two_pic_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#55000000"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px5"
+        android:paddingTop="@dimen/px5"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px38"/>
+
+</RelativeLayout>

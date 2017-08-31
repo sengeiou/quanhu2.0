@@ -6,10 +6,10 @@ import android.util.Log;
 
 import com.rz.circled.BuildConfig;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.js.model.HeaderModel;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.SystemUtils;
-import com.rz.httpapi.bean.HeaderModel;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.ServerHandler;

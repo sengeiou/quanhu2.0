@@ -18,9 +18,9 @@
     <string name="upload_video">上传视频</string>
     <string name="click_to_try_again">点击重试</string>
 
+    <string name="next">下一步</string>
 
     <string name="sd_card_un_exist">SD卡不存在</string>
-    <string name="file_too_big">文件大小不得超过500M</string>
     <string name="video_format">格式: </string>
     <string name="video_time">时长: </string>
     <string name="video_size">大小: </string>
@@ -32,4 +32,55 @@
     <string name="pic">图片</string>
     <string name="finish">完成</string>
     <string name="zhang">张</string>
+
+
+    <string name="retry_upload">重新上传</string>
+    <string name="video_upload_failed">视频上传失败</string>
+    <string name="camera">相机</string>
+
+
+    <!--发布-->
+    <string name="not_found_pic">抱歉，你选择的图片不存在</string>
+    <string name="not_found_video">抱歉,没有找到该视频资源</string>
+    <string name="not_found_audio">抱歉,没有找到该音频资源</string>
+    <string name="file_too_big">文件大小不得超过500M</string>
+    <string name="error_to_found_video">抱歉,获取视频资源失败</string>
+    <string name="error_to_found_audio">抱歉,获取音频资源失败</string>
+    <string name="wait_publish_video">请等待视频上传成功后发布</string>
+    <string name="wait_publish_audio">请等待音频上传成功后发布</string>
+    <string name="editor_two_show_video_text">这里显示插入的视频文件</string>
+    <string name="editor_two_show_audio_text">这里显示插入的音频文件</string>
+    <string name="editor_two_show_video_audio_text">这里显示插入的视频、音频文件</string>
+    <string name="editor_two_cancel">是否要离开当前页面？</string>
+    <string name="editor_two_publish_fail">发布失败,请稍后再试。</string>
+    <string name="editor_two_publish_success">发布成功</string>
+    <string name="editor_two_publish_ing">正在处理中...</string>
+    <string name="editor_two_page_fail">封面上传失败</string>
+    <string name="editor_two_image_fail">图片上传失败</string>
+    <string name="editor_two_audio_fail">音频上传失败</string>
+    <string name="editor_two_video_image_fail">视频图片上传失败</string>
+    <string name="play_audio_fail">播放音频失败</string>
+    <string name="share">分享</string>
+    <string name="add_text">添加正文</string>
+    <string name="add_text_pic_here">在这里添加文字和图文...</string>
+    <string name="delete">删除</string>
+    <string name="text">文字</string>
+    <string name="video">视频</string>
+    <string name="audios">音频</string>
+    <string name="show_video_file">这里显示插入的视频文件</string>
+    <string name="play">点击播放</string>
+    <string name="max_size_text_hint">内容不能超过%1$d个字</string>
+    <string name="cannot_add_content">您还没有添加发布内容</string>
+    <string name="add_content">添加正文</string>
+    <string name="editor_content_null">正文详情不能为空</string>
+
+
+    <string name="xuanbei">选被</string>
+    <string name="quanbi_zhuanfa">圈币转发过的</string>
+    <string name="format_mp4">格式:mp4</string>
+    <string name="time_long">"时长: "</string>
+    <string name="size">大小:</string>
+    <string name="format">格式:</string>
+    <string name="choose_one_audio_publish">请选择一个音频作品发布</string>
+    <string name="anonymous_publish">匿名发布</string>
 </resources>

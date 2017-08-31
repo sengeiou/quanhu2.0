@@ -65,6 +65,7 @@ public class QHApplication extends BaseApplication {
     private void init() {
         configOkHttp();
         configExo();
+//        configRecord();
     }
 
     public void configExo() {

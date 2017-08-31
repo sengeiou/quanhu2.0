@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/id_popup_price_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_width="@dimen/px450"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_pricce_sel"
+        android:padding="@dimen/px35"
+        android:text="@string/all"
+        android:textColor="@color/txt_white_666"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/id_no_all_ll"
+        android:layout_width="@dimen/px450"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_pricce_sel"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/px30"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/id_txt_1"
+            style="@style/DefaultTvStyle"
+            android:text="@string/xuanbei"
+            android:textColor="@color/color_666"/>
+
+        <TextView
+            android:id="@+id/id_price_txt"
+            style="@style/DefaultTvStyle"
+            android:textColor="@color/txt_white_ff6600"
+
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/id_txt_2"
+            style="@style/DefaultTvStyle"
+            android:text="@string/quanbi_zhuanfa"
+            android:textColor="@color/color_666"/>
+    </LinearLayout>
+
+</LinearLayout>

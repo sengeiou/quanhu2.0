@@ -6,10 +6,19 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
+//        classpath 'com.mcxiaoke.packer-ng:plugin:2.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+
+        classpath 'com.novoda:bintray-release:0.5.0'
+        configurations.all {
+            resolutionStrategy {
+                force 'org.jacoco:org.jacoco.report:0.7.4.201502262128'
+                force 'org.jacoco:org.jacoco.core:0.7.4.201502262128'
+            }
+        }
     }
 }
 
@@ -22,4 +31,12 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    compileSdkVersion = 23
+    buildToolsVersion = '23.0.3'
+    minSdkVersion = 15
+    targetSdkVersion = 23
+    supportVersion = '24.1.0'
 }

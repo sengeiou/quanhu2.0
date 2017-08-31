@@ -1,4 +1,4 @@
-package com.rz.circled.ui.activity;
+package com.rz.common.utils;
 
 import android.os.Handler;
 
