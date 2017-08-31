@@ -8,11 +8,13 @@ import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.constant.CodeStatus;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.ACache;
+import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.constans.ReturnCode;
@@ -235,37 +237,37 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             }
         });
     }
-//
-//    /**
-//     * 首页广告位展示
-//     */
-//    public void getBannerList(final int stats) {
-//        if (!NetUtils.isNetworkConnected(mContext)) {
-//            return;
-//        }
-//        Call<ResponseData<List<BannerAddSubjectModel>>> call = mUserService.getBanner(520);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<BannerAddSubjectModel>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<BannerAddSubjectModel>>> call, Response<ResponseData<List<BannerAddSubjectModel>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<BannerAddSubjectModel> model = (List<BannerAddSubjectModel>) res.getData();
-//                        mView.updateViewWithFlag(model, stats);
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<BannerAddSubjectModel>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//            }
-//        });
-//    }
-//
+
+    /**
+     * 首页广告位展示
+     */
+    public void getBannerList(final int stats) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        Call<ResponseData<List<BannerAddSubjectModel>>> call = mUserService.getBanner(520);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<BannerAddSubjectModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<BannerAddSubjectModel>>> call, Response<ResponseData<List<BannerAddSubjectModel>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<BannerAddSubjectModel> model = (List<BannerAddSubjectModel>) res.getData();
+                        mView.updateViewWithFlag(model, stats);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<BannerAddSubjectModel>>> call, Throwable t) {
+                super.onFailure(call, t);
+            }
+        });
+    }
+
 //    /**
 //     * 首页话题展示
 //     */

@@ -3,6 +3,7 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
+import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.RegisterBean;
@@ -231,6 +232,14 @@ public interface ApiService {
     @POST(CircleApi.CIRCLE_ENTRANCE_LIST)
     public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
             @Field("status") int status
+    );
+    /**
+     * 获取首页banner
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_BANNER_LIST)
+    public Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
+            @Field("act") int act
     );
 
 }

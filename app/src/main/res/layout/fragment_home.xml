@@ -12,6 +12,10 @@
         android:padding="@dimen/px50"
         android:text="跳转web页面"
         android:textColor="@color/font_gray_m"/>
+    <com.rz.circled.widget.AutoRollLayout
+        android:id="@+id/auto_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px292"></com.rz.circled.widget.AutoRollLayout>
 
 
 </LinearLayout>

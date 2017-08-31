@@ -1,7 +1,5 @@
 package com.rz.circled.presenter;
 
-import android.util.Log;
-
 import com.rz.common.ui.inter.IViewController;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.Http;
@@ -11,7 +9,7 @@ import com.rz.httpapi.model.BaseRequestModel;
 /**
  * Created by Gsm on 2017/8/24.
  */
-public class UserPresenter extends IPresenter {
+public class UserPresenter implements IPresenter {
 
     private ApiService mApiService;
     private BaseRequestModel mRequestModel;
@@ -20,6 +18,11 @@ public class UserPresenter extends IPresenter {
     public void attachView(IViewController view) {
         mApiService = Http.getApiService(ApiService.class);
         mRequestModel = new BaseRequestModel();
+    }
+
+    @Override
+    public void loadData() {
+
     }
 
     @Override
@@ -33,13 +36,11 @@ public class UserPresenter extends IPresenter {
             @Override
             public void onSuccess(Object o) {
                 if (o != null) {
-                    Log.d(TAG, "onSuccess");
                 }
             }
 
             @Override
             public void onFailure(int code, String errorInfo) {
-                Log.d(TAG, errorInfo);
             }
         });
     }

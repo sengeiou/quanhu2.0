@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -44,7 +45,8 @@ public class FindFragment extends BaseFragment {
         mPresenter.attachView(this);
         mPresenter.getCircleEntranceList(0);
     }
-    BaseAdapter findAdapter=new BaseAdapter() {
+
+    BaseAdapter findAdapter = new BaseAdapter() {
         @Override
         public int getCount() {
             return circleEntrModleList.size() > 12 ? 12 : circleEntrModleList.size();
@@ -59,31 +61,46 @@ public class FindFragment extends BaseFragment {
         public long getItemId(int position) {
             return 0;
         }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
-            ViewHolder viewHolder=null;
-            if (convertView==null){
-                viewHolder=new ViewHolder();
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                viewHolder = new ViewHolder();
                 convertView = View.inflate(mActivity, R.layout.item_recyclev_homev3, null);
                 viewHolder.icv_circle_img = (ImageView) convertView.findViewById(R.id.id_circle_civ);
                 viewHolder.tv_circle_name = (TextView) convertView.findViewById(R.id.id_circle_name);
                 viewHolder.tv_circle_peoplenums = (TextView) convertView.findViewById(R.id.id_circle_peoplenums);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
             }
             viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
-            Glide.with(FindFragment.this).load(circleEntrModle.circleUrl).into(viewHolder.icv_circle_img);
+            Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
             return convertView;
         }
-         class ViewHolder {
+
+        class ViewHolder {
             ImageView icv_circle_img;
             TextView tv_circle_name;
             TextView tv_circle_peoplenums;
         }
     };
+
     public void initView() {
-
         mFindGv.setAdapter(findAdapter);
+        mFindGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (circleEntrModleList.get(position).circleName.equals("百圈纷呈")){
 
+                }else {
+
+
+                }
+            }
+        });
     }
 
     @Override
@@ -94,7 +111,7 @@ public class FindFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (flag==0) {
+        if (flag == 0) {
             circleEntrModleList.addAll((List<CircleEntrModle>) t);
             CircleEntrModle c = new CircleEntrModle();
             c.circleName = getString(R.string.baiquanfencheng);
