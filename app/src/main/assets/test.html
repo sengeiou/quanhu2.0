@@ -61,6 +61,7 @@
 <p><input type="button" id="enter30" value="关闭当前页" onclick="testClick1(29);"/></p>
 <p><input type="button" id="enter31" value="导航" onclick="testClick1(30);"/></p>
 <p><input type="button" id="enter32" value="举报" onclick="testClick1(31);"/></p>
+<p><input type="button" id="enter33" value="保存图片" onclick="testClick1(32);"/></p>
 
 <textarea id="code" cols="10"></textarea>
 <input type="button" value="runCode" onclick="runcode();"/>
@@ -75,6 +76,10 @@
     function javacalljswith(arg){
      alert("javacalljswith("+arg+")")
 }
+
+
+
+
 
 
 
@@ -262,6 +267,9 @@ function testClick1(index) {
                                          'name':"光谷未来城"},callback))
     }else if(index==31){
         yryz.report(Object.assign(callback))
+    }else if(index==32){
+        yryz.saveImage(Object.assign({'name':"zhshimingc",
+                                      'data':"zhshimingcdata"},callback))
     }  else if (index == 24) {
          yryz.publishImageText(Object.assign({
     "config": {
@@ -453,6 +461,10 @@ function testClick1(index) {
 },callback))
     }
 }
+
+
+
+
 
 
 
