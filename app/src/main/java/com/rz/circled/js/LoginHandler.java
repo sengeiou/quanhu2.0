@@ -1,24 +1,21 @@
 package com.rz.circled.js;
 
-import android.content.Intent;
+import android.app.Activity;
 
-import com.rz.jsbridge.BaseParamsObject;
-import com.rz.jsbridge.ServerHandler;
-import com.rz.jsbridge.core.Callback;
-import com.rz.jsbridge.core.ParamsObject;
-import com.rz.jsbridge.core.WebContainerAty;
-import com.rz.jsbridge.core.WebViewProxy;
-import com.rz.rz_rrz.constant.IntentKey;
-import com.rz.rz_rrz.constant.Type;
-import com.rz.rz_rrz.view.activity.LoginAty;
+import com.rz.sgt.jsbridge.BaseParamsObject;
+import com.rz.sgt.jsbridge.ServerHandler;
+import com.rz.sgt.jsbridge.core.Callback;
+import com.rz.sgt.jsbridge.core.ParamsObject;
+import com.rz.sgt.jsbridge.core.WebViewProxy;
 
 /**
  * Created by KF on 2017/6/15.
  */
 public class LoginHandler extends ServerHandler {
-    public LoginHandler(WebContainerAty webContainerAty) {
-        super(webContainerAty);
+    public LoginHandler(Activity mActivity) {
+        super(mActivity);
     }
+
 
     @Override
     public String getInvokeName() {
@@ -27,9 +24,9 @@ public class LoginHandler extends ServerHandler {
 
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
-        Intent mIntent = new Intent(webContainerAty, LoginAty.class);
-        mIntent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_LOGIN_WEB);
-        webContainerAty.startActivity(mIntent);
+//        Intent mIntent = new Intent(mActivity, LoginAty.class);
+//        mIntent.putExtra(IntentKey.EXTRA_TYPE, Type.TYPE_LOGIN_WEB);
+//        mActivity.startActivity(mIntent);
     }
 
     @Override

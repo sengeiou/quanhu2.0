@@ -44,6 +44,7 @@ public class BaseLoadView implements View.OnClickListener {
         tvFunction = (TextView) statusView.findViewById(R.id.tv_base_load_function);
         tvFunction.setOnClickListener(this);
         statusView.setOnClickListener(this);
+        statusView.setVisibility(View.GONE);
     }
 
     public void setRefreshListener(RefreshListener refreshListener) {

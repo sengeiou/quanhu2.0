@@ -21,7 +21,7 @@
         android:layout_height="@dimen/px418"
         android:layout_marginTop="@dimen/px114">
 
-        <com.rz.rz_rrz.widget.RoundProgressBar
+        <com.rz.common.widget.RoundProgressBar
             android:id="@+id/progress_record"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

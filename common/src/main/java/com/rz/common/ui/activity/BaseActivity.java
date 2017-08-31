@@ -148,7 +148,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      * @param refreshListener
      */
     public void setRefreshListener(BaseLoadView.RefreshListener refreshListener) {
-        if (mLoadView != null || isFinishing() || mLoadView == null)
+        if (mLoadView != null || isFinishing() || mLoadView != null)
             mLoadView.setRefreshListener(refreshListener);
     }
 

@@ -1,5 +1,6 @@
 package com.rz.circled.js;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,22 +17,21 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.model.Team;
-import com.rz.jsbridge.BaseParamsObject;
-import com.rz.jsbridge.JsEvent;
-import com.rz.jsbridge.ServerHandler;
-import com.rz.jsbridge.core.Callback;
-import com.rz.jsbridge.core.ParamsObject;
-import com.rz.jsbridge.core.WebContainerAty;
-import com.rz.jsbridge.core.WebViewProxy;
-import com.rz.rz_rrz.R;
-import com.rz.rz_rrz.utils.SoftKeyboardUtil;
-import com.rz.yryz.api.BaseCallback;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.circled.R;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.sgt.jsbridge.BaseParamsObject;
+import com.rz.sgt.jsbridge.JsEvent;
+import com.rz.sgt.jsbridge.ServerHandler;
+import com.rz.sgt.jsbridge.core.Callback;
+import com.rz.sgt.jsbridge.core.ParamsObject;
+import com.rz.sgt.jsbridge.core.WebViewProxy;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView;
 import com.yryz.yunxinim.uikit.common.util.sys.ScreenUtil;
+import com.yryz.yunxinim.uikit.common.util.sys.SoftKeyboardUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +47,8 @@ public class JoinTeamHandler extends ServerHandler {
 
     private Long invokeId;
 
-    public JoinTeamHandler(WebContainerAty webContainerAty) {
-        super(webContainerAty);
+    public JoinTeamHandler(Activity mActivity) {
+        super(mActivity);
     }
 
     @Override
@@ -68,18 +68,18 @@ public class JoinTeamHandler extends ServerHandler {
             int verifyType = object.getJSONObject("data").getInteger("verifyType");
             switch (verifyType) {
                 case 0:
-                    applyJoinTeam(teamId, webContainerAty.getString(R.string.i_am) + NimUIKit.getUserInfoProvider().getUserInfo(NimUIKit.getAccount()).getName());
+                    applyJoinTeam(teamId, mActivity.getString(R.string.i_am) + NimUIKit.getUserInfoProvider().getUserInfo(NimUIKit.getAccount()).getName());
                     break;
                 case 1:
                     if (NIMClient.getStatus() == StatusCode.LOGINED) {
                         final Dialog dialog;
-                        View view = webContainerAty.getLayoutInflater().inflate(com.yryz.yunxinim.R.layout.dialog_team_verification, null, false);
+                        View view = mActivity.getLayoutInflater().inflate(com.yryz.yunxinim.R.layout.dialog_team_verification, null, false);
                         TextView id_tv_confirm = (TextView) view.findViewById(com.yryz.yunxinim.R.id.id_tv_confirm);
                         final EditText editText = (EditText) view.findViewById(com.yryz.yunxinim.R.id.id_edit);
                         HeadImageView imageView = (HeadImageView) view.findViewById(com.yryz.yunxinim.R.id.contacts_item_head);
-                        editText.setHint(webContainerAty.getString(R.string.i_am) + NimUIKit.getUserInfoProvider().getUserInfo(NimUIKit.getAccount()).getName());
+                        editText.setHint(mActivity.getString(R.string.i_am) + NimUIKit.getUserInfoProvider().getUserInfo(NimUIKit.getAccount()).getName());
                         imageView.loadBuddyAvatar(NimUIKit.getAccount());
-                        dialog = new Dialog(webContainerAty, com.yryz.yunxinim.R.style.dialog_default_style);
+                        dialog = new Dialog(mActivity, com.yryz.yunxinim.R.style.dialog_default_style);
                         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
                                 ScreenUtil.getDisplayWidth() - 80,
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -145,12 +145,12 @@ public class JoinTeamHandler extends ServerHandler {
             @Override
             public void onSuccess(Team team) {
                 JsEvent.callJsEvent(invokeId, 1, BaseParamsObject.RESULT_CODE_SUCRESS);
-                String toast = webContainerAty.getString(com.yryz.yunxinim.R.string.team_join_success, team.getName());
-                Toast.makeText(webContainerAty, toast, Toast.LENGTH_SHORT).show();
+                String toast = mActivity.getString(com.yryz.yunxinim.R.string.team_join_success, team.getName());
+                Toast.makeText(mActivity, toast, Toast.LENGTH_SHORT).show();
 
-                SoftKeyboardUtil.showKeyboard(webContainerAty, false);
+                SoftKeyboardUtil.showKeyboard(mActivity, false);
 
-                Http.getNewService(ImService.class).joinTeam(NimUIKit.getAccount(), NimUIKit.getAccount(), team.getId()).enqueue(new BaseCallback<ResponseData>() {
+                Http.getApiService(ImService.class).joinTeam(NimUIKit.getAccount(), NimUIKit.getAccount(), team.getId()).enqueue(new BaseCallback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                         super.onResponse(call, response);
@@ -169,18 +169,18 @@ public class JoinTeamHandler extends ServerHandler {
 //                    Toast.makeText(webContainerAty, com.yryz.yunxinim.R.string.team_apply_to_join_send_success,
 //                            Toast.LENGTH_SHORT).show();
 
-                    SoftKeyboardUtil.showKeyboard(webContainerAty, false);
+                    SoftKeyboardUtil.showKeyboard(mActivity, false);
 
                     JsEvent.callJsEvent(invokeId, 2, BaseParamsObject.RESULT_CODE_SUCRESS);
                     return;
                 } else if (code == 809) {
-                    Toast.makeText(webContainerAty, com.yryz.yunxinim.R.string.has_exist_in_team,
+                    Toast.makeText(mActivity, com.yryz.yunxinim.R.string.has_exist_in_team,
                             Toast.LENGTH_SHORT).show();
                 } else if (code == 802) {
-                    Toast.makeText(webContainerAty, R.string.unallowed_join_hint,
+                    Toast.makeText(mActivity, R.string.unallowed_join_hint,
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(webContainerAty, "failed, error code =" + code,
+                    Toast.makeText(mActivity, "failed, error code =" + code,
                             Toast.LENGTH_SHORT).show();
                 }
                 JsEvent.callJsEvent(invokeId, 0, BaseParamsObject.RESULT_CODE_FAILED);

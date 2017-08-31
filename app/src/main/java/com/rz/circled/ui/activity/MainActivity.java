@@ -34,6 +34,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     @Override
+    protected boolean needShowTitle() {
+        return false;
+    }
+
+    @Override
     public void initView() {
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);

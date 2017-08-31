@@ -83,4 +83,8 @@
     <string name="format">格式:</string>
     <string name="choose_one_audio_publish">请选择一个音频作品发布</string>
     <string name="anonymous_publish">匿名发布</string>
+
+
+    <string name="i_am">我是</string>
+    <string name="unallowed_join_hint">该群已设置不允许任何人加入</string>
 </resources>

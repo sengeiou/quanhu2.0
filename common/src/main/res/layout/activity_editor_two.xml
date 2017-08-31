@@ -518,7 +518,7 @@
                     android:textSize="@dimen/px44"
                     android:visibility="gone"/>
 
-                <com.rz.rz_rrz.widget.ExpandGridView
+                <com.rz.circled.widget.ExpandGridView
                     android:id="@+id/gv_editor_two_pic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

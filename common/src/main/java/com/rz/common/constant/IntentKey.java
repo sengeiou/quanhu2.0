@@ -37,4 +37,6 @@ public interface IntentKey {
     String EXTRA_ENABLE_IMAGE = "extra_enable_image";
     String EXTRA_TEXT_MAX = "extra_text_max";
     String EXTRA_IMAGE_MAX = "extra_max_image";
+
+    String EXTRA_INVOKE_ID = "extraInvokeId";
 }

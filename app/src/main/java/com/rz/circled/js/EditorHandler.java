@@ -1,9 +1,13 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.rz.circled.ui.activity.EditorActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.common.constant.IntentKey;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -169,32 +173,32 @@ public class EditorHandler extends ServerHandler {
                 } else if (jsonObject.has("video")) {
                     temp = new HashMap<>();
                     jsonObject1 = jsonObject.getJSONObject("video");
-//                    if (jsonObject1 != null) {
-//                        EditorActivity.VideoEntity videoEntity1 = new EditorActivity.VideoEntity();
-//                        if (jsonObject1.has("thumbnailImage")) {
-//                            videoEntity1.thumbnailImage = jsonObject1.getString("thumbnailImage");
-//                        }
-//                        if (jsonObject1.has("url")) {
-//                            videoEntity1.url = jsonObject1.getString("url");
-//                        }
-//                        temp.put("video", videoEntity1);
-//                        list.add(temp);
-//                    }
+                    if (jsonObject1 != null) {
+                        EditorActivity.VideoEntity videoEntity1 = new EditorActivity.VideoEntity();
+                        if (jsonObject1.has("thumbnailImage")) {
+                            videoEntity1.thumbnailImage = jsonObject1.getString("thumbnailImage");
+                        }
+                        if (jsonObject1.has("url")) {
+                            videoEntity1.url = jsonObject1.getString("url");
+                        }
+                        temp.put("video", videoEntity1);
+                        list.add(temp);
+                    }
                     continue;
                 } else if (jsonObject.has("audio")) {
                     temp = new HashMap<>();
                     jsonObject1 = jsonObject.getJSONObject("audio");
-//                    if (jsonObject1 != null) {
-//                        EditorActivity.AudioEntity audioEntity1 = new EditorActivity.AudioEntity();
-//                        if (jsonObject1.has("time")) {
-//                            audioEntity1.time = jsonObject1.getLong("time");
-//                        }
-//                        if (jsonObject1.has("url")) {
-//                            audioEntity1.url = jsonObject1.getString("url");
-//                        }
-//                        temp.put("audio", audioEntity1);
-//                        list.add(temp);
-//                    }
+                    if (jsonObject1 != null) {
+                        EditorActivity.AudioEntity audioEntity1 = new EditorActivity.AudioEntity();
+                        if (jsonObject1.has("time")) {
+                            audioEntity1.time = jsonObject1.getLong("time");
+                        }
+                        if (jsonObject1.has("url")) {
+                            audioEntity1.url = jsonObject1.getString("url");
+                        }
+                        temp.put("audio", audioEntity1);
+                        list.add(temp);
+                    }
                     continue;
                 }
 
@@ -206,34 +210,35 @@ public class EditorHandler extends ServerHandler {
 
 
         Log.d("yeying", "list " + list.toString());
-//        final Intent i = new Intent(mActivity, EditorActivity.class);
-//        if (list != null) {
-//            i.putExtra("map", list);
-//        }
+        final Intent i = new Intent(mActivity, EditorActivity.class);
+        if (list != null) {
+            i.putExtra("map", list);
+        }
         //------------------------
-//        if (editorEntity != null) {
-//            if (editorEntity.txtMaxNum < 0 || editorEntity.txtMaxNum > 10000) {
-//                editorEntity.txtMaxNum = 10000;
-//            }
-//            i.putExtra(IntentKey.KEY_TEXT_MAX, editorEntity.txtMaxNum);
-//            if (editorEntity.imageEnable) {
-//                if (editorEntity.imgMaxNum <= 0 || editorEntity.imgMaxNum > 20) {
-//                    editorEntity.imgMaxNum = 20;
-//                }
-//                i.putExtra(IntentKey.KEY_IMAGE_MAX, editorEntity.imgMaxNum);
-//            }
-//            i.putExtra(IntentKey.KEY_ENABLE_IMAGE, editorEntity.imageEnable);
-//            i.putExtra(IntentKey.KEY_ENABLE_AUDIO, editorEntity.audioEnable);
-//            i.putExtra(IntentKey.KEY_ENABLE_VIDEO, editorEntity.videoEnable);
-//        }
-//        Log.d("yeying","editorEntity  "+editorEntity.toString());
-//        mActivity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                i.putExtra(IntentKey.KEY_URL, webContainerAty.getOssDir());
-//                mActivity.startActivity(i);
-//            }
-//        });
+        if (editorEntity != null) {
+            if (editorEntity.txtMaxNum < 0 || editorEntity.txtMaxNum > 10000) {
+                editorEntity.txtMaxNum = 10000;
+            }
+            i.putExtra(IntentKey.EXTRA_TEXT_MAX, editorEntity.txtMaxNum);
+            if (editorEntity.imageEnable) {
+                if (editorEntity.imgMaxNum <= 0 || editorEntity.imgMaxNum > 20) {
+                    editorEntity.imgMaxNum = 20;
+                }
+                i.putExtra(IntentKey.EXTRA_IMAGE_MAX, editorEntity.imgMaxNum);
+            }
+            i.putExtra(IntentKey.EXTRA_ENABLE_IMAGE, editorEntity.imageEnable);
+            i.putExtra(IntentKey.EXTRA_ENABLE_AUDIO, editorEntity.audioEnable);
+            i.putExtra(IntentKey.EXTRA_ENABLE_VIDEO, editorEntity.videoEnable);
+        }
+        Log.d("yeying", "editorEntity  " + editorEntity.toString());
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mActivity instanceof WebContainerActivity)
+                    i.putExtra(IntentKey.EXTRA_URL, ((WebContainerActivity) mActivity).getOssDir());
+                mActivity.startActivity(i);
+            }
+        });
     }
 
     @Override
