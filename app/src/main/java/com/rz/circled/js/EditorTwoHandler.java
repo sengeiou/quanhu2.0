@@ -1,8 +1,12 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.google.gson.Gson;
+import com.rz.circled.js.model.EditorRootTwoBean;
+import com.rz.circled.ui.activity.EditorTwoActivity;
+import com.rz.common.constant.IntentKey;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -28,15 +32,15 @@ public class EditorTwoHandler extends ServerHandler {
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         Gson gson = new Gson();
         String dataStr = gson.toJson(paramObj.data);
-//        EditorRootTwoBean rootBean = gson.fromJson(dataStr, EditorRootTwoBean.class);
-//        final Intent intent = new Intent(webContainerAty, EditorTwoActivity.class);
-//        intent.putExtra(IntentKey.KEY_SERIALIZABLE, rootBean);
-//        webContainerAty.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                webContainerAty.startActivity(intent);
-//            }
-//        });
+        EditorRootTwoBean rootBean = gson.fromJson(dataStr, EditorRootTwoBean.class);
+        final Intent intent = new Intent(mActivity, EditorTwoActivity.class);
+        intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, rootBean);
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mActivity.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -11,4 +11,8 @@
     <dimen name="tab_bottom_img_size">@dimen/px65</dimen>
     <dimen name="tab_bottom_img_margin">@dimen/px15</dimen>
     <dimen name="tab_bottom_img_margin_tv">@dimen/px10</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="gudieview_width">6dp</dimen>
+    <dimen name="gudieview_heigh">6dp</dimen>
 </resources>

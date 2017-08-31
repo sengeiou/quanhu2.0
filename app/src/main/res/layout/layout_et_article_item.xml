@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@null"
+          android:gravity="top"
+          android:inputType="textMultiLine"
+          android:paddingBottom="@dimen/px44"
+          android:paddingLeft="@dimen/px44"
+          android:paddingRight="@dimen/px44"
+          android:paddingTop="@dimen/px44"
+          android:textColor="@color/black"
+          android:textColorHint="@color/font_gray_m"
+          android:textSize="@dimen/px48">
+
+</EditText>

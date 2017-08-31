@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.rz.circled.R;
 import com.rz.circled.js.RequestBackHandler;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.BaseLoadView;
@@ -45,6 +44,17 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         return inflater.inflate(R.layout.activity_web_container, null);
     }
 
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean needShowTitle() {
+        return false;
+    }
+
     @Override
     public void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -63,9 +73,10 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
         setRefreshListener(this);
 
-        String loadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
-        mWebViewProxy.removeRepetLoadUrl(loadUrl);
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
+//        String loadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
+//        mWebViewProxy.removeRepetLoadUrl(loadUrl);
+
+        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
 
     @Override
@@ -93,16 +104,6 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     protected void onPause() {
         super.onPause();
 //        mWebView.pauseTimers();
-    }
-
-    @Override
-    protected boolean needLoadingView() {
-        return true;
-    }
-
-    @Override
-    protected boolean needShowTitle() {
-        return false;
     }
 
     public String getOssDir() {

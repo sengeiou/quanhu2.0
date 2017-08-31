@@ -13,11 +13,14 @@
     <string name="status_data_luck">数据不足</string>
     <string name="status_web_error">哎呀,页面不存在了~</string>
     <string name="status_news_empty">哦哦,您还没有收到任何消息~</string>
+    <string name="personal_no_sd_card">SD卡不存在</string>
 
     <string name="confirm">确认</string>
     <string name="define">确定</string>
     <string name="setting">设置</string>
     <string name="cancel">取消</string>
+
+    <string name="save_to_phone">保存到手机</string>
 
 
     <string name="file_format_un_sure">文件格式不正确</string>
@@ -38,4 +41,11 @@
     <string name="play_video_error">视频播放错误</string>
     <string name="upload_video_fail">上传视频失败</string>
     <string name="upload_pic_fail">上传图片失败</string>
+
+
+    <string name="rmb_yuan">圈币</string>
+    <string name="yuan">元</string>
+    <string name="all">全部</string>
+
+    <string name="comple">完成</string>
 </resources>

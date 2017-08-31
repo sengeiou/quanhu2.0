@@ -25,6 +25,26 @@
     <color name="color_183">#18357e</color>
     <color name="color_315ac1">#315ac1</color>
     <color name="color_f5f5f5">#f5f5f5</color>
+    <color name="color_232323">#232323</color>
+    <color name="color_1bc2b8">#1bc2b8</color>
+    <color name="color_FF6600">#FF6600</color>
+
+
+    <color name="white_75_transparent">#c0ffffff</color>
+    <color name="white_50_transparent">#80ffffff</color>
+    <color name="white_40_transparent">#60ffffff</color>
+    <color name="white_30_transparent">#40ffffff</color>
+    <color name="white_80_transparent">#ccffffff</color>
+    <color name="white_60_transparent">#a0ffffff</color>
+    <color name="white_20_transparent">#30ffffff</color>
+    <color name="white_10_transparent">#20ffffff</color>
+    <color name="black_75_transparent">#c0000000</color>
+    <color name="black_50_transparent">#80000000</color>
+    <color name="black_60_transparent">#a0000000</color>
+    <color name="black_30_transparent">#60000000</color>
+    <color name="black_20_transparent">#30000000</color>
+    <color name="black_40_transparent">#90000000</color>
+    <color name="black_10_transparent">#10000000</color>
     <color name="color_E7E7E7">#E7E7E7</color>
     <color name="color_F5F5F5">#F5F5F5</color>
     <color name="v3_text_color_main_blue">#1bc2b8</color>

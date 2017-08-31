@@ -53,6 +53,8 @@ public interface CommonCode {
 
     interface EventType {
         int FINISH_LOADING = 10001;
+
+        int EDITOR_PIC_DELETE = 10002;
     }
 
     /**
@@ -86,6 +88,21 @@ public interface CommonCode {
          * 删除相片
          */
         int PUBLISH_RESULT_DEL_PIC = 313;
+    }
+
+    interface Constant {
+        /**
+         * 倒计时常量 单位秒
+         */
+        public static final int COUNTDOWN = 90;
+        /**
+         * 录音限制时长
+         */
+        public static final int MAX_INTERVAL_TIME = 120;
+
+        public static int RECORDE_SHOW = 10001;
+
+        public static int RECORDE_OPUS_VIDEO = 10002;
     }
 
 

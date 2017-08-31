@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/copyTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_adapter_item_bg"
+        android:gravity="center_vertical"
+        android:paddingBottom="15dip"
+        android:paddingLeft="10dip"
+        android:paddingTop="15dip"
+        android:text="@string/save_to_phone"
+        android:textSize="16sp"
+        android:textColor="@color/color_232323" />
+
+
+</LinearLayout>

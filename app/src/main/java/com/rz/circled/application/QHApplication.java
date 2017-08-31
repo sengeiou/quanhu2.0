@@ -1,10 +1,16 @@
 package com.rz.circled.application;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.facebook.cache.disk.DiskCacheConfig;
+import com.facebook.common.internal.Supplier;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -16,12 +22,44 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
 import com.rz.circled.BuildConfig;
+import com.rz.circled.js.BackHandler;
+import com.rz.circled.js.BackHomeHandler;
+import com.rz.circled.js.CreateTeamHandler;
+import com.rz.circled.js.EditorHandler;
+import com.rz.circled.js.EditorTwoHandler;
+import com.rz.circled.js.FinishLoadingHandler;
+import com.rz.circled.js.FriendInfoHandler;
+import com.rz.circled.js.HttpHeaderHandler;
+import com.rz.circled.js.HttpRequestHandler;
+import com.rz.circled.js.JoinTeamHandler;
+import com.rz.circled.js.LocationHandler;
+import com.rz.circled.js.LoginHandler;
+import com.rz.circled.js.NavigateHandler;
+import com.rz.circled.js.NetStatusHandler;
+import com.rz.circled.js.OpenAppHandler;
+import com.rz.circled.js.OpenCircleListHandler;
+import com.rz.circled.js.OpenUrlHandler;
+import com.rz.circled.js.PasteBoardHandler;
+import com.rz.circled.js.PlayVideoHandler;
+import com.rz.circled.js.RechargeHandler;
+import com.rz.circled.js.ReportHandler;
+import com.rz.circled.js.SendVerifyCodeHandler;
+import com.rz.circled.js.ShortCutHandler;
+import com.rz.circled.js.SocializationShareHandler;
+import com.rz.circled.js.StartP2pMessageHandler;
+import com.rz.circled.js.StartTeamMessageHandler;
+import com.rz.circled.js.StatusBarHandler;
+import com.rz.circled.js.TransferHandler;
+import com.rz.circled.js.UploadAudioHandler;
+import com.rz.circled.js.UploadPicHandler;
+import com.rz.circled.js.UploadVideoHandler;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.api.Http;
+import com.rz.sgt.jsbridge.RegisterList;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,6 +103,96 @@ public class QHApplication extends BaseApplication {
     private void init() {
         configOkHttp();
         configExo();
+//        configRecord();
+        registerJsServerInterface();
+        configFresco();
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    private void configFresco() {
+        DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(instance)
+                .setMaxCacheSize(2 * 1024 * 1024)//最大缓存
+                .setBaseDirectoryName("imageCache")//子目录
+                .setBaseDirectoryPathSupplier(new Supplier<File>() {
+                    @Override
+                    public File get() {
+                        return instance.getCacheDir();//还是推荐缓存到应用本身的缓存文件夹,这样卸载时能自动清除,其他清理软件也能扫描出来
+                    }
+                })
+                .build();
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(instance)
+                .setMainDiskCacheConfig(diskCacheConfig)
+                .setDownsampleEnabled(true)
+                //Downsampling，要不要向下采样,它处理图片的速度比常规的裁剪scaling更快，
+                // 并且同时支持PNG，JPG以及WEP格式的图片，非常强大,与ResizeOptions配合使用
+                .setBitmapsConfig(Bitmap.Config.RGB_565)
+                //如果不是重量级图片应用,就用这个省点内存吧.默认是RGB_888
+                .build();
+        Fresco.initialize(instance, config);
+    }
+
+    private void registerJsServerInterface() {
+        //RegisterList.registerServerHandlerClass(TestHandler.class);
+        RegisterList.registerServerHandlerClass(UploadPicHandler.class);
+        RegisterList.registerServerHandlerClass(UploadVideoHandler.class);
+        RegisterList.registerServerHandlerClass(UploadAudioHandler.class);
+        //充值
+        RegisterList.registerServerHandlerClass(RechargeHandler.class);
+        //网络状态
+        RegisterList.registerServerHandlerClass(NetStatusHandler.class);
+        RegisterList.registerServerHandlerClass(SocializationShareHandler.class);
+        RegisterList.registerServerHandlerClass(BackHomeHandler.class);
+        RegisterList.registerServerHandlerClass(BackHandler.class);
+        RegisterList.registerServerHandlerClass(FriendInfoHandler.class);
+        RegisterList.registerServerHandlerClass(LocationHandler.class);
+        //生成快捷方式
+        RegisterList.registerServerHandlerClass(ShortCutHandler.class);
+        RegisterList.registerServerHandlerClass(EditorHandler.class);
+        //网络访问
+        RegisterList.registerServerHandlerClass(HttpRequestHandler.class);
+        //获取公共头信息
+        RegisterList.registerServerHandlerClass(HttpHeaderHandler.class);
+        //发送短信验证码
+        RegisterList.registerServerHandlerClass(SendVerifyCodeHandler.class);
+        //修改状态栏颜色
+        RegisterList.registerServerHandlerClass(StatusBarHandler.class);
+        //创建圈子
+        RegisterList.registerServerHandlerClass(CreateTeamHandler.class);
+        //加入圈子
+        RegisterList.registerServerHandlerClass(JoinTeamHandler.class);
+        //单聊会话
+        RegisterList.registerServerHandlerClass(StartP2pMessageHandler.class);
+        //群聊会话
+        RegisterList.registerServerHandlerClass(StartTeamMessageHandler.class);
+        //剪切板
+        RegisterList.registerServerHandlerClass(PasteBoardHandler.class);
+        //举报
+        RegisterList.registerServerHandlerClass(ReportHandler.class);
+        //转发
+        RegisterList.registerServerHandlerClass(TransferHandler.class);
+        //打开url
+        RegisterList.registerServerHandlerClass(OpenUrlHandler.class);
+        //本地播放视频
+        RegisterList.registerServerHandlerClass(PlayVideoHandler.class);
+        //发布
+        RegisterList.registerServerHandlerClass(EditorTwoHandler.class);
+        //悠然广场
+        RegisterList.registerServerHandlerClass(OpenCircleListHandler.class);
+        //登录
+        RegisterList.registerServerHandlerClass(LoginHandler.class);
+        //跳转融众财富
+        RegisterList.registerServerHandlerClass(OpenAppHandler.class);
+        //导航
+        RegisterList.registerServerHandlerClass(NavigateHandler.class);
+        //关闭loading页面
+        RegisterList.registerServerHandlerClass(FinishLoadingHandler.class);
+
     }
 
     public void configExo() {
