@@ -133,7 +133,7 @@ public abstract class UI extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(toolBarId);
 
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
-        params.setMargins(0, (int) getResources().getDimension(R.dimen.titlebar_padding_top), 0, 0);
+        params.setMargins(0, (int) getResources().getDimension(R.dimen.title_bar_padding_top), 0, 0);
         toolbar.setLayoutParams(params);
 
         setSupportActionBar(toolbar);

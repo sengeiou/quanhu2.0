@@ -1,7 +1,7 @@
 package com.yryz.yunxinim.uikit;
 
-import com.rz.yryz.api.APIIm;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.ApiIM;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.yryz.yunxinim.uikit.model.CheckCircleModel;
 import com.yryz.yunxinim.uikit.model.CheckTeamModel;
 import com.yryz.yunxinim.uikit.model.CircleTeamModel;
@@ -37,7 +37,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.CREATE_TEAM)
+    @POST(ApiIM.CREATE_TEAM)
     public Call<ResponseData<TeamCreateModel>> createTeam(
             @Field("tname") String tname,
             @Field("custId") String custId,
@@ -57,7 +57,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.DETELE_TEAM)
+    @POST(ApiIM.DETELE_TEAM)
     Call<ResponseData> deteleTeam(
             @Field("custId") String custId,
             @Field("tid") String tid
@@ -75,7 +75,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.UPDATE_TEAM)
+    @POST(ApiIM.UPDATE_TEAM)
     Call<ResponseData> updateTeam(
             @Field("custId") String custId,
             @Field("tid") String tid,
@@ -94,7 +94,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.TRANSFER_TEAM)
+    @POST(ApiIM.TRANSFER_TEAM)
     Call<ResponseData> transferTeam(
             @Field("custId") String custId,
             @Field("tid") String tid,
@@ -110,7 +110,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.CHECK_IN_TEAM)
+    @POST(ApiIM.CHECK_IN_TEAM)
     Call<ResponseData<CheckTeamModel>> checkInTeam(
             @Field("custId") String custId,
             @Field("tid") String tid
@@ -124,7 +124,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.CHECK_IN_CIRCLE)
+    @POST(ApiIM.CHECK_IN_CIRCLE)
     Call<ResponseData<CheckCircleModel>> checkInCircle(
             @Field("circleKey") String circleKey,
             @Field("tid") String tid
@@ -140,7 +140,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.GET_TEAM_BY_CIRCLE)
+    @POST(ApiIM.GET_TEAM_BY_CIRCLE)
     Call<ResponseData<List<CircleTeamModel>>> getTeamInCircle(
             @Field("appId") String appId,
             @Field("custId") String custId,
@@ -155,7 +155,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.GET_ALL_TEAM)
+    @POST(ApiIM.GET_ALL_TEAM)
     Call<ResponseData<List<CircleTeamModel>>> getAllTeam(
             @Field("tids") String tids
     );
@@ -168,7 +168,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.JOIN_TEAM)
+    @POST(ApiIM.JOIN_TEAM)
     Call<ResponseData> joinTeam(
             @Field("custId") String custId,
             @Field("fid") String fid,
@@ -183,7 +183,7 @@ public interface ImService {
      * @return
      */
     @FormUrlEncoded
-    @POST(APIIm.QUIT_TEAM)
+    @POST(ApiIM.QUIT_TEAM)
     Call<ResponseData> quitTeam(
             @Field("custId") String custId,
             @Field("fid") String fid,

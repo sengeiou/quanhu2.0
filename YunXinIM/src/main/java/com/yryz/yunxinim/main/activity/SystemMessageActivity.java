@@ -11,9 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.rz.yryz.api.BaseCallback;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.main.adapter.SystemMessageAdapter;
 import com.yryz.yunxinim.main.viewholder.SystemMessageViewHolder;
@@ -51,6 +50,7 @@ import java.util.Map;
 import java.util.Set;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -459,15 +459,13 @@ public class SystemMessageActivity extends UI implements TAdapterDelegate,
     private void onProcessSuccess(final boolean pass, SystemMessage message) {
         if (message.getType() == SystemMessageType.ApplyJoinTeam) {
             if (pass) {
-                Http.getNewService(ImService.class).joinTeam(NimUIKit.getAccount(), message.getFromAccount(), message.getTargetId()).enqueue(new BaseCallback<ResponseData>() {
+                Http.getApiService(ImService.class).joinTeam(NimUIKit.getAccount(), message.getFromAccount(), message.getTargetId()).enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        super.onResponse(call, response);
                     }
 
                     @Override
                     public void onFailure(Call<ResponseData> call, Throwable t) {
-                        super.onFailure(call, t);
                     }
                 });
             }
@@ -475,15 +473,13 @@ public class SystemMessageActivity extends UI implements TAdapterDelegate,
 
         if (message.getType() == SystemMessageType.TeamInvite) {
             if (pass) {
-                Http.getNewService(ImService.class).joinTeam(NimUIKit.getAccount(), NimUIKit.getAccount(), message.getTargetId()).enqueue(new BaseCallback<ResponseData>() {
+                Http.getApiService(ImService.class).joinTeam(NimUIKit.getAccount(), NimUIKit.getAccount(), message.getTargetId()).enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        super.onResponse(call, response);
                     }
 
                     @Override
                     public void onFailure(Call<ResponseData> call, Throwable t) {
-                        super.onFailure(call, t);
                     }
                 });
             }

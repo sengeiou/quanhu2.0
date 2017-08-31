@@ -10,9 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rz.yryz.api.BaseCallback;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
@@ -39,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.yryz.yunxinim.uikit.Constants.FRIEND_INFO_ACTION;
@@ -315,7 +315,7 @@ public class AdvancedTeamMemberInfoActivity extends UI implements View.OnClickLi
      */
     private void updateMemberNickname() {
         nickName.setText(viewMember.getTeamNick() != null ? viewMember.getTeamNick() : getString(R.string.team_nickname_none));
-        nickName.setTextColor(viewMember.getTeamNick() != null ? getResources().getColor(R.color.v3_text_color_dark) : getResources().getColor(R.color.v3_text_color_light));
+        nickName.setTextColor(viewMember.getTeamNick() != null ? getResources().getColor(R.color.font_gray_l) : getResources().getColor(R.color.font_gray_m));
     }
 
     /**
@@ -369,7 +369,7 @@ public class AdvancedTeamMemberInfoActivity extends UI implements View.OnClickLi
             public void onSuccess(Void param) {
                 DialogMaker.dismissProgressDialog();
                 nickName.setText(name != null ? name : getString(R.string.team_nickname_none));
-                nickName.setTextColor(name != null ? getResources().getColor(R.color.v3_text_color_dark) : getResources().getColor(R.color.v3_text_color_light));
+                nickName.setTextColor(name != null ? getResources().getColor(R.color.font_gray_l) : getResources().getColor(R.color.font_gray_m));
                 Toast.makeText(AdvancedTeamMemberInfoActivity.this, R.string.update_success, Toast.LENGTH_SHORT).show();
             }
 
@@ -578,10 +578,9 @@ public class AdvancedTeamMemberInfoActivity extends UI implements View.OnClickLi
         NIMClient.getService(TeamService.class).removeMember(teamId, account).setCallback(new RequestCallback<Void>() {
             @Override
             public void onSuccess(Void param) {
-                Http.getNewService(ImService.class).quitTeam(NimUIKit.getAccount(), account, teamId).enqueue(new BaseCallback<ResponseData>() {
+                Http.getApiService(ImService.class).quitTeam(NimUIKit.getAccount(), account, teamId).enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        super.onResponse(call, response);
                         DialogMaker.dismissProgressDialog();
                         makeIntent(account, isSetAdmin, true);
                         finish();
@@ -590,7 +589,6 @@ public class AdvancedTeamMemberInfoActivity extends UI implements View.OnClickLi
 
                     @Override
                     public void onFailure(Call<ResponseData> call, Throwable t) {
-                        super.onFailure(call, t);
                     }
                 });
             }

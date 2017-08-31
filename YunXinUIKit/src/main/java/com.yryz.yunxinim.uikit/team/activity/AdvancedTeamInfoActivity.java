@@ -16,9 +16,8 @@ import android.widget.Toast;
 
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
-import com.rz.yryz.api.BaseCallback;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
@@ -873,10 +872,9 @@ public class AdvancedTeamInfoActivity extends UI implements
 //        ContactSelectActivity.Option option = TeamHelper.getContactSelectOption(memberAccounts);
 //        NimUIKit.startContactSelect(AdvancedTeamInfoActivity.this, option, REQUEST_CODE_CONTACT_SELECT);
 
-        Http.getNewService(ImService.class).getAllTeam(teamId).enqueue(new BaseCallback<ResponseData<List<CircleTeamModel>>>() {
+        Http.getApiService(ImService.class).getAllTeam(teamId).enqueue(new Callback<ResponseData<List<CircleTeamModel>>>() {
             @Override
             public void onResponse(Call<ResponseData<List<CircleTeamModel>>> call, Response<ResponseData<List<CircleTeamModel>>> response) {
-                super.onResponse(call, response);
                 if (response.isSuccessful() && response.body().isSuccessful() && response.body().getData().size() > 0 && !TextUtils.isEmpty(response.body().getData().get(0).getAppId())) {
                     Intent intent = new Intent();
                     intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
@@ -893,7 +891,6 @@ public class AdvancedTeamInfoActivity extends UI implements
 
             @Override
             public void onFailure(Call<ResponseData<List<CircleTeamModel>>> call, Throwable t) {
-                super.onFailure(call, t);
                 Intent intent = new Intent();
                 intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
                 intent.putStringArrayListExtra("EXTRA_DATA", (ArrayList<String>) memberAccounts);
@@ -1012,7 +1009,7 @@ public class AdvancedTeamInfoActivity extends UI implements
                     @Override
                     public void onSuccess(List<TeamMember> members) {
 
-                        Http.getNewService(ImService.class).transferTeam(NimUIKit.getAccount(), teamId, account, 0).enqueue(new Callback<ResponseData>() {
+                        Http.getApiService(ImService.class).transferTeam(NimUIKit.getAccount(), teamId, account, 0).enqueue(new Callback<ResponseData>() {
                             @Override
                             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                                 if (response.isSuccessful() && response.body().isSuccessful()) {
@@ -1079,11 +1076,9 @@ public class AdvancedTeamInfoActivity extends UI implements
         NIMClient.getService(TeamService.class).quitTeam(teamId).setCallback(new RequestCallback<Void>() {
             @Override
             public void onSuccess(Void param) {
-                Http.getNewService(ImService.class).quitTeam(NimUIKit.getAccount(), NimUIKit.getAccount(), teamId).enqueue(new BaseCallback<ResponseData>() {
+                Http.getApiService(ImService.class).quitTeam(NimUIKit.getAccount(), NimUIKit.getAccount(), teamId).enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        super.onResponse(call, response);
-
                         Intent msgIntent = new Intent(QUIT_ADVANCE_TEAM);
                         sendBroadcast(msgIntent);
 
@@ -1095,7 +1090,6 @@ public class AdvancedTeamInfoActivity extends UI implements
 
                     @Override
                     public void onFailure(Call<ResponseData> call, Throwable t) {
-                        super.onFailure(call, t);
                         DialogMaker.dismissProgressDialog();
                         Toast.makeText(AdvancedTeamInfoActivity.this, R.string.quit_team_failed, Toast.LENGTH_SHORT).show();
                     }
@@ -1147,10 +1141,9 @@ public class AdvancedTeamInfoActivity extends UI implements
         NIMClient.getService(TeamService.class).dismissTeam(teamId).setCallback(new RequestCallback<Void>() {
             @Override
             public void onSuccess(Void param) {
-                Http.getNewService(ImService.class).deteleTeam(NimUIKit.getAccount(), teamId).enqueue(new BaseCallback<ResponseData>() {
+                Http.getApiService(ImService.class).deteleTeam(NimUIKit.getAccount(), teamId).enqueue(new Callback<ResponseData>() {
                     @Override
                     public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                        super.onResponse(call, response);
                         DialogMaker.dismissProgressDialog();
                         if (response.isSuccessful() && response.body().isSuccessful()) {
 
@@ -1165,7 +1158,6 @@ public class AdvancedTeamInfoActivity extends UI implements
 
                     @Override
                     public void onFailure(Call<ResponseData> call, Throwable t) {
-                        super.onFailure(call, t);
                         DialogMaker.dismissProgressDialog();
                         Toast.makeText(AdvancedTeamInfoActivity.this, R.string.dismiss_team_failed, Toast.LENGTH_SHORT).show();
                     }
@@ -1677,15 +1669,13 @@ public class AdvancedTeamInfoActivity extends UI implements
                             Toast.makeText(AdvancedTeamInfoActivity.this, R.string.update_success, Toast.LENGTH_SHORT).show();
                             onUpdateDone();
 
-                            Http.getNewService(ImService.class).updateTeam(NimUIKit.getAccount(), teamId, null, url, null, null).enqueue(new BaseCallback<ResponseData>() {
+                            Http.getApiService(ImService.class).updateTeam(NimUIKit.getAccount(), teamId, null, url, null, null).enqueue(new Callback<ResponseData>() {
                                 @Override
                                 public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                                    super.onResponse(call, response);
                                 }
 
                                 @Override
                                 public void onFailure(Call<ResponseData> call, Throwable t) {
-                                    super.onFailure(call, t);
                                 }
                             });
 

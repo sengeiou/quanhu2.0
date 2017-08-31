@@ -19,11 +19,10 @@ import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.constant.TeamFieldEnum;
 import com.netease.nimlib.sdk.team.constant.TeamTypeEnum;
 import com.netease.nimlib.sdk.team.model.Team;
-import com.rz.jsbridge.BaseParamsObject;
-import com.rz.jsbridge.JsEvent;
-import com.rz.yryz.api.BaseCallback;
-import com.rz.yryz.api.Http;
-import com.rz.yryz.api.model.ResponseData;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.sgt.jsbridge.BaseParamsObject;
+import com.rz.sgt.jsbridge.JsEvent;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.main.activity.MainActivity;
@@ -40,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -167,10 +167,9 @@ public class TeamCreateHelper {
             array[i] = memberAccounts.get(i);
         }
         // 创建群
-        Http.getNewService(ImService.class).createTeam(teamName, NimUIKit.getAccount(), new Gson().toJson(memberAccounts), "", intro, "验证消息", imgUrl, circleKey).enqueue(new BaseCallback<ResponseData<TeamCreateModel>>() {
+        Http.getApiService(ImService.class).createTeam(teamName, NimUIKit.getAccount(), new Gson().toJson(memberAccounts), "", intro, "验证消息", imgUrl, circleKey).enqueue(new Callback<ResponseData<TeamCreateModel>>() {
             @Override
             public void onResponse(Call<ResponseData<TeamCreateModel>> call, Response<ResponseData<TeamCreateModel>> response) {
-                super.onResponse(call, response);
                 if (null == response.body() || null == response.body().getData()) {
                     Toast.makeText(context, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                     DialogMaker.dismissProgressDialog();
@@ -187,7 +186,6 @@ public class TeamCreateHelper {
 
             @Override
             public void onFailure(Call<ResponseData<TeamCreateModel>> call, Throwable t) {
-                super.onFailure(call, t);
                 DialogMaker.dismissProgressDialog();
                 Toast.makeText(DemoCache.getContext(), R.string.create_team_failed, Toast.LENGTH_SHORT).show();
             }
@@ -202,10 +200,9 @@ public class TeamCreateHelper {
             array[i] = memberAccounts.get(i);
         }
         // 创建群
-        Http.getNewService(ImService.class).createTeam(teamName, NimUIKit.getAccount(), new Gson().toJson(memberAccounts), "", "", "验证消息", "", circleKey).enqueue(new BaseCallback<ResponseData<TeamCreateModel>>() {
+        Http.getApiService(ImService.class).createTeam(teamName, NimUIKit.getAccount(), new Gson().toJson(memberAccounts), "", "", "验证消息", "", circleKey).enqueue(new Callback<ResponseData<TeamCreateModel>>() {
             @Override
             public void onResponse(Call<ResponseData<TeamCreateModel>> call, Response<ResponseData<TeamCreateModel>> response) {
-                super.onResponse(call, response);
                 if (null == response.body() || null == response.body().getData()) {
                     Toast.makeText(context, response.body().getMsg(), Toast.LENGTH_SHORT).show();
                     return;
@@ -220,7 +217,6 @@ public class TeamCreateHelper {
 
             @Override
             public void onFailure(Call<ResponseData<TeamCreateModel>> call, Throwable t) {
-                super.onFailure(call, t);
                 if (invokeId != 0l) {
                     JsEvent.callJsEvent(invokeId, null, BaseParamsObject.RESULT_CODE_FAILED);
                 }

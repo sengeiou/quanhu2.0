@@ -36,5 +36,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':YunXinUIKit')
+    compile project(path: ':jsbridge')
     compile 'com.netease.nimlib:jsbridge:1.3.1'
 }
