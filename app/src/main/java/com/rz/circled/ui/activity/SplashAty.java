@@ -1,5 +1,4 @@
 package com.rz.circled.ui.activity;
-
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -23,7 +22,6 @@ import com.zhuge.analysis.stat.ZhugeSDK;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
 import static com.xiaomi.push.thrift.a.R;
-
 /**
  * 作者：Administrator on 2016/6/22 0022 11:07
  * 功能：欢迎页+广告页
