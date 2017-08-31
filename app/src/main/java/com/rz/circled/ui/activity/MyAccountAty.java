@@ -1,16 +1,13 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
+import com.rz.circled.R;
 import com.rz.common.ui.activity.BaseActivity;
 
 import butterknife.OnClick;
 
-import static com.xiaomi.push.thrift.a.R;
 
 /**
  * Created by rzw2 on 2016/6/28.

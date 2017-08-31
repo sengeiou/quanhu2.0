@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebSettings;
 
+import com.rz.circled.R;
 import com.rz.circled.ui.view.FileWebView;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 
-import static com.xiaomi.push.thrift.a.R;
 
 
 /**

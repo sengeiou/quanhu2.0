@@ -1,20 +1,20 @@
 package com.rz.circled.ui.activity;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.rz.circled.R;
 import com.rz.circled.modle.AccountModel;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
-import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
-import java.util.Currency;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-import static com.xiaomi.push.thrift.a.R;
 /**
  * Created by Administrator on 2016/7/19 0019.
  * 奖励悠然币界面
@@ -48,12 +48,12 @@ public class RewardScoreAty extends BaseActivity {
     @Override
     public void initView() {
         setTitleText(getString(R.string.all_point));
-        setTitleRightText(getString(R.string.account_detail), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
-            }
-        });
+//        setTitleRightText(getString(R.string.account_detail), new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
+//            }
+//        });
         setTitleRightTextColor(R.color.color_main);
     }
 

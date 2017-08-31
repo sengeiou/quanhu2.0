@@ -1,6 +1,8 @@
 package com.rz.common.utils;
 
 
+import com.rz.common.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

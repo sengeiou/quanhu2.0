@@ -5,18 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.rz.circled.R;
 import com.rz.circled.modle.AccountModel;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentCode;
-import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
-
-import java.util.Currency;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.xiaomi.push.thrift.a.R;
 
 /**
  * Created by rzw2 on 2016/6/28.
@@ -45,12 +42,12 @@ public class MyBalanceAty extends BaseActivity {
     @Override
     public void initView() {
         //消费明细
-        setTitleRightText(getString(R.string.cost_detail_v3), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
-            }
-        });
+//        setTitleRightText(getString(R.string.cost_detail_v3), new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
+//            }
+//        });
         setTitleRightTextColor(R.color.color_main);
     }
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.rz.circled.R;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
 import com.rz.circled.ui.fragment.MineFragment;
@@ -17,7 +18,6 @@ import com.rz.common.utils.ClickCounter;
 
 import butterknife.BindView;
 
-import static com.xiaomi.push.thrift.a.R;
 
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged {

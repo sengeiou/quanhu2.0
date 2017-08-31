@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.R;
 import com.rz.circled.modle.BankCardModel;
 import com.rz.circled.modle.UserInfoModel;
 import com.rz.circled.widget.GlideCircleImage;
@@ -133,7 +134,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void initData() {
-        mAdapter = new CommonAdapter<BankCardModel>(aty, mBanks, R.layout.layout_item_bank_card) {
+        mAdapter = new CommonAdapter<BankCardModel>(aty, R.layout.layout_item_bank_card) {
             @Override
             public void convert(ViewHolder helper, final BankCardModel item,int postion) {
                 //银行卡icon
@@ -240,11 +241,11 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 String payPw = (String) t;
                 if (TextUtils.equals("1", payPw)) {
                     //解绑成功
-                    SVProgressHUD.showSuccessWithStatus(aty, R.string.unbind_card_success);
+                    SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.unbind_card_success));
 //                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
                 } else if (TextUtils.equals("2", payPw)) {
                     //设置默认银行卡成功
-                    SVProgressHUD.showSuccessWithStatus(aty, R.string.setting_success);
+                    SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.setting_success));
 //                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
                 } else {
                     //解绑银行卡

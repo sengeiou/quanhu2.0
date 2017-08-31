@@ -110,17 +110,11 @@
         <activity android:name=".ui.activity.SplashAty"/>
         <activity android:name=".ui.activity.BankCardListAty"/>
         <activity android:name=".ui.activity.GuideActivity"/>
-        <activity android:name=".ui.activity.MediaActivity"/>
         <activity android:name=".ui.activity.MyAccountAty"/>
         <activity android:name=".ui.activity.MyBalanceAty"/>
         <activity android:name=".ui.activity.PersonAreaAty"/>
         <activity android:name=".ui.activity.PersonInfoAty"/>
-        <activity android:name=".ui.activity.PictureSelectedActivity"/>
-        <activity android:name=".ui.activity.ReportActivity"/>
         <activity android:name=".ui.activity.RewardScoreAty"/>
-        <activity android:name=".ui.activity.UploadVideoActivity"/>
-        <activity android:name=".ui.activity.VideoChooseActivity"/>
-        <activity android:name=".ui.activity.WebContainerActivity"/>
     </application>
 
 </manifest>

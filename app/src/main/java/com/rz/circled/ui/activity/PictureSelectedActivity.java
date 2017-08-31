@@ -55,9 +55,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.xiaomi.push.thrift.a.R;
-
 /**
  * 图片管理器
  */

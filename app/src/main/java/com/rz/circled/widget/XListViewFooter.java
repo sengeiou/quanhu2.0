@@ -13,7 +13,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.rz.rz_rrz.R;
+import com.rz.circled.R;
+
 
 public class XListViewFooter extends LinearLayout {
     public final static int STATE_NORMAL = 0;

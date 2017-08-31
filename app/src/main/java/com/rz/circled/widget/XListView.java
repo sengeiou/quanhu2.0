@@ -22,9 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-import com.rz.rz_rrz.R;
+import com.rz.circled.R;
 
-import static com.xiaomi.push.thrift.a.R;
 
 public class XListView extends ListView implements OnScrollListener {
 

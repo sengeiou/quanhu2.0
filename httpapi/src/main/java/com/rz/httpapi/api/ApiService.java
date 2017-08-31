@@ -3,6 +3,7 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
+import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -220,6 +221,16 @@ public interface ApiService {
     @POST(APIUser.EXIT_APP)
     Call<ResponseData> exitAPP(
             @Field("custId") String custId
+    );
+    /*****************************作品、圈子相关********app-circle********************************************/
+
+    /**
+     * 获取首页圈子入口列表
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_ENTRANCE_LIST)
+    public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
+            @Field("status") int status
     );
 
 }

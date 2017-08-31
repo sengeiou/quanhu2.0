@@ -1,4 +1,5 @@
 package com.rz.circled.ui.activity;
+
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
@@ -21,7 +23,6 @@ import com.rz.common.utils.SystemUtils;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
-import static com.xiaomi.push.thrift.a.R;
 /**
  * 作者：Administrator on 2016/6/22 0022 11:07
  * 功能：欢迎页+广告页
@@ -90,7 +91,7 @@ public class SplashAty extends BaseActivity {
     public void initView() {
 
         mImgBg = (ImageView) findViewById(R.id.id_start_page_bg_img);
-        mImgBg.setImageResource(R.drawable.page_bg_qq_new);
+//        mImgBg.setImageResource(R.drawable.page_bg_qq_new);
         if (!TextUtils.equals(StringUtils.isEmpty(Session.getAppVersion()) ? "" : Session.getAppVersion(), SystemUtils.getVersionName(this))) {
 //            ClearCacheUtil.clearCache(aty, 0, "");
             Session.clearMust();
@@ -148,7 +149,7 @@ public class SplashAty extends BaseActivity {
             }
         } else {
             recLen = 1000 * 4;
-            mImgBg.setImageResource(R.drawable.bg_splash_activity);
+//            mImgBg.setImageResource(R.drawable.bg_splash_activity);
         }
         mTxtjumpTo = (TextView) findViewById(R.id.id_jump_txt);
         mTxtjumpTo.setVisibility(View.VISIBLE);

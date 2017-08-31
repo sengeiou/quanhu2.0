@@ -3,29 +3,34 @@ package com.rz.circled.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
 import android.view.View;
 
 import com.rz.common.ui.inter.IViewController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by JS01 on 2016/6/7.
- * MVP Presenter层，加载数据并控制View层
+ * Created by Administrator on 2016/8/13 0013.
  */
-public abstract class IPresenter {
+public abstract class GeneralPresenter<T> implements IPresenter {
 
-    public static String TAG = "IPresenter";
 
-    /**
-     * 与View（Activity或Fragment）关联，在onCreate中调用，
-     *
-     * @param view
-     */
-    public abstract void attachView(IViewController view);
+    public List<Call> calls = new ArrayList<>();
 
     /**
-     * 与View分离，在onDestory调用
+     * 带缓存的数据访问
      */
-    public abstract void detachView();
+//    public abstract T loadDataReturn();
+    public abstract T getCacheData();
+
+    public void loadData(boolean loadMore) {
+
+    }
+
+    public void loadData() {
+    }
 
     public Context getContext(IViewController viewController) {
         if (viewController != null) {
@@ -41,5 +46,6 @@ public abstract class IPresenter {
         }
         return null;
     }
+
 
 }

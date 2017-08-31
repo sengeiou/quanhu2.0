@@ -2,7 +2,6 @@ package com.rz.circled.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.rz.circled.R;
 import com.rz.circled.modle.AreaModel;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
@@ -32,9 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.xiaomi.push.thrift.a.R;
-
 
 /**
  * Created by xiayumo on 16/8/16.
@@ -70,8 +67,8 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void initView() {
-        setTitleText(getString(R.string.mine_person_area), null);
-        setTitleRightText(getString(R.string.mine_person_save), this);
+        setTitle(getString(R.string.mine_person_area));
+        setTitleRightText(getString(R.string.mine_person_save));
 
         keyType = getIntent().getStringExtra(IntentKey.KEY_TYPE);
 
@@ -82,7 +79,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
 
         // 模拟一个选中城市
 
-        mAdapter = new CommonAdapter<AreaModel>(this, areaList, R.layout.layout_area_item) {
+        mAdapter = new CommonAdapter<AreaModel>(this,  R.layout.layout_area_item) {
 
             @Override
             public void convert(ViewHolder helper, AreaModel item, int position) {
@@ -163,9 +160,9 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.titlebar_right_text:
+//            case R.id.titlebar_right_text:
 //                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "location", paramas);
-                break;
+//                break;
             default:
                 break;
 

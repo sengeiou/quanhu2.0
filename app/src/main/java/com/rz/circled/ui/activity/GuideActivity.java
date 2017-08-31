@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.rz.circled.R;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
 
@@ -16,9 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.xiaomi.push.thrift.a.R;
-
 /**
  * Created by Administrator on 2017/8/11/011.
  */
@@ -37,9 +35,9 @@ public class GuideActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        guideList.add(R.drawable.guide_one);
-        guideList.add(R.drawable.guide_two);
-        guideList.add(R.drawable.guide_three);
+//        guideList.add(R.drawable.guide_one);
+//        guideList.add(R.drawable.guide_two);
+//        guideList.add(R.drawable.guide_three);
         final PagerAdapter adapter = new PagerAdapter() {
             @Override
             public int getCount() {
@@ -94,13 +92,4 @@ public class GuideActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected boolean isSupportSwipeBack() {
-        return false;
-    }
-
-    @Override
-    protected boolean isTitleBarShow() {
-        return false;
-    }
 }

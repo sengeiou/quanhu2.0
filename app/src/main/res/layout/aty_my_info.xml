@@ -90,7 +90,7 @@
                 style="@style/DefaultTvStyle"
                 android:layout_centerVertical="true"
                 android:text="@string/mine_person_scan"
-                android:textSize="@dimen/v3_text_size_48px"/>
+                android:textSize="@dimen/font_52"/>
 
             <ImageView
                 android:layout_width="@dimen/px62"

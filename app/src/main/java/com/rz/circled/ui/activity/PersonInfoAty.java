@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.R;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.common.cache.preference.Session;
@@ -49,8 +50,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
-import static com.xiaomi.push.thrift.a.R;
-
 /**
  * Created by xiayumo on 16/8/15.
  * 个人详情
@@ -431,10 +430,11 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 singatrue.setText(Session.getUser_signatrue());
                 desc.setText(Session.getUser_desc());
                 zhugeIdentify(Session.getUserId(), Session.getUser_sex(), Session.getUser_area());
-            } else if (resultCode == PublishAty.PUBLISH_RESULT_CAMERA) {
-                String path = data.getStringExtra("picture");
-                setHeadImage(path);
             }
+//            } else if (resultCode == PublishAty.PUBLISH_RESULT_CAMERA) {
+//                String path = data.getStringExtra("picture");
+//                setHeadImage(path);
+//            }
         }
     }
 
@@ -451,7 +451,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                     if (SDState.equals(Environment.MEDIA_MOUNTED)) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         // 创建拍摄照片保存的文件夹及图片文件名
-                        String imgName = com.rz.rz_rrz.utils.StringUtils.getPhotoFileName();
+                        String imgName =StringUtils.getPhotoFileName();
                         File mPhotoFile = new File(CacheUtils.getCacheDirectory(aty, true, "pic") + imgName);
                         if (mPhotoFile != null) {
                             mPhotoFileName = mPhotoFile.getAbsolutePath();
