@@ -1,7 +1,11 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.content.Intent;
 
+import com.rz.circled.ui.activity.UploadAudioActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.common.constant.IntentKey;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -25,14 +29,15 @@ public class UploadAudioHandler extends ServerHandler {
 
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
-//        mActivity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent i = new Intent(mActivity, UploadAudioAty.class);
-//                i.putExtra(IntentKey.KEY_URL, webContainerAty.getOssDir());
-//                mActivity.startActivity(i);
-//            }
-//        });
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(mActivity, UploadAudioActivity.class);
+                if (mActivity instanceof WebContainerActivity)
+                    i.putExtra(IntentKey.EXTRA_URL, ((WebContainerActivity) mActivity).getOssDir());
+                mActivity.startActivity(i);
+            }
+        });
     }
 
     @Override

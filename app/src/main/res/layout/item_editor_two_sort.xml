@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/cb_editor_two_anonymity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/px30"
+        android:background="@color/transparent"
+        android:button="@null"
+        android:checked="true"
+        android:clickable="false"
+        android:drawableLeft="@drawable/check_publish_sel"
+        android:drawablePadding="@dimen/px50"
+        android:focusable="false"
+        android:paddingBottom="@dimen/px30"
+        android:paddingLeft="@dimen/px15"
+        android:paddingTop="@dimen/px30"
+        android:text="@string/anonymous_publish"
+        android:textColor="@color/font_gray_l"
+        android:textSize="@dimen/font_50"/>
+
+</LinearLayout>

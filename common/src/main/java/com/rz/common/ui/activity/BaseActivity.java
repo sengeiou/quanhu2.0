@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     private View commonTitle;
     private TextView tvCommonTitle;
+    private TextView tvCommonTitleLeft;
     private TextView tvCommonTitleRight;
     private ImageView ivCommonLeft;
     private ImageView ivCommonRight;
@@ -98,6 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     private void initCommonTitle() {
         tvCommonTitle = (TextView) commonTitle.findViewById(R.id.tv_base_title);
+        tvCommonTitleLeft = (TextView) commonTitle.findViewById(R.id.tv_base_title_left);
         tvCommonTitleRight = (TextView) commonTitle.findViewById(R.id.tv_base_title_right);
         ivCommonLeft = (ImageView) commonTitle.findViewById(R.id.iv_base_title_left);
         ivCommonRight = (ImageView) commonTitle.findViewById(R.id.iv_base_title_right);
@@ -146,7 +148,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      * @param refreshListener
      */
     public void setRefreshListener(BaseLoadView.RefreshListener refreshListener) {
-        if (mLoadView != null || isFinishing() || mLoadView == null)
+        if (mLoadView != null || isFinishing() || mLoadView != null)
             mLoadView.setRefreshListener(refreshListener);
     }
 
@@ -293,7 +295,32 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void setTitleLeftIcon(int drawableId) {
         if (ivCommonLeft != null)
             ivCommonLeft.setImageResource(drawableId);
+        tvCommonTitleLeft.setVisibility(View.GONE);
+        ivCommonLeft.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * 设置公用title的左边文字
+     *
+     * @param StringId
+     */
+    public void setTitleLeftText(int StringId) {
+        setTitleLeftText(getString(StringId));
+
+    }
+
+    /**
+     * 设置公用title的左边文字
+     *
+     * @param text
+     */
+    public void setTitleLeftText(String text) {
+        if (tvCommonTitleLeft != null && text != null)
+            tvCommonTitleLeft.setText(text);
+        tvCommonTitleLeft.setVisibility(View.VISIBLE);
+        ivCommonRight.setVisibility(View.GONE);
+    }
+
 
     /**
      * 设置公用title左边按钮点击事件
@@ -302,9 +329,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      */
     public void setTitleLeftListener(View.OnClickListener leftListener) {
         if (leftListener != null) {
-            ivCommonLeft.setOnClickListener(leftListener);
+            if (ivCommonLeft.getVisibility() == View.VISIBLE)
+                ivCommonLeft.setOnClickListener(leftListener);
+            else if (tvCommonTitleLeft.getVisibility() == View.VISIBLE)
+                tvCommonTitleLeft.setOnClickListener(leftListener);
         } else {
             ivCommonLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+            tvCommonTitleLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     finish();

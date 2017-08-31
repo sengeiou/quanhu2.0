@@ -1,0 +1,559 @@
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>
+        js调用java2
+    </title>
+    <script type="text/javascript" src="yryz.js?db7eacb057e1c76ca972"></script>
+</head>
+
+<body>
+<p>
+    <xmp id="show">
+    </xmp>
+</p>
+<p>
+    <xmp id="init">
+    </xmp>
+</p>
+<p>
+    <input type="text" id="text1" value="用户名(username)"/>
+</p>
+<p>
+    <input type="text" id="text2" value="password"/>
+</p>
+<p>
+    <input type="button" id="enter" value="显示cookie" onclick="testClick();"
+    />
+</p>
+
+<p><input type="button" id="enter1" value="调用Native方法" onclick="testClick0();"/></p>
+
+
+<p><input type="button" id="enter2" value="分享-微信朋友圈" onclick="testClick1(1);"/></p>
+<p><input type="button" id="enter3" value="分享-微信好友" onclick="testClick1(2);"/></p>
+<p><input type="button" id="enter4" value="分享-QQ好友" onclick="testClick1(3);"/></p>
+<p><input type="button" id="enter5" value="分享-QQ空间" onclick="testClick1(4);"/></p>
+<p><input type="button" id="enter6" value="分享-新浪" onclick="testClick1(5);"/></p>
+<p><input type="button" id="enter7" value="分享-随手晒" onclick="testClick1(6);"/></p>
+<p><input type="button" id="enter8" value="本地资源-上传照片" onclick="testClick1(7);"/></p>
+<p><input type="button" id="enter9" value="本地资源-上传视频" onclick="testClick1(8);"/></p>
+<p><input type="button" id="enter10" value="本地资源-上传音频" onclick="testClick1(9);"/></p>
+<p><input type="button" id="enter11" value="充值" onclick="testClick1(10);"/></p>
+<p><input type="button" id="enter12" value="获取网络状态" onclick="testClick1(11);"/></p>
+<p><input type="button" id="enter13" value="获取当前位置" onclick="testClick1(12);"/></p>
+<p><input type="button" id="enter14" value="回到首页" onclick="testClick1(13);"/></p>
+<p><input type="button" id="enter15" value="查看个人信息" onclick="testClick1(14);"/></p>
+<p><input type="button" id="enter16" value="创建圈子快捷方式" onclick="testClick1(15);"/></p>
+<p><input type="button" id="enter17" value="转发" onclick="testClick1(16);"/></p>
+<p><input type="button" id="enter18" value="编辑" onclick="testClick1(17);"/></p>
+<p><input type="button" id="enter19" value="单聊" onclick="testClick1(18);"/></p>
+<p><input type="button" id="enter20" value="群聊" onclick="testClick1(19);"/></p>
+<p><input type="button" id="enter21" value="创建圈子" onclick="testClick1(20);"/></p>
+<p><input type="button" id="enter22" value="加入圈子群" onclick="testClick1(21);"/></p>
+<p><input type="button" id="enter23" value="打开url" onclick="testClick1(22);"/></p>
+<p><input type="button" id="enter24" value="返回" onclick="testClick1(23);"/></p>
+<p><input type="button" id="enter25" value="编辑2" onclick="testClick1(24);"/></p>
+<p><input type="button" id="enter26" value="本地视频" onclick="testClick1(25);"/></p>
+<p><input type="button" id="enter27" value="悠然广场" onclick="testClick1(26);"/></p>
+<p><input type="button" id="enter28" value="登录" onclick="testClick1(27);"/></p>
+<p><input type="button" id="enter29" value="跳转融众财富" onclick="testClick1(28);"/></p>
+<p><input type="button" id="enter30" value="关闭当前页" onclick="testClick1(29);"/></p>
+<p><input type="button" id="enter31" value="导航" onclick="testClick1(30);"/></p>
+<p><input type="button" id="enter32" value="举报" onclick="testClick1(31);"/></p>
+<p><input type="button" id="enter33" value="保存图片" onclick="testClick1(32);"/></p>
+
+<textarea id="code" cols="10"></textarea>
+<input type="button" value="runCode" onclick="runcode();"/>
+
+<!--<video width="420" height="420" controls>-->
+<!--<source src="http://yryz-resources.oss-cn-hangzhou.aliyuncs.com/efdb6cfc-ba24-4dbc-8c0a-e14a572033b8.mp4"-->
+<!--type="video/mp4">-->
+<!--</video>-->
+</body>
+<script>
+
+    function javacalljswith(arg){
+     alert("javacalljswith("+arg+")")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<script>
+
+if (typeof Object.assign != 'function') {
+  Object.assign = function(target, varArgs) { // .length of function is 2
+    'use strict';
+    if (target == null) { // TypeError if undefined or null
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    var to = Object(target);
+
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments[index];
+
+      if (nextSource != null) { // Skip over if undefined or null
+        for (var nextKey in nextSource) {
+          // Avoid bugs when hasOwnProperty is shadowed
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}
+
+
+
+    function runcode(){
+      eval('('+ document.getElementById('code').value+')');
+    }
+
+    function testClick0(){
+        yryz.uploadPics({'data':{'picNum':2}}, {'success':function(msg){
+            document.getElementById('text1').value=msg.errMsg;
+        }
+            ,cancel:function(msg){
+                document.getElementById('text1').value=msg.errMsg;
+            },error:function(msg){
+                document.getElementById('text1').value=msg.errMsg;
+            }
+        })
+    }
+
+    function testClick(){
+        document.getElementById('text1').value= document.cookie;
+    }
+
+//----------------------------------------
+function testClick1(index) {
+
+    var callback = {'success':function(msg,rawdata) {
+        document.getElementById('text1').value=msg.errMsg+rawdata;
+    }, 'cancel':function(msg,rawdata) {
+        document.getElementById('text1').value=msg.errMsg;
+    }, 'error':function(msg,rawdata) {
+        document.getElementById('text1').value=msg.errMsg;
+    }
+    };
+
+    if ( index == 1) {
+        yryz.shareToOtherPlat(Object.assign({'plat':'WeChatLine'},callback))
+    } else if (index == 2) {
+        yryz.shareToOtherPlat(Object.assign({'plat':'WeChat'}, callback))
+    } else if (index == 3) {
+        yryz.shareToOtherPlat(Object.assign({'plat':'QQ'}, callback))
+    } else if (index == 4) {
+        yryz.shareToOtherPlat(Object.assign({'plat':'QQZone'}, callback))
+    } else if (index == 5) {
+        yryz.shareToOtherPlat(Object.assign({'plat':'Sina'}, callback))
+    } else if (index == 6) {
+        yryz.shareToOtherPlat(Object.assign({'plat':'YRShow'}, callback))
+    } else if (index == 7) {
+        yryz.uploadPics(Object.assign({'picNum':2}, callback))
+    } else if (index == 8) {
+        yryz.uploadVideo(Object.assign(callback))
+    } else if (index == 9) {
+        yryz.uploadAudio(Object.assign(callback))
+    } else if (index == 10) {
+        yryz.showCharge(Object.assign(callback))
+    } else if (index == 11) {
+        yryz.getNetWorkStatus(Object.assign(callback))
+    } else if (index == 12) {
+        yryz.getLocation(Object.assign(callback))
+    } else if (index == 13) {
+        yryz.backHome(Object.assign(callback))
+    } else if (index == 14) {
+        yryz.toPersonalInfo(Object.assign({'userId':'17wdphixtk'}, callback))
+    } else if (index == 15) {
+        yryz.circleShortcut(Object.assign({
+            "circleImageUrl": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489408539810&di=98e8aaffd325f7336c6fc9cf736459dd&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fw%253D580%2Fsign%3D13f84e0b5b82b2b7a79f39cc01accb0a%2F896f5e600c3387445944f973530fd9f9d62aa08c.jpg",
+            "circleName": "圈子",
+            "circleUrl": "https://www.baidu.com/"
+        },callback))
+    } else if (index == 16) {
+        yryz.forward(Object.assign({'authorId':'17wdphixtk', 'opusId':'a49ae3053c06492e95e4ae9abc2d956e'}, callback))
+    } else if (index == 17) {
+        yryz.createImageText(Object.assign({'imgMaxNum':"1"},callback))
+    }else if (index == 18) {
+        yryz.sessionP2P(Object.assign({'custId':'8n502jyk58'},callback))
+    }else if (index == 19) {
+        yryz.sessionTeam(Object.assign({'teamId':'18386615'},callback))
+    }else if (index == 20) {
+        yryz.createCircleTeam(Object.assign(callback))
+    }else if (index == 21) {
+        yryz.joinTeam(Object.assign({'teamId':'18386615','verifyType':1},callback))
+    }else if (index == 22) {
+        yryz.openUrl(Object.assign({'url':'http://www.baidu.com'},callback))
+    }else if (index == 23) {
+        yryz.back(Object.assign(callback))
+    }else if(index==25){
+        yryz.playVideo(Object.assign({'videoUrl':'https://cdn.yryz.com/video/opus/914b8971-8a84-4963-84c2-3f342f51e084.mp4'},callback))
+    }else if(index==26){
+        yryz.openYrSquare(Object.assign(callback))
+    }else if(index==27){
+        yryz.login(Object.assign(callback))
+    }else if(index==28){
+        yryz.openAPP(Object.assign({'urlScheme':'rzWealth://uri.main?custId=123&token=456',
+                                    'downloadUrl' : 'http://a.app.qq.com/o/simple.jsp?pkgname=com.rongzhong.wealth.activity',
+                                    'extendParameter' : 'com.rongzhong.wealth.activity'}, callback))
+    }else if(index==29){
+        yryz.finishWeb(Object.assign(callback))
+    }else if(index==30){
+        yryz.mapNavigation(Object.assign({'latitude':30.4892800000,
+                                         'longitude':114.5382000000,
+                                         'name':"光谷未来城"},callback))
+    }else if(index==31){
+        yryz.report(Object.assign(callback))
+    }else if(index==32){
+        yryz.saveImage(Object.assign({'name':"zhshimingc",
+                                      'data':"zhshimingcdata"},callback))
+    }  else if (index == 24) {
+         yryz.publishImageText(Object.assign({
+    "config": {
+        "coverPlan": {
+            "enabled": 1,
+            "errorPrompt": "错误封面图片信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入提示信息",
+            "lowerLimit": 1,
+            "propertyAlias": "缩率图",
+            "propertyKey": "coverPlan",
+            "required": 1,
+            "upperLimit": 1
+        },
+        "title": {
+            "enabled": 1,
+            "errorPrompt": "错误标题信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入标题信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "title",
+            "required": 1,
+            "upperLimit": 10
+        },
+        "description": {
+            "enabled": 1,
+            "errorPrompt": "错误简介信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入简介信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "description",
+            "required": 1,
+            "upperLimit": 10
+        },
+        "text": {
+            "enabled": 1,
+            "errorPrompt": "错误详情信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入详情信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "text",
+            "required": 0,
+            "upperLimit": 100
+        },
+        "img": {
+            "enabled": 1,
+            "errorPrompt": "错误图片信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入图片信息",
+            "lowerLimit": 1,
+            "propertyAlias": "缩率图",
+            "propertyKey": "img",
+            "required": 0,
+            "upperLimit": 10
+        },
+        "audio": {
+            "enabled": 1,
+            "errorPrompt": "错误音频信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入音频信息",
+            "lowerLimit": 1,
+            "propertyAlias": "缩率图",
+            "propertyKey": "audio",
+            "required": 0,
+            "upperLimit": 10
+        },
+        "video": {
+            "enabled": 1,
+            "errorPrompt": "错误视频信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入视频信息",
+            "lowerLimit": 1,
+            "propertyAlias": "缩率图",
+            "propertyKey": "video",
+            "required": 0,
+            "upperLimit": 10
+        },
+        "site": {
+            "enabled": 1,
+            "errorPrompt": "错误位置信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入位置信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "site",
+            "required": 1,
+            "upperLimit": 10
+        },
+        "date": {
+            "enabled": 1,
+            "errorPrompt": "错误日期信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入日期信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "date",
+            "required": 1,
+            "upperLimit": 10
+        },
+        "classify": {
+            "enabled": 1,
+            "errorPrompt": "错误分类信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入分类信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "classify",
+            "required": 1,
+            "editable":true,
+            "upperLimit": 10
+        },
+        "label": {
+            "enabled": 1,
+            "errorPrompt": "错误标签信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入标签信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "label",
+            "required": 1,
+            "upperLimit": 10
+        },
+        "anonymity": {
+            "enabled": 0,
+            "errorPrompt": "错误匿名信息",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入匿名信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "anonymity",
+            "required": 0,
+            "upperLimit": 10
+        },
+        "vote": {
+            "enabled": 1,
+            "errorPrompt": "投票",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入投票信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "vote",
+            "required": 0,
+            "upperLimit": 10
+        },
+        "picTxt": {
+            "enabled": 1,
+            "errorPrompt": "非图文混排",
+            "firstStageId": 1,
+            "id": 1,
+            "inputPrompt": "输入投票信息",
+            "lowerLimit": 5,
+            "propertyAlias": "缩率图",
+            "propertyKey": "vote",
+            "required": 0,
+            "upperLimit": 10
+        }
+    },
+    "category":{
+        "defaultId":81483,
+        "defaultText":"测试内容duo",
+        "data":[
+            {"categoryName": "测试内容duo",
+                "id": 81483
+            },
+             {"categoryName": "测试内容duo2",
+                "id": 81482
+             },
+             {"categoryName": "测试内容duo3",
+                "id": 81481
+             }
+             ]
+     }
+},callback))
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>
+

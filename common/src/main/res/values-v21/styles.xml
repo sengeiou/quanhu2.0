@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<style name="AppTheme" parent="AppBaseTheme">-->
+        <!--<item name="android:statusBarColor">@color/statusBarColor</item>-->
+        <!--&lt;!&ndash;<item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
+        <!--<item name="android:windowTranslucentStatus">false</item>-->
+        <!--<item name="android:windowTranslucentNavigation">false</item>-->
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">false</item>-->
+    <!--</style>-->
+
+    <!--<style name="AppTheme.Translucent" parent="AppTheme">-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowFullscreen">false</item>-->
+        <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--&lt;!&ndash; Note that we use the base animation style here (that is no-->
+             <!--animations) because we really have no idea how this kind of-->
+             <!--activity will be used. &ndash;&gt;-->
+        <!--<item name="android:windowAnimationStyle">@android:style/Animation</item>-->
+        <!--<item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>-->
+    <!--</style>-->
+
+</resources>
