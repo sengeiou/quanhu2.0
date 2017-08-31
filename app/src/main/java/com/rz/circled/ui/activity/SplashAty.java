@@ -94,7 +94,7 @@ public class SplashAty extends BaseActivity {
         mImgBg = (ImageView) findViewById(R.id.id_start_page_bg_img);
         mImgBg.setImageResource(R.drawable.page_bg_qq_new);
         if (!TextUtils.equals(StringUtils.isEmpty(Session.getAppVersion()) ? "" : Session.getAppVersion(), SystemUtils.getVersionName(this))) {
-            ClearCacheUtil.clearCache(aty, 0, "");
+//            ClearCacheUtil.clearCache(aty, 0, "");
             Session.clearMust();
             Session.setAppVersion(SystemUtils.getVersionName(this));
         }
@@ -106,7 +106,7 @@ public class SplashAty extends BaseActivity {
                 if (!Session.getUserIsFirstDownload()) {
                     initV();
                 } else {
-                    skipActivity(aty, GuideAty.class);
+                    skipActivity(aty, GuideActivity.class);
                 }
             }
         }, 2000);
@@ -143,7 +143,7 @@ public class SplashAty extends BaseActivity {
                     public void onClick(View view) {
                         isClickAdv = true;
                         if (!TextUtils.isEmpty(Session.getAdv_url())) {
-                            CommH5Aty.startCommonH5(aty, Session.getAdv_url());
+//                            CommH5Aty.startCommonH5(aty, Session.getAdv_url());
                         }
                     }
                 });
@@ -196,7 +196,7 @@ public class SplashAty extends BaseActivity {
 //        } else {
 //        }
         if (!isClickAdv) {
-            skipActivity(aty, MainAty.class);
+            skipActivity(aty, MainActivity.class);
         }
     }
 

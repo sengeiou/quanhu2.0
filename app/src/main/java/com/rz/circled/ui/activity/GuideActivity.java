@@ -1,15 +1,24 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.rz.circled.R;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.ui.activity.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+
+import static com.xiaomi.push.thrift.a.R;
+
 /**
  * Created by Administrator on 2017/8/11/011.
  */

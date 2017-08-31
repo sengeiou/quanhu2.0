@@ -138,7 +138,36 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void showActivity(Activity aty, Intent it) {
         aty.startActivity(it);
     }
+    public void showActivity(Activity aty, Class<?> cls, Bundle extras) {
+        Intent intent = new Intent();
+        intent.putExtras(extras);
+        intent.setClass(aty, cls);
+        aty.startActivity(intent);
+    }
+    /**
+     * skip to @param(cls)，and call @param(aty's) finish() method
+     */
+    public void skipActivity(Activity aty, Class<?> cls) {
+        showActivity(aty, cls);
+        aty.finish();
+    }
 
+    /**
+     * skip to @param(cls)，and call @param(aty's) finish() method
+     */
+
+    public void skipActivity(Activity aty, Intent it) {
+        showActivity(aty, it);
+        aty.finish();
+    }
+
+    /**
+     * skip to @param(cls)，and call @param(aty's) finish() method
+     */
+    public void skipActivity(Activity aty, Class<?> cls, Bundle extras) {
+        showActivity(aty, cls, extras);
+        aty.finish();
+    }
     /**
      * 初始化沉浸式
      */

@@ -46,9 +46,9 @@ public class MyAccountAty extends BaseActivity {
                 break;
             //红包记录
             case R.id.id_layout_red_bag:
-                Intent bag = new Intent(aty, MyReceiveMoneyListAty.class);
-                bag.putExtra(IntentKey.KEY_TYPE, Type.TYPE_RECORD_BAG);
-                startActivity(bag);
+//                Intent bag = new Intent(aty, MyReceiveMoneyListAty.class);
+//                bag.putExtra(IntentKey.KEY_TYPE, Type.TYPE_RECORD_BAG);
+//                startActivity(bag);
                 break;
             //银行卡
             case R.id.id_layout_bank_card:

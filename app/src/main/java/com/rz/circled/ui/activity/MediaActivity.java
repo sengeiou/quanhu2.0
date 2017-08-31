@@ -41,6 +41,8 @@ import com.rz.common.widget.toasty.Toasty;
 
 import butterknife.BindView;
 
+import static com.xiaomi.push.thrift.a.R;
+
 public class MediaActivity extends BaseActivity implements SimpleExoPlayer.VideoListener, ExoPlayer.EventListener {
 
     @BindView(R.id.playview_exo)

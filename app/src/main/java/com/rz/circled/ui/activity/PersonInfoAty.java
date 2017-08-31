@@ -19,8 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
@@ -30,6 +32,7 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.AudioUtils;
 import com.rz.common.utils.CacheUtils;
 import com.rz.common.utils.Protect;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
@@ -45,6 +48,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.rz.common.utils.SystemUtils.trackUser;
 import static com.xiaomi.push.thrift.a.R;
 
 /**
@@ -158,15 +162,15 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.id_layout_person_nick:
                 trackUser("我的","个人资料二级界面","昵称");
-                intent.setClass(this, PersonNickAty.class);
+//                intent.setClass(this, PersonNickAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_scan:
-                showActivity(this, PersonScanAty.class);
+//                showActivity(this, PersonScanAty.class);
                 break;
             case R.id.id_layout_person_sex:
                 trackUser("我的","个人资料二级界面","性别");
-                intent.setClass(this, PersonSexAty.class);
+//                intent.setClass(this, PersonSexAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_area:
@@ -179,7 +183,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 data.putString("content", singatrue.getText().toString());
                 data.putString(TYPE, getString(R.string.mine_person_sign));
                 intent.putExtras(data);
-                intent.setClass(this, PersonBriefAty.class);
+//                intent.setClass(this, PersonBriefAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_brief:
@@ -187,7 +191,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 data.putString("content", desc.getText().toString());
                 data.putString(TYPE, getString(R.string.mine_person_brief));
                 intent.putExtras(data);
-                intent.setClass(this, PersonBriefAty.class);
+//                intent.setClass(this, PersonBriefAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             default:
@@ -321,7 +325,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
     }
 
     private void initHeadPicPath() {
-        String imgName = com.rz.rz_rrz.utils.StringUtils.getPhotoFileName();
+        String imgName = StringUtils.getPhotoFileName();
         File f = new File(CacheUtils.getCacheDirectory(aty, true, "pic") + imgName);
         if (f.exists()) {
             f.delete();
@@ -346,7 +350,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         Bundle bundle = picdata.getExtras();
         if (bundle != null) {
             photo = bundle.getParcelable("data");
-            String imgName = com.rz.rz_rrz.utils.StringUtils.getPhotoFileName();
+            String imgName = StringUtils.getPhotoFileName();
             File f = new File(CacheUtils.getCacheDirectory(aty, true, "pic") + imgName);
             if (f.exists()) {
                 f.delete();
