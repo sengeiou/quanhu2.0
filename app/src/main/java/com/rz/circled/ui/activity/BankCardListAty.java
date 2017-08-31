@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.xiaomi.push.thrift.a.R;
+
 
 /**
  * 银行卡列表
@@ -285,5 +286,10 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 //                ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
             }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
     }
 }
