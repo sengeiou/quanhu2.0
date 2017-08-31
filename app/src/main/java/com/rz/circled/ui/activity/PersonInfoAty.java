@@ -18,23 +18,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.bumptech.glide.Glide;
-import com.rz.rz_rrz.R;
-import com.rz.rz_rrz.app.OssManager;
-import com.rz.rz_rrz.app.UploadPicManager;
-import com.rz.rz_rrz.cache.preference.Session;
-import com.rz.rz_rrz.constant.Constants;
-import com.rz.rz_rrz.constant.IntentKey;
-import com.rz.rz_rrz.permission.AppSettingsDialog;
-import com.rz.rz_rrz.permission.EasyPermissions;
-import com.rz.rz_rrz.presenter.impl.PersonInfoPresenter;
-import com.rz.rz_rrz.utils.AudioUtils;
-import com.rz.rz_rrz.utils.CacheUtils;
-import com.rz.rz_rrz.utils.Protect;
-import com.rz.rz_rrz.view.base.BaseCommonAty;
-import com.rz.rz_rrz.widget.GlideRoundImage;
-import com.rz.rz_rrz.widget.PopupView;
+import com.rz.circled.widget.PopupView;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentKey;
+import com.rz.common.oss.OssManager;
+import com.rz.common.oss.UploadPicManager;
+import com.rz.common.permission.AppSettingsDialog;
+import com.rz.common.permission.EasyPermissions;
+import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.AudioUtils;
+import com.rz.common.utils.CacheUtils;
+import com.rz.common.utils.Protect;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.json.JSONObject;
@@ -49,13 +45,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.rz.rz_rrz.utils.CommomUtils.trackUser;
+import static com.xiaomi.push.thrift.a.R;
 
 /**
  * Created by xiayumo on 16/8/15.
  * 个人详情
  */
-public class PersonInfoAty extends BaseCommonAty implements View.OnClickListener, PopupView.OnItemPopupClick, UploadPicManager.OnUploadCallback {
+public class PersonInfoAty extends BaseActivity implements View.OnClickListener, PopupView.OnItemPopupClick, UploadPicManager.OnUploadCallback {
 
     @BindView(R.id.id_person_head_img)
     ImageView idPersonHeadImg;
@@ -90,7 +86,7 @@ public class PersonInfoAty extends BaseCommonAty implements View.OnClickListener
                     /**
                      * 保存图片
                      */
-                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "headImg", (String) msg.obj);
+//                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "headImg", (String) msg.obj);
                     break;
                 case 2:
                     break;
@@ -109,16 +105,15 @@ public class PersonInfoAty extends BaseCommonAty implements View.OnClickListener
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
         }
     }
-
     @Override
-    public View loadView(LayoutInflater inflater, View childView) {
-        return super.loadView(inflater, inflater.inflate(R.layout.aty_my_info, null));
+    protected View loadView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.aty_my_info, null);
     }
 
     @Override
     public void initPresenter() {
         super.initPresenter();
-        presenter = new PersonInfoPresenter();
+//        presenter = new PersonInfoPresenter();
     }
 
     @Override
@@ -129,15 +124,13 @@ public class PersonInfoAty extends BaseCommonAty implements View.OnClickListener
         area.setText(Session.getUser_area());
         singatrue.setText(Session.getUser_signatrue());
         desc.setText(Session.getUser_desc());
+        setTitleText(getString(R.string.mine_person_info));
         if (Protect.checkLoadImageStatus(aty)) {
             Glide.with(aty).load(Session.getUserPicUrl()).transform(new GlideRoundImage(aty)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
         }
     }
 
-    protected void setTitleText(String text) {
-        setTitleText(getString(R.string.mine_person_info), null);
-    }
 
     @Override
     public void initData() {

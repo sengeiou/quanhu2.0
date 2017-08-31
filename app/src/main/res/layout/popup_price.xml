@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:background="@color/translucent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_choose_bg"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/px60"
+            android:paddingLeft="@dimen/px70"
+            android:paddingRight="@dimen/px70"
+            android:paddingTop="@dimen/px60">
+
+            <GridView
+                android:id="@+id/id_opus_price_gridv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fadingEdge="none"
+                android:horizontalSpacing="@dimen/px40"
+                android:numColumns="2"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/px40" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/id_close_img"
+            android:layout_width="@dimen/px85"
+            android:layout_height="@dimen/px85"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/px10"
+            android:background="@drawable/ic_price_close"
+            android:clickable="true" />
+    </LinearLayout>
+</FrameLayout>

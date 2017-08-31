@@ -31,6 +31,8 @@
     <color name="color_1bc2b8">#1bc2b8</color>
     <color name="color_333333">#333333</color>
     <color name="light_gray">#cccccc</color>
+    <color name="black_50_transparent">#80000000</color>
+    <color name="translucent">#50000000</color>
 
 
 </resources>
