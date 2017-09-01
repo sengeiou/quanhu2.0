@@ -3,6 +3,7 @@ package com.rz.circled.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
@@ -33,6 +34,11 @@ import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jzxiang.pickerview.TimePickerDialog;
@@ -43,6 +49,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.PicAdapter;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.js.http.WebHttp;
+import com.rz.circled.js.model.EditorAuthorityRootBean;
 import com.rz.circled.js.model.EditorCategoryRootTwoModel;
 import com.rz.circled.js.model.EditorCategoryTwoModel;
 import com.rz.circled.js.model.EditorConfigTwoModel;
@@ -65,6 +72,7 @@ import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.CountDownTimer;
+import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
 import com.rz.common.utils.Protect;
@@ -116,7 +124,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     //封面
     @BindView(R.id.iv_editor_two_page)
-    ImageView ivPage;
+    SimpleDraweeView ivPage;
     @BindView(R.id.tv_editor_two_page_change)
     TextView tvPageChange;
     @BindView(R.id.tv_editor_two_page_add)
@@ -247,6 +255,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     CheckBox cbAnonymity;
     @BindView(R.id.cb_editor_two_vote)
     CheckBox cbVote;
+    //权限
+    @BindView(R.id.tv_editor_two_authority)
+    TextView tvAuthority;
+
 
     //视频
     private String[] videoItems = {"拍摄视频", "从手机相册中选取"};
@@ -283,6 +295,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 分类回调
      */
     private static final int SORT_REQUEST = 30;
+
+    private final int AUTHORITY_REQUEST = 40;
 
     private EditorDataSourceTwoModel dataSource;
 
@@ -350,8 +364,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         setTitleLeftText(R.string.cancel);
         setTitleText("");
         setTitleRightText(R.string.publish);
-        setTitleRightListener(new OnTitleRightClickListener());
         setTitleRightTextColor(R.color.color_main);
+        setTitleRightListener(new OnTitleRightClickListener());
         setTitleLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -402,7 +416,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     @OnClick({R.id.tv_editor_two_page_change, R.id.tv_editor_two_page_add, R.id.rl_editor_two_sort, R.id.rl_editor_two_location, R.id.rl_editor_two_time, R.id.iv_editor_two_choose_pic
             , R.id.iv_editor_two_choose_audio, R.id.iv_editor_two_choose_video, R.id.iv_editor_two_video_delete, R.id.iv_editor_two_audio_delete
-            , R.id.iv_editor_two_video_icon, R.id.iv_editor_two_video_preview, R.id.iv_editor_two_audio_play})
+            , R.id.iv_editor_two_video_icon, R.id.iv_editor_two_video_preview, R.id.iv_editor_two_audio_play, R.id.tv_editor_two_authority})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_editor_two_page_change:
@@ -496,6 +510,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     }
                 }
                 break;
+            case R.id.tv_editor_two_authority:
+                //跳转到选择权限页面
+                EditorConfigTwoModel authModel = (EditorConfigTwoModel) view.getTag();
+                Intent authorityIntent = new Intent(mContext, EditorTwoAuthorityActivity.class);
+                authorityIntent.putExtra(IntentKey.EXTRA_SERIALIZABLE, authModel.getData());
+                startActivityForResult(authorityIntent, AUTHORITY_REQUEST);
+                break;
         }
     }
 
@@ -535,7 +556,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             if (null == data) {
                 return;
             }
-            if (resultCode == PUBLISH_RESULT) {
+            if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT) {
                 ArrayList<String> mList = data.getExtras().getStringArrayList("picList");
                 if (null != mList && !mList.isEmpty()) {
                     if (isPicText) {
@@ -605,7 +626,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             mAudioFilePath = data.getStringExtra(IntentKey.EXTRA_PATH);
             initContentAudioView();
         } else if (requestCode == PIC_PAGE_CHANGE_REQUEST) {
-            if (resultCode == PUBLISH_RESULT) {//相册
+            if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT) {//相册
                 ArrayList<String> picList = data.getExtras().getStringArrayList("picList");
                 if (null != picList && !picList.isEmpty()) {
                     String filePath = picList.get(0);
@@ -634,6 +655,14 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 }
                 if (dataSource != null)
                     tvSort.setText(dataSource.getClassifyItemName());
+            }
+        } else if (requestCode == AUTHORITY_REQUEST) {
+            if (data != null) {
+                EditorAuthorityRootBean authorityRootBean = (EditorAuthorityRootBean) data.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
+                dataSource.setAllowGeneralizeFlag(authorityRootBean.getAllowGeneralizeFlag() == 1 ? 1 : 0);
+                dataSource.setAllowShareFlag(authorityRootBean.getAllowShareFlag() == 1 ? 1 : 0);
+                dataSource.setContentPrice(authorityRootBean.getContentPrice());
+                dataSource.setCoterieId(authorityRootBean.getCoterieId());
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -755,6 +784,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         processMedia();
         if (dataSource != null && dataSource.getContentSource() != null)
             processContentData();
+
+        //音频
+        EditorConfigTwoModel authModel = null;
+        if (configMap.containsKey("auth")) {
+            authModel = configMap.get("auth");
+        }
+        processAuthority(authModel);
     }
 
     /**
@@ -1077,6 +1113,15 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 //        rlVideo.setLayoutParams(layoutParams);
     }
 
+    private void processAuthority(EditorConfigTwoModel authModel) {
+        if (authModel.getEnabled()) {
+            tvAuthority.setVisibility(View.VISIBLE);
+            tvAuthority.setTag(authModel);
+        } else {
+            tvAuthority.setVisibility(View.GONE);
+        }
+    }
+
     /**
      * 处理内容相关数据
      */
@@ -1373,6 +1418,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         ivPage.setTag(R.id.iv_editor_two_page, imgPath);
         if (Protect.checkLoadImageStatus(this)) {
 //            Glide.with(this).load(imgPath).into(ivPage);
+            if (imgPath.startsWith("http"))
+                ivPage.setImageURI(Uri.parse(imgPath));
+            else
+                ivPage.setImageURI(Uri.fromFile(new File(imgPath)));
         }
     }
 
@@ -1516,7 +1565,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             Toasty.info(mContext, getString(R.string.not_found_pic)).show();
         }
         View view = getLayoutInflater().inflate(R.layout.layout_iv_article_item, llContentText, false);
-        final ImageView iv = (ImageView) view.findViewById(R.id.id_iv);
+        final SimpleDraweeView iv = (SimpleDraweeView) view.findViewById(R.id.id_iv);
         ImageView iv_delete = (ImageView) view.findViewById(R.id.id_iv_delete);
         iv_delete.setOnClickListener(this);
 
@@ -1531,14 +1580,24 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
         iv.setTag(R.id.id_iv, imgPath);
         if (Protect.checkLoadImageStatus(this)) {
-//            Glide.with(this).load(imgPath).into(new ViewTarget<ImageView, GlideDrawable>(iv) {
-//                @Override
-//                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-//                    iv.getLayoutParams().height = resource.getIntrinsicHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / resource.getIntrinsicWidth();
-//                    iv.requestLayout();
-//                    iv.setImageDrawable(resource.getCurrent());
-//                }
-//            });
+            // 需要使用 ControllerBuilder 方式请求图片
+            final PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
+            if (imgPath.startsWith("http"))
+                controller.setUri(Uri.parse(imgPath));
+            else
+                controller.setUri(Uri.fromFile(new File(imgPath)));
+            controller.setOldController(iv.getController());
+
+// 需要设置 ControllerListener，获取图片大小后，传递给 PhotoDraweeView 更新图片长宽
+            controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+                @Override
+                public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                    super.onFinalImageSet(id, imageInfo, animatable);
+                    iv.getLayoutParams().height = imageInfo.getHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / imageInfo.getWidth();
+                    iv.requestLayout();
+                    iv.setController(controller.build());
+                }
+            });
         }
         initImageCount();
     }
@@ -2184,15 +2243,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         rootBean.setDataSource(dataSource);
         if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//1.投票
             onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-//            RequestPublishHandler publishHandler = new RequestPublishHandler(this);
-//            publishHandler.setRequestData(rootBean);
-//            JsRequestEvent.callJsEvent(publishHandler, true);
             JsEvent.callJsEvent(rootBean, true);
             finish();
         } else {//2.发布
-//            RequestBeforePublishHandler beforePublishHandler = new RequestBeforePublishHandler(this);
-//            beforePublishHandler.setRequestData(rootBean);
-//            JsRequestEvent.callJsEvent(beforePublishHandler, true);
             try {
                 if (httpRequestModel != null) {
                     processPublishData();

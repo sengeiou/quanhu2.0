@@ -31,7 +31,6 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
         if (mData != null) mData.clear();
         else mData = new ArrayList<>();
         addData(list);
-        notifyDataSetChanged();
     }
 
     /**

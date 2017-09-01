@@ -27,10 +27,45 @@ public class EditorDataSourceTwoModel implements Serializable {
     private String title;
     private String videoThumbnailUrl;
     private String videoUrl;
+    private int allowGeneralizeFlag;
+    private int allowShareFlag;
+    private int contentPrice;
+    private String coterieId;
 
 
     private String classifyItemName;
 
+    public int getAllowGeneralizeFlag() {
+        return allowGeneralizeFlag;
+    }
+
+    public void setAllowGeneralizeFlag(int allowGeneralizeFlag) {
+        this.allowGeneralizeFlag = allowGeneralizeFlag;
+    }
+
+    public int getAllowShareFlag() {
+        return allowShareFlag;
+    }
+
+    public void setAllowShareFlag(int allowShareFlag) {
+        this.allowShareFlag = allowShareFlag;
+    }
+
+    public int getContentPrice() {
+        return contentPrice;
+    }
+
+    public void setContentPrice(int contentPrice) {
+        this.contentPrice = contentPrice;
+    }
+
+    public String getCoterieId() {
+        return coterieId;
+    }
+
+    public void setCoterieId(String coterieId) {
+        this.coterieId = coterieId;
+    }
 
     public long getClassifyItemId() {
         return classifyItemId;

@@ -318,7 +318,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (tvCommonTitleLeft != null && text != null)
             tvCommonTitleLeft.setText(text);
         tvCommonTitleLeft.setVisibility(View.VISIBLE);
-        ivCommonRight.setVisibility(View.GONE);
+        ivCommonLeft.setVisibility(View.GONE);
     }
 
 

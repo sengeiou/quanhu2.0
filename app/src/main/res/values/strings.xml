@@ -87,4 +87,9 @@
 
     <string name="i_am">我是</string>
     <string name="unallowed_join_hint">该群已设置不允许任何人加入</string>
+    <string name="editor_authority">权限</string>
+    <string name="authority_setting">权限设置</string>
+    <string name="authority_share">允许成员分享</string>
+    <string name="authority_read">付费可读</string>
+    <string name="authority_popularize">允许平台免费推广</string>
 </resources>
