@@ -3,6 +3,8 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
+import com.rz.httpapi.bean.BannerAddSubjectModel;
+import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -220,6 +222,139 @@ public interface ApiService {
     @POST(APIUser.EXIT_APP)
     Call<ResponseData> exitAPP(
             @Field("custId") String custId
+    );
+    /*****************************作品、圈子相关********app-circle********************************************/
+
+    /**
+     * 获取首页圈子入口列表
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_ENTRANCE_LIST)
+    public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
+            @Field("status") int status
+    );
+
+    /**
+     * 获取首页banner
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_BANNER_LIST)
+    public Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
+            @Field("act") int act
+    );
+
+
+    /*******************个人信息编辑保存 start**********************/
+
+    /**
+     * 保存头像
+     *
+     * @param custId
+     * @param headImg
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveHeadImg(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("headImg") String headImg
+    );
+
+    /**
+     * 保存昵称
+     *
+     * @param custId
+     * @param nickName
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveNickName(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("nickName") String nickName
+    );
+
+    /**
+     * 保存性别
+     *
+     * @param custId
+     * @param sex
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveSex(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("sex") String sex
+    );
+
+    /**
+     * 保存地区
+     *
+     * @param custId
+     * @param location
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveAress(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("location") String location
+    );
+
+    /**
+     * 保存个人签名
+     *
+     * @param custId
+     * @param signature
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveSignature(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("signature") String signature
+
+    );
+
+    /**
+     * 保存个人简介
+     *
+     * @param custId
+     * @param desc
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveDesc(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("desc") String desc
+    );
+
+    /*******************个人信息编辑保存 end**********************/
+
+    /**
+     * 举报接口
+     *
+     * @param custId
+     * @param type
+     * @param sourceId
+     * @param content
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(API.REPORT)
+    public Call<ResponseData> report(
+            @Field("custId") String custId,
+            @Field("type") int type,
+            @Field("sourceId") String sourceId,
+            @Field("content") String content
     );
 
 }

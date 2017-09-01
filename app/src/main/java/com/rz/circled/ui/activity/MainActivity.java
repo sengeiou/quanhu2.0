@@ -19,6 +19,7 @@ import com.rz.common.utils.ClickCounter;
 
 import butterknife.BindView;
 
+
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged {
 
     @Nullable
@@ -36,6 +37,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     protected boolean needShowTitle() {
+        return false;
+    }
+
+    @Override
+    protected boolean needSwipeBack() {
         return false;
     }
 

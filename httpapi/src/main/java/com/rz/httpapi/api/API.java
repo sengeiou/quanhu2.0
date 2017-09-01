@@ -76,4 +76,9 @@ public interface API {
     //审核不通过
     String URL_REVIEW_REFUSE = "/xycfq/message/011/";
 
+    /**
+     * 举报
+     */
+    public static final String REPORT = "v2/reported/save";
+
 }

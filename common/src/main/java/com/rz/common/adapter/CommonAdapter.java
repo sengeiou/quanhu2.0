@@ -1,6 +1,7 @@
 package com.rz.common.adapter;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +17,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     private List<T> mData;
     protected Context mContext;
     private int mLayoutId;
+    public SparseBooleanArray checkMap;
 
     public CommonAdapter(Context context, int layoutId) {
         mContext = context;
@@ -31,7 +33,6 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
         if (mData != null) mData.clear();
         else mData = new ArrayList<>();
         addData(list);
-        notifyDataSetChanged();
     }
 
     /**
@@ -76,5 +77,29 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
     protected ViewHolder getViewHolder(int position, View convertView, ViewGroup parent) {
         return ViewHolder.get(mContext, convertView, parent, mLayoutId, position);
+    }
+    /**
+     * 用来记录checkbox的状态
+     */
+    private boolean checkedDefaultValue = false;
+    /**
+     * 改变某个item的选中状态 <功能详细描述> 多选
+     */
+    public void setCheckAtPosition(int pos) {
+        checkMap.put(pos, !checkMap.get(pos, checkedDefaultValue));
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 改变某个item的选中状态 <功能详细描述> 单选
+     */
+    public void setCheckAtPosFalse(int pos, boolean flag) {
+        for (int i = 0; i < getCount(); i++) {
+            checkMap.put(i, false);
+        }
+        if (flag) {
+            checkMap.put(pos, !checkMap.get(pos, checkedDefaultValue));
+        }
+        notifyDataSetChanged();
     }
 }

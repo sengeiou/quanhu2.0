@@ -18,6 +18,8 @@
     <string name="upload_video">上传视频</string>
     <string name="click_to_try_again">点击重试</string>
 
+    <string name="login">登录</string>
+    <string name="request_failed">请求失败</string>
     <string name="next">下一步</string>
 
     <string name="sd_card_un_exist">SD卡不存在</string>
@@ -94,8 +96,74 @@
     <string name="private_group_status_2">未通过</string>
     <string name="private_group_status_3">上架</string>
     <string name="private_group_status_4">下架</string>
-    <string name="request_failed">请求失败</string>
     <string name="private_group_login_tip">登录才能创建私圈</string>
-    <string name="login">登录</string>
     <string name="private_group_no_create">还没有创建私圈哦！</string>
+
+    <string name="mine_my_account">我的账户</string>
+    <string name="consumer_account">消费账户</string>
+    <string name="account_profit">悠然账户</string>
+    <string name="redbag_record">红包记录</string>
+    <string name="bank_card">银行卡</string>
+    <string name="cost_detail_v3">消费明细</string>
+    <string name="account_remain">账户余额</string>
+    <string name="youranbi">悠然币</string>
+    <string name="recharge">充值</string>
+    <string name="all_point">悠然账户</string>
+    <string name="duihuan_yrb">您暂无可兑换悠然币</string>
+    <string name="tixian_yrb">您暂无可提现悠然币</string>
+    <string name="yizhi">悠然一指</string>
+    <string name="account_balance">账户余额</string>
+    <string name="youran_currency">悠然币</string>
+    <string name="transfer_cost_account">兑换到消费账户</string>
+    <string name="draw_title">提现</string>
+    <string name="reward_rules">《平台奖励规则》</string>
+    <string name="unbind_bank_card">解绑银行卡</string>
+    <string name="set_default">设为默认</string>
+    <string name="mine_person_area">地区</string>
+    <string name="mine_person_save">保存</string>
+    <string name="mine_person_locate">定位当前位置</string>
+    <string name="is_location">正在定位...</string>
+    <string name="mine_person_all">全部</string>
+    <string name="had_check">已选中</string>
+    <string name="location_permission">悠然一指要使用定位权限</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+    <string name="mine_person_info">个人信息</string>
+    <!--启动页-->
+    <string name="start_page_jump">跳过</string>
+    <string name="second">秒</string>
+    <string name="mine_person_photo">头像</string>
+    <string name="mine_person_nick">昵称</string>
+    <string name="mine_person_scan">我的二维码</string>
+    <string name="mine_person_sex">性别</string>
+    <string name="mine_person_sign">个人签名</string>
+    <string name="mine_person_brief">个人简介</string>
+    <string name="mine_person_city">城市</string>
+    <string name="change_bank_card">更换银行卡</string>
+    <string name="setting_success">设置成功</string>
+    <string name="unbind_card_success">解绑成功</string>
+    <string name="location_permission_run">悠然一指要使用定位权限，否则app可能无法正常运行</string>
+    <string name="carme_sd_permission">悠然一指要使用摄像头,使用sd卡权限</string>
+
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">上滑加载更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+    <string name="no_more_data">没有更多数据</string>
+    <string name="baiquanfencheng">百圈纷呈</string>
+    <string name="editor_authority">权限</string>
+    <string name="authority_setting">权限设置</string>
+    <string name="authority_share">允许成员分享</string>
+    <string name="authority_read">付费可读</string>
+    <string name="authority_popularize">允许平台免费推广</string>
+
+
+    <string name="modify_fail">修改失败</string>
+    <string name="report_fail">举报失败</string>
+    <string name="refunds_success">举报成功</string>
+    <string name="refunds_fail">举报失败</string>
+
 </resources>

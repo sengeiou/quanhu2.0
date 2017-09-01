@@ -4,6 +4,7 @@ package com.rz.common.constant;
  * Created by Gsm on 2017/8/9.
  */
 public interface IntentKey {
+    //位置
     /**
      * 路径
      */
@@ -39,4 +40,6 @@ public interface IntentKey {
     String EXTRA_IMAGE_MAX = "extra_max_image";
 
     String EXTRA_INVOKE_ID = "extraInvokeId";
+
+    String EXTRA_MODEL = "extraModel";
 }

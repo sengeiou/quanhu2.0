@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.rz.rz_rrz.widget.XListView
+        android:id="@+id/id_bank_listv"
+        style="@style/DefaultLvStyle"
+        android:clipToPadding="false"
+        android:divider="@null" />
+
+</LinearLayout>

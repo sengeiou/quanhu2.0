@@ -41,10 +41,6 @@ public class PicManagerAdapter extends CommonAdapter<PictureModel> {
             mCheckBox.setVisibility(View.VISIBLE);
             if (model.getmPicPath() != null && Protect.checkLoadImageStatus(mContext)) {
                 SimpleDraweeView draweeView = (SimpleDraweeView) holder.getViewById(R.id.iv_pic_sel);
-//                draweeView.setController(Fresco.newDraweeControllerBuilder()
-//                        .setAutoPlayAnimations(true)
-//                        .setUri(Uri.parse("file://" + model.getmPicPath()))//设置uri
-//                        .build());
                 draweeView.setImageURI(Uri.fromFile(new File(model.getmPicPath())));
             }
             mCheckBox.setChecked(model.isSelect());

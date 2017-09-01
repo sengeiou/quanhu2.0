@@ -28,7 +28,6 @@ import com.rz.sgt.jsbridge.core.WebViewProxy;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 public class WebContainerActivity extends BaseActivity implements BaseLoadView.RefreshListener {
 
     private AdvancedWebView mWebView;

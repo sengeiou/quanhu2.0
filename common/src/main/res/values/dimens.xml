@@ -8,7 +8,7 @@
     <!--默認title高-->
     <dimen name="title_height">@dimen/px130</dimen>
     <!--整個app基础边距(ui图上距离手机屏幕的距离)-->
-    <dimen name="app_base_padding">@dimen/px45</dimen>
+    <dimen name="app_base_padding">@dimen/px44</dimen>
     <!--通用按钮的高-->
     <dimen name="btn_base_height">@dimen/px116</dimen>
     <!--通用大按钮的边距-->
