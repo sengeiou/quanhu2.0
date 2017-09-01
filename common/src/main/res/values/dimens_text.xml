@@ -14,13 +14,11 @@
     <dimen name="font_s">@dimen/px38</dimen>
     <!--超小号文字字体-->
     <dimen name="font_xs">@dimen/px32</dimen>
-
-
+    <dimen name="font_44">@dimen/px44</dimen>
+    <dimen name="font_46">@dimen/px46</dimen>
+    <dimen name="font_40">@dimen/px40</dimen>
     <dimen name="font_52">@dimen/px52</dimen>
     <dimen name="font_50">@dimen/px50</dimen>
-    <dimen name="font_48">@dimen/px48</dimen>
-    <dimen name="font_44">@dimen/px44</dimen>
-    <dimen name="font_40">@dimen/px40</dimen>
     <dimen name="font_38">@dimen/px38</dimen>
     <dimen name="font_34">@dimen/px34</dimen>
 

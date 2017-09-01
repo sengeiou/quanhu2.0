@@ -26,12 +26,11 @@ import butterknife.Unbinder;
  */
 public abstract class BaseFragment extends Fragment implements IViewController, EasyPermissions.PermissionCallbacks {
     private Unbinder unbinder;
-    private Activity mActivity;
+    public Activity mActivity;
     public String TAG;
     protected boolean isViewInit = false;
     private boolean isAddIn = false;
     private BaseLoadView mLoadView;
-
     public BaseFragment() {
         TAG = getClass().getSimpleName();
     }
@@ -50,9 +49,14 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         initContentView(inflater, llRoot);
         unbinder = ButterKnife.bind(this, rootView);
         isViewInit = true;
+        initPresenter();
         initView();
         initData();
         return rootView;
+    }
+
+    public void initPresenter() {
+
     }
 
     private void initContentView(LayoutInflater inflater, LinearLayout llContent) {

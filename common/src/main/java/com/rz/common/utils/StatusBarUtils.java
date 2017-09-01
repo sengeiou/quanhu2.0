@@ -1,4 +1,4 @@
-package com.rz.sgt.jsbridge;
+package com.rz.common.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

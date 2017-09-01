@@ -18,6 +18,8 @@ import com.rz.common.utils.ClickCounter;
 
 import butterknife.BindView;
 
+
+
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged {
 
     @Nullable

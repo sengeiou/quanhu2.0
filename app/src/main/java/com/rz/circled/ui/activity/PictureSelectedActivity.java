@@ -55,7 +55,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
 /**
  * 图片管理器
  */

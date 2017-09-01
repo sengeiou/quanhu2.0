@@ -41,6 +41,7 @@ import com.rz.common.widget.toasty.Toasty;
 
 import butterknife.BindView;
 
+
 public class MediaActivity extends BaseActivity implements SimpleExoPlayer.VideoListener, ExoPlayer.EventListener {
 
     @BindView(R.id.playview_exo)

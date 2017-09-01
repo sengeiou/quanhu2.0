@@ -4,6 +4,29 @@ package com.rz.common.constant;
  * 接口返回数据 类别标识
  */
 public interface Type {
+
+    /**
+     * 设置了支付密码
+     */
+     int HAD_SET_PW = 1;
+
+    /**
+     * 没有支付密码
+     */
+    int HAD_NO_SET_PW = 0;
+
+    /**
+     * 开启了免密支付
+     */
+     int OPEN_EASY_PAY = 1;
+    //收益流水
+    public static final int TYPE_SCORE = 2;
+    //消费流水
+    int TYPE_BALANCE = 1;
+    /**
+     * 红包记录
+     */
+    int TYPE_RECORD_BAG = 6;
     /**
      * 视频
      */
