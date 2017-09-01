@@ -18,6 +18,7 @@ import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,11 +48,17 @@ public class HomeFragment extends BaseFragment {
         V3CirclePresenter presenter = new V3CirclePresenter();
         presenter.attachView(this);
         presenter.getBannerList(5);
+        presenter.getCircleDynamicList(false);
     }
 
     @Override
     public void initView() {
+        initDynamicLv();
+    }
 
+    private void initDynamicLv() {
+        dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);//泛型要改
+        mHomeLv.setAdapter(dynamicAdapter);
     }
 
     @Override
@@ -74,6 +81,20 @@ public class HomeFragment extends BaseFragment {
             }
             mAuto_viewpager.notifyData();
         }
+    }
+
+    @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t != null) {
+            if (!loadMore) {
+                circleDynamicList.clear();
+            }
+            circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
+        }
+            dynamicAdapter.notifyDataSetChanged();
+
+
     }
 
     @OnClick(R.id.tv_home_web)

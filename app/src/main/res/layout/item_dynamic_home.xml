@@ -22,7 +22,7 @@
             android:layout_height="@dimen/px98"
             android:src="@drawable/ic_default_head_new" />
 
-        <com.rz.rz_rrz.widget.CircleImageView
+        <com.rz.circled.widget.CircleImageView
             android:id="@+id/civ_superV"
             android:layout_width="@dimen/px38"
             android:layout_height="@dimen/px38"

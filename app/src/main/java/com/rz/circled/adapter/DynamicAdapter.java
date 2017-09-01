@@ -7,13 +7,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.widget.CircleImageView;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.CircleDynamic;
-import com.yryz.yunxinim.uikit.common.ui.imageview.CircleImageView;
 
 import java.util.List;
 
