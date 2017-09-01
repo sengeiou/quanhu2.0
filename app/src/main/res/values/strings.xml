@@ -153,5 +153,6 @@
     <string name="report_fail">举报失败</string>
     <string name="refunds_success">举报成功</string>
     <string name="refunds_fail">举报失败</string>
+    <string name="un_support_function">暂不支持此服务</string>
 
 </resources>

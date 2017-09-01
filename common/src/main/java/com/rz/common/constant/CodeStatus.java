@@ -29,6 +29,10 @@ public class CodeStatus {
         public static final int NOT_FULL_DATA = 310;
         //没有转发券
         public static final int NO_TICKET_MSG = 305;
+        /**
+         * web页找不到
+         */
+        public static final int WEB_ERROR = 160;
     }
 
     /**

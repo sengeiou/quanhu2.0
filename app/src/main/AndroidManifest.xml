@@ -143,6 +143,7 @@
             android:name=".ui.activity.RewardScoreAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity android:name=".ui.activity.CommonH5Activity"/>
     </application>
 
 </manifest>
