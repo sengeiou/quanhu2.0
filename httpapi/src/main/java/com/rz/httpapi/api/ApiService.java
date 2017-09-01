@@ -234,6 +234,7 @@ public interface ApiService {
     public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
             @Field("status") int status
     );
+
     /**
      * 获取首页banner
      */
@@ -256,6 +257,120 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("start") int start,
             @Field("limit") int limit
+    );
+
+
+    /*******************个人信息编辑保存 start**********************/
+
+    /**
+     * 保存头像
+     *
+     * @param custId
+     * @param headImg
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveHeadImg(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("headImg") String headImg
+    );
+
+    /**
+     * 保存昵称
+     *
+     * @param custId
+     * @param nickName
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveNickName(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("nickName") String nickName
+    );
+
+    /**
+     * 保存性别
+     *
+     * @param custId
+     * @param sex
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveSex(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("sex") String sex
+    );
+
+    /**
+     * 保存地区
+     *
+     * @param custId
+     * @param location
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveAress(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("location") String location
+    );
+
+    /**
+     * 保存个人签名
+     *
+     * @param custId
+     * @param signature
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveSignature(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("signature") String signature
+
+    );
+
+    /**
+     * 保存个人简介
+     *
+     * @param custId
+     * @param desc
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.PERSON_INFO_UPDATE)
+    Call<ResponseData> editSaveDesc(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("desc") String desc
+    );
+
+    /*******************个人信息编辑保存 end**********************/
+
+    /**
+     * 举报接口
+     *
+     * @param custId
+     * @param type
+     * @param sourceId
+     * @param content
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(API.REPORT)
+    public Call<ResponseData> report(
+            @Field("custId") String custId,
+            @Field("type") int type,
+            @Field("sourceId") String sourceId,
+            @Field("content") String content
     );
 
 }

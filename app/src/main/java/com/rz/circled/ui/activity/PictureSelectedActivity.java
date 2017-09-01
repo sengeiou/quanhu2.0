@@ -304,6 +304,8 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         if (!mShowPictures.contains(mAddCameraPic)) {
             mShowPictures.add(0, mAddCameraPic);
         }
+
+        picManagerAdapter.setmAddCameraPic(mAddCameraPic);
     }
 
 

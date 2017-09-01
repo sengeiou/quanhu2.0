@@ -37,7 +37,7 @@ public class RewardScoreAty extends BaseActivity {
 
     @Override
     protected View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aty_reward_score, null);
+        return inflater.inflate(R.layout.activity_reward_score, null);
     }
 
     @Override

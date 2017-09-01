@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.rz.circled.R;
 import com.rz.circled.modle.AreaModel;
+import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.Session;
@@ -59,18 +61,20 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     public AMapLocationClientOption mLocationOption = null;
     //上一个页面带过来的type
     private String keyType;
+    private PersonInfoPresenter personInfoPresenter;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aty_my_area, null);
+        return inflater.inflate(R.layout.activity_my_area, null);
     }
 
     @Override
     public void initView() {
+
         setTitle(getString(R.string.mine_person_area));
         setTitleRightText(getString(R.string.mine_person_save));
 
-        keyType = getIntent().getStringExtra(IntentKey.KEY_TYPE);
+        keyType = getIntent().getStringExtra(IntentKey.EXTRA_TYPE);
 
         View headView = LayoutInflater.from(this).inflate(R.layout.layout_area_head, null);
         mTvLocation = (TextView) headView.findViewById(R.id.tv_location);
@@ -79,7 +83,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
 
         // 模拟一个选中城市
 
-        mAdapter = new CommonAdapter<AreaModel>(this,  R.layout.layout_area_item) {
+        mAdapter = new CommonAdapter<AreaModel>(this, R.layout.layout_area_item) {
 
             @Override
             public void convert(ViewHolder helper, AreaModel item, int position) {
@@ -105,22 +109,23 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void initPresenter() {
         super.initPresenter();
-//        presenter = new PersonInfoPresenter();
+        personInfoPresenter = new PersonInfoPresenter();
+        personInfoPresenter.attachView(this);
     }
 
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
         //通用发布页面过来
-//        if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
-//            String area = t.toString();
-//            Intent mIntent = new Intent();
-//            mIntent.putExtra(IntentKey.KEY_POSITION, area);
-//            setResult(RESULT_CODE1, mIntent);
-//        } else {
-//            Session.setUser_area(t.toString());
-//            setResult(RESULT_CODE1);
-//        }
+        if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+            String area = t.toString();
+            Intent mIntent = new Intent();
+            mIntent.putExtra(IntentKey.EXTRA_POSITION, area);
+            setResult(RESULT_CODE1, mIntent);
+        } else {
+            Session.setUser_area(t.toString());
+            setResult(RESULT_CODE1);
+        }
         finish();
     }
 
@@ -174,52 +179,52 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position > 0) {
-//            Intent intent = new Intent(this, PersonSecondAreaAty.class);
-//            Bundle data = new Bundle();
-//            data.putSerializable("areaModel", areaList.get(position - 1));
-//            data.putString(IntentKey.KEY_TYPE, keyType);
-//            intent.putExtras(data);
-//            startActivityForResult(intent, REQUEST_CODE);
+            Intent intent = new Intent(this, PersonSecondAreaAty.class);
+            Bundle data = new Bundle();
+            data.putSerializable("areaModel", areaList.get(position - 1));
+            data.putString(IntentKey.EXTRA_TYPE, keyType);
+            intent.putExtras(data);
+            startActivityForResult(intent, REQUEST_CODE);
         } else if (position == 0) {
             paramas = "";
             /**
              * 进入gps定位
              */
             String area = mTvLocation.getText().toString().trim();
-//            if (!TextUtils.equals(area, getString(R.string.is_location))) {
-//                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
-//                    //通用发布页过来
-//                    Intent mIntent = new Intent();
-//                    mIntent.putExtra(IntentKey.General.KEY_POSITION, area);
-//                    setResult(RESULT_CODE1, mIntent);
-//                    finish();
-//                } else {
-//                    String[] array = area.split(" ");
-//                    String[] index = new String[array.length - 1];
-//                    for (int i = 0; i < index.length; i++) {
-//                        index[i] = array[i + 1].substring(0, array[i + 1].length() - 1);
-//                        paramas = paramas + " " + index[i];
-//                    }
-//                    paramas = paramas.trim();
-////                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "location", paramas);
-//                }
-//            }
+            if (!TextUtils.equals(area, getString(R.string.is_location))) {
+                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+                    //通用发布页过来
+                    Intent mIntent = new Intent();
+                    mIntent.putExtra(IntentKey.EXTRA_POSITION, area);
+                    setResult(RESULT_CODE1, mIntent);
+                    finish();
+                } else {
+                    String[] array = area.split(" ");
+                    String[] index = new String[array.length - 1];
+                    for (int i = 0; i < index.length; i++) {
+                        index[i] = array[i + 1].substring(0, array[i + 1].length() - 1);
+                        paramas = paramas + " " + index[i];
+                    }
+                    paramas = paramas.trim();
+                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas);
+                }
+            }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
-//            if (resultCode == RESULT_CODE) {
-//                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
-//                    setResult(RESULT_CODE1, data);
-//                    finish();
-//                } else {
-//                    setResult(RESULT_CODE1);
-//                    finish();
-//                }
-//
-//            }
+            if (resultCode == RESULT_CODE) {
+                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+                    setResult(RESULT_CODE1, data);
+                    finish();
+                } else {
+                    setResult(RESULT_CODE1);
+                    finish();
+                }
+
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

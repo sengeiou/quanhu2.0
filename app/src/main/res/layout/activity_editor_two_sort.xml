@@ -13,7 +13,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/px15"
         android:layout_marginRight="@dimen/px15"
+        android:divider="@color/line_gray_s"
         android:dividerHeight="@dimen/px2"
+        android:listSelector="@color/transparent"
         android:paddingLeft="@dimen/px15"
         android:paddingRight="@dimen/px15"
         android:scrollbars="none"/>

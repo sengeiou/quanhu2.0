@@ -38,7 +38,6 @@ import java.util.List;
 import butterknife.BindView;
 
 
-
 /**
  * 银行卡列表
  */
@@ -74,7 +73,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
      */
     public static void startBankCardList(Activity activity, int type) {
         Intent intent = new Intent(activity, BankCardListAty.class);
-        intent.putExtra(IntentKey.KEY_TYPE, type);
+        intent.putExtra(IntentKey.EXTRA_TYPE, type);
         activity.startActivityForResult(intent, IntentCode.BankCard.BankCard_REQUEST_CODE);
     }
 
@@ -85,7 +84,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     protected View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aty_bankcard_list, null);
+        return inflater.inflate(R.layout.activity_bankcard_list, null);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void initView() {
-        type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
+        type = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, Constants.DEFAULTVALUE);
         if (type == 1) {
             setTitleText(getString(R.string.bank_card));
             mPopupView = new PopupView(aty);
@@ -136,7 +135,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
     public void initData() {
         mAdapter = new CommonAdapter<BankCardModel>(aty, R.layout.layout_item_bank_card) {
             @Override
-            public void convert(ViewHolder helper, final BankCardModel item,int postion) {
+            public void convert(ViewHolder helper, final BankCardModel item, int postion) {
                 //银行卡icon
                 ImageView mBankImg = (ImageView) helper.getViewById(R.id.id_iv_icon);
                 //信用卡
@@ -189,7 +188,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                                 mPopupView.setItemColor(mTitleColor);
                             } else {
                                 Intent card = new Intent();
-                                card.putExtra(IntentKey.KEY_MODEL, item);
+                                card.putExtra(IntentKey.EXTRA_MODEL, item);
                                 setResult(IntentCode.BankCard.BankCard_RESULT_CODE, card);
                                 finish();
                             }

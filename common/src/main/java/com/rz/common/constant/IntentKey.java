@@ -5,10 +5,6 @@ package com.rz.common.constant;
  */
 public interface IntentKey {
     //位置
-    String KEY_POSITION = "key_position";
-    String KEY_TYPE = "type";
-    String KEY_MODEL = "key_model";
-    String KEY_PATH = "path";
     /**
      * 路径
      */
@@ -44,4 +40,6 @@ public interface IntentKey {
     String EXTRA_IMAGE_MAX = "extra_max_image";
 
     String EXTRA_INVOKE_ID = "extraInvokeId";
+
+    String EXTRA_MODEL = "extraModel";
 }

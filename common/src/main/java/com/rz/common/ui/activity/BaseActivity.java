@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -24,6 +25,7 @@ import com.rz.common.R;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.widget.SwipeBackLayout;
 
 import java.util.List;
@@ -57,7 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        this.aty=this;
+        this.aty = this;
         TAG = getClass().getSimpleName();
         setContentView(R.layout.activity_base);
 
@@ -67,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
         initSupportSwipeBack();
         initTint();
-
+        StatusBarUtils.setDarkStatusIcon(this, true);
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         initTitleView(llTitle, flTransTitle);
@@ -119,11 +121,28 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (needLoadingView()) {
             View loadView = getLayoutInflater().inflate(R.layout.layout_base_load, null);
             mLoadView = new BaseLoadView(mContext, loadView, llContent);
-            llContent.addView(loadView);
+            ViewGroup.LayoutParams layoutParams = loadView.getLayoutParams();
+            if (layoutParams == null)
+                layoutParams = new ViewGroup.LayoutParams(-1, -1);
+            else {
+                layoutParams.height = -1;
+                layoutParams.width = -1;
+            }
+            llContent.addView(loadView, layoutParams);
         }
-        if (loadView(getLayoutInflater()) != null)
-            llContent.addView(loadView(getLayoutInflater()));
+        if (loadView(getLayoutInflater()) != null) {
+            View contentView = loadView(getLayoutInflater());
+            ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+            if (layoutParams == null) {
+                layoutParams = new ViewGroup.LayoutParams(-1, -1);
+            } else {
+                layoutParams.height = -1;
+                layoutParams.width = -1;
+            }
+            llContent.addView(contentView, layoutParams);
+        }
     }
+
     /**
      * show to @param(cls)，but can't finish activity
      */
@@ -140,12 +159,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void showActivity(Activity aty, Intent it) {
         aty.startActivity(it);
     }
+
     public void showActivity(Activity aty, Class<?> cls, Bundle extras) {
         Intent intent = new Intent();
         intent.putExtras(extras);
         intent.setClass(aty, cls);
         aty.startActivity(intent);
     }
+
     /**
      * skip to @param(cls)，and call @param(aty's) finish() method
      */
@@ -170,6 +191,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         showActivity(aty, cls, extras);
         aty.finish();
     }
+
     /**
      * 初始化沉浸式
      */
@@ -372,7 +394,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (tvCommonTitleLeft != null && text != null)
             tvCommonTitleLeft.setText(text);
         tvCommonTitleLeft.setVisibility(View.VISIBLE);
-        ivCommonRight.setVisibility(View.GONE);
+        ivCommonLeft.setVisibility(View.GONE);
     }
 
 

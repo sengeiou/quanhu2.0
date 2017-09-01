@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/colorPrimary"
+              android:background="@color/white"
               android:orientation="vertical"
               android:paddingTop="@dimen/title_bar_padding_top">
 
@@ -27,6 +27,8 @@
             android:paddingLeft="@dimen/app_base_padding"
             android:paddingRight="@dimen/px40"
             android:text="左侧文字"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/font_44"
             android:visibility="gone"/>
 
         <TextView
@@ -46,7 +48,8 @@
             android:gravity="center_vertical"
             android:paddingRight="@dimen/app_base_padding"
             android:text="右侧文字"
-            android:textColor="@color/color_333"
+            android:textColor="@color/font_color_blue"
+            android:textSize="@dimen/font_44"
             android:visibility="gone"/>
 
         <ImageView

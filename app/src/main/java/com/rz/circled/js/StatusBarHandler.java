@@ -3,8 +3,8 @@ package com.rz.circled.js;
 
 import android.app.Activity;
 
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.sgt.jsbridge.ServerHandler;
-import com.rz.sgt.jsbridge.StatusBarUtils;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;

@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px560">
 
-                    <ImageView
+                    <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/iv_editor_two_page"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -704,78 +704,104 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             style="@style/line_horizontal_gray_s"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/px158"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px30">
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_pic"
-                android:layout_width="@dimen/px144"
+                android:layout_width="@dimen/px100"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/px30"
+                android:layout_marginRight="@dimen/px44"
                 android:src="@mipmap/icon_editor_pic"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_video"
-                android:layout_width="@dimen/px144"
+                android:layout_width="@dimen/px100"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/px30"
+                android:layout_marginRight="@dimen/px44"
                 android:src="@mipmap/icon_editor_video"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_audio"
-                android:layout_width="@dimen/px144"
+                android:layout_width="@dimen/px100"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/px30"
                 android:src="@mipmap/icon_editor_audio"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <CheckBox
-                    android:id="@+id/cb_editor_two_anonymity"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/px44"
-                    android:background="@color/transparent"
-                    android:button="@null"
-                    android:checked="false"
-                    android:drawableLeft="@drawable/check_publish_sel"
-                    android:drawablePadding="@dimen/px28"
-                    android:text="匿名发布"
-                    android:textSize="@dimen/px44"
-                    android:visibility="gone"/>
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cb_editor_two_anonymity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/px44"
+                        android:background="@color/transparent"
+                        android:button="@null"
+                        android:checked="false"
+                        android:drawableLeft="@drawable/check_publish_sel"
+                        android:drawablePadding="@dimen/px28"
+                        android:text="匿名发布"
+                        android:textColor="@color/font_gray_m"
+                        android:textSize="@dimen/px44"
+                        android:visibility="gone"/>
 
 
-                <CheckBox
-                    android:id="@+id/cb_editor_two_vote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/px44"
-                    android:background="@color/transparent"
-                    android:button="@null"
-                    android:checked="false"
-                    android:drawableLeft="@drawable/check_publish_sel"
-                    android:drawablePadding="@dimen/px28"
-                    android:text="发起投票"
-                    android:textSize="@dimen/px44"
-                    android:visibility="gone"/>
+                    <CheckBox
+                        android:id="@+id/cb_editor_two_vote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/px44"
+                        android:background="@color/transparent"
+                        android:button="@null"
+                        android:checked="false"
+                        android:drawableLeft="@drawable/check_publish_sel"
+                        android:drawablePadding="@dimen/px28"
+                        android:text="发起投票"
+                        android:textColor="@color/font_gray_m"
+                        android:textSize="@dimen/px44"
+                        android:visibility="gone"/>
 
+                    <TextView
+                        android:id="@+id/tv_editor_two_authority"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/px30"
+                        android:background="@drawable/shape_round_f4"
+                        android:drawableLeft="@mipmap/editor_authority"
+                        android:drawablePadding="@dimen/px12"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/px20"
+                        android:paddingLeft="@dimen/px15"
+                        android:paddingRight="@dimen/px25"
+                        android:paddingTop="@dimen/px20"
+                        android:text="@string/editor_authority"
+                        android:textColor="@color/font_color_blue"
+                        android:visibility="gone"/>
+                </LinearLayout>
             </RelativeLayout>
 
         </LinearLayout>

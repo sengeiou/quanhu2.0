@@ -36,6 +36,10 @@
 
     <!--底部导航栏字体蓝色-->
     <color name="tab_blue">@color/color_183</color>
+    <!--蓝色字体-->
+    <color name="font_color_blue">@color/color_0085ff</color>
+    <!--通用背景色-->
+    <color name="bg_common">@color/color_F8F8F8</color>
 
 
 </resources>

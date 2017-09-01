@@ -50,6 +50,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
+
 /**
  * Created by xiayumo on 16/8/15.
  * 个人详情
@@ -108,9 +109,10 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
         }
     }
+
     @Override
     protected View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aty_my_info, null);
+        return inflater.inflate(R.layout.activity_my_info, null);
     }
 
     @Override
@@ -153,14 +155,14 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         Bundle data = new Bundle();
         switch (v.getId()) {
             case R.id.id_layout_person_photo:
-                trackUser("我的","个人资料二级界面","头像");
+                trackUser("我的", "个人资料二级界面", "头像");
 //                intent.setClass(this, PictureManagerAty.class);
 //                intent.putExtra("isSingle", true);
 //                startActivityForResult(intent, REQUEST_CODE);
                 popupView.showAtLocPop(root, POPUP_ITEMS);
                 break;
             case R.id.id_layout_person_nick:
-                trackUser("我的","个人资料二级界面","昵称");
+                trackUser("我的", "个人资料二级界面", "昵称");
 //                intent.setClass(this, PersonNickAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
@@ -168,17 +170,17 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
 //                showActivity(this, PersonScanAty.class);
                 break;
             case R.id.id_layout_person_sex:
-                trackUser("我的","个人资料二级界面","性别");
+                trackUser("我的", "个人资料二级界面", "性别");
 //                intent.setClass(this, PersonSexAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_area:
-                trackUser("我的","个人资料二级界面","地区");
+                trackUser("我的", "个人资料二级界面", "地区");
                 intent.setClass(this, PersonAreaAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_sign:
-                trackUser("我的","个人资料二级界面","个人签名");
+                trackUser("我的", "个人资料二级界面", "个人签名");
                 data.putString("content", singatrue.getText().toString());
                 data.putString(TYPE, getString(R.string.mine_person_sign));
                 intent.putExtras(data);
@@ -186,7 +188,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_brief:
-                trackUser("我的","个人资料二级界面","个人简介");
+                trackUser("我的", "个人资料二级界面", "个人简介");
                 data.putString("content", desc.getText().toString());
                 data.putString(TYPE, getString(R.string.mine_person_brief));
                 intent.putExtras(data);
@@ -383,13 +385,13 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString(IntentKey.KEY_PATH, mPhotoFileName);
+        outState.putString(IntentKey.EXTRA_PATH, mPhotoFileName);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        mPhotoFileName = savedInstanceState.getString(IntentKey.KEY_PATH, "");
+        mPhotoFileName = savedInstanceState.getString(IntentKey.EXTRA_PATH, "");
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -451,7 +453,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                     if (SDState.equals(Environment.MEDIA_MOUNTED)) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         // 创建拍摄照片保存的文件夹及图片文件名
-                        String imgName =StringUtils.getPhotoFileName();
+                        String imgName = StringUtils.getPhotoFileName();
                         File mPhotoFile = new File(CacheUtils.getCacheDirectory(aty, true, "pic") + imgName);
                         if (mPhotoFile != null) {
                             mPhotoFileName = mPhotoFile.getAbsolutePath();
