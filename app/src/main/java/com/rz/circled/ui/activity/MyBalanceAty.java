@@ -27,7 +27,7 @@ public class MyBalanceAty extends BaseActivity {
 
     @Override
     protected View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aty_my_balance, null);
+        return inflater.inflate(R.layout.activity_my_balance, null);
     }
     @Override
     public boolean hasDataInPage() {

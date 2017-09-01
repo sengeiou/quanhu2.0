@@ -126,6 +126,7 @@
     <string name="mine_person_sex">性别</string>
     <string name="mine_person_sign">个人签名</string>
     <string name="mine_person_brief">个人简介</string>
+    <string name="mine_person_city">城市</string>
     <string name="change_bank_card">更换银行卡</string>
     <string name="setting_success">设置成功</string>
     <string name="unbind_card_success">解绑成功</string>
@@ -146,4 +147,11 @@
     <string name="authority_share">允许成员分享</string>
     <string name="authority_read">付费可读</string>
     <string name="authority_popularize">允许平台免费推广</string>
+
+
+    <string name="modify_fail">修改失败</string>
+    <string name="report_fail">举报失败</string>
+    <string name="refunds_success">举报成功</string>
+    <string name="refunds_fail">举报失败</string>
+
 </resources>

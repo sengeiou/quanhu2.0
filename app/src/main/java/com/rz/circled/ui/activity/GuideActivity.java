@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
 /**
  * Created by Administrator on 2017/8/11/011.
  */
@@ -25,6 +26,16 @@ public class GuideActivity extends BaseActivity {
     @BindView(R.id.guide_vp)
     ViewPager mGuideVp;
     List<Integer> guideList = new ArrayList<>();
+
+    @Override
+    protected boolean needSwipeBack() {
+        return false;
+    }
+
+    @Override
+    protected boolean needShowTitle() {
+        return false;
+    }
 
     @Nullable
     @Override

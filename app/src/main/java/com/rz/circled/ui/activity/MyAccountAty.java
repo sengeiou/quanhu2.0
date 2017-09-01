@@ -17,7 +17,7 @@ public class MyAccountAty extends BaseActivity {
 
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.aty_my_account, null);
+        return inflater.inflate(R.layout.activity_my_account, null);
     }
 
     @Override

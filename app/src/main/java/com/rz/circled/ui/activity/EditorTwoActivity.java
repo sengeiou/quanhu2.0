@@ -441,9 +441,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
             case R.id.rl_editor_two_location:
-//                Intent locationIntent = new Intent(this, PersonAreaAty.class);
-//                locationIntent.putExtra(IntentKey.EXTRA_TYPE, TYPE_EDITOR);
-//                startActivityForResult(locationIntent, REQUEST_CODE);
+                Intent locationIntent = new Intent(this, PersonAreaAty.class);
+                locationIntent.putExtra(IntentKey.EXTRA_TYPE, TYPE_EDITOR);
+                startActivityForResult(locationIntent, REQUEST_CODE);
                 break;
             case R.id.rl_editor_two_time:
                 showDateDialog();
@@ -656,7 +656,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 if (dataSource != null)
                     tvSort.setText(dataSource.getClassifyItemName());
             }
-        } else if (requestCode == AUTHORITY_REQUEST) {
+        } else if (requestCode == AUTHORITY_REQUEST) {//权限
             if (data != null) {
                 EditorAuthorityRootBean authorityRootBean = (EditorAuthorityRootBean) data.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
                 dataSource.setAllowGeneralizeFlag(authorityRootBean.getAllowGeneralizeFlag() == 1 ? 1 : 0);

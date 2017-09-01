@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/px40"
         android:text="@string/mine_person_all"
         android:textColor="@color/color_666666"
-        android:textSize="@dimen/v3_text_size_38px"/>
+        android:textSize="@dimen/font_38"/>
 
 
 </LinearLayout>

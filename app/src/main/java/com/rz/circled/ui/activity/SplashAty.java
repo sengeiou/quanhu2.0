@@ -23,6 +23,7 @@ import com.rz.common.utils.SystemUtils;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
+
 /**
  * 作者：Administrator on 2016/6/22 0022 11:07
  * 功能：欢迎页+广告页
@@ -77,13 +78,18 @@ public class SplashAty extends BaseActivity {
     public View loadView(LayoutInflater inflater) {
         ZhugeSDK.getInstance().init(QHApplication.getContext());
         ZhugeSDK.getInstance().openLog();
-        trackUser("启动APP","","");
+        trackUser("启动APP", "", "");
 //        initMainRequest();
-        return inflater.inflate(R.layout.aty_splash, null);
+        return inflater.inflate(R.layout.activity_splash, null);
     }
 
     @Override
     protected boolean needShowTitle() {
+        return false;
+    }
+
+    @Override
+    protected boolean needSwipeBack() {
         return false;
     }
 
