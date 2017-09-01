@@ -1,0 +1,156 @@
+package com.rz.circled.ui.fragment;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.rz.circled.R;
+import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.api.ApiPGService;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.PrivateGroupBean;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
+import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
+
+/**
+ * Created by rzw2 on 2017/8/31.
+ */
+
+public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
+
+    public static final int TYPE_PART = 0;
+    public static final int TYPE_ALL = 1;
+
+    @BindView(R.id.lv)
+    ListView lv;
+    @BindView(R.id.tv)
+    TextView tv;
+    @BindView(R.id.layout_data)
+    LinearLayout layoutData;
+    @BindView(R.id.btn_login)
+    TextView btnLogin;
+    @BindView(R.id.layout_login)
+    LinearLayout layoutLogin;
+    @BindView(R.id.layout_no_data)
+    LinearLayout layoutNoData;
+
+    private int type;
+    private int pageNo;
+    private DefaultPrivateGroupAdapter mAdapter;
+
+    public static PrivateGroupCreateByMyselfFragment newInstance(int type) {
+        PrivateGroupCreateByMyselfFragment fragment = new PrivateGroupCreateByMyselfFragment();
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_TYPE, type);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
+    }
+
+    @Nullable
+    @Override
+    public View loadView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.fragment_my_create_private_group, null);
+    }
+
+    @Override
+    public void initView() {
+        if (type == TYPE_PART) {
+            if (Session.getUserIsLogin()) {
+                layoutLogin.setVisibility(View.GONE);
+            } else {
+                layoutLogin.setVisibility(View.VISIBLE);
+            }
+        } else {
+            layoutLogin.setVisibility(View.GONE);
+            layoutNoData.setVisibility(View.GONE);
+        }
+        lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        Http.getApiService(ApiPGService.class).privateGroupList(pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<PrivateGroupBean>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    if (!response.body().isSuccessful()) {
+                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
+                    } else {
+                        List<PrivateGroupBean> data = response.body().getData();
+                        if (type == TYPE_PART) {
+                            if (data != null && data.size() > 0) {
+                                if (data.size() > 2) {
+                                    mAdapter.setData(data.subList(0, 2));
+                                } else {
+                                    mAdapter.setData(data);
+                                }
+                            } else {
+                                layoutData.setVisibility(View.GONE);
+                                layoutNoData.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            if (data != null && data.size() > 0) {
+                                mAdapter.setData(data);
+                                tv.setVisibility(View.GONE);
+                            } else {
+                                onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }
+                        }
+                    }
+                } else {
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<PrivateGroupBean>>> call, Throwable t) {
+                super.onFailure(call, t);
+                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+            }
+        });
+    }
+
+    @OnClick({R.id.tv, R.id.btn_login})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv:
+                break;
+            case R.id.btn_login:
+                break;
+        }
+    }
+}

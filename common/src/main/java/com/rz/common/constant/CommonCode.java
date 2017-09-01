@@ -103,6 +103,8 @@ public interface CommonCode {
         public static int RECORDE_SHOW = 10001;
 
         public static int RECORDE_OPUS_VIDEO = 10002;
+
+        int PAGE_SIZE = 10;
     }
 
 

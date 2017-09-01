@@ -122,8 +122,19 @@ dependencies {
     //图片加载
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.facebook.fresco:animated-gif:0.12.0'
-
+    //图片加载
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    //图片加载
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //圆形图片
+    compile 'com.makeramen:roundedimageview:2.3.0'
+    //指示器
+    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+    //循环滚动viewpager
+    compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+        exclude module: 'support-v4'
+    }
+
     compile project(':common')
     compile project(':YunXinIM')
     compile project(':httpapi')

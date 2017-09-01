@@ -87,4 +87,15 @@
 
     <string name="i_am">我是</string>
     <string name="unallowed_join_hint">该群已设置不允许任何人加入</string>
+
+    <string name="private_group_joined_user">%1$d人加入</string>
+    <string name="private_group_status_0">待审核</string>
+    <string name="private_group_status_1">通过</string>
+    <string name="private_group_status_2">未通过</string>
+    <string name="private_group_status_3">上架</string>
+    <string name="private_group_status_4">下架</string>
+    <string name="request_failed">请求失败</string>
+    <string name="private_group_login_tip">登录才能创建私圈</string>
+    <string name="login">登录</string>
+    <string name="private_group_no_create">还没有创建私圈哦！</string>
 </resources>

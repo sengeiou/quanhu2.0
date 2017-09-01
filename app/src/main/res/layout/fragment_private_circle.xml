@@ -1,6 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<com.rz.circled.widget.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scrollbars="none" />
+
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/indicator_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="我的私圈"
+                    android:textColor="@color/font_gray_l"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/btn_apply_for"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请创建私圈"
+                    android:textColor="@color/font_gray_l"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View style="@style/line_horizontal_gray_s" />
+
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/indicator_tab"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom" />
+
+            <View style="@style/line_horizontal_gray_s" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager_group"
+                android:layout_width="match_parent"
+                android:layout_height="240dp" />
+        </LinearLayout>
+
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_height="10dp"
+            android:background="@color/color_gray_eeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="推荐私圈"
+                    android:textColor="@color/font_gray_l"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/btn_refresh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="换一换"
+                    android:textColor="@color/font_gray_l"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View style="@style/line_horizontal_gray_s" />
+
+            <FrameLayout
+                android:id="@+id/frame_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_height="10dp"
+            android:background="@color/color_gray_eeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="私圈精华"
+                    android:textColor="@color/font_gray_l"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View style="@style/line_horizontal_gray_s" />
+
+            <FrameLayout
+                android:id="@+id/frame_essence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</com.rz.circled.widget.VerticalScrollView>
+

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -23,6 +25,7 @@ import org.json.JSONException;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -57,6 +60,7 @@ public class SaveImageHandler extends ServerHandler {
             JsEvent.callJsEvent(null, true);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
+            Log.e("zxw", e.getMessage(), e);
             JsEvent.callJsEvent(null, false);
         }
     }
@@ -101,18 +105,15 @@ public class SaveImageHandler extends ServerHandler {
                 }
             }
         }
+        notifyPicture(myCaptureFile, fileName);
     }
 
-    /*
-    *  // 最后通知图库更新
-    try {
-        MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
+    private void notifyPicture(File file, String fileName) {
+        // 最后通知图库更新
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(file);
+        intent.setData(uri);
+        mActivity.sendBroadcast(intent);
     }
-    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-    Uri uri = Uri.fromFile(file);
-    intent.setData(uri);
-    context.sendBroadcast(intent);
-    * */
+
 }
