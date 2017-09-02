@@ -186,13 +186,13 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
                 case 1:
                     List<LocalMediaInfo> localMediaInfos = (List<LocalMediaInfo>) msg.obj;
                     if (localMediaInfos != null && localMediaInfos.size() > 0) {
-                        onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                        onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         if (localMediaInfoEntityCache != null) {
                             localMediaInfoEntityCache.putListEntityAddTag((List<LocalMediaInfo>) msg.obj, Type.TYPE_AUDIO + "");
                         }
                         refreshView((List<LocalMediaInfo>) msg.obj);
                     } else {
-                        onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                        onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                     }
                     break;
                 default:
@@ -218,7 +218,6 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
         Log.d(TAG, "localMediaInfos:size" + localMediaInfoList.size());
         mListView.setAdapter(commonAdapter);
         commonAdapter.setData(localMediaInfoList);
-        commonAdapter.notifyDataSetChanged();
     }
 
 

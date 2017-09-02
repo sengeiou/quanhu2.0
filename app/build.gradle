@@ -111,23 +111,24 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
-    compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
-    compile 'com.android.support:multidex:1.0.1'
-
-    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     //视频播放
-    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
     //图片加载
-    compile 'com.facebook.fresco:fresco:0.12.0'
-    compile 'com.facebook.fresco:animated-gif:0.12.0'
 
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+
     compile project(':common')
     compile project(':YunXinIM')
     compile project(':httpapi')
     compile project(':jsbridge')
     compile project(':TimePickerDialog')
     compile project(':audio')
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+    compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'com.facebook.fresco:animated-gif:0.12.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 }

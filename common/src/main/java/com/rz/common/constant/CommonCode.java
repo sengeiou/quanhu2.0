@@ -98,7 +98,7 @@ public interface CommonCode {
         /**
          * 录音限制时长
          */
-        public static final int MAX_INTERVAL_TIME = 120;
+        public static final int MAX_INTERVAL_TIME = 180;
 
         public static int RECORDE_SHOW = 10001;
 

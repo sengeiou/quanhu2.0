@@ -1,14 +1,13 @@
 package com.czt.mp3recorder;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.*;
-import android.support.v4.content.ContextCompat;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.czt.mp3recorder.util.LameUtil;
@@ -351,7 +350,7 @@ public class MP3Recorder {
     private Handler mRecordPlayTimeHandler; // 用于更新录音播放时间
     private OnSpeechingListener mSpeechingListener;// 录音时间监听
     private OnFinishedRecordListener mFinishedListerer;
-    public static final int MAX_INTERVAL_TIME = 120;
+    public static final int MAX_INTERVAL_TIME = 180;
     private Timer timer;
     // 录音播放计时器
     private Timer playtimer;

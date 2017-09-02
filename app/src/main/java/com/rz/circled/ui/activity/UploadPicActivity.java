@@ -50,6 +50,11 @@ public class UploadPicActivity extends BaseActivity {
     List<String> netPaths = new ArrayList<>();
     private UploadPicManager uploadPicManager;
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -73,12 +78,7 @@ public class UploadPicActivity extends BaseActivity {
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.tv_upload_pic_local) {//本地选择图片
-            Intent intent = new Intent(mContext, PictureSelectedActivity.class);
-            intent.putExtra(EXTRA_INDEX, maxPicNum);
-            intent.putExtra(EXTRA_IS_NEED, false);
-//            if (maxPicNum == 1)
-            intent.putExtra(EXTRA_IS_SINGLE, false);
-            startActivityForResult(intent, CommonCode.REQUEST.PUBLISH_REQUEST);
+            PictureSelectedActivity.startActivityForResult(UploadPicActivity.this, CommonCode.REQUEST.PUBLISH_REQUEST, maxPicNum, false);
         } else if (i == R.id.tv_upload_pic_shoot) {//拍摄图片
             doCamera();
         }
@@ -105,6 +105,7 @@ public class UploadPicActivity extends BaseActivity {
 //                SVProgressHUD.showErrorWithStatus(UploadPicAty.this, "上传图片失败");
                 Toasty.error(mContext, getString(R.string.upload_pic_fail), Toast.LENGTH_SHORT, true).show();
             }
+            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
             callResult(result);
         }
     };
@@ -148,6 +149,7 @@ public class UploadPicActivity extends BaseActivity {
         }
 //        SVProgressHUD.showWithStatus(aty, getString(R.string.is_loading));
 //        materialDialogUtils.showProgressDialog(R.string.is_upload_pic);
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (uploadInfos.size() > 0) {
             //oss上传图片
             uploadPicManager.compressAndUploads(this, uploadInfos, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir);
@@ -200,14 +202,22 @@ public class UploadPicActivity extends BaseActivity {
 
         if (requestCode == CommonCode.REQUEST.PUBLISH_REQUEST) {
             if (null == data) return;
-            ArrayList<String> mList = data.getExtras().getStringArrayList("picList");
-            localPaths.clear();
-            if (null != mList && !mList.isEmpty()) {
-                for (String filePath : mList) {
-                    localPaths.add(filePath);
-                }
-                if (isCrop) doPhoto(Uri.fromFile(new File(localPaths.get(0))));
+
+            if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT_CAMERA) {
+                String path = data.getStringExtra("picture");
+                localPaths.add(path);
+                if (isCrop) doPhoto(Uri.fromFile(new File(path)));
                 else requestOss();
+            } else {
+                ArrayList<String> mList = data.getExtras().getStringArrayList("picList");
+                localPaths.clear();
+                if (null != mList && !mList.isEmpty()) {
+                    for (String filePath : mList) {
+                        localPaths.add(filePath);
+                    }
+                    if (isCrop) doPhoto(Uri.fromFile(new File(localPaths.get(0))));
+                    else requestOss();
+                }
             }
         }
         if (requestCode == CommonCode.REQUEST.TAKE_PICTURE) {

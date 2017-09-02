@@ -9,6 +9,9 @@
     <string name="tab_reward">悬赏</string>
     <string name="tab_private_circle">私圈</string>
     <string name="tab_mine">我的</string>
+    <string name="tab_content">内容</string>
+    <string name="tab_person">用户</string>
+    <string name="tab_circle">圈子</string>
 
     <!--最多选择多少张图片-->
     <string name="max_size_choose_pic_hint">做多选择%1$d张</string>
@@ -153,5 +156,18 @@
     <string name="report_fail">举报失败</string>
     <string name="refunds_success">举报成功</string>
     <string name="refunds_fail">举报失败</string>
+    <string name="re_answer">重新回答</string>
+    <string name="re_record">重新录制</string>
+    <string name="change_text_answer">切换文字回答</string>
+    <string name="max">最多</string>
+    <string name="click_start_record">点击开始录音</string>
+    <string name="reply">回答</string>
+    <string name="record_voice">录音</string>
+    <string name="click_play_voice">点击播放录音</string>
+    <string name="click_stop">点击暂停</string>
+    <string name="click_finish_record">点击结束录音</string>
+    <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
+    <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
+    <string name="search">搜索</string>
 
 </resources>

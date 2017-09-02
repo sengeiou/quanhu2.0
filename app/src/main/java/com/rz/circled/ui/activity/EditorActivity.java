@@ -40,6 +40,7 @@ import com.rz.circled.recorder.RecordResult;
 import com.rz.circled.recorder.RecorderContant;
 import com.rz.circled.widget.CustomProgressbar;
 import com.rz.circled.widget.PopupView;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.oss.OssManager;
@@ -370,10 +371,7 @@ public class EditorActivity extends BaseActivity implements View.OnClickListener
 //                break;
             case R.id.id_public_choose_pic_btn:
                 if (imageCount < imgMaxNum) {
-                    Intent intent = new Intent(this, PictureSelectedActivity.class);
-                    intent.putExtra("index", imgMaxNum - imageCount);
-                    intent.putExtra("isNeed", false);
-                    startActivityForResult(intent, PIC_PUBLISH_REQUEST);
+                    PictureSelectedActivity.startActivityForResult(EditorActivity.this, PIC_PUBLISH_REQUEST, imgMaxNum - imageCount, false);
                 } else {
                     Toasty.error(mContext, String.format(getString(R.string.max_size_choose_pic_hint), imgMaxNum)).show();
                 }
@@ -972,7 +970,7 @@ public class EditorActivity extends BaseActivity implements View.OnClickListener
                         initImageView(filePath);
                     }
                 }
-            } else if (resultCode == PUBLISH_RESULT_CAMERA) {
+            } else if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT_CAMERA) {
                 String path = data.getStringExtra("picture");
                 initImageView(path);
             }

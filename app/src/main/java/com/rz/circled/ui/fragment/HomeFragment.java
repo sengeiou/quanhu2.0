@@ -2,13 +2,17 @@ package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 
@@ -24,6 +28,8 @@ import butterknife.OnClick;
 public class HomeFragment extends BaseFragment {
     @BindView(R.id.auto_viewpager)
     AutoRollLayout mAuto_viewpager;
+    @BindView(R.id.et_home_custId)
+    EditText etCustId;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
 
     @Nullable
@@ -34,7 +40,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-        V3CirclePresenter presenter= new V3CirclePresenter();
+        V3CirclePresenter presenter = new V3CirclePresenter();
         presenter.attachView(this);
         presenter.getBannerList(5);
     }
@@ -66,8 +72,18 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.tv_home_web)
-    public void onClick() {
-        startActivity(new Intent(getActivity(), WebContainerActivity.class));
+    @OnClick({R.id.tv_home_web, R.id.tv_home_search})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_home_web:
+                String s = etCustId.getText().toString();
+                if (!TextUtils.isEmpty(s))
+                    Session.setUserId(s);
+                startActivity(new Intent(getActivity(), WebContainerActivity.class));
+                break;
+            case R.id.tv_home_search:
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
+        }
     }
 }

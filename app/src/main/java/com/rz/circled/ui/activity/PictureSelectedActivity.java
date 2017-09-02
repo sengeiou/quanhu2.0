@@ -55,6 +55,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * 图片管理器
  */
@@ -109,11 +110,6 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
     private int mChooseNum = 0;
 
     /**
-     * 记录已经选择的图片张数
-     */
-    private boolean isSingle = false;
-
-    /**
      * popupwindow弹出框，显示文件夹
      */
     private ComSelPopWindow mPopWindow;
@@ -166,6 +162,21 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
      * 照相机回调
      */
     public static final int PUBLISH_RESULT_CAMERA = 12;
+
+
+    public static void startActivityForResult(Activity activity, int requestCode, int index, boolean isNeedCut) {
+        Intent intent = new Intent(activity, PictureSelectedActivity.class);
+        intent.putExtra(UploadPicActivity.EXTRA_INDEX, index);
+        intent.putExtra(UploadPicActivity.EXTRA_IS_NEED, isNeedCut);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    public static void startActivity(Activity activity, int index, boolean isNeedCut) {
+        Intent intent = new Intent(activity, PictureSelectedActivity.class);
+        intent.putExtra(UploadPicActivity.EXTRA_INDEX, index);
+        intent.putExtra(UploadPicActivity.EXTRA_IS_NEED, isNeedCut);
+        activity.startActivity(intent);
+    }
 
 
     @Nullable
@@ -258,12 +269,6 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         setTitleText(getString(R.string.pic));
         setTitleRightText(R.string.publish);
         index = getIntent().getIntExtra(UploadPicActivity.EXTRA_INDEX, 9);
-
-        if (getIntent().hasExtra(UploadPicActivity.EXTRA_IS_SINGLE))
-            isSingle = getIntent().getExtras().getBoolean(UploadPicActivity.EXTRA_IS_SINGLE);
-        if (isSingle) {
-            titleRightClear();
-        }
         setTitleRightText(R.string.finish);
         setTittleRightEnabled(false);
 
@@ -335,7 +340,6 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
                         if (!TextUtils.isEmpty(mPhotoFilePath))
                             gotoPublish(new File(mPhotoFilePath));
                     }
-
                     //TOAST
                     break;
                 // 选择好照片后
@@ -449,11 +453,9 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
                 pics.add(model.getmPicPath());
             }
         }
-
         Intent data = new Intent();
         data.putExtra("picture", mPhotoFile.toString());
         setResult(CommonCode.REQUEST.PUBLISH_RESULT_CAMERA, data);
-
         finish();
 
     }
@@ -487,7 +489,7 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         if (model == mAddCameraPic) {
             // 执行拍照前，应该先判断SD卡是否存在
             doCamera();
-        } else if (!isSingle) {
+        } else if (!isNeedCut) {
             for (PictureModel mp : mSaveScanAllPics) {
                 if (model.getmPicPath().equals(mp.getmPicPath())) {
                     if (model.isSelect()) {

@@ -12,6 +12,24 @@
         android:padding="@dimen/px50"
         android:text="跳转web页面"
         android:textColor="@color/font_gray_m"/>
+
+    <TextView
+        android:id="@+id/tv_home_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/px50"
+        android:text="跳转搜索页面"
+        android:textColor="@color/font_gray_m"/>
+
+    <EditText
+        android:id="@+id/et_home_custId"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:background="@drawable/shape_ring_blue"
+        android:hint="输入custId"
+        android:textColor="@color/font_gray_m"
+        android:textColorHint="@color/font_gray_m"/>
+
     <com.rz.circled.widget.AutoRollLayout
         android:id="@+id/auto_viewpager"
         android:layout_width="match_parent"

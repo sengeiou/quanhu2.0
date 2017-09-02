@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +15,7 @@ import com.google.gson.Gson;
 import com.rz.circled.R;
 import com.rz.circled.js.RequestBackHandler;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.BaseLoadView;
@@ -28,6 +31,7 @@ import com.rz.sgt.jsbridge.core.WebViewProxy;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 public class WebContainerActivity extends BaseActivity implements BaseLoadView.RefreshListener {
 
     private AdvancedWebView mWebView;
@@ -35,6 +39,12 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
     private boolean hadError = false;
     private WebChromeClient webChromeClient;
+
+    public static void startActivity(String url, Context context) {
+        Intent intent = new Intent(context, WebContainerActivity.class);
+        intent.putExtra(IntentKey.EXTRA_URL, url);
+        context.startActivity(intent);
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
