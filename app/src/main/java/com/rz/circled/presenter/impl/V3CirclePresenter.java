@@ -20,6 +20,7 @@ import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.io.Serializable;
@@ -300,38 +301,38 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //            }
 //        });
 //    }
-//
-//    /**
-//     * 首页圈子达人
-//     */
-//    public void getFamousList(final int stats) {
-//        if (!NetUtils.isNetworkConnected(mContext)) {
-//            return;
-//        }
-//        Call<ResponseData<List<FamousModel>>> call = mUserService.getFamous("2");
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<FamousModel>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<FamousModel>>> call, Response<ResponseData<List<FamousModel>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<FamousModel> model = (List<FamousModel>) res.getData();
-//                        mView.updateViewWithFlag(model, stats);
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<FamousModel>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//            }
-//        });
-//    }
-//
-//
+
+    /**
+     * 首页圈子达人
+     */
+    public void getFamousList(final int stats) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        Call<ResponseData<List<FamousModel>>> call = mUserService.getFamous("2");
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<FamousModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<FamousModel>>> call, Response<ResponseData<List<FamousModel>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<FamousModel> model = (List<FamousModel>) res.getData();
+                        mView.updateViewWithFlag(model, stats);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<FamousModel>>> call, Throwable t) {
+                super.onFailure(call, t);
+            }
+        });
+    }
+
+
 //    /**
 //     * 获取转发详情
 //     *

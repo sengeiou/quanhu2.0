@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.rz.common.R;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -92,7 +93,18 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
             }
         }
     }
-
+    /**
+     * 用户是否登录
+     */
+    public boolean isLogin() {
+        if (Session.getUserIsLogin()) {
+            return true;
+        } else {
+//            Intent login = new Intent(mActivity, LoginAty.class);
+//            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
+            return false;
+        }
+    }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

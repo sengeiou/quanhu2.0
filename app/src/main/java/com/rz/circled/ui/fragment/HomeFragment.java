@@ -29,7 +29,6 @@ import butterknife.OnClick;
  * Created by Gsm on 2017/8/29.
  */
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.auto_viewpager)
     AutoRollLayout mAuto_viewpager;
     @BindView(R.id.id_homefrg_listview)
     ListView mHomeLv;
@@ -57,6 +56,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initDynamicLv() {
+        View v = View.inflate(mActivity, R.layout.banner, null);
+        mAuto_viewpager = (AutoRollLayout) v.findViewById(R.id.auto_viewpager);
+        mHomeLv.addHeaderView(v);
         dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);//泛型要改
         mHomeLv.setAdapter(dynamicAdapter);
     }
@@ -92,7 +94,7 @@ public class HomeFragment extends BaseFragment {
             }
             circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
         }
-            dynamicAdapter.notifyDataSetChanged();
+        dynamicAdapter.notifyDataSetChanged();
 
 
     }
