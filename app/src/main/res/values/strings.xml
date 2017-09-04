@@ -9,6 +9,9 @@
     <string name="tab_reward">悬赏</string>
     <string name="tab_private_circle">私圈</string>
     <string name="tab_mine">我的</string>
+    <string name="tab_content">内容</string>
+    <string name="tab_person">用户</string>
+    <string name="tab_circle">圈子</string>
 
     <!--最多选择多少张图片-->
     <string name="max_size_choose_pic_hint">做多选择%1$d张</string>
@@ -18,6 +21,8 @@
     <string name="upload_video">上传视频</string>
     <string name="click_to_try_again">点击重试</string>
 
+    <string name="login">登录</string>
+    <string name="request_failed">请求失败</string>
     <string name="next">下一步</string>
 
     <string name="sd_card_un_exist">SD卡不存在</string>
@@ -73,6 +78,8 @@
     <string name="cannot_add_content">您还没有添加发布内容</string>
     <string name="add_content">添加正文</string>
     <string name="editor_content_null">正文详情不能为空</string>
+    <string name="user_create_private_group_num">创建的私圈（%1$d）</string>
+    <string name="user_join_private_group_num">加入的私圈（%1$d）</string>
 
 
     <string name="xuanbei">选被</string>
@@ -87,6 +94,16 @@
 
     <string name="i_am">我是</string>
     <string name="unallowed_join_hint">该群已设置不允许任何人加入</string>
+
+    <string name="private_group_joined_user">%1$d人加入</string>
+    <string name="private_group_status_0">待审核</string>
+    <string name="private_group_status_1">通过</string>
+    <string name="private_group_status_2">未通过</string>
+    <string name="private_group_status_3">上架</string>
+    <string name="private_group_status_4">下架</string>
+    <string name="private_group_login_tip">登录才能创建私圈</string>
+    <string name="private_group_no_create">还没有创建私圈哦！</string>
+
     <string name="mine_my_account">我的账户</string>
     <string name="consumer_account">消费账户</string>
     <string name="account_profit">悠然账户</string>
@@ -158,6 +175,19 @@
     <string name="circle_hot_famous">热门达人</string>
     <string name="circle_hot_subject">热门话题</string>
     <string name="circle_new_activity">最新活动</string>
+    <string name="re_answer">重新回答</string>
+    <string name="re_record">重新录制</string>
+    <string name="change_text_answer">切换文字回答</string>
+    <string name="max">最多</string>
+    <string name="click_start_record">点击开始录音</string>
+    <string name="reply">回答</string>
+    <string name="record_voice">录音</string>
+    <string name="click_play_voice">点击播放录音</string>
+    <string name="click_stop">点击暂停</string>
+    <string name="click_finish_record">点击结束录音</string>
+    <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
+    <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
+    <string name="search">搜索</string>
     <string name="favorite_circle">喜欢的圈子</string>
     <string name="more_circle">更多圈子</string>
 

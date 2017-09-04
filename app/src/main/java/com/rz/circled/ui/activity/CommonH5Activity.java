@@ -17,7 +17,6 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.rz.circled.R;
-import com.rz.common.constant.CodeStatus;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.ProgressWebView;

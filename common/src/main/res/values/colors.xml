@@ -11,9 +11,12 @@
     <color name="color_dark_gray">#666666</color>
     <color name="color_DDD">#DDDDDD</color>
     <color name="color_999">#999999</color>
+    <color name="color_aaa">#aaaaaa</color>
     <color name="color_333">#333333</color>
     <color name="color_eee">#EEEEEE</color>
     <color name="color_F8F8F8">#F8F8F8</color>
+    <color name="color_f6f6f6">#f6f6f6</color>
+    <color name="color_f7f7f7">#f7f7f7</color>
     <color name="color_F4F4F4">#f4f4f4</color>
     <color name="color_D7D7D7">#D7D7D7</color>
     <color name="color_666">#666666</color>
@@ -29,6 +32,10 @@
     <color name="color_1bc2b8">#1bc2b8</color>
     <color name="color_FF6600">#FF6600</color>
     <color name="color_0085ff">#0085ff</color>
+    <color name="color_0084ff">#0084ff</color>
+    <color name="color_80c2ff">#80c2ff</color>
+    <color name="color_edf6ff">#edf6ff</color>
+    <color name="color_b2dafe">#b2dafe</color>
 
 
     <color name="white_75_transparent">#c0ffffff</color>

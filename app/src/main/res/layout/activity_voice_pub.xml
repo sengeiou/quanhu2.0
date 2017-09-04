@@ -4,107 +4,79 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@android:color/white"
-              android:gravity="center"
+              android:gravity="center_horizontal"
               android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tv_tip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="点击开始录音，最长时间可以录制120”"
-        android:textColor="@color/font_gray_m"
-        android:textSize="@dimen/font_52"/>
-
-    <FrameLayout
-        android:layout_width="@dimen/px418"
-        android:layout_height="@dimen/px418"
-        android:layout_marginTop="@dimen/px114">
-
-        <com.rz.common.widget.RoundProgressBar
-            android:id="@+id/progress_record"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            app:_max="1000"
-            app:_roundColor="#e1e1e1"
-            app:_roundProgressColor="#ff6060"
-            app:_roundWidth="8dp"
-            app:_textIsDisplayable="false"/>
-
-        <ImageView
-            android:id="@+id/img_record"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/px90"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_voice_record"/>
-
-        <ImageView
-            android:id="@+id/img_record1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/px120"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_voice_record_ing"
-            android:visibility="gone"/>
-
-        <ImageView
-            android:id="@+id/img_record2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/px120"
-            android:scaleType="fitCenter"
-            android:src="@drawable/bg_progress"
-            android:visibility="gone"/>
-
-        <ImageView
-            android:id="@+id/img_record3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/px120"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/ic_voice_play"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px30"
-        android:textColor="#FF6060"
-        android:textSize="@dimen/font_44"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px116"
-        android:layout_marginTop="@dimen/px110"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/px50"
-        android:paddingRight="@dimen/px50">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px270">
+
+            <ImageView
+                android:id="@+id/iv_voice_record"
+                android:layout_width="@dimen/px375"
+                android:layout_height="@dimen/px375"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/px70"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/icon_record"/>
+
+            <ImageView
+                android:id="@+id/iv_voice_record_gif"
+                android:layout_width="@dimen/px430"
+                android:layout_height="@dimen/px430"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/px15"
+                android:scaleType="fitCenter"/>
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/btn1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_gray"
-            android:gravity="center"
-            android:text="重录"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_50"/>
+            android:id="@+id/tv_voice_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/click_start_record"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_54"/>
 
         <TextView
-            android:id="@+id/btn2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/px70"
-            android:layout_weight="1"
-            android:background="@drawable/shape_round_gray"
-            android:gravity="center"
-            android:text="下一步"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_50"/>
+            android:id="@+id/tv_voice_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px40"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_46"/>
+
+        <TextView
+            android:id="@+id/tv_voice_re_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px110"
+            android:background="@drawable/shape_ring_blue"
+            android:paddingBottom="@dimen/px35"
+            android:paddingLeft="@dimen/px110"
+            android:paddingRight="@dimen/px110"
+            android:paddingTop="@dimen/px35"
+            android:textColor="@color/font_color_blue"
+            android:textSize="@dimen/font_46"
+            android:visibility="gone"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_voice_change_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px140"
+        android:drawableLeft="@mipmap/icon_record_change_text"
+        android:drawablePadding="@dimen/px14"
+        android:text="@string/change_text_answer"
+        android:textColor="@color/font_color_blue"
+        android:textSize="@dimen/font_48"
+        android:visibility="gone"/>
 </LinearLayout>

@@ -21,7 +21,6 @@ import com.rz.circled.widget.XListView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.CodeStatus;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;

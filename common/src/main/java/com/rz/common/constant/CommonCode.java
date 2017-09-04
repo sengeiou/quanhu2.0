@@ -55,6 +55,8 @@ public interface CommonCode {
         int FINISH_LOADING = 10001;
 
         int EDITOR_PIC_DELETE = 10002;
+
+        int SEARCH_KEYWORD = 20001;
     }
 
     /**
@@ -98,11 +100,13 @@ public interface CommonCode {
         /**
          * 录音限制时长
          */
-        public static final int MAX_INTERVAL_TIME = 120;
+        public static final int MAX_INTERVAL_TIME = 180;
 
         public static int RECORDE_SHOW = 10001;
 
         public static int RECORDE_OPUS_VIDEO = 10002;
+
+        int PAGE_SIZE = 10;
     }
 
 

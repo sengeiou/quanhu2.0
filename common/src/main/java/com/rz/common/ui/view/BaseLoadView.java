@@ -2,6 +2,7 @@ package com.rz.common.ui.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.rz.common.R;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.common.widget.toasty.Toasty;
 
 /**
  * Created by Gsm on 2017/8/4.
@@ -102,11 +104,11 @@ public class BaseLoadView implements View.OnClickListener {
     private void processNewsEmpty(String msg, boolean haveData) {
         if (haveData) {
             statusView.setVisibility(View.GONE);
-//            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_data_luck) : msg).show();
+            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_data_luck) : msg).show();
         } else {
             statusView.setVisibility(View.VISIBLE);
 //            ivStatus.setImageResource(R.drawable.icon_news_empty);
-//            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_news_empty) : msg);
+            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_news_empty) : msg);
             tvFunction.setVisibility(View.GONE);
             ivLoading.setVisibility(View.GONE);
             llError.setVisibility(View.VISIBLE);
@@ -119,7 +121,7 @@ public class BaseLoadView implements View.OnClickListener {
     private void processWebError(String msg, boolean haveData) {
         statusView.setVisibility(View.VISIBLE);
 //        ivStatus.setImageResource(R.drawable.icon_web_error);
-//        tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_web_error) : msg);
+        tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_web_error) : msg);
         tvFunction.setVisibility(View.GONE);
         ivLoading.setVisibility(View.GONE);
         llError.setVisibility(View.VISIBLE);
@@ -138,7 +140,7 @@ public class BaseLoadView implements View.OnClickListener {
      */
     private void processDataLack(String msg, boolean haveData) {
         statusView.setVisibility(View.GONE);
-//        Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_data_luck) : msg).show();
+        Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_data_luck) : msg).show();
     }
 
     /**
@@ -147,12 +149,12 @@ public class BaseLoadView implements View.OnClickListener {
     private void processDataEmpty(String msg, boolean haveData) {
         if (haveData) {
             statusView.setVisibility(View.GONE);
-//            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg).show();
+            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg).show();
         } else {
             ivLoading.setVisibility(View.GONE);
             statusView.setVisibility(View.VISIBLE);
 //            ivStatus.setImageResource(R.drawable.icon_data_empty);
-//            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg);
+            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg);
             tvFunction.setVisibility(View.GONE);
             llError.setVisibility(View.VISIBLE);
         }
@@ -164,12 +166,12 @@ public class BaseLoadView implements View.OnClickListener {
     private void processLoadError(String msg, boolean haveData) {
         if (haveData) {
             statusView.setVisibility(View.GONE);
-//            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg).show();
+            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg).show();
         } else {
             ivLoading.setVisibility(View.GONE);
             statusView.setVisibility(View.VISIBLE);
 //            ivStatus.setImageResource(R.drawable.icon_load_error);
-//            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg);
+            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg);
             tvFunction.setVisibility(View.VISIBLE);
             llError.setVisibility(View.VISIBLE);
         }
@@ -181,7 +183,7 @@ public class BaseLoadView implements View.OnClickListener {
     private void processLoading(String msg, boolean haveData) {
         if (haveData) {
             statusView.setVisibility(View.GONE);
-//            SVProgressHUD.showWithStatus(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_is_loading) : msg);
+            SVProgressHUD.showWithStatus(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_is_loading) : msg);
         } else {
             statusView.setVisibility(View.VISIBLE);
             ivLoading.setVisibility(View.VISIBLE);
@@ -201,12 +203,12 @@ public class BaseLoadView implements View.OnClickListener {
     private void processUnNetWork(String msg, boolean haveData) {
         if (haveData) {
             statusView.setVisibility(View.GONE);
-//            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg).show();
+            Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg).show();
         } else {
             ivLoading.setVisibility(View.GONE);
             statusView.setVisibility(View.VISIBLE);
 //            ivStatus.setImageResource(R.drawable.icon_load_error);
-//            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg);
+            tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg);
             tvFunction.setVisibility(View.GONE);
             llError.setVisibility(View.VISIBLE);
         }

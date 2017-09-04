@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_bg_gray_common"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="私圈是什么？申请创建私圈需要具备哪些条件？"
+                android:textColor="@color/font_gray_m"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal_gray_s" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="2dp"
+                    android:layout_height="14dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorPrimary"
+                    app:riv_corner_radius="1dp"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="个人信息"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="身份简介"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/etv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="请输入简介"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="4dp"
+                android:lines="2"
+                android:maxLength="30"
+                android:textColor="@color/font_gray_m"
+                android:textColorHint="@color/font_gray_s"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="2"
+                    android:id="@+id/tv_desc_num"
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/30"
+                    android:textColor="@color/font_gray_s"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal_gray_s" />
+
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="2dp"
+                    android:layout_height="14dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorPrimary"
+                    app:riv_corner_radius="1dp"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="个人信息"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <View style="@style/line_horizontal_gray_s" />
+
+                    <LinearLayout
+                        android:id="@+id/btn_update_pic"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@color/app_bg_gray_common"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="上传私圈封面图"
+                            android:textColor="@color/font_gray_m"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View style="@style/line_horizontal_gray_s" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:id="@+id/img_group"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="私圈名称"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/etv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="请输入私圈名称"
+                    android:textColor="@color/font_gray_m"
+                    android:textColorHint="@color/font_gray_s"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="私圈简介"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etv_group_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="请输入简介"
+                    android:inputType="textMultiLine"
+                    android:lineSpacingExtra="4dp"
+                    android:lines="2"
+                    android:maxLength="30"
+                    android:textColor="@color/font_gray_m"
+                    android:textColorHint="@color/font_gray_s"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="2"
+                        android:id="@+id/tv_desc_group_num"
+                        android:textColor="@color/font_gray_m"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/30"
+                        android:textColor="@color/font_gray_s"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <View
+                    style="@style/line_horizontal_gray_s"
+                    android:layout_marginTop="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="私圈名称"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:text="鱼儿圈"
+                    android:textColor="@color/font_gray_m"
+                    android:textColorHint="@color/font_gray_s"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <CheckBox
+                android:id="@+id/cbx_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:text="我已阅读并同意"
+                android:textColor="@color/font_gray_m"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/btn_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《私圈创建协议》"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

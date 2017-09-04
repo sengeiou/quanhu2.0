@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/comm_item_selector">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_pic_sel"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_centerInParent="true"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"/>
 
     <CheckBox
         android:id="@+id/cb_pic_sel"
@@ -23,6 +23,6 @@
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 
 </RelativeLayout>

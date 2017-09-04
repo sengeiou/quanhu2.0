@@ -3,7 +3,7 @@ package com.rz.circled.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Animatable;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
@@ -34,11 +34,12 @@ import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
-import com.facebook.drawee.controller.BaseControllerListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jzxiang.pickerview.TimePickerDialog;
@@ -59,6 +60,7 @@ import com.rz.circled.js.model.HttpRequestModel;
 import com.rz.circled.recorder.RecordResult;
 import com.rz.circled.recorder.RecorderContant;
 import com.rz.circled.widget.ExpandGridView;
+import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.cache.preference.Session;
@@ -324,7 +326,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private PopupView mPopupView;
 
     private Record mRecord;
-//    private AnimationDrawable animationDrawable;
+    private AnimationDrawable animationDrawable;
 
     public String ossDir;
 
@@ -353,6 +355,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private HttpRequestModel httpRequestModel;
     private CommonDialog commonDialog;
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -379,7 +385,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 });
             }
         });
-//        animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.audio_anim);
+        animationDrawable = (AnimationDrawable) ContextCompat.getDrawable(mContext, R.drawable.audio_anim);
         mRecord = new Record(this);
         mRecord.setOnPlayListener(new Record.OnPlayListener() {
             @Override
@@ -421,10 +427,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.tv_editor_two_page_change:
             case R.id.tv_editor_two_page_add:
-                Intent pageIntent = new Intent(this, PictureSelectedActivity.class);
-                pageIntent.putExtra("index", 1);
-                pageIntent.putExtra("isNeed", false);
-                startActivityForResult(pageIntent, PIC_PAGE_CHANGE_REQUEST);
+                PictureSelectedActivity.startActivityForResult(EditorTwoActivity.this, PIC_PAGE_CHANGE_REQUEST, 1, false);
                 break;
             case R.id.rl_editor_two_sort:
                 EditorConfigTwoModel sortModel = (EditorConfigTwoModel) rlSort.getTag();
@@ -451,10 +454,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             case R.id.iv_editor_two_choose_pic:
                 EditorConfigTwoModel imgModel = (EditorConfigTwoModel) view.getTag();
                 if (contentImageCount < imgModel.getUpperLimit()) {
-                    Intent intent = new Intent(this, PictureSelectedActivity.class);
-                    intent.putExtra("index", (imgModel.getUpperLimit() - contentImageCount));
-                    intent.putExtra("isNeed", false);
-                    startActivityForResult(intent, PIC_PUBLISH_REQUEST);
+                    PictureSelectedActivity.startActivityForResult(EditorTwoActivity.this, PIC_PUBLISH_REQUEST, imgModel.getUpperLimit() - contentImageCount, false);
+
                 } else {
                     Toasty.error(mContext, String.format(getString(R.string.max_size_choose_pic_hint), imgModel.getUpperLimit())).show();
                 }
@@ -568,7 +569,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         initPic();
                     }
                 }
-            } else if (resultCode == PUBLISH_RESULT_CAMERA) {
+            } else if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT_CAMERA) {
                 String path = data.getStringExtra("picture");
                 if (isPicText) {
                     initContentImageView(path);
@@ -593,9 +594,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             resetVideo();
             mVideoFilePath = filePath;
             initContentVideoView();
-        } else if (requestCode == SYSTEM_SHOOT_VIDEO && requestCode == RESULT_OK) {
-            mVideoFilePath = this.filePath;
+        } else if (requestCode == SYSTEM_SHOOT_VIDEO && resultCode == RESULT_OK) {
             resetVideo();
+            mVideoFilePath = this.filePath;
             initContentVideoView();
         } else if (requestCode == RecorderContant.RECORDE_SHOW && resultCode == RESULT_OK) {
             RecordResult result = new RecordResult(data);
@@ -1417,11 +1418,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         tvPageChange.setVisibility(View.VISIBLE);
         ivPage.setTag(R.id.iv_editor_two_page, imgPath);
         if (Protect.checkLoadImageStatus(this)) {
-//            Glide.with(this).load(imgPath).into(ivPage);
-            if (imgPath.startsWith("http"))
-                ivPage.setImageURI(Uri.parse(imgPath));
-            else
-                ivPage.setImageURI(Uri.fromFile(new File(imgPath)));
+            Glide.with(this).load(imgPath).into(ivPage);
         }
     }
 
@@ -1565,7 +1562,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             Toasty.info(mContext, getString(R.string.not_found_pic)).show();
         }
         View view = getLayoutInflater().inflate(R.layout.layout_iv_article_item, llContentText, false);
-        final SimpleDraweeView iv = (SimpleDraweeView) view.findViewById(R.id.id_iv);
+        final ImageView iv = (ImageView) view.findViewById(R.id.id_iv);
         ImageView iv_delete = (ImageView) view.findViewById(R.id.id_iv_delete);
         iv_delete.setOnClickListener(this);
 
@@ -1580,22 +1577,12 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
         iv.setTag(R.id.id_iv, imgPath);
         if (Protect.checkLoadImageStatus(this)) {
-            // 需要使用 ControllerBuilder 方式请求图片
-            final PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
-            if (imgPath.startsWith("http"))
-                controller.setUri(Uri.parse(imgPath));
-            else
-                controller.setUri(Uri.fromFile(new File(imgPath)));
-            controller.setOldController(iv.getController());
-
-// 需要设置 ControllerListener，获取图片大小后，传递给 PhotoDraweeView 更新图片长宽
-            controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
+            Glide.with(this).load(imgPath).into(new ViewTarget<ImageView, GlideDrawable>(iv) {
                 @Override
-                public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-                    super.onFinalImageSet(id, imageInfo, animatable);
-                    iv.getLayoutParams().height = imageInfo.getHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / imageInfo.getWidth();
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    iv.getLayoutParams().height = resource.getIntrinsicHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / resource.getIntrinsicWidth();
                     iv.requestLayout();
-                    iv.setController(controller.build());
+                    iv.setImageDrawable(resource.getCurrent());
                 }
             });
         }
@@ -1918,9 +1905,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void showAudioImgAnim() {
-//        Glide.with(this).load(R.drawable.editor_audio_play_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivVideoAudioPlay);
-//        Glide.with(this).load(R.drawable.editor_audio_play_gif).diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .transform(new GlideCircleImage(this)).crossFade().into(ivVideoAudioPlay);
+        Glide.with(this).load(R.drawable.editor_audio_play_gif).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivVideoAudioPlay);
+        Glide.with(this).load(R.drawable.editor_audio_play_gif).diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .transform(new GlideCircleImage(this)).crossFade().into(ivVideoAudioPlay);
     }
 
     private void stopAudioImgAnim() {
@@ -2340,7 +2327,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      */
     private void publishFail() {
         onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-        Toasty.info(EditorTwoActivity.this, getString(R.string.editor_two_publish_fail)).show();
+        Toasty.info(mContext, getString(R.string.editor_two_publish_fail)).show();
     }
 
     private Map getMap(String headerStr) throws JSONException {

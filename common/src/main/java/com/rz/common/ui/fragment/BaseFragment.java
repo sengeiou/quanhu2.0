@@ -32,6 +32,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     protected boolean isViewInit = false;
     private boolean isAddIn = false;
     private BaseLoadView mLoadView;
+
     public BaseFragment() {
         TAG = getClass().getSimpleName();
     }
@@ -194,6 +195,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     public void onDestroyView() {
         super.onDestroyView();
         mLoadView = null;
+        unbinder.unbind();
     }
 
 

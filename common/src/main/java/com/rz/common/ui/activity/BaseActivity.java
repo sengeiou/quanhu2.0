@@ -292,7 +292,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      * @return true 有 , false 没有
      */
     protected boolean hasDataInPage() {
-        return false;
+        return true;
     }
 
     /**

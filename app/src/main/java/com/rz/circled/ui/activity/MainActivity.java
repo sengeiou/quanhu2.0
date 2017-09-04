@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initData() {
-
     }
 
     private void initCounter() {
