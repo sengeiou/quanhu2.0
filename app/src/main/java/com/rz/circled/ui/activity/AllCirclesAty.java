@@ -49,7 +49,6 @@ public class AllCirclesAty extends BaseActivity {
     List<CircleEntrModle> followOnLines = new ArrayList<>();
     List<CircleEntrModle> noFollow = new ArrayList<>();
     List<CircleEntrModle> waitUp = new ArrayList<>();
-    List<CircleEntrModle> offline = new ArrayList<>();
     PublishedAdapter publishedAdapter;
     ComingPublishedAdapter comingPublishedAdapter;
     private HashSet<String> mFollowCircle;
@@ -57,7 +56,6 @@ public class AllCirclesAty extends BaseActivity {
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        EventBus.getDefault().register(this);
         return inflater.inflate(R.layout.aty_allcircles, null);
     }
 
@@ -127,34 +125,14 @@ public class AllCirclesAty extends BaseActivity {
             if (flag == 0) {
                 //上线
                 onLines = circleEntrModleList;
-                if (mFollowCircle != null) {
-                    followOnLines.clear();
-                    noFollow.clear();
-                    for (int i = 0; i < onLines.size(); i++) {
-                        boolean isfind = false;
-                        for (String s : mFollowCircle) {
-                            if (onLines.get(i).appId.equals(s)) {
-                                followOnLines.add(onLines.get(i));
-                                isfind = true;
-                                break;
-                            }
-                        }
-                        if (!isfind) {
-                            noFollow.add(onLines.get(i));
-                        }
-                    }
-                    onLines.clear();
-                    onLines.addAll(followOnLines);
-                    onLines.addAll(noFollow);
-                }
-
-
                 publishedAdapter.notifyDataSetChanged();
-
-            } else if (flag == 1) {
+                return;
+            }
+            if (flag == 1) {
                 //等待上线
                 waitUp = circleEntrModleList;
                 comingPublishedAdapter.notifyDataSetChanged();
+                return;
             }
         }
     }

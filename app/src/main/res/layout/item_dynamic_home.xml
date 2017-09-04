@@ -42,8 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="name"
-                android:textColor="@color/color_2AAE9D"
-                android:textSize="@dimen/font_40" />
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_44" />
 
             <TextView
                 android:id="@+id/tv_time"
@@ -70,6 +70,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/default_circle"
             android:textColor="@color/color_666666"
+            android:visibility="gone"
             android:textSize="@dimen/font_34" />
     </LinearLayout>
 
@@ -79,7 +80,7 @@
         android:id="@+id/rl_otherinfo_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="center_vertical">
 
         <LinearLayout
@@ -88,45 +89,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
-            <!--<TextView-->
-            <!--android:id="@+id/tv_other_left"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="@dimen/px44"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:background="@drawable/shape_item_circleinfo"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="这里是昵称"-->
-            <!--android:textColor="@color/color_9c9c9c"-->
-            <!--android:textSize="@dimen/px30"/>-->
-
-            <!--<com.rz.rz_rrz.widget.CircleImageView-->
-            <!--android:id="@+id/iv_other_leftbg"-->
-            <!--android:layout_width="@dimen/px56"-->
-            <!--android:layout_height="@dimen/px56"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:src="#fff7ea"/>-->
-
-            <!--<com.rz.rz_rrz.widget.CircleImageView-->
-            <!--android:id="@+id/iv_other_left"-->
-            <!--android:layout_width="@dimen/px52"-->
-            <!--android:layout_height="@dimen/px52"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:src="@color/color_cccccc"/>-->
-            <ImageView
-                android:id="@+id/iv_other_left"
-                style="@style/DynamicHomeFuncNumImgStyle" />
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_other_left"-->
+                <!--style="@style/DynamicHomeFuncNumImgStyle" />-->
 
             <TextView
                 android:id="@+id/tv_other_left"
                 style="@style/DynamicHomeFuncTvStyle" />
-
-            <!--<com.rz.rz_rrz.widget.CircleImageView-->
-            <!--android:id="@+id/iv_other_leftbg"-->
-            <!--android:layout_width="@dimen/px56"-->
-            <!--android:layout_height="@dimen/px56"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:src="#fff7ea"/>-->
 
 
         </LinearLayout>
@@ -144,7 +113,7 @@
                 android:layout_marginRight="@dimen/px30"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ll_other_left_type1_iv1"
@@ -180,7 +149,7 @@
                 android:layout_marginRight="@dimen/px30"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ll_other_mid_type1_iv1"
@@ -218,9 +187,9 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <ImageView
-                    android:id="@+id/ll_other_right_type1_iv1"
-                    style="@style/DynamicHomeFuncNumImgStyle" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/ll_other_right_type1_iv1"-->
+                    <!--style="@style/DynamicHomeFuncNumImgStyle" />-->
 
                 <TextView
                     android:id="@+id/ll_other_right_type1_tv2"
