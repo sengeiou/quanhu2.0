@@ -10,13 +10,13 @@
     tools:context="com.rz.circled.ui.activity.SearchActivity">
 
 
-    <com.rz.circled.widget.PagerSlidingTabStrip
+    <com.rz.circled.widget.PagerSlidingTabStripHome
         android:id="@+id/tab_pager_search"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px124"
         android:textSize="@dimen/font_46"
         app:pstsIndicatorHeight="@dimen/px8"
-        app:pstsUnderlineHeight="2dp"/>
+        app:pstsUnderlineHeight="1dp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_search"

@@ -18,6 +18,11 @@ public class SearchRewardFragment extends BaseFragment {
     @BindView(R.id.lv_search_content)
     ListView lvReward;
 
+    public static SearchRewardFragment newInstance() {
+        SearchRewardFragment frg = new SearchRewardFragment();
+        return frg;
+    }
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {

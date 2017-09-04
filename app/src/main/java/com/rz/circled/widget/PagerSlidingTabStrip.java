@@ -466,7 +466,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
         //画指示器
 //        indicatorColor = getResources().getColor(R.color.underline_tab);//xiesixiesixiesixiesi!!
-        indicatorColor = getResources().getColor(R.color.color_1bc2b8);//xiesixiesixiesixiesi!!
+        indicatorColor = getResources().getColor(R.color.color_main);//xiesixiesixiesixiesi!!
         rectPaint.setColor(indicatorColor);
         canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
 
@@ -498,7 +498,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 
         // draw underline
-        underlineColor = getResources().getColor(R.color.tab_color_line);//xiesixiesixiesixiesi!!
+        underlineColor = getResources().getColor(R.color.color_999);//xiesixiesixiesixiesi!!
 //        underlineColor = getResources().getColor(R.color.color_1bc2b8);//xiesixiesixiesixiesi!!
         rectPaint.setColor(underlineColor);
         canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);

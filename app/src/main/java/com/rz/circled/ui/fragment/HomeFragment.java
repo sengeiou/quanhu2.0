@@ -1,17 +1,15 @@
 package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
@@ -22,7 +20,6 @@ import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -92,21 +89,13 @@ public class HomeFragment extends BaseFragment {
             }
             circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
         }
-            dynamicAdapter.notifyDataSetChanged();
+        dynamicAdapter.notifyDataSetChanged();
 
 
     }
 
-    @OnClick(R.id.tv_home_web)
+    @OnClick(R.id.tv_home_search)
     public void onClick() {
-        startActivity(new Intent(getActivity(), WebContainerActivity.class));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+        startActivity(new Intent(getActivity(), SearchActivity.class));
     }
 }

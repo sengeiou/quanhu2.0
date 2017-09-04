@@ -6,16 +6,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
-import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 
 /**
  * Created by Gsm on 2017/9/2.
  */
-public class SearchPersonAdapter extends CommonAdapter {
+public class SearchPersonAdapter extends SearchCommonAdapter {
 
     private boolean isTalentPage = false;
-    private String keyWord;
 
     public SearchPersonAdapter(Context context, int layoutId) {
         super(context, layoutId);
@@ -23,10 +21,6 @@ public class SearchPersonAdapter extends CommonAdapter {
 
     public void setTalentPage(boolean isTalentPage) {
         this.isTalentPage = isTalentPage;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
     }
 
     @Override
@@ -40,7 +34,11 @@ public class SearchPersonAdapter extends CommonAdapter {
         ImageView ivTalent = (ImageView) helper.getViewById(R.id.iv_search_person_talent);
 
         //name  或者 info 包含keyWord 则显示为蓝色字体
+        tvName.setText("");
+        tvName.append(getSpan(""));//替换文本
 
+        tvInfo.setText("");
+        tvInfo.append(getSpan(""));//替换文本
 
         if (isTalentPage) {//达人列表
             int basePadding = (int) mContext.getResources().getDimension(R.dimen.px20);

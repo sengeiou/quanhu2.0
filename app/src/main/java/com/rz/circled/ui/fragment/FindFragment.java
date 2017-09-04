@@ -1,6 +1,5 @@
 package com.rz.circled.ui.fragment;
 
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.CommonH5Activity;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleEntrModle;
 
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -95,10 +93,10 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
-                if (circleEntrModle.circleName.equals("百圈纷呈")){
+                if (circleEntrModle.circleName.equals("百圈纷呈")) {
 
-                }else {
-                    CommonH5Activity.startCommonH5(mActivity,"",circleEntrModle.circleUrl);
+                } else {
+                    WebContainerActivity.startActivity(mActivity, circleEntrModle.circleUrl);
 
                 }
             }
@@ -125,13 +123,5 @@ public class FindFragment extends BaseFragment {
             findAdapter.notifyDataSetChanged();
 
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
     }
 }

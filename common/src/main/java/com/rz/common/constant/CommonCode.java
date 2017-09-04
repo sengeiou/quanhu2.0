@@ -55,6 +55,8 @@ public interface CommonCode {
         int FINISH_LOADING = 10001;
 
         int EDITOR_PIC_DELETE = 10002;
+
+        int SEARCH_KEYWORD = 20001;
     }
 
     /**

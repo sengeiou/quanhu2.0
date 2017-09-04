@@ -40,7 +40,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     private boolean hadError = false;
     private WebChromeClient webChromeClient;
 
-    public static void startActivity(String url, Context context) {
+    public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebContainerActivity.class);
         intent.putExtra(IntentKey.EXTRA_URL, url);
         context.startActivity(intent);
@@ -80,10 +80,10 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
         setRefreshListener(this);
 
-//        String loadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
-//        mWebViewProxy.removeRepetLoadUrl(loadUrl);
+        String loadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
+        mWebViewProxy.removeRepetLoadUrl(loadUrl);
 
-        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
+//        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
 
     @Override
@@ -105,6 +105,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     protected void onResume() {
         super.onResume();
 //        mWebView.resumeTimers();
+        mWebViewProxy.autoCancelUiHandler();
     }
 
     @Override

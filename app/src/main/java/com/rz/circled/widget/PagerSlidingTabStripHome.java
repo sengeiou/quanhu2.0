@@ -24,7 +24,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.Path;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Parcel;
@@ -192,7 +191,7 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
         fillPaint.setStyle(Style.FILL_AND_STROKE);
         fillPaint.setAntiAlias(true);
         fillPaint.setAlpha(1);
-        fillPaint.setColor(getResources().getColor(R.color.color_main));
+        fillPaint.setColor(getResources().getColor(R.color.font_color_blue));
         fillPaint.setStrokeWidth(getResources().getDimension(R.dimen.px2));
 
         defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
@@ -321,6 +320,7 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
         tab.setSingleLine();
         TextPaint tp = tab.getPaint();
         tp.setFakeBoldText(true);
+        tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_46));
 
         addTab(position, tab);
     }
@@ -426,9 +426,9 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
         final int height = getHeight();
 
         // draw underline
-
+        underlineColor = getResources().getColor(R.color.color_aaa);
         rectPaint.setColor(underlineColor);
-        canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
+        canvas.drawRect(getResources().getDimension(R.dimen.app_base_padding), height - underlineHeight, tabsContainer.getWidth() - getResources().getDimension(R.dimen.app_base_padding), height, rectPaint);
 
         // draw indicator line
         rectPaint.setColor(indicatorColor);
@@ -466,42 +466,46 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
 
         //画指示器
 //        indicatorColor = getResources().getColor(R.color.underline_tab);//xiesixiesixiesixiesi!!
-        indicatorColor = getResources().getColor(R.color.color_main);//xiesixiesixiesixiesi!!
+        indicatorColor = getResources().getColor(R.color.font_color_blue);//xiesixiesixiesixiesi!!
         rectPaint.setColor(indicatorColor);
-        canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+        canvas.drawRect(lineLeft + getResources().getDimension(R.dimen.px60),
+                height - indicatorHeight - getResources().getDimension(R.dimen.px20),
+                lineRight - getResources().getDimension(R.dimen.px60),
+                height - getResources().getDimension(R.dimen.px20), rectPaint);
 
 
-        if (sanJiaoType == 1) {
-//            Rect rect = new Rect();
-//            rect.set((int) lineLeft, height - 20, (int) lineRight, height);
-//            canvas.drawBitmap(selectedBitmap, null, rect, null);
-            canvas.drawRect(lineLeft, height - 10, lineRight, height, fillPaint);
-            Path path = new Path();
-            path.moveTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
-            path.lineTo((lineRight - lineLeft) / 2 + 15 + lineLeft, height - 10);
-            path.lineTo((lineRight - lineLeft) / 2 + lineLeft, height - 20);
-            path.lineTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
-            path.close();
-            canvas.drawPath(path, fillPaint);
-        } else if (sanJiaoType == 2) {
-            canvas.drawRect(lineLeft, height - 20, lineRight, height - 10, fillPaint);
-            Path path = new Path();
-            path.moveTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
-            path.lineTo((lineRight - lineLeft) / 2 + 15 + lineLeft, height - 10);
-            path.lineTo((lineRight - lineLeft) / 2 + lineLeft, height);
-            path.lineTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
-            path.close();
-            canvas.drawPath(path, fillPaint);
-        } else {
-            canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
-        }
+//        if (sanJiaoType == 1) {
+////            Rect rect = new Rect();
+////            rect.set((int) lineLeft, height - 20, (int) lineRight, height);
+////            canvas.drawBitmap(selectedBitmap, null, rect, null);
+//            canvas.drawRect(lineLeft, height - 10, lineRight, height, fillPaint);
+//            Path path = new Path();
+//            path.moveTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
+//            path.lineTo((lineRight - lineLeft) / 2 + 15 + lineLeft, height - 10);
+//            path.lineTo((lineRight - lineLeft) / 2 + lineLeft, height - 20);
+//            path.lineTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
+//            path.close();
+//            canvas.drawPath(path, fillPaint);
+//        } else if (sanJiaoType == 2) {
+//            canvas.drawRect(lineLeft, height - 20, lineRight, height - 10, fillPaint);
+//            Path path = new Path();
+//            path.moveTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
+//            path.lineTo((lineRight - lineLeft) / 2 + 15 + lineLeft, height - 10);
+//            path.lineTo((lineRight - lineLeft) / 2 + lineLeft, height);
+//            path.lineTo((lineRight - lineLeft) / 2 - 15 + lineLeft, height - 10);
+//            path.close();
+//            canvas.drawPath(path, fillPaint);
+//        } else {
+//            canvas.drawRect(lineLeft + getResources().getDimension(R.dimen.px40),
+//                    height - indicatorHeight - getResources().getDimension(R.dimen.px20),
+//                    lineRight - getResources().getDimension(R.dimen.px40),
+//                    height - getResources().getDimension(R.dimen.px20), rectPaint);
+//        }
 
 
         // draw underline
-        underlineColor = getResources().getColor(R.color.color_999);//xiesixiesixiesixiesi!!
-//        underlineColor = getResources().getColor(R.color.color_1bc2b8);//xiesixiesixiesixiesi!!
-        rectPaint.setColor(underlineColor);
-        canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
+//        rectPaint.setColor(underlineColor);
+//        canvas.drawRect(getResources().getDimension(R.dimen.px20), height - underlineHeight, tabsContainer.getWidth() - getResources().getDimension(R.dimen.px20), height, rectPaint);
 
 
         // draw divider

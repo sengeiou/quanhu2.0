@@ -20,6 +20,11 @@ public class SearchPersonFragment extends BaseFragment {
     ListView lvPerson;
     private SearchPersonAdapter personAdapter;
 
+    public static SearchPersonFragment newInstance() {
+        SearchPersonFragment frg = new SearchPersonFragment();
+        return frg;
+    }
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {

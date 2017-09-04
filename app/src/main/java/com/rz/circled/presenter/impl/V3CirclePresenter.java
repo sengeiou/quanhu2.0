@@ -8,7 +8,6 @@ import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.CodeStatus;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.ACache;
 import com.rz.common.utils.NetUtils;

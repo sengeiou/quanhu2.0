@@ -14,8 +14,14 @@ import android.widget.ImageView;
 
 import com.rz.circled.R;
 import com.rz.circled.ui.fragment.SearchContentFragment;
-import com.rz.circled.widget.PagerSlidingTabStrip;
+import com.rz.circled.ui.fragment.SearchPersonFragment;
+import com.rz.circled.ui.fragment.SearchRewardFragment;
+import com.rz.circled.widget.PagerSlidingTabStripHome;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,7 +33,7 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.iv_search_clear_keyword)
     ImageView ivClearKeyword;
     @BindView(R.id.tab_pager_search)
-    PagerSlidingTabStrip tabPagerSearch;
+    PagerSlidingTabStripHome tabPagerSearch;
     @BindView(R.id.vp_search)
     ViewPager vpSearch;
     private SearchAdapter searchAdapter;
@@ -66,7 +72,7 @@ public class SearchActivity extends BaseActivity {
                 }
             }
         });
-
+        tabPagerSearch.setCustomLayoutParams(5);
         searchAdapter = new SearchAdapter(getSupportFragmentManager());
         vpSearch.setAdapter(searchAdapter);
         vpSearch.setOffscreenPageLimit(5);
@@ -122,6 +128,8 @@ public class SearchActivity extends BaseActivity {
     private void toSearch() {
         String keyWord = etKeyword.getText().toString();
         if (TextUtils.isEmpty(keyWord)) return;
+        BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.SEARCH_KEYWORD, keyWord);
+        EventBus.getDefault().post(baseEvent);
     }
 
 
@@ -141,13 +149,15 @@ public class SearchActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-//            if (position == TYPE_CONTENT)
+            if (position == TYPE_CONTENT)
                 return SearchContentFragment.newInstance();
-//            if (position == TYPE_PERSON)
+            if (position == TYPE_PERSON)
+                return SearchPersonFragment.newInstance();
 //                if (position == TYPE_PRIVATE)
-//                    if (position == TYPE_CI RCLE)
-//                        if (position == TYPE_REWARD)
-//            return null;
+//                    if (position == TYPE_CIRCLE)
+            if (position == TYPE_REWARD)
+                return SearchRewardFragment.newInstance();
+            return SearchContentFragment.newInstance();
         }
 
         @Override
