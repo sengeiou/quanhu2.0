@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
-import com.rz.circled.ui.activity.CommonH5Activity;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
@@ -124,8 +124,7 @@ public class FindFragment extends BaseFragment {
                     Intent intent = new Intent(mActivity, AllCirclesAty.class);
                     getActivity().startActivity(intent);
                 } else {
-                    CommonH5Activity.startCommonH5(mActivity, "", circleEntrModle.circleUrl);
-
+                    WebContainerActivity.startActivity(mActivity, circleEntrModleList.get(position).circleUrl);
                 }
             }
         });

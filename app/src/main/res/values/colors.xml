@@ -8,8 +8,5 @@
     <color name="tab_strip_check">@color/color_main</color>
     <color name="tab_strip_uncheck">@color/black</color>
     <color name="tab_color_line">@color/color_main</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#315ac1</color>
     <color name="color_CBCBCB">#CBCBCB</color>
 </resources>

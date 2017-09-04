@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,12 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
@@ -26,6 +21,7 @@ import com.rz.common.utils.Protect;
 import com.rz.httpapi.bean.CircleEntrModle;
 
 import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
