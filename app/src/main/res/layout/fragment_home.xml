@@ -34,6 +34,13 @@
         android:id="@+id/auto_viewpager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px292"></com.rz.circled.widget.AutoRollLayout>
+    <ListView
+        android:id="@+id/id_homefrg_listview"
+        style="@style/DefaultLvStyle"
+        android:background="@color/color_F6F8F8"
+        android:clipToPadding="false"
+        android:divider="@color/color_F4F4F4"
+        />
 
 
 </LinearLayout>

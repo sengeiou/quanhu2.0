@@ -88,9 +88,7 @@ public class AudioChooseActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void initView() {
-
         setTitleRightText(R.string.define);
-
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +145,7 @@ public class AudioChooseActivity extends BaseActivity implements AdapterView.OnI
         };
 
     }
+
 
     @Override
     public void initData() {

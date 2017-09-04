@@ -104,5 +104,22 @@
         <item name="android:textStyle">normal</item>
         <item name="android:singleLine">true</item>
     </style>
+    <style name="DynamicHomeFuncNumImgStyle">
+        <item name="android:layout_width">@dimen/px44</item>
+        <item name="android:layout_height">@dimen/px44</item>
+        <item name="android:layout_marginRight">@dimen/px14</item>
+        <item name="android:src">@color/color_666666</item>
+    </style>
+    <style name="DynamicHomeFuncTvStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:lines">1</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:layout_marginRight">@dimen/px14</item>
+        <item name="android:maxLength">10</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textSize">@dimen/font_40</item>
+        <item name="android:text">文本</item>
+    </style>
 
 </resources>

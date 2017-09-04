@@ -142,7 +142,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             llContent.addView(contentView, layoutParams);
         }
     }
-
+    /**
+     * 清除右侧图标和文字
+     */
+    protected void clearTitleRight() {
+        tvCommonTitleRight.setVisibility(View.GONE);
+        ivCommonRight.setVisibility(View.GONE);
+    }
     /**
      * show to @param(cls)，but can't finish activity
      */

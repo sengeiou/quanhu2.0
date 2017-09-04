@@ -156,6 +156,7 @@
     <string name="report_fail">举报失败</string>
     <string name="refunds_success">举报成功</string>
     <string name="refunds_fail">举报失败</string>
+    <string name="un_support_function">暂不支持此服务</string>
     <string name="re_answer">重新回答</string>
     <string name="re_record">重新录制</string>
     <string name="change_text_answer">切换文字回答</string>

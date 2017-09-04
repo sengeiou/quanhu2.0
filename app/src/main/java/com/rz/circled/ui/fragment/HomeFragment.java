@@ -1,25 +1,28 @@
 package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.rz.circled.R;
+import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
-import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
+import com.rz.httpapi.bean.CircleDynamic;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -28,9 +31,11 @@ import butterknife.OnClick;
 public class HomeFragment extends BaseFragment {
     @BindView(R.id.auto_viewpager)
     AutoRollLayout mAuto_viewpager;
-    @BindView(R.id.et_home_custId)
-    EditText etCustId;
+    @BindView(R.id.id_homefrg_listview)
+    ListView mHomeLv;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
+    private List<CircleDynamic> circleDynamicList = new ArrayList<>();
+    DynamicAdapter dynamicAdapter;
 
     @Nullable
     @Override
@@ -43,11 +48,17 @@ public class HomeFragment extends BaseFragment {
         V3CirclePresenter presenter = new V3CirclePresenter();
         presenter.attachView(this);
         presenter.getBannerList(5);
+        presenter.getCircleDynamicList(false);
     }
 
     @Override
     public void initView() {
+        initDynamicLv();
+    }
 
+    private void initDynamicLv() {
+        dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);//泛型要改
+        mHomeLv.setAdapter(dynamicAdapter);
     }
 
     @Override
@@ -72,18 +83,30 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.tv_home_web, R.id.tv_home_search})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_home_web:
-                String s = etCustId.getText().toString();
-                if (!TextUtils.isEmpty(s))
-                    Session.setUserId(s);
-                startActivity(new Intent(getActivity(), WebContainerActivity.class));
-                break;
-            case R.id.tv_home_search:
-                startActivity(new Intent(getActivity(), SearchActivity.class));
-                break;
+    @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t != null) {
+            if (!loadMore) {
+                circleDynamicList.clear();
+            }
+            circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
         }
+            dynamicAdapter.notifyDataSetChanged();
+
+
+    }
+
+    @OnClick(R.id.tv_home_web)
+    public void onClick() {
+        startActivity(new Intent(getActivity(), WebContainerActivity.class));
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

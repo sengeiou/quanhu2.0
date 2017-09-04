@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 
 import com.rz.common.R;
 import com.rz.common.permission.EasyPermissions;
-import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.ui.inter.IViewController;
+import com.rz.common.ui.view.BaseLoadView;
 
 import java.util.List;
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleEntrModle;
 
@@ -93,10 +94,11 @@ public class FindFragment extends BaseFragment {
         mFindGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (circleEntrModleList.get(position).circleName.equals("百圈纷呈")){
+                CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
+                if (circleEntrModle.circleName.equals("百圈纷呈")){
 
                 }else {
-
+                    CommonH5Activity.startCommonH5(mActivity,"",circleEntrModle.circleUrl);
 
                 }
             }
