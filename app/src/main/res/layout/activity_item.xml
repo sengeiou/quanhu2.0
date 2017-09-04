@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/px34"
+    android:text="7月25日光谷国际广场B座1129将开展正式湖东,湖东会邀请大名鼎鼎湖畔花园夏雨荷过来演讲如何月入百万"
+    android:textColor="@color/color_000000"
+    android:textStyle="bold"
+    android:maxLines="2"
+    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/font_34"
+        android:text="活动时间:2017年八月32日"
+        android:textColor="@color/color_666666"
+        android:maxLines="2"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px10"
+        android:text="活动地址:光谷国际广场光谷步行街光谷天地"
+        android:textColor="@color/color_666666"
+        android:maxLines="2"
+        />
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="@dimen/px30"
+        android:layout_marginBottom="@dimen/px34"
+        android:background="@color/color_666666"
+        />
+</LinearLayout>

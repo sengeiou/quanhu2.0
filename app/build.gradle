@@ -54,10 +54,9 @@ android {
             buildConfigField "int", "isFlag", "1"
             buildConfigField "boolean", "isDebug", "false"
             buildConfigField "boolean", "addServerPrefix", "true"
-            buildConfigField "String", "BaseUrl", "\"https://api.yryz.com/api/\""
-            buildConfigField "String", "NoticeBaseUrl", "\"https://m.yryz.com\""
-            buildConfigField "String", "WebHomeBaseUrl", "\"https://web.haidao86.com\""
-            buildConfigField "String", "YYLUrl", "\"https://opus.yryz.com/yyl\""
+            buildConfigField "String", "BaseUrl", "\"https://api.quanhu365.com/api/\""
+            buildConfigField "String", "NoticeBaseUrl", "\"https://m.quanhu365.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"https://web.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -68,10 +67,9 @@ android {
             buildConfigField "int", "isFlag", "1"
             buildConfigField "boolean", "isDebug", "true"
             buildConfigField "boolean", "addServerPrefix", "true"
-            buildConfigField "String", "BaseUrl", "\"https://api-mo.yryz.com/api/\""
-            buildConfigField "String", "NoticeBaseUrl", "\"https://m-mo.yryz.com\""
-            buildConfigField "String", "WebHomeBaseUrl", "\"https://web-mo.haidao86.com\""
-            buildConfigField "String", "YYLUrl", "\"https://opus-mo.yryz.com/yyl\""
+            buildConfigField "String", "BaseUrl", "\"https://api-mo.quanhu365.com/api/\""
+            buildConfigField "String", "NoticeBaseUrl", "\"https://m-mo.quanhu365.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"https://web-mo.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -82,10 +80,9 @@ android {
             buildConfigField "int", "isFlag", "5"
             buildConfigField "boolean", "isDebug", "true"
             buildConfigField "boolean", "addServerPrefix", "true"
-            buildConfigField "String", "BaseUrl", "\"http://api-dev.yryz.com/api/\""
-            buildConfigField "String", "NoticeBaseUrl", "\"http://m-dev.yryz.com\""
-            buildConfigField "String", "WebHomeBaseUrl", "\"http://web-dev.haidao86.com\""
-            buildConfigField "String", "YYLUrl", "\"https://opus-dev.yryz.com/yyl\""
+            buildConfigField "String", "BaseUrl", "\"http://api-dev.quanhu365.com/api/\""
+            buildConfigField "String", "NoticeBaseUrl", "\"http://m-dev.quanhu365.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"http://web-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -111,11 +108,27 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+    compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
-    //视频播放
-    //图片加载
+    compile 'com.android.support:multidex:1.0.1'
 
+    compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //视频播放
+    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+    //图片加载
+    compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'com.facebook.fresco:animated-gif:0.12.0'
+    //图片加载
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    //圆形图片
+    compile 'com.makeramen:roundedimageview:2.3.0'
+    //指示器
+    compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+    //循环滚动viewpager
+    compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+        exclude module: 'support-v4'
+    }
 
     compile project(':common')
     compile project(':YunXinIM')

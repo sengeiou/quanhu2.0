@@ -6,6 +6,7 @@ import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -371,6 +372,14 @@ public interface ApiService {
             @Field("type") int type,
             @Field("sourceId") String sourceId,
             @Field("content") String content
+    );
+    /**
+     * 获取圈子达人
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_FAMOUS_LIST)
+    public Call<ResponseData<List<FamousModel>>> getFamous(
+            @Field("appIds") String appIds
     );
 
 }
