@@ -4,7 +4,6 @@
               android:layout_height="match_parent"
               android:background="@color/white"
               android:orientation="vertical">
-
     <TextView
         android:id="@+id/tv_home_web"
         android:layout_width="wrap_content"
@@ -12,10 +11,15 @@
         android:padding="@dimen/px50"
         android:text="跳转web页面"
         android:textColor="@color/font_gray_m"/>
-    <com.rz.circled.widget.AutoRollLayout
-        android:id="@+id/auto_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px292"></com.rz.circled.widget.AutoRollLayout>
+
+
+    <ListView
+        android:id="@+id/id_homefrg_listview"
+        style="@style/DefaultLvStyle"
+        android:background="@color/color_F6F8F8"
+        android:clipToPadding="false"
+        android:divider="@color/color_F4F4F4"
+        />
 
 
 </LinearLayout>

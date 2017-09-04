@@ -1,10 +1,13 @@
 package com.rz.circled.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CodeStatus;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.ACache;
@@ -17,6 +20,7 @@ import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.io.Serializable;
@@ -124,72 +128,72 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //    }
 //
 //
-//    /**
-//     * 首页动态列表
-//     *
-//     * @param loadMore
-//     */
-//    public void getCircleDynamicList(final boolean loadMore) {
-//        Call<ResponseData<List<CircleDynamic>>> call = null;
-//        String userid = Session.getUserId();
-//        if (TextUtils.isEmpty(userid)) {
-//            userid = null;
-//        }
-//        call = mUserService.getCircleDynamic(userid, loadMore ? dynamicPos : 0, 50);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (!loadMore) {
-//                        dynamicPos = 0;
-//                    }
-////                    dynamicPos += Constants.PAGESIZE;
-//                    dynamicPos+=50;
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<CircleDynamic> model = (List<CircleDynamic>) res.getData();
-//                        if (null != model && model.size() != 0) {
-//                            //发送成功
-//                            mView.updateViewWithLoadMore(model, loadMore);
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, loadMore);
-//                        } else {
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, loadMore);
-//                        }
-//                        try {
-//                            if (loadMore) {
-//                                currentData.addAll(model);
-//                            } else {
-//                                currentData = new ArrayList<CircleDynamic>(model);
-//                            }
-//                            if (!loadMore) {
-//                                mCirclesCache.putListEntity(model);
-//                            } else {
-//                                mCirclesCache.putListEntity(currentData);
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            Log.d("test", "cacheData failed " + e.getMessage());
-//                        }
-//                        return;
-//                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-//                        //发送失败
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, loadMore);
-//                        return;
-//                    }
-//                }
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//                //发送验证码失败
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, loadMore);
-//            }
-//        });
-//    }
+    /**
+     * 首页动态列表
+     *
+     * @param loadMore
+     */
+    public void getCircleDynamicList(final boolean loadMore) {
+        Call<ResponseData<List<CircleDynamic>>> call = null;
+        String userid = Session.getUserId();
+        if (TextUtils.isEmpty(userid)) {
+            userid = null;
+        }
+        call = mUserService.getCircleDynamic(userid, loadMore ? dynamicPos : 0, 50);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (!loadMore) {
+                        dynamicPos = 0;
+                    }
+//                    dynamicPos += Constants.PAGESIZE;
+                    dynamicPos+=50;
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<CircleDynamic> model = (List<CircleDynamic>) res.getData();
+                        if (null != model && model.size() != 0) {
+                            //发送成功
+                            mView.updateViewWithLoadMore(model, loadMore);
+                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL);
+                        } else {
+                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL);
+                        }
+                        try {
+                            if (loadMore) {
+                                currentData.addAll(model);
+                            } else {
+                                currentData = new ArrayList<CircleDynamic>(model);
+                            }
+                            if (!loadMore) {
+                                mCirclesCache.putListEntity(model);
+                            } else {
+                                mCirclesCache.putListEntity(currentData);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.d("test", "cacheData failed " + e.getMessage());
+                        }
+                        return;
+                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
+                        //发送失败
+                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA);
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
+                super.onFailure(call, t);
+                //发送验证码失败
+                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA);
+            }
+        });
+    }
 
     /**
      * 首页圈子入口列表
@@ -297,38 +301,38 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //            }
 //        });
 //    }
-//
-//    /**
-//     * 首页圈子达人
-//     */
-//    public void getFamousList(final int stats) {
-//        if (!NetUtils.isNetworkConnected(mContext)) {
-//            return;
-//        }
-//        Call<ResponseData<List<FamousModel>>> call = mUserService.getFamous("2");
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<FamousModel>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<FamousModel>>> call, Response<ResponseData<List<FamousModel>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<FamousModel> model = (List<FamousModel>) res.getData();
-//                        mView.updateViewWithFlag(model, stats);
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<FamousModel>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//            }
-//        });
-//    }
-//
-//
+
+    /**
+     * 首页圈子达人
+     */
+    public void getFamousList(final int stats) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        Call<ResponseData<List<FamousModel>>> call = mUserService.getFamous("2");
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<FamousModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<FamousModel>>> call, Response<ResponseData<List<FamousModel>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<FamousModel> model = (List<FamousModel>) res.getData();
+                        mView.updateViewWithFlag(model, stats);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<FamousModel>>> call, Throwable t) {
+                super.onFailure(call, t);
+            }
+        });
+    }
+
+
 //    /**
 //     * 获取转发详情
 //     *

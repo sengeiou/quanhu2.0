@@ -4,7 +4,9 @@ import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
+import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -242,6 +244,21 @@ public interface ApiService {
     public Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
             @Field("act") int act
     );
+    /**
+     * 获取首页圈子动态列表
+     *
+     * @param custId
+     * @param start
+     * @param limit
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_DYNAMIC_GET)
+    public Call<ResponseData<List<CircleDynamic>>> getCircleDynamic(
+            @Field("custId") String custId,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
 
 
     /*******************个人信息编辑保存 start**********************/
@@ -355,6 +372,14 @@ public interface ApiService {
             @Field("type") int type,
             @Field("sourceId") String sourceId,
             @Field("content") String content
+    );
+    /**
+     * 获取圈子达人
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_FAMOUS_LIST)
+    public Call<ResponseData<List<FamousModel>>> getFamous(
+            @Field("appIds") String appIds
     );
 
 }

@@ -55,6 +55,13 @@
     <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_ff6060">#ff6060</color>
     <color name="color_ECECEC">#ECECEC</color>
+    <color name="color_F6F8F8">#F6F8F8</color>
+    <color name="color_29D1E2">#29D1E2</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_ffffff">#FFFFFF</color>
+    <color name="color_cccccc">#cccccc</color>
+    <color name="color_23CDC3">#23CDC3</color>
+    <color name="F7B85D">#F7B85D</color>
 
 
 </resources>

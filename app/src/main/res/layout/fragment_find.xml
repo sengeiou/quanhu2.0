@@ -1,13 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <GridView
-        android:id="@+id/find_gv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="4">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    </GridView>
+    <com.rz.circled.widget.observable.ObservableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <com.rz.circled.widget.XGridView
+                    android:id="@+id/find_gv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="4">
+                </com.rz.circled.widget.XGridView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px60"
+                android:layout_marginTop="@dimen/font_40"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:layout_width="@dimen/px450"
+                    android:layout_height="@dimen/px180"
+                    android:layout_marginRight="@dimen/font_34"
+                    android:background="@drawable/find_button_com_shape"
+                    android:drawableRight="@drawable/tiananmen"
+                    android:text="CHINA\r\nRESOURCE"
+                    android:textColor="@color/black"
+                    />
+
+                <Button
+                    android:layout_width="@dimen/px450"
+                    android:layout_height="@dimen/px180"
+                    android:background="@drawable/find_button_com_shape"
+                    android:drawableRight="@drawable/laohuji"
+                    android:text="@string/quanquanle"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px30"
+                android:background="@color/color_F8F8F8"
+                ></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/circle_theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px40"
+                    android:src="@drawable/hot_famous"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/circle_theme"
+                    android:padding="@dimen/px44"
+                    android:text="@string/circle_hot_famous"
+                    android:textColor="@color/color_000000"
+                    android:textSize="@dimen/px48"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px60"
+                    android:text="查看更多"
+                    android:textColor="#58A2FF"
+                    android:textSize="@dimen/px48"/>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/circle_famous_rcv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/px34"
+                >
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px30"
+                android:background="@color/color_F8F8F8"
+                ></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px40"
+                    android:src="@drawable/hot_subject"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_subject"
+                    android:padding="@dimen/px44"
+                    android:text="@string/circle_hot_subject"
+                    android:textColor="@color/color_000000"
+                    android:textSize="@dimen/px48"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px60"
+                    android:text="查看更多"
+                    android:textColor="#58A2FF"
+                    android:textSize="@dimen/px48"/>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/circle_subject_rcv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </android.support.v7.widget.RecyclerView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px30"
+                android:background="@color/color_F8F8F8"
+                ></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px44"
+                android:paddingBottom="@dimen/px10"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px40"
+                    android:src="@drawable/newest_activity"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_activity"
+                    android:layout_marginLeft="@dimen/px44"
+                    android:text="@string/circle_new_activity"
+                    android:textColor="@color/color_000000"
+                    android:textSize="@dimen/px48"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/px60"
+                    android:text="查看更多"
+                    android:textColor="#58A2FF"
+                    android:textSize="@dimen/px48"/>
+            </RelativeLayout>
+            <com.rz.circled.widget.MListView
+                android:id="@+id/new_activity_lv"
+                style="@style/DefaultLvStyle"
+                android:paddingLeft="@dimen/px34"
+                android:paddingRight="@dimen/px34"
+                >
+            </com.rz.circled.widget.MListView>
+        </LinearLayout>
+    </com.rz.circled.widget.observable.ObservableScrollView>
 
 </LinearLayout>

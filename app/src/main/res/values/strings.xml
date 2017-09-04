@@ -167,5 +167,10 @@
     <string name="report_fail">举报失败</string>
     <string name="refunds_success">举报成功</string>
     <string name="refunds_fail">举报失败</string>
+    <string name="un_support_function">暂不支持此服务</string>
+    <string name="quanquanle">圈圈乐</string>
+    <string name="circle_hot_famous">热门达人</string>
+    <string name="circle_hot_subject">热门话题</string>
+    <string name="circle_new_activity">最新活动</string>
 
 </resources>
