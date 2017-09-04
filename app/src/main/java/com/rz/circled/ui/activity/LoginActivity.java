@@ -28,7 +28,6 @@ import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShowListModel;
-import com.rz.circled.modle.UserInfoModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.widget.CommomUtils;
@@ -519,7 +518,7 @@ public class LoginActivity extends BaseActivity {
             if (resultCode == IntentCode.Register.REGISTER_RESULT_CODE) {
                 //注册成功(包括从忘记密码中进入)
                 if (null != data) {
-                    UserInfoModel model = (UserInfoModel) data.getSerializableExtra("111");
+                    UserInfoBean model = (UserInfoBean) data.getSerializableExtra("111");
                     if (null != model) {
                         updateView(model);
                         finish();
@@ -722,7 +721,7 @@ public class LoginActivity extends BaseActivity {
     public void onEvent(NotifyEvent notifyEvent) {
         if (notifyEvent != null && notifyEvent.tag.equals("register")) {
             Session.setLoginWay(Type.LOGIN_PHONE);
-            UserInfoModel model = (UserInfoModel) notifyEvent.object;
+            UserInfoBean model = (UserInfoBean) notifyEvent.object;
             if (null != model) {
                 updateView(model);
             }

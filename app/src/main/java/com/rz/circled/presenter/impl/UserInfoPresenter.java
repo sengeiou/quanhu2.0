@@ -7,10 +7,9 @@ import android.os.Handler;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.modle.RegisterModel;
-import com.rz.circled.modle.UserInfoModel;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.CodeStatus;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
@@ -84,14 +83,14 @@ public class UserInfoPresenter extends GeneralPresenter {
                             if (function == null || function.length() == 0 || Type.FUNCTION_CODE_2.equals(function)) {
                                 mView.updateView(model);
                             } else {
-                                mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             }
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                     }
                 } else {
-                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.send_code_failed));
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
                 }
             }
 
@@ -99,7 +98,7 @@ public class UserInfoPresenter extends GeneralPresenter {
             public void onFailure(Call<ResponseData<RegisterBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.send_code_failed));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
             }
         });
     }
@@ -110,10 +109,10 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void registerUser(String phone, String password, String veriCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, mContext.getString(R.string.register_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.register_loading));
         Call<ResponseData<UserInfoBean>> call = mUserService.register(
                 1002,
                 phone,
@@ -135,24 +134,24 @@ public class UserInfoPresenter extends GeneralPresenter {
                         if (null != user) {
                             //注册成功
                             Session.setLoginWay(Type.LOGIN_PHONE);
-                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, mContext.getString(R.string.regist_success));
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.regist_success));
                             mView.updateView(user);
                             return;
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         //注册失败
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                         return;
                     }
                 }
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.regist_failed));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.regist_failed));
             }
 
             @Override
             public void onFailure(Call<ResponseData<UserInfoBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 //注册失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.regist_failed));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.regist_failed));
             }
         });
     }
@@ -162,7 +161,7 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void changePw(String phone, String password, String veriCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
         }
 //        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, mContext.getString(R.string.check_loading));
@@ -180,23 +179,23 @@ public class UserInfoPresenter extends GeneralPresenter {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         //重置密码成功
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, mContext.getString(R.string.change_pw_success));
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.change_pw_success));
                         mView.updateView("1");
                         return;
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         //重置密码失败
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         return;
                     }
                 }
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.change_pw_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.change_pw_fail));
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
                 //重置密码失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.change_pw_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.change_pw_fail));
             }
         });
     }
@@ -206,9 +205,9 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void modifyPw(String password, String newPassword) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
         }
-        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, mContext.getString(R.string.check_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
         Call<ResponseData> call = mUserService.modifyPw(
                 Session.getUserId(),
                 password,
@@ -222,7 +221,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         //修改密码成功
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, mContext.getString(R.string.modify_success));
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.modify_success));
                         mView.updateView("");
                         return;
                     } else {
@@ -230,21 +229,21 @@ public class UserInfoPresenter extends GeneralPresenter {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                                 }
                             }, 2000);
                             return;
 //                        }
                     }
                 }
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.modify_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.modify_fail));
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
                 //修改密码失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.modify_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.modify_fail));
             }
         });
     }
@@ -254,9 +253,9 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void bindPhone(final String phone, String password, String veriCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
         }
-        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, mContext.getString(R.string.check_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
         Call<ResponseData> call = mUserService.bindPhone(
                 1012,
                 Session.getUserId(),
@@ -274,7 +273,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         //绑定手机号成功
                         Session.setUserLoginPw(true);
                         Session.setUserPhone(phone);
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, mContext.getString(R.string.bind_success));
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.bind_success));
                         mView.updateView("1");
                         return;
                     } else {
@@ -282,7 +281,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                                 }
                             }, 2000);
                             return;
@@ -290,14 +289,14 @@ public class UserInfoPresenter extends GeneralPresenter {
                     }
                 }
                 //绑定手机号失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.bind_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.bind_fail));
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
                 //绑定手机号失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.bind_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.bind_fail));
             }
         });
     }
