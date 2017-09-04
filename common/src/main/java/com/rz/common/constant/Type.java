@@ -52,6 +52,11 @@ public interface Type {
      * 手机号登录
      */
     public static final int LOGIN_PHONE = 4;
+
+    /**
+     *从圈子跳转登录
+     */
+    public static final int TYPE_LOGIN_WEB = 5;
     /**
      * 第三方绑定
      */

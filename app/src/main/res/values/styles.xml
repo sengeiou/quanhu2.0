@@ -131,4 +131,11 @@
         <item name="android:textSize">@dimen/font_50</item>
     </style>
 
+    <style name="LoginEtStyle">
+        <item name="android:textColorHint">@color/color_666666</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textSize">@dimen/font_44</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
