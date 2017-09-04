@@ -47,8 +47,8 @@ public interface CommonCode {
      * app的基本配置
      */
     interface App {
-        String APP_ID = "w2oqkv4yi892";
-        String APP_SECRET = "78cba16f947e4c7bb9579196c6126851";
+        String APP_ID = "vebff12m1762";
+        String APP_SECRET = "59473d316dc24d0d8c783cbb981b56dc";
     }
 
     interface EventType {

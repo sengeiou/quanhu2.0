@@ -8,6 +8,7 @@ import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.ACache;
 import com.rz.common.utils.NetUtils;
@@ -156,9 +157,9 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (null != model && model.size() != 0) {
                             //发送成功
                             mView.updateViewWithLoadMore(model, loadMore);
-                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
-                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL);
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }
                         try {
                             if (loadMore) {
@@ -178,18 +179,18 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         return;
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         //发送失败
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
                         return;
                     }
                 }
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
             }
 
             @Override
             public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
     }
@@ -218,25 +219,25 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                                 ACache mCache = ACache.get(mContext);
                                 mCache.put("cache", (Serializable) model);
                             }
-                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                         } else {
-                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
                         }
                         return;
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         //发送失败
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                         return;
                     }
                 }
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
             }
 
             @Override
             public void onFailure(Call<ResponseData<List<CircleEntrModle>>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
             }
         });
     }
