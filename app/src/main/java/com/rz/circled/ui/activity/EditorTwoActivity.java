@@ -2161,7 +2161,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent, SYSTEM_SHOOT_VIDEO);
             } catch (IOException e) {
-                Toasty.error(mContext, getString(R.string.get_audio_fail_two));
+//                Toasty.error(mContext, getString(R.string.get_audio_fail_two));
                 e.printStackTrace();
             }
         } else {
