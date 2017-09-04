@@ -39,7 +39,6 @@ public class PlayVideoHandler extends ServerHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        Intent intent = new Intent(mActivity, FullScreenVideoActivity.class);
         Intent intent = new Intent(mActivity, MediaActivity.class);
         intent.putExtra(IntentKey.EXTRA_PATH, videoUrl);
         intent.putExtra(IntentKey.EXTRA_BOOLEAN, false);

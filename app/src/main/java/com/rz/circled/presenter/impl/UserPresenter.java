@@ -1,5 +1,6 @@
-package com.rz.circled.presenter;
+package com.rz.circled.presenter.impl;
 
+import com.rz.circled.presenter.IPresenter;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.Http;

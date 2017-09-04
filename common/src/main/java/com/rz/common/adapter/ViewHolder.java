@@ -1,5 +1,6 @@
 package com.rz.common.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -7,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.rz.common.utils.Protect;
 
 /**
  * 作者：Administrator on 2016/8/9 0009 10:15
@@ -109,6 +113,26 @@ public class ViewHolder {
     public View getViewById(int viewId) {
         View view = getView(viewId);
         return view;
+    }
+
+    /**
+     * 添加网络图片
+     *
+     * @param img
+     * @param url
+     * @return
+     */
+    public ViewHolder setImageByUrl(ImageView img, String url, int loadImg) {
+        if (mContext instanceof Activity) {
+            Activity act = (Activity) mContext;
+            if (act == null || act.isFinishing()) {
+                return this;
+            }
+        }
+        if (Protect.checkLoadImageStatus(mContext)) {
+            Glide.with(mContext).load(url).placeholder(loadImg).error(loadImg).into(img);
+        }
+        return this;
     }
 
 }

@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.rz.circled.R;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
@@ -48,7 +50,7 @@ public class OpenAppHandler extends ServerHandler {
                 mActivity.startActivity(intent);
             }
         } else {
-//            CommH5Aty.startCommonH5(webContainerAty, downloadUrl, webContainerAty.getResources().getString(R.string.load_app));
+            CommonH5Activity.startCommonH5(mActivity, downloadUrl, mActivity.getResources().getString(R.string.app_name));
         }
     }
 

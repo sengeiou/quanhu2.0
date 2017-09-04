@@ -1,7 +1,9 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.content.Intent;
 
+import com.rz.circled.ui.activity.LocationActivity;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -31,8 +33,8 @@ public class LocationHandler extends ServerHandler {
 
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
-//        Intent intent = new Intent(mActivity, LocationAty.class);
-//        mActivity.startActivity(intent);
+        Intent intent = new Intent(mActivity, LocationActivity.class);
+        mActivity.startActivity(intent);
     }
 
     @Override
@@ -47,6 +49,7 @@ public class LocationHandler extends ServerHandler {
                     map.put("latitude", json.getDouble("latitude"));
                     map.put("province", json.getString("province"));
                     map.put("city", json.getString("city"));
+                    map.put("cityCode", json.getString("cityCode"));
                     map.put("region", json.getString("region"));
                     baseParamsObject.data = map;
                 } catch (JSONException e) {

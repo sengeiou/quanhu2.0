@@ -188,5 +188,31 @@
     <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
     <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
     <string name="search">搜索</string>
+    <string name="send_gift_success">礼物打赏成功</string>
 
+    <string name="choose_gift">请选择要打赏的礼物</string>
+    <string name="no_money">余额不足，请充值</string>
+    <string name="pay_amount">支付金额</string>
+    <string name="dashang_for">打赏给</string>
+    <string name="pay_count">支付总额</string>
+    <string name="balance">余额</string>
+    <string name="pay">支付</string>
+    <string name="ten_rmb_transfer">10圈币转发券</string>
+    <string name="pay_title">支付</string>
+    <string name="check_ing">验证中，请稍后</string>
+    <string name="check_fail">校验失败</string>
+    <string name="auth_remind_content">为了保护您的账户安全，请先设置支付密码。</string>
+    <string name="money_less">余额不足</string>
+    <string name="pay_password">请输入支付密码</string>
+    <string name="again_pay_miss">支付密码错误，请重试</string>
+    <string name="user_money_freeze">您的账户已被冻结，请联系客服</string>
+    <string name="please_go_login">您还未登录，请登录</string>
+    <string name="pay_input_pay_pw">请输入支付密码</string>
+    <string name="pay_check_explain">以验证身份</string>
+    <string name="safe_info_note">为保障账户安全，请及时设置安全保护信息</string>
+    <string name="forget_password">忘记密码</string>
+
+    <string name="exit_intr">退出会清除已上传的视频资源</string>
+    <string name="look_again">再看看</string>
+    <string name="forward_to_make_money">转发去赚钱</string>
 </resources>

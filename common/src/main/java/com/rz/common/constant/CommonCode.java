@@ -57,6 +57,8 @@ public interface CommonCode {
         int EDITOR_PIC_DELETE = 10002;
 
         int SEARCH_KEYWORD = 20001;
+
+        String CIRCLE_FRAGMENT_REFRESH = "circle_fragment_refresh";
     }
 
     /**
