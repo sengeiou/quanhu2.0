@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
-import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
@@ -49,7 +49,7 @@ public class FindFragment extends BaseFragment {
     @BindView(R.id.new_activity_lv)
     MListView mNewActivityLv;
     private List<CircleEntrModle> circleEntrModleList = new ArrayList();
-    private V3CirclePresenter mPresenter;
+    private CirclePresenter mPresenter;
     private List<FamousModel> famousList = new ArrayList<>();
     private List<HotSubjectModel> subjectList = new ArrayList<>();
     private List<HotSubjectModel> activityList = new ArrayList<>();
@@ -63,7 +63,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-        mPresenter = new V3CirclePresenter();
+        mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getCircleEntranceList(0);
         mPresenter.getFamousList(7);

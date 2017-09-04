@@ -35,7 +35,7 @@ public class FriendInfoHandler extends ServerHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        FriendInfoAty.newFrindInfo(webContainerAty, userId);
+//        FriendInfoAty.newFrindInfo(mActivity, userId);
         JsEvent.callJsEvent(null, true);
     }
 

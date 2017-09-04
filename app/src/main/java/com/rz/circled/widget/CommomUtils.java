@@ -11,7 +11,7 @@ import android.view.View;
 import com.rz.circled.R;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.EntityCache;
-import com.rz.common.modle.RewardGiftModel;
+import com.rz.httpapi.bean.RewardGiftModel;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.json.JSONException;

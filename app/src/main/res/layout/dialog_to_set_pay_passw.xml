@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_pop_white_btn"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/id_des_txt"
+        style="@style/DefaultTvStyle"
+        android:singleLine="false"
+        android:paddingBottom="@dimen/px118"
+        android:paddingLeft="@dimen/px40"
+        android:paddingRight="@dimen/px40"
+        android:paddingTop="@dimen/px118"
+        android:text="@string/auth_remind_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px4"
+        android:background="@color/color_EEEEEE" />
+
+    <TextView
+        android:id="@+id/id_set_pay_pw_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:background="@drawable/shape_round_bottom_gray"
+        android:padding="@dimen/px36"
+        android:clickable="true"
+        android:text="@string/setting"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

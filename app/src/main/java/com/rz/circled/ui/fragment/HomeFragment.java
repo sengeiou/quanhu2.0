@@ -1,13 +1,16 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
-import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
@@ -22,7 +25,7 @@ import butterknife.BindView;
 /**
  * Created by Gsm on 2017/8/29.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     AutoRollLayout mAuto_viewpager;
     @BindView(R.id.id_homefrg_listview)
     ListView mHomeLv;
@@ -38,7 +41,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-        V3CirclePresenter presenter = new V3CirclePresenter();
+        CirclePresenter presenter = new CirclePresenter();
         presenter.attachView(this);
         presenter.getBannerList(5);
         presenter.getCircleDynamicList(false);
@@ -55,6 +58,7 @@ public class HomeFragment extends BaseFragment {
         mHomeLv.addHeaderView(v);
         dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);//泛型要改
         mHomeLv.setAdapter(dynamicAdapter);
+        mHomeLv.setOnItemClickListener(this);
     }
 
     @Override
@@ -93,8 +97,8 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-//    @OnClick(R.id.tv_home_search)
-//    public void onClick() {
-//        startActivity(new Intent(getActivity(), SearchActivity.class));
-//    }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        startActivity(new Intent(mActivity, SearchActivity.class));
+    }
 }

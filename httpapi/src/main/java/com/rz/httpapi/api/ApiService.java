@@ -2,6 +2,7 @@ package com.rz.httpapi.api;
 
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
+import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -9,7 +10,11 @@ import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.RegisterBean;
+import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.Ticket;
+import com.rz.httpapi.bean.TransferResultBean;
 import com.rz.httpapi.bean.UserInfoBean;
+import com.rz.httpapi.bean.UserInfoModel;
 
 import java.util.List;
 
@@ -244,6 +249,7 @@ public interface ApiService {
     public Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
             @Field("act") int act
     );
+
     /**
      * 获取首页圈子动态列表
      *
@@ -373,6 +379,7 @@ public interface ApiService {
             @Field("sourceId") String sourceId,
             @Field("content") String content
     );
+
     /**
      * 获取圈子达人
      */
@@ -380,6 +387,79 @@ public interface ApiService {
     @POST(CircleApi.CIRCLE_FAMOUS_LIST)
     public Call<ResponseData<List<FamousModel>>> getFamous(
             @Field("appIds") String appIds
+    );
+
+    /**
+     * 获取转发价格列表
+     *
+     * @param
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_TRANSFER_GET_PRICE)
+    Call<ResponseData<List<RewardGiftModel>>> v3CircleGetTransferPrice(
+            @Field("custId") String custId
+    );
+
+    /**
+     * 匹配可用支付券
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.MATCH_VOUCHER)
+    public Call<ResponseData<Ticket>> MatchVoucher(
+            @Field("cost") String cost,
+            @Field("custId") String custId,
+            @Field("type") int type);
+
+    /**
+     * 圈子转发
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.TRANSFER)
+    Call<ResponseData<TransferResultBean>> v3CircleTransfer(
+            @Field("custId") String custId,//*
+            @Field("parentId") String parentId,
+            @Field("authorId") String authorId,//*
+            @Field("appId") String appId,//*
+            @Field("moduleId") String moduleId,//*
+            @Field("infoId") String infoId,
+            @Field("infoTitle") String infoTitle,
+            @Field("infoDesc") String infoDesc,
+            @Field("infoThumbnail") String infoThumbnail,
+            @Field("infoPic") String infoPic,
+            @Field("infoVideo") String infoVideo,
+            @Field("infoVideoPic") String infoVideoPic,
+            @Field("price") long price,
+            @Field("payPasswd") String payPasswd,
+            @Field("infoCreateTime") String createTime
+    );
+
+    /**
+     * 获取用户账户余额
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.GET_ACCOUNT)
+    Call<ResponseData<AccountBean>> getUserAccount(
+            @Field("act") int act,
+            @Field("custId") String custId
+    );
+
+    /**
+     * 查询用户安全信息
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.SEARCH_USER_NEWS)
+    Call<ResponseData<UserInfoModel>> searchUserNews(
+            @Field("act") int act,
+            @Field("custId") String custId
     );
 
 }

@@ -244,7 +244,7 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
             if (i == position) {
 //                temp.setTypeface(tabTypeface, Typeface.BOLD);
 //                temp.setTypeface(tabTypeface, Typeface.NORMAL);
-                temp.setTextColor(getResources().getColor(R.color.tab_strip_check));
+                temp.setTextColor(getResources().getColor(R.color.font_color_blue));
 //                rectPaint.setColor(getResources().getColor(R.color.color_main_new));
             } else {
 //                temp.setTextColor(getResources().getColor(R.color.color_666666));
@@ -468,10 +468,11 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
 //        indicatorColor = getResources().getColor(R.color.underline_tab);//xiesixiesixiesixiesi!!
         indicatorColor = getResources().getColor(R.color.font_color_blue);//xiesixiesixiesixiesi!!
         rectPaint.setColor(indicatorColor);
-        canvas.drawRect(lineLeft + getResources().getDimension(R.dimen.px60),
-                height - indicatorHeight - getResources().getDimension(R.dimen.px20),
-                lineRight - getResources().getDimension(R.dimen.px60),
-                height - getResources().getDimension(R.dimen.px20), rectPaint);
+//        canvas.drawRect(lineLeft + getResources().getDimension(R.dimen.px60),
+//                height - indicatorHeight - getResources().getDimension(R.dimen.px20),
+//                lineRight - getResources().getDimension(R.dimen.px60),
+//                height - getResources().getDimension(R.dimen.px20), rectPaint);
+        canvas.drawRect(lineLeft, height - indicatorHeight - getResources().getDimension(R.dimen.px20), lineRight, height - getResources().getDimension(R.dimen.px20), rectPaint);
 
 
 //        if (sanJiaoType == 1) {

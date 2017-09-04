@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/id_money_scroll"
+        style="@style/DefaultSvStyle"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/px45"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30"
+            android:paddingTop="@dimen/px45">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px100"
+                android:text="@string/dashang_for"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_44"/>
+
+            <TextView
+                android:id="@+id/tv_send_to_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px30"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/font_44"/>
+
+            <ImageView
+                android:id="@+id/iv_gift"
+                android:layout_width="@dimen/px250"
+                android:layout_height="@dimen/px250"
+                android:layout_marginTop="@dimen/px58"
+                android:src="@drawable/v3_gift_qiqiu"/>
+
+            <TextView
+                android:id="@+id/tv_transfer_introduce"
+                android:layout_width="@dimen/px434"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px60"
+                android:background="@color/color_F8F8F8"
+                android:gravity="center"
+                android:paddingBottom="@dimen/px30"
+                android:paddingTop="@dimen/px30"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_44"/>
+
+            <LinearLayout
+                android:id="@+id/id_circle_price_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rolle_f5f5f5_stroke_e5e5e5"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/px45"
+                android:paddingLeft="@dimen/px30"
+                android:paddingRight="@dimen/px30"
+                android:paddingTop="@dimen/px45"
+                android:visibility="gone">
+
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:layout_marginTop="@dimen/px80"
+                android:text="@string/pay_count"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_50"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/id_money_total_txt"
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginTop="@dimen/px40"
+                    android:textColor="@color/color_1bc2b8"
+                    android:textSize="@dimen/px116"/>
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px14"
+                    android:layout_marginTop="@dimen/px30"
+                    android:text="@string/youranbi"
+                    android:textColor="@color/color_1bc2b8"
+                    android:textSize="@dimen/font_46"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_bottom_bg"
+        android:padding="@dimen/px30">
+
+        <TextView
+            android:id="@+id/tv"
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:text="@string/balance"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/px50"/>
+
+        <TextView
+            android:id="@+id/id_user_money_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_toRightOf="@+id/tv"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/px64"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/id_recharge_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:layout_toLeftOf="@+id/id_go_pay_btn_txt"
+            android:clickable="true"
+            android:text="@string/recharge"
+            android:textColor="@color/color_1bc2b8"
+            android:textSize="@dimen/font_40"/>
+
+        <TextView
+            android:id="@+id/id_go_pay_btn_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_bg_blue_sel"
+            android:paddingBottom="@dimen/px10"
+            android:paddingLeft="@dimen/px80"
+            android:paddingRight="@dimen/px80"
+            android:paddingTop="@dimen/px10"
+            android:text="@string/pay"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_44"/>
+    </RelativeLayout>
+
+
+    <CheckBox
+        android:id="@+id/id_forward_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:background="@color/transparent"
+        android:button="@null"
+        android:checked="true"
+        android:drawableLeft="@drawable/check_publish_sel"
+        android:drawablePadding="@dimen/px24"
+        android:paddingBottom="@dimen/px30"
+        android:paddingLeft="@dimen/px30"
+        android:text="@string/ten_rmb_transfer"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/px42"
+        android:visibility="gone"/>
+</LinearLayout>

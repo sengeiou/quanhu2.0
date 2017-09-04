@@ -32,7 +32,7 @@ public class SearchActivity extends BaseActivity {
     EditText etKeyword;
     @BindView(R.id.iv_search_clear_keyword)
     ImageView ivClearKeyword;
-    @BindView(R.id.tab_pager_search)
+    @BindView(R.id. tab_pager_search)
     PagerSlidingTabStripHome tabPagerSearch;
     @BindView(R.id.vp_search)
     ViewPager vpSearch;
@@ -73,6 +73,7 @@ public class SearchActivity extends BaseActivity {
             }
         });
         tabPagerSearch.setCustomLayoutParams(5);
+        tabPagerSearch.setLineFitFont(true);
         searchAdapter = new SearchAdapter(getSupportFragmentManager());
         vpSearch.setAdapter(searchAdapter);
         vpSearch.setOffscreenPageLimit(5);
