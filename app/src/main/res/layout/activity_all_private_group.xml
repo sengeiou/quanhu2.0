@@ -9,11 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/px44">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px78"
             android:background="@drawable/shape_bg_white_stoke_f4f4f4"
             android:orientation="horizontal">
 
@@ -35,7 +35,7 @@
                 android:inputType="textImeMultiLine"
                 android:textColor="@color/font_gray_m"
                 android:textColorHint="@color/font_gray_s"
-                android:textSize="12sp" />
+                android:textSize="@dimen/font_40" />
         </LinearLayout>
     </LinearLayout>
 

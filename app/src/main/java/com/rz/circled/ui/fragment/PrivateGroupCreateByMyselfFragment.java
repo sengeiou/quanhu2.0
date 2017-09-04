@@ -1,7 +1,9 @@
 package com.rz.circled.ui.fragment;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.ViewUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Utility;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -26,6 +29,7 @@ import com.rz.httpapi.bean.PrivateGroupBean;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,7 +54,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     ListView lv;
 
     private int type;
-    private int pageNo;
     private DefaultPrivateGroupAdapter mAdapter;
 
     public static PrivateGroupCreateByMyselfFragment newInstance(int type) {
@@ -75,6 +78,10 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (type == TYPE_PART) {
+            lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
+            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
+        }
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,7 +93,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        Http.getApiService(ApiPGService.class).privateGroupList(pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<PrivateGroupBean>>>() {
+        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(Session.getUserId()).enqueue(new BaseCallback<ResponseData<List<PrivateGroupBean>>>() {
             @Override
             public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
                 super.onResponse(call, response);
@@ -102,6 +109,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                 } else {
                                     mAdapter.setData(data);
                                 }
+                                Utility.setListViewHeightBasedOnChildren(lv);
                             }
                         } else {
                             if (data != null && data.size() > 0) {
@@ -123,5 +131,11 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
+
+        List<PrivateGroupBean> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            list.add(new PrivateGroupBean());
+        }
+        mAdapter.setData(list);
     }
 }

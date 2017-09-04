@@ -75,9 +75,10 @@
     <string name="cannot_add_content">您还没有添加发布内容</string>
     <string name="add_content">添加正文</string>
     <string name="editor_content_null">正文详情不能为空</string>
-    <string name="user_create_private_group_num">创建的私圈（%1$d）</string>
-    <string name="user_join_private_group_num">加入的私圈（%1$d）</string>
-
+    <string name="user_create_private_group_num">创建的私圈  (%1$d)</string>
+    <string name="user_join_private_group_num">加入的私圈  (%1$d)</string>
+    <string name="private_group_no_more">没有更多了</string>
+    <string name="private_group_total">共%1$d个，查看全部私圈</string>
 
     <string name="xuanbei">选被</string>
     <string name="quanbi_zhuanfa">圈币转发过的</string>
@@ -172,5 +173,6 @@
     <string name="circle_hot_famous">热门达人</string>
     <string name="circle_hot_subject">热门话题</string>
     <string name="circle_new_activity">最新活动</string>
+    <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
 
 </resources>

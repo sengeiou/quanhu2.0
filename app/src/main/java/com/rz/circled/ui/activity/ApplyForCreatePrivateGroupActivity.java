@@ -40,7 +40,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity {
     @BindView(R.id.tv_desc_group_num)
     TextView tvDescGroupNum;
     @BindView(R.id.tv_group)
-    EditText tvGroup;
+    TextView tvGroup;
     @BindView(R.id.btn_group)
     LinearLayout btnGroup;
     @BindView(R.id.cbx_protocol)

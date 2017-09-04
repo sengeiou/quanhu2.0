@@ -41,7 +41,6 @@ public class AllPrivateGroupActivity extends BaseActivity {
         return inflater.inflate(R.layout.activity_all_private_group, null, false);
     }
 
-
     @Override
     public void initView() {
         etvSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -60,7 +59,6 @@ public class AllPrivateGroupActivity extends BaseActivity {
     public void initData() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_frame, PrivateGroupAllFragment.newInstance());
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }

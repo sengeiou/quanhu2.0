@@ -107,4 +107,10 @@ public interface ApiPGService {
 
     @GET(ApiPG.PRIVATE_GROUP_ESSENCE)
     Call<ResponseData<List<PrivateGroupBean>>> privateGroupEssence();
+
+    @GET(ApiPG.PRIVATE_GROUP_MYSEFL_CREATE + "{custId}")
+    Call<ResponseData<List<PrivateGroupBean>>> privateGroupMyselfCreate(@Path("custId") String custId);
+
+    @GET(ApiPG.PRIVATE_GROUP_MYSELF_JOIN + "{custId}")
+    Call<ResponseData<List<PrivateGroupBean>>> privateGroupMyselfJoin(@Path("custId") String custId);
 }
