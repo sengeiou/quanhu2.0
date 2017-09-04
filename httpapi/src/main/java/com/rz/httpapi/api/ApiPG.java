@@ -7,14 +7,18 @@ package com.rz.httpapi.api;
 
 public class ApiPG {
 
-    public static final String PRIVATE_GROUP_CREATE = "v3/im/createTeam";
+    public static final String PRIVATE_GROUP_CREATE = "services/app/v1/coterie/info/single";
 
-    public static final String PRIVATE_GROUP_SETTING = "v3/im/createTeam";
+    public static final String PRIVATE_GROUP_SETTING = "services/app/v1/coterie/info/single/";
 
-    public static final String PRIVATE_GROUP_DETAILS = "v3/im/createTeam";
+    public static final String PRIVATE_GROUP_DETAILS = "services/app/v1/coterie/info/single/";
 
-    public static final String PRIVATE_GROUP_ESSENCE = "v3/im/createTeam";
+    public static final String PRIVATE_GROUP_ESSENCE = "services/app/v1/coterie/info/list/recommend";
 
-    public static final String PRIVATE_GROUP_ALL = "v3/im/createTeam";
+    public static final String PRIVATE_GROUP_ALL = "services/app/v1/coterie/info/list/";
+
+    public static final String PRIVATE_GROUP_MYSEFL_CREATE = "services/app/v1/coterie/info/creator/";
+
+    public static final String PRIVATE_GROUP_MYSELF_JOIN = "services/app/v1/coterie/info/list/join/";
 
 }

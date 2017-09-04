@@ -7,9 +7,9 @@
     <color name="windowBackground">@color/app_bg_gray_common</color>
     <color name="textColorPrimary">@color/font_gray_l</color>
 
-
     <color name="tab_strip_check">@color/color_main</color>
     <color name="tab_strip_uncheck">@color/black</color>
     <color name="tab_color_line">@color/color_main</color>
     <color name="color_CBCBCB">#CBCBCB</color>
+    <color name="color_bfbfbf">#BFBFBF</color>
 </resources>

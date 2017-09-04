@@ -74,14 +74,9 @@
     <string name="audios">音频</string>
     <string name="show_video_file">这里显示插入的视频文件</string>
     <string name="play">点击播放</string>
-    <string name="max_size_text_hint">内容不能超过%1$d个字</string>
     <string name="cannot_add_content">您还没有添加发布内容</string>
     <string name="add_content">添加正文</string>
     <string name="editor_content_null">正文详情不能为空</string>
-    <string name="user_create_private_group_num">创建的私圈（%1$d）</string>
-    <string name="user_join_private_group_num">加入的私圈（%1$d）</string>
-
-
     <string name="xuanbei">选被</string>
     <string name="quanbi_zhuanfa">圈币转发过的</string>
     <string name="format_mp4">格式:mp4</string>
@@ -91,19 +86,8 @@
     <string name="choose_one_audio_publish">请选择一个音频作品发布</string>
     <string name="anonymous_publish">匿名发布</string>
 
-
     <string name="i_am">我是</string>
     <string name="unallowed_join_hint">该群已设置不允许任何人加入</string>
-
-    <string name="private_group_joined_user">%1$d人加入</string>
-    <string name="private_group_status_0">待审核</string>
-    <string name="private_group_status_1">通过</string>
-    <string name="private_group_status_2">未通过</string>
-    <string name="private_group_status_3">上架</string>
-    <string name="private_group_status_4">下架</string>
-    <string name="private_group_login_tip">登录才能创建私圈</string>
-    <string name="private_group_no_create">还没有创建私圈哦！</string>
-
     <string name="mine_my_account">我的账户</string>
     <string name="consumer_account">消费账户</string>
     <string name="account_profit">悠然账户</string>
@@ -157,6 +141,22 @@
     <string name="xlistview_footer_hint_normal">上滑加载更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
 
+    <!--私圈-->
+    <string name="max_size_text_hint">内容不能超过%1$d个字</string>
+    <string name="user_create_private_group_num">创建的私圈  (%1$d)</string>
+    <string name="user_join_private_group_num">加入的私圈  (%1$d)</string>
+    <string name="private_group_no_more">没有更多了</string>
+    <string name="private_group_total">共%1$d个，查看全部私圈</string>
+    <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
+    <string name="private_group_joined_user">%1$d人加入</string>
+    <string name="private_group_status_0">待审核</string>
+    <string name="private_group_status_1">通过</string>
+    <string name="private_group_status_2">未通过</string>
+    <string name="private_group_status_3">上架</string>
+    <string name="private_group_status_4">下架</string>
+    <string name="private_group_login_tip">登录才能创建私圈</string>
+    <string name="private_group_no_create">还没有创建私圈哦！</string>
+
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
     <string name="editor_authority">权限</string>
@@ -164,7 +164,6 @@
     <string name="authority_share">允许成员分享</string>
     <string name="authority_read">付费可读</string>
     <string name="authority_popularize">允许平台免费推广</string>
-
 
     <string name="modify_fail">修改失败</string>
     <string name="report_fail">举报失败</string>

@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
+import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
+import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.GroupBannerBean;
@@ -200,10 +203,13 @@ public class PrivateCircledFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_for:
+                startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
                 break;
             case R.id.btn_create_more:
+                MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);
                 break;
             case R.id.btn_join_more:
+                MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 1);
                 break;
             case R.id.btn_refresh:
                 break;
