@@ -54,7 +54,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
 
         keyType = getIntent().getExtras().getString(IntentKey.EXTRA_TYPE);
 
-        ArrayList<AreaModel.CityModel> cityList = model.cities;
+        ArrayList<AreaModel.CityModel> cityList = model.children;
 
         View headView = LayoutInflater.from(this).inflate(R.layout.layout_area_head1, null);
 
@@ -99,12 +99,13 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position != 0) {
-            String paramas = model.name + " " + model.cities.get(position - 1).name;
+            String paramas = model.name + " " + model.children.get(position - 1).name;
             paramas = paramas.trim();
             if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
                 //通用发布过来
                 Intent mIntent = new Intent();
                 mIntent.putExtra(IntentKey.EXTRA_POSITION, paramas);
+                mIntent.putExtra(IntentKey.EXTRA_ID, model.children.get(position - 1).code);
                 setResult(RESULT_CODE, mIntent);
                 finish();
             } else {

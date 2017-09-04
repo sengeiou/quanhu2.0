@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -18,6 +20,7 @@ import com.rz.circled.ui.fragment.SearchPersonFragment;
 import com.rz.circled.ui.fragment.SearchRewardFragment;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 
@@ -32,18 +35,24 @@ public class SearchActivity extends BaseActivity {
     EditText etKeyword;
     @BindView(R.id.iv_search_clear_keyword)
     ImageView ivClearKeyword;
-    @BindView(R.id. tab_pager_search)
+    @BindView(R.id.tab_pager_search)
     PagerSlidingTabStripHome tabPagerSearch;
     @BindView(R.id.vp_search)
     ViewPager vpSearch;
     private SearchAdapter searchAdapter;
 
 
-    private final int TYPE_CONTENT = 0;
-    private final int TYPE_PERSON = 1;
-    private final int TYPE_PRIVATE = 2;
-    private final int TYPE_CIRCLE = 3;
-    private final int TYPE_REWARD = 4;
+    public static final int TYPE_CONTENT = 0;
+    public static final int TYPE_PERSON = 1;
+    public static final int TYPE_PRIVATE = 2;
+    public static final int TYPE_CIRCLE = 3;
+    public static final int TYPE_REWARD = 4;
+
+    public static final void stratActivity(Context context, int type) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra(IntentKey.EXTRA_TYPE, type);
+        context.startActivity(intent);
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
