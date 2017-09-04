@@ -9,4 +9,6 @@
     <color name="tab_color_line">@color/color_main</color>
     <color name="color_CBCBCB">#CBCBCB</color>
     <color name="color_bfbfbf">#BFBFBF</color>
+    <color name="color_f5cd45">#f5cd45</color>
+
 </resources>

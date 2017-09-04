@@ -30,7 +30,7 @@ public interface IntentKey {
 
     String EXTRA_TITLE = "extraTitle";
 
-    public static final String EXTRA_ID = "extraId";
+    String EXTRA_ID = "extraId";
 
 
     String EXTRA_ENABLE_VIDEO = "extra_enable_video";
