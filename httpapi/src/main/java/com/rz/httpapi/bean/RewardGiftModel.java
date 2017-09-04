@@ -1,4 +1,4 @@
-package com.rz.common.modle;
+package com.rz.httpapi.bean;
 
 import java.io.Serializable;
 

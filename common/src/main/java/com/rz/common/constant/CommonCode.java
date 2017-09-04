@@ -47,14 +47,18 @@ public interface CommonCode {
      * app的基本配置
      */
     interface App {
-        String APP_ID = "w2oqkv4yi892";
-        String APP_SECRET = "78cba16f947e4c7bb9579196c6126851";
+        String APP_ID = "vebff12m1762";
+        String APP_SECRET = "59473d316dc24d0d8c783cbb981b56dc";
     }
 
     interface EventType {
         int FINISH_LOADING = 10001;
 
         int EDITOR_PIC_DELETE = 10002;
+
+        int SEARCH_KEYWORD = 20001;
+
+        String CIRCLE_FRAGMENT_REFRESH = "circle_fragment_refresh";
     }
 
     /**
@@ -98,7 +102,7 @@ public interface CommonCode {
         /**
          * 录音限制时长
          */
-        public static final int MAX_INTERVAL_TIME = 120;
+        public static final int MAX_INTERVAL_TIME = 180;
 
         public static int RECORDE_SHOW = 10001;
 

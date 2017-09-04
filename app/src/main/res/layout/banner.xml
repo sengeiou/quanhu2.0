@@ -6,6 +6,6 @@
     <com.rz.circled.widget.AutoRollLayout
         android:id="@+id/auto_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px340"></com.rz.circled.widget.AutoRollLayout>
+        android:layout_height="@dimen/px484"></com.rz.circled.widget.AutoRollLayout>
 
 </LinearLayout>

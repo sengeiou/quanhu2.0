@@ -17,7 +17,7 @@
             android:layout_alignParentLeft="true"
             android:paddingLeft="@dimen/app_base_padding"
             android:paddingRight="@dimen/px40"
-            android:src="@mipmap/icon_arrow_back_black"/>
+            android:src="@mipmap/icon_arrow_left_gray"/>
 
         <TextView
             android:id="@+id/tv_base_title_left"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.rz.circled.widget.MyGridView xmlns:android="http://schemas.android.com/apk/res/android"
+                                  android:id="@+id/id_gift_gird"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:background="@color/color_F4F4F4"
+                                  android:fadingEdge="none"
+                                  android:horizontalSpacing="2px"
+                                  android:numColumns="4"
+                                  android:overScrollMode="never"
+                                  android:scrollbars="none"
+                                  android:verticalSpacing="2px"/>

@@ -14,14 +14,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.modle.BankCardModel;
-import com.rz.circled.modle.UserInfoModel;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.circled.widget.XListView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.CodeStatus;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
@@ -31,6 +30,7 @@ import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.UnitUtil;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.UserInfoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -270,7 +270,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 //            mPayPresenter.showResetDialog();
         } else {
             mListview.stopRefresh();
-            if (loadingStatus == CodeStatus.Gegeneral.DATA_SUCCESS_NULL) {
+            if (loadingStatus == CommonCode.General.DATA_EMPTY) {
                 mBanks.clear();
                 mBanks.add(addCard());
                 mAdapter.notifyDataSetChanged();

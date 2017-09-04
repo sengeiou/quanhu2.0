@@ -17,7 +17,7 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.rz.circled.R;
-import com.rz.common.constant.CodeStatus;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.ProgressWebView;
@@ -121,9 +121,9 @@ public class CommonH5Activity extends BaseActivity {
             String loadUrl = extras.getString(IntentKey.EXTRA_URL);
             if (TextUtils.isEmpty(loadUrl) || (loadUrl.startsWith("http://") || loadUrl.startsWith("https://") || loadUrl.startsWith("www.")))
                 mWebView.loadUrl(loadUrl);
-            else onLoadingStatus(CodeStatus.Gegeneral.WEB_ERROR);
+            else onLoadingStatus(CommonCode.General.WEB_ERROR);
         } else {
-            onLoadingStatus(CodeStatus.Gegeneral.WEB_ERROR);
+            onLoadingStatus(CommonCode.General.WEB_ERROR);
         }
     }
 

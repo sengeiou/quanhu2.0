@@ -13,10 +13,12 @@ public class CircleApi {
     /**
      * 首页banner
      */
-    public static final String CIRCLE_BANNER_LIST = "v3/recommend/banner"; /**
+    public static final String CIRCLE_BANNER_LIST = "v3/recommend/banner";
+    /**
      * 首页热门话题
      */
-    public static final String CIRCLE_SUBJECT_LIST = "v3/recommend/topic"; /**
+    public static final String CIRCLE_SUBJECT_LIST = "v3/recommend/topic";
+    /**
      * 首页圈子达人
      */
     public static final String CIRCLE_FAMOUS_LIST = "v3/recommend/star";
@@ -143,5 +145,7 @@ public class CircleApi {
      * 动态搜索
      */
     public static final String SEARCH_DYNAMIC = "v3/search/dynamic";
+
+    public static final String MATCH_VOUCHER = "v3/voucher/getUseableVoucher";
 
 }

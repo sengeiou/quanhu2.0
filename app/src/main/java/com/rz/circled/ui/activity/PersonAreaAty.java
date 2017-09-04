@@ -156,7 +156,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
          * 初始化
          */
         getAreaList(array);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setData(areaList);
 
     }
 
