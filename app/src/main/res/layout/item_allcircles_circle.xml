@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/px4"
+              android:paddingTop="@dimen/px62">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/civ_circleimg"
+            android:layout_width="@dimen/px168"
+            android:layout_height="@dimen/px168"
+            android:src="@drawable/ic_default_head"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/circle_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px50"
+            android:src="@drawable/gray_close"
+            android:visibility="gone" />
+    </RelativeLayout>
+<!--<FrameLayout-->
+    <!--android:layout_width="@dimen/px188"-->
+    <!--android:layout_marginTop="@dimen/px30"-->
+    <!--android:layout_height="@dimen/px73">-->
+    <!--<TextView-->
+        <!--android:id="@+id/follow_tv"-->
+        <!--android:layout_width="@dimen/px188"-->
+        <!--android:layout_height="@dimen/px73"-->
+        <!--android:background="@drawable/follow_shape_normal"-->
+        <!--android:gravity="center"-->
+        <!--android:text="关注"-->
+        <!--android:textColor="#ff8e3b"-->
+        <!--android:textSize="@dimen/px40"-->
+        <!--android:visibility="gone" />-->
+    <!--<TextView-->
+        <!--android:id="@+id/cancel_tv"-->
+        <!--android:layout_width="@dimen/px188"-->
+        <!--android:layout_height="@dimen/px73"-->
+        <!--android:background="@drawable/follow_shape_press"-->
+        <!--android:gravity="center"-->
+        <!--android:text="取消"-->
+        <!--android:textColor="@color/color_666666"-->
+        <!--android:textSize="@dimen/px40"-->
+        <!--android:visibility="gone" />-->
+<!--</FrameLayout>-->
+</LinearLayout>

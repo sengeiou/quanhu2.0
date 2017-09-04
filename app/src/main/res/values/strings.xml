@@ -188,6 +188,8 @@
     <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
     <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
     <string name="search">搜索</string>
+    <string name="favorite_circle">喜欢的圈子</string>
+    <string name="more_circle">更多圈子</string>
     <string name="send_gift_success">礼物打赏成功</string>
 
     <string name="choose_gift">请选择要打赏的礼物</string>

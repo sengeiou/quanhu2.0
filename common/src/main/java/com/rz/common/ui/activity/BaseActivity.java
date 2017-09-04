@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -233,7 +234,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (mLoadView != null || isFinishing() || mLoadView != null)
             mLoadView.setRefreshListener(refreshListener);
     }
-
+    /**
+     * 用户是否登录
+     */
+    public boolean isLogin() {
+        if (Session.getUserIsLogin()) {
+            return true;
+        } else {
+//            Intent login = new Intent(aty, LoginAty.class);
+//            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
+            return false;
+        }
+    }
     /**
      * @return 状态栏颜色
      */

@@ -52,6 +52,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     private IViewController mView;
     private Context mContext;
+//    private APIService mCircleService;
     private ApiService mUserService;
 
     public int currentCircleId;
@@ -74,6 +75,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         this.mView = view;
         mContext = getContext(mView);
         mCirclesCache = new EntityCache<CircleDynamic>(mContext, CircleDynamic.class);
+//        mCircleService = Http.getCircleService(mContext);
         mUserService = Http.getApiService(ApiService.class);
     }
 
@@ -134,7 +136,6 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //    }
 //
 //
-
     /**
      * 首页动态列表
      *
@@ -346,36 +347,35 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //     * @param transferId
 //     */
 //    public void getCircleTransferDetail(int transferId) {
-//        Call<ResponseData<TransferDetailBean>> call = null;
+//        Call<ResponseData<V3TransferDetail>> call = null;
 //        call = mUserService.v3CircleTransferDetail(transferId + "", Session.getUserId());
 //        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<TransferDetailBean>>() {
+//        call.enqueue(new BaseCallback<ResponseData<V3TransferDetail>>() {
 //            @Override
-//            public void onResponse(Call<ResponseData<TransferDetailBean>> call, Response<ResponseData<TransferDetailBean>> response) {
+//            public void onResponse(Call<ResponseData<V3TransferDetail>> call, Response<ResponseData<V3TransferDetail>> response) {
 //                super.onResponse(call, response);
 //                if (response.isSuccessful()) {
 //                    ResponseData res = response.body();
 //                    if (res.getRet() == ReturnCode.SUCCESS) {
 //                        mView.updateView(res.getData());
-//                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+//                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
 //                        return;
 //                    } else {
-//                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA);
 //                        return;
 //                    }
 //                }
-//                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA);
 //            }
 //
 //            @Override
-//            public void onFailure(Call<ResponseData<TransferDetailBean>> call, Throwable t) {
+//            public void onFailure(Call<ResponseData<V3TransferDetail>> call, Throwable t) {
 //                super.onFailure(call, t);
-//                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
 //            }
 //        });
 //    }
-
-    //
+//
 //    /**
 //     * 悠然圈列表
 //     *
@@ -624,51 +624,50 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //    }
 //
 //
-    public void loadRewardGiftList() {
-        if (!NetUtils.isNetworkConnected(mContext)) {
-            Toasty.info(mContext, mContext.getString(R.string.status_un_network)).show();
-            return;
-        }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, "");
-        Call<ResponseData<List<RewardGiftModel>>> call = mUserService.v3CircleGetTransferPrice(
-                Session.getUserId());
-        CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<RewardGiftModel>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<RewardGiftModel>>> call, Response<ResponseData<List<RewardGiftModel>>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    ResponseData<List<RewardGiftModel>> res = response.body();
-                    if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<RewardGiftModel> mGifts = res.getData();
-                        if (mGifts != null && !mGifts.isEmpty()) {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
-                            mView.updateView(mGifts);
-                            try {
-                                EntityCache<RewardGiftModel> entityCache = new EntityCache<RewardGiftModel>(mContext, RewardGiftModel.class);
-                                entityCache.putListEntityAddTag(mGifts, "transfer");
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            return;
-                        } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
-                            return;
-                        }
-                    }
-                }
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<List<RewardGiftModel>>> call, Throwable t) {
-                super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
-            }
-        });
-    }
-
-    //
+//    public void loadRewardGiftList() {
+//        if (!NetUtils.isNetworkConnected(mContext)) {
+//            ToastUtil.showToast(mContext.getString(R.string.no_net_work));
+//            return;
+//        }
+//        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, "");
+//        Call<ResponseData<List<RewardGiftModel>>> call = mCircleService.v3CircleGetTransferPrice(
+//                Session.getUserId());
+//        CallManager.add(call);
+//        call.enqueue(new BaseCallback<ResponseData<List<RewardGiftModel>>>() {
+//            @Override
+//            public void onResponse(Call<ResponseData<List<RewardGiftModel>>> call, Response<ResponseData<List<RewardGiftModel>>> response) {
+//                super.onResponse(call, response);
+//                if (response.isSuccessful()) {
+//                    ResponseData<List<RewardGiftModel>> res = response.body();
+//                    if (res.getRet() == ReturnCode.SUCCESS) {
+//                        List<RewardGiftModel> mGifts = res.getData();
+//                        if (mGifts != null && !mGifts.isEmpty()) {
+//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
+//                            mView.updateView(mGifts);
+//                            try {
+//                                EntityCache<RewardGiftModel> entityCache = new EntityCache<RewardGiftModel>(mContext, RewardGiftModel.class);
+//                                entityCache.putListEntityAddTag(mGifts, "transfer");
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                            return;
+//                        } else {
+//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
+//                            return;
+//                        }
+//                    }
+//                }
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseData<List<RewardGiftModel>>> call, Throwable t) {
+//                super.onFailure(call, t);
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+//            }
+//        });
+//    }
+//
 //
 //    public void getCircleStats(String userId) {
 //        Call<ResponseData<CircleStatsModel>> call = null;
@@ -1024,117 +1023,120 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //        });
 //    }
 //
-
-    /**
-     * 圈子转发
-     *
-     * @param parentId
-     * @param authorId
-     * @param appId
-     * @param moduleId
-     * @param infoId
-     * @param infoTitle
-     * @param infoDesc
-     * @param infoThumbnail
-     * @param infoPic
-     * @param infoVideo
-     * @param infoVideoPic
-     * @param price
-     */
-    public void circleTransfer(String parentId, String authorId, String appId, String moduleId, String infoId, String infoTitle, String infoDesc, String infoThumbnail, String infoPic, String infoVideo, String infoVideoPic, long price, String password, String createTime) {
-        Call<ResponseData<TransferResultBean>> call = null;
-        if (!TextUtils.isEmpty(infoId)) {
-            String[] s = infoId.split("\\.");
-            if (s.length > 0) {
-                infoId = s[0];
-            }
-        }
-        call = mUserService.v3CircleTransfer(Protect.toNull(Session.getUserId()), Protect.toNull(parentId), Protect.toNull(authorId), Protect.toNull(appId), Protect.toNull(moduleId), Protect.toNull(infoId), Protect.toNull(infoTitle), Protect.toNull(infoDesc), Protect.toNull(infoThumbnail), Protect.toNull(infoPic), Protect.toNull(infoVideo), Protect.toNull(infoVideoPic), price, StringUtils.isEmpty(password) ? "" : HexUtil.encodeHexStr(MD5Util.md5(password)), createTime);
-        CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<TransferResultBean>>() {
-            @Override
-            public void onResponse(Call<ResponseData<TransferResultBean>> call, Response<ResponseData<TransferResultBean>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    ResponseData res = response.body();
-                    if (res.getRet() == ReturnCode.SUCCESS) {
-                        TransferResultBean result = (TransferResultBean) res.getData();
-                        if (result != null) {
-                            if (result.id != 0) {
-                                mView.updateView(result.id);
-                                return;
-                            } else {
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
-                            }
-                        }
-                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        //发送失败
-                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
-                        return;
-                    }
-                }
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<TransferResultBean>> call, Throwable t) {
-                super.onFailure(call, t);
-                //发送验证码失败
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
-            }
-        });
-    }
-
-
-    public void matchVoucher(String cost, int type) {
-        if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
-            return;
-        }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
-        Call<ResponseData<Ticket>> call = mUserService.MatchVoucher(cost, Session.getUserId(), type);
-        CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<Ticket>>() {
-            @Override
-            public void onResponse(Call<ResponseData<Ticket>> call, Response<ResponseData<Ticket>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    ResponseData<Ticket> res = response.body();
-                    if (res.getRet() == ReturnCode.SUCCESS) {
-                        Ticket model = res.getData();
-                        if (null != model) {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                            mView.updateView(model);
-                        } else {
+//
+//    /**
+//     * 圈子转发
+//     *
+//     * @param parentId
+//     * @param authorId
+//     * @param appId
+//     * @param moduleId
+//     * @param infoId
+//     * @param infoTitle
+//     * @param infoDesc
+//     * @param infoThumbnail
+//     * @param infoPic
+//     * @param infoVideo
+//     * @param infoVideoPic
+//     * @param price
+//     */
+//    public void circleTransfer(String parentId, String authorId, String appId, String moduleId, String infoId, String infoTitle, String infoDesc, String infoThumbnail, String infoPic, String infoVideo, String infoVideoPic, long price, String password, String createTime) {
+//        Call<ResponseData<V3TransferResult>> call = null;
+//        if (!TextUtils.isEmpty(infoId)) {
+//            String[] s = infoId.split("\\.");
+//            if (s.length > 0) {
+//                infoId = s[0];
+//            }
+//        }
+//        String infoCreateTime = null;
+////        if (TextUtils.isEmpty(parentId)) {
+////            infoCreateTime = StringUtils.getDataTime("yyyy-MM-dd HH:mm:ss");
+////        }
+//        call = mUserService.v3CircleTransfer(Protect.toNull(Session.getUserId()), Protect.toNull(parentId), Protect.toNull(authorId), Protect.toNull(appId), Protect.toNull(moduleId), Protect.toNull(infoId), Protect.toNull(infoTitle), Protect.toNull(infoDesc), Protect.toNull(infoThumbnail), Protect.toNull(infoPic), Protect.toNull(infoVideo), Protect.toNull(infoVideoPic), price, StringUtils.isEmpty(password) ? "" : HexUtil.encodeHexStr(MD5Util.md5(password)), createTime);
+//        CallManager.add(call);
+//        call.enqueue(new BaseCallback<ResponseData<V3TransferResult>>() {
+//            @Override
+//            public void onResponse(Call<ResponseData<V3TransferResult>> call, Response<ResponseData<V3TransferResult>> response) {
+//                super.onResponse(call, response);
+//                if (response.isSuccessful()) {
+//                    ResponseData res = response.body();
+//                    if (res.getRet() == ReturnCode.SUCCESS) {
+//                        V3TransferResult result = (V3TransferResult) res.getData();
+//                        if (result != null) {
+//                            if (result.id != 0) {
+//                                mView.updateView(result.id);
+//                                return;
+//                            } else {
+//                                mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
+//                            }
+//                        }
+//                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
+//                        //发送失败
+//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
+//                        return;
+//                    }
+//                }
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseData<V3TransferResult>> call, Throwable t) {
+//                super.onFailure(call, t);
+//                //发送验证码失败
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+//            }
+//        });
+//    }
+//
+//
+//    public void matchVoucher(String cost, int type) {
+//        if (!NetUtils.isNetworkConnected(mContext)) {
+//            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.net_error));
+//            return;
+//        }
+//        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, mContext.getString(R.string.data_loading));
+//        Call<ResponseData<Ticket>> call = mUserService.MatchVoucher(cost, Session.getUserId(), type);
+//        CallManager.add(call);
+//        call.enqueue(new BaseCallback<ResponseData<Ticket>>() {
+//            @Override
+//            public void onResponse(Call<ResponseData<Ticket>> call, Response<ResponseData<Ticket>> response) {
+//                super.onResponse(call, response);
+//                if (response.isSuccessful()) {
+//                    ResponseData<Ticket> res = response.body();
+//                    if (res.getRet() == ReturnCode.SUCCESS) {
+//                        Ticket model = res.getData();
+//                        if (null != model) {
+//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
+//                            mView.updateView(model);
+//                        } else {
 //                            mView.onLoadingStatus(CodeStatus.Gegeneral.NO_TICKET_MSG, "");
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                        return;
-                    } else {
+//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
+//                        }
+//                        return;
+//                    } else {
 //                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
 //                        mView.onLoadingStatus(CodeStatus.Gegeneral.NO_TICKET_MSG, "");
-                        mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-//                        if (HandleRetCode.handler(mContext, res)) {
-//                            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
-//                                }
-//                            }, 2000);
-//                        }
-                        return;
-                    }
-                }
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<Ticket>> call, Throwable t) {
-                super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
-            }
-        });
-    }
+////                        if (HandleRetCode.handler(mContext, res)) {
+////                            new Handler().postDelayed(new Runnable() {
+////                                @Override
+////                                public void run() {
+////                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+////                                }
+////                            }, 2000);
+////                        }
+//                        return;
+//                    }
+//                }
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseData<Ticket>> call, Throwable t) {
+//                super.onFailure(call, t);
+//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+//            }
+//        });
+//    }
 //
 //
 //    public void getCircleTransferCust(String custId, String transferId, String infoId, boolean loadMore) {
