@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.MListView;
@@ -119,7 +121,8 @@ public class FindFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
                 if (circleEntrModle.circleName.equals("百圈纷呈")) {
-
+                    Intent intent = new Intent(mActivity, AllCirclesAty.class);
+                    getActivity().startActivity(intent);
                 } else {
                     CommonH5Activity.startCommonH5(mActivity, "", circleEntrModle.circleUrl);
 
