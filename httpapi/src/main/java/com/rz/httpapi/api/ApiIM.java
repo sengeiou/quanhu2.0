@@ -2,6 +2,7 @@ package com.rz.httpapi.api;
 
 /**
  * Created by rzw2 on 2017/3/29.
+ * IM接口
  */
 
 public class ApiIM {

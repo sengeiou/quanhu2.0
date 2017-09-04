@@ -3,6 +3,8 @@ package com.rz.circled.js;
 import android.app.Activity;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -30,12 +32,12 @@ public class CreateTeamHandler extends ServerHandler {
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         Log.d("zxw", "handle: params" + params);
-//        JSONObject object = JSON.parseObject(params);
+        JSONObject object = JSON.parseObject(params);
 //        if (object.containsKey("data") && object.getJSONObject("data").containsKey("circleKey")) {
 //            if (object.getJSONObject("data").containsKey("circleName"))
-//                CreateTeamActivity.createTeam(webContainerAty, object.getJSONObject("data").getString("circleKey"), object.getJSONObject("data").getString("circleName"), paramObj.getInvokeId());
+//                CreateTeamActivity.createTeam(mActivity, object.getJSONObject("data").getString("circleKey"), object.getJSONObject("data").getString("circleName"), paramObj.getInvokeId());
 //            else
-//                CreateTeamActivity.createTeam(webContainerAty, object.getJSONObject("data").getString("circleKey"), "育儿圈", paramObj.getInvokeId());
+//                CreateTeamActivity.createTeam(mActivity, object.getJSONObject("data").getString("circleKey"), "育儿圈", paramObj.getInvokeId());
 //        } else
 //            JsEvent.callJsEvent(paramObj.getInvokeId(), null, BaseParamsObject.RESULT_CODE_FAILED);
     }

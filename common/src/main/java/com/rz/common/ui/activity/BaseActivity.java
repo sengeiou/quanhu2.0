@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -142,6 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             llContent.addView(contentView, layoutParams);
         }
     }
+
     /**
      * 清除右侧图标和文字
      */
@@ -149,6 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         tvCommonTitleRight.setVisibility(View.GONE);
         ivCommonRight.setVisibility(View.GONE);
     }
+
     /**
      * show to @param(cls)，but can't finish activity
      */
@@ -235,6 +238,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     }
 
     /**
+     * 用户是否登录
+     */
+    public boolean isLogin() {
+        if (Session.getUserIsLogin()) {
+            return true;
+        } else {
+//            Intent login = new Intent(aty, LoginAty.class);
+//            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
+            return false;
+        }
+    }
+
+    /**
      * @return 状态栏颜色
      */
     protected int getStatusTintColor() {
@@ -280,7 +296,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      * @return true 有 , false 没有
      */
     protected boolean hasDataInPage() {
-        return false;
+        return true;
     }
 
     /**
@@ -537,6 +553,25 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void onLoadingStatus(int loadingStatus, String string) {
         if (mContext == null || isFinishing() || mLoadView == null) return;
         mLoadView.onLoading(loadingStatus, string, hasDataInPage(), needSupportRefresh());
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param stringId
+     */
+    public void setFunctionText(int stringId) {
+        setFunctionText(getString(stringId));
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param string
+     */
+    public void setFunctionText(String string) {
+        if (mContext == null || isFinishing() || mLoadView == null) return;
+        mLoadView.setFunctionText(string);
     }
     //-------------------------------点击editText以外的区域start-----------------------------------//
 

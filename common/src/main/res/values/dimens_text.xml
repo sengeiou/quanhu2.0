@@ -14,6 +14,7 @@
     <dimen name="font_s">@dimen/px38</dimen>
     <!--超小号文字字体-->
     <dimen name="font_xs">@dimen/px32</dimen>
+    <dimen name="font_54">@dimen/px54</dimen>
     <dimen name="font_52">@dimen/px52</dimen>
     <dimen name="font_50">@dimen/px50</dimen>
     <dimen name="font_48">@dimen/px48</dimen>

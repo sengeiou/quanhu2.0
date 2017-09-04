@@ -8,7 +8,7 @@ public interface Type {
     /**
      * 设置了支付密码
      */
-     int HAD_SET_PW = 1;
+    int HAD_SET_PW = 1;
 
     /**
      * 没有支付密码
@@ -18,7 +18,7 @@ public interface Type {
     /**
      * 开启了免密支付
      */
-     int OPEN_EASY_PAY = 1;
+    int OPEN_EASY_PAY = 1;
     //收益流水
     public static final int TYPE_SCORE = 2;
     //消费流水
@@ -124,5 +124,10 @@ public interface Type {
         int REVIEW_REFUSE = 5011;
 
     }
+
+    /**
+     * 用户账户余额正常
+     */
+    public static final int USER_MONEY_NORMAL = 1;
 
 }

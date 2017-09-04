@@ -7,6 +7,7 @@
           android:gravity="center"
           android:padding="@dimen/px40"
           android:text="@string/camera"
+          android:textColor="@color/color_main"
           android:textSize="@dimen/px52"/>
 
     <!--    android:textColor="@color/txt_pop_blue"-->

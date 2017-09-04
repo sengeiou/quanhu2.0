@@ -23,6 +23,8 @@
     <color name="font_gray_m">@color/color_666</color>
     <!--字体最浅灰色-->
     <color name="font_gray_s">@color/color_999</color>
+    <color name="font_gray_a">@color/color_aaa</color>
+
     <!--浅灰色分割线-->
     <color name="line_gray_s">@color/color_e7e7e7</color>
 

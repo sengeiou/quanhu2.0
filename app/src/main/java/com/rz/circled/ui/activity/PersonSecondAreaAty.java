@@ -72,7 +72,6 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
         idCityListView.setAdapter(mAdapter);
         idCityListView.setOnItemClickListener(this);
         mAdapter.setData(cityList);
-
     }
 
     @Override

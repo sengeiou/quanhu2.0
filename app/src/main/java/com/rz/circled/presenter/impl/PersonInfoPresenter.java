@@ -5,7 +5,7 @@ import android.content.Context;
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.application.BaseApplication;
-import com.rz.common.constant.CodeStatus;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
@@ -56,7 +56,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void savePersonInfo(String id, String paramasType, final String paramas) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.status_un_network));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.status_un_network));
             return;
         }
 
@@ -101,14 +101,14 @@ public class PersonInfoPresenter extends GeneralPresenter {
 
                     }
                 } else {
-                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.modify_fail));
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.modify_fail));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.modify_fail));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.modify_fail));
             }
         });
     }
@@ -126,20 +126,20 @@ public class PersonInfoPresenter extends GeneralPresenter {
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, mContext.getString(R.string.refunds_success));
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.refunds_success));
                         mView.updateView(0);
                     } else {
-                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.refunds_fail) + ":" + res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail) + ":" + res.getMsg());
                     }
                 } else {
-                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.refunds_fail));
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.refunds_fail));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail));
             }
         });
     }

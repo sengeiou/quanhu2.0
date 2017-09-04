@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
-import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.CommonH5Activity;
+import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.AllCirclesAty;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
@@ -47,7 +49,7 @@ public class FindFragment extends BaseFragment {
     @BindView(R.id.new_activity_lv)
     MListView mNewActivityLv;
     private List<CircleEntrModle> circleEntrModleList = new ArrayList();
-    private V3CirclePresenter mPresenter;
+    private CirclePresenter mPresenter;
     private List<FamousModel> famousList = new ArrayList<>();
     private List<HotSubjectModel> subjectList = new ArrayList<>();
     private List<HotSubjectModel> activityList = new ArrayList<>();
@@ -61,7 +63,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-        mPresenter = new V3CirclePresenter();
+        mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getCircleEntranceList(0);
         mPresenter.getFamousList(7);
@@ -119,10 +121,10 @@ public class FindFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
                 if (circleEntrModle.circleName.equals("百圈纷呈")) {
-
+                    Intent intent = new Intent(mActivity, AllCirclesAty.class);
+                    getActivity().startActivity(intent);
                 } else {
-                    CommonH5Activity.startCommonH5(mActivity, "", circleEntrModle.circleUrl);
-
+                    WebContainerActivity.startActivity(mActivity, circleEntrModleList.get(position).circleUrl);
                 }
             }
         });

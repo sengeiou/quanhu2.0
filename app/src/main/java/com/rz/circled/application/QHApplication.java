@@ -43,6 +43,7 @@ import com.rz.circled.js.PasteBoardHandler;
 import com.rz.circled.js.PlayVideoHandler;
 import com.rz.circled.js.RechargeHandler;
 import com.rz.circled.js.ReportHandler;
+import com.rz.circled.js.SaveImageHandler;
 import com.rz.circled.js.SendVerifyCodeHandler;
 import com.rz.circled.js.ShortCutHandler;
 import com.rz.circled.js.SocializationShareHandler;
@@ -192,7 +193,8 @@ public class QHApplication extends BaseApplication {
         RegisterList.registerServerHandlerClass(NavigateHandler.class);
         //关闭loading页面
         RegisterList.registerServerHandlerClass(FinishLoadingHandler.class);
-
+        //保存图片
+        RegisterList.registerServerHandlerClass(SaveImageHandler.class);
     }
 
     public void configExo() {

@@ -5,10 +5,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.rz.sgt.jsbridge.BaseParamsObject;
+import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
+import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import java.util.HashMap;
 
@@ -30,16 +32,16 @@ public class NetStatusHandler extends ServerHandler {
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         String netWorkStatus = "" ;
-//        if (NetworkUtil.isNetAvailable(mActivity)) {
-//            if (NetworkUtil.isWifi(mActivity)) {
-//                netWorkStatus  = "wifi";
-//            }else{
-//                netWorkStatus = "wwan";
-//            }
-//        }else{
-//            netWorkStatus = "notReachable";
-//        }
-//        JsEvent.callJsEvent(paramObj.getInvokeId(),netWorkStatus, netWorkStatus!=""? BaseParamsObject.RESULT_CODE_SUCRESS:BaseParamsObject.RESULT_CODE_FAILED);
+        if (NetworkUtil.isNetAvailable(mActivity)) {
+            if (NetworkUtil.isWifi(mActivity)) {
+                netWorkStatus  = "wifi";
+            }else{
+                netWorkStatus = "wwan";
+            }
+        }else{
+            netWorkStatus = "notReachable";
+        }
+        JsEvent.callJsEvent(paramObj.getInvokeId(),netWorkStatus, netWorkStatus!=""? BaseParamsObject.RESULT_CODE_SUCRESS:BaseParamsObject.RESULT_CODE_FAILED);
     }
 
 

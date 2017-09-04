@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initData() {
-
     }
 
     private void initCounter() {

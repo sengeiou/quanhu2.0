@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/shape_pop_white_btn"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/px34"
+        android:paddingTop="@dimen/px34">
+
+        <TextView
+            android:id="@+id/id_pay_title_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_centerInParent="true"
+            android:text="@string/pay_input_pay_pw"
+            android:textSize="@dimen/font_46"/>
+
+        <ImageView
+            android:id="@+id/id_pay_close_img"
+            android:layout_width="@dimen/px44"
+            android:layout_height="@dimen/px44"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px30"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_pay_close"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px3"
+        android:background="@color/color_EEEEEE"/>
+
+
+    <TextView
+        android:id="@+id/id_pay_des_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_marginBottom="@dimen/px42"
+        android:layout_marginTop="@dimen/px75"
+        android:text="@string/pay_amount"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/font_44"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px72"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/id_pay_money_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_marginRight="@dimen/px22"
+            android:text="0.01"
+            android:textColor="@color/color_main"
+            android:textSize="@dimen/px86"/>
+
+        <TextView
+            android:id="@+id/id_dialog_pay_yuan_txt"
+            style="@style/DefaultTvStyle"
+            android:text="@string/youranbi"
+            android:textColor="@color/color_main"
+            android:textSize="@dimen/font_44"/>
+    </LinearLayout>
+
+    <com.rz.circled.widget.password.GridPasswordView
+        android:id="@+id/id_pay_pw_pass"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px132"
+        android:layout_marginBottom="@dimen/px30"
+        android:layout_marginLeft="@dimen/px52"
+        android:layout_marginRight="@dimen/px52"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/id_is_set_user_txt"
+        style="@style/DefaultTvStyle"
+        android:paddingBottom="@dimen/px30"
+        android:text="@string/safe_info_note"
+        android:textColor="@color/color_ff0000"
+        android:textSize="@dimen/font_38"
+        android:visibility="gone"/>
+
+
+</LinearLayout>

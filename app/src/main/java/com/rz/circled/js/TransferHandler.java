@@ -1,8 +1,12 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.rz.circled.modle.TransferModule;
+import com.rz.circled.ui.activity.TransferGiftActivity;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -23,16 +27,16 @@ public class TransferHandler extends ServerHandler {
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         String result = new Gson().toJson(paramObj.data);
-//        V3TransferMoneyAty.TransferModule transferModule = new Gson().fromJson(result, V3TransferMoneyAty.TransferModule.class);
-//        String infoId = transferModule.infoId;
-//        if (!TextUtils.isEmpty(infoId)) {
-//            String[] s = infoId.split("\\.");
-//            if (s.length > 0) {
-//                transferModule.infoId = infoId;
-//            }
-//        }
-//        Log.d("yeying", "handle " + transferModule.toString());
-//        V3TransferGiftAty.startTransferGiftAty(mActivity, transferModule, true);
+        TransferModule transferModule = new Gson().fromJson(result, TransferModule.class);
+        String infoId = transferModule.infoId;
+        if (!TextUtils.isEmpty(infoId)) {
+            String[] s = infoId.split("\\.");
+            if (s.length > 0) {
+                transferModule.infoId = infoId;
+            }
+        }
+        Log.d("webView", "handle " + transferModule.toString());
+        TransferGiftActivity.startTransferGiftAty(mActivity, transferModule, true);
     }
 
     @Override
