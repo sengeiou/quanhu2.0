@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.rz.circled.widget.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -29,17 +29,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
+                android:padding="12dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -67,18 +64,125 @@
 
             <View style="@style/line_horizontal_gray_s" />
 
-            <net.lucode.hackware.magicindicator.MagicIndicator
-                android:id="@+id/indicator_tab"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom" />
+                android:layout_height="wrap_content">
 
-            <View style="@style/line_horizontal_gray_s" />
+                <LinearLayout
+                    android:id="@+id/layout_my_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager_group"
-                android:layout_width="match_parent"
-                android:layout_height="240dp" />
+                    <LinearLayout
+                        android:id="@+id/layout_my_create"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_create"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingBottom="12dp"
+                                android:paddingTop="12dp"
+                                android:text="创建的私圈"
+                                android:textColor="@color/font_gray_xl"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/btn_create_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="12dp"
+                                android:paddingTop="12dp"
+                                android:text="查看更多"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:id="@+id/frame_created"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_my_join"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_join"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingBottom="12dp"
+                                android:paddingTop="12dp"
+                                android:text="加入的私圈"
+                                android:textColor="@color/font_gray_xl"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/btn_join_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="12dp"
+                                android:paddingTop="12dp"
+                                android:text="查看更多"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:id="@+id/frame_join"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_no_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_launcher" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="您还没有创建和加入私圈"
+                        android:textColor="@color/font_gray_m"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
 
         <View
@@ -178,5 +282,5 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-</com.rz.circled.widget.VerticalScrollView>
+</ScrollView>
 

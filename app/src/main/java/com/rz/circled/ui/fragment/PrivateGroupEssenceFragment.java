@@ -14,6 +14,7 @@ import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.MyListView;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -21,6 +22,7 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,7 +38,7 @@ import retrofit2.Response;
 public class PrivateGroupEssenceFragment extends BaseFragment {
 
     @BindView(R.id.lv)
-    ListView lv;
+    MyListView lv;
     @BindView(R.id.tv)
     TextView tv;
 
@@ -72,19 +74,24 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
                 super.onResponse(call, response);
-                if (!response.body().isSuccessful()) {
-                    SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                } else {
-                    List<PrivateGroupBean> data = response.body().getData();
-                    if (data != null && data.size() > 0) {
-                        if (data.size() > 3) {
-                            mAdapter.setData(data.subList(0, 3));
-                        } else {
-                            mAdapter.setData(data);
-                        }
+
+                if (response.isSuccessful()) {
+                    if (!response.body().isSuccessful()) {
+                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
                     } else {
-                        onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                        List<PrivateGroupBean> data = response.body().getData();
+                        if (data != null && data.size() > 0) {
+                            if (data.size() > 3) {
+                                mAdapter.setData(data.subList(0, 3));
+                            } else {
+                                mAdapter.setData(data);
+                            }
+                        } else {
+                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                        }
                     }
+                } else {
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
             }
 
@@ -94,6 +101,13 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
+
+
+        List<PrivateGroupBean> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            list.add(new PrivateGroupBean());
+        }
+        mAdapter.setData(list);
     }
 
     @OnClick(R.id.tv)

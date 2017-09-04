@@ -63,7 +63,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initData() {
-        startActivity(new Intent(mContext, WebContainerActivity.class));
     }
 
     private void initCounter() {

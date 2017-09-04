@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.event.EventConstant;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
@@ -21,6 +23,8 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -44,16 +48,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @BindView(R.id.lv)
     ListView lv;
-    @BindView(R.id.tv)
-    TextView tv;
-    @BindView(R.id.layout_data)
-    LinearLayout layoutData;
-    @BindView(R.id.btn_login)
-    TextView btnLogin;
-    @BindView(R.id.layout_login)
-    LinearLayout layoutLogin;
-    @BindView(R.id.layout_no_data)
-    LinearLayout layoutNoData;
 
     private int type;
     private int pageNo;
@@ -81,16 +75,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        if (type == TYPE_PART) {
-            if (Session.getUserIsLogin()) {
-                layoutLogin.setVisibility(View.GONE);
-            } else {
-                layoutLogin.setVisibility(View.VISIBLE);
-            }
-        } else {
-            layoutLogin.setVisibility(View.GONE);
-            layoutNoData.setVisibility(View.GONE);
-        }
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,18 +102,15 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                 } else {
                                     mAdapter.setData(data);
                                 }
-                            } else {
-                                layoutData.setVisibility(View.GONE);
-                                layoutNoData.setVisibility(View.VISIBLE);
                             }
                         } else {
                             if (data != null && data.size() > 0) {
                                 mAdapter.setData(data);
-                                tv.setVisibility(View.GONE);
                             } else {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             }
                         }
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, data.size()));
                     }
                 } else {
                     SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
@@ -142,15 +123,5 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
-    }
-
-    @OnClick({R.id.tv, R.id.btn_login})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv:
-                break;
-            case R.id.btn_login:
-                break;
-        }
     }
 }

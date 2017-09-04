@@ -1,62 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_data"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/layout_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <ListView
+        android:id="@+id/lv"
+        style="@style/DefaultLvStyle"
+        android:clipToPadding="false"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp" />
 
-        <ListView
-            android:id="@+id/lv"
-            style="@style/DefaultLvStyle"
-            android:clipToPadding="false"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp" />
-
-        <include layout="@layout/layout_private_group_more" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_login"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/private_group_login_tip"
-            android:textColor="@color/font_gray_m"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/shape_1bc2b8_normal"
-            android:text="@string/login"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_no_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/private_group_no_create"
-            android:textColor="@color/font_gray_m"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>

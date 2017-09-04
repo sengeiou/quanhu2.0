@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
+    <com.rz.common.widget.MyListView
         android:id="@+id/lv"
         style="@style/DefaultLvStyle"
         android:clipToPadding="false"

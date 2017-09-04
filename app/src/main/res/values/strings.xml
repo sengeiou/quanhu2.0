@@ -75,6 +75,8 @@
     <string name="cannot_add_content">您还没有添加发布内容</string>
     <string name="add_content">添加正文</string>
     <string name="editor_content_null">正文详情不能为空</string>
+    <string name="user_create_private_group_num">创建的私圈（%1$d）</string>
+    <string name="user_join_private_group_num">加入的私圈（%1$d）</string>
 
 
     <string name="xuanbei">选被</string>

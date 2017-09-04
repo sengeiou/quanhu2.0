@@ -27,10 +27,10 @@ public class PrivateGroupNavigatorAdapter extends CommonNavigatorAdapter {
     private List<String> mDataList;
     private ViewPager viewPager;
 
-    public PrivateGroupNavigatorAdapter(Context context, ViewPager viewPager) {
+    public PrivateGroupNavigatorAdapter(Context context, ViewPager viewPager, List<String> mDataList) {
         this.mContext = context;
         this.viewPager = viewPager;
-        mDataList = new ArrayList<>();
+        this.mDataList = mDataList;
     }
 
     @Override

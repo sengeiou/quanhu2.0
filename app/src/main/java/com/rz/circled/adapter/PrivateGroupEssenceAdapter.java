@@ -19,8 +19,8 @@ public class PrivateGroupEssenceAdapter extends CommonAdapter<PrivateGroupBean> 
 
     @Override
     public void convert(ViewHolder helper, PrivateGroupBean item, int position) {
-        helper.setText(R.id.tv_title, item.getName());
-        helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
-        helper.setText(R.id.tv_scan, String.format(mContext.getString(R.string.private_group_joined_user), item.getMemberNum()));
+//        helper.setText(R.id.tv_title, item.getName());
+//        helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
+//        helper.setText(R.id.tv_scan, String.format(mContext.getString(R.string.private_group_joined_user), item.getMemberNum()));
     }
 }

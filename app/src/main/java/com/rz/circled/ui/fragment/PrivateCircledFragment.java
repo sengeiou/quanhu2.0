@@ -1,10 +1,9 @@
 package com.rz.circled.ui.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,23 +15,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
-import com.rz.circled.adapter.MyFragmentPagerAdapter;
 import com.rz.circled.adapter.MyPagerAdapter;
-import com.rz.circled.adapter.PrivateGroupNavigatorAdapter;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.GroupBannerBean;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
-import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +35,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
-import static net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator.MODE_MATCH_EDGE;
-import static net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator.MODE_WRAP_CONTENT;
+import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
+import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
 
 /**
  * Created by Gsm on 2017/8/29.
  */
 public class PrivateCircledFragment extends BaseFragment {
+
 
     @BindView(R.id.viewpager)
     AutoScrollViewPager viewpager;
@@ -56,18 +50,32 @@ public class PrivateCircledFragment extends BaseFragment {
     MagicIndicator indicatorBanner;
     @BindView(R.id.btn_apply_for)
     TextView btnApplyFor;
-    @BindView(R.id.indicator_tab)
-    MagicIndicator indicatorTab;
-    @BindView(R.id.viewpager_group)
-    ViewPager viewpagerGroup;
+    @BindView(R.id.tv_create)
+    TextView tvCreate;
+    @BindView(R.id.btn_create_more)
+    TextView btnCreateMore;
+    @BindView(R.id.frame_created)
+    FrameLayout frameCreated;
+    @BindView(R.id.layout_my_create)
+    LinearLayout layoutMyCreate;
+    @BindView(R.id.tv_join)
+    TextView tvJoin;
+    @BindView(R.id.btn_join_more)
+    TextView btnJoinMore;
+    @BindView(R.id.frame_join)
+    FrameLayout frameJoin;
+    @BindView(R.id.layout_my_join)
+    LinearLayout layoutMyJoin;
+    @BindView(R.id.layout_my_group)
+    LinearLayout layoutMyGroup;
+    @BindView(R.id.layout_no_data)
+    LinearLayout layoutNoData;
     @BindView(R.id.btn_refresh)
     TextView btnRefresh;
     @BindView(R.id.frame_recommend)
     FrameLayout frameRecommend;
     @BindView(R.id.frame_essence)
     FrameLayout frameEssence;
-
-    private PrivateGroupNavigatorAdapter groupNavigatorAdapter;
 
     @Nullable
     @Override
@@ -77,12 +85,55 @@ public class PrivateCircledFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
+        initRecommendGroup();
+        initEssenceGroup();
+        initCreatedGroup();
+        initJoinGroup();
     }
 
     @Override
     public void initData() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case USER_CREATE_PRIVATE_GROUP_NUM:
+                if ((int) event.getData() != 0) {
+                    tvCreate.setText(String.format(getString(R.string.user_create_private_group_num), (int) event.getData()));
+                    layoutMyCreate.setVisibility(View.VISIBLE);
+                } else {
+                    layoutMyCreate.setVisibility(View.GONE);
+                }
+                checkGroupNull();
+                break;
+            case USER_JOIN_PRIVATE_GROUP_NUM:
+                if ((int) event.getData() != 0) {
+                    tvJoin.setText(String.format(getString(R.string.user_join_private_group_num), (int) event.getData()));
+                    layoutMyJoin.setVisibility(View.VISIBLE);
+                } else {
+                    layoutMyJoin.setVisibility(View.GONE);
+                }
+                checkGroupNull();
+                break;
+        }
+    }
+
+    private void checkGroupNull() {
+        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE) {
+            layoutNoData.setVisibility(View.VISIBLE);
+        } else {
+            layoutNoData.setVisibility(View.GONE);
+        }
     }
 
     private void initViewpagerBanner(List<GroupBannerBean> pics) {
@@ -118,30 +169,45 @@ public class PrivateCircledFragment extends BaseFragment {
         ViewPagerHelper.bind(indicatorBanner, viewpager);
     }
 
-    private void initViewpagerGroup() {
-        List<Fragment> mFragments = new ArrayList<>();
-        BaseFragment privateGroupJoinByMyselfFragment = PrivateGroupJoinByMyselfFragment.newInstance(PrivateGroupJoinByMyselfFragment.TYPE_PART);
-        BaseFragment privateGroupCreateByMyselfFragment = PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_PART);
-        mFragments.add(privateGroupJoinByMyselfFragment);
-        mFragments.add(privateGroupCreateByMyselfFragment);
-        viewpager.setAdapter(new MyFragmentPagerAdapter(getFragmentManager(), mFragments));
+    private void initCreatedGroup() {
+        PrivateGroupCreateByMyselfFragment privateGroupCreateByMyselfFragment = PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_PART);
+        initFragment(R.id.frame_created, privateGroupCreateByMyselfFragment);
     }
 
-    private void initIndicatorGroup() {
-        CommonNavigator commonNavigator = new CommonNavigator(getContext());
-        commonNavigator.setAdapter(groupNavigatorAdapter = new PrivateGroupNavigatorAdapter(getContext(), viewpagerGroup));
-        commonNavigator.setAdjustMode(true);
-        indicatorTab.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(indicatorTab, viewpagerGroup);
+    private void initJoinGroup() {
+        PrivateGroupJoinByMyselfFragment privateGroupJoinByMyselfFragment = PrivateGroupJoinByMyselfFragment.newInstance(PrivateGroupJoinByMyselfFragment.TYPE_PART);
+        initFragment(R.id.frame_join, privateGroupJoinByMyselfFragment);
     }
 
-    @OnClick({R.id.btn_apply_for, R.id.btn_refresh})
+    private void initRecommendGroup() {
+        PrivateGroupRecommendFragment privateGroupRecommendFragment = PrivateGroupRecommendFragment.newInstance();
+        initFragment(R.id.frame_recommend, privateGroupRecommendFragment);
+    }
+
+    private void initEssenceGroup() {
+        PrivateGroupEssenceFragment privateGroupEssenceFragment = PrivateGroupEssenceFragment.newInstance();
+        initFragment(R.id.frame_essence, privateGroupEssenceFragment);
+    }
+
+    private void initFragment(int id, BaseFragment fragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(id, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @OnClick({R.id.btn_apply_for, R.id.btn_create_more, R.id.btn_join_more, R.id.btn_refresh})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_for:
+                break;
+            case R.id.btn_create_more:
+                break;
+            case R.id.btn_join_more:
                 break;
             case R.id.btn_refresh:
                 break;
         }
     }
+
 }

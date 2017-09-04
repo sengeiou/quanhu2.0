@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.event.EventConstant;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
@@ -21,6 +23,8 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -42,16 +46,6 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @BindView(R.id.lv)
     ListView lv;
-    @BindView(R.id.tv)
-    TextView tv;
-    @BindView(R.id.layout_data)
-    LinearLayout layoutData;
-    @BindView(R.id.btn_login)
-    TextView btnLogin;
-    @BindView(R.id.layout_login)
-    LinearLayout layoutLogin;
-    @BindView(R.id.layout_no_data)
-    LinearLayout layoutNoData;
 
     private int type;
     private DefaultPrivateGroupAdapter mAdapter;
@@ -78,16 +72,6 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        if (type == TYPE_PART) {
-            if (Session.getUserIsLogin()) {
-                layoutLogin.setVisibility(View.GONE);
-            } else {
-                layoutLogin.setVisibility(View.VISIBLE);
-            }
-        } else {
-            layoutLogin.setVisibility(View.GONE);
-            layoutNoData.setVisibility(View.GONE);
-        }
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,29 +87,30 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
                 super.onResponse(call, response);
-                if (!response.body().isSuccessful()) {
-                    SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                } else {
-                    List<PrivateGroupBean> data = response.body().getData();
-                    if (type == TYPE_PART) {
-                        if (data != null && data.size() > 0) {
-                            if (data.size() > 2) {
-                                mAdapter.setData(data.subList(0, 2));
-                            } else {
-                                mAdapter.setData(data);
+                if (response.isSuccessful()) {
+                    if (!response.body().isSuccessful()) {
+                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
+                    } else {
+                        List<PrivateGroupBean> data = response.body().getData();
+                        if (type == TYPE_PART) {
+                            if (data != null && data.size() > 0) {
+                                if (data.size() > 2) {
+                                    mAdapter.setData(data.subList(0, 2));
+                                } else {
+                                    mAdapter.setData(data);
+                                }
                             }
                         } else {
-                            layoutData.setVisibility(View.GONE);
-                            layoutNoData.setVisibility(View.VISIBLE);
+                            if (data != null && data.size() > 0) {
+                                mAdapter.setData(data);
+                            } else {
+                                onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }
                         }
-                    } else {
-                        if (data != null && data.size() > 0) {
-                            mAdapter.setData(data);
-                            tv.setVisibility(View.GONE);
-                        } else {
-                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, data.size()));
                     }
+                } else {
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
             }
 
@@ -135,15 +120,5 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
-    }
-
-    @OnClick({R.id.tv, R.id.btn_login})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv:
-                break;
-            case R.id.btn_login:
-                break;
-        }
     }
 }
