@@ -45,7 +45,17 @@
 
             <TextView
                 android:id="@+id/tv_base_load_function"
-                style="@style/btn_big_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_ring_blue"
+                android:gravity="center"
+                android:minWidth="@dimen/px405"
+                android:paddingBottom="@dimen/px35"
+                android:paddingLeft="@dimen/px65"
+                android:paddingRight="@dimen/app_base_padding"
+                android:paddingTop="@dimen/px35"
+                android:textColor="@color/font_color_blue"
+                android:textSize="@dimen/font_46"
                 android:visibility="gone"/>
         </LinearLayout>
     </FrameLayout>

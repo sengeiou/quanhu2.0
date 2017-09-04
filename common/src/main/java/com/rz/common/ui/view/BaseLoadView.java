@@ -107,7 +107,7 @@ public class BaseLoadView implements View.OnClickListener {
             Toasty.info(mContext, TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_data_luck) : msg).show();
         } else {
             statusView.setVisibility(View.VISIBLE);
-//            ivStatus.setImageResource(R.drawable.icon_news_empty);
+            ivStatus.setImageResource(R.mipmap.icon_news_empty);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_news_empty) : msg);
             tvFunction.setVisibility(View.GONE);
             ivLoading.setVisibility(View.GONE);
@@ -120,7 +120,7 @@ public class BaseLoadView implements View.OnClickListener {
      */
     private void processWebError(String msg, boolean haveData) {
         statusView.setVisibility(View.VISIBLE);
-//        ivStatus.setImageResource(R.drawable.icon_web_error);
+        ivStatus.setImageResource(R.mipmap.icon_web_error);
         tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_web_error) : msg);
         tvFunction.setVisibility(View.GONE);
         ivLoading.setVisibility(View.GONE);
@@ -153,7 +153,7 @@ public class BaseLoadView implements View.OnClickListener {
         } else {
             ivLoading.setVisibility(View.GONE);
             statusView.setVisibility(View.VISIBLE);
-//            ivStatus.setImageResource(R.drawable.icon_data_empty);
+            ivStatus.setImageResource(R.mipmap.icon_data_empty);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg);
             tvFunction.setVisibility(View.GONE);
             llError.setVisibility(View.VISIBLE);
@@ -170,7 +170,7 @@ public class BaseLoadView implements View.OnClickListener {
         } else {
             ivLoading.setVisibility(View.GONE);
             statusView.setVisibility(View.VISIBLE);
-//            ivStatus.setImageResource(R.drawable.icon_load_error);
+            ivStatus.setImageResource(R.mipmap.icon_load_error);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg);
             tvFunction.setVisibility(View.VISIBLE);
             llError.setVisibility(View.VISIBLE);
@@ -207,11 +207,29 @@ public class BaseLoadView implements View.OnClickListener {
         } else {
             ivLoading.setVisibility(View.GONE);
             statusView.setVisibility(View.VISIBLE);
-//            ivStatus.setImageResource(R.drawable.icon_load_error);
+            ivStatus.setImageResource(R.mipmap.icon_load_error);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg);
             tvFunction.setVisibility(View.GONE);
             llError.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param stringId
+     */
+    public void setFunctionText(int stringId) {
+        setFunctionText(mContext.getString(stringId));
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param string
+     */
+    public void setFunctionText(String string) {
+        tvFunction.setText(string);
     }
 
     public void SVProgressHUDDismiss() {

@@ -94,6 +94,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
             }
         }
     }
+
     /**
      * 用户是否登录
      */
@@ -106,6 +107,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
             return false;
         }
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -189,6 +191,25 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     public void onLoadingStatus(int loadingStatus, String string) {
         if (mActivity == null || mActivity.isFinishing() || mLoadView == null) return;
         mLoadView.onLoading(loadingStatus, string, hasDataInPage(), needSupportRefresh());
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param stringId
+     */
+    public void setFunctionText(int stringId) {
+        setFunctionText(getString(stringId));
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param string
+     */
+    public void setFunctionText(String string) {
+        if (mActivity == null || mActivity.isFinishing() || mLoadView == null) return;
+        mLoadView.setFunctionText(string);
     }
 
     @Override

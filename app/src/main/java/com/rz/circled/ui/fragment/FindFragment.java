@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
-import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;

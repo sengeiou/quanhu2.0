@@ -143,6 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             llContent.addView(contentView, layoutParams);
         }
     }
+
     /**
      * 清除右侧图标和文字
      */
@@ -150,6 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         tvCommonTitleRight.setVisibility(View.GONE);
         ivCommonRight.setVisibility(View.GONE);
     }
+
     /**
      * show to @param(cls)，but can't finish activity
      */
@@ -234,6 +236,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (mLoadView != null || isFinishing() || mLoadView != null)
             mLoadView.setRefreshListener(refreshListener);
     }
+
     /**
      * 用户是否登录
      */
@@ -246,6 +249,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             return false;
         }
     }
+
     /**
      * @return 状态栏颜色
      */
@@ -549,6 +553,25 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void onLoadingStatus(int loadingStatus, String string) {
         if (mContext == null || isFinishing() || mLoadView == null) return;
         mLoadView.onLoading(loadingStatus, string, hasDataInPage(), needSupportRefresh());
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param stringId
+     */
+    public void setFunctionText(int stringId) {
+        setFunctionText(getString(stringId));
+    }
+
+    /**
+     * 设置功能按钮显示文字
+     *
+     * @param string
+     */
+    public void setFunctionText(String string) {
+        if (mContext == null || isFinishing() || mLoadView == null) return;
+        mLoadView.setFunctionText(string);
     }
     //-------------------------------点击editText以外的区域start-----------------------------------//
 

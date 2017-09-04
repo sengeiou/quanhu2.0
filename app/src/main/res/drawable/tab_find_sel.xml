@@ -4,6 +4,6 @@
     <item android:drawable="@mipmap/icon_tab_find" android:state_pressed="true"/>
     <item android:drawable="@mipmap/icon_tab_find" android:state_focused="true"/>
     <item android:drawable="@mipmap/icon_tab_find" android:state_selected="true"/>
-    <item android:drawable="@mipmap/ic_launcher"/>
+    <item android:drawable="@mipmap/icon_tab_find_gray"/>
 
 </selector>

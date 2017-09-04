@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
-import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
@@ -100,7 +100,7 @@ public class AllCirclesAty extends BaseActivity {
     @Override
     public void initPresenter() {
         super.initPresenter();
-        V3CirclePresenter  presenter = new V3CirclePresenter();
+        CirclePresenter  presenter = new CirclePresenter();
         presenter.attachView(this);
         presenter.getCircleEntranceList(0);
         presenter.getCircleEntranceList(1);
