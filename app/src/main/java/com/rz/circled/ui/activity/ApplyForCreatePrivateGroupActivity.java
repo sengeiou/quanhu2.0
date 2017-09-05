@@ -88,6 +88,18 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(coverPath)) {
+                    Toast.makeText(mContext, "封面图为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(circleId)) {
+                    Toast.makeText(mContext, "请选择圈子", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!cbxProtocol.isChecked()) {
+                    Toast.makeText(mContext, "请同意创建协议", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 updateCoverPic();
             }
         });
@@ -192,10 +204,6 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     }
 
     private void updateCoverPic() {
-        if (TextUtils.isEmpty(coverPath)) {
-            Toast.makeText(mContext, "封面图为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
         /**
          * oss上传图片，得到回调之后，保存图片地址到本地
          */
@@ -208,10 +216,6 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     @Override
     public void onResult(boolean result, List<UploadPicManager.UploadInfo> resultList) {
-        if (TextUtils.isEmpty(circleId)) {
-            Toast.makeText(mContext, "请选择圈子", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String groupName = etvName.getText().toString().trim();
         String groupDesc = etvGroupDesc.getText().toString().trim();
         String ownDesc = etvDesc.getText().toString().trim();
