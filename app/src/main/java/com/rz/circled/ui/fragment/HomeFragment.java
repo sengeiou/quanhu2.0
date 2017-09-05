@@ -1,23 +1,36 @@
 package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+
+import com.jakewharton.rxbinding.view.RxView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.SearchActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import rx.functions.Action1;
+
 /**
  * Created by Gsm on 2017/8/29.
  */
@@ -25,6 +38,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     AutoRollLayout mAuto_viewpager;
     @BindView(R.id.id_homefrg_listview)
     ListView mHomeLv;
+    @BindView(R.id.layout_content)
+    FrameLayout mLayoutContent;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     DynamicAdapter dynamicAdapter;
@@ -45,7 +60,27 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initView() {
+        initTitleBar();
         initDynamicLv();
+    }
+
+    private void initTitleBar() {
+        View v = View.inflate(getActivity(), R.layout.titlebar_transparent, null);
+        mLayoutContent.addView(v);
+        RxView.clicks(v.findViewById(R.id.et_search_keyword)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                //跳搜索界面
+                startActivity(new Intent(mActivity, SearchActivity.class));
+            }
+        });
+        RxView.clicks(v.findViewById(R.id.iv_mess)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                //跳消息界面
+            }
+        });
+
     }
 
     private void initDynamicLv() {
@@ -95,6 +130,16 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(mActivity, SearchActivity.class));
+        CircleDynamic circleDynamic = circleDynamicList.get(position);
+        String url = CommomUtils.getDymanicUrl(circleDynamic.circleUrl, circleDynamic.moduleId, circleDynamic.infoId);
+        WebContainerActivity.startActivity(mActivity,url);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

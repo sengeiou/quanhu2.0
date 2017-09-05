@@ -24,7 +24,6 @@ import com.rz.httpapi.bean.CircleEntrModle;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,7 +53,8 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
     ComingPublishedAdapter comingPublishedAdapter;
     ImageView mIvBaseTitleLeft;
     TextView mTvBaseTitleRight;
-    private HashSet<String> mFollowCircle;
+    //    private HashSet<String> mFollowCircle;
+    List<CircleEntrModle> mFollowCircle = new ArrayList<>();
 
     @Nullable
     @Override
@@ -72,38 +72,43 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         publishedAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int pos, int status) {
-                if (isLogin()) {
-                    trackUser("百圈纷呈", "圈子入口", onLines.get(pos).circleName);
+//                if (isLogin()) {
                     CircleEntrModle circleEntrModle = onLines.get(pos);
-                    WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
-                }
+                    if (isEdit) {
+                        onLines.remove(circleEntrModle);
+                        waitUp.add(circleEntrModle);
+                        publishedAdapter.notifyDataSetChanged();
+                        comingPublishedAdapter.notifyDataSetChanged();
+                    } else {
+                        trackUser("百圈纷呈", "圈子入口", onLines.get(pos).circleName);
+                        WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
+                    }
+//                }
             }
         });
         comingPublishedAdapter = new ComingPublishedAdapter(QHApplication.getContext());
-//        comingPublishedAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int pos, int status) {
-//                if(isLogin()) {
-//                    CircleEntrModle circleEntrModle = waitUp.get(pos);
-//                    WebContainerAty.startAty(AllCirclesAty.this, circleEntrModle.circleUrl);
+        comingPublishedAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int pos, int status) {
+//                if (isLogin()) {
+                CircleEntrModle circleEntrModle = waitUp.get(pos);
+                if (isEdit) {
+                    waitUp.remove(circleEntrModle);
+                    onLines.add(0,circleEntrModle);
+                    publishedAdapter.notifyDataSetChanged();
+                    comingPublishedAdapter.notifyDataSetChanged();
+                } else {
+                    WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
+                }
 //                }
-//            }
-//        });
+            }
+        });
         mRvAllcirclesPublished.setAdapter(publishedAdapter);//马上发布
         mRvAllcirclesPublished.setHasFixedSize(true);
         mRvAllcirclesPublished.setNestedScrollingEnabled(false);
         mRvAllcirclesComingpublish.setAdapter(comingPublishedAdapter);//即将发布
         mRvAllcirclesComingpublish.setHasFixedSize(true);
         mRvAllcirclesComingpublish.setNestedScrollingEnabled(false);
-//        setTitleRightBackground(R.drawable.all_circle_shape);
-//        setTitleRightText("编辑");
-//        setTitleRightTextColor(R.color.white);
-//        setTitleRightListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -168,21 +173,30 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         EventBus.getDefault().unregister(this);
     }
 
+    boolean isEdit = false;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.all_circle__title_left:
                 finish();
                 break;
-
             case R.id.all_circle_title_right:
+                if (isEdit) {
+                    isEdit = false;
+                    mTvBaseTitleRight.setText("编辑");
+                    //点击完成后联网
+
+                } else {
+                    isEdit = true;
+                    mTvBaseTitleRight.setText("完成");
+                }
+                publishedAdapter.notifyDataSetChanged();
                 break;
 
 
         }
     }
-
-
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int pos, int status);
     }
@@ -220,21 +234,8 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
 
         @Override
         public void onBindViewHolder(PublishedViewHolder holder, int position) {
-            CircleEntrModle circleEntrModle = onLines.get(position);
-            if (mFollowCircle != null) {
-                boolean isfind = false;
-                for (String s : mFollowCircle) {
-                    if (onLines.get(position).appId.equals(s)) {
-                        isfind = true;
-                        holder.circle_follow.setVisibility(View.VISIBLE);
-                        break;
-                    }
-
-                }
-                if (!isfind) {
-                    holder.circle_follow.setVisibility(View.GONE);
-                }
-            }
+            final CircleEntrModle circleEntrModle = onLines.get(position);
+            holder.circle_follow.setVisibility(isEdit == true ? View.VISIBLE : View.GONE);
             if (Protect.checkLoadImageStatus(AllCirclesAty.this)) {
                 Glide.with(AllCirclesAty.this).load(circleEntrModle.circleIcon).into(holder.civ_circleImg);
             }
