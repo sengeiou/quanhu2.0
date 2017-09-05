@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
@@ -36,7 +37,7 @@ import static com.rz.circled.widget.CommomUtils.trackUser;
  * Created by Administrator on 2017/3/30/030.
  */
 
-public class AllCirclesAty extends BaseActivity {
+public class AllCirclesAty extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.title_content)
     FrameLayout mTitleContent;
@@ -51,6 +52,8 @@ public class AllCirclesAty extends BaseActivity {
     List<CircleEntrModle> waitUp = new ArrayList<>();
     PublishedAdapter publishedAdapter;
     ComingPublishedAdapter comingPublishedAdapter;
+    ImageView mIvBaseTitleLeft;
+    TextView mTvBaseTitleRight;
     private HashSet<String> mFollowCircle;
 
     @Nullable
@@ -72,7 +75,7 @@ public class AllCirclesAty extends BaseActivity {
                 if (isLogin()) {
                     trackUser("百圈纷呈", "圈子入口", onLines.get(pos).circleName);
                     CircleEntrModle circleEntrModle = onLines.get(pos);
-//                    WebContainerAty.startAty(AllCirclesAty.this, circleEntrModle.circleUrl);
+                    WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
                 }
             }
         });
@@ -92,13 +95,26 @@ public class AllCirclesAty extends BaseActivity {
         mRvAllcirclesComingpublish.setAdapter(comingPublishedAdapter);//即将发布
         mRvAllcirclesComingpublish.setHasFixedSize(true);
         mRvAllcirclesComingpublish.setNestedScrollingEnabled(false);
-        setTitleText(R.string.baiquanfencheng);
+//        setTitleRightBackground(R.drawable.all_circle_shape);
+//        setTitleRightText("编辑");
+//        setTitleRightTextColor(R.color.white);
+//        setTitleRightListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+    }
+
+    @Override
+    protected boolean needShowTitle() {
+        return false;
     }
 
     @Override
     public void initPresenter() {
         super.initPresenter();
-        CirclePresenter  presenter = new CirclePresenter();
+        CirclePresenter presenter = new CirclePresenter();
         presenter.attachView(this);
         presenter.getCircleEntranceList(0);
         presenter.getCircleEntranceList(1);
@@ -106,7 +122,16 @@ public class AllCirclesAty extends BaseActivity {
 
     @Override
     public void initData() {
+        initTitleBar();
+    }
 
+    private void initTitleBar() {
+        View v = View.inflate(this, R.layout.all_circle_head, null);
+        mTitleContent.addView(v);
+        mIvBaseTitleLeft = (ImageView) v.findViewById(R.id.all_circle__title_left);
+        mTvBaseTitleRight = (TextView) v.findViewById(R.id.all_circle_title_right);
+        mIvBaseTitleLeft.setOnClickListener(this);
+        mTvBaseTitleRight.setOnClickListener(this);
     }
 
     @Override
@@ -136,11 +161,27 @@ public class AllCirclesAty extends BaseActivity {
             }
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.all_circle__title_left:
+                finish();
+                break;
+
+            case R.id.all_circle_title_right:
+                break;
+
+
+        }
+    }
+
 
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int pos, int status);
@@ -205,6 +246,7 @@ public class AllCirclesAty extends BaseActivity {
             return onLines.size();
         }
     }
+
     private static class PublishedViewHolder extends RecyclerView.ViewHolder {
         ImageView civ_circleImg;
         ImageView circle_follow;

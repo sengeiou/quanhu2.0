@@ -70,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
         initSupportSwipeBack();
         initTint();
-        StatusBarUtils.setDarkStatusIcon(this, true);
+        StatusBarUtils.setDarkStatusIcon(this, false);
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         initTitleView(llTitle, flTransTitle);
@@ -467,6 +467,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             tvCommonTitleRight.setVisibility(View.VISIBLE);
             ivCommonRight.setVisibility(View.GONE);
         }
+    }
+    public void setTitleRightBackground(int color){
+        tvCommonTitleRight.setBackgroundColor(color);
     }
 
     /**

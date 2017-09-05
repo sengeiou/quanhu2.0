@@ -17,12 +17,16 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
+import com.rz.circled.ui.activity.MoreFamousActivity;
+import com.rz.circled.ui.activity.MorePlayActivity;
+import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.circled.widget.XGridView;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
@@ -32,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.rz.circled.widget.CommomUtils.trackUser;
 
@@ -48,6 +53,12 @@ public class FindFragment extends BaseFragment {
     RecyclerView mSubjectRcv;
     @BindView(R.id.new_activity_lv)
     MListView mNewActivityLv;
+    @BindView(R.id.tv_famous_more)
+    TextView mTvFamousMore;
+    @BindView(R.id.tv_subject_more)
+    TextView mTvSubjectMore;
+    @BindView(R.id.tv_activity_more)
+    TextView mTvActivityMore;
     private List<CircleEntrModle> circleEntrModleList = new ArrayList();
     private CirclePresenter mPresenter;
     private List<FamousModel> famousList = new ArrayList<>();
@@ -195,7 +206,6 @@ public class FindFragment extends BaseFragment {
                 Glide.with(mActivity).load(famousModel.getStarImg()).into(fvh.famous_iv);
                 fvh.famous_name.setText(famousModel.getStarName());
                 fvh.famous_mark.setText(famousModel.getStarTag());
-                fvh.famous_des.setText(famousModel.getStarDesc());
                 fvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -218,14 +228,12 @@ public class FindFragment extends BaseFragment {
                 ImageView famous_iv;
                 TextView famous_name;
                 TextView famous_mark;
-                TextView famous_des;
 
                 public FamousViewHolder(View itemView) {
                     super(itemView);
                     famous_iv = (ImageView) itemView.findViewById(R.id.famous_iv);
                     famous_name = ((TextView) itemView.findViewById(R.id.famous_name));
                     famous_mark = ((TextView) itemView.findViewById(R.id.famous_mark));
-                    famous_des = ((TextView) itemView.findViewById(R.id.famous_des));
                 }
             }
         };
@@ -265,5 +273,26 @@ public class FindFragment extends BaseFragment {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @OnClick({R.id.tv_famous_more, R.id.tv_subject_more, R.id.tv_activity_more,R.id.btn_resource, R.id.btn_quanle})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_famous_more:
+                jump(MoreFamousActivity.class);
+                break;
+            case R.id.tv_subject_more:
+                jump(MoreSubjectActivity.class);
+                break;
+            case R.id.tv_activity_more:
+                jump(MorePlayActivity.class);
+                break;
+            case R.id.btn_resource:
+                Toasty.info(mActivity,"点啊").show();
+                break;
+            case R.id.btn_quanle:
+                Toasty.info(mActivity,"点啊").show();
+                break;
+        }
     }
 }
