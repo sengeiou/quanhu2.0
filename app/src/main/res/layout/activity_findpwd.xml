@@ -49,35 +49,19 @@
                         android:layout_marginRight="@dimen/px44"
                         >
 
-
                     </FrameLayout>
-
-
-                    <ImageView
-                        android:id="@+id/logo_img"
-                        android:layout_width="@dimen/px242"
-                        android:layout_height="@dimen/px242"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_alignParentTop="true"
-
-                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/welcome_login"
-                        android:layout_centerHorizontal="true"
+                        android:text="@string/forget_pw_title"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/px44"
-                        android:layout_below="@id/logo_img"
                         android:textColor="@color/black"
                         android:textSize="@dimen/px52"
                         />
 
-
                 </RelativeLayout>
-
-
 
 
             </LinearLayout>
@@ -104,13 +88,13 @@
                         android:src="@mipmap/ic_login_phone"/>
 
                     <EditText
-                        android:id="@+id/id_login_edit_phone"
+                        android:id="@+id/id_find_1_phone_edit"
                         style="@style/LoginEtStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="@string/phone_num"
+                        android:hint="@string/edit_phone_num"
                         android:inputType="phone"
                         android:maxLength="11"
                         android:paddingBottom="@dimen/px63"
@@ -120,16 +104,18 @@
                         android:textColorHint="@color/color_999999"/>
 
                     <ImageView
-                        android:id="@+id/id_login_clear_phone"
+                        android:id="@+id/id_clear_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
-                        android:visibility="gone"
-                        android:layout_marginRight="@dimen/px100"
-                        />
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px2"
+                    android:background="@color/color_DDDDDD"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,42 +124,59 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="@dimen/px42"
-                        android:layout_height="@dimen/px56"
-                        android:layout_marginLeft="@dimen/px66"
-                        android:src="@mipmap/ic_login_pw"/>
+                    android:layout_width="@dimen/px42"
+                    android:layout_height="@dimen/px56"
+                    android:layout_marginLeft="@dimen/px66"
+                    android:src="@mipmap/icon_code"/>
 
                     <EditText
-                        android:id="@+id/id_login_edit_pw"
+                        android:id="@+id/id_find_1_code_edit"
                         style="@style/LoginEtStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="@string/input_login_pw"
-                        android:maxLength="18"
+                        android:hint="@string/edit_code_num"
+                        android:inputType="phone"
+                        android:maxLength="11"
                         android:paddingBottom="@dimen/px63"
                         android:paddingLeft="@dimen/px44"
                         android:paddingTop="@dimen/px63"
-                        android:password="true"
                         android:singleLine="true"
                         android:textColorHint="@color/color_999999"/>
 
                     <ImageView
-                        android:id="@+id/id_login_clear_pw"
+                        android:id="@+id/id_clear_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
                         android:visibility="gone"
-                        android:layout_marginRight="@dimen/px100"
+                        android:layout_marginRight="@dimen/px86"
                         />
+
+
+                    <Button
+                        android:id="@+id/id_find_1_code_btn"
+                        android:layout_width="@dimen/px260"
+                        android:layout_height="@dimen/px86"
+                        android:background="@drawable/shape_btn_blue_d7_selector"
+                        android:text="@string/send_check_code"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        >
+
+                    </Button>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px2"
+                    android:background="@color/color_DDDDDD"/>
             </LinearLayout>
 
 
             <Button
-                android:id="@+id/id_login_btn"
+                android:id="@+id/id_find_1_next_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -184,76 +187,10 @@
                 android:gravity="center"
                 android:minHeight="0dp"
                 android:padding="@dimen/px32"
-                android:text="@string/login_with_space"
+                android:text="@string/forget_next"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/px50"/>
 
-            <LinearLayout
-                android:id="@+id/reg_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/id_login_btn"
-                android:layout_marginTop="@dimen/px86"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/LoginEtStyle"
-                    android:id="@+id/id_login_pw_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/px40"
-                    android:text="@string/login_forgot_psw"
-                    />
-
-                <View
-                    android:id="@+id/v3_view_login_line"
-                    android:layout_width="@dimen/px3"
-                    android:layout_height="@dimen/px38"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/id_login_register_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/px40"
-                    android:text="@string/login_to_register"
-                    style="@style/LoginEtStyle"
-                    />
-
-            </LinearLayout>
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:text="@string/login_third_other"
-                android:textColor="@color/color_999999"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/px194"
-                android:textSize="@dimen/font_34"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/px100"
-                android:paddingLeft="@dimen/px100"
-                android:paddingRight="@dimen/px100"
-                android:layout_marginTop="@dimen/px44"
-                >
-
-                <include
-                    layout="@layout/layout_sns_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"/>
-            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

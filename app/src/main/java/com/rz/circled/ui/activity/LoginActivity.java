@@ -321,11 +321,11 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.id_login_register_btn)
     public void registerBtn() {
-//        CommomUtils.trackUser("注册登录", "注册", "");
-//        Intent intent = new Intent(aty, RegisterActivi.class);
-//        intent.putExtra(IntentKey.KEY_TYPE, loginType);
-////        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
-//        startActivity(intent);
+        CommomUtils.trackUser("注册登录", "注册", "");
+        Intent intent = new Intent(aty, RegisterActivity.class);
+        intent.putExtra(IntentKey.KEY_TYPE, loginType);
+//        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
+        startActivity(intent);
     }
 
     /**
@@ -333,9 +333,9 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.id_login_pw_btn)
     public void forgetPw() {
-//        Intent forget = new Intent(aty, FindPass1Aty.class);
-//        forget.putExtra(IntentKey.KEY_TYPE, loginType);
-//        startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
+        Intent forget = new Intent(aty, FindPwdActivity.class);
+        forget.putExtra(IntentKey.KEY_TYPE, loginType);
+        startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
     }
 
     @Override
@@ -711,11 +711,10 @@ public class LoginActivity extends BaseActivity {
         ZhugeSDK.getInstance().track(getApplicationContext(), "注册登录", eventObject);
     }
 
-//    @OnClick({R.id.logo, R.id.titlebar_main_left_btn})
-//    public void onClick(View view) {
-//        if (view.getId() == R.id.logo) showActivity(this, MainActivity.class);
-//        finish();
-//    }
+    @OnClick(R.id.titlebar_main_left_btn)
+    public void onClick() {
+        finish();
+    }
 
     @Subscribe
     public void onEvent(NotifyEvent notifyEvent) {

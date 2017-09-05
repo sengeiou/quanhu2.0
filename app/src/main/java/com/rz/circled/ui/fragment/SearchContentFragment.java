@@ -43,7 +43,7 @@ public class SearchContentFragment extends BaseFragment {
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(fragment_search_content, null);
+        return inflater.inflate(R.layout.fragment_search_content, null);
     }
 
     @Override

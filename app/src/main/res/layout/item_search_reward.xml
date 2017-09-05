@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/px260"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px165">
+
+
+
+        <ImageView
+            android:id="@+id/iv_search_person"
+            android:layout_width="@dimen/px166"
+            android:layout_height="@dimen/px166"
+            android:layout_alignParentTop="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv_search_person_talent"
+            android:layout_width="@dimen/px50"
+            android:layout_height="@dimen/px50"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@id/iv_search_person"
+            android:src="@mipmap/icon_talent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户昵称"
+            android:layout_toRightOf="@id/iv_search_person"
+            android:textSize="@dimen/font_40"
+            android:textColor="@color/color_999999"
+            android:layout_marginLeft="@dimen/px34"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="赏金 99圈币"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/color_yellow_b39729"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px165"
+        android:paddingLeft="@dimen/px30">
+
+        <TextView
+            android:id="@+id/tv_search_person_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/px20"
+            android:background="@drawable/shape_round_blue_other"
+            android:paddingBottom="@dimen/px10"
+            android:paddingLeft="@dimen/px35"
+            android:paddingRight="@dimen/px35"
+            android:paddingTop="@dimen/px10"
+            android:text="LV 1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_38"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_search_person_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/px50"
+            android:layout_toLeftOf="@id/tv_search_person_lv"
+            android:maxLines="1"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_50"/>
+
+        <TextView
+            android:id="@+id/tv_search_person_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/px50"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_40"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

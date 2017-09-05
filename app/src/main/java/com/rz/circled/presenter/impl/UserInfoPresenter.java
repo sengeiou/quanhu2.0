@@ -78,7 +78,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        RegisterModel model = (RegisterModel) res.getData();
+                        RegisterBean model = (RegisterBean) res.getData();
                         if (model != null) {
                             if (function == null || function.length() == 0 || Type.FUNCTION_CODE_2.equals(function)) {
                                 mView.updateView(model);
