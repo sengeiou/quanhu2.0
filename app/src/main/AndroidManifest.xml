@@ -155,7 +155,22 @@
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity android:name=".ui.activity.AllCirclesAty"/>
+        <activity
+            android:name=".ui.activity.AllCirclesAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MoreFamousActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MoreSubjectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MorePlayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
     </application>
 
 </manifest>
