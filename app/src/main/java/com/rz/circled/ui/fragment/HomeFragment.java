@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
@@ -15,13 +14,10 @@ import com.rz.circled.widget.AutoRollLayout;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import butterknife.BindView;
-
 /**
  * Created by Gsm on 2017/8/29.
  */

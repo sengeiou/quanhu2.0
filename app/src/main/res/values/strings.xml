@@ -42,7 +42,7 @@
     <string name="login">登录</string>
     <string name="request_failed">请求失败</string>
     <string name="next">下一步</string>
-
+    <string name="submit">提交</string>
     <string name="sd_card_un_exist">SD卡不存在</string>
     <string name="video_format">格式: </string>
     <string name="video_time">时长: </string>
@@ -177,6 +177,8 @@
     <string name="private_group_status_4">下架</string>
     <string name="private_group_login_tip">登录才能创建私圈</string>
     <string name="private_group_no_create">还没有创建私圈哦！</string>
+    <string name="private_group_apply_for_success">申请提交成功</string>
+    <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>

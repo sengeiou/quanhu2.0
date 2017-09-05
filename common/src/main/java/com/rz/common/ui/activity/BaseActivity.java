@@ -59,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.transparencyBar(this);
         mContext = this;
         this.aty = this;
         TAG = getClass().getSimpleName();
@@ -88,7 +89,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public abstract void initView();
 
     public abstract void initData();
-
 
     private void initTitleView(LinearLayout llTitle, FrameLayout flTransTitle) {
         if (!needShowTitle()) return;
@@ -467,6 +467,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             tvCommonTitleRight.setVisibility(View.VISIBLE);
             ivCommonRight.setVisibility(View.GONE);
         }
+    }
+
+    public void setTitleRightBackground(int color) {
+        tvCommonTitleRight.setBackgroundColor(color);
     }
 
     /**

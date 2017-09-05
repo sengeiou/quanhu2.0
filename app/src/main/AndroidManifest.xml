@@ -22,7 +22,7 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -173,10 +173,25 @@
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity android:name=".ui.activity.AllCirclesAty"/>
         <activity android:name=".ui.activity.AllPrivateGroupActivity" />
         <activity android:name=".ui.activity.MyPrivateGroupActivity" />
         <activity android:name=".ui.activity.ApplyForCreatePrivateGroupActivity" />
+        <activity
+            android:name=".ui.activity.AllCirclesAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MoreFamousActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MoreSubjectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MorePlayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
     </application>
 
 </manifest>

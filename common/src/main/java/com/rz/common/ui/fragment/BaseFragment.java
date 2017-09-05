@@ -2,6 +2,7 @@ package com.rz.common.ui.fragment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -94,7 +95,28 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
             }
         }
     }
+    /**
+     * 指定Activity跳转，不带参数
+     *
+     * @param claz 组件名
+     */
+    protected void jump(Class<? extends Activity> claz) {
+        jump(claz, null);
+    }
 
+    /**
+     * 指定Activity跳转，带参数
+     *
+     * @param claz 组件名
+     * @param data 参数
+     */
+    protected void jump(Class<? extends Activity> claz, Bundle data) {
+        Intent intent = new Intent(getContext(), claz);
+        if (data != null) {
+            intent.putExtras(data);
+        }
+        startActivity(intent);
+    }
     /**
      * 用户是否登录
      */
