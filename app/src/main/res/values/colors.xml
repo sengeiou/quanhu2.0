@@ -4,9 +4,12 @@
     <color name="colorPrimaryDark">@color/white</color>
     <color name="colorAccent">@color/white</color>
 
-
     <color name="tab_strip_check">@color/color_main</color>
     <color name="tab_strip_uncheck">@color/black</color>
     <color name="tab_color_line">@color/color_main</color>
     <color name="color_CBCBCB">#CBCBCB</color>
+    <color name="color_bfbfbf">#BFBFBF</color>
+    <color name="color_DDDDDD">#DDDDDD</color>
+
+
 </resources>

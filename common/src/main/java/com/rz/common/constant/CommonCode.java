@@ -41,6 +41,11 @@ public interface CommonCode {
          * 没有消息
          */
         int NEWS_EMPTY = 170;
+
+        /**
+         * 数据错误
+         */
+        int ERROR_DATA = 302;
     }
 
     /**

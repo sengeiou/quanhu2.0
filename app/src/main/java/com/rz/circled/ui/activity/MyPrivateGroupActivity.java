@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,9 +13,11 @@ import com.rz.circled.adapter.MyFragmentPagerAdapter;
 import com.rz.circled.adapter.PrivateGroupNavigatorAdapter;
 import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
 import com.rz.circled.ui.fragment.PrivateGroupJoinByMyselfFragment;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.httpapi.bean.TransferBean;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -42,9 +46,14 @@ public class MyPrivateGroupActivity extends BaseActivity {
     @BindView(R.id.viewpager_group)
     ViewPager viewpagerGroup;
 
-    private final String[] TITLES = new String[]{String.format(getString(R.string.user_create_private_group_num), 0), String.format(getString(R.string.user_join_private_group_num), 0)};
-    private List<String> mDataList = Arrays.asList(TITLES);
+    private List<String> mDataList;
     private PrivateGroupNavigatorAdapter groupNavigatorAdapter;
+
+    public static void startMyPrivateGroup(Context context, int index) {
+        Intent i = new Intent(context, MyPrivateGroupActivity.class);
+        i.putExtra(IntentKey.EXTRA_POSITION, index);
+        context.startActivity(i);
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -53,8 +62,10 @@ public class MyPrivateGroupActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        initTabTitle();
         initViewpagerGroup();
         initIndicatorGroup();
+        viewpagerGroup.setCurrentItem(getIntent().getIntExtra(IntentKey.EXTRA_POSITION, 0));
     }
 
     @Override
@@ -84,10 +95,16 @@ public class MyPrivateGroupActivity extends BaseActivity {
         }
     }
 
+    private void initTabTitle() {
+        mDataList = new ArrayList<>();
+        mDataList.add(String.format(getString(R.string.user_create_private_group_num), 0));
+        mDataList.add(String.format(getString(R.string.user_join_private_group_num), 0));
+    }
+
     private void initViewpagerGroup() {
         List<Fragment> mFragments = new ArrayList<>();
-        BaseFragment privateGroupJoinByMyselfFragment = PrivateGroupJoinByMyselfFragment.newInstance(PrivateGroupJoinByMyselfFragment.TYPE_PART);
-        BaseFragment privateGroupCreateByMyselfFragment = PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_PART);
+        BaseFragment privateGroupJoinByMyselfFragment = PrivateGroupJoinByMyselfFragment.newInstance(PrivateGroupJoinByMyselfFragment.TYPE_ALL);
+        BaseFragment privateGroupCreateByMyselfFragment = PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_ALL);
         mFragments.add(privateGroupJoinByMyselfFragment);
         mFragments.add(privateGroupCreateByMyselfFragment);
         viewpagerGroup.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));

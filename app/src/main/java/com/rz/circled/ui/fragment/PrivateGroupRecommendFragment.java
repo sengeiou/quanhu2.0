@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
+import com.rz.circled.ui.activity.AllPrivateGroupActivity;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Utility;
 import com.rz.common.widget.MyListView;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
@@ -36,7 +39,7 @@ import retrofit2.Response;
 public class PrivateGroupRecommendFragment extends BaseFragment {
 
     @BindView(R.id.lv)
-    MyListView lv;
+    ListView lv;
     @BindView(R.id.tv)
     TextView tv;
 
@@ -80,9 +83,14 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                         if (data != null && data.size() > 0) {
                             if (data.size() > 3) {
                                 mAdapter.setData(data.subList(0, 3));
+                                tv.setText(String.format(getString(R.string.private_group_total), data.size()));
+                                tv.setTextColor(getResources().getColor(R.color.color_0185FF));
                             } else {
                                 mAdapter.setData(data);
+                                tv.setText(R.string.private_group_no_more);
+                                tv.setTextColor(getResources().getColor(R.color.font_gray_s));
                             }
+                            Utility.setListViewHeightBasedOnChildren(lv);
                         } else {
                             onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }
@@ -104,10 +112,11 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
             list.add(new PrivateGroupBean());
         }
         mAdapter.setData(list);
-
+        Utility.setListViewHeightBasedOnChildren(lv);
     }
 
     @OnClick(R.id.tv)
     public void onClick() {
+        startActivity(new Intent(getContext(), AllPrivateGroupActivity.class));
     }
 }

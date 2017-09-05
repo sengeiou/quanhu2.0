@@ -131,6 +131,14 @@
         <item name="android:textSize">@dimen/font_50</item>
     </style>
 
+    <style name="DefaultArrowRightStyle">
+        <item name="android:layout_width">8dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:src">@mipmap/ic_right_arrow</item>
+        <item name="android:layout_marginLeft">@dimen/px28</item>
+    </style>
+
     <style name="GridPasswordView"/>
 
     <style name="GridPasswordView.TextView">
@@ -151,6 +159,13 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginTop">1dp</item>
         <item name="android:layout_marginBottom">1dp</item>
+    </style>
+
+    <style name="LoginEtStyle">
+        <item name="android:textColorHint">@color/color_666666</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textSize">@dimen/font_44</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>

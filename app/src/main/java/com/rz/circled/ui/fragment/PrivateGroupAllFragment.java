@@ -14,6 +14,7 @@ import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Utility;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -24,6 +25,7 @@ import com.rz.httpapi.bean.PrivateGroupBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -110,6 +112,7 @@ public class PrivateGroupAllFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
                 super.onResponse(call, response);
+                layoutRefresh.setRefreshing(false);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
@@ -135,8 +138,16 @@ public class PrivateGroupAllFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseData<List<PrivateGroupBean>>> call, Throwable t) {
                 super.onFailure(call, t);
+                layoutRefresh.setRefreshing(false);
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
+
+        List<PrivateGroupBean> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            list.add(new PrivateGroupBean());
+        }
+        mAdapter.setData(list);
+        Utility.setListViewHeightBasedOnChildren(lv);
     }
 }

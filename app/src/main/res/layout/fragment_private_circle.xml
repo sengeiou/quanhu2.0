@@ -16,12 +16,12 @@
             <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="@dimen/px490"
                 android:scrollbars="none" />
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/indicator_banner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:layout_gravity="bottom" />
         </FrameLayout>
@@ -33,33 +33,38 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px160"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:paddingLeft="@dimen/px44"
+                android:paddingRight="@dimen/px44">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/px58"
+                    android:layout_height="@dimen/px58"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_private_group_myself" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px28"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="我的私圈"
-                    android:textColor="@color/font_gray_l"
-                    android:textSize="16sp" />
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_40"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/btn_apply_for"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/px312"
+                    android:layout_height="@dimen/px70"
+                    android:background="@drawable/shape_create_private_group"
+                    android:gravity="center"
                     android:text="申请创建私圈"
                     android:textColor="@color/font_gray_l"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/font_38" />
             </LinearLayout>
 
             <View style="@style/line_horizontal_gray_s" />
@@ -73,9 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/layout_my_create"
@@ -86,28 +89,30 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/px44"
+                            android:paddingRight="@dimen/px44"
+                            android:paddingTop="@dimen/px44">
 
                             <TextView
                                 android:id="@+id/tv_create"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingBottom="12dp"
-                                android:paddingTop="12dp"
+                                android:includeFontPadding="false"
                                 android:text="创建的私圈"
                                 android:textColor="@color/font_gray_xl"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/font_46"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/btn_create_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingBottom="12dp"
-                                android:paddingTop="12dp"
+                                android:includeFontPadding="false"
                                 android:text="查看更多"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
+                                android:textColor="@color/color_0185FF"
+                                android:textSize="@dimen/font_38" />
 
                         </LinearLayout>
 
@@ -116,6 +121,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+
+                    <View
+                        android:id="@+id/line"
+                        style="@style/line_horizontal_gray_s"
+                        android:layout_marginLeft="@dimen/px44"
+                        android:layout_marginRight="@dimen/px44"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/layout_my_join"
@@ -126,28 +138,29 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/px44"
+                            android:paddingRight="@dimen/px44"
+                            android:paddingTop="@dimen/px44">
 
                             <TextView
                                 android:id="@+id/tv_join"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingBottom="12dp"
-                                android:paddingTop="12dp"
+                                android:includeFontPadding="false"
                                 android:text="加入的私圈"
                                 android:textColor="@color/font_gray_xl"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/font_46"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/btn_join_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingBottom="12dp"
-                                android:paddingTop="12dp"
                                 android:text="查看更多"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="14sp" />
+                                android:textColor="@color/color_0185FF"
+                                android:textSize="@dimen/font_38" />
 
                         </LinearLayout>
 
@@ -165,22 +178,23 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="24dp"
-                    android:visibility="visible">
+                    android:paddingBottom="@dimen/px58"
+                    android:paddingTop="@dimen/px116"
+                    android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px360"
                         android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/ic_empty_private_group" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/px58"
                         android:text="您还没有创建和加入私圈"
                         android:textColor="@color/font_gray_m"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/font_44" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
@@ -188,45 +202,59 @@
         <View
             style="@style/line_horizontal_gray_s"
             android:layout_height="10dp"
-            android:background="@color/color_gray_eeeeee" />
+            android:background="@color/color_F8F8F8" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px160"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
+                android:paddingLeft="@dimen/px44"
+                android:paddingRight="@dimen/px44">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/px58"
+                    android:layout_height="@dimen/px58"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_private_group_recommend" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px28"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="推荐私圈"
-                    android:textColor="@color/font_gray_l"
-                    android:textSize="16sp" />
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_40"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/btn_refresh"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="换一换"
-                    android:textColor="@color/font_gray_l"
-                    android:textSize="14sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/px44"
+                        android:layout_height="@dimen/px44"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_private_group_refresh" />
+
+                    <TextView
+                        android:id="@+id/btn_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px14"
+                        android:text="换一批"
+                        android:textColor="@color/font_gray_m"
+                        android:textSize="@dimen/font_38" />
+                </LinearLayout>
             </LinearLayout>
 
             <View style="@style/line_horizontal_gray_s" />
@@ -240,37 +268,37 @@
         <View
             style="@style/line_horizontal_gray_s"
             android:layout_height="10dp"
-            android:background="@color/color_gray_eeeeee" />
+            android:background="@color/color_F8F8F8" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px160"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
+                android:paddingLeft="@dimen/px44"
+                android:paddingRight="@dimen/px44">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/px58"
+                    android:layout_height="@dimen/px58"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/ic_private_group_essence" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px28"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="私圈精华"
-                    android:textColor="@color/font_gray_l"
-                    android:textSize="16sp" />
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_40"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Utility;
 import com.rz.common.widget.MyListView;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 public class PrivateGroupEssenceFragment extends BaseFragment {
 
     @BindView(R.id.lv)
-    MyListView lv;
+    ListView lv;
     @BindView(R.id.tv)
     TextView tv;
 
@@ -83,9 +84,14 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
                         if (data != null && data.size() > 0) {
                             if (data.size() > 3) {
                                 mAdapter.setData(data.subList(0, 3));
+                                tv.setText(String.format(getString(R.string.private_group_total), data.size()));
+                                tv.setTextColor(getResources().getColor(R.color.color_0185FF));
                             } else {
                                 mAdapter.setData(data);
+                                tv.setText(R.string.private_group_no_more);
+                                tv.setTextColor(getResources().getColor(R.color.font_gray_s));
                             }
+                            Utility.setListViewHeightBasedOnChildren(lv);
                         } else {
                             onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }
@@ -102,12 +108,12 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             }
         });
 
-
         List<PrivateGroupBean> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             list.add(new PrivateGroupBean());
         }
         mAdapter.setData(list);
+        Utility.setListViewHeightBasedOnChildren(lv);
     }
 
     @OnClick(R.id.tv)

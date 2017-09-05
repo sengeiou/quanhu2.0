@@ -8,8 +8,11 @@
     <ListView
         android:id="@+id/lv"
         style="@style/DefaultLvStyle"
-        android:clipToPadding="false"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp" />
+        android:layout_weight="1"
+        android:clipToPadding="false" />
 
+    <View
+        style="@style/line_horizontal_gray_s"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44" />
 </LinearLayout>
