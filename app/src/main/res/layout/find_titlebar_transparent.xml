@@ -10,7 +10,7 @@
         android:layout_height="@dimen/title_height">
 
         <ImageView
-            android:id="@+id/all_circle__title_left"
+            android:id="@+id/find_title_left"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
@@ -23,27 +23,24 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/baiquanfencheng"
+            android:text="@string/find"
             android:textColor="@color/color_333"
             android:textSize="@dimen/font_title_size"/>
-        <TextView
-            android:id="@+id/all_circle_title_right"
-            android:layout_width="@dimen/px172"
-            android:layout_height="@dimen/px57"
-            android:background="@drawable/all_circle_shape"
+        <ImageView
+            android:id="@+id/iv_find_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:layout_marginRight="@dimen/app_base_padding"
-            android:text="编辑"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_44"
-          />
+            android:src="@drawable/find_more"
+
+            />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:background="@color/line_gray_s"/>
-
 </LinearLayout>
