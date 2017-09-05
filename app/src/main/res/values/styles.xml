@@ -164,15 +164,15 @@
     <style name="LoginEtStyle">
         <item name="android:textColorHint">@color/color_666666</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:textSize">@dimen/font_40</item>
-        <item name="android:textColor">@color/color_grey_999999</item>
+        <item name="android:textSize">@dimen/font_46</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="RegistEtStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:textSize">@dimen/px26</item>
+        <item name="android:textSize">@dimen/font_46</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/color_666666</item>
     </style>

@@ -9,6 +9,8 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +97,9 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.layout_login_webo)
     TextView layoutLoginWebo;
     private long lastClickTime;
+
+    @BindView(R.id.id_watch_pass)
+    ImageView mImgWatchPw;
 
     /**
      * 手机号
@@ -184,6 +189,12 @@ public class LoginActivity extends BaseActivity {
 //            }
 //        });
         mLoginBtn.setEnabled(true);
+
+        if(mEditPass.getText().length()>0){
+            mImgWatchPw.setVisibility(View.VISIBLE);
+        }else{
+            mImgWatchPw.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -222,6 +233,13 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     mImgClearPass.setVisibility(View.GONE);
                 }
+
+                if(mEditPass.getText().length()>0){
+                    mImgWatchPw.setVisibility(View.VISIBLE);
+                }else{
+                    mImgWatchPw.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -294,6 +312,21 @@ public class LoginActivity extends BaseActivity {
     public void clearPw() {
         mEditPass.setText("");
     }
+
+    @OnClick(R.id.id_watch_pass)
+    public void exchangePwd() {
+        int length = TextUtils.isEmpty(mEditPass.getText()) ? 0 : mEditPass.getText().length();
+        if (mEditPass.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+            mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+        } else {
+            mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+        }
+        mEditPass.setSelection(length);
+
+    }
+
 
     /**
      * 手机号登录操作

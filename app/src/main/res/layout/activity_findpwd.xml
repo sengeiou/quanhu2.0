@@ -56,9 +56,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/forget_pw_title"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/px44"
+                        android:layout_marginTop="@dimen/px86"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/px52"
+                        android:textSize="@dimen/px72"
                         />
 
                 </RelativeLayout>
@@ -108,14 +108,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/px100"
+                        />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,15 +161,12 @@
                         android:text="@string/send_check_code"
                         android:textColor="@android:color/white"
                         android:gravity="center"
+                        android:layout_marginRight="@dimen/px100"
                         >
 
                     </Button>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"/>
             </LinearLayout>
 
 

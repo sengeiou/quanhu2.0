@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:paddingTop="0dp"
     >
 
     <ScrollView
@@ -71,14 +72,11 @@
                         android:layout_marginTop="@dimen/px44"
                         android:layout_below="@id/logo_img"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/px52"
+                        android:textSize="@dimen/font_54"
                         />
 
 
                 </RelativeLayout>
-
-
-
 
             </LinearLayout>
 
@@ -159,6 +157,19 @@
                         android:singleLine="true"
                         android:textColorHint="@color/color_999999"/>
 
+
+                    <ImageView
+                        android:id="@+id/id_watch_pass"
+                        android:layout_width="@dimen/px84"
+                        android:layout_height="@dimen/px60"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="@dimen/px86"
+                        android:padding="@dimen/px10"
+                        android:src="@mipmap/pwd_unsee"
+                        android:visibility="visible"/>
+
                     <ImageView
                         android:id="@+id/id_login_clear_pw"
                         android:layout_width="wrap_content"
@@ -198,13 +209,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/LoginEtStyle"
                     android:id="@+id/id_login_pw_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:paddingRight="@dimen/px40"
                     android:text="@string/login_forgot_psw"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_40"
                     />
 
                 <View
@@ -220,7 +232,8 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="@dimen/px40"
                     android:text="@string/login_to_register"
-                    style="@style/LoginEtStyle"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_40"
                     />
 
             </LinearLayout>

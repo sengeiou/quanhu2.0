@@ -70,7 +70,7 @@
                     android:layout_marginTop="@dimen/px44"
                     android:layout_below="@id/logo_img"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/px52"
+                    android:textSize="@dimen/px72"
                     />
 
 
@@ -245,12 +245,7 @@
                         />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"/>
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/id_regist_btn"

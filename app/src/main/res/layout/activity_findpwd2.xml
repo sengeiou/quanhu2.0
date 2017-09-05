@@ -57,9 +57,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/reset_password"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/px44"
+                        android:layout_marginTop="@dimen/px86"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/px52"
+                        android:textSize="@dimen/px72"
                         />
 
                     <TextView
@@ -71,6 +71,7 @@
                         android:textColor="@color/color_666666"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/px72"
+                        android:textSize="@dimen/font_44"
 
                         />
 
@@ -134,7 +135,7 @@
                     android:layout_marginRight="@dimen/px50"
                     android:padding="@dimen/px10"
                     android:src="@mipmap/pwd_unsee"
-                    android:visibility="visible"/>
+                    android:visibility="gone"/>
 
                 <View
                     android:layout_width="match_parent"

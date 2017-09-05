@@ -136,6 +136,12 @@ public class FindPwdActivity2 extends BaseActivity {
             TextViewUtils.setSpannableStyle(getString(R.string.protocol), 11, 19, mTvProtocol);
         }
 
+        if(mEditPassWEdit.getText().length()>0){
+            mImgWatchPass.setVisibility(View.VISIBLE);
+        }else{
+            mImgWatchPass.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -152,6 +158,12 @@ public class FindPwdActivity2 extends BaseActivity {
                     mImgClearPassW.setVisibility(View.VISIBLE);
                 } else {
                     mImgClearPassW.setVisibility(View.GONE);
+                }
+
+                if(mEditPassWEdit.getText().length()>0){
+                    mImgWatchPass.setVisibility(View.VISIBLE);
+                }else{
+                    mImgWatchPass.setVisibility(View.GONE);
                 }
             }
 

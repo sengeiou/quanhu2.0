@@ -145,6 +145,12 @@ public class RegisterActivity extends BaseActivity {
             }
         });
         TextViewUtils.setSpannableStyle(mTvProtocol);
+
+        if(mEditPassw.getText().length()>0){
+            mImgWatchPw.setVisibility(View.VISIBLE);
+        }else{
+            mImgWatchPw.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -214,6 +220,13 @@ public class RegisterActivity extends BaseActivity {
                 } else {
                     mImgClearPw.setVisibility(View.GONE);
                 }
+
+                if(mEditPassw.getText().length()>0){
+                    mImgWatchPw.setVisibility(View.VISIBLE);
+                }else{
+                    mImgWatchPw.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
