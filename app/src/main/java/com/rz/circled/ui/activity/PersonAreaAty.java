@@ -179,12 +179,29 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position > 0) {
-            Intent intent = new Intent(this, PersonSecondAreaAty.class);
-            Bundle data = new Bundle();
-            data.putSerializable("areaModel", areaList.get(position - 1));
-            data.putString(IntentKey.EXTRA_TYPE, keyType);
-            intent.putExtras(data);
-            startActivityForResult(intent, REQUEST_CODE);
+            if (areaList.get(position - 1).children != null && areaList.get(position - 1).children.size() > 0) {
+                Intent intent = new Intent(this, PersonSecondAreaAty.class);
+                Bundle data = new Bundle();
+                data.putSerializable("areaModel", areaList.get(position - 1));
+                data.putString(IntentKey.EXTRA_TYPE, keyType);
+                intent.putExtras(data);
+                startActivityForResult(intent, REQUEST_CODE);
+            } else {
+                AreaModel areaModel = areaList.get(position - 1);
+                String paramas = areaModel.name + " " + areaModel.children.get(position - 1).name;
+                paramas = paramas.trim();
+                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+                    //通用发布过来
+                    Intent mIntent = new Intent();
+                    mIntent.putExtra(IntentKey.EXTRA_POSITION, paramas);
+                    mIntent.putExtra(IntentKey.EXTRA_ID, areaModel.children.get(position - 1).code);
+                    setResult(RESULT_CODE1, mIntent);
+                    finish();
+                } else {
+                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas);
+                }
+            }
+
         } else if (position == 0) {
             paramas = "";
             /**
@@ -245,16 +262,19 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
             ArrayList<AreaModel> cacheList = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                JSONArray array1 = obj.getJSONArray("cities");
+                JSONArray array1 = obj.getJSONArray("children");
 
                 AreaModel model = new AreaModel();
                 model.name = obj.getString("name");
-                model.cities = new ArrayList<>();
+                model.code = obj.getString("code");
+                model.children = new ArrayList<>();
 
                 for (int j = 0; j < array1.length(); j++) {
                     AreaModel.CityModel model1 = new AreaModel.CityModel();
-                    model1.name = (String) array1.get(j);
-                    model.cities.add(model1);
+                    JSONObject o = (JSONObject) array1.get(j);
+                    model1.name = o.getString("name");
+                    model1.code = o.getString("code");
+                    model.children.add(model1);
                 }
                 cacheList.add(model);
 
@@ -275,9 +295,9 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                 AreaModel model = areaList.get(ii);
                 if (model.name.equals(fiters[0])) model.isChecked = true;
 
-                for (int jj = 0; jj < model.cities.size(); jj++) {
-                    if (model.cities.get(jj).name.equals(fiters[1])) {
-                        model.cities.get(jj).isChecked = true;
+                for (int jj = 0; jj < model.children.size(); jj++) {
+                    if (model.children.get(jj).name.equals(fiters[1])) {
+                        model.children.get(jj).isChecked = true;
                     }
                 }
 

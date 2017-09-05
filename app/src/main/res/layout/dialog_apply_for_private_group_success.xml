@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_pop_white_btn"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px72"
+        android:text="@string/private_group_apply_for_success"
+        android:textColor="@color/color_f5cd45"
+        android:textSize="@dimen/font_54"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/DefaultTvStyle"
+        android:layout_marginBottom="@dimen/px58"
+        android:layout_marginTop="@dimen/px58"
+        android:singleLine="false"
+        android:text="@string/private_group_apply_for_tip"
+        android:textSize="@dimen/font_46" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px4"
+        android:background="@color/color_EEEEEE" />
+
+    <TextView
+        android:id="@+id/id_set_pay_pw_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px120"
+        android:background="@drawable/shape_round_bottom_gray"
+        android:clickable="true"
+        android:text="@string/define"
+        android:textColor="@color/font_gray_l"
+        android:textSize="@dimen/font_46" />
+
+</LinearLayout>

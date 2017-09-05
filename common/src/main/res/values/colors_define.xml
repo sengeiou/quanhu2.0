@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimary">@color/color_main</color>
     <color name="colorPrimaryDark">@color/white</color>
     <color name="colorAccent">@color/color_main</color>
     <color name="statusBarColor">@color/transparent</color>
-    <color name="windowBackground">@color/white</color>
+    <color name="windowBackground">@color/app_bg_gray_common</color>
     <color name="textColorPrimary">@color/font_gray_l</color>
 
     <!--app主題色-->
@@ -28,8 +28,8 @@
     <!--浅灰色分割线-->
     <color name="line_gray_s">@color/color_e7e7e7</color>
 
-    <color name="color_main">@color/color_315</color>
-    <color name="color_main_on">@color/color_324</color>
+    <color name="color_main">@color/color_0085ff</color>
+    <color name="color_main_on">@color/color_0175ff</color>
 
     <color name="color_light_gray">@color/color_ccc</color>
 
@@ -37,7 +37,7 @@
     <color name="tab_gray">@color/color_666</color>
 
     <!--底部导航栏字体蓝色-->
-    <color name="tab_blue">@color/color_183</color>
+    <color name="tab_blue">@color/color_0085ff</color>
     <!--蓝色字体-->
     <color name="font_color_blue">@color/color_0085ff</color>
     <!--通用背景色-->
