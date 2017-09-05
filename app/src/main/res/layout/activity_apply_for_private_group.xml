@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px14"
                     android:text="个人信息"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/font_color_blue"
                     android:textSize="@dimen/font_46" />
             </LinearLayout>
 
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px14"
                     android:text="私圈信息"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/font_color_blue"
                     android:textSize="@dimen/font_46" />
             </LinearLayout>
 
@@ -347,7 +347,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《私圈创建协议》"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/font_color_blue"
                 android:textSize="@dimen/font_38" />
         </LinearLayout>
     </LinearLayout>
