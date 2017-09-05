@@ -59,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.transparencyBar(this);
         mContext = this;
         this.aty = this;
         TAG = getClass().getSimpleName();
@@ -70,7 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
         initSupportSwipeBack();
         initTint();
-        StatusBarUtils.setDarkStatusIcon(this, false);
+        StatusBarUtils.setDarkStatusIcon(this, true);
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         initTitleView(llTitle, flTransTitle);
@@ -88,7 +89,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public abstract void initView();
 
     public abstract void initData();
-
 
     private void initTitleView(LinearLayout llTitle, FrameLayout flTransTitle) {
         if (!needShowTitle()) return;
@@ -468,7 +468,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             ivCommonRight.setVisibility(View.GONE);
         }
     }
-    public void setTitleRightBackground(int color){
+
+    public void setTitleRightBackground(int color) {
         tvCommonTitleRight.setBackgroundColor(color);
     }
 
