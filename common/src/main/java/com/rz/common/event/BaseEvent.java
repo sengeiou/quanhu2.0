@@ -31,6 +31,11 @@ public class BaseEvent {
         this.data = data;
     }
 
+    public BaseEvent(){
+
+    }
+
+
     @Override
     public String toString() {
         return "BaseEvent{" +

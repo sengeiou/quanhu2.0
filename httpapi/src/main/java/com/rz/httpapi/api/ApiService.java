@@ -114,7 +114,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.LOGIN)
-    Observable<ResponseData<UserInfoBean>> login(
+    Call<ResponseData<UserInfoBean>> login(
             @Field("act") int act,
             @Field("phone") String phone,
             @Field("password") String password
