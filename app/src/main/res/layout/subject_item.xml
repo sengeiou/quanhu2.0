@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="@dimen/px520"
                 android:layout_marginLeft="@dimen/font_34"
-                android:background="@drawable/find_button_com_shape"
-              android:layout_height="match_parent">
+                android:background="@drawable/hot_subject_bg"
+              android:layout_height="wrap_content">
 <ImageView
     android:id="@+id/topic_iv"
     android:layout_width="@dimen/px180"
     android:layout_height="@dimen/px200"
-    android:src="@drawable/tiananmen"/>
+    android:src="@drawable/default_subject_bg"/>
     <TextView
         android:id="@+id/topic_name"
         android:layout_width="@dimen/px300"
