@@ -1,4 +1,4 @@
-include ':app', ':svprogresshub', ':umshare'
+include ':app'
 include 'common'
 include 'httpapi'
 include 'jsbridge'

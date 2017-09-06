@@ -671,7 +671,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     //
 //
-//    public void getCircleStats(String userId) {
+    public void getCircleStats(String userId) {
 //        Call<ResponseData<CircleStatsModel>> call = null;
 //        call = mUserService.getCircleStats(userId);
 //        CallManager.add(call);
@@ -701,7 +701,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //                //发送验证码失败
 //            }
 //        });
-//    }
+    }
 //
 //    /**
 //     * 转发统计

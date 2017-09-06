@@ -216,6 +216,27 @@
             android:name=".ui.activity.RechargePayAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.PictureManagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.PersionNickActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.PersonSexActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.PersonBriefAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
     </application>
 
 </manifest>

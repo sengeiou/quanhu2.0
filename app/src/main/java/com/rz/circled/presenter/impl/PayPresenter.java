@@ -37,9 +37,6 @@ import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.lang.ref.WeakReference;
 
@@ -173,22 +170,22 @@ public class PayPresenter extends AbsPresenter {
      */
     public void wxPay(PaySignModel.Sign sign) {
         //TODO 微信支付
-        if (activity != null) {
-            IWXAPI iwxapi = WXAPIFactory.createWXAPI(activity, Constants.WeiXin.APP_ID);
-
-            iwxapi = WXAPIFactory.createWXAPI(activity, null);
-            iwxapi.registerApp(Constants.WeiXin.APP_ID);
-
-            PayReq req = new PayReq();
-            req.appId = sign.appid;
-            req.partnerId = sign.partnerid;
-            req.prepayId = sign.prepayid;
-            req.nonceStr = sign.noncestr;
-            req.timeStamp = sign.timestamp;
-            req.packageValue = "Sign=WXPay";
-            req.sign = sign.sign;
-            iwxapi.sendReq(req);
-        }
+//        if (activity != null) {
+//            IWXAPI iwxapi = WXAPIFactory.createWXAPI(activity, Constants.WeiXin.APP_ID);
+//
+//            iwxapi = WXAPIFactory.createWXAPI(activity, null);
+//            iwxapi.registerApp(Constants.WeiXin.APP_ID);
+//
+//            PayReq req = new PayReq();
+//            req.appId = sign.appid;
+//            req.partnerId = sign.partnerid;
+//            req.prepayId = sign.prepayid;
+//            req.nonceStr = sign.noncestr;
+//            req.timeStamp = sign.timestamp;
+//            req.packageValue = "Sign=WXPay";
+//            req.sign = sign.sign;
+//            iwxapi.sendReq(req);
+//        }
     }
 
     /**

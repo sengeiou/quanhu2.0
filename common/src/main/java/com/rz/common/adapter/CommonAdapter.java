@@ -2,6 +2,7 @@ package com.rz.common.adapter;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -22,6 +23,13 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     public CommonAdapter(Context context, int layoutId) {
         mContext = context;
         mLayoutId = layoutId;
+    }
+
+    public CommonAdapter(Context context, List<T> mDatas, int itemLayoutId) {
+        this.mContext = context;
+        this.mData = mDatas;
+        this.mLayoutId = itemLayoutId;
+        checkMap = new SparseBooleanArray();
     }
 
     /**

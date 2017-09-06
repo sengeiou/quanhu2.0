@@ -27,6 +27,7 @@
             android:src="@mipmap/icon_talent"/>
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="用户昵称"
@@ -47,13 +48,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="8dp"
-            android:id="@+id/textView2" />
+            android:id="@+id/tv_reward" />
 
 
     </RelativeLayout>
 
 
     <TextView
+        android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px26"
@@ -69,7 +71,7 @@
         android:paddingLeft="@dimen/px30">
 
         <TextView
-            android:id="@+id/tv_search_person_lv"
+            android:id="@+id/tv_search_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px20"
@@ -84,12 +86,12 @@
             />
 
         <TextView
-            android:id="@+id/tv_search_person_name"
+            android:id="@+id/tv_join_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px20"
             android:layout_marginRight="@dimen/px50"
-            android:layout_toRightOf="@id/tv_search_person_lv"
+            android:layout_toRightOf="@id/tv_search_time"
             android:maxLines="1"
             android:textColor="@color/font_gray_xl"
             android:textSize="@dimen/font_40"
@@ -97,7 +99,7 @@
             />
 
         <TextView
-            android:id="@+id/tv_search_person_info"
+            android:id="@+id/tv_search_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/px50"

@@ -203,4 +203,16 @@
         <item name="android:gravity">left|center_vertical</item>
     </style>
 
+    <style name="MineMeTvStyle" parent="DefaultTvStyle">
+        <item name="android:paddingTop">@dimen/px35</item>
+        <item name="android:paddingBottom">@dimen/px35</item>
+        <item name="android:textSize">@dimen/px40</item>
+    </style>
+
+    <style name="SettingImgStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">matrix</item>
+    </style>
+
 </resources>
