@@ -156,14 +156,14 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.id_layout_person_photo:
                 trackUser("我的", "个人资料二级界面", "头像");
-//                intent.setClass(this, PictureManagerAty.class);
-//                intent.putExtra("isSingle", true);
-//                startActivityForResult(intent, REQUEST_CODE);
+                intent.setClass(this, PictureManagerActivity.class);
+                intent.putExtra("isSingle", true);
+                startActivityForResult(intent, REQUEST_CODE);
                 popupView.showAtLocPop(root, POPUP_ITEMS);
                 break;
             case R.id.id_layout_person_nick:
                 trackUser("我的", "个人资料二级界面", "昵称");
-//                intent.setClass(this, PersonNickAty.class);
+                intent.setClass(this, PersionNickActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_scan:
@@ -171,7 +171,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.id_layout_person_sex:
                 trackUser("我的", "个人资料二级界面", "性别");
-//                intent.setClass(this, PersonSexAty.class);
+                intent.setClass(this, PersonSexActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_area:
@@ -184,7 +184,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 data.putString("content", singatrue.getText().toString());
                 data.putString(TYPE, getString(R.string.mine_person_sign));
                 intent.putExtras(data);
-//                intent.setClass(this, PersonBriefAty.class);
+                intent.setClass(this, PersonBriefAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.id_layout_person_brief:
@@ -192,7 +192,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 data.putString("content", desc.getText().toString());
                 data.putString(TYPE, getString(R.string.mine_person_brief));
                 intent.putExtras(data);
-//                intent.setClass(this, PersonBriefAty.class);
+                intent.setClass(this, PersonBriefAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             default:

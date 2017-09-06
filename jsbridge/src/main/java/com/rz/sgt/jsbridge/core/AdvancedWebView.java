@@ -48,7 +48,6 @@ import android.webkit.WebStorage.QuotaUpdater;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
@@ -1469,7 +1468,7 @@ public class AdvancedWebView extends WebView {
         return mCustomWebChromeClient != null && mCustomWebChromeClient.isVideoFullscreen();
     }
 
-    private String[] jsUrlItems = {"app.1abf3370.9c0130bb.js", "app.d2e061f1.css", "common.1abf3370.js", "common.aeac3405.css", "vendor.47798442.js"};
+//    private String[] jsUrlItems = {"app.1abf3370.9c0130bb.js", "app.d2e061f1.css", "common.1abf3370.js", "common.aeac3405.css", "vendor.47798442.js"};
 
     private WebResourceResponse reloadUrl(String url) {
         //text/html  html
@@ -1480,24 +1479,25 @@ public class AdvancedWebView extends WebView {
         //image/jpeg
         //image/png
         //image/gif
-        String localUrl = null;
-        String mimeType = "text/javascript";
-        for (String jsUrlItem : jsUrlItems) {
-            if (url.contains(jsUrlItem)) {
-                localUrl = jsUrlItem;
-                if (url.endsWith(".css"))
-                    mimeType = "text/css";
-            }
-        }
-        if (localUrl != null) {
-            try {
-                InputStream stream = getContext().getAssets().open(localUrl);
-                return new WebResourceResponse(mimeType, "UTF-8", stream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//        String localUrl = null;
+//        String mimeType = "text/javascript";
+//        for (String jsUrlItem : jsUrlItems) {
+//            if (url.contains(jsUrlItem)) {
+//                localUrl = jsUrlItem;
+//                if (url.endsWith(".css"))
+//                    mimeType = "text/css";
+//            }
+//        }
+//        if (localUrl != null) {
+//            try {
+//                InputStream stream = getContext().getAssets().open(localUrl);
+//                return new WebResourceResponse(mimeType, "UTF-8", stream);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        } else
             return null;
-        } else return null;
     }
 
 }

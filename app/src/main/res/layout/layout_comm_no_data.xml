@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/id_refresh_status_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_background"
+                android:visibility="gone">
+
+    <TextView
+        android:id="@+id/id_refresh_status_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/px15"
+        android:textColor="@color/font_gray_xl"
+        android:textSize="@dimen/px42"/>
+</RelativeLayout>

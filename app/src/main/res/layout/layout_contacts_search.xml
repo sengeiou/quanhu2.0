@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_F5F5F5"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/id_search_key_rela"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px21"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:layout_marginTop="@dimen/px21"
+        android:background="@drawable/press_white_e3e3e3_sel"
+        android:paddingBottom="@dimen/px21"
+        android:paddingTop="@dimen/px21">
+
+        <EditText
+            android:id="@+id/id_search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px21"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/search_key_icon"
+            android:drawablePadding="@dimen/px24"
+            android:hint="@string/search_key3"
+            android:imeOptions="actionSearch"
+            android:inputType="textImeMultiLine"
+            android:lines="1"
+            android:textColor="@color/color_000000"
+            android:textColorHint="@color/color_666666"
+            android:textSize="@dimen/font_50"/>
+
+        <ImageView
+            android:id="@+id/id_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px30"
+            android:src="@drawable/ic_clear"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <include layout="@layout/layout_comm_no_data"/>
+
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/id_swipyRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/id_search_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@null"/>
+
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+
+</LinearLayout>

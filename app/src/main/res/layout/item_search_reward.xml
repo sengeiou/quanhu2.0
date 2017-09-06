@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px165">
+
+
+        <ImageView
+            android:id="@+id/iv_search_person"
+            android:layout_width="@dimen/px166"
+            android:layout_height="@dimen/px166"
+            />
+
+        <ImageView
+            android:id="@+id/iv_search_person_talent"
+            android:layout_width="@dimen/px50"
+            android:layout_height="@dimen/px50"
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@id/iv_search_person"
+            android:src="@mipmap/icon_talent"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户昵称"
+            android:layout_toRightOf="@id/iv_search_person"
+            android:textSize="@dimen/font_40"
+            android:textColor="@color/color_999999"
+            android:layout_marginLeft="@dimen/px34"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="赏金 99圈币"
+            android:textColor="@color/color_yellow_b39729"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/tv_reward" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px26"
+        android:text="悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/px26"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/px30">
+
+        <TextView
+            android:id="@+id/tv_search_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px20"
+            android:paddingBottom="@dimen/px10"
+            android:paddingLeft="@dimen/px35"
+            android:paddingRight="@dimen/px35"
+            android:text="还剩23小时"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_40"
+            android:visibility="visible"
+            android:layout_alignParentLeft="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_join_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px20"
+            android:layout_marginRight="@dimen/px50"
+            android:layout_toRightOf="@id/tv_search_time"
+            android:maxLines="1"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_40"
+            android:text="3人已参与"
+            />
+
+        <TextView
+            android:id="@+id/tv_search_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/px50"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_40"
+            android:layout_alignParentRight="true"
+            android:text="进行中"
+            android:layout_marginTop="@dimen/px20"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

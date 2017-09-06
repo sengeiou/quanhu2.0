@@ -10,8 +10,10 @@ import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
+import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,7 +45,7 @@ public class SearchContentFragment extends BaseFragment {
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(fragment_search_content, null);
+        return inflater.inflate(R.layout.fragment_search_content, null);
     }
 
     @Override
@@ -77,6 +79,32 @@ public class SearchContentFragment extends BaseFragment {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
+
+//            searchPresenter.searchPerson();
+        }
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (null != t) {
+            if (t instanceof UserInfoBean) {
+                UserInfoBean model = (UserInfoBean) t;
+                if (null != model) {
+
+//                    NotifyEvent notifyEvent = new NotifyEvent("register", model, true);
+//                    EventBus.getDefault().post(notifyEvent);
+
+                    /**
+                     * 更新界面，更新adapter数据
+                     */
+
+                }
+            } else {
+                BaseEvent event = new BaseEvent();
+                event.info = "1";
+                EventBus.getDefault().post(event);
+            }
         }
     }
 

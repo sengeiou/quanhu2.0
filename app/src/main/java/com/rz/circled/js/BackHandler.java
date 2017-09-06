@@ -25,8 +25,6 @@ public class BackHandler extends ServerHandler {
 
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
-        String simpleName = mActivity.getClass().getSimpleName();
-        if (simpleName.equals("MainActivity")) return;
         mActivity.finish();
     }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector">
+
+    <TextView
+        android:id="@+id/id_alpha_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px88"
+        android:background="@color/color_background"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/px44"
+        android:textColor="@color/color_74"
+        android:textSize="@dimen/font_44"/>
+
+    <ImageView
+        android:id="@+id/id_friends_img"
+        android:layout_width="@dimen/px100"
+        android:layout_height="@dimen/px100"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/id_alpha_txt"
+        android:layout_marginBottom="@dimen/px40"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px30"
+        android:layout_marginTop="@dimen/px40"
+        android:background="@drawable/ic_default_avatar_personal"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/id_friends_name"
+        style="@style/DefaultTvStyle"
+        android:layout_below="@+id/id_alpha_txt"
+        android:layout_marginTop="@dimen/px60"
+        android:layout_toRightOf="@+id/id_friends_img"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/px45"/>
+
+    <!--<View-->
+    <!--style="@style/DefaultHLineStyle"-->
+    <!--android:layout_below="@+id/id_friends_img"-->
+    <!--android:layout_marginLeft="@dimen/px20"-->
+    <!--android:layout_marginRight="@dimen/px20" />-->
+</RelativeLayout>

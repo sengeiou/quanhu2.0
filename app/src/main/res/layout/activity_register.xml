@@ -19,9 +19,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px518"
+            android:layout_height="@dimen/px594"
             android:background="@mipmap/background_lite"
             android:orientation="vertical"
+            android:paddingTop="@dimen/title_bar_padding_top"
             >
 
             <ImageView
@@ -70,7 +71,7 @@
                     android:layout_marginTop="@dimen/px44"
                     android:layout_below="@id/logo_img"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/px52"
+                    android:textSize="@dimen/px72"
                     />
 
 
@@ -119,7 +120,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/px100"
+                        />
 
                 </LinearLayout>
 
@@ -148,7 +151,7 @@
                             android:layout_width="@dimen/px42"
                             android:layout_height="@dimen/px56"
                             android:layout_marginLeft="@dimen/px66"
-                            android:src="@mipmap/ic_login_phone"/>
+                            android:src="@mipmap/icon_code"/>
 
                         <EditText
                             android:id="@+id/id_regist_code_edit"
@@ -183,6 +186,8 @@
                             android:background="@drawable/shape_btn_blue_d7_selector"
                             android:text="@string/send_check_code"
                             android:textColor="@android:color/white"
+                            android:gravity="center"
+                            android:layout_marginRight="@dimen/px100"
                             >
 
                         </Button>
@@ -226,7 +231,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="@dimen/px22"
+                        android:layout_marginRight="@dimen/px86"
                         android:padding="@dimen/px10"
                         android:src="@mipmap/pwd_unsee"
                         android:visibility="visible"/>
@@ -236,18 +241,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/px100"
+                        />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"/>
             </LinearLayout>
 
-
             <Button
-                android:id="@+id/id_login_btn"
+                android:id="@+id/id_regist_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -264,6 +266,7 @@
 
 
             <TextView
+                android:id="@+id/find_pass2_protocol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/protocol"
