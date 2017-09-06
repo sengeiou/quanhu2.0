@@ -16,5 +16,8 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
     @Override
     public void convert(ViewHolder helper, Object item, int position) {
 
+
+
+
     }
 }

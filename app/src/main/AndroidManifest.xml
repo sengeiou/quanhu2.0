@@ -35,6 +35,20 @@
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.FindPwdActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.FindPwdActivity2"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
 
         <activity
             android:name=".ui.activity.WebContainerActivity"

@@ -10,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jakewharton.rxbinding.view.RxView;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.MoreFamousActivity;
-import com.rz.circled.ui.activity.MorePlayActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
@@ -33,10 +34,12 @@ import com.rz.httpapi.bean.HotSubjectModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 import static com.rz.circled.widget.CommomUtils.trackUser;
 
@@ -59,6 +62,10 @@ public class FindFragment extends BaseFragment {
     TextView mTvSubjectMore;
     @BindView(R.id.tv_activity_more)
     TextView mTvActivityMore;
+    @BindView(R.id.layout_content)
+    FrameLayout mLayoutContent;
+    @BindView(R.id.iv_activity)
+    ImageView mIvActivity;
     private List<CircleEntrModle> circleEntrModleList = new ArrayList();
     private CirclePresenter mPresenter;
     private List<FamousModel> famousList = new ArrayList<>();
@@ -126,6 +133,7 @@ public class FindFragment extends BaseFragment {
         initFamous();
         initSubject();
         initActivity();
+        initTitleBar();
         mFindGv.setAdapter(findAdapter);
         mFindGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -137,6 +145,23 @@ public class FindFragment extends BaseFragment {
                 } else {
                     WebContainerActivity.startActivity(mActivity, circleEntrModleList.get(position).circleUrl);
                 }
+            }
+        });
+    }
+
+    private void initTitleBar() {
+        View v = View.inflate(getActivity(), R.layout.find_titlebar_transparent, null);
+        mLayoutContent.addView(v);
+        RxView.clicks(v.findViewById(R.id.find_title_left)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                Toasty.info(mActivity,"这里不能点啊").show();
+            }
+        });
+        RxView.clicks(v.findViewById(R.id.iv_find_more)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+
             }
         });
     }
@@ -275,7 +300,7 @@ public class FindFragment extends BaseFragment {
         return rootView;
     }
 
-    @OnClick({R.id.tv_famous_more, R.id.tv_subject_more, R.id.tv_activity_more,R.id.btn_resource, R.id.btn_quanle})
+    @OnClick({R.id.tv_famous_more, R.id.tv_subject_more, R.id.tv_activity_more, R.id.btn_resource, R.id.btn_quanle})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_famous_more:
@@ -285,13 +310,13 @@ public class FindFragment extends BaseFragment {
                 jump(MoreSubjectActivity.class);
                 break;
             case R.id.tv_activity_more:
-                jump(MorePlayActivity.class);
+//                jump(MorePlayActivity.class);
                 break;
             case R.id.btn_resource:
-                Toasty.info(mActivity,"点啊").show();
+                Toasty.info(mActivity, "点啊").show();
                 break;
             case R.id.btn_quanle:
-                Toasty.info(mActivity,"点啊").show();
+                Toasty.info(mActivity, "点啊").show();
                 break;
         }
     }

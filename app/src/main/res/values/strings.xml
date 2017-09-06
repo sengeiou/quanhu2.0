@@ -19,6 +19,7 @@
     <string name="exit_success">退出成功</string>
     <string name="exit_loading">正在退出...</string>
     <string name="check_loading">正在提交...</string>
+    <string name="edit_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890</string>
 
 
     <string name="tab_home">首页</string>
@@ -230,9 +231,10 @@
     <string name="phone_num">手机号</string>
     <string name="send_check_code">发送验证码</string>
     <string name="login_loading">正在登录，请稍后</string>
-    <string name="no_install_wx">没有安装微信客户端</string>
+    <string name="no_install_wx">没有安装微信客户端</string>third_
     <string name="v3_login_forgot_psw">忘记密码&#160;?</string>
     <string name="v3_login_to_register">现在注册&#160;></string>
+    <string name="login_third_other">第三方登录</string>
 
 
     <!--注册-->
@@ -306,10 +308,15 @@
     <string name="pay_check_explain">以验证身份</string>
     <string name="safe_info_note">为保障账户安全，请及时设置安全保护信息</string>
     <string name="forget_password">忘记密码</string>
+    <string name="reset_password">重设密码</string>
+    <string name="reset_title">重设密码后可用手机号登录</string>
+
 
     <string name="exit_intr">退出会清除已上传的视频资源</string>
     <string name="look_again">再看看</string>
     <string name="forward_to_make_money">转发去赚钱</string>
+    <string name="search_keyword_hint">搜个关键词试试看</string>
+    <string name="find">发现</string>
 
     <string name="create_team_add_icon">添加私圈头像</string>
     <string name="create_team_change_icon">更换私圈头像</string>

@@ -42,6 +42,8 @@ public class MoreSubjectActivity extends BaseActivity {
             public void convert(ViewHolder helper, HotSubjectModel item) {
                helper.getView(R.id.ll_more_head).setVisibility(View.VISIBLE);
                helper.getView(R.id.ll_more_foot).setVisibility(View.VISIBLE);
+               helper.getView(R.id.acitvity_des).setVisibility(View.VISIBLE);
+
 
             }
         });
