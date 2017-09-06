@@ -129,7 +129,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText("注册");
-        fromPage = getIntent().getIntExtra(IntentKey.KEY_PAGE, Constants.DEFAULTVALUE);
+        fromPage = getIntent().getIntExtra(IntentKey.EXTRA_PAGE, Constants.DEFAULTVALUE);
         if (fromPage == IntentCode.Register.REGISTER_RESULT_CODE) {
 //            mAgreeLL.setVisibility(View.GONE);
             setTitleText("绑定手机号");

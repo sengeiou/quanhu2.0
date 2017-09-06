@@ -159,7 +159,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra(IntentKey.KEY_BOOLEAN, true);
+        intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
         setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
         finish();
     }
@@ -246,7 +246,7 @@ public class LoginActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
+        loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
 //    /**
@@ -356,7 +356,7 @@ public class LoginActivity extends BaseActivity {
     public void registerBtn() {
         CommomUtils.trackUser("注册登录", "注册", "");
         Intent intent = new Intent(aty, RegisterActivity.class);
-        intent.putExtra(IntentKey.KEY_TYPE, loginType);
+        intent.putExtra(IntentKey.EXTRA_TYPE, loginType);
 //        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
         startActivity(intent);
     }
@@ -367,7 +367,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.id_login_pw_btn)
     public void forgetPw() {
         Intent forget = new Intent(aty, FindPwdActivity.class);
-        forget.putExtra(IntentKey.KEY_TYPE, loginType);
+        forget.putExtra(IntentKey.EXTRA_TYPE, loginType);
         startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
     }
 

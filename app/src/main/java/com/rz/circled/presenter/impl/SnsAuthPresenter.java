@@ -3,7 +3,6 @@ package com.rz.circled.presenter.impl;
 import android.content.Context;
 import android.os.Handler;
 import com.rz.circled.R;
-import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -80,10 +79,10 @@ public class SnsAuthPresenter extends GeneralPresenter {
      */
     public void loginRequest(String phone, String pw) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonConstants.ERROR_NET, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonConstants.DATA_LOADING, mContext.getString(R.string.is_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
 
         Call<ResponseData<UserInfoBean>> call = mUserService.login(1003, phone, pw);
         CallManager.add(call);
@@ -98,7 +97,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
                         if (null != user) {
                             //登录成功
                             Session.setLoginWay(Type.LOGIN_PHONE);
-                            mView.onLoadingStatus(CommonConstants.DATA_SUCCESS_FULL, mContext.getString(R.string.login_success));
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.login_success));
                             mView.updateView(user);
                          /*   Set<String> sset = new HashSet<String>();
                             sset.add("testTag");
@@ -113,34 +112,27 @@ public class SnsAuthPresenter extends GeneralPresenter {
                         }
                     } else {
 //                        if (HandleRetCode.handler(mContext, res)) {
-//                            //登录失败
-//                            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
-//                                }
-//                            }, 2000);
-//                            return;
-//                        }
-
+                            //登录失败
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
                                 }
                             }, 2000);
                             return;
+//                        }
+
                     }
                 }
                 //登录失败
-                mView.onLoadingStatus(CommonConstants.ERROR_DATA, mContext.getString(R.string.login_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
             }
 
             @Override
             public void onFailure(Call<ResponseData<UserInfoBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 //登录失败
-                mView.onLoadingStatus(CommonConstants.ERROR_DATA, mContext.getString(R.string.login_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
             }
         });
     }
