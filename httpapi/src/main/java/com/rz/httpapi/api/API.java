@@ -79,6 +79,44 @@ public interface API {
     /**
      * 举报
      */
-    public static final String REPORT = "v2/reported/save";
+    String REPORT = "v2/reported/save";
+
+
+    /**
+     * 圈子成员列表
+     */
+    String CIRCLE_MEMBER = "v3/circle/getCircleMember";
+
+    /**
+     * 圈子收益统计
+     */
+    String CLUB_STATS = "v2/collection/getClubStatistics";
+
+    /**
+     * 圈子转发详情（圈子列表点开）
+     */
+    String TRANSFER_CLUB_DETAIL = "v2/collection/transferClubDetail";
+
+    /**
+     * 作品标签列表
+     */
+    String OPUS_TAG = "v2/opus/getTags";
+
+    /**
+     * 作品标签搜索
+     */
+    String OPUS_TAGINFO_LIST = "v2/opus/getTagsInfoByList";
+
+    /**
+     * 作品列表
+     */
+    String OPUS_LIST = "v2/opus/list";
+
+
+    /**
+     * 圈子图片
+     */
+    String CIRCLE_IMGS = "v2/collection/getCustImg";
+
 
 }

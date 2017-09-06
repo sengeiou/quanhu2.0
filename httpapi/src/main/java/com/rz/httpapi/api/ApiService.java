@@ -5,13 +5,23 @@ import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
+import com.rz.httpapi.bean.BaseInfo;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.CircleMemberModel;
+import com.rz.httpapi.bean.ClubStats;
 import com.rz.httpapi.bean.FamousModel;
+import com.rz.httpapi.bean.FriendInfoModel;
+import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.LoginWayBean;
+import com.rz.httpapi.bean.OpusData;
+import com.rz.httpapi.bean.OpusTag;
+import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
+import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.Ticket;
+import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
@@ -461,5 +471,267 @@ public interface ApiService {
             @Field("act") int act,
             @Field("custId") String custId
     );
+
+
+    /**
+     * 圈子成员列表
+     *
+     * @param appId 圈子id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(API.CIRCLE_MEMBER)
+    Call<ResponseData<List<CircleMemberModel>>> getCircleMember(
+            @Field("appId") String appId, @Field("custId") String custId
+    );
+
+    /**
+     * 圈子统计收益
+     *
+     * @param custId
+     * @param clubId
+     * @param loginUserId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(API.CLUB_STATS)
+    public Call<ResponseData<ClubStats>> getClubStats(
+            @Field("act") String act,
+            @Field("custId") String custId,
+            @Field("clubId") String clubId,
+            @Field("loginUserId") String loginUserId
+    );
+
+    /**
+     * 收益详情
+     */
+    @FormUrlEncoded
+    @POST(API.TRANSFER_CLUB_DETAIL)
+    public Call<ResponseData<TransferDetail>> transferClubDetail(
+            @Field("act") String actionCode,
+            @Field("loginUserId") String loginUserId,
+            @Field("clubId") String clubId
+    );
+
+    @FormUrlEncoded
+    @POST(API.OPUS_TAG)
+    public Call<ResponseData<List<OpusTag>>> getOpusTag(
+            @Field("act") int actionCode,
+            @Field("type") String type
+    );
+
+    /**
+     * 作品标签搜索
+     *
+     * @param actionCode
+     * @param loginUserId
+     * @param type
+     * @param tag
+     * @param start
+     * @param limit
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(API.OPUS_TAGINFO_LIST)
+    public Call<ResponseData<List<OpusData>>> searchOpusTagInfoList(
+            @Field("act") int actionCode,
+            @Field("loginUserId") String loginUserId,
+            @Field("type") int type,
+            @Field("tag") String tag,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
+
+    /**
+     * 获取作品列表
+     *
+     * @param actionCode
+     * @param categroy
+     * @param type
+     * @param start
+     * @param limit
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(API.OPUS_LIST)
+    public Call<ResponseData<List<OpusData>>> getOpusList(
+            @Field("act") int actionCode,
+            @Field("custId") String custId,
+            @Field("category") String categroy,
+            @Field("loginUserId") String loginUserId,
+            @Field("type") Integer type,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
+
+    /**
+     * 获取圈子图片
+     */
+    @FormUrlEncoded
+    @POST(API.CIRCLE_IMGS)
+    public Call<ResponseData<String[]>> getCircleImgs(
+            @Field("act") int actionCode,
+            @Field("custId") String custId,
+            @Field("limit") int limit
+    );
+
+    /**
+     * 好友详情
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.FRIEND_DETAIL)
+    Call<ResponseData<FriendInfoModel>> getFriendDetail(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("fid") String fid
+    );
+
+    /**
+     * 加好友通过手机号（申请、同意、拒绝）
+     *
+     * @param aCustId 加好友发起者custId（是）
+     * @param phone   手机号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.REQUIRE_FRIEND_BY_PHONE)
+    Call<ResponseData<RequireFriendByPhoneModel>> requireFriendByPhone(
+            @Field("custId") String aCustId,
+            @Field("phone") String phone
+    );
+
+
+    /**
+     * 好友删除
+     *
+     * @param custId 加好友发起者custId
+     * @param fid    加好友接受者custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.FRIEND_DETELE)
+    Call<ResponseData> friendDetele(
+            @Field("custId") String custId,
+            @Field("fid") String fid
+    );
+
+    /**
+     * 好友备注
+     *
+     * @param act
+     * @param custId    加好友发起者custId
+     * @param fid       加好友接受者custId
+     * @param nameNotes 给好友编辑备注名，限长128
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.FRIEND_REMARK)
+    Call<ResponseData> remarkFriend(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("fid") String fid,
+            @Field("nameNotes") String nameNotes
+    );
+
+    /**
+     * 删除好友申请
+     *
+     * @param custId 加好友发起者custId
+     * @param rid    请求ID，用于同意、拒绝申请时传参
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.REQUIRE_DETELE)
+    Call<ResponseData> requireDetele(
+            @Field("custId") String custId,
+            @Field("rid") Integer rid
+    );
+
+    /**
+     * 申请加好友列表
+     *
+     * @param custId 发起者custId
+     * @param limit  每页条数
+     * @param start  分页游标 起始位置
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.REQUIRE_LIST)
+    Call<ResponseData<List<FriendRequireModel>>> requireList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("start") int start
+    );
+
+    /**
+     * 加好友（申请、同意、拒绝）
+     *
+     * @param custId 加好友发起者custId（是）
+     * @param fid    加好友接受者custId（是）
+     * @param msg    加好友对应的请求消息，最长256字符（否）
+     * @param type   1申请加好友，2同意加好友，3拒绝加好友（是）
+     * @param rid    请求ID，用于同意、拒绝申请时传参（否）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.REQUIRE_FRIEND)
+    Call<ResponseData> requireFriend(
+            @Field("custId") String custId,
+            @Field("fid") String fid,
+            @Field("msg") String msg,
+            @Field("type") Integer type,
+            @Field("rid") Integer rid
+    );
+
+    /**
+     * 好友搜索
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.FRIEND_SEARCH)
+    Call<ResponseData<List<BaseInfo>>> searchFriend(
+            @Field("custId") String custId,
+            @Field("keyWord") String keyword,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
+
+    /**
+     * 好友列表
+     *
+     * @param custId 发起者custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.FRIEND_ALL_LIST)
+    Call<ResponseData<List<BaseInfo>>> friendList(
+            @Field("custId") String custId
+    );
+
+
+    /**
+     * 获取支付订单
+     *
+     * @param custId
+     * @param payWay
+     * @param orderSrc
+     * @param orderAmount
+     * @param currency
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.PAY)
+    Call<ResponseData<PaySignModel>> payProvingSign(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("payWay") String payWay,
+            @Field("orderSrc") String orderSrc,
+            @Field("orderAmount") String orderAmount,
+            @Field("currency") String currency
+    );
+
 
 }

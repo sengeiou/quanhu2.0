@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:background="@color/color_F5F5F5"
+        android:gravity="left"
+        android:padding="@dimen/px60"
+        android:text="@string/pay_type"
+        android:textSize="@dimen/font_50"/>
+
+    <RelativeLayout
+        android:id="@+id/id_ali_pay_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/comm_item_selector"
+        android:gravity="center_vertical"
+        android:padding="@dimen/px30">
+
+        <ImageView
+            android:id="@+id/id_ali_img"
+            android:layout_width="@dimen/px132"
+            android:layout_height="@dimen/px132"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_pay_alipay"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_toRightOf="@+id/id_ali_img"
+            android:text="@string/zfb"
+            android:textSize="@dimen/font_52"/>
+
+        <ImageView
+            android:id="@+id/id_ali_check_img"
+            android:layout_width="@dimen/px60"
+            android:layout_height="@dimen/px60"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_checked"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px3"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:background="@color/color_EEEEEE"></View>
+
+    <RelativeLayout
+        android:id="@+id/id_weixin_pay_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/comm_item_selector"
+        android:gravity="center_vertical"
+        android:padding="@dimen/px30">
+
+        <ImageView
+            android:id="@+id/id_weixin_img"
+            android:layout_width="@dimen/px134"
+            android:layout_height="@dimen/px134"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_pay_weixin"/>
+
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_toRightOf="@+id/id_weixin_img"
+            android:text="@string/pay_wx"
+            android:textSize="@dimen/font_52"/>
+
+        <ImageView
+            android:id="@+id/id_weixin_check_img"
+            android:layout_width="@dimen/px60"
+            android:layout_height="@dimen/px60"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_unchecked"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px3"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:background="@color/color_EEEEEE"/>
+
+    <TextView
+        style="@style/DefaultTvStyle"
+        android:layout_marginTop="@dimen/px150"
+        android:text="@string/recharge_money"
+        android:textSize="@dimen/font_50"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px15"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/id_pay_amount"
+            style="@style/DefaultTvStyle"
+            android:textSize="@dimen/px86"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:text="@string/rmb_yuan"
+            android:textSize="@dimen/font_38"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_pay_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px135"
+        android:layout_marginRight="@dimen/px135"
+        android:layout_marginTop="@dimen/px75"
+        android:background="@drawable/shape_bg_blue_sel"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:padding="@dimen/px30"
+        android:text="@string/account_recharge"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/px52"/>
+</LinearLayout>

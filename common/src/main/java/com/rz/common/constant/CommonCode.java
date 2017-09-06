@@ -116,5 +116,34 @@ public interface CommonCode {
         int PAGE_SIZE = 10;
     }
 
+    /**
+     * 加好友类型
+     */
+    interface requireFriend {
+        //申请加好友
+        public static final int require_type_add = 1;
+        //同意加好友
+        public static final int require_type_agree = 2;
+        //拒绝加好友
+        public static final int require_type_refuse = 3;
+    }
+
+    /**
+     * 支付
+     */
+    interface PayCode {
+        //取消
+        public static final int PAY_CANDEL = 1011;
+        //支付成功
+        public static final int PAY_SUCCESS = 1012;
+        //支付失败，支付控件相关
+        public static final int PAY_FAIL = 1013;
+        //支付异常，包括生成支付订单错误等
+        public static final int PAY_ABNORMAL = 1014;
+        //支付结果确认中
+        public static final int PAY_CONFIRM = 1015;
+
+    }
+
 
 }

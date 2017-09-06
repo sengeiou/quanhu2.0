@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_F8F8F8"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/id_search_key_rela2"
+        layout="@layout/com_search_bar"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/id_search_key_rela1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_bg_white_stoke_f4f4f4"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/search_key_icon"/>
+
+        <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
+            android:id="@+id/team_search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/transparent"
+            android:hint="@string/input_keyword"
+            android:imeOptions="actionSearch"
+            android:inputType="textImeMultiLine"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/color_000000"
+            android:textColorHint="@color/color_666666"
+            android:textSize="@dimen/font_44"/>
+    </RelativeLayout>
+
+    <include layout="@layout/view_letter_guide"/>
+
+    <!--<View style="@style/DefaultHLineStyle" />-->
+
+    <LinearLayout
+        android:id="@+id/contacts_select_submit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/px150"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingLeft="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/font_46"/>
+
+            <TextView
+                android:id="@+id/tvSelectNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px26"
+                android:layout_marginRight="@dimen/px26"
+                android:text="0"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/px58"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/font_46"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSelect"
+            android:layout_width="@dimen/px302"
+            android:layout_height="@dimen/px86"
+            android:layout_marginLeft="6dip"
+            android:layout_marginRight="6dip"
+            android:background="@drawable/shape_bg_blue_sel"
+            android:text="@string/press"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_46"
+            android:visibility="visible"/>
+    </LinearLayout>
+</LinearLayout>

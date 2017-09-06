@@ -54,7 +54,7 @@ public interface Type {
     public static final int LOGIN_PHONE = 4;
 
     /**
-     *从圈子跳转登录
+     * 从圈子跳转登录
      */
     public static final int TYPE_LOGIN_WEB = 5;
     /**
@@ -129,5 +129,53 @@ public interface Type {
      * 用户账户余额正常
      */
     public static final int USER_MONEY_NORMAL = 1;
+
+    /**
+     * 所有的
+     */
+    public static final int custType_0 = 0;
+    /**
+     * 我关注的
+     */
+    public static final int custType_1 = 1;
+    /**
+     * 关注我的
+     */
+    public static final int custType_2 = 2;
+    /**
+     * 互相关注
+     */
+    public static final int custType_3 = 3;
+    /**
+     * 黑名单
+     */
+    public static final int custType_4 = 4;
+    /**
+     * 平台陌生人
+     */
+    public static final int custType_5 = 5;
+
+
+    /**
+     * 好友关系
+     */
+    public static final int relation_friend = 1;
+
+    /**
+     * 陌生人
+     */
+    public static final int relation_stranger = 0;
+
+
+    /**
+     * 微信支付
+     */
+    public static final String TYPE_WX_PAY = "4";
+
+    /**
+     * 支付宝支付
+     */
+    public static final String TYPE_ALI_PAY = "3";
+
 
 }

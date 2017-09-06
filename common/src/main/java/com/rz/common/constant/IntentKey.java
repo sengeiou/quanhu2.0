@@ -44,4 +44,12 @@ public interface IntentKey {
     String EXTRA_INVOKE_ID = "extraInvokeId";
 
     String EXTRA_MODEL = "extraModel";
+
+    String EXTRA_CLUB_ID = "extraClubId";
+
+    String EXTRA_NAME = "extraName";
+
+    String EXTRA_INVOKEID = "extraInvokeId";
+
+    String EXTRA_MONEY = "extraMoney";
 }

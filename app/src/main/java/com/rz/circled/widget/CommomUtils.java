@@ -1,12 +1,16 @@
 package com.rz.circled.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.common.application.BaseApplication;
@@ -39,19 +43,19 @@ public class CommomUtils {
 
     }
 
-//    public static void showNoDataTip(Activity mActivity) {
-//        TextView idRefreshStatusTxt = (TextView) mActivity.findViewById(R.id.id_refresh_status_txt);
-//        final RelativeLayout idRefreshStatusLl = (RelativeLayout) mActivity.findViewById(R.id.id_refresh_status_ll);
-//
-//        idRefreshStatusTxt.setText("没有更多的搜索结果");
-//        idRefreshStatusLl.setVisibility(View.VISIBLE);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                idRefreshStatusLl.setVisibility(View.GONE);
-//            }
-//        }, 3000);
-//    }
+    public static void showNoDataTip(Activity mActivity) {
+        TextView idRefreshStatusTxt = (TextView) mActivity.findViewById(R.id.id_refresh_status_txt);
+        final RelativeLayout idRefreshStatusLl = (RelativeLayout) mActivity.findViewById(R.id.id_refresh_status_ll);
+
+        idRefreshStatusTxt.setText("没有更多的搜索结果");
+        idRefreshStatusLl.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                idRefreshStatusLl.setVisibility(View.GONE);
+            }
+        }, 3000);
+    }
 
     /**
      * 计算指定的 View 在屏幕中的坐标。
@@ -244,7 +248,7 @@ public class CommomUtils {
             infoId = infoId.split("\\.")[0];
         }
 //        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId + "/dynamic";
-        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId +"?type=dynamic";
+        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId + "?type=dynamic";
         return url;
     }
 
