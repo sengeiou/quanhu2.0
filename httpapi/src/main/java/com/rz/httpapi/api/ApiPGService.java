@@ -3,8 +3,11 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
+import com.rz.httpapi.bean.GroupBannerBean;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.PrivateGroupBean;
+import com.rz.httpapi.bean.PrivateGroupListBean;
+import com.rz.httpapi.bean.PrivateGroupResourceBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
@@ -38,14 +41,15 @@ public interface ApiPGService {
     );
 
     /**
-     * @param pageNo
+     * @param pageNum
      * @param pageSize
      * @return
      */
-    @GET(ApiPG.PRIVATE_GROUP_ALL + "{pageNo}" + "/" + "{pageSize}")
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_ALL)
     Call<ResponseData<List<PrivateGroupBean>>> privateGroupList(
-            @Path("pageNo") int pageNo,
-            @Path("pageSize") int pageSize
+            @Field("pageNum") int pageNum,
+            @Field("pageSize") int pageSize
     );
 
     /**
@@ -71,46 +75,26 @@ public interface ApiPGService {
     );
 
     /**
-     * @param coterieId     圈子id，即tenantId
-     * @param consultingFee 咨询费，0表示免费
-     * @param icon          封面图
-     * @param intro         圈子简介
-     * @param joinCheck     成员加入是否需要审核（0不审核，1审核）
-     * @param joinFee       加入私圈金额(悠然币)，0表示免费
-     * @param name          圈子名称
-     * @param ownerIntro    个人简介
-     * @param qrUrl         私圈名片(二维码)
+     * @param bannerType 1，引导页广告；2，首页广告；3，私圈首页广告
      * @return
      */
     @FormUrlEncoded
-    @POST(ApiPG.PRIVATE_GROUP_SETTING + "{coterieId}")
-    Call<ResponseData> privateGroupSetting(
-            @Path("coterieId") String coterieId,
-            @Field("consultingFee") int consultingFee,
-            @Field("icon") String icon,
-            @Field("intro") String intro,
-            @Field("joinCheck") int joinCheck,
-            @Field("joinFee") int joinFee,
-            @Field("name") String name,
-            @Field("ownerIntro") String ownerIntro,
-            @Field("qrUrl") String qrUrl
-    );
+    @POST(ApiPG.PRIVATE_GROUP_BANNER)
+    Call<ResponseData<List<GroupBannerBean>>> privateGroupBanner(@Field("bannerType") String bannerType);
 
-    /**
-     * @param coterieId 圈子id，即tenantId
-     * @return
-     */
-    @GET(ApiPG.PRIVATE_GROUP_DETAILS + "{coterieId}")
-    Call<ResponseData<List<PrivateGroupBean>>> privateGroupDetails(
-            @Path("coterieId") String coterieId
-    );
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_ESSENCE)
+    Call<ResponseData<List<PrivateGroupResourceBean>>> privateGroupEssence(@Field("start") int start, @Field("limit") int limit);
 
-    @GET(ApiPG.PRIVATE_GROUP_ESSENCE)
-    Call<ResponseData<List<PrivateGroupBean>>> privateGroupEssence();
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_RECOMMEND)
+    Call<ResponseData<PrivateGroupListBean>> privateGroupRecommend(@Field("custId") String custId);
 
-    @GET(ApiPG.PRIVATE_GROUP_MYSEFL_CREATE + "{custId}")
-    Call<ResponseData<List<PrivateGroupBean>>> privateGroupMyselfCreate(@Path("custId") String custId);
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_MYSELF_CREATE)
+    Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfCreate(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
 
-    @GET(ApiPG.PRIVATE_GROUP_MYSELF_JOIN + "{custId}")
-    Call<ResponseData<List<PrivateGroupBean>>> privateGroupMyselfJoin(@Path("custId") String custId);
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_MYSELF_JOIN)
+    Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfJoin(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
 }

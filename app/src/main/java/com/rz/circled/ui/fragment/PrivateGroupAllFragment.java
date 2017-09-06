@@ -46,7 +46,7 @@ public class PrivateGroupAllFragment extends BaseFragment {
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout layoutRefresh;
 
-    private int pageNo;
+    private int pageNo = 1;
     private DefaultPrivateGroupAdapter mAdapter;
 
     public static PrivateGroupAllFragment newInstance() {
@@ -142,12 +142,5 @@ public class PrivateGroupAllFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
-
-        List<PrivateGroupBean> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(new PrivateGroupBean());
-        }
-        mAdapter.setData(list);
-        Utility.setListViewHeightBasedOnChildren(lv);
     }
 }

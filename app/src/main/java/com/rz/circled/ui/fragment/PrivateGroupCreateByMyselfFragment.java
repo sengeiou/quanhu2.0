@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.event.EventConstant;
@@ -26,6 +28,7 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
+import com.rz.httpapi.bean.PrivateGroupListBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -52,9 +55,12 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @BindView(R.id.lv)
     ListView lv;
+    @BindView(R.id.layout_refresh)
+    SwipyRefreshLayout refreshLayout;
 
     private int type;
     private DefaultPrivateGroupAdapter mAdapter;
+    private int pageNo = 1;
 
     public static PrivateGroupCreateByMyselfFragment newInstance(int type) {
         PrivateGroupCreateByMyselfFragment fragment = new PrivateGroupCreateByMyselfFragment();
@@ -81,27 +87,45 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
+            refreshLayout.setEnabled(false);
         }
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PrivateGroupBean item = mAdapter.getItem(position);
+                if (item.getStatus() == 3) {
 
+                }
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    loadData(false);
+                } else {
+                    loadData(true);
+                }
             }
         });
     }
 
     @Override
     public void initData() {
-        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(Session.getUserId()).enqueue(new BaseCallback<ResponseData<List<PrivateGroupBean>>>() {
+        loadData(false);
+    }
+
+    private void loadData(final boolean loadMore) {
+        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
-            public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
+            public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
                     } else {
-                        List<PrivateGroupBean> data = response.body().getData();
+                        List<PrivateGroupBean> data = response.body().getData().getList();
                         if (type == TYPE_PART) {
                             if (data != null && data.size() > 0) {
                                 if (data.size() > 2) {
@@ -109,11 +133,17 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                 } else {
                                     mAdapter.setData(data);
                                 }
-                                Utility.setListViewHeightBasedOnChildren(lv);
+                                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
                             }
                         } else {
                             if (data != null && data.size() > 0) {
-                                mAdapter.setData(data);
+                                if (loadMore) {
+                                    mAdapter.addData(data);
+                                } else {
+                                    mAdapter.setData(data);
+                                    pageNo = 1;
+                                }
+                                pageNo++;
                             } else {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             }
@@ -124,18 +154,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                     SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
             }
-
-            @Override
-            public void onFailure(Call<ResponseData<List<PrivateGroupBean>>> call, Throwable t) {
-                super.onFailure(call, t);
-                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-            }
         });
-
-        List<PrivateGroupBean> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(new PrivateGroupBean());
-        }
-        mAdapter.setData(list);
     }
 }

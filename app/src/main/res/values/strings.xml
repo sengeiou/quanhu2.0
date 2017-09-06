@@ -178,6 +178,17 @@
     <string name="private_group_no_create">还没有创建私圈哦！</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
+    <string name="private_group_from">来自%1$s</string>
+    <string name="private_group_free">免费</string>
+    <string name="private_group_price">%1$d圈币</string>
+    <string name="private_group_essence_scan">%1$d 阅读</string>
+
+    <!--消息-->
+    <string name="announcement">通知公告</string>
+    <string name="system_information">系统消息</string>
+    <string name="account_information">账户消息</string>
+    <string name="interactive_information">互动消息</string>
+    <string name="recommend_information">精彩推荐</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -310,4 +321,5 @@
     <string name="exit_intr">退出会清除已上传的视频资源</string>
     <string name="look_again">再看看</string>
     <string name="forward_to_make_money">转发去赚钱</string>
+
 </resources>

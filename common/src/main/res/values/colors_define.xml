@@ -28,7 +28,7 @@
     <!--浅灰色分割线-->
     <color name="line_gray_s">@color/color_e7e7e7</color>
 
-    <color name="color_main">@color/color_315</color>
+    <color name="color_main">@color/color_0185FF</color>
     <color name="color_main_on">@color/color_324</color>
 
     <color name="color_light_gray">@color/color_ccc</color>

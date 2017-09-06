@@ -53,7 +53,7 @@
                     android:layout_width="2dp"
                     android:layout_height="@dimen/px40"
                     android:scaleType="centerCrop"
-                    android:src="@color/colorPrimary"
+                    android:src="@color/font_color_blue"
                     app:riv_corner_radius="1dp"
                     app:riv_mutate_background="true"
                     app:riv_oval="false" />
@@ -142,7 +142,7 @@
                     android:layout_width="2dp"
                     android:layout_height="@dimen/px40"
                     android:scaleType="centerCrop"
-                    android:src="@color/colorPrimary"
+                    android:src="@color/font_color_blue"
                     app:riv_corner_radius="1dp"
                     app:riv_mutate_background="true"
                     app:riv_oval="false" />
@@ -235,6 +235,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="请输入私圈名称"
+                        android:gravity="right"
                         android:textColor="@color/font_gray_m"
                         android:textColorHint="@color/font_gray_s"
                         android:textSize="@dimen/font_44" />
