@@ -58,6 +58,10 @@ public interface Type {
      */
     public static final int TYPE_LOGIN_WEB = 5;
     /**
+     *从向导跳转登录
+     */
+    public static final int TYPE_LOGIN_GUIDE = 9;
+    /**
      * 第三方绑定
      */
     public static int ACTION_BIND = 0;

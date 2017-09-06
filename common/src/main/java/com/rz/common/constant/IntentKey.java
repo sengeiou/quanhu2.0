@@ -44,4 +44,5 @@ public interface IntentKey {
     String EXTRA_INVOKE_ID = "extraInvokeId";
 
     String EXTRA_MODEL = "extraModel";
+    String GUIDE_KEY = "guide_key";
 }

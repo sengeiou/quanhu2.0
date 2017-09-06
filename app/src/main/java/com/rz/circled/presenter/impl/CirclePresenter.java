@@ -253,11 +253,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     /**
      * 首页广告位展示
      */
-    public void getBannerList(final int stats) {
+    public void getBannerList(final String stats) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        Call<ResponseData<List<BannerAddSubjectModel>>> call = mUserService.getBanner(520);
+        Call<ResponseData<List<BannerAddSubjectModel>>> call = mUserService.getBanner(stats);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<BannerAddSubjectModel>>>() {
             @Override
@@ -267,7 +267,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         List<BannerAddSubjectModel> model = (List<BannerAddSubjectModel>) res.getData();
-                        mView.updateViewWithFlag(model, stats);
+                        if ("1".equals(stats)){
+                            Session.setAdv_pic_url(model.get(0).getPicUrl());
+                            Session.setAdv_url(model.get(0).getUrl());
+                        }
+                        mView.updateViewWithFlag(model, Integer.parseInt(stats));
 
                     }
                 }

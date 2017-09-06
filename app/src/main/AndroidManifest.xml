@@ -24,11 +24,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
         <activity
@@ -118,7 +118,13 @@
         <activity
             android:name=".ui.activity.SplashAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.FullScreen"/>
+            android:theme="@style/BaseAppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
         <activity
             android:name=".ui.activity.BankCardListAty"
             android:screenOrientation="portrait"
@@ -178,6 +184,7 @@
             android:name=".ui.activity.MorePlayActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity android:name=".ui.activity.FollowCircle"/>
     </application>
 
 </manifest>
