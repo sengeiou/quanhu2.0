@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingTop="0dp"
     >
 
     <ScrollView
@@ -20,9 +19,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px518"
+                android:layout_height="@dimen/px594"
                 android:background="@mipmap/background_lite"
                 android:orientation="vertical"
+                android:paddingTop="@dimen/title_bar_padding_top"
                 >
 
                 <ImageView
