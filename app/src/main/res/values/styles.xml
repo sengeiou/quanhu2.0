@@ -177,4 +177,30 @@
         <item name="android:textColorHint">@color/color_666666</item>
     </style>
 
+    <style name="ContactHeadRelaStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px144</item>
+        <item name="android:paddingLeft">@dimen/px44</item>
+        <item name="android:background">@drawable/comm_item_selector</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ContactHeadImgStyle">
+        <item name="android:layout_width">@dimen/px100</item>
+        <item name="android:layout_height">@dimen/px100</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:padding">@dimen/px8</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <!--带icon的textview-->
+    <style name="IconTvStyle" parent="DefaultTvStyle">
+        <item name="android:paddingBottom">@dimen/px28</item>
+        <item name="android:paddingTop">@dimen/px28</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/px48</item>
+        <item name="android:drawablePadding">@dimen/px38</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
 </resources>

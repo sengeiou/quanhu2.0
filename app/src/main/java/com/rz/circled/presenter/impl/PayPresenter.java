@@ -3,22 +3,29 @@ package com.rz.circled.presenter.impl;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.rz.circled.R;
 import com.rz.circled.http.HandleRetCode;
+import com.rz.circled.pay.PayResult;
 import com.rz.circled.presenter.AbsPresenter;
 import com.rz.circled.widget.password.GridPasswordView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.Type;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.Currency;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.NetUtils;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
@@ -27,11 +34,21 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.AccountBean;
+import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.lang.ref.WeakReference;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by JS01 on 2016/7/28.
@@ -89,174 +106,174 @@ public class PayPresenter extends AbsPresenter {
     public void detachView() {
     }
 
-//    /**
-//     * 创建订单
-//     */
-//    public void pay(String custId, final String payWay, String orderAmount, String currency) {
-//        if (!NetUtils.isNetworkConnected(activity)) {
-//            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, activity.getString(R.string.status_un_network));
-//            return;
-//        }
-//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
-//        Call<ResponseData<PaySignModel>> call = mAddSignPayService.payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
-////        Call<ResponseData<PaySignModel>> call = Http.getAddSignService(activity).payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<PaySignModel>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<PaySignModel>> call, Response<ResponseData<PaySignModel>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData<PaySignModel> res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        PaySignModel model = res.getData();
-//                        if (null != model) {
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
-//                            PaySignModel.Sign sign = model.ext;
-//                            if (null != sign) {
-//                                String orderInfo = sign.orderStr;
-//                                /**
-//                                 * 支付宝微信的验证信息分别传不同
-//                                 */
-//                                if (TextUtils.equals(payWay, Type.TYPE_ALI_PAY)) {
-//                                    if (StringUtils.isEmpty(orderInfo)) {
-//                                        SVProgressHUD.showErrorWithStatus(activity, R.string.backstage_configuration_error);
-//                                    } else {
-//                                        aliPay(orderInfo);
-//                                    }
-//                                } else if (TextUtils.equals(payWay, Type.TYPE_WX_PAY)) {
-//                                    wxPay(sign);
-//                                }
-//                            } else {
-//                                SVProgressHUD.showErrorWithStatus(activity, R.string.backstage_configuration_error);
-//                            }
-//                            return;
-//                        }
-//                    } else {
-//                        HandleRetCode.handler(activity, res);
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
-//                        return;
-//                    }
-//                }
-////                mView.onLoadingStatus(CodeStatus.PayCode.PAY_ABNORMAL);
-//                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<PaySignModel>> call, Throwable t) {
-//                super.onFailure(call, t);
-////                mView.onLoadingStatus(CodeStatus.PayCode.PAY_ABNORMAL);
-//                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
-//            }
-//        });
-//    }
+    /**
+     * 创建订单
+     */
+    public void pay(String custId, final String payWay, String orderAmount, String currency) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, activity.getString(R.string.status_un_network));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Call<ResponseData<PaySignModel>> call = mAddSignPayService.payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
+//        Call<ResponseData<PaySignModel>> call = Http.getAddSignService(activity).payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<PaySignModel>>() {
+            @Override
+            public void onResponse(Call<ResponseData<PaySignModel>> call, Response<ResponseData<PaySignModel>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<PaySignModel> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        PaySignModel model = res.getData();
+                        if (null != model) {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            PaySignModel.Sign sign = model.ext;
+                            if (null != sign) {
+                                String orderInfo = sign.orderStr;
+                                /**
+                                 * 支付宝微信的验证信息分别传不同
+                                 */
+                                if (TextUtils.equals(payWay, Type.TYPE_ALI_PAY)) {
+                                    if (StringUtils.isEmpty(orderInfo)) {
+                                        SVProgressHUD.showErrorWithStatus(activity, activity.getString(R.string.backstage_configuration_error));
+                                    } else {
+                                        aliPay(orderInfo);
+                                    }
+                                } else if (TextUtils.equals(payWay, Type.TYPE_WX_PAY)) {
+                                    wxPay(sign);
+                                }
+                            } else {
+                                SVProgressHUD.showErrorWithStatus(activity, activity.getString(R.string.backstage_configuration_error));
+                            }
+                            return;
+                        }
+                    } else {
+                        HandleRetCode.handler(activity, res);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        return;
+                    }
+                }
+//                mView.onLoadingStatus(CodeStatus.PayCode.PAY_ABNORMAL);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<PaySignModel>> call, Throwable t) {
+                super.onFailure(call, t);
+//                mView.onLoadingStatus(CodeStatus.PayCode.PAY_ABNORMAL);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
+            }
+        });
+    }
 
 
-//    /**
-//     * 微信支付
-//     */
-//    public void wxPay(PaySignModel.Sign sign) {
-//        //TODO 微信支付
-//        if (activity != null) {
-//            IWXAPI iwxapi = WXAPIFactory.createWXAPI(activity, Constants.WeiXin.APP_ID);
-//
-//            iwxapi = WXAPIFactory.createWXAPI(activity, null);
-//            iwxapi.registerApp(Constants.WeiXin.APP_ID);
-//
-//            PayReq req = new PayReq();
-//            req.appId = sign.appid;
-//            req.partnerId = sign.partnerid;
-//            req.prepayId = sign.prepayid;
-//            req.nonceStr = sign.noncestr;
-//            req.timeStamp = sign.timestamp;
-//            req.packageValue = "Sign=WXPay";
-//            req.sign = sign.sign;
-//            iwxapi.sendReq(req);
-//        }
-//    }
+    /**
+     * 微信支付
+     */
+    public void wxPay(PaySignModel.Sign sign) {
+        //TODO 微信支付
+        if (activity != null) {
+            IWXAPI iwxapi = WXAPIFactory.createWXAPI(activity, Constants.WeiXin.APP_ID);
 
-//    /**
-//     * 支付宝
-//     *
-//     * @param order 支付宝订单数据
-//     */
-//    public void aliPay(final String order) {
-//        if (activity != null && !activity.isFinishing()) {
-//            Observable.create(new Observable.OnSubscribe<String>() {
-//                @Override
-//                public void call(Subscriber<? super String> subscriber) {
-//                    PayTask alipay = new PayTask(activity);
-//                    String result = alipay.pay(order, false);
-//                    subscriber.onNext(result);
-//                    subscriber.onCompleted();
-//                }
-//            }).subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Subscriber<String>() {
-//                        @Override
-//                        public void onCompleted() {
-//                            Log.d(TAG, "onCompleted");
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Log.d(TAG, "onError");
-//                        }
-//
-//                        @Override
-//                        public void onNext(String s) {
-//                            Log.d(TAG, "onNext");
-//                            AliPayHandler handler = new AliPayHandler(PayPresenter.this);
-//                            Message msg = new Message();
-//                            msg.what = SDK_ALIAY;
-//                            msg.obj = s;
-//                            handler.sendMessage(msg);
-//                        }
-//                    });
-//        }
-//    }
+            iwxapi = WXAPIFactory.createWXAPI(activity, null);
+            iwxapi.registerApp(Constants.WeiXin.APP_ID);
 
-//    /**
-//     * 支付宝支付回调
-//     */
-//    private class AliPayHandler extends Handler {
-//
-//        private WeakReference<PayPresenter> weakref;
-//
-//        public AliPayHandler(PayPresenter presenter) {
-//            this.weakref = new WeakReference<>(presenter);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            switch (msg.what) {
-//                case SDK_ALIAY: {
-//                    String str = (String) msg.obj;
-//                    PayResult payResult = new PayResult(str);
-//                    String result = payResult.getResult();
-//                    String resultStatus = payResult.getResultStatus();
-//                    if (TextUtils.equals(resultStatus, ALIPAY_STATE_SUCCESS)) {
-//                        //TODO 支付成功
-//                        mView.onLoadingStatus(CodeStatus.PayCode.PAY_SUCCESS);
-//                    } else {
-//                        if (TextUtils.equals(resultStatus, ALIPAY_STATE_CONFIRMING)) {
-//                            //TODO 支付结果确认中
-//                            mView.onLoadingStatus(CodeStatus.PayCode.PAY_CONFIRM);
-//                        } else if (TextUtils.equals(resultStatus, ALIPAY_STATE_CANCEL)) {
-//                            //TODO 用户支付取消
-//                            mView.onLoadingStatus(CodeStatus.PayCode.PAY_CANDEL);
-//                        } else {
-//                            //TODO 支付失败
-//                            mView.onLoadingStatus(CodeStatus.PayCode.PAY_FAIL);
-//                        }
-//                    }
-//                    break;
-//                }
-//                default:
-//                    break;
-//            }
-//        }
-//    }
+            PayReq req = new PayReq();
+            req.appId = sign.appid;
+            req.partnerId = sign.partnerid;
+            req.prepayId = sign.prepayid;
+            req.nonceStr = sign.noncestr;
+            req.timeStamp = sign.timestamp;
+            req.packageValue = "Sign=WXPay";
+            req.sign = sign.sign;
+            iwxapi.sendReq(req);
+        }
+    }
+
+    /**
+     * 支付宝
+     *
+     * @param order 支付宝订单数据
+     */
+    public void aliPay(final String order) {
+        if (activity != null && !activity.isFinishing()) {
+            Observable.create(new Observable.OnSubscribe<String>() {
+                @Override
+                public void call(Subscriber<? super String> subscriber) {
+                    PayTask alipay = new PayTask(activity);
+                    String result = alipay.pay(order, false);
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<String>() {
+                        @Override
+                        public void onCompleted() {
+                            Log.d(TAG, "onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.d(TAG, "onError");
+                        }
+
+                        @Override
+                        public void onNext(String s) {
+                            Log.d(TAG, "onNext");
+                            AliPayHandler handler = new AliPayHandler(PayPresenter.this);
+                            Message msg = new Message();
+                            msg.what = SDK_ALIAY;
+                            msg.obj = s;
+                            handler.sendMessage(msg);
+                        }
+                    });
+        }
+    }
+
+    /**
+     * 支付宝支付回调
+     */
+    private class AliPayHandler extends Handler {
+
+        private WeakReference<PayPresenter> weakref;
+
+        public AliPayHandler(PayPresenter presenter) {
+            this.weakref = new WeakReference<>(presenter);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case SDK_ALIAY: {
+                    String str = (String) msg.obj;
+                    PayResult payResult = new PayResult(str);
+                    String result = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+                    if (TextUtils.equals(resultStatus, ALIPAY_STATE_SUCCESS)) {
+                        //TODO 支付成功
+                        mView.onLoadingStatus(CommonCode.PayCode.PAY_SUCCESS);
+                    } else {
+                        if (TextUtils.equals(resultStatus, ALIPAY_STATE_CONFIRMING)) {
+                            //TODO 支付结果确认中
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CONFIRM);
+                        } else if (TextUtils.equals(resultStatus, ALIPAY_STATE_CANCEL)) {
+                            //TODO 用户支付取消
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CANDEL);
+                        } else {
+                            //TODO 支付失败
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_FAIL);
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
 
     /**
      * 查询余额
@@ -264,7 +281,7 @@ public class PayPresenter extends AbsPresenter {
     public void getUserAccount(String custId, String loading) {
         if (!NetUtils.isNetworkConnected(activity)) {
             Toasty.info(activity, activity.getString(R.string.status_un_network)).show();
-//            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, activity.getString(R.string.no_net_work));
+//            mView.onLoadingStatus(CommonCode.General.ERROR_NET, activity.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, loading);
@@ -377,7 +394,7 @@ public class PayPresenter extends AbsPresenter {
 //     */
 //    public void requestGetBillList(final boolean loadmore, int type) {
 //        if (!NetUtils.isNetworkConnected(activity)) {
-//            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, loadmore);
+//            mView.onLoadingStatus(CommonCode.General.ERROR_NET, loadmore);
 //            return;
 //        }
 //        if (isDataError) {
@@ -405,29 +422,29 @@ public class PayPresenter extends AbsPresenter {
 //                        List<BillDetailModel> dataList = res.getData();
 //                        if (null != dataList && !dataList.isEmpty()) {
 //                            isDataError = false;
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
+//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_FULL, "");
 //                            mView.updateViewWithLoadMore(dataList, loadmore);
 //                        } else {
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
+//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_NULL, "");
 //                            isDataError = true;
 //                        }
 //                        return;
 //                    } else {
 //                        if (HandleRetCode.handler(activity, res)) {
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+//                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
 //                            isDataError = true;
 //                            return;
 //                        }
 //                    }
 //                }
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, activity.getString(R.string.load_fail));
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
 //                isDataError = true;
 //            }
 //
 //            @Override
 //            public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
 //                super.onFailure(call, t);
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, activity.getString(R.string.load_fail));
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
 //                isDataError = true;
 //            }
 //        });
@@ -441,10 +458,10 @@ public class PayPresenter extends AbsPresenter {
 //     */
 //    public void pointsToAccount(String password, String cost) {
 //        if (!NetUtils.isNetworkConnected(activity)) {
-//            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, activity.getString(R.string.no_net_work));
+//            mView.onLoadingStatus(CommonCode.General.ERROR_NET, activity.getString(R.string.no_net_work));
 //            return;
 //        }
-//        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, activity.getString(R.string.check_ing));
+//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, activity.getString(R.string.check_ing));
 ////        Call<ResponseData> call = mUserService
 ////                .pointsToAccount(1056, password, Session.getUserId(), cost);
 //        Call<ResponseData> call = Http.getTestService(activity)
@@ -460,32 +477,32 @@ public class PayPresenter extends AbsPresenter {
 //                    final ResponseData res = response.body();
 //                    if (res.getRet() == ReturnCode.SUCCESS) {
 //                        //收益兑换成功
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
+//                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_FULL, "");
 //                        mView.updateView(res.getRet());
 //                        return;
 //                    } else {
-////                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "error");
-////                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+////                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "error");
+////                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
 ////                        return;
 //                        if (HandleRetCode.handler(activity, res)) {
 //                            new Handler().postDelayed(new Runnable() {
 //                                @Override
 //                                public void run() {
 //                                    mView.updateView(res.getRet());
-//                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
+//                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
 //                                }
 //                            }, 2000);
 //                            return;
 //                        }
 //                    }
 //                }
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, activity.getString(R.string.action_fail));
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
 //            }
 //
 //            @Override
 //            public void onFailure(Call<ResponseData> call, Throwable t) {
 //                super.onFailure(call, t);
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, activity.getString(R.string.action_fail));
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
 //            }
 //        });
 //    }

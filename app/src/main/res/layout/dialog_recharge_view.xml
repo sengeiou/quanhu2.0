@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/rolle_white_bg"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/id_recharge_txt"
+        style="@style/DefaultTvStyle"
+        android:paddingBottom="@dimen/px30"
+        android:paddingTop="@dimen/px52"
+        android:textSize="@dimen/font_52"/>
+
+    <TextView
+        android:id="@+id/id_recharge_money_txt"
+        style="@style/DefaultTvStyle"
+        android:paddingBottom="@dimen/px35"
+        android:textSize="@dimen/font_52"/>
+
+    <View
+        style="@style/line_horizontal_gray_s"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rolle_left_f5f5f5"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/id_dialog_recharge_sure_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/left_bottom_roller_f5_bg"
+            android:paddingBottom="@dimen/px38"
+            android:paddingTop="@dimen/px38"
+            android:text="@string/define"
+            android:textColor="@color/color_1bc2b8"
+            android:textSize="@dimen/font_52"/>
+
+        <View
+            style="@style/line_horizontal_gray_s"/>
+
+        <Button
+            android:id="@+id/id_dialog_rehcarge_cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/right_bottom_roller_f5_bg"
+            android:paddingBottom="@dimen/px38"
+            android:paddingTop="@dimen/px38"
+            android:text="@string/cancel"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/font_52"/>
+    </LinearLayout>
+
+</LinearLayout>

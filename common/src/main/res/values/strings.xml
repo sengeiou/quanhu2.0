@@ -54,4 +54,12 @@
     <string name="two_hour_later">2小时前</string>
     <string name="default_circle">创业达人圈</string>
     <string name="image_adaptation_stitching">x-oss-process=image/resize,m_lfit,limit_0,w_%1$d,h_%2$d</string>
+    <string name="pay_type">请选择支付方式</string>
+    <string name="pay_bank">银行卡支付</string>
+    <string name="pay_wx">微信支付</string>
+    <string name="pay_zfb">支付宝支付</string>
+    <string name="zfb">支付宝</string>
+    <string name="account_recharge">充值</string>
+    <string name="recharge_money">充值金额</string>
+    <string name="backstage_configuration_error">后台配置错误</string>
 </resources>

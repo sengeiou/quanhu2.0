@@ -1,8 +1,11 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
+import com.rz.circled.ui.activity.RechargeMoneyAty;
+import com.rz.common.constant.IntentKey;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -28,9 +31,9 @@ public class RechargeHandler extends ServerHandler {
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         //充值
-//        Intent intent = new Intent(mActivity, RechargeMoneyAty.class);
-//        intent.putExtra(IntentKey.EXTRA_INVOKE_ID, paramObj.getInvokeId());
-//        mActivity.startActivity(intent);
+        Intent intent = new Intent(mActivity, RechargeMoneyAty.class);
+        intent.putExtra(IntentKey.EXTRA_INVOKE_ID, paramObj.getInvokeId());
+        mActivity.startActivity(intent);
     }
 
     @Override
