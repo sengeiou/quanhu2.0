@@ -330,7 +330,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
     }
 
     private boolean checkLogin() {
-        if (!isLogin() || NIMClient.getStatus() != StatusCode.LOGINED) {
+        if (!Session.getUserIsLogin() || NIMClient.getStatus() != StatusCode.LOGINED) {
 //        if (!isLogin()) {
             Toasty.info(mContext, getString(R.string.im_link_error_hint)).show();
             return true;

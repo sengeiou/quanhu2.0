@@ -1,8 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +23,6 @@ import com.litesuits.common.utils.MD5Util;
 import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.rz.circled.R;
@@ -46,7 +43,6 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.UserInfoBean;
-import com.rz.sgt.jsbridge.JsEvent;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.config.preference.UserPreferences;
@@ -58,8 +54,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,10 +61,6 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Response;
-
-import static com.rz.common.constant.Constants.LOGIN_IN_SUCCESS;
 
 
 /**

@@ -4,6 +4,7 @@ package com.rz.common.constant;
  * Created by Gsm on 2017/8/9.
  */
 public interface IntentKey {
+    String KEY_TYPE = "key_type";
     //位置
     /**
      * 路径
