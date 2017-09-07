@@ -734,4 +734,21 @@ public interface ApiService {
     );
 
 
+    /**
+     * 统一搜索
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.QH_SEARCH)
+    Call<ResponseData<List<CircleDynamic>>> searchQH(
+            @Field("circleId") String circleId,
+            @Field("coterieId") String coterieId,
+            @Field("keyWord") String keyWord,
+            @Field("limit") int limit,
+            @Field("resourceType") String resourceType,
+            @Field("searchType") int searchType,
+            @Field("start") int start
+    );
+
 }

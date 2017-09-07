@@ -130,7 +130,7 @@
             android:theme="@style/BaseAppTheme.Translucent"/>
 
         <activity
-            android:name=".ui.activity.SplashAty"
+            android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.FullScreen">
             <intent-filter>
@@ -175,10 +175,10 @@
             android:name=".ui.activity.PersonSecondAreaAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity
-            android:name=".ui.activity.SearchActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+        <!--<activity-->
+            <!--android:name=".ui.activity.SearchActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@style/BaseAppTheme.Translucent"/>-->
         <activity android:name=".ui.activity.AllPrivateGroupActivity"/>
         <activity android:name=".ui.activity.MyPrivateGroupActivity"/>
         <activity android:name=".ui.activity.ApplyForCreatePrivateGroupActivity"/>

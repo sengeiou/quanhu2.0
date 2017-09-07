@@ -6,15 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
-import com.litesuits.common.utils.HexUtil;
-import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
-import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
-import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -29,12 +25,10 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.rz.circled.R.layout.fragment_search_content;
-
 /**
  * Created by Gsm on 2017/9/2.
  */
-public class SearchContentFragment extends BaseFragment {
+public class SearchPrivateCircleFragment extends BaseFragment {
 
     @BindView(R.id.lv_search_content)
     ListView lvContent;
@@ -43,8 +37,8 @@ public class SearchContentFragment extends BaseFragment {
     private SearchPresenter searchPresenter;
     public  static String keyWord = "";
 
-    public static SearchContentFragment newInstance() {
-        SearchContentFragment frg = new SearchContentFragment();
+    public static SearchPrivateCircleFragment newInstance() {
+        SearchPrivateCircleFragment frg = new SearchPrivateCircleFragment();
         return frg;
     }
 
