@@ -32,7 +32,11 @@ public class CircleApi {
     /**
      * 首页圈子达人
      */
-    public static final String CIRCLE_FAMOUS_LIST = "v3/recommend/star";
+    public static final String CIRCLE_FAMOUS_LIST = "v3/star/starCommend";
+    /**
+     * 更多达人
+     */
+    public static final String MORE_FAMOUS_LIST = "v3/star/getAllStar";
     /**
      * 查询圈子转发详情
      */

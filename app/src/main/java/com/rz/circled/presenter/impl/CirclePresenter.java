@@ -7,6 +7,7 @@ import android.util.Log;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
+import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -26,7 +27,9 @@ import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.FamousModel;
+import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferResultBean;
 import com.rz.httpapi.constans.ReturnCode;
@@ -37,6 +40,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import rx.Observer;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
@@ -342,6 +349,136 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                 super.onFailure(call, t);
             }
         });
+    }
+    /**
+     * 发现更多达人
+     */
+    public void getMoreFamousList() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.getMoreFamous("45")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseData<MoreFamousModel<List<StarListBean>>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<MoreFamousModel<List<StarListBean>>> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            List<StarListBean> data = res.getData().starList;
+                            mView.updateView(data);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
+                        }
+                    }
+                });
+    }
+    /**
+     * 删除喜欢的圈子
+     */
+    public void removeLoveCircle(String circleId,String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.delLoveCircle(circleId,custId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+//                            List<StarListBean> data = res.getData().starList;
+//                            mView.updateView(data);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
+                        }
+
+                    }
+                });
+    }
+    /**
+     * 添加喜欢的圈子
+     */
+    public void addLoveCircle(String circleId,String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.addLoveCircle(circleId,custId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+//                            List<StarListBean> data = res.getData().starList;
+//                            mView.updateView(data);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
+                        }
+
+                    }
+                });
+    }
+    /**
+     * 获取用户喜欢的圈子
+     */
+    public void getUserLoveCircle(String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.getLoveCircleList(custId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<List<CircleEntrModle>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<List<CircleEntrModle>> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            List<CircleEntrModle> data = res.getData();
+                            mView.updateView(data);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
+                        }
+                    }
+                });
     }
 
 

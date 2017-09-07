@@ -21,10 +21,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/px58"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -38,21 +38,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px30"
                     android:text="@string/favorite_circle"
-                    android:textSize="@dimen/font_46"
-                    android:textColor="@color/color_666666"/>
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_46"/>
+
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"></View>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></View>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_nodata"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px400"
+                android:gravity="center"
+                android:text="@string/NO_LOVA"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_allcircles_published"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px62"
                 android:layout_marginLeft="@dimen/px40"
                 android:layout_marginRight="@dimen/px40"
-                android:layout_marginBottom="@dimen/px62"
-                android:layout_height="wrap_content">
+                android:visibility="gone">
             </android.support.v7.widget.RecyclerView>
 
             <View
@@ -79,24 +88,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px30"
                     android:text="@string/more_circle"
-                    android:textSize="@dimen/font_46"
-                    android:textColor="@color/color_666666"/>
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_46"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px36"
-                    android:visibility="invisible"
-                    android:textColor="@color/color_CBCBCB"/>
+                    android:textColor="@color/color_CBCBCB"
+                    android:visibility="invisible"/>
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_allcircles_comingpublish"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/px40"
-                android:layout_marginRight="@dimen/px40"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px62"
-                android:layout_height="wrap_content">
+                android:layout_marginLeft="@dimen/px40"
+                android:layout_marginRight="@dimen/px40">
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

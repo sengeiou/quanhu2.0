@@ -7,78 +7,82 @@ package com.rz.httpapi.bean;
 public class FamousModel {
 
     /**
-     * appId : 测试内容7t54
-     * starDesc : 测试内容oh51
-     * starImg : 测试内容dw7y
-     * starName : 测试内容g9b7
-     * starTag : 测试内容7j7q
-     * url : 测试内容j18s
+     * custInfo : {"custId":"","custImg":"","custLevel":1,"custNname":"","nameNotes":""}
+     * starInfo : {"tradeField":""}
      */
 
-    private String appId;
-    private String starDesc;
-    private String starImg;
-    private String starName;
-    private String starTag;
-    private String url;
+    public CustInfoBean custInfo;
+    public StarInfoBean starInfo;
 
-    @Override
-    public String toString() {
-        return "FamousModel{" +
-                "appId='" + appId + '\'' +
-                ", starDesc='" + starDesc + '\'' +
-                ", starImg='" + starImg + '\'' +
-                ", starName='" + starName + '\'' +
-                ", starTag='" + starTag + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+    public class CustInfoBean {
+        /**
+         * custId :
+         * custImg :
+         * custLevel : 1
+         * custNname :
+         * nameNotes :
+         */
+
+        private String custId;
+        private String custImg;
+        private int custLevel;
+        private String custNname;
+        private String nameNotes;
+
+        public String getCustId() {
+            return custId;
+        }
+
+        public void setCustId(String custId) {
+            this.custId = custId;
+        }
+
+        public String getCustImg() {
+            return custImg;
+        }
+
+        public void setCustImg(String custImg) {
+            this.custImg = custImg;
+        }
+
+        public int getCustLevel() {
+            return custLevel;
+        }
+
+        public void setCustLevel(int custLevel) {
+            this.custLevel = custLevel;
+        }
+
+        public String getCustNname() {
+            return custNname;
+        }
+
+        public void setCustNname(String custNname) {
+            this.custNname = custNname;
+        }
+
+        public String getNameNotes() {
+            return nameNotes;
+        }
+
+        public void setNameNotes(String nameNotes) {
+            this.nameNotes = nameNotes;
+        }
     }
 
-    public String getAppId() {
-        return appId;
-    }
+    public static class StarInfoBean {
+        /**
+         * tradeField :
+         */
 
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
+        private String tradeField;
 
-    public String getStarDesc() {
-        return starDesc;
-    }
+        public String getTradeField() {
+            return tradeField;
+        }
 
-    public void setStarDesc(String starDesc) {
-        this.starDesc = starDesc;
-    }
-
-    public String getStarImg() {
-        return starImg;
-    }
-
-    public void setStarImg(String starImg) {
-        this.starImg = starImg;
-    }
-
-    public String getStarName() {
-        return starName;
-    }
-
-    public void setStarName(String starName) {
-        this.starName = starName;
-    }
-
-    public String getStarTag() {
-        return starTag;
-    }
-
-    public void setStarTag(String starTag) {
-        this.starTag = starTag;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+        public void setTradeField(String tradeField) {
+            this.tradeField = tradeField;
+        }
     }
 }

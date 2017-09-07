@@ -116,6 +116,7 @@ public class LoginActivity extends BaseActivity {
 //    @BindView(R.id.titlebar_root)
 //    RelativeLayout mRlTitleRoot;
     private int loginType;
+    private int mGuideType;
 
 
     @Override
@@ -230,7 +231,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
         loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
-        loginType= getIntent().getIntExtra(IntentKey.GUIDE_KEY,-1);
+        mGuideType = getIntent().getIntExtra(IntentKey.GUIDE_KEY,-1);
         loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
@@ -452,7 +453,7 @@ public class LoginActivity extends BaseActivity {
                     //从圈子过来跳转登录的
 //                    JsEvent.callJsEvent(getLoginWebResultData(), true);
                     finish();
-                } else if(loginType == Type.TYPE_LOGIN_GUIDE){
+                } else if(mGuideType == Type.TYPE_LOGIN_GUIDE){
                     //从向导页面过来
                     Session.setUserIsFirstDownload(false);
                     skipActivity(aty, FollowCircle.class);

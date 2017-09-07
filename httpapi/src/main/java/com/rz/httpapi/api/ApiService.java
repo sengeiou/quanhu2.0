@@ -14,12 +14,14 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.LoginWayBean;
+import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
@@ -250,6 +252,32 @@ public interface ApiService {
     public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
             @Field("status") int status
     );
+    /**
+     * 添加喜欢的圈子
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.SAVE_FAVORITE_CIRCLE)
+    public Observable<ResponseData> addLoveCircle(
+            @Field("circleId") String circleId,
+            @Field("custId") String custId
+    );
+    /**
+     * 删除喜欢的圈子
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.REMOVE_FAVORITE_CIRCLE)
+    public Observable<ResponseData> delLoveCircle(
+            @Field("circleId") String circleId,
+            @Field("custId") String custId
+    );
+    /**
+     * 获取喜欢圈子列表
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.FAVORITE_CIRCLE_LIST)
+    public Observable<ResponseData<List<CircleEntrModle>>> getLoveCircleList(
+            @Field("custId") String custId
+    );
 
     /**
      * 获取首页banner
@@ -396,6 +424,14 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_FAMOUS_LIST)
     public Call<ResponseData<List<FamousModel>>> getFamous(
+            @Field("appIds") String appIds
+    );
+    /**
+     * 获取更多达人
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.MORE_FAMOUS_LIST)
+    public Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
             @Field("appIds") String appIds
     );
 
