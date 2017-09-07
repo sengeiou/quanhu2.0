@@ -76,7 +76,7 @@ public class PersionNickActivity extends BaseActivity implements View.OnClickLis
         finish();
     }
 
-    @OnClick({R.id.id_person_clear})
+    @OnClick({R.id.id_person_clear,R.id.tv_base_title_right})
     @Override
     public void onClick(View v) {
 
@@ -86,7 +86,7 @@ public class PersionNickActivity extends BaseActivity implements View.OnClickLis
                 String nickName = idPersonNickEdit.getText().toString();
 
                 if (StringUtils.isEmpty(nickName)) {
-                    SVProgressHUD.showErrorWithStatus(this, " 昵称不能为空");
+                    SVProgressHUD.showErrorWithStatus(this, "昵称不能为空");
                     return;
                 }
 
