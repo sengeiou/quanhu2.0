@@ -37,7 +37,6 @@ public class SearchPersonFragment extends BaseFragment {
         lvPerson.setPadding(basePadding, 0, basePadding, 0);
 
         personAdapter = new SearchPersonAdapter(getActivity(), R.layout.item_search_person);
-
         lvPerson.setAdapter(personAdapter);
     }
 

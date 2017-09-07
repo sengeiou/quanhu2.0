@@ -1,8 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +23,6 @@ import com.litesuits.common.utils.MD5Util;
 import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.rz.circled.R;
@@ -46,7 +43,6 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.UserInfoBean;
-import com.rz.sgt.jsbridge.JsEvent;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.config.preference.UserPreferences;
@@ -58,8 +54,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,10 +61,6 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Response;
-
-import static com.rz.common.constant.Constants.LOGIN_IN_SUCCESS;
 
 
 /**
@@ -137,6 +127,7 @@ public class LoginActivity extends BaseActivity {
 //    @BindView(R.id.titlebar_root)
 //    RelativeLayout mRlTitleRoot;
     private int loginType;
+    private int mGuideType;
 
 
     @Override
@@ -159,7 +150,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra(IntentKey.KEY_BOOLEAN, true);
+        intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
         setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
         finish();
     }
@@ -247,6 +238,8 @@ public class LoginActivity extends BaseActivity {
             }
         });
         loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
+        mGuideType = getIntent().getIntExtra(IntentKey.GUIDE_KEY,-1);
+        loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
 //    /**
@@ -356,7 +349,7 @@ public class LoginActivity extends BaseActivity {
     public void registerBtn() {
         CommomUtils.trackUser("注册登录", "注册", "");
         Intent intent = new Intent(aty, RegisterActivity.class);
-        intent.putExtra(IntentKey.KEY_TYPE, loginType);
+        intent.putExtra(IntentKey.EXTRA_TYPE, loginType);
 //        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
         startActivity(intent);
     }
@@ -367,7 +360,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.id_login_pw_btn)
     public void forgetPw() {
         Intent forget = new Intent(aty, FindPwdActivity.class);
-        forget.putExtra(IntentKey.KEY_TYPE, loginType);
+        forget.putExtra(IntentKey.EXTRA_TYPE, loginType);
         startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
     }
 
@@ -467,7 +460,12 @@ public class LoginActivity extends BaseActivity {
                     //从圈子过来跳转登录的
 //                    JsEvent.callJsEvent(getLoginWebResultData(), true);
                     finish();
-                } else {
+                } else if(mGuideType == Type.TYPE_LOGIN_GUIDE){
+                    //从向导页面过来
+                    Session.setUserIsFirstDownload(false);
+                    skipActivity(aty, FollowCircle.class);
+                    finish();
+                }else {
                     BaseEvent event = new BaseEvent();
 //                    event.key = LOGIN_IN_SUCCESS;
                     EventBus.getDefault().post(event);

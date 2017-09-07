@@ -29,6 +29,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     private String[] tabTags = new String[]{"home", "find", "reward", "privateCircle", "mine"};
 
+    
+
     @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_main, null);

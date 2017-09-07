@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.rz.circled.R;
-import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentKey;
+import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -46,9 +47,9 @@ public class GuideActivity extends BaseActivity {
     @Override
     public void initView() {
 
-//        guideList.add(R.drawable.guide_one);
-//        guideList.add(R.drawable.guide_two);
-//        guideList.add(R.drawable.guide_three);
+        guideList.add(R.drawable.guide_one);
+        guideList.add(R.drawable.guide_two);
+        guideList.add(R.drawable.guide_three);
         final PagerAdapter adapter = new PagerAdapter() {
             @Override
             public int getCount() {
@@ -80,13 +81,15 @@ public class GuideActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Session.setUserIsFirstDownload(false);
+
                 if (position == guideList.size() - 1) {
                     View iv = mGuideVp.getChildAt(position);
                     iv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                            Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
+                            intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
+                            startActivity(intent);
                             finish();
                         }
                     });

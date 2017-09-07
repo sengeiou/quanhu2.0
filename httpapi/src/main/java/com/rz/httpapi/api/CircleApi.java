@@ -9,7 +9,18 @@ public class CircleApi {
     /**
      * 获取圈子入口列表
      */
-    public static final String CIRCLE_ENTRANCE_LIST = "v3/circle/getCircleList";
+    public static final String CIRCLE_ENTRANCE_LIST = "v3/circle/getCircleList"; /**
+     * 获取喜欢圈子列表
+     */
+    public static final String FAVORITE_CIRCLE_LIST = "v3/circle/getFavoriteCircle";
+    /**
+     * 添加喜欢的圈子
+     */
+    public static final String SAVE_FAVORITE_CIRCLE = "v3/circle/saveFavoriteCircle";
+    /**
+     * 删除喜欢的圈子
+     */
+    public static final String REMOVE_FAVORITE_CIRCLE = "v3/circle/removeFavoriteCircle";
     /**
      * 首页banner
      */

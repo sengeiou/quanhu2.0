@@ -280,7 +280,7 @@ public class FindPwdActivity2 extends BaseActivity {
                 UserInfoModel model = (UserInfoModel) t;
                 if (null != model) {
                     Intent intent = new Intent();
-                    intent.putExtra(IntentKey.KEY_MODEL, model);
+                    intent.putExtra(IntentKey.EXTRA_MODEL, model);
                     setResult(IntentCode.Register.REGISTER_RESULT_CODE, intent);
                 }
             }

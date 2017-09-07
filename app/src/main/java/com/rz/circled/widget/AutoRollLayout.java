@@ -1,6 +1,7 @@
 package com.rz.circled.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -181,13 +184,13 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
                             if (url.contains("opus-h")){
 //                                VideoH5Aty.startCommonH5((Activity) v.getContext(),url,context.getString(R.string.app_name));
                             }else{
-//                            WebContainerAty.startAty(v.getContext(), url);
+                                WebContainerActivity.startActivity(v.getContext(), url);
                             }
                         } else {
                             if (Session.getUserIsLogin()){
-//                                WebContainerAty.startAty(v.getContext(), url);
+                                WebContainerActivity.startActivity(v.getContext(), url);
                             }else{
-//                            getContext().startActivity(new Intent(v.getContext(), LoginAty.class));
+                            getContext().startActivity(new Intent(v.getContext(), LoginActivity.class));
                             }
                         }
                 }

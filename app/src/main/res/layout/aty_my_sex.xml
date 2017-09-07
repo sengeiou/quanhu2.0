@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.rz.circled.widget.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F4F4F4">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/px30">
+
+        <RelativeLayout
+            android:id="@+id/id_layout_person_female"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comm_item_selector"
+            android:gravity="center_vertical"
+            android:padding="@dimen/px45">
+
+            <ImageView
+                android:id="@+id/id_female_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_pay_checked" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px20"
+                android:layout_toRightOf="@+id/id_female_img"
+                android:text="@string/mine_person_sex_female"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/px45" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px3"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:background="@color/color_EEEEEE" />
+
+        <RelativeLayout
+            android:id="@+id/id_layout_person_male"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comm_item_selector"
+            android:gravity="center_vertical"
+            android:padding="@dimen/px45">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/id_male_img"
+                android:text="@string/mine_person_sex_male"
+                android:layout_marginLeft="@dimen/px20"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/px45" />
+
+            <ImageView
+                android:id="@+id/id_male_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:src="@drawable/ic_pay_unchecked" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</com.rz.circled.widget.OverScrollView>

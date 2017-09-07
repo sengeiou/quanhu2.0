@@ -112,20 +112,22 @@ public class FindFragment extends BaseFragment {
                 convertView = View.inflate(mActivity, R.layout.item_recyclev_homev3, null);
                 viewHolder.icv_circle_img = (ImageView) convertView.findViewById(R.id.id_circle_civ);
                 viewHolder.tv_circle_name = (TextView) convertView.findViewById(R.id.id_circle_name);
-                viewHolder.tv_circle_peoplenums = (TextView) convertView.findViewById(R.id.id_circle_peoplenums);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
-            Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
+            if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)){
+                viewHolder.icv_circle_img.setImageResource(R.drawable.resource_more);
+            }else {
+//                viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
+                Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
+            }
             return convertView;
         }
 
         class ViewHolder {
             ImageView icv_circle_img;
             TextView tv_circle_name;
-            TextView tv_circle_peoplenums;
         }
     };
 
@@ -139,7 +141,7 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
-                if (circleEntrModle.circleName.equals("百圈纷呈")) {
+                if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
                     Intent intent = new Intent(mActivity, AllCirclesAty.class);
                     getActivity().startActivity(intent);
                 } else {
@@ -277,7 +279,7 @@ public class FindFragment extends BaseFragment {
         if (flag == 0) {
             circleEntrModleList.addAll((List<CircleEntrModle>) t);
             CircleEntrModle c = new CircleEntrModle();
-            c.circleName = getString(R.string.baiquanfencheng);
+            c.appId = getString(R.string.FIND_MORE);
             if (circleEntrModleList.size() >= 8) {
                 circleEntrModleList.add(7, c);
             } else {
