@@ -15,12 +15,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
+import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.zhuge.analysis.stat.ZhugeSDK;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
 
@@ -56,22 +62,11 @@ public class SplashAty extends BaseActivity {
 
     //时间是否结束
     private boolean isTimeOver;
+    private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (!isTaskRoot()) {
-//            Intent intent = getIntent();
-//            String action = intent.getAction();
-//            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(action)) {
-//                finish();
-//            }
-//        }
-
-//        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
-//            finish();
-//            return;
-//        }
     }
 
     @Override
@@ -94,10 +89,17 @@ public class SplashAty extends BaseActivity {
     }
 
     @Override
+    public void initPresenter() {
+        CirclePresenter presenter=new CirclePresenter();
+        presenter.attachView(this);
+        presenter.getBannerList("1");
+    }
+
+    @Override
     public void initView() {
 
         mImgBg = (ImageView) findViewById(R.id.id_start_page_bg_img);
-//        mImgBg.setImageResource(R.drawable.page_bg_qq_new);
+        mImgBg.setImageResource(R.drawable.page_bg_qq_new);
         if (!TextUtils.equals(StringUtils.isEmpty(Session.getAppVersion()) ? "" : Session.getAppVersion(), SystemUtils.getVersionName(this))) {
 //            ClearCacheUtil.clearCache(aty, 0, "");
             Session.clearMust();
@@ -118,6 +120,14 @@ public class SplashAty extends BaseActivity {
     }
 
     @Override
+    public <T> void updateViewWithFlag(T t, int flag) {
+        super.updateViewWithFlag(t, flag);
+        bannerList.addAll((Collection<? extends BannerAddSubjectModel>) t);
+
+
+    }
+
+    @Override
     public void initData() {
         SystemUtils.checkSystem(this);
     }
@@ -131,7 +141,7 @@ public class SplashAty extends BaseActivity {
         //过期日期
         long expireDate = StringUtils.isEmpty(Session.getAdv_expireDate()) ? 0 : Long.parseLong(Session.getAdv_expireDate());
         Log.d("time-----", "当前时间" + currentTime + "上刊时间" + upIngDate + "过期日期" + expireDate);
-        if (currentTime >= upIngDate && currentTime < expireDate) {
+        if (bannerList!=null) {
             recLen = 1000 * 5;
             if (Session.getAdv_pic_url().endsWith(".gif")) {
                 if (Protect.checkLoadImageStatus(aty)) {
@@ -148,14 +158,16 @@ public class SplashAty extends BaseActivity {
                     public void onClick(View view) {
                         isClickAdv = true;
                         if (!TextUtils.isEmpty(Session.getAdv_url())) {
-//                            CommH5Aty.startCommonH5(aty, Session.getAdv_url());
+                            CommonH5Activity.startCommonH5(aty,"", Session.getAdv_url());
                         }
                     }
                 });
             }
         } else {
-            recLen = 1000 * 4;
+//            recLen = 1000 * 4;
+//
 //            mImgBg.setImageResource(R.drawable.bg_splash_activity);
+            jumpTo();
         }
         mTxtjumpTo = (TextView) findViewById(R.id.id_jump_txt);
         mTxtjumpTo.setVisibility(View.VISIBLE);
@@ -194,14 +206,10 @@ public class SplashAty extends BaseActivity {
      * 跳转
      */
     private void jumpTo() {
-//        if (Session.getIsOpenGesture()) {
-//            Intent intent = new Intent(aty, LockCheckActivity.class);
-//            intent.putExtra("gesture", Constants.HOM_PAGE_TO_GESTURE);
-//            skipActivity(this, intent);
-//        } else {
-//        }
-        if (!isClickAdv) {
+        if (!isClickAdv&&Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
+        }else {
+            skipActivity(aty, LoginActivity.class);
         }
     }
 

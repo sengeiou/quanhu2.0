@@ -54,7 +54,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void initPresenter() {
         CirclePresenter presenter = new CirclePresenter();
         presenter.attachView(this);
-        presenter.getBannerList(5);
+        presenter.getBannerList("2");
         presenter.getCircleDynamicList(false);
     }
 
@@ -100,7 +100,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (flag == 5) {
+        if (flag == 2) {
             bannerList.clear();
             bannerList.addAll((List<BannerAddSubjectModel>) t);
             mAuto_viewpager.setItems(bannerList);

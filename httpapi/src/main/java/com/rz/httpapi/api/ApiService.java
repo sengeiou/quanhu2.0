@@ -257,7 +257,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_BANNER_LIST)
     public Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
-            @Field("act") int act
+            @Field("bannerType") String bannerType
     );
 
     /**
