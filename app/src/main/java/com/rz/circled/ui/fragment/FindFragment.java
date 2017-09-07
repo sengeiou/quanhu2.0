@@ -23,6 +23,7 @@ import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.circled.widget.XGridView;
@@ -40,8 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
-
-import static com.rz.circled.widget.CommomUtils.trackUser;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -85,6 +84,7 @@ public class FindFragment extends BaseFragment {
         mPresenter.attachView(this);
         mPresenter.getCircleEntranceList(0);
         mPresenter.getFamousList(7);
+
     }
 
     BaseAdapter findAdapter = new BaseAdapter() {
@@ -230,17 +230,18 @@ public class FindFragment extends BaseFragment {
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 FamousViewHolder fvh = (FamousViewHolder) holder;
                 FamousModel famousModel = famousList.get(position);
-                Glide.with(mActivity).load(famousModel.getStarImg()).into(fvh.famous_iv);
-                fvh.famous_name.setText(famousModel.getStarName());
-                fvh.famous_mark.setText(famousModel.getStarTag());
+                Glide.with(mActivity).load(famousModel.custInfo.getCustImg()).transform(new GlideCircleImage(mActivity)).into(fvh.famous_iv);
+                fvh.famous_name.setText(famousModel.custInfo.getCustNname());
+                fvh.famous_mark.setText(famousModel.starInfo.getTradeField());
+                fvh.famous_level.setText("Lv"+String.valueOf(famousModel.custInfo.getCustLevel()));
                 fvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (isLogin()) {
-                            String url = famousList.get(position).getUrl();
-                            String starName = famousList.get(position).getStarName();
-                            trackUser("推广", "达人", starName);
-//                            WebContainerAty.startAty(v.getContext(), url);
+//                            String url = famousList.get(position).getUrl();
+//                            String starName = famousList.get(position).getStarName();
+//                            trackUser("推广", "达人", starName);
+//                            WebContainerActivity.startActivity(v.getContext(), url);
                         }
                     }
                 });
@@ -255,12 +256,14 @@ public class FindFragment extends BaseFragment {
                 ImageView famous_iv;
                 TextView famous_name;
                 TextView famous_mark;
+                TextView famous_level;
 
                 public FamousViewHolder(View itemView) {
                     super(itemView);
                     famous_iv = (ImageView) itemView.findViewById(R.id.famous_iv);
                     famous_name = ((TextView) itemView.findViewById(R.id.famous_name));
                     famous_mark = ((TextView) itemView.findViewById(R.id.famous_mark));
+                    famous_level = ((TextView) itemView.findViewById(R.id.famous_level));
                 }
             }
         };

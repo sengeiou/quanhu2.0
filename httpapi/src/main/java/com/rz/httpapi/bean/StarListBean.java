@@ -1,11 +1,10 @@
 package com.rz.httpapi.bean;
 
 /**
- * Created by Administrator on 2017/6/8/008.
+ * Created by Administrator on 2017/9/7/007.
  */
 
-public class FamousModel {
-
+public class StarListBean {
     /**
      * custInfo : {"custId":"","custImg":"","custLevel":1,"custNname":"","nameNotes":""}
      * starInfo : {"tradeField":""}
@@ -14,7 +13,7 @@ public class FamousModel {
     public CustInfoBean custInfo;
     public StarInfoBean starInfo;
 
-    public class CustInfoBean {
+    public static class CustInfoBean {
         /**
          * custId :
          * custImg :
