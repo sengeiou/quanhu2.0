@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.rz.circled.R;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
@@ -70,6 +71,16 @@ public class UploadVideoActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText(R.string.upload_video);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
     }
 
     @Override
@@ -212,6 +223,7 @@ public class UploadVideoActivity extends BaseActivity {
 
     private void uploadVideoFile() {
         Log.d(TAG, "uploadVideoFile uoloadId is " + currentUploadId);
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
         mOssManager.asyncMultipartUpload(mVideoFilePath, fileName, OssManager.VIDEO, new OssManager.OssCallBack() {
             @Override
             public void onSuccess(String url, String uploadId) {
@@ -232,6 +244,7 @@ public class UploadVideoActivity extends BaseActivity {
 //                showRetryPublishVideoDialog();
                 Log.d(TAG, "OssCallBack onFailure  ");
                 Log.d(TAG, "uploadId " + uploadId);
+                onLoadingStatus(CommonCode.General.ERROR_DATA);
 //                Toast.makeText(App.getContext(), getString(R.string.upload_video_fail), Toast.LENGTH_SHORT).show();
             }
 
@@ -267,9 +280,11 @@ public class UploadVideoActivity extends BaseActivity {
 //                        materialDialogUtils.dismissProgress();
                         Log.d(TAG, "this is video pic upload result result is " + result);
                         if (result) {
+                            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mVideoImage = resultList.get(0).fileSavePath;
                             callResult(true);
                         } else {
+                            onLoadingStatus(CommonCode.General.ERROR_DATA);
                             Toasty.error(mContext, getString(R.string.upload_video_fail), Toast.LENGTH_SHORT, true).show();
                         }
                     }

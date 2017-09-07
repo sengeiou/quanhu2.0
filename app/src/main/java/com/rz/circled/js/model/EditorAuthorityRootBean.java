@@ -12,7 +12,7 @@ public class EditorAuthorityRootBean implements Serializable {
     //允许分享标识（0；不允许；1：允许）
     private int allowShareFlag = -1;
     //内容价格
-    private int contentPrice = 0;
+    private int contentPrice = 1;
     //私圈Id
     private String coterieId;
 

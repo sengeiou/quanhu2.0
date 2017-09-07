@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -53,6 +52,11 @@ public class UploadPicActivity extends BaseActivity {
 
     @Override
     protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
         return true;
     }
 
