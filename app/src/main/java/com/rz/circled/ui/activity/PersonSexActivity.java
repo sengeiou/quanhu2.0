@@ -37,7 +37,7 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
         return inflater.inflate(R.layout.aty_my_sex, null);
     }
 
-    @OnClick({R.id.id_layout_person_female, R.id.id_layout_person_male})
+    @OnClick({R.id.id_layout_person_female, R.id.id_layout_person_male, R.id.tv_base_title_right})
     @Override
     public void onClick(View v) {
 
