@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.rz.circled.R;
-import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class GuideActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
-                            intent.putExtra(IntentKey.GUIDE_KEY, IntentKey.GUIDE_KEY);
+                            intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
                             startActivity(intent);
                             finish();
                         }
