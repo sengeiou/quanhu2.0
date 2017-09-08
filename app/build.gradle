@@ -143,4 +143,6 @@ dependencies {
     compile 'com.facebook.fresco:animated-gif:0.12.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile project(':umshare')
+    compile project(path: ':YunXinUIKit')
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
 }

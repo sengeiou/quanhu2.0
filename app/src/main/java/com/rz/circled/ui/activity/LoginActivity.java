@@ -120,6 +120,11 @@ public class LoginActivity extends BaseActivity {
 
 
     @Override
+    protected boolean needSwipeBack() {
+        return false;
+    }
+
+    @Override
     public boolean needShowTitle() {
         return false;
     }
@@ -328,7 +333,7 @@ public class LoginActivity extends BaseActivity {
             if (mPassword.length() >= 6 && mPassword.length() <= 18) {
                 ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
             } else {
-                SVProgressHUD.showErrorWithStatus(aty, getString(R.string.password_error));
+                SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
             }
         } else {
             SVProgressHUD.showErrorWithStatus(aty, getString(R.string.phone_error));

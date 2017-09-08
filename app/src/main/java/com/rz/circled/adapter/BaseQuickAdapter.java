@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.animation.ScaleInAnimation;
 import com.chad.library.adapter.base.animation.SlideInBottomAnimation;
 import com.chad.library.adapter.base.animation.SlideInLeftAnimation;
 import com.chad.library.adapter.base.animation.SlideInRightAnimation;
+import com.rz.circled.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -229,7 +230,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     }
 
     private BaseViewHolder getLoadingView(ViewGroup parent) {
-        return this.mLoadingView == null?this.createBaseViewHolder(parent, com.chad.library.R.layout.def_loading):new BaseViewHolder(this.mContext, this.mLoadingView);
+        return this.mLoadingView == null?this.createBaseViewHolder(parent, R.layout.def_loading):new BaseViewHolder(this.mContext, this.mLoadingView);
     }
 
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
