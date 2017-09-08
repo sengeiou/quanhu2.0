@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.jakewharton.rxbinding.view.RxView;
 import com.rz.circled.R;
+import com.rz.circled.db.DatabaseHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.MoreFamousActivity;
@@ -27,6 +27,7 @@ import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.circled.widget.XGridView;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
@@ -35,12 +36,10 @@ import com.rz.httpapi.bean.HotSubjectModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -71,6 +70,10 @@ public class FindFragment extends BaseFragment {
     private List<HotSubjectModel> subjectList = new ArrayList<>();
     private List<HotSubjectModel> activityList = new ArrayList<>();
     private RecyclerView.Adapter mFamousAdapter;
+    private List<CircleEntrModle> mLoveList=new ArrayList<>();
+    private List<CircleEntrModle> allCircle=new ArrayList<>();
+    private List<CircleEntrModle> noFollow=new ArrayList<>();
+    private List<CircleEntrModle> Follow=new ArrayList<>();
 
     @Nullable
     @Override
@@ -80,9 +83,19 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
+        DatabaseHelper helper = DatabaseHelper.getHelper(getContext());
+//        try {
+//            helper.getUserDao().deleteBuilder()
+//            List<User> users = helper.getUserDao().queryForAll();
+//            int desc = users.get(0).getCount();
+//            Log.i(TAG, "initPresenter: "+desc);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getCircleEntranceList(0);
+        mPresenter.getUserLoveCircle(Session.getUserId());
         mPresenter.getFamousList(7);
 
     }
@@ -154,18 +167,7 @@ public class FindFragment extends BaseFragment {
     private void initTitleBar() {
         View v = View.inflate(getActivity(), R.layout.find_titlebar_transparent, null);
         mLayoutContent.addView(v);
-        RxView.clicks(v.findViewById(R.id.find_title_left)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
-                Toasty.info(mActivity,"这里不能点啊").show();
-            }
-        });
-        RxView.clicks(v.findViewById(R.id.iv_find_more)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-            @Override
-            public void call(Void aVoid) {
 
-            }
-        });
     }
 
     private void initActivity() {
@@ -280,21 +282,52 @@ public class FindFragment extends BaseFragment {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
         if (flag == 0) {
-            circleEntrModleList.addAll((List<CircleEntrModle>) t);
-            CircleEntrModle c = new CircleEntrModle();
-            c.appId = getString(R.string.FIND_MORE);
-            if (circleEntrModleList.size() >= 8) {
-                circleEntrModleList.add(7, c);
-            } else {
-                circleEntrModleList.add(c);
+            allCircle.addAll((List<CircleEntrModle>) t);
+            for (int i = 0; i < allCircle.size(); i++) {
+                boolean isfind = false;
+                for (int j = 0; j < mLoveList.size(); j++) {
+                    if (allCircle.get(i).appId.equals(mLoveList.get(j).appId)){
+                        Follow.add(allCircle.get(i));
+                        isfind = true;
+                        break;
+                    }
+                }
+                if (!isfind) {
+                    noFollow.add(allCircle.get(i));
+                }
             }
-            findAdapter.notifyDataSetChanged();
+            circleEntrModleList.clear();
+            circleEntrModleList.addAll(Follow);
+            circleEntrModleList.addAll(noFollow);
+            addMore();
             return;
         }
         if (flag == 7) {
             famousList.addAll((List<FamousModel>) t);
             mFamousAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+            mLoveList = (List<CircleEntrModle>) t;
+    }
+
+    private void addMore() {
+//        if (mLoveList.size()>=7){
+//            circleEntrModleList.addAll(mLoveList);
+//        }else {
+//            circleEntrModleList.addAll(mLoveList);
+//            circleEntrModleList.addAll(allCircle);
+//        }
+        CircleEntrModle c = new CircleEntrModle();
+        c.appId = getString(R.string.FIND_MORE);
+        if (circleEntrModleList.size() >= 8) {
+            circleEntrModleList.add(7, c);
+        } else {
+            circleEntrModleList.add(c);
+        }
+        findAdapter.notifyDataSetChanged();
     }
 
     @Override

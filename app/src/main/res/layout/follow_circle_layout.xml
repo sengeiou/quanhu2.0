@@ -2,6 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
+              android:background="@color/white"
               android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/px200"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/font_44"
+            android:text="选择你喜欢的圈子"
+            android:textColor="@color/black"
+            android:textSize="@dimen/px58"
+            android:textStyle="bold"
+            />
+        <Button
+            android:id="@+id/btn_jump"
+            android:layout_width="@dimen/px174"
+            android:layout_height="@dimen/px72"
+            android:text="跳过"
+            android:layout_marginRight="@dimen/px28"
+            android:background="@drawable/follow_jump_shape"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/px44"
+            android:textColor="@color/color_666666"
+            />
+        <Button
+            android:id="@+id/btn_press"
+            android:layout_width="@dimen/px174"
+            android:layout_height="@dimen/px72"
+            android:background="@drawable/follow_press_shape"
+            android:layout_marginRight="@dimen/px44"
+            android:textSize="@dimen/px44"
+            android:text="确定"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/color_349DFF"
+            />
+
+    </LinearLayout>
+    <GridView
+        android:id="@+id/gv_follow"
+        android:layout_marginTop="@dimen/px50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:paddingLeft="@dimen/font_44"
+        ></GridView>
 
 </LinearLayout>
