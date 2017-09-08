@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.rz.circled.adapter.viewholder.NewsActivityViewBinder;
 import com.rz.circled.adapter.viewholder.NewsAnnouncementViewBinder;
 import com.rz.circled.adapter.viewholder.NewsArticleViewBinder;
+import com.rz.circled.adapter.viewholder.NewsGroupViewBinder;
+import com.rz.circled.adapter.viewholder.NewsInteractiveViewBinder;
 import com.rz.circled.adapter.viewholder.NewsTextViewBinder;
 import com.rz.circled.adapter.viewholder.NewsUserViewBinder;
 import com.rz.httpapi.bean.NewsBean;
@@ -30,6 +32,8 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
                 new NewsArticleViewBinder(),
                 new NewsTextViewBinder(),
                 new NewsAnnouncementViewBinder(),
+                new NewsInteractiveViewBinder(),
+                new NewsGroupViewBinder(),
                 new NewsUserViewBinder()
         ).withClassLinker(new ClassLinker<NewsBean>() {
             @NonNull
@@ -46,6 +50,10 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
                         return NewsUserViewBinder.class;
                     case NewsBean.TYPE_ANNOUNCEMENT:
                         return NewsAnnouncementViewBinder.class;
+                    case NewsBean.TYPE_GROUP:
+                        return NewsGroupViewBinder.class;
+                    case NewsBean.TYPE_INTERACTIVE:
+                        return NewsInteractiveViewBinder.class;
                     default:
                         return NewsTextViewBinder.class;
                 }

@@ -189,7 +189,7 @@
     <string name="system_information">系统消息</string>
     <string name="account_information">账户消息</string>
     <string name="interactive_information">互动消息</string>
-    <string name="recommend_information">精彩推荐</string>
+    <string name="recommend_information">推荐与活动</string>
     <string name="news_details_view">查看详情</string>
     <string name="news_private_group_from">来自私圈  %1$s</string>
     <string name="news_interactive_tab_comment">评论</string>
@@ -503,8 +503,6 @@
     <string name="publish_show">发布</string>
     <string name="publish_thinking">写点什么秀自我，秀生活</string>
     <string name="max_txt_num">/300</string>
-
-
 
 
     <string name="FIND_MORE">110</string>

@@ -82,7 +82,7 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                         List<PrivateGroupBean> data = response.body().getData().getList();
                         if (data != null && data.size() > 0) {
                             mAdapter.setData(data.size() > 3 ? data.subList(0, 3) : data);
-                            tv.setText(String.format(getString(R.string.private_group_total), data.size()));
+                            tv.setText(String.format(getString(R.string.private_group_total), response.body().getData().getCount()));
                             tv.setTextColor(getResources().getColor(R.color.color_0185FF));
                             Utility.setListViewHeightBasedOnChildren(lv);
                         } else {
