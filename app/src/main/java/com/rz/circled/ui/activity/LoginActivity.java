@@ -462,7 +462,7 @@ public class LoginActivity extends BaseActivity {
                     finish();
                 } else if(mGuideType == Type.TYPE_LOGIN_GUIDE){
                     //从向导页面过来
-                    Session.setUserIsFirstDownload(false);
+
                     skipActivity(aty, FollowCircle.class);
                     finish();
                 }else {

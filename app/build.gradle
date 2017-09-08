@@ -56,7 +56,7 @@ android {
             buildConfigField "boolean", "addServerPrefix", "true"
             buildConfigField "String", "BaseUrl", "\"https://api.quanhu365.com/api/\""
             buildConfigField "String", "NoticeBaseUrl", "\"https://m.quanhu365.com\""
-            buildConfigField "String", "WebHomeBaseUrl", "\"https://web.quanhu365.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"https://m.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -69,7 +69,7 @@ android {
             buildConfigField "boolean", "addServerPrefix", "true"
             buildConfigField "String", "BaseUrl", "\"https://api-mo.quanhu365.com/api/\""
             buildConfigField "String", "NoticeBaseUrl", "\"https://m-mo.quanhu365.com\""
-            buildConfigField "String", "WebHomeBaseUrl", "\"https://web-mo.quanhu365.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"https://m-mo.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -82,7 +82,7 @@ android {
             buildConfigField "boolean", "addServerPrefix", "true"
             buildConfigField "String", "BaseUrl", "\"http://api-dev.quanhu365.com/api/\""
             buildConfigField "String", "NoticeBaseUrl", "\"http://m-dev.quanhu365.com\""
-            buildConfigField "String", "WebHomeBaseUrl", "\"http://web-dev.quanhu365.com\""
+            buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
