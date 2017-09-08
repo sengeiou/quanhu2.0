@@ -189,6 +189,12 @@
     <string name="account_information">账户消息</string>
     <string name="interactive_information">互动消息</string>
     <string name="recommend_information">精彩推荐</string>
+    <string name="news_details_view">查看详情</string>
+    <string name="news_private_group_from">来自私圈  %1$s</string>
+    <string name="news_interactive_tab_comment">评论</string>
+    <string name="news_interactive_tab_qa">问答</string>
+    <string name="news_interactive_tab_group">私圈</string>
+    <string name="news_interactive_tab_activity">活动</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>

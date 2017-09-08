@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44"
+        android:paddingTop="@dimen/px44">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_38"
+            tool:text="2017年9月7日11:00:52" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px30"
+            android:lines="1"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_54"
+            tool:text="这里的是活动标题" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px30"
+            android:lines="1"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_44"
+            tool:text="这里是活动简介" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px400"
+            android:layout_marginTop="@dimen/px30"
+            android:scaleType="centerCrop"
+            android:src="@android:color/holo_green_light"
+            app:riv_corner_radius="@dimen/px18"
+            app:riv_mutate_background="true"
+            app:riv_oval="false" />
+
+        <View style="@style/line_horizontal_gray_s" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px30"
+            android:paddingTop="@dimen/px30">
+
+            <TextView
+                android:id="@+id/tv_from"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44"
+                tool:text="来自私圈 巴拉巴拉" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/news_details_view"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44" />
+
+            <ImageView style="@style/DefaultArrowRightStyle" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line_horizontal_gray_s" />
+</LinearLayout>

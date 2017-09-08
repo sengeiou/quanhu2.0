@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44"
+        android:paddingTop="@dimen/px44">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_38"
+            tool:text="2017年9月7日11:00:52" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px44"
+            android:layout_marginTop="@dimen/px44"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/px160"
+                android:layout_height="@dimen/px160"
+                android:scaleType="centerCrop"
+                android:src="@android:color/holo_green_light"
+                app:riv_mutate_background="true"
+                app:riv_oval="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px44"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="@dimen/font_54"
+                    tool:text="董子献" />
+
+                <TextView
+                    android:id="@+id/tv_intro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px20"
+                    android:lines="1"
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_44"
+                    tool:text="这里是个人简介" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal_gray_s" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px30"
+            android:paddingTop="@dimen/px30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/news_details_view"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44" />
+
+            <ImageView style="@style/DefaultArrowRightStyle" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line_horizontal_gray_s" />
+</LinearLayout>

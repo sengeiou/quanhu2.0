@@ -303,7 +303,6 @@ public class Session {
      */
     private static String js_user_id;
 
-
     public static boolean isRedbag_rule() {
         return SysSharePres.getInstance().getUserReadBagRule();
     }
@@ -883,6 +882,70 @@ public class Session {
 
     public static void setCache(int size) {
         SysSharePres.getInstance().setCache(size);
+    }
+
+    public static int getNewsAnnouncementNum() {
+        return SysSharePres.getInstance().getNewsAnnouncementNum();
+    }
+
+    public static void setNewsAnnouncementNum(int newsAnnouncementNum) {
+        SysSharePres.getInstance().setNewsAnnouncementNum(newsAnnouncementNum);
+    }
+
+    public static int getNewsSystemInformationNum() {
+        return SysSharePres.getInstance().getNewsSystemInformationNum();
+    }
+
+    public static void setNewsSystemInformationNum(int newsSystemInformationNum) {
+        SysSharePres.getInstance().setNewsSystemInformationNum(newsSystemInformationNum);
+    }
+
+    public static int getNewsCommentNum() {
+        return SysSharePres.getInstance().getNewsCommentNum();
+    }
+
+    public static void setNewsCommentNum(int newsCommentNum) {
+        SysSharePres.getInstance().setNewsCommentNum(newsCommentNum);
+    }
+
+    public static int getNewsQaNum() {
+        return SysSharePres.getInstance().getNewsQaNum();
+    }
+
+    public static void setNewsQaNum(int newsQaNum) {
+        SysSharePres.getInstance().setNewsQaNum(newsQaNum);
+    }
+
+    public static int getNewsGroupNum() {
+        return SysSharePres.getInstance().getNewsGroupNum();
+    }
+
+    public static void setNewsGroupNum(int newsGroupNum) {
+        SysSharePres.getInstance().setNewsGroupNum(newsGroupNum);
+    }
+
+    public static int getNewsActivityNum() {
+        return SysSharePres.getInstance().getNewsActivityNum();
+    }
+
+    public static void setNewsActivityNum(int newsActivityNum) {
+        SysSharePres.getInstance().setNewsActivityNum(newsActivityNum);
+    }
+
+    public static int getNewsRecommendNum() {
+        return SysSharePres.getInstance().getNewsRecommendNum();
+    }
+
+    public static void setNewsRecommendNum(int newsRecommendNum) {
+        SysSharePres.getInstance().setNewsRecommendNum(newsRecommendNum);
+    }
+
+    public static int getNewsAccountInformationNum() {
+        return SysSharePres.getInstance().getNewsAccountInformationNum();
+    }
+
+    public static void setNewsAccountInformationNum(int newsAccountInformationNum) {
+        SysSharePres.getInstance().setNewsAccountInformationNum(newsAccountInformationNum);
     }
 
     /**

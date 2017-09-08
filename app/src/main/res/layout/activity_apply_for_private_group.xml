@@ -37,6 +37,39 @@
         <View style="@style/line_horizontal_gray_s" />
 
         <LinearLayout
+            android:id="@+id/btn_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/px44">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="所属圈子"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/px50" />
+
+            <TextView
+                android:id="@+id/tv_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="鱼儿圈"
+                android:textColor="@color/font_gray_s"
+                android:textSize="@dimen/font_44" />
+
+            <ImageView style="@style/DefaultArrowRightStyle" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal_gray_s" />
+
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginTop="@dimen/px28" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -234,8 +267,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@null"
-                        android:hint="请输入私圈名称"
                         android:gravity="right"
+                        android:hint="请输入私圈名称"
                         android:textColor="@color/font_gray_m"
                         android:textColorHint="@color/font_gray_s"
                         android:textSize="@dimen/font_44" />
@@ -292,37 +325,6 @@
                         android:textColor="@color/font_gray_s"
                         android:textSize="@dimen/font_38" />
                 </LinearLayout>
-
-                <View
-                    style="@style/line_horizontal_gray_s"
-                    android:layout_marginBottom="@dimen/px44"
-                    android:layout_marginTop="@dimen/px28" />
-
-                <LinearLayout
-                    android:id="@+id/btn_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="所属圈子"
-                        android:textColor="@color/font_gray_xl"
-                        android:textSize="@dimen/px50" />
-
-                    <TextView
-                        android:id="@+id/tv_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="鱼儿圈"
-                        android:textColor="@color/font_gray_s"
-                        android:textSize="@dimen/font_44" />
-
-                    <ImageView style="@style/DefaultArrowRightStyle" />
-                </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
 

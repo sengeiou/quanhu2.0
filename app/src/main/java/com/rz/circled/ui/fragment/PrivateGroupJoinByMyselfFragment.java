@@ -128,7 +128,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                                 } else {
                                     mAdapter.setData(data);
                                 }
-                                Utility.setListViewHeightBasedOnChildren(lv);
+                                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
                             }
                         } else {
                             if (data != null && data.size() > 0) {

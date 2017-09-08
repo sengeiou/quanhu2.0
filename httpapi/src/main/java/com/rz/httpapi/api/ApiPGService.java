@@ -91,10 +91,10 @@ public interface ApiPGService {
     Call<ResponseData<PrivateGroupListBean>> privateGroupRecommend(@Field("custId") String custId);
 
     @FormUrlEncoded
-    @POST(ApiPG.PRIVATE_GROUP_MYSELF_CREATE)
-    Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfCreate(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
-
-    @FormUrlEncoded
     @POST(ApiPG.PRIVATE_GROUP_MYSELF_JOIN)
     Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfJoin(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
+
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_MYSELF_CREATE)
+    Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfCreate(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
 }

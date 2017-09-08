@@ -140,7 +140,9 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     compile 'com.android.support:multidex:1.0.1'
-
+    compile('me.drakeet.multitype:multitype:3.0.0', {
+        exclude group: 'com.android.support'
+    })
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     //视频播放
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'

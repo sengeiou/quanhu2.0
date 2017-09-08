@@ -22,7 +22,6 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
     public static final int TYPE_DESC = 1;
 
     private int type;
-    private String keyWord;
 
     public DefaultPrivateGroupAdapter(Context context, int layoutId, int type) {
         super(context, layoutId);
@@ -67,8 +66,4 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
         }
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
-        notifyDataSetChanged();
-    }
 }
