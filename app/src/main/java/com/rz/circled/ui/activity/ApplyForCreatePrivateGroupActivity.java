@@ -74,7 +74,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     TextView btnProtocol;
 
     private String coverPath;
-    private String circleId;
+    private String circleId = "y2caoa2g2jcb";
     private UploadPicManager upManager;
 
     @Override
@@ -150,7 +150,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 PictureSelectedActivity.startActivityForResult(this, COVER_ADD_REQUEST, 1, false);
                 break;
             case R.id.btn_group:
-
+                ApplyForPrivateGroupBelongActivity.startPrivateGroupBelong(mContext, TextUtils.isEmpty(circleId) ? "" : circleId);
                 break;
             case R.id.btn_protocol:
 

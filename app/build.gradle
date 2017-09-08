@@ -58,6 +58,13 @@ android {
             buildConfigField "String", "NoticeBaseUrl", "\"https://m.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"https://web.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
+            manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
+                                    AMAP_KEY     : "fadba6d91674d925460af5bf3cf24899",
+                                    JPUSH_PKGNAME: defaultConfig.applicationId,
+                                    //JPush上注册的包名对应的appkey.
+                                    JPUSH_APPKEY : "40869323ab400d45aa046896",
+                                    //暂时填写默认值即可.
+                                    JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -71,6 +78,13 @@ android {
             buildConfigField "String", "NoticeBaseUrl", "\"https://m-mo.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"https://web-mo.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
+            manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
+                                    AMAP_KEY     : "fadba6d91674d925460af5bf3cf24899",
+                                    JPUSH_PKGNAME: defaultConfig.applicationId,
+                                    //JPush上注册的包名对应的appkey.
+                                    JPUSH_APPKEY : "40869323ab400d45aa046896",
+                                    //暂时填写默认值即可.
+                                    JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -84,6 +98,13 @@ android {
             buildConfigField "String", "NoticeBaseUrl", "\"http://m-dev.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"http://web-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
+            manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
+                                    AMAP_KEY     : "fadba6d91674d925460af5bf3cf24899",
+                                    JPUSH_PKGNAME: defaultConfig.applicationId,
+                                    //JPush上注册的包名对应的appkey.
+                                    JPUSH_APPKEY : "40869323ab400d45aa046896",
+                                    //暂时填写默认值即可.
+                                    JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -107,10 +128,22 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile project(':common')
+    compile project(':YunXinIM')
+    compile project(':httpapi')
+    compile project(':jsbridge')
+    compile project(':TimePickerDialog')
+    compile project(':audio')
+    compile project(':umshare')
+
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
     compile 'com.android.support:multidex:1.0.1'
+    compile('me.drakeet.multitype:multitype:3.0.0', {
+        exclude group: 'com.android.support'
+    })
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     //视频播放
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
@@ -129,12 +162,10 @@ dependencies {
     compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
-    compile project(':common')
-    compile project(':YunXinIM')
-    compile project(':httpapi')
-    compile project(':jsbridge')
-    compile project(':TimePickerDialog')
-    compile project(':audio')
+    // 此处以JPush 3.0.9 版本为例。
+    compile 'cn.jiguang.sdk:jpush:3.0.6'
+    // 此处以JCore 1.1.7 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.5'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
@@ -142,6 +173,7 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.facebook.fresco:animated-gif:0.12.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+
     compile project(':umshare')
     compile project(path: ':YunXinUIKit')
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'

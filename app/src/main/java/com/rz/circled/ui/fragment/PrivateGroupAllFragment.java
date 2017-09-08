@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
+import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -34,6 +35,8 @@ import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_SEARCH_KEY;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
+import static com.rz.common.constant.IntentKey.EXTRA_BOOLEAN;
+import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
  * Created by rzw2 on 2017/8/31.
@@ -46,12 +49,17 @@ public class PrivateGroupAllFragment extends BaseFragment {
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout layoutRefresh;
 
-    private int pageNo;
-    private DefaultPrivateGroupAdapter mAdapter;
+    private int pageNo = 1;
+    private DefaultPricePrivateGroupAdapter mAdapter;
 
     public static PrivateGroupAllFragment newInstance() {
+        return newInstance(true);
+    }
+
+    public static PrivateGroupAllFragment newInstance(boolean initData) {
         PrivateGroupAllFragment fragment = new PrivateGroupAllFragment();
         Bundle args = new Bundle();
+        args.putBoolean(EXTRA_BOOLEAN, initData);
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,7 +74,7 @@ public class PrivateGroupAllFragment extends BaseFragment {
     public void initView() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
-        lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_SCAN));
+        lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_SCAN));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,7 +96,8 @@ public class PrivateGroupAllFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        loadData(false);
+        if (getArguments().getBoolean(EXTRA_BOOLEAN))
+            loadData(false);
     }
 
     @Override
@@ -103,6 +112,7 @@ public class PrivateGroupAllFragment extends BaseFragment {
         switch (event.getType()) {
             case PRIVATE_GROUP_SEARCH_KEY:
                 mAdapter.setKeyWord((String) event.getData());
+                loadData(false);
                 break;
         }
     }
@@ -142,12 +152,5 @@ public class PrivateGroupAllFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
-
-        List<PrivateGroupBean> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(new PrivateGroupBean());
-        }
-        mAdapter.setData(list);
-        Utility.setListViewHeightBasedOnChildren(lv);
     }
 }

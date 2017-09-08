@@ -10,11 +10,11 @@ import android.widget.ListView;
  */
 
 public class Utility {
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
+    public static int setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) {
             // pre-condition
-            return;
+            return 0;
         }
 
         int totalHeight = 0;
@@ -27,5 +27,12 @@ public class Utility {
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+        return params.height;
+    }
+
+    public static void setViewHeight(View view, int height) {
+        ViewGroup.LayoutParams params = view.getLayoutParams();
+        params.height = height;
+        view.setLayoutParams(params);
     }
 }

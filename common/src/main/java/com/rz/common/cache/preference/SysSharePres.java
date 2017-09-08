@@ -341,6 +341,23 @@ public class SysSharePres {
      */
     public static final String CACHE_SIZE = "cacheSize";
 
+
+    private static final String NEWS_ANNOUNCEMENT_NUM = "newsAnnouncementNum";
+
+    private static final String NEWS_SYSTEM_INFORMATION_NUM = "newsSystemInformationNum";
+
+    private static final String NEWS_COMMENT_NUM = "newsCommentNum";
+
+    private static final String NEWS_QA_NUM = "newsQaNum";
+
+    private static final String NEWS_GROUP_NUM = "newsGroupNum";
+
+    private static final String NEWS_ACTIVITY_NUM = "newsActivityNum";
+
+    private static final String NEWS_RECOMMEND_NUM = "newsRecommendNum";
+
+    private static final String NEWS_ACCOUNT_INFORMATION_NUM = "newsAccountInformationNum";
+
     public SysSharePres() {
         System.out.println(BaseApplication.getInstance().getContext());
         mSharePres = BaseApplication.getInstance().getContext().getSharedPreferences(PRES_NAME,
@@ -894,4 +911,67 @@ public class SysSharePres {
         mSharePres.edit().putInt(CACHE_SIZE, size).apply();
     }
 
+    public int getNewsAnnouncementNum() {
+        return mSharePres.getInt(NEWS_ANNOUNCEMENT_NUM, 0);
+    }
+
+    public void setNewsAnnouncementNum(int newsAnnouncementNum) {
+        mSharePres.edit().putInt(NEWS_ANNOUNCEMENT_NUM, newsAnnouncementNum).apply();
+    }
+
+    public int getNewsSystemInformationNum() {
+        return mSharePres.getInt(NEWS_SYSTEM_INFORMATION_NUM, 0);
+    }
+
+    public void setNewsSystemInformationNum(int newsSystemInformationNum) {
+        mSharePres.edit().putInt(NEWS_SYSTEM_INFORMATION_NUM, newsSystemInformationNum).apply();
+    }
+
+    public int getNewsCommentNum() {
+        return mSharePres.getInt(NEWS_COMMENT_NUM, 0);
+    }
+
+    public void setNewsCommentNum(int newsCommentNum) {
+        mSharePres.edit().putInt(NEWS_COMMENT_NUM, newsCommentNum).apply();
+    }
+
+    public int getNewsQaNum() {
+        return mSharePres.getInt(NEWS_QA_NUM, 0);
+    }
+
+    public void setNewsQaNum(int newsQaNum) {
+        mSharePres.edit().putInt(NEWS_QA_NUM, newsQaNum).apply();
+    }
+
+    public int getNewsGroupNum() {
+        return mSharePres.getInt(NEWS_GROUP_NUM, 0);
+    }
+
+    public void setNewsGroupNum(int newsGroupNum) {
+        mSharePres.edit().putInt(NEWS_GROUP_NUM, newsGroupNum).apply();
+    }
+
+    public int getNewsActivityNum() {
+        return mSharePres.getInt(NEWS_ACTIVITY_NUM, 0);
+    }
+
+    public void setNewsActivityNum(int newsActivityNum) {
+        mSharePres.edit().putInt(NEWS_ACTIVITY_NUM, newsActivityNum).apply();
+    }
+
+    public int getNewsRecommendNum() {
+        return mSharePres.getInt(NEWS_RECOMMEND_NUM, 0);
+    }
+
+    public void setNewsRecommendNum(int newsRecommendNum) {
+        mSharePres.edit().putInt(NEWS_RECOMMEND_NUM, newsRecommendNum).apply();
+    }
+
+    public int getNewsAccountInformationNum() {
+        return mSharePres.getInt(NEWS_ACCOUNT_INFORMATION_NUM, 0);
+    }
+
+    public void setNewsAccountInformationNum(int newsAccountInformationNum) {
+        mSharePres.edit().putInt(NEWS_ACCOUNT_INFORMATION_NUM, newsAccountInformationNum).apply();
+    }
 }

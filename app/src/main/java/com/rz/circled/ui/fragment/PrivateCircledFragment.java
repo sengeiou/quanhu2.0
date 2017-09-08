@@ -15,12 +15,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.httpapi.api.ApiPGService;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.GroupBannerBean;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -37,7 +43,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
+import retrofit2.Call;
+import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_REFRESH;
 import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
 import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
 
@@ -46,13 +56,16 @@ import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
  */
 public class PrivateCircledFragment extends BaseFragment {
 
-
+    @BindView(R.id.layout_refresh)
+    SwipyRefreshLayout refreshLayout;
     @BindView(R.id.viewpager)
     AutoScrollViewPager viewpager;
     @BindView(R.id.indicator_banner)
     MagicIndicator indicatorBanner;
     @BindView(R.id.btn_apply_for)
     TextView btnApplyFor;
+    @BindView(R.id.line)
+    View line;
     @BindView(R.id.tv_create)
     TextView tvCreate;
     @BindView(R.id.btn_create_more)
@@ -88,6 +101,7 @@ public class PrivateCircledFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        initRefresh();
         initRecommendGroup();
         initEssenceGroup();
         initCreatedGroup();
@@ -98,6 +112,21 @@ public class PrivateCircledFragment extends BaseFragment {
     public void initData() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+
+        Http.getApiService(ApiPGService.class).privateGroupBanner("3").enqueue(new BaseCallback<ResponseData<List<GroupBannerBean>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<GroupBannerBean>>> call, Response<ResponseData<List<GroupBannerBean>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful() && response.body().isSuccessful()) {
+                    List<GroupBannerBean> data = response.body().getData();
+                    if (data.size() > 0) {
+                        initViewpagerBanner(data);
+                        initIndicatorBanner(data);
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
@@ -136,7 +165,24 @@ public class PrivateCircledFragment extends BaseFragment {
             layoutNoData.setVisibility(View.VISIBLE);
         } else {
             layoutNoData.setVisibility(View.GONE);
+            if (layoutMyCreate.getVisibility() == View.VISIBLE && layoutMyJoin.getVisibility() == View.VISIBLE)
+                line.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void initRefresh() {
+        refreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_ESSENCE_REFRESH));
+                } else {
+                    EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_ESSENCE_MORE));
+                }
+                refreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     private void initViewpagerBanner(List<GroupBannerBean> pics) {
@@ -144,7 +190,7 @@ public class PrivateCircledFragment extends BaseFragment {
         for (GroupBannerBean pic : pics) {
             ImageView imageView = new ImageView(getContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(getContext()).load(pic.getPic()).into(imageView);
+            Glide.with(getContext()).load(pic.getPicUrl()).into(imageView);
             imageViews.add(imageView);
         }
         viewpager.setAdapter(new MyPagerAdapter(imageViews));
@@ -161,7 +207,7 @@ public class PrivateCircledFragment extends BaseFragment {
     private void initIndicatorBanner(List pics) {
         CircleNavigator circleNavigator = new CircleNavigator(getContext());
         circleNavigator.setCircleCount(pics.size());
-        circleNavigator.setCircleColor(Color.WHITE);
+        circleNavigator.setCircleColor(getResources().getColor(R.color.color_main));
         circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
             @Override
             public void onClick(int index) {
