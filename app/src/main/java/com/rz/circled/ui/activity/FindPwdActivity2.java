@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
-import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
@@ -31,10 +29,7 @@ import com.rz.common.utils.TextViewUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.UserInfoModel;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -210,10 +205,10 @@ public class FindPwdActivity2 extends BaseActivity {
         int length = TextUtils.isEmpty(mEditPassWEdit.getText()) ? 0 : mEditPassWEdit.getText().length();
         if (mEditPassWEdit.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
             mEditPassWEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
         } else {
             mEditPassWEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
         }
         mEditPassWEdit.setSelection(length);
     }

@@ -68,8 +68,11 @@ public class UserInfoPresenter extends GeneralPresenter {
      * @param phone
      */
     public void getVeriCode(String phone, final String function) {
+
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
         Call<ResponseData<RegisterBean>> call = null;
         call = mUserService.sendVeriCode(1001, phone, Type.VERIFY_CODE, function);
+
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<RegisterBean>>() {
             @Override
@@ -164,7 +167,7 @@ public class UserInfoPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
         }
-//        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, mContext.getString(R.string.check_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
         Call<ResponseData> call = mUserService.changePw(
                 1010,
                 phone,

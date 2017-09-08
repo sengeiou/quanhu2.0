@@ -105,8 +105,8 @@ public class MyPrivateGroupActivity extends BaseActivity {
         List<Fragment> mFragments = new ArrayList<>();
         BaseFragment privateGroupJoinByMyselfFragment = PrivateGroupJoinByMyselfFragment.newInstance(PrivateGroupJoinByMyselfFragment.TYPE_ALL);
         BaseFragment privateGroupCreateByMyselfFragment = PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_ALL);
-        mFragments.add(privateGroupJoinByMyselfFragment);
         mFragments.add(privateGroupCreateByMyselfFragment);
+        mFragments.add(privateGroupJoinByMyselfFragment);
         viewpagerGroup.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));
     }
 

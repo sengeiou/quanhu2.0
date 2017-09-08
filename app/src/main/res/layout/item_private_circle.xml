@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px26"
+        >
+
+        <ImageView
+            android:id="@+id/private_circle_img"
+            android:layout_width="@dimen/px210"
+            android:layout_height="@dimen/px210"
+            android:src="@mipmap/ic_default_pic"
+            />
+
+        <TextView
+            android:id="@+id/second_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px26"
+            android:text="趣学世界：自然拼读日"
+            android:textSize="@dimen/font_50"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@id/private_circle_img"
+            android:layout_alignTop="@id/private_circle_img"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/private_circle_img"
+            android:layout_marginLeft="@dimen/px26"
+            android:layout_below="@id/second_txt"
+            android:text="王毅  海银资本创始合伙人"
+            android:layout_marginTop="@dimen/px16"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/private_circle_img"
+            android:layout_marginLeft="@dimen/px26"
+            android:layout_alignBottom="@id/private_circle_img"
+            android:text="4532人加入"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/px26"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="来自私圈 育儿童星圈"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99悠然币"
+            android:textColor="@color/color_yellow_b39729"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

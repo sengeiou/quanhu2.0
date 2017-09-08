@@ -299,4 +299,7 @@ public static final String FOLLOW_DATA="follow_data";
     public static final String LOGIN_OUT_SUCCESS = "login_out_success";
 
     public static final String SWITCH_SHARE_SUCCESS = "switch_share_success";
+
+
+
 }

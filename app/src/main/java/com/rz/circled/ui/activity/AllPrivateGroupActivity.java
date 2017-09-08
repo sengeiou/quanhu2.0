@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.ui.fragment.NewsCommonFragment;
 import com.rz.circled.ui.fragment.PrivateGroupAllFragment;
 import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
 import com.rz.common.event.BaseEvent;
@@ -23,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_SEARCH_KEY;
+import static com.rz.circled.ui.fragment.NewsCommonFragment.NEWS_ANNOUNCEMENT;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
@@ -58,6 +60,7 @@ public class AllPrivateGroupActivity extends BaseActivity {
     @Override
     public void initData() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.layout_frame, NewsCommonFragment.newInstance(NEWS_ANNOUNCEMENT));
         transaction.replace(R.id.layout_frame, PrivateGroupAllFragment.newInstance());
         transaction.commit();
     }

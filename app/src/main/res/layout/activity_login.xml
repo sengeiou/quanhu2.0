@@ -59,7 +59,7 @@
                         android:layout_width="@dimen/px242"
                         android:layout_height="@dimen/px242"
                         android:layout_centerHorizontal="true"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@mipmap/logo_login"
                         android:layout_alignParentTop="true"
 
                         />
@@ -128,6 +128,13 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px2"
+                    android:background="@color/color_DDDDDD"
+                    style="@style/line_horizontal_gray_s"
+                    />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -167,7 +174,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="@dimen/px86"
                         android:padding="@dimen/px10"
-                        android:src="@mipmap/pwd_unsee"
+                        android:src="@mipmap/pwd_see"
                         android:visibility="visible"/>
 
                     <ImageView
@@ -179,6 +186,14 @@
                         android:layout_marginRight="@dimen/px100"
                         />
                 </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px2"
+                    android:background="@color/color_DDDDDD"
+                    style="@style/line_horizontal_gray_s"
+                    />
 
             </LinearLayout>
 

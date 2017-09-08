@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/px44"
+    android:paddingRight="@dimen/px44">
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/NewsTimeTipTvStyle"
+        tool:text="09:23" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px44"
+        android:orientation="vertical"
+        android:padding="@dimen/px44">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_50"
+            tool:text="充值成功" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px20"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_44"
+            tool:text="充值成功" />
+    </LinearLayout>
+</LinearLayout>

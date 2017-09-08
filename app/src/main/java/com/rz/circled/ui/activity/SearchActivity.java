@@ -15,8 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.rz.circled.R;
+import com.rz.circled.ui.fragment.SearchCircleFragment;
 import com.rz.circled.ui.fragment.SearchContentFragment;
 import com.rz.circled.ui.fragment.SearchPersonFragment;
+import com.rz.circled.ui.fragment.SearchPrivateCircleFragment;
 import com.rz.circled.ui.fragment.SearchRewardFragment;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.constant.CommonCode;
@@ -160,13 +162,16 @@ public class SearchActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == TYPE_CONTENT)
-                return SearchContentFragment.newInstance();
+                return SearchContentFragment.newInstance();     //搜索内容
             if (position == TYPE_PERSON)
-                return SearchPersonFragment.newInstance();
-//                if (position == TYPE_PRIVATE)
-//                    if (position == TYPE_CIRCLE)
+                return SearchPersonFragment.newInstance();      //搜索用户
+            if (position == TYPE_PRIVATE)
+                return SearchPrivateCircleFragment.newInstance();     //搜索私圈
+            if (position == TYPE_CIRCLE)
+                return SearchCircleFragment.newInstance();            //搜索圈子
             if (position == TYPE_REWARD)
-                return SearchRewardFragment.newInstance();
+                return SearchRewardFragment.newInstance();      //搜索悬赏
+
             return SearchContentFragment.newInstance();
         }
 

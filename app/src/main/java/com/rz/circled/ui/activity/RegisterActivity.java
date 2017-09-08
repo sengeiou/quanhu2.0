@@ -24,7 +24,6 @@ import com.rz.circled.service.BackGroundService;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
-import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
@@ -357,10 +356,10 @@ public class RegisterActivity extends BaseActivity {
                 int length = TextUtils.isEmpty(mEditPassw.getText()) ? 0 : mEditPassw.getText().length();
                 if (mEditPassw.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
                     mEditPassw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
                 } else {
                     mEditPassw.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
                 }
                 mEditPassw.setSelection(length);
                 break;

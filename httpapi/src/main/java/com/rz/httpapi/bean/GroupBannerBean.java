@@ -7,13 +7,23 @@ import java.io.Serializable;
  */
 
 public class GroupBannerBean implements Serializable {
-    private String pic;
+    private String picUrl;
 
-    public String getPic() {
-        return pic;
+    private String url;
+
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

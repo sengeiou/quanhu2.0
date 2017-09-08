@@ -81,6 +81,14 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px3"
+                android:layout_below="@+id/id_no_regist_pass_edit"
+                android:background="@color/color_F4F4F4"
+                android:layout_marginTop="@dimen/px66"
+                />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,7 +143,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="@dimen/px50"
                     android:padding="@dimen/px10"
-                    android:src="@mipmap/pwd_unsee"
+                    android:src="@mipmap/pwd_see"
                     android:visibility="gone"/>
 
                 <View

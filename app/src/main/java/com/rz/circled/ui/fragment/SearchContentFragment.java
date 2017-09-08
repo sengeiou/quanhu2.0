@@ -1,13 +1,17 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
+import com.litesuits.common.utils.HexUtil;
+import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
+import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.NotifyEvent;
@@ -20,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +41,7 @@ public class SearchContentFragment extends BaseFragment {
     private DynamicAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private SearchPresenter searchPresenter;
+    public  static String keyWord = "";
 
     public static SearchContentFragment newInstance() {
         SearchContentFragment frg = new SearchContentFragment();
@@ -70,6 +76,7 @@ public class SearchContentFragment extends BaseFragment {
         super.initPresenter();
         //搜索接口
         searchPresenter = new SearchPresenter();
+        searchPresenter.attachView(this);
     }
 
     /**
@@ -80,7 +87,8 @@ public class SearchContentFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
 
-//            searchPresenter.searchPerson();
+            keyWord = (String) baseEvent.getData();
+            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"2140","23",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
         }
     }
 
@@ -109,9 +117,33 @@ public class SearchContentFragment extends BaseFragment {
     }
 
     @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t != null) {
+            if (!loadMore) {
+                circleDynamicList.clear();
+            }
+            circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
+        }
+        dynamicAdapter.notifyDataSetChanged();
+    }
+
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void onVisible(){
+
+        Log.e(TAG,"请求数据");
+
+        if(!keyWord.isEmpty()){
+            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"2140","23",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
+        }
+    }
+
 }

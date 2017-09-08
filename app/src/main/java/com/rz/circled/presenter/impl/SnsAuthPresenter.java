@@ -9,6 +9,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
@@ -91,7 +92,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
             public void onResponse(Call<ResponseData<UserInfoBean>> call, Response<ResponseData<UserInfoBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData<UserInfoBean> res = response.body();
+                    final ResponseData<UserInfoBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         UserInfoBean user = res.getData();
                         if (null != user) {
@@ -117,6 +118,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
                                 @Override
                                 public void run() {
                                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
+                                    Toasty.info(mContext,res.getMsg()).show();
                                 }
                             }, 2000);
                             return;

@@ -139,7 +139,7 @@
         <item name="android:layout_marginLeft">@dimen/px28</item>
     </style>
 
-    <style name="GridPasswordView"/>
+    <style name="GridPasswordView" />
 
     <style name="GridPasswordView.TextView">
         <item name="android:layout_width">0dp</item>
@@ -215,4 +215,65 @@
         <item name="android:scaleType">matrix</item>
     </style>
 
+    <style name="NewsLineStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingBottom">@dimen/px40</item>
+        <item name="android:paddingTop">@dimen/px40</item>
+    </style>
+
+    <style name="NewsImgStyle">
+        <item name="android:layout_width">@dimen/px138</item>
+        <item name="android:layout_height">@dimen/px138</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:src">@mipmap/ic_launcher</item>
+    </style>
+
+    <style name="NewsDotStyle">
+        <item name="android:src">@mipmap/ic_launcher</item>
+        <item name="android:layout_width">@dimen/px30</item>
+        <item name="android:layout_height">@dimen/px30</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:layout_marginRight">@dimen/px6</item>
+        <item name="android:layout_marginTop">@dimen/px6</item>
+    </style>
+
+    <style name="NewsTitleStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/font_gray_xl</item>
+        <item name="android:textSize">@dimen/font_m</item>
+    </style>
+
+    <style name="NewsTimeStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/font_gray_m</item>
+        <item name="android:textSize">@dimen/font_34</item>
+    </style>
+
+    <style name="NewsDescStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/px10</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:lines">1</item>
+        <item name="android:textColor">@color/font_gray_m</item>
+        <item name="android:textSize">@dimen/font_44</item>
+    </style>
+
+    <style name="NewsTimeTipTvStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/px10</item>
+        <item name="android:paddingBottom">@dimen/px10</item>
+        <item name="android:paddingRight">@dimen/px20</item>
+        <item name="android:paddingLeft">@dimen/px20</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_38</item>
+        <item name="android:background">@drawable/shape_news_time_tip</item>
+    </style>
 </resources>

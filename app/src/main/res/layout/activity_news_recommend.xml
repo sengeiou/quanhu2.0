@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_gray_common">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:descendantFocusability="blocksDescendants"
+        app:layoutManager="LinearLayoutManager" />
+
+</com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>

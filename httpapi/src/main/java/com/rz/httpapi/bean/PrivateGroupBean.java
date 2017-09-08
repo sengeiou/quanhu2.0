@@ -29,6 +29,7 @@ public class PrivateGroupBean implements Serializable {
      * status : 	状态：0待审核，1审批通过，2审批未通过，3上架，4下架
      */
     private String circleId;
+    private String circleName;
     private int consultingFee;
     private String coterieId;
     private String createDate;
@@ -46,6 +47,14 @@ public class PrivateGroupBean implements Serializable {
     private String ownerName;
     private String qrUrl;
     private int status;
+
+    public String getCircleName() {
+        return circleName;
+    }
+
+    public void setCircleName(String circleName) {
+        this.circleName = circleName;
+    }
 
     public String getCircleId() {
         return circleId;
