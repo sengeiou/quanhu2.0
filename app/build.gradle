@@ -177,4 +177,5 @@ dependencies {
     compile project(':umshare')
     compile project(path: ':YunXinUIKit')
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
+
 }
