@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/color_F5F5F5"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/id_follow_me_rela"
+        style="@style/ContactHeadRelaStyle">
+
+        <ImageView
+            style="@style/ContactHeadImgStyle"
+            android:src="@mipmap/ic_new_friend"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px130"
+            android:text="@string/new_friend"/>
+
+        <TextView
+            android:id="@+id/id_remind_num_follow_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px60"
+            android:background="@drawable/unread_count_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20"/>
+
+    <TextView
+        android:id="@+id/id_my_follow_txt"
+        style="@style/IconTvStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px3"
+        android:background="@drawable/comm_item_selector"
+        android:clickable="true"
+        android:drawableLeft="@mipmap/ic_my_follow"
+        android:paddingLeft="@dimen/px30"
+        android:text="@string/my_follow"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/id_group_chat_rela"
+        style="@style/ContactHeadRelaStyle">
+
+        <ImageView
+            style="@style/ContactHeadImgStyle"
+            android:src="@mipmap/ic_team_advance"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px130"
+            android:text="@string/group_chat"/>
+
+        <TextView
+            android:id="@+id/id_remind_num_group_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px60"
+            android:background="@drawable/unread_count_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20"/>
+
+    <RelativeLayout
+        android:id="@+id/id_group_discuss"
+        style="@style/ContactHeadRelaStyle">
+
+        <ImageView
+            style="@style/ContactHeadImgStyle"
+            android:src="@mipmap/ic_team_normal"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px130"
+            android:text="@string/discuss_chat"/>
+
+        <TextView
+            android:id="@+id/id_remind_num_discuss_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px60"
+            android:background="@drawable/unread_count_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20"/>
+
+    <RelativeLayout
+        android:id="@+id/id_verify_message_rela"
+        style="@style/ContactHeadRelaStyle">
+
+        <ImageView
+            style="@style/ContactHeadImgStyle"
+            android:src="@mipmap/ic_team_system_message"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px130"
+            android:text="@string/team_verification"/>
+
+        <TextView
+            android:id="@+id/id_remind_num_verify_message_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px60"
+            android:background="@drawable/unread_count_bg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/id_black_name_txt"
+        style="@style/IconTvStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px3"
+        android:background="@drawable/comm_item_selector"
+        android:clickable="true"
+        android:drawableLeft="@mipmap/ic_black_name"
+        android:paddingLeft="@dimen/px30"
+        android:text="@string/black_name"
+        android:visibility="gone"/>
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginRight="@dimen/px20"/>
+
+    <TextView
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/px44"
+        android:text="@string/my_friends"
+        android:textColor="@color/font_gray_m"
+        android:textSize="@dimen/font_46"/>
+
+</LinearLayout>

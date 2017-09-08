@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
-import com.rz.common.cache.preference.Session;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -59,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.transparencyBar(this);
         mContext = this;
         this.aty = this;
         TAG = getClass().getSimpleName();
@@ -70,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
         initSupportSwipeBack();
         initTint();
-        StatusBarUtils.setDarkStatusIcon(this, false);
+        StatusBarUtils.setDarkStatusIcon(this, true);
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         initTitleView(llTitle, flTransTitle);
@@ -88,7 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public abstract void initView();
 
     public abstract void initData();
-
 
     private void initTitleView(LinearLayout llTitle, FrameLayout flTransTitle) {
         if (!needShowTitle()) return;
@@ -237,18 +236,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             mLoadView.setRefreshListener(refreshListener);
     }
 
-    /**
-     * 用户是否登录
-     */
-    public boolean isLogin() {
-        if (Session.getUserIsLogin()) {
-            return true;
-        } else {
-//            Intent login = new Intent(aty, LoginAty.class);
-//            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
-            return false;
-        }
-    }
+
 
     /**
      * @return 状态栏颜色
@@ -468,7 +456,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             ivCommonRight.setVisibility(View.GONE);
         }
     }
-    public void setTitleRightBackground(int color){
+
+    public void setTitleRightBackground(int color) {
         tvCommonTitleRight.setBackgroundColor(color);
     }
 

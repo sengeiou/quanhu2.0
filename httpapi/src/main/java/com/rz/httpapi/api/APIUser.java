@@ -96,4 +96,11 @@ public class APIUser {
      */
     public static final String FRIEND_DETAIL = "v3/user/find";
 
+
+    /**
+     * 统一搜索
+     * public static final String QH_SEARCH = "v3/search/searchQH";
+     */
+    public static final String QH_SEARCH = "v3/search/searchQH";
+
 }

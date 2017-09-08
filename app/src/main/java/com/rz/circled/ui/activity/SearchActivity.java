@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -13,11 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.rz.circled.R;
+import com.rz.circled.ui.fragment.SearchCircleFragment;
 import com.rz.circled.ui.fragment.SearchContentFragment;
 import com.rz.circled.ui.fragment.SearchPersonFragment;
+import com.rz.circled.ui.fragment.SearchPrivateCircleFragment;
 import com.rz.circled.ui.fragment.SearchRewardFragment;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 
@@ -32,18 +37,24 @@ public class SearchActivity extends BaseActivity {
     EditText etKeyword;
     @BindView(R.id.iv_search_clear_keyword)
     ImageView ivClearKeyword;
-    @BindView(R.id. tab_pager_search)
+    @BindView(R.id.tab_pager_search)
     PagerSlidingTabStripHome tabPagerSearch;
     @BindView(R.id.vp_search)
     ViewPager vpSearch;
     private SearchAdapter searchAdapter;
 
 
-    private final int TYPE_CONTENT = 0;
-    private final int TYPE_PERSON = 1;
-    private final int TYPE_PRIVATE = 2;
-    private final int TYPE_CIRCLE = 3;
-    private final int TYPE_REWARD = 4;
+    public static final int TYPE_CONTENT = 0;
+    public static final int TYPE_PERSON = 1;
+    public static final int TYPE_PRIVATE = 2;
+    public static final int TYPE_CIRCLE = 3;
+    public static final int TYPE_REWARD = 4;
+
+    public static final void stratActivity(Context context, int type) {
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra(IntentKey.EXTRA_TYPE, type);
+        context.startActivity(intent);
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -151,13 +162,16 @@ public class SearchActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == TYPE_CONTENT)
-                return SearchContentFragment.newInstance();
+                return SearchContentFragment.newInstance();     //搜索内容
             if (position == TYPE_PERSON)
-                return SearchPersonFragment.newInstance();
-//                if (position == TYPE_PRIVATE)
-//                    if (position == TYPE_CIRCLE)
+                return SearchPersonFragment.newInstance();      //搜索用户
+            if (position == TYPE_PRIVATE)
+                return SearchPrivateCircleFragment.newInstance();     //搜索私圈
+            if (position == TYPE_CIRCLE)
+                return SearchCircleFragment.newInstance();            //搜索圈子
             if (position == TYPE_REWARD)
-                return SearchRewardFragment.newInstance();
+                return SearchRewardFragment.newInstance();      //搜索悬赏
+
             return SearchContentFragment.newInstance();
         }
 

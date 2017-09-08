@@ -16,5 +16,6 @@ public class HeaderModel {
     public String net;
     public String custId;
     public String userId;
+    public String phone;
 
 }

@@ -83,6 +83,8 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         String loadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
         mWebViewProxy.removeRepetLoadUrl(loadUrl);
 
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
+
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
 

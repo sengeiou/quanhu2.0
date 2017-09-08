@@ -10,9 +10,9 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.text.TextUtils;
 
-import com.rz.circled.modle.BaseInfo;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.utils.NetUtils;
+import com.rz.httpapi.bean.BaseInfo;
 
 import java.util.ArrayList;
 import java.util.List;

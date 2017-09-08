@@ -513,9 +513,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.tv_editor_two_authority:
                 //跳转到选择权限页面
-                EditorConfigTwoModel authModel = (EditorConfigTwoModel) view.getTag();
+                EditorAuthorityRootBean authModel = (EditorAuthorityRootBean) view.getTag();
                 Intent authorityIntent = new Intent(mContext, EditorTwoAuthorityActivity.class);
-                authorityIntent.putExtra(IntentKey.EXTRA_SERIALIZABLE, authModel.getData());
+                authorityIntent.putExtra(IntentKey.EXTRA_SERIALIZABLE, authModel);
                 startActivityForResult(authorityIntent, AUTHORITY_REQUEST);
                 break;
         }
@@ -664,6 +664,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 dataSource.setAllowShareFlag(authorityRootBean.getAllowShareFlag() == 1 ? 1 : 0);
                 dataSource.setContentPrice(authorityRootBean.getContentPrice());
                 dataSource.setCoterieId(authorityRootBean.getCoterieId());
+                tvAuthority.setTag(authorityRootBean);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -1117,7 +1118,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private void processAuthority(EditorConfigTwoModel authModel) {
         if (authModel.getEnabled()) {
             tvAuthority.setVisibility(View.VISIBLE);
-            tvAuthority.setTag(authModel);
+            tvAuthority.setTag(authModel.getData());
         } else {
             tvAuthority.setVisibility(View.GONE);
         }

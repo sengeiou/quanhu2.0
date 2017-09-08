@@ -17,7 +17,6 @@
             android:layout_height="@dimen/px147"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
-            app:placeholderImage="@drawable/ic_default_head"
             android:background="@color/white"
             android:scaleType="fitXY" />
 
@@ -38,6 +37,7 @@
         android:layout_marginTop="@dimen/px22"
         android:gravity="center_horizontal"
         android:textColor="@color/color_000000"
+        android:visibility="gone"
         android:textSize="@dimen/font_40" />
 
     <TextView

@@ -1,12 +1,15 @@
 package com.rz.circled.js.http;
 
 import com.google.gson.JsonObject;
+import com.rz.httpapi.api.APIUser;
 
 import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.HeaderMap;
@@ -54,15 +57,15 @@ public interface APIWebService {
     @Headers({"Content-type:application/json; charset=UTF-8"})
     public Call<JsonObject> reQuestNetPatch(@Path(value = "url", encoded = true) String url, @Body RequestBody body, @HeaderMap Map<String, String> header);
 
-//    /**
-//     * 发送验证码 js
-//     */
-//    @FormUrlEncoded
-//    @POST(APIUser.SEND_VERI_CODE)
-//    public Call<JsonObject>sendVeriCodeJs(
-//            @Field("act") int act,
-//            @Field("phone") String phone,
-//            @Field("type") String type,
-//            @Field("code") String code
-//    );
+    /**
+     * 发送验证码 js
+     */
+    @FormUrlEncoded
+    @POST(APIUser.SEND_VERI_CODE)
+    public Call<JsonObject>sendVeriCodeJs(
+            @Field("act") int act,
+            @Field("phone") String phone,
+            @Field("type") String type,
+            @Field("code") String code
+    );
 }

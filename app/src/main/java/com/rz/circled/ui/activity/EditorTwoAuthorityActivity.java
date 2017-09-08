@@ -55,6 +55,11 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                     CheckBox checkBox = boxMaps.get(typePopularize);
                     authorityRootBean.setAllowGeneralizeFlag(checkBox.isChecked() ? 1 : 0);
                 }
+                if (boxMaps.containsKey(typeRead)) {
+                    CheckBox checkBox = boxMaps.get(typeRead);
+                    if (!checkBox.isChecked())
+                        authorityRootBean.setContentPrice(0);
+                }
                 Intent intent = new Intent();
                 intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, authorityRootBean);
                 setResult(RESULT_OK, intent);
@@ -92,6 +97,7 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
             case typeShare:
                 tvName.setText(R.string.authority_share);
                 boxMaps.put(typeShare, checkBox);
+                checkBox.setChecked(authorityRootBean.getAllowShareFlag() == 1);
                 break;
             case typeRead:
                 tvName.setText(R.string.authority_read);
@@ -101,19 +107,19 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
                             myGridView.setVisibility(View.VISIBLE);
-                            if (authorityRootBean.getContentPriceData().getData().contains(authorityRootBean.getContentPrice())) {
-                                authorityRootBean.setContentPrice(authorityRootBean.getContentPriceData().getData().get(0).intValue());
-                            }
-                        } else myGridView.setVisibility(View.GONE);
+                        } else {
+                            myGridView.setVisibility(View.GONE);
+                        }
                     }
                 });
-                if (authorityRootBean.getContentPriceData().getData().contains(authorityRootBean.getContentPrice()))
+                if (authorityRootBean.getContentPriceData().getData().contains(new Integer(authorityRootBean.getContentPrice())))
                     checkBox.setChecked(true);
                 boxMaps.put(typeRead, checkBox);
                 break;
             case typePopularize:
                 tvName.setText(R.string.authority_popularize);
                 boxMaps.put(typePopularize, checkBox);
+                checkBox.setChecked(authorityRootBean.getAllowGeneralizeFlag() == 1);
                 break;
         }
         llRoot.addView(rootView);
@@ -135,6 +141,8 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                 if (authorityRootBean.getContentPrice() != price)
                     tvPrice.setSelected(false);
                 else tvPrice.setSelected(true);
+                if (authorityRootBean.getContentPrice() == 0 && position == 0)
+                    tvPrice.setSelected(true);
 
                 tvPrice.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -124,7 +124,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         if (Session.getUserIsLogin()) {
             return true;
         } else {
-//            Intent login = new Intent(mActivity, LoginAty.class);
+//            Intent login = new Intent(mActivity, LoginActivity.class);
 //            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
             return false;
         }

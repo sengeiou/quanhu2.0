@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.rz.circled.widget.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/px30">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/id_person_nick_edit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px180"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:hint="@string/mine_person_ex6"
+                android:maxLength="10"
+                android:paddingLeft="@dimen/px30"
+                android:paddingRight="@dimen/px30"
+                android:singleLine="true"
+                android:textColor="@color/gray7" />
+
+            <ImageView
+                android:id="@+id/id_person_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px180"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/px30"
+                android:src="@drawable/ic_clear"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</com.rz.circled.widget.OverScrollView>

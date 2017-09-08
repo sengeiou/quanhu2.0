@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rl_contacts_select_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector">
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px30"
+        android:background="@android:color/white"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/id_alpha_txt"
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_divider"
+        android:background="@color/color_F8F8F8"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/px15"
+        android:paddingLeft="@dimen/px42"
+        android:paddingTop="@dimen/px15"
+        android:textColor="@color/font_gray_m"
+        android:textSize="@dimen/font_44"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_alpha_txt"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/px42"
+        android:paddingTop="@dimen/px42">
+
+        <ImageView
+            android:id="@+id/imgSelect"
+            android:layout_width="@dimen/px58"
+            android:layout_height="@dimen/px58"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/px42"
+            android:contentDescription="@string/empty"/>
+
+        <com.yryz.yunxinim.uikit.common.ui.imageview.CircleImageView
+            android:id="@+id/id_friends_img"
+            android:layout_width="@dimen/px98"
+            android:layout_height="@dimen/px98"
+            android:layout_marginLeft="@dimen/px20"
+            android:src="@drawable/ic_default_head"/>
+
+        <TextView
+            android:id="@+id/id_friends_name"
+            style="@style/DefaultTvStyle"
+            android:layout_marginLeft="@dimen/px28"
+            android:textSize="@dimen/font_50"/>
+
+    </LinearLayout>
+</RelativeLayout>

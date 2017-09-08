@@ -4,6 +4,7 @@ package com.rz.common.constant;
  * Created by Gsm on 2017/8/9.
  */
 public interface IntentKey {
+    String KEY_TYPE = "key_type";
     //位置
     /**
      * 路径
@@ -30,10 +31,7 @@ public interface IntentKey {
 
     String EXTRA_TITLE = "extraTitle";
 
-    public static final String KEY_BOOLEAN = "key_boolean";
-    public static final String KEY_TYPE = "type";
-    public static final String EXTRA_ID = "extraId";
-
+    String EXTRA_ID = "extraId";
 
     String EXTRA_ENABLE_VIDEO = "extra_enable_video";
     String EXTRA_ENABLE_AUDIO = "extra_enable_audio";
@@ -44,4 +42,15 @@ public interface IntentKey {
     String EXTRA_INVOKE_ID = "extraInvokeId";
 
     String EXTRA_MODEL = "extraModel";
+    String EXTRA_PAGE = "extraPage";
+
+
+    String EXTRA_CLUB_ID = "extraClubId";
+
+    String EXTRA_NAME = "extraName";
+
+    String EXTRA_INVOKEID = "extraInvokeId";
+
+    String EXTRA_MONEY = "extraMoney";
+    String GUIDE_KEY = "guide_key";
 }

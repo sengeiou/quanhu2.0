@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.oss.OssManager;
 import com.rz.common.ui.activity.BaseActivity;
@@ -80,6 +81,7 @@ public class UploadAudioActivity extends BaseActivity {
     }
 
     private void uploadAudioFile() {
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
         Log.d("test", "uploadVideoFile uoloadId is " + currentUploadId);
         mOssManager.asyncMultipartUpload(mFilePath, fileName, OssManager.AUDIO, new OssManager.OssCallBack() {
             @Override
@@ -87,7 +89,7 @@ public class UploadAudioActivity extends BaseActivity {
                 Log.d("multipartUpload", "OssCallBack onSuccess url " + url);
                 Log.d("multipartUpload", "uploadId " + uploadId);
 //                mAudioPublishProgress.setProgress(100);
-                dismissProgress();
+                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 currentUploadId = "";
                 uploadedUrl = url;
                 callResult(true);
@@ -99,7 +101,7 @@ public class UploadAudioActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(uploadId)) {
                     currentUploadId = uploadId;
                 }
-                dismissProgress();
+                onLoadingStatus(CommonCode.General.LOAD_ERROR);
                 showRetryPublishVideoDialog();
                 Log.d("multipartUpload", "OssCallBack onFailure  ");
                 Log.d("multipartUpload", "uploadId " + uploadId);

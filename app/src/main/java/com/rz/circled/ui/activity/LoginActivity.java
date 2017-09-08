@@ -1,14 +1,14 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
-import com.netease.nimlib.sdk.AbortableFuture;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.StatusBarNotificationConfig;
-import com.netease.nimlib.sdk.auth.AuthService;
-import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
@@ -44,20 +37,12 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.UserInfoBean;
-import com.rz.sgt.jsbridge.JsEvent;
-import com.yryz.yunxinim.DemoCache;
-import com.yryz.yunxinim.config.preference.Preferences;
-import com.yryz.yunxinim.config.preference.UserPreferences;
-import com.yryz.yunxinim.uikit.cache.DataCacheManager;
-import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,10 +50,6 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Response;
-
-import static com.rz.common.constant.Constants.LOGIN_IN_SUCCESS;
 
 
 /**
@@ -95,6 +76,9 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.layout_login_webo)
     TextView layoutLoginWebo;
     private long lastClickTime;
+
+    @BindView(R.id.id_watch_pass)
+    ImageView mImgWatchPw;
 
     /**
      * 手机号
@@ -132,6 +116,7 @@ public class LoginActivity extends BaseActivity {
 //    @BindView(R.id.titlebar_root)
 //    RelativeLayout mRlTitleRoot;
     private int loginType;
+    private int mGuideType;
 
 
     @Override
@@ -139,6 +124,10 @@ public class LoginActivity extends BaseActivity {
         return false;
     }
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -154,7 +143,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.putExtra(IntentKey.KEY_BOOLEAN, true);
+        intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
         setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
         finish();
     }
@@ -184,6 +173,12 @@ public class LoginActivity extends BaseActivity {
 //            }
 //        });
         mLoginBtn.setEnabled(true);
+
+        if(mEditPass.getText().length()>0){
+            mImgWatchPw.setVisibility(View.VISIBLE);
+        }else{
+            mImgWatchPw.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -222,6 +217,13 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     mImgClearPass.setVisibility(View.GONE);
                 }
+
+                if(mEditPass.getText().length()>0){
+                    mImgWatchPw.setVisibility(View.VISIBLE);
+                }else{
+                    mImgWatchPw.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -229,6 +231,8 @@ public class LoginActivity extends BaseActivity {
             }
         });
         loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
+        mGuideType = getIntent().getIntExtra(IntentKey.GUIDE_KEY,-1);
+        loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
 //    /**
@@ -295,6 +299,21 @@ public class LoginActivity extends BaseActivity {
         mEditPass.setText("");
     }
 
+    @OnClick(R.id.id_watch_pass)
+    public void exchangePwd() {
+        int length = TextUtils.isEmpty(mEditPass.getText()) ? 0 : mEditPass.getText().length();
+        if (mEditPass.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+            mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+        } else {
+            mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+        }
+        mEditPass.setSelection(length);
+
+    }
+
+
     /**
      * 手机号登录操作
      */
@@ -321,11 +340,11 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.id_login_register_btn)
     public void registerBtn() {
-//        CommomUtils.trackUser("注册登录", "注册", "");
-//        Intent intent = new Intent(aty, RegisterActivi.class);
-//        intent.putExtra(IntentKey.KEY_TYPE, loginType);
-////        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
-//        startActivity(intent);
+        CommomUtils.trackUser("注册登录", "注册", "");
+        Intent intent = new Intent(aty, RegisterActivity.class);
+        intent.putExtra(IntentKey.EXTRA_TYPE, loginType);
+//        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
+        startActivity(intent);
     }
 
     /**
@@ -333,9 +352,9 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.id_login_pw_btn)
     public void forgetPw() {
-//        Intent forget = new Intent(aty, FindPass1Aty.class);
-//        forget.putExtra(IntentKey.KEY_TYPE, loginType);
-//        startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
+        Intent forget = new Intent(aty, FindPwdActivity.class);
+        forget.putExtra(IntentKey.EXTRA_TYPE, loginType);
+        startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
     }
 
     @Override
@@ -434,7 +453,12 @@ public class LoginActivity extends BaseActivity {
                     //从圈子过来跳转登录的
 //                    JsEvent.callJsEvent(getLoginWebResultData(), true);
                     finish();
-                } else {
+                } else if(mGuideType == Type.TYPE_LOGIN_GUIDE){
+                    //从向导页面过来
+                    Session.setUserIsFirstDownload(false);
+                    skipActivity(aty, FollowCircle.class);
+                    finish();
+                }else {
                     BaseEvent event = new BaseEvent();
 //                    event.key = LOGIN_IN_SUCCESS;
                     EventBus.getDefault().post(event);
@@ -533,64 +557,64 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void loginYunXin(final String account, final String token) {
-        AbortableFuture<LoginInfo> loginRequest;
-        // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
-        // 在这里直接使用同步到云信服务器的帐号和token登录。
-        // 这里为了简便起见，demo就直接使用了密码的md5作为token。
-        // 如果开发者直接使用这个demo，只更改appkey，然后就登入自己的账户体系的话，需要传入同步到云信服务器的token，而不是用户密码。
-        // final String account = "wh5120051".toLowerCase();
-        // final String token = MD5.getStringMD5("111111");
-        // 登录
-        loginRequest = NIMClient.getService(AuthService.class).login(new LoginInfo(account, token));
-        loginRequest.setCallback(new RequestCallback<LoginInfo>() {
-            @Override
-            public void onSuccess(LoginInfo param) {
-                LogUtil.i(TAG, "login success");
-
-                DemoCache.setAccount(account);
-                Preferences.saveUserAccount(account);
-                Preferences.saveUserToken(token);
-
-                // 初始化消息提醒
-                NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
-
-//                // 初始化免打扰
-//                if (UserPreferences.getStatusConfig() == null) {
-//                    initStatusBarNotificationConfig();
+//    private void loginYunXin(final String account, final String token) {
+//        AbortableFuture<LoginInfo> loginRequest;
+//        // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
+//        // 在这里直接使用同步到云信服务器的帐号和token登录。
+//        // 这里为了简便起见，demo就直接使用了密码的md5作为token。
+//        // 如果开发者直接使用这个demo，只更改appkey，然后就登入自己的账户体系的话，需要传入同步到云信服务器的token，而不是用户密码。
+//        // final String account = "wh5120051".toLowerCase();
+//        // final String token = MD5.getStringMD5("111111");
+//        // 登录
+//        loginRequest = NIMClient.getService(AuthService.class).login(new LoginInfo(account, token));
+//        loginRequest.setCallback(new RequestCallback<LoginInfo>() {
+//            @Override
+//            public void onSuccess(LoginInfo param) {
+//                LogUtil.i(TAG, "login success");
+//
+//                DemoCache.setAccount(account);
+//                Preferences.saveUserAccount(account);
+//                Preferences.saveUserToken(token);
+//
+//                // 初始化消息提醒
+//                NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
+//
+////                // 初始化免打扰
+////                if (UserPreferences.getStatusConfig() == null) {
+////                    initStatusBarNotificationConfig();
+////                }
+//                NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
+//
+//                // 构建缓存
+//                DataCacheManager.buildDataCacheAsync();
+//
+//
+////                BaseEvent event = new BaseEvent();
+////                event.key = "110";
+////                EventBus.getDefault().post(event);
+////
+////                EventBus.getDefault().post(new NotifyEvent("login", null, false));
+////
+////                setResult(IntentCode.Login.LOGIN_RESULT_CODE);
+////
+////                finish();
+//            }
+//
+//            @Override
+//            public void onFailed(int code) {
+//                if (code == 302 || code == 404) {
+//                    Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.login_failed, Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "登录失败: " + code, Toast.LENGTH_SHORT).show();
 //                }
-                NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
-
-                // 构建缓存
-                DataCacheManager.buildDataCacheAsync();
-
-
-//                BaseEvent event = new BaseEvent();
-//                event.key = "110";
-//                EventBus.getDefault().post(event);
+//            }
 //
-//                EventBus.getDefault().post(new NotifyEvent("login", null, false));
-//
-//                setResult(IntentCode.Login.LOGIN_RESULT_CODE);
-//
-//                finish();
-            }
-
-            @Override
-            public void onFailed(int code) {
-                if (code == 302 || code == 404) {
-                    Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.login_failed, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "登录失败: " + code, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onException(Throwable exception) {
-                Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.login_exception, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+//            @Override
+//            public void onException(Throwable exception) {
+//                Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.login_exception, Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
 //    private void initStatusBarNotificationConfig() {
 //        // 如果将新消息通知提醒托管给SDK完成，需要添加以下配置。
@@ -711,11 +735,10 @@ public class LoginActivity extends BaseActivity {
         ZhugeSDK.getInstance().track(getApplicationContext(), "注册登录", eventObject);
     }
 
-//    @OnClick({R.id.logo, R.id.titlebar_main_left_btn})
-//    public void onClick(View view) {
-//        if (view.getId() == R.id.logo) showActivity(this, MainActivity.class);
-//        finish();
-//    }
+    @OnClick(R.id.titlebar_main_left_btn)
+    public void onClick() {
+        finish();
+    }
 
     @Subscribe
     public void onEvent(NotifyEvent notifyEvent) {

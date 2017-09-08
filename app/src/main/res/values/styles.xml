@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar"></style>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
 
     <style name="BaseAppTheme" parent="AppBaseTheme">
         <!-- Customize your theme here. -->
@@ -164,8 +164,55 @@
     <style name="LoginEtStyle">
         <item name="android:textColorHint">@color/color_666666</item>
         <item name="android:textCursorDrawable">@null</item>
-        <item name="android:textSize">@dimen/font_44</item>
+        <item name="android:textSize">@dimen/font_46</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="RegistEtStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textSize">@dimen/font_46</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/color_666666</item>
+    </style>
+
+    <style name="ContactHeadRelaStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px144</item>
+        <item name="android:paddingLeft">@dimen/px44</item>
+        <item name="android:background">@drawable/comm_item_selector</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ContactHeadImgStyle">
+        <item name="android:layout_width">@dimen/px100</item>
+        <item name="android:layout_height">@dimen/px100</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:padding">@dimen/px8</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <!--带icon的textview-->
+    <style name="IconTvStyle" parent="DefaultTvStyle">
+        <item name="android:paddingBottom">@dimen/px28</item>
+        <item name="android:paddingTop">@dimen/px28</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/px48</item>
+        <item name="android:drawablePadding">@dimen/px38</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <style name="MineMeTvStyle" parent="DefaultTvStyle">
+        <item name="android:paddingTop">@dimen/px35</item>
+        <item name="android:paddingBottom">@dimen/px35</item>
+        <item name="android:textSize">@dimen/px40</item>
+    </style>
+
+    <style name="SettingImgStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scaleType">matrix</item>
     </style>
 
     <style name="NewsLineStyle">

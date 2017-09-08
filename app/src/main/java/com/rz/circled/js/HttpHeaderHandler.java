@@ -55,6 +55,7 @@ public class HttpHeaderHandler extends ServerHandler {
         headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
         headerModel.custId = Session.getUserId();
         headerModel.userId = Session.getJsUserId();
+        headerModel.phone = Session.getUserPhone();
 //        Gson gson = new Gson();
 //        paramStr= gson.toJson(headerModel);
 //        Log.e("fengan", "handle:paramStr== "+paramStr );

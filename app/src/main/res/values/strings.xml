@@ -19,6 +19,7 @@
     <string name="exit_success">退出成功</string>
     <string name="exit_loading">正在退出...</string>
     <string name="check_loading">正在提交...</string>
+    <string name="edit_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890</string>
 
 
     <string name="tab_home">首页</string>
@@ -250,6 +251,9 @@
     <string name="no_install_wx">没有安装微信客户端</string>
     <string name="v3_login_forgot_psw">忘记密码&#160;?</string>
     <string name="v3_login_to_register">现在注册&#160;></string>
+    <string name="v3_my_reward">我的打赏</string>
+    <string name="v3_customer_service">联系客服</string>
+    <string name="login_third_other">第三方登录</string>
 
 
     <!--注册-->
@@ -323,9 +327,186 @@
     <string name="pay_check_explain">以验证身份</string>
     <string name="safe_info_note">为保障账户安全，请及时设置安全保护信息</string>
     <string name="forget_password">忘记密码</string>
+    <string name="reset_password">重设密码</string>
+    <string name="reset_title">重设密码后可用手机号登录</string>
+
 
     <string name="exit_intr">退出会清除已上传的视频资源</string>
     <string name="look_again">再看看</string>
     <string name="forward_to_make_money">转发去赚钱</string>
 
+    <string name="search_keyword_hint">搜个关键词试试看</string>
+    <string name="find">发现</string>
+
+    <string name="create_team_add_icon">添加私圈头像</string>
+    <string name="create_team_change_icon">更换私圈头像</string>
+    <string name="create_team_add_name">私圈名称（必填）</string>
+    <string name="create_team_add_info">私圈介绍（选填）</string>
+    <string name="create_private_circle">创建私圈</string>
+    <string name="create_team_add_icon_error">请添加私圈头像</string>
+    <string name="create_team_add_name_error">请填写私圈名称</string>
+    <string name="create_team_add_error">创建私圈失败请稍后再试</string>
+    <string name="create_team_add_name_num"><Data><![CDATA[<font color="#00AFF7" face="courier"><b>%1$d</b></font>/12]]></Data></string>
+    <string name="create_team_add_info_num"><Data><![CDATA[<font color="#00AFF7" face="courier"><b>%1$d</b></font>/50]]></Data></string>
+    <string name="choose_one_person">请选择至少一个联系人！</string>
+    <string name="s_discussion_group">的讨论组</string>
+    <string name="search_friend_key">搜索我的好友</string>
+    <string name="input_keyword">输入关键字</string>
+    <string name="select">已选择</string>
+    <string name="press">确定</string>
+    <string name="person">人</string>
+    <string name="no_friend_to_add">你暂时还没有好友哦，\n快去添加好友吧</string>
+    <string name="search_key3">输入昵称、手机号码或备注名</string>
+    <string name="remark_fail">备注失败</string>
+    <string name="obtain_fail">获取失败</string>
+    <string name="inval_sucess">邀请成功</string>
+
+
+    <string name="contacts_search_keywords">关键字搜索</string>
+    <string name="myfocus">我关注的</string>
+    <string name="friend">好友</string>
+    <string name="new_friend">新的好友</string>
+    <string name="phone_contacts">手机联系人</string>
+    <string name="qh_personal">圈乎用户</string>
+    <string name="search_key1">输入昵称或手机号码</string>
+    <string name="invite_friend">邀请好友</string>
+    <string name="mine_my_contacts">通讯录</string>
+    <string name="contacts_phone">手机联系人</string>
+    <string name="add_friends">添加好友</string>
+    <string name="im_link_error_hint">圈乎聊天服务未连接成功，正在继续尝试连接中，聊天功能暂时受限，请稍后再试。</string>
+    <string name="my_follow">我的申请</string>
+    <string name="group_chat">群聊</string>
+    <string name="discuss_chat">讨论组</string>
+    <string name="team_verification">群验证消息</string>
+    <string name="black_name">黑名单</string>
+    <string name="my_friends">我的好友</string>
+
+    <string name="choose_recharge_money">请选择充值金额</string>
+    <string name="balance_current">当前余额为:</string>
+    <string name="recharge_title">充值</string>
+    <string name="recharge_problem">充值遇到问题？请戳这里</string>
+
+    <!-- 我的 -->
+    <string name="my_circle">我的圈子</string>
+    <string name="my_transfer">我的转发</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="red_bag_adv">红包广告</string>
+    <string name="other_login_style">其他登录方式</string>
+    <string name="replace_bind_phone">更换绑定手机请联系客服</string>
+    <string name="modify_login_pwd">修改登录密码</string>
+    <string name="clean_cache_complete">已成功清除缓存</string>
+    <string name="exit_login">退出登录</string>
+    <string name="add_bank_card">添加银行卡</string>
+    <string name="card_match_name">持卡人姓名需与银行卡号匹配</string>
+    <string name="mine_title">我的</string>
+    <string name="mine_info">原创作品</string>
+    <string name="send_friends">推荐给朋友</string>
+    <string name="share_app">分享悠然一指</string>
+    <string name="mine_forward_circle">悠然广场转发</string>
+    <string name="mine_no_login">点击登录</string>
+    <string name="mine_identified">已认证</string>
+    <string name="mine_no_identified">未认证</string>
+    <string name="mine_account">账号:</string>
+    <string name="mine_my_scan">扫描二维码</string>
+    <string name="account_and_safe">账户与安全</string>
+    <string name="mine_my_transmit">我的推广</string>
+    <string name="mine_my_publish">我的作品</string>
+    <string name="mine_my_collection">我的收藏</string>
+    <string name="mine_my_ticket">我的卡券</string>
+    <string name="mine_my_qrcode">我的二维码</string>
+    <string name="mine_my_invite_friend">一键邀请好友</string>
+    <string name="mine_notice">用户帮助</string>
+    <string name="mine_know">作者须知</string>
+    <string name="mine_auth">作者声明</string>
+    <string name="mine_report">监督举报</string>
+    <string name="mine_user">用户须知</string>
+    <string name="mine_bank">绑卡指南</string>
+    <string name="mine_my_setting">设置</string>
+    <string name="mine_my_kefu">帮助</string>
+    <string name="online_kefu">在线留言</string>
+    <string name="setting_title">设置</string>
+    <string name="setting_account_safe">安全设置</string>
+    <string name="setting_update">版本更新</string>
+    <string name="setting_main">重要更新</string>
+    <string name="setting_download">下载中…</string>
+    <string name="setting_no_update">无更新</string>
+    <string name="setting_had_update">有更新</string>
+    <string name="setting_new">有新版本</string>
+    <string name="download_start">开始下载</string>
+    <string name="getversion_error">获取系统版本号出错</string>
+    <string name="setting_clear_cache">清理缓存</string>
+    <string name="setting_cache">是否清除缓存</string>
+    <string name="cache_size">当前缓存大小为</string>
+    <string name="setting_about">关于我们</string>
+    <string name="setting_exit">退出</string>
+    <string name="safe_title">安全设置</string>
+    <string name="safe_account_rrz">账号</string>
+    <string name="safe_modify_question">安全问题</string>
+    <string name="safe_auth">实名认证</string>
+    <string name="safe_modify_pw">登录密码</string>
+    <string name="safe_modify">更改</string>
+    <string name="safe_modify_pay_pw">支付密码</string>
+    <string name="safe_is_setting">未设置</string>
+    <string name="go_to_set_pay_pw">设置</string>
+    <string name="safe_had_setting">已设置</string>
+    <string name="safe_modify_shoushi">手势密码</string>
+    <string name="safe_reset_shoushi">重置手势密码</string>
+    <string name="safe_setting_shoushi">设置手势密码</string>
+    <string name="safe_band_name">真实姓名</string>
+    <string name="bank_card_remind">持卡人姓名需与银行卡号匹配</string>
+    <string name="safe_band_phone">绑定手机</string>
+    <string name="safe_band_idcard">身份信息</string>
+    <string name="question_title">设置安全问题</string>
+    <string name="question_check_title">验证安全问题</string>
+    <string name="question_1">问题1:</string>
+    <string name="question_2">问题2:</string>
+    <string name="question_3">问题3:</string>
+    <string name="question_answer_1">答案1:</string>
+    <string name="question_answer_2">答案2:</string>
+    <string name="question_answer_3">答案3:</string>
+    <string name="question_submit">提交</string>
+    <string name="question_null">请选择问题</string>
+    <string name="answer_null">答案不能为空</string>
+    <string name="answer_success">验证成功</string>
+    <string name="question_success">设置成功</string>
+    <string name="name">名称</string>
+    <string name="pwd_space">****&#160;****&#160;****&#160;</string>
+    <string name="easy_pay_intr">开启后50悠然币以下的支付行为,无需输入支付密码</string>
+    <string name="shine_rule">“随手晒”使用规则</string>
+
+    <!-- 个人信息 -->
+
+    <string name="mine_person_save_error">保存失败</string>
+    <string name="mine_person_nick_change">修改昵称</string>
+    <string name="mine_person_sex_change">修改性别</string>
+    <string name="mine_person_sex_male">男</string>
+    <string name="mine_person_sex_female">女</string>
+    <string name="mine_person_ex1">呜哩哇啦</string>
+    <string name="mine_person_ex2">湖北 武汉</string>
+    <string name="mine_person_ex3">世界那么大</string>
+    <string name="mine_person_ex4">世界那么大 我想去看看！</string>
+    <string name="mine_person_ex5">个人简介</string>
+    <string name="mine_person_ex6">输入昵称</string>
+    <string name="mine_person_ex7">扫一扫上面的二维码，加我吧 长按保存图片</string>
+    <string name="mine_person_camera">相机</string>
+    <string name="mine_person_from_camera">从相机上传</string>
+    <string name="mine_person_save_picture">保存图片</string>
+    <string name="mine_person_get_scan">识别图中二维码</string>
+    <string name="mine_person_locate_error">定位失败</string>
+    <string name="mine_person_locate_ex">中国 湖北省 武汉市</string>
+    <string name="alltrends">所有动态</string>
+    <string name="zhang_num">张</string>
+    <string name="channel_finish">完成</string>
+    <string name="personal_no_sd_card">SD卡不存在</string>
+    <string name="attach_picture">图片</string>
+    <string name="publish_all_pic">所有图片</string>
+    <string name="publish_show">发布</string>
+    <string name="publish_thinking">写点什么秀自我，秀生活</string>
+    <string name="max_txt_num">/300</string>
+
+
+
+
+    <string name="FIND_MORE">110</string>
+    <string name="NO_LOVA">您还没有喜欢的圈子,\r\n赶快添加阅读更多精彩内容吧!</string>
 </resources>

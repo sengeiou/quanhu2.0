@@ -19,9 +19,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px518"
+                android:layout_height="@dimen/px594"
                 android:background="@mipmap/background_lite"
                 android:orientation="vertical"
+                android:paddingTop="@dimen/title_bar_padding_top"
                 >
 
                 <ImageView
@@ -71,14 +72,11 @@
                         android:layout_marginTop="@dimen/px44"
                         android:layout_below="@id/logo_img"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/px52"
+                        android:textSize="@dimen/font_54"
                         />
 
 
                 </RelativeLayout>
-
-
-
 
             </LinearLayout>
 
@@ -124,14 +122,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/px100"
+                        />
 
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"/>
+                    android:background="@color/color_DDDDDD"
+                    style="@style/line_horizontal_gray_s"
+                    />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -161,18 +164,37 @@
                         android:singleLine="true"
                         android:textColorHint="@color/color_999999"/>
 
+
+                    <ImageView
+                        android:id="@+id/id_watch_pass"
+                        android:layout_width="@dimen/px84"
+                        android:layout_height="@dimen/px60"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="@dimen/px86"
+                        android:padding="@dimen/px10"
+                        android:src="@mipmap/pwd_see"
+                        android:visibility="visible"/>
+
                     <ImageView
                         android:id="@+id/id_login_clear_pw"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clear"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/px100"
+                        />
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"/>
+                    android:background="@color/color_DDDDDD"
+                    style="@style/line_horizontal_gray_s"
+                    />
+
             </LinearLayout>
 
 
@@ -197,21 +219,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/id_login_btn"
-                android:layout_marginBottom="@dimen/px30"
-                android:layout_marginTop="@dimen/px100"
+                android:layout_marginTop="@dimen/px86"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/LoginEtStyle"
                     android:id="@+id/id_login_pw_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingBottom="@dimen/px40"
                     android:paddingRight="@dimen/px40"
-                    android:paddingTop="@dimen/px40"
                     android:text="@string/login_forgot_psw"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_40"
                     />
 
                 <View
@@ -225,22 +245,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingBottom="@dimen/px40"
                     android:paddingLeft="@dimen/px40"
-                    android:paddingTop="@dimen/px40"
                     android:text="@string/login_to_register"
-                    style="@style/LoginEtStyle"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_40"
                     />
 
             </LinearLayout>
 
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/login_third_other"
+                android:textColor="@color/color_999999"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/px194"
+                android:textSize="@dimen/font_34"
+                />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/reg_layout"
                 android:paddingBottom="@dimen/px100"
                 android:paddingLeft="@dimen/px100"
-                android:paddingRight="@dimen/px100">
+                android:paddingRight="@dimen/px100"
+                android:layout_marginTop="@dimen/px44"
+                >
 
                 <include
                     layout="@layout/layout_sns_login"
