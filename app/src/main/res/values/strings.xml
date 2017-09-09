@@ -182,7 +182,11 @@
     <string name="private_group_from">来自%1$s</string>
     <string name="private_group_free">免费</string>
     <string name="private_group_price">%1$d圈币</string>
+    <string name="private_group_youran_price">%1$d悠然币</string>
     <string name="private_group_essence_scan">%1$d 阅读</string>
+    <string name="private_group_join_way_change">修改加入私圈方式</string>
+    <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
+    <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
 
     <!--消息-->
     <string name="announcement">通知公告</string>
@@ -507,4 +511,5 @@
 
     <string name="FIND_MORE">110</string>
     <string name="NO_LOVA">您还没有喜欢的圈子,\r\n赶快添加阅读更多精彩内容吧!</string>
+
 </resources>

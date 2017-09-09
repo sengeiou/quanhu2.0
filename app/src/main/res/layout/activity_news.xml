@@ -98,6 +98,7 @@
             <TextView
                 android:id="@+id/tv_system_information_desc"
                 style="@style/NewsDescStyle"
+                android:textStyle="bold"
                 tools:text="最新通知" />
         </LinearLayout>
     </LinearLayout>

@@ -1,6 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_gray_common"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px168"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44">
+
+        <CheckBox
+            android:id="@+id/cbx_free"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px60"
+            android:button="@drawable/selector_private_group_way"
+            android:checked="true"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingLeft="@dimen/px44"
+            android:text="免费"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/font_50" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px168"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44">
+
+        <CheckBox
+            android:id="@+id/cbx_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px60"
+            android:button="@drawable/selector_private_group_way"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingLeft="@dimen/px44"
+            android:text="付费"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/font_50" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/px288"
+                android:layout_height="@dimen/px72"
+                android:background="@drawable/shape_private_group_price_bg"
+                android:orientation="horizontal"
+                android:padding="@dimen/px2">
+
+                <TextView
+                    android:id="@+id/btn_less"
+                    android:layout_width="@dimen/px72"
+                    android:layout_height="@dimen/px72"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="-"
+                    android:textColor="@color/color_bfbfbf"
+                    android:textSize="@dimen/font_50" />
+
+                <View
+                    style="@style/line_vertical_gray_s"
+                    android:layout_width="@dimen/px2"
+                    android:background="@color/color_D7D7D7" />
+
+                <EditText
+                    android:id="@+id/etv_num"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:text="1"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="@dimen/font_44" />
+
+                <View
+                    style="@style/line_vertical_gray_s"
+                    android:layout_width="@dimen/px2"
+                    android:background="@color/color_D7D7D7" />
+
+                <TextView
+                    android:id="@+id/btn_add"
+                    android:layout_width="@dimen/px72"
+                    android:layout_height="@dimen/px72"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="0dp"
+                    android:text="+"
+                    android:textColor="@color/font_color_blue"
+                    android:textSize="@dimen/font_50" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px14"
+                android:includeFontPadding="false"
+                android:text="悠然币/永久"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_44" />
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

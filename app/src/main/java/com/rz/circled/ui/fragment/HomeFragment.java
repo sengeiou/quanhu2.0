@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
@@ -78,6 +79,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void call(Void aVoid) {
                 //跳消息界面
+                startActivity(new Intent(mActivity, NewsActivity.class));
             }
         });
 
@@ -132,7 +134,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position);
         String url = CommomUtils.getDymanicUrl(circleDynamic.circleUrl, circleDynamic.moduleId, circleDynamic.infoId);
-        WebContainerActivity.startActivity(mActivity,url);
+        WebContainerActivity.startActivity(mActivity, url);
     }
 
     @Override

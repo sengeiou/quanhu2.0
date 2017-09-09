@@ -16,21 +16,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.kyleduo.switchbutton.SwitchButton;
 import com.rz.circled.R;
 import com.rz.circled.dialog.ApplyForGroupSuccessDialog;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
-import com.rz.httpapi.api.ApiPG;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
-import com.yryz.yunxinim.uikit.common.util.string.StringTextWatcher;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,9 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
+import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
+import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
 import static com.rz.circled.ui.activity.PictureSelectedActivity.PUBLISH_RESULT_CAMERA;
 
 /**
@@ -50,6 +55,10 @@ import static com.rz.circled.ui.activity.PictureSelectedActivity.PUBLISH_RESULT_
 public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements UploadPicManager.OnUploadCallback {
     private static int COVER_ADD_REQUEST = 2;
 
+    @BindView(R.id.tv_group)
+    TextView tvGroup;
+    @BindView(R.id.btn_group)
+    LinearLayout btnGroup;
     @BindView(R.id.etv_desc)
     EditText etvDesc;
     @BindView(R.id.tv_desc_num)
@@ -60,14 +69,18 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     ImageView imgGroup;
     @BindView(R.id.etv_name)
     EditText etvName;
+    @BindView(R.id.tv_name_num)
+    TextView tvNameNum;
     @BindView(R.id.etv_group_desc)
     EditText etvGroupDesc;
     @BindView(R.id.tv_desc_group_num)
     TextView tvDescGroupNum;
-    @BindView(R.id.tv_group)
-    TextView tvGroup;
-    @BindView(R.id.btn_group)
-    LinearLayout btnGroup;
+    @BindView(R.id.tv_way)
+    TextView tvWay;
+    @BindView(R.id.cbx)
+    SwitchButton cbx;
+    @BindView(R.id.line_cbx)
+    LinearLayout lineCbx;
     @BindView(R.id.cbx_protocol)
     CheckBox cbxProtocol;
     @BindView(R.id.btn_protocol)
@@ -75,6 +88,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     private String coverPath;
     private String circleId = "y2caoa2g2jcb";
+    private int price;
     private UploadPicManager upManager;
 
     @Override
@@ -84,6 +98,8 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         setTitleRightText(R.string.submit);
         setTitleRightListener(new View.OnClickListener() {
             @Override
@@ -142,7 +158,14 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         upManager = new UploadPicManager(this);
     }
 
-    @OnClick({R.id.btn_update_pic, R.id.btn_group, R.id.btn_protocol})
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    @OnClick({R.id.btn_update_pic, R.id.btn_group, R.id.btn_protocol, R.id.btn_way})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_group:
@@ -152,8 +175,28 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
             case R.id.btn_group:
                 ApplyForPrivateGroupBelongActivity.startPrivateGroupBelong(mContext, TextUtils.isEmpty(circleId) ? "" : circleId);
                 break;
+            case R.id.btn_way:
+                startActivity(new Intent(mContext, PrivateGroupJoinWayChangeActivity.class));
+                break;
             case R.id.btn_protocol:
 
+                break;
+        }
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case PRIVATE_GROUP_JOIN_WAY:
+                if ((int) event.getData() == 0) {
+                    price = 0;
+                    tvWay.setText(R.string.private_group_free);
+                    lineCbx.setVisibility(View.VISIBLE);
+                } else {
+                    price = (int) event.getData();
+                    tvWay.setText(String.format(mContext.getString(R.string.private_group_youran_price), price));
+                    lineCbx.setVisibility(View.GONE);
+                }
                 break;
         }
     }
@@ -183,6 +226,8 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 circleId,
                 url,
                 groupDesc,
+                price == 0 ? (cbx.isChecked() ? 1 : 0) : 0,
+                price,
                 groupName,
                 Session.getUserId(),
                 ownDesc,
@@ -221,4 +266,5 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         String ownDesc = etvDesc.getText().toString().trim();
         createPrivateGroupSubmit(resultList.get(0).fileSavePath, groupName, groupDesc, ownDesc);
     }
+
 }

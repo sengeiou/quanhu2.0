@@ -12,9 +12,17 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.NewsMultiTypeAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.api.ApiNews;
+import com.rz.httpapi.api.ApiNewsService;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.NewsBean;
+import com.rz.httpapi.bean.PrivateGroupBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -22,7 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Response;
 
+import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
@@ -149,7 +160,11 @@ public class NewsCommonFragment extends BaseFragment {
         layoutRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    loadData(false);
+                } else {
+                    loadData(true);
+                }
             }
         });
     }
@@ -162,6 +177,79 @@ public class NewsCommonFragment extends BaseFragment {
         }
         mAdapter.setItems(data);
         mAdapter.notifyDataSetChanged();
+
+        loadData(false);
+    }
+
+    private void loadData(final boolean loadMore) {
+        int ontType;
+        int twoType = 0;
+        switch (type) {
+            case NEWS_ANNOUNCEMENT:
+                ontType = ApiNews.NEWS_ANNOUNCEMENT;
+                break;
+            case NEWS_SYSTEM_INFORMATION:
+                ontType = ApiNews.NEWS_SYSTEM;
+                break;
+            case NEWS_RECOMMEND:
+                ontType = ApiNews.NEWS_RECOMMEND;
+                break;
+            case NEWS_ACCOUNT:
+                ontType = ApiNews.NEWS_ACCOUNT;
+                break;
+            case NEWS_COMMENT:
+                twoType = ApiNews.NEWS_COMMENT;
+                ontType = ApiNews.NEWS_INTERACTIVE;
+                break;
+            case NEWS_QA:
+                twoType = ApiNews.NEWS_ANSWER;
+                ontType = ApiNews.NEWS_INTERACTIVE;
+                break;
+            case NEWS_PRIVATE_GROUP:
+                twoType = ApiNews.NEWS_GROUP;
+                ontType = ApiNews.NEWS_INTERACTIVE;
+                break;
+            case NEWS_ACTIVITY:
+                twoType = ApiNews.NEWS_ACTIVITY;
+                ontType = ApiNews.NEWS_INTERACTIVE;
+                break;
+            default:
+                ontType = ApiNews.NEWS_ANNOUNCEMENT;
+                break;
+        }
+
+        Http.getApiService(ApiNewsService.class).newsMulitList(Session.getUserId(), ontType, twoType, mAdapter.getItemCount(), PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<NewsBean>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<NewsBean>>> call, Response<ResponseData<List<NewsBean>>> response) {
+                super.onResponse(call, response);
+                layoutRefresh.setRefreshing(false);
+                if (response.isSuccessful()) {
+                    if (!response.body().isSuccessful()) {
+                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
+                    } else {
+                        List<NewsBean> data = response.body().getData();
+                        if (data != null && data.size() > 0) {
+                            if (loadMore) {
+                                mAdapter.setItems(data);
+                            } else {
+                                mAdapter.setItems(data);
+                            }
+                        } else {
+                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                        }
+                    }
+                } else {
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<NewsBean>>> call, Throwable t) {
+                super.onFailure(call, t);
+                layoutRefresh.setRefreshing(false);
+                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+            }
+        });
     }
 
 }

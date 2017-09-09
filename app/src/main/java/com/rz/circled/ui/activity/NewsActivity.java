@@ -11,15 +11,27 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.ui.fragment.NewsCommonFragment;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.api.ApiNewsService;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.NewsUnreadBean;
+import com.rz.httpapi.bean.PrivateGroupBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.NEWS_ACCOUNT_INFORMATION_UNREAD_CHANGE;
 import static com.rz.circled.event.EventConstant.NEWS_ACTIVITY_UNREAD_CHANGE;
@@ -97,6 +109,15 @@ public class NewsActivity extends BaseActivity {
     public void initData() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+        Http.getApiService(ApiNewsService.class).newsUnread(Session.getUserId()).enqueue(new BaseCallback<ResponseData<NewsUnreadBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<NewsUnreadBean>> call, Response<ResponseData<NewsUnreadBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful() && !response.body().isSuccessful()) {
+                    NewsUnreadBean data = response.body().getData();
+                }
+            }
+        });
     }
 
     @Override

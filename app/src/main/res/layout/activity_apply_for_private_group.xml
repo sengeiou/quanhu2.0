@@ -119,7 +119,7 @@
                 android:layout_marginTop="@dimen/px44"
                 android:background="@null"
                 android:gravity="top"
-                android:hint="请输入简介"
+                android:hint="介绍个人身份、擅长领域、特长等。"
                 android:inputType="textMultiLine"
                 android:lineSpacingExtra="4dp"
                 android:maxLength="30"
@@ -162,14 +162,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/px44">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px44"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/px44">
+                android:orientation="horizontal">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:layout_width="2dp"
@@ -189,127 +190,87 @@
                     android:textSize="@dimen/font_46" />
             </LinearLayout>
 
+            <View style="@style/line_horizontal_gray_s" />
+
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px44"
+                android:layout_marginTop="@dimen/px44">
 
                 <LinearLayout
                     android:id="@+id/btn_update_pic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/px44"
-                    android:paddingRight="@dimen/px44"
-                    android:visibility="visible">
+                    android:layout_width="@dimen/px216"
+                    android:layout_height="@dimen/px216"
+                    android:background="@drawable/shape_private_group_icon_update_bg"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <View style="@style/line_horizontal_gray_s" />
+                    <ImageView
+                        android:layout_width="@dimen/px50"
+                        android:layout_height="@dimen/px50"
+                        android:layout_marginTop="@dimen/px28"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/ic_private_group_icon_add" />
 
-                    <LinearLayout
-                        android:layout_width="@dimen/px606"
-                        android:layout_height="@dimen/px300"
-                        android:layout_marginBottom="@dimen/px92"
-                        android:layout_marginTop="@dimen/px92"
-                        android:background="@drawable/shape_private_group_icon_update_bg"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px28"
                         android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="@dimen/px108"
-                            android:layout_height="@dimen/px108"
-                            android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_private_group_icon_add" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/px38"
-                            android:text="上传私圈封面图"
-                            android:textColor="@color/font_gray_s"
-                            android:textSize="@dimen/font_40" />
-                    </LinearLayout>
-
-                    <View style="@style/line_horizontal_gray_s" />
+                        android:paddingLeft="@dimen/px10"
+                        android:paddingRight="@dimen/px10"
+                        android:text="上传私圈封面图"
+                        android:textColor="@color/font_gray_s"
+                        android:textSize="@dimen/font_38" />
                 </LinearLayout>
 
                 <ImageView
                     android:id="@+id/img_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px484"
+                    android:layout_width="@dimen/px216"
+                    android:layout_height="@dimen/px216"
                     android:background="@color/white"
                     android:scaleType="centerCrop"
                     android:src="@color/colorPrimary"
                     android:visibility="gone" />
             </FrameLayout>
 
+            <View style="@style/line_horizontal_gray_s" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/px44">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="私圈名称"
-                        android:textColor="@color/font_gray_xl"
-                        android:textSize="@dimen/font_50" />
-
-                    <EditText
-                        android:id="@+id/etv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="请输入私圈名称"
-                        android:textColor="@color/font_gray_m"
-                        android:textColorHint="@color/font_gray_s"
-                        android:textSize="@dimen/font_44" />
-
-                </LinearLayout>
-
-                <View
-                    style="@style/line_horizontal_gray_s"
-                    android:layout_marginBottom="@dimen/px44"
-                    android:layout_marginTop="@dimen/px44" />
+                android:layout_marginTop="@dimen/px44"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="私圈简介"
+                    android:layout_weight="1"
+                    android:text="私圈名称"
                     android:textColor="@color/font_gray_xl"
-                    android:textSize="@dimen/px50" />
+                    android:textSize="@dimen/font_50" />
 
                 <EditText
-                    android:id="@+id/etv_group_desc"
-                    android:layout_width="match_parent"
+                    android:id="@+id/etv_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px44"
                     android:background="@null"
-                    android:gravity="top"
-                    android:hint="请输入简介"
-                    android:inputType="textMultiLine"
-                    android:lineSpacingExtra="4dp"
-                    android:maxLength="200"
+                    android:gravity="right"
+                    android:maxLength="7"
                     android:textColor="@color/font_gray_m"
                     android:textColorHint="@color/font_gray_s"
                     android:textSize="@dimen/font_44" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/px58"
+                    android:layout_marginLeft="@dimen/px28"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_desc_group_num"
+                        android:id="@+id/tv_name_num"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -321,12 +282,132 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/200"
+                        android:text="/7"
                         android:textColor="@color/font_gray_s"
                         android:textSize="@dimen/font_38" />
                 </LinearLayout>
             </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginBottom="@dimen/px44"
+                android:layout_marginTop="@dimen/px44" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="私圈简介"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/px50" />
+
+            <EditText
+                android:id="@+id/etv_group_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px44"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="介绍私圈、私圈提供资源、帮助用户解决什么问题等"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="4dp"
+                android:maxLength="200"
+                android:textColor="@color/font_gray_m"
+                android:textColorHint="@color/font_gray_s"
+                android:textSize="@dimen/font_44" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px28"
+                android:layout_marginTop="@dimen/px58"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_desc_group_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="0"
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_38" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/200"
+                    android:textColor="@color/font_gray_s"
+                    android:textSize="@dimen/font_38" />
+            </LinearLayout>
+
+            <View style="@style/line_horizontal_gray_s" />
+
+            <LinearLayout
+                android:id="@+id/btn_way"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px44"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="私圈加入方式"
+                    android:textColor="@color/font_gray_xl"
+                    android:textSize="@dimen/font_50" />
+
+                <TextView
+                    android:id="@+id/tv_way"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="免费"
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_44" />
+
+                <ImageView style="@style/DefaultArrowRightStyle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line_cbx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px44"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <View style="@style/line_horizontal_gray_s" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px44"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="成员入圈审核"
+                        android:textColor="@color/font_gray_xl"
+                        android:textSize="@dimen/font_50" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/cbx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:kswBackColor="@color/selector_private_group_join_check"
+                        app:kswThumbColor="@color/white"
+                        app:kswThumbMargin="@dimen/px8" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
+        <View style="@style/line_horizontal_gray_s" />
 
         <LinearLayout
             android:layout_width="match_parent"
