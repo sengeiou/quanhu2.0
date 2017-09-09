@@ -259,7 +259,7 @@
     <!--注册-->
     <string name="edit_phone_num">请输入手机号</string>
     <string name="edit_code_num">请输入验证码</string>
-    <string name="edit_pwd">设置登录密码（6~18位数字+字母组合）</string>
+    <string name="edit_pwd">设置登录密码(6~18位数字+字母组合)</string>
     <string name="register_btn">注册</string>
     <string name="input_old_pwd_hint">请输入旧密码</string>
     <string name="input_new_pwd_hint">请输入新密码</string>

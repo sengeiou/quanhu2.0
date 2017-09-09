@@ -172,6 +172,8 @@ public class SearchActivity extends BaseActivity {
             if (position == TYPE_REWARD)
                 return SearchRewardFragment.newInstance();      //搜索悬赏
 
+
+
             return SearchContentFragment.newInstance();
         }
 

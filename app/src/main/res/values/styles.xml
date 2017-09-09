@@ -162,7 +162,7 @@
     </style>
 
     <style name="LoginEtStyle">
-        <item name="android:textColorHint">@color/color_666666</item>
+        <item name="android:textColorHint">@color/color_aaa</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textSize">@dimen/font_46</item>
         <item name="android:textColor">@color/black</item>
@@ -174,7 +174,7 @@
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:textSize">@dimen/font_46</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textColorHint">@color/color_666666</item>
+        <item name="android:textColorHint">@color/color_aaa</item>
     </style>
 
     <style name="ContactHeadRelaStyle">

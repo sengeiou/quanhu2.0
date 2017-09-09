@@ -74,7 +74,7 @@
                                 <ImageView
                                     android:layout_width="@dimen/px42"
                                     android:layout_height="@dimen/px56"
-                                    android:layout_marginLeft="@dimen/px50"
+                                    android:layout_marginLeft="@dimen/px24"
                                     android:src="@mipmap/ic_login_phone"/>
 
                                 <EditText
@@ -88,7 +88,7 @@
                                     android:inputType="phone"
                                     android:maxLength="11"
                                     android:paddingBottom="@dimen/px63"
-                                    android:paddingLeft="@dimen/px44"
+                                    android:paddingLeft="@dimen/px24"
                                     android:paddingTop="@dimen/px63"
                                     android:singleLine="true"
                                     android:textColorHint="@color/color_999999"/>
@@ -123,7 +123,7 @@
                                 <ImageView
                                     android:layout_width="@dimen/px42"
                                     android:layout_height="@dimen/px56"
-                                    android:layout_marginLeft="@dimen/px50"
+                                    android:layout_marginLeft="@dimen/px24"
                                     android:src="@mipmap/icon_code"
 
                                     />
@@ -139,7 +139,7 @@
                                     android:inputType="phone"
                                     android:maxLength="11"
                                     android:paddingBottom="@dimen/px63"
-                                    android:paddingLeft="@dimen/px44"
+                                    android:paddingLeft="@dimen/px24"
                                     android:paddingTop="@dimen/px63"
                                     android:singleLine="true"
                                     android:textColorHint="@color/color_999999"/>
@@ -180,11 +180,9 @@
 
                             <Button
                                 android:id="@+id/id_find_1_next_btn"
-                                android:layout_width="match_parent"
+                                android:layout_width="@dimen/px836"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="@dimen/px162"
-                                android:layout_marginRight="@dimen/px162"
                                 android:layout_marginTop="@dimen/px170"
                                 android:background="@drawable/shape_btn_blue_d7_selector"
                                 android:gravity="center"
@@ -194,6 +192,7 @@
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/px50"
                                 android:layout_marginBottom="@dimen/px116"
+                                android:layout_gravity="center_horizontal"
                                 />
 
 
