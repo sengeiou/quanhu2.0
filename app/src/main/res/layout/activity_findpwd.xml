@@ -17,190 +17,204 @@
             android:orientation="vertical"
             >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px594"
-                android:background="@mipmap/background_lite"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/title_bar_padding_top"
-                >
-
-                <ImageView
-                    android:id="@+id/titlebar_main_left_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_left"
-                    android:layout_marginLeft="@dimen/px44"
-                    android:layout_marginTop="@dimen/px44"
-
-                    />
-
+                android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="@dimen/px594"
+                    android:background="@mipmap/background_lite"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/title_bar_padding_top"
+                    >
+
+                    <ImageView
+                        android:id="@+id/titlebar_main_left_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/arrow_left"
+                        android:padding="@dimen/px44"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/px222"
+                    >
 
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/shape_round_top"
-                        android:layout_marginTop="@dimen/px121"
-                        android:layout_marginLeft="@dimen/px44"
-                        android:layout_marginRight="@dimen/px44"
+                        android:background="@drawable/login_rect_background"
+                        android:layout_marginLeft="@dimen/px22"
+                        android:layout_marginRight="@dimen/px22"
                         >
+
+
+                        <LinearLayout
+                            android:id="@+id/et_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/px20"
+                            android:paddingRight="@dimen/px20"
+                            android:layout_marginTop="@dimen/px306"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px42"
+                                    android:layout_height="@dimen/px56"
+                                    android:layout_marginLeft="@dimen/px24"
+                                    android:src="@mipmap/ic_login_phone"/>
+
+                                <EditText
+                                    android:id="@+id/id_find_1_phone_edit"
+                                    style="@style/LoginEtStyle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:hint="@string/edit_phone_num"
+                                    android:inputType="phone"
+                                    android:maxLength="11"
+                                    android:paddingBottom="@dimen/px63"
+                                    android:paddingLeft="@dimen/px24"
+                                    android:paddingTop="@dimen/px63"
+                                    android:singleLine="true"
+                                    android:textColorHint="@color/color_999999"/>
+
+                                <ImageView
+                                    android:id="@+id/id_clear_phone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_clear"
+                                    android:visibility="gone"
+                                    android:layout_marginRight="@dimen/px50"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px2"
+                                android:background="@color/color_DDDDDD"
+                                android:visibility="visible"
+                                android:layout_marginLeft="@dimen/px30"
+                                android:layout_marginRight="@dimen/px30"
+                                />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/px42"
+                                    android:layout_height="@dimen/px56"
+                                    android:layout_marginLeft="@dimen/px24"
+                                    android:src="@mipmap/icon_code"
+
+                                    />
+
+                                <EditText
+                                    android:id="@+id/id_find_1_code_edit"
+                                    style="@style/LoginEtStyle"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:hint="@string/edit_code_num"
+                                    android:inputType="phone"
+                                    android:maxLength="11"
+                                    android:paddingBottom="@dimen/px63"
+                                    android:paddingLeft="@dimen/px24"
+                                    android:paddingTop="@dimen/px63"
+                                    android:singleLine="true"
+                                    android:textColorHint="@color/color_999999"/>
+
+                                <ImageView
+                                    android:id="@+id/id_clear_code"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_clear"
+                                    android:visibility="gone"
+                                    android:layout_marginRight="@dimen/px86"
+                                    />
+
+
+                                <Button
+                                    android:id="@+id/id_find_1_code_btn"
+                                    android:layout_width="@dimen/px260"
+                                    android:layout_height="@dimen/px86"
+                                    android:background="@drawable/shape_btn_blue_d7_selector"
+                                    android:text="@string/send_check_code"
+                                    android:textColor="@android:color/white"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/font_34"
+                                    android:layout_marginRight="@dimen/px44"
+                                    >
+
+                                </Button>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px2"
+                                android:background="@color/color_DDDDDD"
+                                android:visibility="visible"
+                                android:layout_marginLeft="@dimen/px30"
+                                android:layout_marginRight="@dimen/px30"
+                                />
+
+                            <Button
+                                android:id="@+id/id_find_1_next_btn"
+                                android:layout_width="@dimen/px836"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="@dimen/px170"
+                                android:background="@drawable/shape_btn_blue_d7_selector"
+                                android:gravity="center"
+                                android:minHeight="0dp"
+                                android:padding="@dimen/px32"
+                                android:text="@string/forget_next"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/px50"
+                                android:layout_marginBottom="@dimen/px116"
+                                android:layout_gravity="center_horizontal"
+                                />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/forget_pw_title"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="@dimen/px26"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/px72"
+                            android:gravity="center"
+                            android:id="@+id/textView2" />
+
 
                     </FrameLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/forget_pw_title"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/px86"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/px72"
-                        />
-
                 </RelativeLayout>
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/et_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/id_login_btn"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/px20"
-                android:paddingRight="@dimen/px20">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="@dimen/px42"
-                        android:layout_height="@dimen/px56"
-                        android:layout_marginLeft="@dimen/px66"
-                        android:src="@mipmap/ic_login_phone"/>
-
-                    <EditText
-                        android:id="@+id/id_find_1_phone_edit"
-                        style="@style/LoginEtStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="@string/edit_phone_num"
-                        android:inputType="phone"
-                        android:maxLength="11"
-                        android:paddingBottom="@dimen/px63"
-                        android:paddingLeft="@dimen/px44"
-                        android:paddingTop="@dimen/px63"
-                        android:singleLine="true"
-                        android:textColorHint="@color/color_999999"/>
-
-                    <ImageView
-                        android:id="@+id/id_clear_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_clear"
-                        android:visibility="gone"
-                        android:layout_marginRight="@dimen/px100"
-                        />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"
-                    android:visibility="visible"
-                    />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                    android:layout_width="@dimen/px42"
-                    android:layout_height="@dimen/px56"
-                    android:layout_marginLeft="@dimen/px66"
-                    android:src="@mipmap/icon_code"/>
-
-                    <EditText
-                        android:id="@+id/id_find_1_code_edit"
-                        style="@style/LoginEtStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="@string/edit_code_num"
-                        android:inputType="phone"
-                        android:maxLength="11"
-                        android:paddingBottom="@dimen/px63"
-                        android:paddingLeft="@dimen/px44"
-                        android:paddingTop="@dimen/px63"
-                        android:singleLine="true"
-                        android:textColorHint="@color/color_999999"/>
-
-                    <ImageView
-                        android:id="@+id/id_clear_code"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_clear"
-                        android:visibility="gone"
-                        android:layout_marginRight="@dimen/px86"
-                        />
-
-
-                    <Button
-                        android:id="@+id/id_find_1_code_btn"
-                        android:layout_width="@dimen/px260"
-                        android:layout_height="@dimen/px86"
-                        android:background="@drawable/shape_btn_blue_d7_selector"
-                        android:text="@string/send_check_code"
-                        android:textColor="@android:color/white"
-                        android:gravity="center"
-                        android:layout_marginRight="@dimen/px100"
-                        >
-
-                    </Button>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px2"
-                    android:background="@color/color_DDDDDD"
-                    android:visibility="visible"
-                    />
-
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/id_find_1_next_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/px162"
-                android:layout_marginRight="@dimen/px162"
-                android:layout_marginTop="@dimen/px170"
-                android:background="@drawable/shape_btn_blue_d7_selector"
-                android:gravity="center"
-                android:minHeight="0dp"
-                android:padding="@dimen/px32"
-                android:text="@string/forget_next"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/px50"/>
-
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

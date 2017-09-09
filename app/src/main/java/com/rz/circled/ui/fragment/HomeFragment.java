@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -32,6 +33,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
+import static com.rz.circled.BuildConfig.WebHomeBaseUrl;
+
 /**
  * Created by Gsm on 2017/8/29.
  */
@@ -41,6 +44,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     ListView mHomeLv;
     @BindView(R.id.layout_content)
     FrameLayout mLayoutContent;
+    @BindView(R.id.home_publish)
+    ImageView mHomePublish;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     DynamicAdapter dynamicAdapter;
@@ -80,6 +85,13 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 //跳消息界面
                 startActivity(new Intent(mActivity, NewsActivity.class));
+            }
+        });
+        RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                //跳消息界面
+                WebContainerActivity.startActivity(mActivity,WebHomeBaseUrl+"/activity/new-circles");
             }
         });
 

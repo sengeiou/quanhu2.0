@@ -309,10 +309,10 @@ public class LoginActivity extends BaseActivity {
         int length = TextUtils.isEmpty(mEditPass.getText()) ? 0 : mEditPass.getText().length();
         if (mEditPass.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
             mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
         } else {
             mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
         }
         mEditPass.setSelection(length);
 
@@ -460,7 +460,7 @@ public class LoginActivity extends BaseActivity {
                     finish();
                 } else if(mGuideType == Type.TYPE_LOGIN_GUIDE){
                     //从向导页面过来
-                    Session.setUserIsFirstDownload(false);
+
                     skipActivity(aty, FollowCircle.class);
                     finish();
                 }else {

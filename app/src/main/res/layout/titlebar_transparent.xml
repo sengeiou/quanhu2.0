@@ -32,7 +32,7 @@
                 android:paddingRight="@dimen/px15"
                 android:src="@mipmap/icon_search"/>
 
-            <EditText
+            <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
                 android:id="@+id/et_search_keyword"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -41,6 +41,9 @@
                 android:background="@color/transparent"
                 android:hint="@string/search_keyword_hint"
                 android:maxLines="1"
+                android:imeOptions="actionSearch"
+                android:focusable="false"
+                android:inputType="textImeMultiLine"
                 android:paddingRight="@dimen/px10"
                 android:textColor="@color/font_gray_m"
                 android:textColorHint="@color/font_gray_a"

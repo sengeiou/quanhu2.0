@@ -181,6 +181,11 @@ public class FindPwdActivity2 extends BaseActivity {
         });
     }
 
+    @OnClick(R.id.titlebar_main_left_btn)
+    public void onClick() {
+        finish();
+    }
+
     /**
      * 清除密码
      */

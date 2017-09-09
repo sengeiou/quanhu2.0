@@ -44,12 +44,12 @@ public class User {
         this.name = name;
     }
 
-    public int getDesc()
+    public int getCount()
     {
         return count;
     }
 
-    public void setDesc(int count)
+    public void setCount(int count)
     {
         this.count = count;
     }

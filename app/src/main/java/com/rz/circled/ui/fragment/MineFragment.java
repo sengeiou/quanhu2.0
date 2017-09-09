@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,6 +30,7 @@ import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.SearchActivity;
+import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.common.adapter.CommonAdapter;
@@ -62,7 +64,7 @@ import static com.rz.circled.widget.CommomUtils.trackUser;
 /**
  * Created by Gsm on 2017/8/29.
  */
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements AdapterView.OnItemClickListener {
 
     /**
      * 用户头像
@@ -311,7 +313,7 @@ public class MineFragment extends BaseFragment {
                 helper.setText(R.id.id_name_txt, item.getName());
             }
         });
-//        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(this);
 
         receiver = new MessageReceiver();
         IntentFilter filter_dynamic = new IntentFilter();
@@ -349,20 +351,20 @@ public class MineFragment extends BaseFragment {
     }
 
 
-//    private void checkUpdate() {
-//        /***** 获取升级信息 *****/
+    private void checkUpdate() {
+        /***** 获取升级信息 *****/
 //        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
 //
 //        if (upgradeInfo != null) {
 //            BaseEvent event = new BaseEvent();
-//            event.key = "versionUpdate";
+//            event.info = "versionUpdate";
 //            EventBus.getDefault().post(event);
 //        } else {
 //            BaseEvent event = new BaseEvent();
-//            event.key = "noVersionUpdate";
+//            event.info = "noVersionUpdate";
 //            EventBus.getDefault().post(event);
 //        }
-//    }
+    }
 
     @OnClick({R.id.id_person_news_rela, R.id.btn_my_transfer, R.id.id_person_head_img, R.id.btn_my_collect, R.id.btn_my_circle})
     public void onClick(View v) {
@@ -458,70 +460,71 @@ public class MineFragment extends BaseFragment {
 //    mModelList.add(model5);//设置
 //    mModelList.add(model7);//在线留言
 
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        switch (position) {
-//            //通讯录
-//            case 0:
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            //通讯录
+            case 0:
+                if (isLogin()) {
+                    trackUser("我的", "入口名称", "通讯录");
+//                    showActivity(frg, ContactsAty.class);
+                }
+                break;
+            //我的账户
+            case 1:
+                if (isLogin()) {
+                    trackUser("我的", "入口名称", "我的账户");
+//                    showActivity(frg, MyAccountAty.class);
+                }
+                break;
+            //我的二维码
+            case 3:
 //                if (isLogin()) {
-//                    trackUser("我的","入口名称","通讯录");
-////                    showActivity(frg, ContactsAty.class);
+//                    showActivity(frg, MyCollectionAty.class);
 //                }
-//                break;
-//            //我的账户
-//            case 1:
-//                if (isLogin()) {
-//                    trackUser("我的","入口名称","我的账户");
-////                    showActivity(frg, MyAccountAty.class);
+                if (isLogin()) {
+                    trackUser("我的", "入口名称", "我的二维码");
+//                    showActivity(frg, PersonScanAty.class);
+                }
+                break;
+            //转发券
+            case 2:
+                if (isLogin()) {
+                    trackUser("我的", "入口名称", "我的卡券");
+//                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
+//                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
+//                    startActivity(intent);
+                }
+                break;
+            case 4:
+                if (isLogin()) {
+//                    trackUser("我的","入口名称","一键邀请好友");
+//                    ShareNewsAty.startShareNews(frg, new ShareModel(
+//                                    "悠然一指，一指进入你的圈子",
+//                                    "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
+//                                    H5Address.ONLINE_TUIGUANG),
+//                            IntentCode.PAGE_ADDFRIEND);
+                }
+                break;
+            //设置
+            case 6:
+                trackUser("我的","入口名称","设置");
+                Intent intent = new Intent(mActivity, SettingActivity.class);
+                startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
+                break;
+            //联系客服
+            case 5:
+                if (isLogin() && null != mCustormServiceModel) {
+                    trackUser("我的", "入口名称", "联系客服");
+                    starCustormService();
+                } else {
+//                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
+//                    CommH5Aty.startCommonH5(frg, customer_url);
 //                }
-//                break;
-//            //我的二维码
-//            case 3:
-////                if (isLogin()) {
-////                    showActivity(frg, MyCollectionAty.class);
-////                }
-//                if (isLogin()) {
-//                    trackUser("我的","入口名称","我的二维码");
-////                    showActivity(frg, PersonScanAty.class);
-//                }
-//                break;
-//            //转发券
-//            case 2:
-//                if (isLogin()) {
-//                    trackUser("我的","入口名称","我的卡券");
-////                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-////                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-////                    startActivity(intent);
-//                }
-//                break;
-//            case 4:
-//                if (isLogin()) {
-////                    trackUser("我的","入口名称","一键邀请好友");
-////                    ShareNewsAty.startShareNews(frg, new ShareModel(
-////                                    "悠然一指，一指进入你的圈子",
-////                                    "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
-////                                    H5Address.ONLINE_TUIGUANG),
-////                            IntentCode.PAGE_ADDFRIEND);
-//                }
-//                break;
-//            //设置
-//            case 6:
-////                trackUser("我的","入口名称","设置");
-////                Intent intent = new Intent(frg, SettingActivity.class);
-////                startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
-//                break;
-//            //联系客服
-//            case 5:
-//                if (isLogin() && null != mCustormServiceModel) {
-//                    trackUser("我的","入口名称","联系客服");
-//                    starCustormService();
-//                } else {
-////                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
-////                    CommH5Aty.startCommonH5(frg, customer_url);
-////                }
-//                break;
-//        }
-//    }
+                    break;
+                }
+        }
+    }
 
     private void starCustormService() {
         int startHour = mCustormServiceModel.getStartHour();

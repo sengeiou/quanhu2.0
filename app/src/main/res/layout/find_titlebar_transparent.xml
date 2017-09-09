@@ -9,14 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
 
-        <ImageView
-            android:id="@+id/find_title_left"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="@dimen/app_base_padding"
-            android:paddingRight="@dimen/px40"
-            android:src="@mipmap/icon_arrow_left_gray"/>
         <TextView
             android:id="@+id/tv_base_title"
             android:layout_width="wrap_content"
@@ -26,17 +18,17 @@
             android:text="@string/find"
             android:textColor="@color/color_333"
             android:textSize="@dimen/font_title_size"/>
-        <ImageView
-            android:id="@+id/iv_find_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_marginRight="@dimen/app_base_padding"
-            android:src="@drawable/find_more"
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_find_more"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginRight="@dimen/app_base_padding"-->
+            <!--android:src="@drawable/find_more"-->
 
-            />
+            <!--/>-->
     </RelativeLayout>
 
     <View

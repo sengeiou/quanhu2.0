@@ -152,6 +152,10 @@ public class FindPwdActivity extends BaseActivity {
         presenter.attachView(this);
     }
 
+    @OnClick(R.id.titlebar_main_left_btn)
+    public void onClick() {
+        finish();
+    }
 
     /**
      * 清除手机号
