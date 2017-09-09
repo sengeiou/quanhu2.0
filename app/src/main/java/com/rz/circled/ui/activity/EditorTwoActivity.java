@@ -1116,7 +1116,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void processAuthority(EditorConfigTwoModel authModel) {
-        if (authModel.getEnabled()) {
+        if (authModel != null && authModel.getEnabled()) {
             tvAuthority.setVisibility(View.VISIBLE);
             tvAuthority.setTag(authModel.getData());
         } else {
