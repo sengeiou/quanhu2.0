@@ -23,8 +23,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/px518"
+                    android:layout_height="@dimen/px594"
                     android:background="@mipmap/background_lite"
+                    android:paddingTop="@dimen/title_bar_padding_top"
                     >
 
                     <ImageView
@@ -32,8 +33,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/arrow_left"
-                        android:layout_marginLeft="@dimen/px44"
-                        android:layout_marginTop="@dimen/px44"
+                        android:padding="@dimen/px44"
 
                         />
 
@@ -43,9 +43,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/login_rect_background"
-                    android:layout_marginLeft="@dimen/px44"
-                    android:layout_marginRight="@dimen/px44"
-                    android:layout_marginTop="@dimen/px202"
+                    android:layout_marginLeft="@dimen/px22"
+                    android:layout_marginRight="@dimen/px22"
+                    android:layout_marginTop="@dimen/px282"
                     >
 
 
@@ -55,9 +55,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/welcome_login"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/px256"
+                        android:layout_marginTop="@dimen/px100"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/font_54"
+                        android:textSize="@dimen/px62"
                         />
 
                     <LinearLayout
@@ -65,8 +65,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="@dimen/px20"
-                        android:paddingRight="@dimen/px20"
                         android:layout_below="@id/welcome_txt"
                         android:layout_marginTop="@dimen/px46"
                         >
@@ -80,7 +78,7 @@
                             <ImageView
                                 android:layout_width="@dimen/px42"
                                 android:layout_height="@dimen/px56"
-                                android:layout_marginLeft="@dimen/px66"
+                                android:layout_marginLeft="@dimen/px24"
                                 android:src="@mipmap/ic_login_phone"/>
 
                             <EditText
@@ -94,7 +92,7 @@
                                 android:inputType="phone"
                                 android:maxLength="11"
                                 android:paddingBottom="@dimen/px63"
-                                android:paddingLeft="@dimen/px44"
+                                android:paddingLeft="@dimen/px24"
                                 android:paddingTop="@dimen/px63"
                                 android:singleLine="true"
                                 android:textColorHint="@color/color_999999"/>
@@ -105,7 +103,7 @@
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_clear"
                                 android:visibility="gone"
-                                android:layout_marginRight="@dimen/px100"
+                                android:layout_marginRight="@dimen/px44"
                                 />
 
                         </LinearLayout>
@@ -115,8 +113,9 @@
                             android:layout_height="@dimen/px2"
                             android:background="@color/color_DDDDDD"
                             style="@style/line_horizontal_gray_s"
+                            android:layout_marginLeft="@dimen/px30"
+                            android:layout_marginRight="@dimen/px30"
                             />
-
 
                         <LinearLayout
                             android:id="@+id/pwd_layout"
@@ -128,7 +127,7 @@
                             <ImageView
                                 android:layout_width="@dimen/px42"
                                 android:layout_height="@dimen/px56"
-                                android:layout_marginLeft="@dimen/px66"
+                                android:layout_marginLeft="@dimen/px24"
                                 android:src="@mipmap/ic_login_pw"/>
 
                             <EditText
@@ -141,7 +140,7 @@
                                 android:hint="@string/input_login_pw"
                                 android:maxLength="18"
                                 android:paddingBottom="@dimen/px63"
-                                android:paddingLeft="@dimen/px44"
+                                android:paddingLeft="@dimen/px24"
                                 android:paddingTop="@dimen/px63"
                                 android:password="true"
                                 android:singleLine="true"
@@ -157,7 +156,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="@dimen/px86"
                                 android:padding="@dimen/px10"
-                                android:src="@mipmap/pwd_see"
+                                android:src="@mipmap/pwd_unsee"
                                 android:visibility="visible"/>
 
                             <ImageView
@@ -166,9 +165,11 @@
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_clear"
                                 android:visibility="gone"
-                                android:layout_marginRight="@dimen/px100"
+                                android:layout_marginRight="@dimen/px44"
                                 />
                         </LinearLayout>
+
+
 
 
                         <View
@@ -176,6 +177,8 @@
                             android:layout_height="@dimen/px2"
                             android:background="@color/color_DDDDDD"
                             style="@style/line_horizontal_gray_s"
+                            android:layout_marginLeft="@dimen/px30"
+                            android:layout_marginRight="@dimen/px30"
                             />
 
                     </LinearLayout>
@@ -184,11 +187,8 @@
                     <Button
                         android:id="@+id/id_login_btn"
                         android:layout_width="@dimen/px836"
-                        android:layout_height="@dimen/px116"
-                        android:layout_marginLeft="@dimen/px162"
-                        android:layout_marginRight="@dimen/px162"
-                        android:layout_marginTop="@dimen/px170"
-                        android:background="@drawable/shape_btn_blue_d7_selector"
+                        android:layout_height="@dimen/px126"
+                        android:layout_marginTop="@dimen/px100"
                         android:gravity="center"
                         android:minHeight="0dp"
                         android:padding="@dimen/px32"
@@ -197,7 +197,53 @@
                         android:textSize="@dimen/px50"
                         android:visibility="visible"
                         android:layout_below="@id/et_layout"
+                        android:background="@drawable/shape_btn_blue_d7_selector"
+                        android:layout_centerHorizontal="true"
                         />
+
+                    <LinearLayout
+                        android:id="@+id/reg_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/id_login_btn"
+                        android:layout_marginTop="@dimen/px86"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/id_login_pw_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:paddingRight="@dimen/px40"
+                            android:text="@string/login_forgot_psw"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/font_40"
+                            />
+
+                        <View
+                            android:id="@+id/v3_view_login_line"
+                            android:layout_width="@dimen/px3"
+                            android:layout_height="@dimen/px38"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/px72"
+                            android:layout_marginRight="@dimen/px72"
+                            android:background="@color/color_DDDDDD"
+                            />
+
+                        <TextView
+                            android:id="@+id/id_login_register_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:paddingLeft="@dimen/px40"
+                            android:text="@string/login_to_register"
+                            android:textColor="@color/color_999999"
+                            android:textSize="@dimen/font_40"
+                            />
+
+                    </LinearLayout>
+
 
                 </RelativeLayout>
 
@@ -207,51 +253,11 @@
                     android:layout_height="@dimen/px242"
                     android:layout_centerHorizontal="true"
                     android:src="@mipmap/logo_login"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/px121"
+                    android:layout_marginTop="@dimen/px201"
                     android:layout_gravity="center_horizontal"
                     />
 
             </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/reg_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/id_login_btn"
-                android:layout_marginTop="@dimen/px86"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/id_login_pw_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="@dimen/px40"
-                    android:text="@string/login_forgot_psw"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/font_40"
-                    />
-
-                <View
-                    android:id="@+id/v3_view_login_line"
-                    android:layout_width="@dimen/px3"
-                    android:layout_height="@dimen/px38"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:id="@+id/id_login_register_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/px40"
-                    android:text="@string/login_to_register"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/font_40"
-                    />
-
-            </LinearLayout>
 
 
             <LinearLayout
@@ -259,17 +265,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/px194"
+                android:layout_marginTop="@dimen/px184"
                 >
 
-                <view
+                <!--<view-->
+                    <!--android:layout_width="@dimen/px188"-->
+                    <!--android:layout_height="@dimen/px1"-->
+                    <!--android:background="@color/app_line_gray_common"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginRight="@dimen/px28"-->
+                    <!--&gt;-->
+                <!--</view>-->
+
+                <View
                     android:layout_width="@dimen/px188"
-                    android:layout_height="@dimen/px1"
-                    android:background="@color/app_line_gray_common"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="@dimen/px2"
+                    android:background="@color/color_DDDDDD"
+                    android:visibility="visible"
                     android:layout_marginRight="@dimen/px28"
-                    >
-                </view>
+                    android:layout_gravity="center_vertical"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -281,21 +296,23 @@
                     android:textSize="@dimen/font_34"
                     />
 
-                <view
+                <View
                     android:layout_width="@dimen/px188"
-                    android:layout_height="@dimen/px1"
-                    android:background="@color/app_line_gray_common"
+                    android:layout_height="@dimen/px2"
+                    android:background="@color/color_DDDDDD"
+                    android:visibility="visible"
+                    android:layout_marginLeft="@dimen/px28"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/px28"
-                    >
-                </view>
+                    />
+
+
 
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/px100"
+                android:paddingBottom="@dimen/px20"
                 android:paddingLeft="@dimen/px100"
                 android:paddingRight="@dimen/px100"
                 android:layout_marginTop="@dimen/px44"
@@ -305,7 +322,9 @@
                     layout="@layout/layout_sns_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
             </RelativeLayout>
 
         </LinearLayout>

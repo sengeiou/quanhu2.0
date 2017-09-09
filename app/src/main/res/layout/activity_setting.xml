@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5"
+    android:orientation="vertical">
+
+    <com.rz.circled.widget.OverScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/id_layout_account_and_safe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px30"
+                android:layout_marginTop="@dimen/px30"
+                android:background="@drawable/comm_item_selector"
+                android:gravity="center_vertical"
+                android:padding="@dimen/px35">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/account_and_safe"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_50" />
+
+                <ImageView
+                    android:layout_width="@dimen/px27"
+                    android:layout_height="@dimen/px45"
+                    android:src="@drawable/ic_right_arrow" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/id_layout_send_friend_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector"
+                android:gravity="center_vertical"
+                android:padding="@dimen/px35">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/share_app"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_50" />
+
+                <ImageView
+                    android:layout_width="@dimen/px27"
+                    android:layout_height="@dimen/px45"
+                    android:src="@drawable/ic_right_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px3"
+                android:layout_marginLeft="@dimen/px30"
+                android:layout_marginRight="@dimen/px30"
+                android:background="@color/color_EEEEEE" />
+
+            <LinearLayout
+                android:id="@+id/id_layout_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector"
+                android:gravity="center_vertical"
+                android:padding="@dimen/px35">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/setting_update"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_50" />
+
+                <TextView
+                    android:id="@+id/tv_version_name"
+                    style="@style/DefaultTvStyle"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/px30"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_48" />
+
+                <ImageView
+                    android:layout_width="@dimen/px27"
+                    android:layout_height="@dimen/px45"
+                    android:src="@drawable/ic_right_arrow" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px3"
+                android:layout_marginLeft="@dimen/px30"
+                android:layout_marginRight="@dimen/px30"
+                android:background="@color/color_EEEEEE" />
+
+            <LinearLayout
+                android:id="@+id/id_layout_clean_cache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/comm_item_selector"
+                android:gravity="center_vertical"
+                android:padding="@dimen/px35">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/setting_clear_cache"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_50" />
+
+                <TextView
+                    android:id="@+id/id_close_cache_txt"
+                    style="@style/DefaultTvStyle"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/px30"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/font_48" />
+
+                <ImageView
+                    android:layout_width="@dimen/px27"
+                    android:layout_height="@dimen/px45"
+                    android:src="@drawable/ic_right_arrow" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px3"
+                android:layout_marginLeft="@dimen/px30"
+                android:layout_marginRight="@dimen/px30"
+                android:background="@color/color_EEEEEE"></View>
+
+            <Button
+                android:id="@+id/id_btn_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/px125"
+                android:layout_marginRight="@dimen/px125"
+                android:layout_marginBottom="@dimen/px30"
+                android:layout_marginTop="@dimen/px170"
+                android:background="@drawable/shape_bg_blue_sel"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:padding="@dimen/px32"
+                android:text="@string/exit_login"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/px52" />
+        </LinearLayout>
+    </com.rz.circled.widget.OverScrollView>
+</LinearLayout>

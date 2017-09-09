@@ -259,7 +259,7 @@
     <!--注册-->
     <string name="edit_phone_num">请输入手机号</string>
     <string name="edit_code_num">请输入验证码</string>
-    <string name="edit_pwd">请设置登录密码（6~18位数字+字母组合）</string>
+    <string name="edit_pwd">设置登录密码(6~18位数字+字母组合)</string>
     <string name="register_btn">注册</string>
     <string name="input_old_pwd_hint">请输入旧密码</string>
     <string name="input_new_pwd_hint">请输入新密码</string>
@@ -401,7 +401,7 @@
     <string name="mine_title">我的</string>
     <string name="mine_info">原创作品</string>
     <string name="send_friends">推荐给朋友</string>
-    <string name="share_app">分享悠然一指</string>
+    <string name="share_app">分享圈呼</string>
     <string name="mine_forward_circle">悠然广场转发</string>
     <string name="mine_no_login">点击登录</string>
     <string name="mine_identified">已认证</string>
@@ -473,6 +473,7 @@
     <string name="pwd_space">****&#160;****&#160;****&#160;</string>
     <string name="easy_pay_intr">开启后50悠然币以下的支付行为,无需输入支付密码</string>
     <string name="shine_rule">“随手晒”使用规则</string>
+    <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
 
     <!-- 个人信息 -->
 
