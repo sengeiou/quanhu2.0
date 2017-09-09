@@ -16,7 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView style="@style/NewsImgStyle" />
+            <ImageView
+                style="@style/NewsImgStyle"
+                android:src="@mipmap/ic_news_announcement" />
 
             <ImageView
                 android:id="@+id/dot_announcement"
@@ -25,13 +27,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px30"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -61,7 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView style="@style/NewsImgStyle" />
+            <ImageView
+                style="@style/NewsImgStyle"
+                android:src="@mipmap/ic_news_system_information" />
 
             <ImageView
                 android:id="@+id/dot_system_information"
@@ -70,13 +75,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px30"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -92,51 +98,7 @@
             <TextView
                 android:id="@+id/tv_system_information_desc"
                 style="@style/NewsDescStyle"
-                tools:text="最新通知" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View style="@style/line_horizontal_gray_s" />
-
-    <LinearLayout
-        android:id="@+id/btn_account_information"
-        style="@style/NewsLineStyle">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView style="@style/NewsImgStyle" />
-
-            <ImageView
-                android:id="@+id/dot_account_information"
-                style="@style/NewsDotStyle" />
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px28"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/NewsTitleStyle"
-                    android:text="@string/account_information" />
-
-                <TextView
-                    android:id="@+id/tv_account_information_time"
-                    style="@style/NewsTimeStyle"
-                    tools:text="09-09" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_account_information_desc"
-                style="@style/NewsDescStyle"
+                android:textStyle="bold"
                 tools:text="最新通知" />
         </LinearLayout>
     </LinearLayout>
@@ -151,7 +113,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView style="@style/NewsImgStyle" />
+            <ImageView
+                style="@style/NewsImgStyle"
+                android:src="@mipmap/ic_news_interactive" />
 
             <ImageView
                 android:id="@+id/dot_interactive"
@@ -160,13 +124,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px30"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -196,7 +161,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView style="@style/NewsImgStyle" />
+            <ImageView
+                style="@style/NewsImgStyle"
+                android:src="@mipmap/ic_news_recommend" />
 
             <ImageView
                 android:id="@+id/dot_recommend"
@@ -205,13 +172,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px30"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -233,4 +201,51 @@
 
     <View style="@style/line_horizontal_gray_s" />
 
+    <LinearLayout
+        android:id="@+id/btn_account_information"
+        style="@style/NewsLineStyle">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                style="@style/NewsImgStyle"
+                android:src="@mipmap/ic_news_account_information" />
+
+            <ImageView
+                android:id="@+id/dot_account_information"
+                style="@style/NewsDotStyle" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px30"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/NewsTitleStyle"
+                    android:text="@string/account_information" />
+
+                <TextView
+                    android:id="@+id/tv_account_information_time"
+                    style="@style/NewsTimeStyle"
+                    tools:text="09-09" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_account_information_desc"
+                style="@style/NewsDescStyle"
+                tools:text="最新通知" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line_horizontal_gray_s" />
 </LinearLayout>

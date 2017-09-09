@@ -17,38 +17,159 @@
             android:orientation="vertical"
             >
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px594"
-                android:background="@mipmap/background_lite"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/title_bar_padding_top"
-                >
-
-                <ImageView
-                    android:id="@+id/titlebar_main_left_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/arrow_left"
-                    android:layout_marginLeft="@dimen/px44"
-                    android:layout_marginTop="@dimen/px44"
-
-                    />
-
+                android:layout_height="match_parent">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="@dimen/px594"
+                    android:background="@mipmap/background_lite"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/title_bar_padding_top"
+                    >
+
+                    <ImageView
+                        android:id="@+id/titlebar_main_left_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/arrow_left"
+                        android:padding="@dimen/px44"
+
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/px222"
+                    >
 
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/shape_round_top"
-                        android:layout_marginTop="@dimen/px121"
-                        android:layout_marginLeft="@dimen/px44"
-                        android:layout_marginRight="@dimen/px44"
+                        android:background="@drawable/login_rect_background"
+                        android:layout_marginLeft="@dimen/px22"
+                        android:layout_marginRight="@dimen/px22"
                         >
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px356"
+                            >
+
+                            <View
+                                android:id="@+id/splite_line"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px3"
+                                android:background="@color/color_F4F4F4"
+                                android:layout_marginTop="@dimen/px50"
+                                android:layout_marginLeft="@dimen/px50"
+                                android:layout_marginRight="@dimen/px50"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icon_pwd"
+                                android:layout_width="@dimen/px42"
+                                android:layout_height="@dimen/px56"
+                                android:layout_marginLeft="@dimen/px24"
+                                android:src="@mipmap/ic_login_pw"
+                                android:layout_below="@id/splite_line"
+                                android:layout_marginTop="@dimen/px58"
+                                />
+
+                            <EditText
+                                android:id="@+id/id_no_regist_pass_edit"
+                                style="@style/RegistEtStyle"
+                                android:layout_toLeftOf="@+id/id_clear_pass"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:hint="@string/setting_login_pwd"
+                                android:maxLength="18"
+                                android:paddingBottom="@dimen/px52"
+                                android:paddingLeft="@dimen/px22"
+                                android:textSize="@dimen/font_44"
+                                android:paddingTop="@dimen/px52"
+                                android:password="true"
+                                android:singleLine="true"
+                                android:layout_toRightOf="@id/icon_pwd"
+                                android:layout_marginTop="@dimen/px58"
+                                />
+
+                            <ImageView
+                                android:id="@+id/id_clear_pass"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_toLeftOf="@+id/id_watch_pass"
+                                android:src="@drawable/ic_clear"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/px58"
+                                />
+
+                            <ImageView
+                                android:id="@+id/id_watch_pass"
+                                android:layout_width="@dimen/px84"
+                                android:layout_height="@dimen/px60"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="@dimen/px50"
+                                android:padding="@dimen/px10"
+                                android:src="@mipmap/pwd_see"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/px58"
+                                />
+
+                            <View
+                                android:id="@+id/splite_line2"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/px3"
+                                android:layout_below="@id/id_no_regist_pass_edit"
+                                android:background="@color/color_F4F4F4"
+                                android:layout_marginLeft="@dimen/px50"
+                                android:layout_marginRight="@dimen/px50"
+                                />
+
+
+                            <Button
+                                android:id="@+id/id_find_2_finish_btn"
+                                android:layout_width="@dimen/px836"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/px170"
+                                android:background="@drawable/shape_btn_blue_d7_selector"
+                                android:gravity="center"
+                                android:minHeight="0dp"
+                                android:padding="@dimen/px32"
+                                android:text="@string/finish"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/px50"
+                                android:layout_below="@id/splite_line2"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/id_find_2_xieyi_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/protocol"
+                                android:layout_gravity="center_horizontal"
+                                android:textColor="@color/color_999"
+                                android:textSize="@dimen/font_38"
+                                android:layout_marginTop="@dimen/px72"
+                                android:visibility="visible"
+                                android:layout_below="@id/id_find_2_finish_btn"
+                                android:layout_marginBottom="@dimen/px100"
+                                android:layout_centerHorizontal="true"
+                                />
+
+                        </RelativeLayout>
 
                     </FrameLayout>
 
@@ -57,10 +178,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reset_password"
-                        android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/px86"
                         android:textColor="@color/black"
                         android:textSize="@dimen/px72"
+                        android:layout_centerHorizontal="true"
                         />
 
                     <TextView
@@ -73,115 +194,10 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/px72"
                         android:textSize="@dimen/font_44"
-
                         />
 
                 </RelativeLayout>
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px3"
-                android:layout_below="@+id/id_no_regist_pass_edit"
-                android:background="@color/color_F4F4F4"
-                android:layout_marginTop="@dimen/px66"
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/px20"
-                android:paddingRight="@dimen/px20">
-
-
-                <ImageView
-                    android:id="@+id/icon_pwd"
-                    android:layout_width="@dimen/px42"
-                    android:layout_height="@dimen/px56"
-                    android:layout_marginLeft="@dimen/px66"
-                    android:src="@mipmap/ic_login_pw"
-                    android:layout_centerVertical="true"
-                    />
-
-                <EditText
-                    android:id="@+id/id_no_regist_pass_edit"
-                    style="@style/RegistEtStyle"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/id_clear_pass"
-                    android:background="@null"
-                    android:ellipsize="end"
-                    android:hint="@string/setting_login_pwd"
-                    android:maxLength="18"
-                    android:paddingBottom="@dimen/px52"
-                    android:paddingLeft="@dimen/px22"
-                    android:textSize="@dimen/font_44"
-                    android:paddingTop="@dimen/px52"
-                    android:password="true"
-                    android:singleLine="true"
-                    android:layout_toRightOf="@id/icon_pwd"
-                    />
-
-                <ImageView
-                    android:id="@+id/id_clear_pass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/id_watch_pass"
-                    android:src="@drawable/ic_clear"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/id_watch_pass"
-                    android:layout_width="@dimen/px84"
-                    android:layout_height="@dimen/px60"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="@dimen/px50"
-                    android:padding="@dimen/px10"
-                    android:src="@mipmap/pwd_see"
-                    android:visibility="gone"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px3"
-                    android:layout_below="@+id/id_no_regist_pass_edit"
-                    android:background="@color/color_F4F4F4"/>
             </RelativeLayout>
-
-            <Button
-                android:id="@+id/id_find_2_finish_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/px162"
-                android:layout_marginRight="@dimen/px162"
-                android:layout_marginTop="@dimen/px170"
-                android:background="@drawable/shape_btn_blue_d7_selector"
-                android:gravity="center"
-                android:minHeight="0dp"
-                android:padding="@dimen/px32"
-                android:text="@string/finish"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/px50"/>
-
-
-            <TextView
-                android:id="@+id/id_find_2_xieyi_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/protocol"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/color_999"
-                android:textSize="@dimen/font_38"
-                android:layout_marginTop="@dimen/px72"
-                android:visibility="gone"
-                />
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

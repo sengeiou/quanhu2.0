@@ -16,26 +16,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px44"
+        android:background="@drawable/ic_news_content_bg"
         android:orientation="vertical"
-        android:padding="@dimen/px44">
+        android:paddingBottom="@dimen/px64"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44"
+        android:paddingTop="@dimen/px44">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:includeFontPadding="false"
             android:lines="1"
+            android:padding="0dp"
             android:textColor="@color/font_gray_xl"
-            android:textSize="@dimen/font_50"
+            android:textSize="@dimen/font_52"
             tool:text="充值成功" />
 
         <TextView
             android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px20"
+            android:layout_marginTop="@dimen/px40"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/px20"
             android:textColor="@color/font_gray_xl"
             android:textSize="@dimen/font_44"
-            tool:text="充值成功" />
+            tool:text="充值成功坚实的快乐发接受的激发来看森度吉安咖啡的数据奥卡福是放假爱丽丝" />
     </LinearLayout>
 </LinearLayout>

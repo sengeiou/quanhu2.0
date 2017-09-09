@@ -233,6 +233,7 @@
         <activity android:name=".ui.activity.MyPrivateGroupActivity" />
         <activity android:name=".ui.activity.ApplyForCreatePrivateGroupActivity" />
         <activity android:name=".ui.activity.ApplyForPrivateGroupBelongActivity" />
+        <activity android:name=".ui.activity.PrivateGroupJoinWayChangeActivity" />
         <activity android:name=".ui.activity.NewsActivity" />
         <activity android:name=".ui.activity.NewsAnnounceDetailsActivity" />
         <activity android:name=".ui.activity.NewsFragmentActivity" />
@@ -304,6 +305,12 @@
             android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
     </application>
 
 </manifest>

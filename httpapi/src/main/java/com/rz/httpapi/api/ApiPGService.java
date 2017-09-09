@@ -68,6 +68,8 @@ public interface ApiPGService {
             @Field("circleId") String circleId,
             @Field("icon") String icon,
             @Field("intro") String intro,
+            @Field("joinCheck") int joinCheck,
+            @Field("joinFee") int joinFee,
             @Field("name") String name,
             @Field("ownerId") String ownerId,
             @Field("ownerIntro") String ownerIntro,
