@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentCode;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -650,4 +652,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Log.d(TAG, "onPermissionsDenied");
     }
+
+
+
+
 }
