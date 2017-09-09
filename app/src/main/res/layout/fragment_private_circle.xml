@@ -245,6 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -258,7 +259,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/px14"
-                            android:text="换一批"
                             android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38" />
                     </LinearLayout>

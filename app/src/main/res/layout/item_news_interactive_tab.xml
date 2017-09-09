@@ -20,5 +20,5 @@
         android:layout_height="@dimen/px40"
         android:layout_gravity="right"
         android:scaleType="fitCenter"
-        android:src="@mipmap/icon_news_empty" />
+        android:src="@mipmap/ic_news_notify_dot" />
 </FrameLayout>

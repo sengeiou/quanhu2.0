@@ -24,6 +24,8 @@ import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -90,7 +92,7 @@ public class SplashAty extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        CirclePresenter presenter=new CirclePresenter();
+        CirclePresenter presenter = new CirclePresenter();
         presenter.attachView(this);
         presenter.getBannerList("1");
     }
@@ -111,7 +113,11 @@ public class SplashAty extends BaseActivity {
             public void run() {
                 // 判断用户是否是第一次安装
                 if (!Session.getUserIsFirstDownload()) {
-                    initV();
+                    try {
+                        initV();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     skipActivity(aty, GuideActivity.class);
                 }
@@ -132,16 +138,21 @@ public class SplashAty extends BaseActivity {
         SystemUtils.checkSystem(this);
     }
 
-    private void initV() {
+    private void initV() throws ParseException {
 //        loadRewardGiftList();
         //当前日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long currentTime = System.currentTimeMillis();
         //上刊日期
-        long upIngDate = StringUtils.isEmpty(Session.getAdv_upIngDate()) ? 0 : Long.parseLong(Session.getAdv_upIngDate());
+        String adv_upIngDate = Session.getAdv_upIngDate();
+        String adv_exDate = Session.getAdv_expireDate();
+        long startTime = sdf.parse(adv_upIngDate).getTime();
+        long endTime = sdf.parse(adv_exDate).getTime();
+        long upIngDate = StringUtils.isEmpty(Session.getAdv_upIngDate()) ? 0 : startTime;
         //过期日期
-        long expireDate = StringUtils.isEmpty(Session.getAdv_expireDate()) ? 0 : Long.parseLong(Session.getAdv_expireDate());
+        long expireDate = StringUtils.isEmpty(Session.getAdv_expireDate()) ? 0 :endTime ;
         Log.d("time-----", "当前时间" + currentTime + "上刊时间" + upIngDate + "过期日期" + expireDate);
-        if (bannerList!=null) {
+        if (currentTime >= upIngDate && currentTime < expireDate) {
             recLen = 1000 * 5;
             if (Session.getAdv_pic_url().endsWith(".gif")) {
                 if (Protect.checkLoadImageStatus(aty)) {
@@ -158,7 +169,7 @@ public class SplashAty extends BaseActivity {
                     public void onClick(View view) {
                         isClickAdv = true;
                         if (!TextUtils.isEmpty(Session.getAdv_url())) {
-                            CommonH5Activity.startCommonH5(aty,"", Session.getAdv_url());
+                            CommonH5Activity.startCommonH5(aty, "", Session.getAdv_url());
                         }
                     }
                 });
@@ -206,9 +217,9 @@ public class SplashAty extends BaseActivity {
      * 跳转
      */
     private void jumpTo() {
-        if (!isClickAdv&&Session.getUserIsLogin()) {
+        if (!isClickAdv && Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
-        }else {
+        } else {
             skipActivity(aty, LoginActivity.class);
         }
     }

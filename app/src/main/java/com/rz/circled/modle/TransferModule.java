@@ -53,25 +53,25 @@ public class TransferModule implements Serializable {
 
     public static TransferModule getInstance(CircleTransferBean v3CircleTransfer) {
         TransferModule transferModule = new TransferModule();
-        transferModule.appId = v3CircleTransfer.appId;
-        if (v3CircleTransfer.user != null) {
-            transferModule.custNname = v3CircleTransfer.user.custNname;
+        transferModule.appId = v3CircleTransfer.circleId;
+        if (v3CircleTransfer.cust != null) {
+            transferModule.custNname = v3CircleTransfer.cust.custNname;
         }
         transferModule.authorId = v3CircleTransfer.authorId;
-        transferModule.infoDesc = v3CircleTransfer.infoDesc;
-        transferModule.infoId = v3CircleTransfer.infoId;
-        transferModule.infoPic = v3CircleTransfer.infoPic;
-        transferModule.infoThumbnail = v3CircleTransfer.infoThumbnail;
-        transferModule.infoVideo = v3CircleTransfer.infoVideo;
-        transferModule.infoVideoPic = v3CircleTransfer.infoVideoPic;
-        transferModule.moduleId = v3CircleTransfer.moduleId;
+        transferModule.infoDesc = v3CircleTransfer.content;
+        transferModule.infoId = v3CircleTransfer.custId;
+        transferModule.infoPic = v3CircleTransfer.pics;
+        transferModule.infoThumbnail = v3CircleTransfer.thumbnail;
+        transferModule.infoVideo = v3CircleTransfer.video;
+        transferModule.infoVideoPic = v3CircleTransfer.videoPic;
+        transferModule.moduleId = v3CircleTransfer.moduleEnum;
         transferModule.parentId = v3CircleTransfer.id == 0 ? null : v3CircleTransfer.id + "";
         transferModule.price = v3CircleTransfer.price;
-        transferModule.infoTitle = v3CircleTransfer.infoTitle;
+        transferModule.infoTitle = v3CircleTransfer.title;
         transferModule.id = v3CircleTransfer.id;
         transferModule.opusId = v3CircleTransfer.opusId;
         transferModule.circleName = v3CircleTransfer.circleName;
-        transferModule.circleUrl = v3CircleTransfer.circleUrl;
+        transferModule.circleUrl = v3CircleTransfer.circleRoute;
         return transferModule;
     }
 

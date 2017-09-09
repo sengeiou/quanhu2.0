@@ -38,6 +38,9 @@ public class FollowCircle extends BaseActivity {
     GridView mGvFollow;
     private List<CircleEntrModle> allCircle=new ArrayList<>();
     private CommonAdapter<CircleEntrModle> mAdapter;
+    private ImageView mIvFollow;
+    private ImageView mIvCb;
+    private CirclePresenter mPresenter;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -46,9 +49,9 @@ public class FollowCircle extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        CirclePresenter presenter=new CirclePresenter();
-        presenter.attachView(this);
-        presenter.getCircleEntranceList(0);
+        mPresenter = new CirclePresenter();
+        mPresenter.attachView(this);
+        mPresenter.getCircleEntranceList(0);
     }
 
     @Override
@@ -56,15 +59,33 @@ public class FollowCircle extends BaseActivity {
         mAdapter = new CommonAdapter<CircleEntrModle>(mContext, allCircle, R.layout.follow_item) {
             @Override
             public void convert(ViewHolder helper, CircleEntrModle item) {
-                ImageView ivFollow = (ImageView) helper.getView(R.id.iv_follow);
-                Glide.with(mContext).load(item.circleIcon).into(ivFollow);
+                mIvFollow =helper.getView(R.id.iv_follow);
+                mIvCb =helper.getView(R.id.iv_cb);
+                if (item.isSeleced()) {
+                    mIvCb.setImageResource(R.drawable.select);
+                } else {
+                    mIvCb.setImageResource(R.drawable.no_select);
+                }
+                Glide.with(mContext).load(item.circleIcon).into(mIvFollow);
             }
         };
         mGvFollow.setAdapter(mAdapter);
         mGvFollow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                CircleEntrModle circleEntrModle = allCircle.get(position);
+                boolean isSeleced = circleEntrModle.isSeleced();
+                String appId = circleEntrModle.appId;
+                if (isSeleced) {
+                    circleEntrModle.setSeleced(false);
+                    mIvCb.setImageResource(R.drawable.no_select);
+                    mPresenter.removeLoveCircle(appId,Session.getUserId());
+                } else {
+                    circleEntrModle.setSeleced(true);
+                    mIvCb.setImageResource(R.drawable.select);
+                    mPresenter.addLoveCircle(appId,Session.getUserId());
+                }
+                mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -99,14 +120,7 @@ public class FollowCircle extends BaseActivity {
     @OnClick({R.id.btn_jump, R.id.btn_press})
     public void onClick(View view) {
         Session.setUserIsFirstDownload(false);
-        switch (view.getId()) {
-            case R.id.btn_jump:
                 finish();
-                break;
-            case R.id.btn_press:
-
-                break;
-
-        }
+                skipActivity(aty,MainActivity.class);
     }
 }

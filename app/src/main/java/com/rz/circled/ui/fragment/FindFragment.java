@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.circled.widget.XGridView;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
@@ -35,6 +37,7 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,16 +67,19 @@ public class FindFragment extends BaseFragment {
     FrameLayout mLayoutContent;
     @BindView(R.id.iv_activity)
     ImageView mIvActivity;
+    @BindView(R.id.find_refresh)
+    SwipeRefreshLayout mFindRefresh;
     private List<CircleEntrModle> circleEntrModleList = new ArrayList();
     private CirclePresenter mPresenter;
     private List<FamousModel> famousList = new ArrayList<>();
     private List<HotSubjectModel> subjectList = new ArrayList<>();
     private List<HotSubjectModel> activityList = new ArrayList<>();
     private RecyclerView.Adapter mFamousAdapter;
-    private List<CircleEntrModle> mLoveList=new ArrayList<>();
-    private List<CircleEntrModle> allCircle=new ArrayList<>();
-    private List<CircleEntrModle> noFollow=new ArrayList<>();
-    private List<CircleEntrModle> Follow=new ArrayList<>();
+    private List<CircleEntrModle> mLoveList = new ArrayList<>();
+    private List<CircleEntrModle> allCircle = new ArrayList<>();
+    private List<CircleEntrModle> noFollow = new ArrayList<>();
+    private List<CircleEntrModle> Follow = new ArrayList<>();
+    private RecyclerView.Adapter mSubjectAdapter;
 
     @Nullable
     @Override
@@ -97,6 +103,7 @@ public class FindFragment extends BaseFragment {
         mPresenter.getCircleEntranceList(0);
         mPresenter.getUserLoveCircle(Session.getUserId());
         mPresenter.getFamousList(7);
+        mPresenter.getSubjectList(2);
 
     }
 
@@ -129,9 +136,9 @@ public class FindFragment extends BaseFragment {
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)){
+            if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
                 viewHolder.icv_circle_img.setImageResource(R.drawable.resource_more);
-            }else {
+            } else {
 //                viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
                 Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
             }
@@ -183,7 +190,7 @@ public class FindFragment extends BaseFragment {
     }
 
     private void initSubject() {
-        RecyclerView.Adapter subjectAdapter = new RecyclerView.Adapter() {
+        mSubjectAdapter = new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //                View view = View.inflate(mActivity, R.layout.subject_item, null);
@@ -194,14 +201,17 @@ public class FindFragment extends BaseFragment {
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                HotSubjectModel hotSubjectModel = subjectList.get(position);
                 SubjectVH vh = (SubjectVH) holder;
+                Glide.with(mActivity).load(hotSubjectModel.getThumbnail()).placeholder(R.drawable.default_subject_bg).into(vh.topicIcon);
+                vh.topicName.setText(hotSubjectModel.getTitle());
+                vh.topicCount.setText(hotSubjectModel.getReadNum() + "人参与");
 
             }
 
             @Override
             public int getItemCount() {
-//                return subjectList == null ? 0 : subjectList.size();
-                return 10;
+                return subjectList == null ? 0 : subjectList.size();
             }
 
             class SubjectVH extends RecyclerView.ViewHolder {
@@ -211,11 +221,14 @@ public class FindFragment extends BaseFragment {
 
                 public SubjectVH(View itemView) {
                     super(itemView);
+                    topicIcon = (ImageView) itemView.findViewById(R.id.topic_iv);
+                    topicName = (TextView) itemView.findViewById(R.id.topic_name);
+                    topicCount = (TextView) itemView.findViewById(R.id.topic_count);
                 }
             }
         };
         mSubjectRcv.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
-        mSubjectRcv.setAdapter(subjectAdapter);
+        mSubjectRcv.setAdapter(mSubjectAdapter);
     }
 
     private void initFamous() {
@@ -235,7 +248,7 @@ public class FindFragment extends BaseFragment {
                 Glide.with(mActivity).load(famousModel.custInfo.getCustImg()).transform(new GlideCircleImage(mActivity)).into(fvh.famous_iv);
                 fvh.famous_name.setText(famousModel.custInfo.getCustNname());
                 fvh.famous_mark.setText(famousModel.starInfo.getTradeField());
-                fvh.famous_level.setText("Lv"+String.valueOf(famousModel.custInfo.getCustLevel()));
+                fvh.famous_level.setText("Lv" + String.valueOf(famousModel.custInfo.getCustLevel()));
                 fvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -275,6 +288,16 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        mFindRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mFindRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getUserLoveCircle(Session.getUserId());
+                mPresenter.getFamousList(7);
+                mPresenter.getSubjectList(2);
+                mFindRefresh.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -282,11 +305,12 @@ public class FindFragment extends BaseFragment {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
         if (flag == 0) {
+            allCircle.clear();
             allCircle.addAll((List<CircleEntrModle>) t);
             for (int i = 0; i < allCircle.size(); i++) {
                 boolean isfind = false;
                 for (int j = 0; j < mLoveList.size(); j++) {
-                    if (allCircle.get(i).appId.equals(mLoveList.get(j).appId)){
+                    if (allCircle.get(i).appId.equals(mLoveList.get(j).appId)) {
                         Follow.add(allCircle.get(i));
                         isfind = true;
                         break;
@@ -302,7 +326,13 @@ public class FindFragment extends BaseFragment {
             addMore();
             return;
         }
+        if (flag == 2) {
+            subjectList.clear();
+            subjectList.addAll((Collection<? extends HotSubjectModel>) t);
+            mSubjectAdapter.notifyDataSetChanged();
+        }
         if (flag == 7) {
+            famousList.clear();
             famousList.addAll((List<FamousModel>) t);
             mFamousAdapter.notifyDataSetChanged();
         }
@@ -310,7 +340,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public <T> void updateView(T t) {
-            mLoveList = (List<CircleEntrModle>) t;
+        mLoveList = (List<CircleEntrModle>) t;
     }
 
     private void addMore() {

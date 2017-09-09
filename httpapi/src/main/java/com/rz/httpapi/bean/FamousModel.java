@@ -26,8 +26,10 @@ public class FamousModel {
         private String custId;
         private String custImg;
         private int custLevel;
+        public int custRole;
         private String custNname;
         private String nameNotes;
+        public String custDesc;
 
         public String getCustId() {
             return custId;

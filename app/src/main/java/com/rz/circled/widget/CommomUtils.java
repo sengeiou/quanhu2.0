@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.EntityCache;
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import static android.R.attr.id;
 
 /**
  * Created by rzw2 on 2016/10/9.
@@ -236,19 +239,8 @@ public class CommomUtils {
      * @param infoId
      * @return
      */
-    public static String getDymanicUrl(String circleUrl, String moduleId, String infoId) {
-        if (TextUtils.isEmpty(circleUrl)) {
-            return "";
-        } else {
-            if (circleUrl.endsWith("/")) {
-                circleUrl = circleUrl.substring(0, circleUrl.length() - 1);
-            }
-        }
-        if (!TextUtils.isEmpty(infoId)) {
-            infoId = infoId.split("\\.")[0];
-        }
-//        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId + "/dynamic";
-        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId + "?type=dynamic";
+    public static String getDymanicUrl(String moduleId, String coterieId) {
+        String url = BuildConfig.WebHomeBaseUrl+"/redirect/coterie/:"+coterieId+"/:"+moduleId+"/:id";
         return url;
     }
 

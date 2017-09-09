@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
+import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -45,9 +48,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     FrameLayout mLayoutContent;
     @BindView(R.id.home_publish)
     ImageView mHomePublish;
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout mRefresh;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     DynamicAdapter dynamicAdapter;
+    private CirclePresenter mPresenter;
 
     @Nullable
     @Override
@@ -57,10 +63,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initPresenter() {
-        CirclePresenter presenter = new CirclePresenter();
-        presenter.attachView(this);
-        presenter.getBannerList("2");
-        presenter.getCircleDynamicList(false);
+        mPresenter = new CirclePresenter();
+        mPresenter.attachView(this);
+        mPresenter.getBannerList("2");
+        mPresenter.getCircleDynamicList("",0,1,false);
     }
 
     @Override
@@ -83,13 +89,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void call(Void aVoid) {
                 //跳消息界面
+                startActivity(new Intent(mActivity, NewsActivity.class));
             }
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
                 //跳消息界面
-                WebContainerActivity.startActivity(mActivity,WebHomeBaseUrl+"/activity/new-circles");
+                WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
             }
         });
 
@@ -106,7 +113,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initData() {
-
+        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getBannerList("2");
+                mPresenter.getCircleDynamicList("",0,1,false);
+                mRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -143,7 +158,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position);
-        String url = CommomUtils.getDymanicUrl(circleDynamic.circleUrl, circleDynamic.moduleId, circleDynamic.infoId);
+        String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId);
         WebContainerActivity.startActivity(mActivity, url);
     }
 

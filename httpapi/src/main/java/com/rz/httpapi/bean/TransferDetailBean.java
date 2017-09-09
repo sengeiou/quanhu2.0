@@ -17,7 +17,7 @@ public class TransferDetailBean {
     public int replayNum;
     public long replayProfit;
     public String createTime;
-    public CircleDynamic.User user;
+    public CircleDynamic.CustBean user;
 
     public String appId;
     //圈子ID

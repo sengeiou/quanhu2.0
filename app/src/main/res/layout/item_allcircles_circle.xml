@@ -14,19 +14,19 @@
 
         <ImageView
             android:id="@+id/civ_circleimg"
-            android:layout_width="@dimen/px168"
-            android:layout_height="@dimen/px168"
+            android:layout_width="@dimen/px147"
+            android:layout_height="@dimen/px147"
             android:src="@drawable/ic_default_head"
             android:layout_centerHorizontal="true" />
 
         <ImageView
             android:id="@+id/circle_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/px50"
-            android:src="@drawable/gray_close"
+            android:layout_width="@dimen/font_40"
+            android:layout_height="@dimen/font_40"
+            android:layout_toRightOf="@+id/civ_circleimg"
+            android:layout_marginLeft="-10dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/del_love_circle"
             android:visibility="gone" />
     </RelativeLayout>
 <!--<FrameLayout-->
