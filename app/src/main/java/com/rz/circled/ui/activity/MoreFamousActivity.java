@@ -3,6 +3,7 @@ package com.rz.circled.ui.activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.rz.circled.R;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
 public class MoreFamousActivity extends BaseActivity {
     @BindView(R.id.lv_m_famous)
     ListView mLvMFamous;
+    @BindView(R.id.et_search_keyword_base)
+    EditText mEtSearchKeywordBase;
     private List<StarListBean> moreFamousList = new ArrayList<>();
     private SearchPersonAdapter mAdapter;
 
@@ -43,6 +46,7 @@ public class MoreFamousActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText("达人");
         mAdapter = new SearchPersonAdapter(this, R.layout.item_search_person);
         mAdapter.setTalentPage(true);
         mLvMFamous.setAdapter(mAdapter);
@@ -51,6 +55,12 @@ public class MoreFamousActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                skipActivity(aty,SearchActivity.class);
+            }
+        });
 
     }
 

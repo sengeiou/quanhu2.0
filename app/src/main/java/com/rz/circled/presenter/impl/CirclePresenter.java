@@ -27,6 +27,7 @@ import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.FamousModel;
+import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.StarListBean;
@@ -148,66 +149,57 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param loadMore
      */
-    public void getCircleDynamicList(final boolean loadMore) {
+    public void getCircleDynamicList(String cityCode,long createTime,int pageNo, final boolean loadMore) {
+        final
         Call<ResponseData<List<CircleDynamic>>> call = null;
         String userid = Session.getUserId();
-        if (TextUtils.isEmpty(userid)) {
-            userid = null;
-        }
-        call = mUserService.getCircleDynamic(userid, loadMore ? dynamicPos : 0, 50);
-        CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    ResponseData res = response.body();
-                    if (!loadMore) {
-                        dynamicPos = 0;
-                    }
-//                    dynamicPos += Constants.PAGESIZE;
-                    dynamicPos += 50;
-                    if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<CircleDynamic> model = (List<CircleDynamic>) res.getData();
-                        if (null != model && model.size() != 0) {
-                            //发送成功
-                            mView.updateViewWithLoadMore(model, loadMore);
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                        } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                        try {
-                            if (loadMore) {
-                                currentData.addAll(model);
-                            } else {
-                                currentData = new ArrayList<CircleDynamic>(model);
-                            }
-                            if (!loadMore) {
-                                mCirclesCache.putListEntity(model);
-                            } else {
-                                mCirclesCache.putListEntity(currentData);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.d("test", "cacheData failed " + e.getMessage());
-                        }
-                        return;
-                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        //发送失败
-                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
-                        return;
-                    }
-                }
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
-            }
+        mUserService.getCircleDynamic(cityCode,createTime,userid,pageNo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<List<CircleDynamic>>>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
-                super.onFailure(call, t);
-                //发送验证码失败
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
-            }
-        });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<List<CircleDynamic>> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+//                            int num=pageNo;
+//                            num++;
+                            List<CircleDynamic> model =res.getData();
+                            if (null != model && model.size() != 0) {
+                                //发送成功
+                                mView.updateViewWithLoadMore(model, loadMore);
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            } else {
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }
+                            try {
+                                if (loadMore) {
+                                    currentData.addAll(model);
+                                } else {
+                                    currentData = new ArrayList<CircleDynamic>(model);
+                                }
+                                if (!loadMore) {
+                                    mCirclesCache.putListEntity(model);
+                                } else {
+                                    mCirclesCache.putListEntity(currentData);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.d("test", "cacheData failed " + e.getMessage());
+                            }
+                            return;
+                        }
+
+                    }
+                });
     }
 
     /**
@@ -277,6 +269,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if ("1".equals(stats)){
                             Session.setAdv_pic_url(model.get(0).getPicUrl());
                             Session.setAdv_url(model.get(0).getUrl());
+                            Session.setAdv_upIngDate(model.get(0).startTime);
+                            Session.setAdv_expireDate(model.get(0).endTime);
                         }
                         mView.updateViewWithFlag(model, Integer.parseInt(stats));
 
@@ -291,35 +285,74 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         });
     }
 
-//    /**
-//     * 首页话题展示
-//     */
-//    public void getSubjectList(final int stats) {
-//        if (!NetUtils.isNetworkConnected(mContext)) {
-//            return;
-//        }
-//        Call<ResponseData<List<HotSubjectModel>>> call = mUserService.getHotSubject("1");
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<HotSubjectModel>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<HotSubjectModel>>> call, Response<ResponseData<List<HotSubjectModel>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<HotSubjectModel> model = (List<HotSubjectModel>) res.getData();
-//                        mView.updateViewWithFlag(model, stats);
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<HotSubjectModel>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//            }
-//        });
-//    }
+    /**
+     * 发现推荐话题
+     */
+    public void getSubjectList(final int stats) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.getSubject()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ResponseData<List<HotSubjectModel>>>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.i("lixiang", "onError: "+e);
+                        }
+
+                        @Override
+                        public void onNext(ResponseData<List<HotSubjectModel>> res) {
+                            if (res.getRet() == ReturnCode.SUCCESS) {
+                                List<HotSubjectModel> data = res.getData();
+                                mView.updateViewWithFlag(data,stats);
+                            } else {
+                                HandleRetCode.handler(mContext, res);
+                            }
+                        }
+                    });
+
+
+    }
+    /**
+     * 发现更多话题
+     */
+    public void getMoreSubjectList(int limit,int start) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.getMoreSubject(limit,start)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ResponseData<List<HotSubjectModel>>>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseData<List<HotSubjectModel>> res) {
+                            if (res.getRet() == ReturnCode.SUCCESS) {
+                                List<HotSubjectModel> data = res.getData();
+                                mView.updateView(data);
+                            } else {
+                                HandleRetCode.handler(mContext, res);
+                            }
+                        }
+                    });
+
+
+    }
 
     /**
      * 首页圈子达人

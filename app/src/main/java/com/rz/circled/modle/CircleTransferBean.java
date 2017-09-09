@@ -59,30 +59,30 @@ public class CircleTransferBean extends CircleDynamic implements Serializable {
 
     public static CircleTransferBean getInstanceFromTransfer(int transferId, TransferModule transferModule) {
         CircleTransferBean CircleTransferBean = new CircleTransferBean();
-        User user = new User();
+        CustBean user = new CustBean();
 //        user.custId = Session.getUserId();
 //        user.custImg = Session.getUserPicUrl();
 //        user.custNname = Session.getUserName();
 //        user.custPhone = Session.getUserPhone();
 //        user.custSignature = Session.getUser_signatrue();
-        CircleTransferBean.user = user;
+        CircleTransferBean.cust = user;
         CircleTransferBean.id = transferId;
         CircleTransferBean.parentId = transferModule.id;
         CircleTransferBean.authorId = transferModule.authorId;
-        CircleTransferBean.appId = transferModule.appId;
-        CircleTransferBean.infoId = transferModule.infoId;
-        CircleTransferBean.infoTitle = transferModule.infoTitle;
-        CircleTransferBean.moduleId = transferModule.moduleId;
+        CircleTransferBean.circleId = transferModule.appId;
+        CircleTransferBean.custId = transferModule.infoId;
+        CircleTransferBean.title = transferModule.infoTitle;
+        CircleTransferBean.moduleEnum = transferModule.moduleId;
         CircleTransferBean.price = transferModule.price;
-        CircleTransferBean.infoVideoPic = transferModule.infoVideoPic;
-        CircleTransferBean.infoVideo = transferModule.infoVideo;
-        CircleTransferBean.infoPic = transferModule.infoPic;
-        CircleTransferBean.infoThumbnail = transferModule.infoThumbnail;
-        CircleTransferBean.infoDesc = transferModule.infoDesc;
-        CircleTransferBean.createTime = System.currentTimeMillis() + "";
+        CircleTransferBean.videoPic = transferModule.infoVideoPic;
+        CircleTransferBean.video = transferModule.infoVideo;
+        CircleTransferBean.pics = transferModule.infoPic;
+        CircleTransferBean.thumbnail = transferModule.infoThumbnail;
+        CircleTransferBean.content = transferModule.infoDesc;
+//        CircleTransferBean.createTime = System.currentTimeMillis() + "";
         CircleTransferBean.circleName = transferModule.circleName;
         CircleTransferBean.transferNum = 0;
-        CircleTransferBean.circleUrl = transferModule.circleUrl;
+        CircleTransferBean.circleRoute = transferModule.circleUrl;
         return CircleTransferBean;
     }
 

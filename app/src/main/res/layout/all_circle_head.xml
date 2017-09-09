@@ -28,15 +28,14 @@
             android:textSize="@dimen/font_title_size"/>
         <TextView
             android:id="@+id/all_circle_title_right"
-            android:layout_width="@dimen/px172"
-            android:layout_height="@dimen/px57"
-            android:background="@drawable/all_circle_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:paddingRight="@dimen/font_44"
             android:gravity="center"
-            android:layout_marginRight="@dimen/app_base_padding"
             android:text="编辑"
-            android:textColor="@color/white"
+            android:textColor="@color/color_0185FF"
             android:textSize="@dimen/font_44"
           />
     </RelativeLayout>

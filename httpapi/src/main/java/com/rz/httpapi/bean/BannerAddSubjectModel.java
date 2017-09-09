@@ -14,6 +14,8 @@ public class BannerAddSubjectModel {
 
     private String picUrl;
     private String url;
+    public String startTime;
+    public String endTime;
 
 
 
