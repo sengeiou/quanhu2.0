@@ -4,15 +4,19 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rz.circled.R;
+import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
+import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,8 +36,8 @@ public class SearchPrivateCircleFragment extends BaseFragment {
 
     @BindView(R.id.lv_search_content)
     ListView lvContent;
-    private DynamicAdapter dynamicAdapter;
-    private List<CircleDynamic> circleDynamicList = new ArrayList<>();
+    private DefaultPricePrivateGroupAdapter mAdapter;
+    private SearchDataBean searchDataBean = new SearchDataBean();
     private SearchPresenter searchPresenter;
     public  static String keyWord = "";
 
@@ -54,9 +58,13 @@ public class SearchPrivateCircleFragment extends BaseFragment {
             EventBus.getDefault().register(this);
 
 
-        //泛型要改
-        dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);
-        lvContent.setAdapter(dynamicAdapter);
+        lvContent.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_SCAN));
+        lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     @Override
@@ -115,11 +123,11 @@ public class SearchPrivateCircleFragment extends BaseFragment {
         super.updateViewWithLoadMore(t, loadMore);
         if (t != null) {
             if (!loadMore) {
-                circleDynamicList.clear();
+                searchDataBean.getCoterieInfos().clear();
             }
-            circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
+            searchDataBean.getCircleInfos().addAll((Collection<? extends SearchDataBean>) t);
         }
-        dynamicAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
 

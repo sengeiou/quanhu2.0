@@ -88,7 +88,20 @@ public class SearchContentFragment extends BaseFragment {
             //去搜索
 //            (final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType)
             keyWord = (String) baseEvent.getData();
-            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"1","1001",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
+
+            /**
+             * {
+             "circleId": "测试内容d9lr",
+             "coterieId": "测试内容u4tu",
+             "keyWord": "测试内容b3yj",
+             "limit": 36207,
+             "resourceType": "测试内容v8t7",
+             "searchType": 68182,
+             "start": 61457
+             }
+             */
+
+            ((SearchPresenter) searchPresenter).searchQH(true,"ti","测试内容","测试内容u4tu","测试内容v8t7",68182);
         }
     }
 

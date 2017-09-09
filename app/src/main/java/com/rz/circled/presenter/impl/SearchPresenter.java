@@ -18,6 +18,8 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.SearchDataBean;
+import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.util.ArrayList;
@@ -62,7 +64,15 @@ public class SearchPresenter extends GeneralPresenter {
 
     //处理缓存
     private EntityCache<CircleDynamic> mCirclesCache;
-    private List<CircleDynamic> currentData = new ArrayList<>();
+    private EntityCache<StarListBean> mStarListCache;
+
+    private SearchDataBean currentData = new SearchDataBean();
+
+    private List<CircleDynamic> resoueces = new ArrayList<>();
+    private List<StarListBean> custInfos = new ArrayList<>();
+    private List coterieInfos = new ArrayList();
+    private List circleInfos = new ArrayList();
+    private List rewards = new ArrayList();
 
     @Override
     public Object getCacheData() {
@@ -85,23 +95,34 @@ public class SearchPresenter extends GeneralPresenter {
      * 搜索内容
      */
 
-    public void searchQH(final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType){
+    /**
+     *
+     *  @Field("circleId") String circleId,
+        @Field("coterieId") String coterieId,
+        @Field("keyWord") String keyWord,
+        @Field("limit") int limit,
+        @Field("resourceType") String resourceType,
+        @Field("searchType") int searchType,
+        @Field("start") int start
+     */
+
+    public void searchQH(final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, final int searchType){
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
-        Call<ResponseData<List<CircleDynamic>>> call = mUserService.searchQH(
-                circleId,
-                coterieId,
-                keyWord,
-                10,
-                resourceType,
-                searchType,
-                Constants.PAGESIZE);
+        Call<ResponseData<SearchDataBean>> call = mUserService.searchQH(
+                "",
+                "",
+                "还有涂鸦跳跃",
+                5,
+                "",
+                3,
+                0);
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
+        call.enqueue(new BaseCallback<ResponseData<SearchDataBean>>() {
             @Override
-            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
+            public void onResponse(Call<ResponseData<SearchDataBean>> call, Response<ResponseData<SearchDataBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
@@ -111,8 +132,8 @@ public class SearchPresenter extends GeneralPresenter {
 //                    dynamicPos += Constants.PAGESIZE;
                     dynamicPos += 50;
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<CircleDynamic> model = (List<CircleDynamic>) res.getData();
-                        if (null != model && model.size() != 0) {
+                        SearchDataBean model = (SearchDataBean) res.getData();
+                        if (null != model) {
                             //发送成功
                             mView.updateViewWithLoadMore(model, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
@@ -120,16 +141,30 @@ public class SearchPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }
                         try {
-                            if (loadMore) {
-                                currentData.addAll(model);
-                            } else {
-                                currentData = new ArrayList<CircleDynamic>(model);
-                            }
-                            if (!loadMore) {
-                                mCirclesCache.putListEntity(model);
-                            } else {
-                                mCirclesCache.putListEntity(currentData);
-                            }
+//                            if (loadMore) {
+//                                if(searchType == 1){
+//                                    resoueces.addAll(model.getResoueces());
+//                                }else if(searchType == 2){
+//                                    custInfos.addAll(model.getCustInfos());
+//                                }else if(searchType == 3){
+//                                    coterieInfos.addAll(model.getCoterieInfos());
+//                                }else if(searchType == 4){
+//                                    circleInfos.addAll(model.getCircleInfos());
+//                                }else if(searchType == 5){
+//                                    rewards.addAll(model.getRewards());
+//                                }
+//                            } else {
+//                                currentData = new ArrayList<CircleDynamic>(model);
+//                                mView.updateView(model);
+//                            }
+//                            if (!loadMore) {
+//                                if()
+//
+//                                mCirclesCache.putListEntity(model);
+//                            } else {
+//                                mCirclesCache.putListEntity(currentData);
+//                            }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.d("test", "cacheData failed " + e.getMessage());
@@ -145,44 +180,12 @@ public class SearchPresenter extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<SearchDataBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
     }
-
-//    /**
-//     *  搜索用户
-//     */
-//    public void searchPerson(String keyWord) {
-//
-//    }
-//
-//    /**
-//     * 搜索私圈
-//     */
-//    public void searchPrivateCircle(String keyWord){
-//
-//
-//    }
-//
-//    /**
-//     * 搜索圈子
-//     */
-//    public void searchCircle(String keyWord){
-//
-//
-//    }
-//
-//    /**
-//     *  搜索悬赏
-//     */
-//    public void searchReward(String keyWord){
-//
-//
-//    }
-
 
 }
