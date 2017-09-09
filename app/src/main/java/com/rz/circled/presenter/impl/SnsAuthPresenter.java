@@ -92,7 +92,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
             public void onResponse(Call<ResponseData<UserInfoBean>> call, Response<ResponseData<UserInfoBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData<UserInfoBean> res = response.body();
+                    final ResponseData<UserInfoBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         UserInfoBean user = res.getData();
                         if (null != user) {
@@ -118,7 +118,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
                                 @Override
                                 public void run() {
                                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
-                                    Toasty.info(mContext,"").show();
+                                    Toasty.info(mContext,res.getMsg()).show();
                                 }
                             }, 2000);
                             return;
