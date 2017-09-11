@@ -22,6 +22,7 @@ import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
@@ -791,7 +792,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.QH_SEARCH)
-    Call<ResponseData<List<CircleDynamic>>> searchQH(
+    Call<ResponseData<SearchDataBean>> searchQH(
             @Field("circleId") String circleId,
             @Field("coterieId") String coterieId,
             @Field("keyWord") String keyWord,
