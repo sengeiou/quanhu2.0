@@ -28,8 +28,6 @@ import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
 
-import static com.rz.circled.event.EventConstant.SYSTEM_INFORMATION_UNREAD_CHANGE;
-
 /**
  * Created by rzw2 on 2017/8/14.
  */
@@ -59,7 +57,7 @@ public class MyReceiver extends BroadcastReceiver {
                         case JPushTypeConstants.InteractiveMessage.TYPE:
                         case JPushTypeConstants.AccoutNotification.TYPE:
                         case JPushTypeConstants.RecommendedActivities.TYPE:
-                            EventBus.getDefault().post(new BaseEvent(SYSTEM_INFORMATION_UNREAD_CHANGE));
+//                            EventBus.getDefault().post(new BaseEvent(SYSTEM_INFORMATION_UNREAD_CHANGE));
                             break;
                     }
                 } catch (Exception e) {

@@ -73,6 +73,31 @@ public class NewsCommonFragment extends BaseFragment {
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
     }
 
+    @Nullable
+    @Override
+    public View loadView(LayoutInflater inflater) {
+        switch (type) {
+            case NEWS_ANNOUNCEMENT:
+                return inflater.inflate(R.layout.activity_news_announcement, null);
+            case NEWS_SYSTEM_INFORMATION:
+                return inflater.inflate(R.layout.activity_news_system_information, null);
+            case NEWS_RECOMMEND:
+                return inflater.inflate(R.layout.activity_news_recommend, null);
+            case NEWS_ACCOUNT:
+                return inflater.inflate(R.layout.activity_news_account_information, null);
+            case NEWS_COMMENT:
+                return inflater.inflate(R.layout.fragment_news_interactive, null);
+            case NEWS_QA:
+                return inflater.inflate(R.layout.fragment_news_interactive, null);
+            case NEWS_PRIVATE_GROUP:
+                return inflater.inflate(R.layout.fragment_news_interactive, null);
+            case NEWS_ACTIVITY:
+                return inflater.inflate(R.layout.fragment_news_interactive, null);
+            default:
+                return inflater.inflate(R.layout.activity_news_announcement, null);
+        }
+    }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -128,31 +153,6 @@ public class NewsCommonFragment extends BaseFragment {
         }
     }
 
-    @Nullable
-    @Override
-    public View loadView(LayoutInflater inflater) {
-        switch (type) {
-            case NEWS_ANNOUNCEMENT:
-                return inflater.inflate(R.layout.activity_news_announcement, null);
-            case NEWS_SYSTEM_INFORMATION:
-                return inflater.inflate(R.layout.activity_news_system_information, null);
-            case NEWS_RECOMMEND:
-                return inflater.inflate(R.layout.activity_news_recommend, null);
-            case NEWS_ACCOUNT:
-                return inflater.inflate(R.layout.activity_news_account_information, null);
-            case NEWS_COMMENT:
-                return inflater.inflate(R.layout.fragment_news_interactive, null);
-            case NEWS_QA:
-                return inflater.inflate(R.layout.fragment_news_interactive, null);
-            case NEWS_PRIVATE_GROUP:
-                return inflater.inflate(R.layout.fragment_news_interactive, null);
-            case NEWS_ACTIVITY:
-                return inflater.inflate(R.layout.fragment_news_interactive, null);
-            default:
-                return inflater.inflate(R.layout.activity_news_announcement, null);
-        }
-    }
-
     @Override
     public void initView() {
         list.setAdapter(mAdapter = new NewsMultiTypeAdapter());
@@ -171,19 +171,21 @@ public class NewsCommonFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        List<NewsBean> data = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            data.add(new NewsBean(i));
-        }
-        mAdapter.setItems(data);
-        mAdapter.notifyDataSetChanged();
+//        List<NewsBean> data = new ArrayList<>();
+//        for (int i = 0; i < 7; i++) {
+//            NewsBean item = new NewsBean();
+//            item.setViewCode(String.valueOf(i));
+//            data.add(item);
+//        }
+//        mAdapter.setItems(data);
+//        mAdapter.notifyDataSetChanged();
 
         loadData(false);
     }
 
     private void loadData(final boolean loadMore) {
         int ontType;
-        int twoType = 0;
+        Integer twoType = null;
         switch (type) {
             case NEWS_ANNOUNCEMENT:
                 ontType = ApiNews.NEWS_ANNOUNCEMENT;
@@ -218,7 +220,7 @@ public class NewsCommonFragment extends BaseFragment {
                 break;
         }
 
-        Http.getApiService(ApiNewsService.class).newsMulitList(Session.getUserId(), ontType, twoType, mAdapter.getItemCount(), PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<NewsBean>>>() {
+        Http.getApiService(ApiNewsService.class).newsMultiList(Session.getUserId(), ontType, twoType, mAdapter.getItemCount(), PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<NewsBean>>>() {
             @Override
             public void onResponse(Call<ResponseData<List<NewsBean>>> call, Response<ResponseData<List<NewsBean>>> response) {
                 super.onResponse(call, response);
@@ -230,10 +232,13 @@ public class NewsCommonFragment extends BaseFragment {
                         List<NewsBean> data = response.body().getData();
                         if (data != null && data.size() > 0) {
                             if (loadMore) {
-                                mAdapter.setItems(data);
+                                List<NewsBean> oldData = mAdapter.getItems() == null ? new ArrayList<NewsBean>() : (List<NewsBean>) mAdapter.getItems();
+                                oldData.addAll(data);
+                                mAdapter.setItems(oldData);
                             } else {
                                 mAdapter.setItems(data);
                             }
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }

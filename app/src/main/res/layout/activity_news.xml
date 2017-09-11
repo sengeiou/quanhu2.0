@@ -248,4 +248,5 @@
     </LinearLayout>
 
     <View style="@style/line_horizontal_gray_s" />
+
 </LinearLayout>

@@ -7,6 +7,7 @@ import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.NewsUnreadBean;
 import com.rz.httpapi.bean.PrivateGroupBean;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -24,7 +25,7 @@ public interface ApiNewsService {
 
     @FormUrlEncoded
     @POST(ApiNews.NEWS_UNREAD)
-    Call<ResponseData<NewsUnreadBean>> newsUnread(
+    Call<ResponseData<HashMap<String, String>>> newsUnread(
             @Field("custId") String custId
     );
 
@@ -38,12 +39,18 @@ public interface ApiNewsService {
      */
     @FormUrlEncoded
     @POST(ApiNews.NEWS_MULTI_LIST)
-    Call<ResponseData<List<NewsBean>>> newsMulitList(
+    Call<ResponseData<List<NewsBean>>> newsMultiList(
             @Field("custId") String custId,
             @Field("type") int type,
-            @Field("label") int label,
-            @Field("limit") int limit,
-            @Field("start") int start
+            @Field("label") Integer label,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
+
+    @FormUrlEncoded
+    @POST(ApiNews.NEWS_OVERVIEW)
+    Call<ResponseData> newsOverview(
+            @Field("custId") String custId
     );
 
 }

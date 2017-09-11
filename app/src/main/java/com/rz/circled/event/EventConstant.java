@@ -15,7 +15,7 @@ public class EventConstant {
     public static final int PRIVATE_GROUP_ESSENCE_REFRESH = 200007;
     public static final int PRIVATE_GROUP_JOIN_WAY = 200016;
 
-    public static final int SYSTEM_INFORMATION_UNREAD_CHANGE = 200004;
+    public static final int NEWS_COME_UNREAD = 200004;
     public static final int NEWS_ANNOUNCEMENT_UNREAD_CHANGE = 200008;
     public static final int NEWS_ACCOUNT_INFORMATION_UNREAD_CHANGE = 200009;
     public static final int NEWS_SYSTEM_INFORMATION_UNREAD_CHANGE = 200010;
