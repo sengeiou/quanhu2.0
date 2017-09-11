@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.db.DatabaseHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.CommonH5Activity;
@@ -32,10 +31,15 @@ import com.rz.circled.widget.ViewHolder;
 import com.rz.circled.widget.XGridView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -90,7 +94,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-        DatabaseHelper helper = DatabaseHelper.getHelper(getContext());
+
 //        try {
 //            helper.getUserDao().deleteBuilder()
 //            List<User> users = helper.getUserDao().queryForAll();
@@ -166,6 +170,7 @@ public class FindFragment extends BaseFragment {
                     Intent intent = new Intent(mActivity, AllCirclesAty.class);
                     getActivity().startActivity(intent);
                 } else {
+                    circleEntrModle.click+=1;
                     WebContainerActivity.startActivity(mActivity, circleEntrModleList.get(position).circleUrl);
                 }
             }
@@ -294,6 +299,7 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 mPresenter.getUserLoveCircle(Session.getUserId());
+                mPresenter.getCircleEntranceList(0);
                 mPresenter.getFamousList(7);
                 mPresenter.getSubjectList(2);
                 mFindRefresh.setRefreshing(false);
@@ -301,12 +307,20 @@ public class FindFragment extends BaseFragment {
         });
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(BaseEvent event) {
+        mPresenter.getUserLoveCircle(Session.getUserId());
+        mPresenter.getCircleEntranceList(0);
+    };
+
 
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
         if (flag == 0) {
             allCircle.clear();
+            Follow.clear();
+            noFollow.clear();
             allCircle.addAll((List<CircleEntrModle>) t);
             for (int i = 0; i < allCircle.size(); i++) {
                 boolean isfind = false;
@@ -341,6 +355,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public <T> void updateView(T t) {
+        mLoveList.clear();
         mLoveList = (List<CircleEntrModle>) t;
     }
 
@@ -365,6 +380,7 @@ public class FindFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -388,5 +404,11 @@ public class FindFragment extends BaseFragment {
                 CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/activity/qql");
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
