@@ -184,7 +184,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:layout_marginTop="@dimen/px170"
-                                android:background="@drawable/shape_btn_blue_d7_selector"
+                                android:background="@mipmap/submit_login_btn_bg"
                                 android:gravity="center"
                                 android:minHeight="0dp"
                                 android:padding="@dimen/px32"

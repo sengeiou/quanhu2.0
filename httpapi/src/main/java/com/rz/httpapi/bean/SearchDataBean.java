@@ -9,7 +9,7 @@ import java.util.List;
 public class SearchDataBean {
 
     private List<CircleDynamic> resoueces;              //内容
-    private List<StarListBean> custInfos;                             //用户
+    private List<StarListBean.CustInfoBean> custInfos;                             //用户
     private List coterieInfos;                          //私圈
     private List circleInfos;                           //圈子
     private List rewards;                               //悬赏

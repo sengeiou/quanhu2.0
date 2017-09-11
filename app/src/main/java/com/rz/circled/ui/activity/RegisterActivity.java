@@ -24,6 +24,7 @@ import com.rz.circled.service.BackGroundService;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
@@ -330,7 +331,7 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.id_regist_send_sms_btn, R.id.id_watch_pass, R.id.id_clear_phone, R.id.id_clear_code, R.id.id_clear_pw, R.id.id_regist_btn})
+    @OnClick({R.id.id_regist_send_sms_btn, R.id.id_watch_pass, R.id.id_clear_phone, R.id.id_clear_code, R.id.id_clear_pw, R.id.id_regist_btn, R.id.find_pass2_protocol})
     public void onClick(View view) {
         switch (view.getId()) {
             //发送手机验证码
@@ -388,9 +389,9 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             //服务条款
-//            case R.id.find_pass2_protocol:
-//                CommH5Aty.startCommonH5(aty, H5Address.USER_SERVER, "悠然一指");
-//                break;
+            case R.id.find_pass2_protocol:
+                CommonH5Activity.startCommonH5(aty, H5Address.USER_SERVER, "圈呼");
+                break;
         }
     }
 
