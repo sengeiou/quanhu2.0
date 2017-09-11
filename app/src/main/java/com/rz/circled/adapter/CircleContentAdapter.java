@@ -44,8 +44,6 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             ImageView iv_circle_img01 = helper.getView(R.id.iv_circle_img01);//iv 第一张小图
             ImageView iv_circle_img02 = helper.getView(R.id.iv_circle_img02);//iv 第二张小图
             ImageView iv_circle_img03 = helper.getView(R.id.iv_circle_img03);//iv 第三张小图
-            ImageView iv_thumbnail = helper.getView(R.id.iv_one_icon);//iv 只展示一张大图
-            RelativeLayout iv_thumbnail_layout = helper.getView(R.id.iv_onely_thumbnail);//iv 展示一张大图的布局
             RelativeLayout rl_circle_video_content = helper.getView(R.id.rl_circle_video_content);//rl 视频content
             ImageView iv_video_preview = helper.getView(R.id.iv_video_preview);//iv 视频预览大图
             ViewGroup rl_otherinfo_content = helper.getView(R.id.rl_otherinfo_content);//rl 其他信息 content
@@ -55,13 +53,11 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             rl_circle_video_content.requestLayout();
                 mIvThumbnail.setVisibility(View.GONE);
             if (TextUtils.isEmpty(item.thumbnail)) {
-                iv_thumbnail_layout.setVisibility(View.GONE);
             } else {
-                iv_thumbnail_layout.setVisibility(View.VISIBLE);
                 rl_circle_video_content.setVisibility(View.GONE);
                 ll_circle_3imgs.setVisibility(View.GONE);
                 String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.thumbnail,R.dimen.px288,R.dimen.px260);
-                helper.setImageByUrlTransger(iv_thumbnail, url, R.drawable.ic_default_thumbnail);
+                helper.setImageByUrlTransger(mIvThumbnail, url, R.drawable.ic_default_thumbnail);
             }
             mTitle.setText(item.title);
             if (TextUtils.isEmpty(item.content)) {

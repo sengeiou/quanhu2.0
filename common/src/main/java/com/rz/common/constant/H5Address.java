@@ -1,5 +1,7 @@
 package com.rz.common.constant;
 
+import com.rz.common.BuildConfig;
+
 /**
  * Created by Administrator on 2017/8/16/016.
  */
@@ -12,7 +14,6 @@ public interface H5Address {
     String USER_SERVER = H5_HEAD + "service-agreement.html";
     //举报
     String ONLINE_REPORT = "http://youranyizhi.mikecrm.com/1f4hJQA";
-
     //充值说明
     public static final String RECHARGE_INTRODUCE = "https://www.yryz.com/web/app/andrioid/help_cz.html";
 }

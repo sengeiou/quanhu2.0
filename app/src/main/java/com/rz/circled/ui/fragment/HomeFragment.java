@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getBannerList("2");
-        mPresenter.getCircleDynamicList("",0,1,false);
+        mPresenter.getCircleDynamicList("",false);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void onRefresh() {
                 mPresenter.getBannerList("2");
-                mPresenter.getCircleDynamicList("",0,1,false);
+                mPresenter.getCircleDynamicList("",false);
                 mRefresh.setRefreshing(false);
             }
         });

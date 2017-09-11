@@ -26,9 +26,9 @@
             android:id="@+id/civ_superV"
             android:layout_width="@dimen/px38"
             android:layout_height="@dimen/px38"
-            android:layout_gravity="bottom"
+            android:layout_gravity="top"
             android:layout_marginLeft="-10dp"
-            android:src="@drawable/ic_item_superv"
+            android:src="@drawable/famous_icon"
             android:visibility="gone" />
 
         <RelativeLayout

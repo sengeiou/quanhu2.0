@@ -74,7 +74,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         return null;
     }
 
-    private int dynamicPos = 0;
+    private int dynamicPage = 1;
+    private long dynamicCreateTime =0;
     private int collectPos = 0;
     private int custPos = 0;
 
@@ -149,17 +150,17 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param loadMore
      */
-    public void getCircleDynamicList(String cityCode,long createTime,int pageNo, final boolean loadMore) {
-        final
+    public void getCircleDynamicList(String cityCode, final boolean loadMore) {
         Call<ResponseData<List<CircleDynamic>>> call = null;
         String userid = Session.getUserId();
-        mUserService.getCircleDynamic(cityCode,createTime,userid,pageNo)
+        Log.i("lixiang", "onNext: "+dynamicCreateTime);
+        mUserService.getCircleDynamic(cityCode,dynamicCreateTime,userid,dynamicPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<List<CircleDynamic>>>() {
                     @Override
                     public void onCompleted() {
-
+                            dynamicPage++;
                     }
 
                     @Override
@@ -170,9 +171,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     @Override
                     public void onNext(ResponseData<List<CircleDynamic>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
-//                            int num=pageNo;
-//                            num++;
                             List<CircleDynamic> model =res.getData();
+                            dynamicCreateTime=model.get(model.size()-1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功
                                 mView.updateViewWithLoadMore(model, loadMore);
