@@ -16,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.db.DatabaseHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
@@ -31,7 +33,6 @@ import com.rz.circled.widget.XGridView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
@@ -381,10 +382,10 @@ public class FindFragment extends BaseFragment {
 //                jump(MorePlayActivity.class);
                 break;
             case R.id.btn_resource:
-                Toasty.info(mActivity, "点啊").show();
+                CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/zgzyq");
                 break;
             case R.id.btn_quanle:
-                Toasty.info(mActivity, "点啊").show();
+                CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/activity/qql");
                 break;
         }
     }

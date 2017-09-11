@@ -74,7 +74,7 @@ public class CircleDynamic implements Serializable {
     public String resourceTag;
     public String resourceType;
     public String summary;
-    public String talentType;
+    public int talentType;
     public String thumbnail;
     public String title;
     public long updateTime;

@@ -56,6 +56,7 @@ public class DynamicAdapter extends CircleContentAdapter {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(mCivHead);
         }
 
+        mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
         mTvName.setText(item.cust.custNname);
         tv_other_left.setText(item.readNum+"阅读");
         if (item.coterieId==null||item.coterieName==null){
