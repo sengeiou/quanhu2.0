@@ -24,8 +24,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static android.R.attr.id;
-
 /**
  * Created by rzw2 on 2016/10/9.
  */
@@ -234,13 +232,13 @@ public class CommomUtils {
     /**
      * 首页和搜索的动态跳转
      *
-     * @param circleUrl
+     * @param
      * @param moduleId
-     * @param infoId
+     * @param
      * @return
      */
-    public static String getDymanicUrl(String moduleId, String coterieId) {
-        String url = BuildConfig.WebHomeBaseUrl+"/redirect/coterie/:"+coterieId+"/:"+moduleId+"/:id";
+    public static String getDymanicUrl(String moduleId, String coterieId,String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl+"/redirect/coterie/"+coterieId+"/"+moduleId+"/"+resourceId;
         return url;
     }
 

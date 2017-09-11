@@ -54,6 +54,15 @@ public class WebHttp {
             String base_url = "";
             if (QHApplication.isFlag == 1) {
                 base_url = API.URL_APP_USER_RELEASE + (BuildConfig.addServerPrefix ? "app-user/" : "");
+            } else if (QHApplication.isFlag == 2) {
+                base_url = API.URL_APP_USER_MO + (BuildConfig.addServerPrefix ? "app-user/" : "");
+//                base_url = API.URL_APP_USER;
+            } else if (QHApplication.isFlag == 3) {
+                base_url = API.URL_APP_USER_TEST + (BuildConfig.addServerPrefix ? "app-user/" : "");
+            } else if (QHApplication.isFlag == 4) {
+                base_url = API.URL_DEBUG + (BuildConfig.addServerPrefix ? "app-user/" : "");
+            } else if (QHApplication.isFlag == 5) {
+                base_url = API.URL_APP_USER_17 + (BuildConfig.addServerPrefix ? "app-user/" : "");
             }
             Retrofit retrofit = new Retrofit.Builder()
                     .client(client)

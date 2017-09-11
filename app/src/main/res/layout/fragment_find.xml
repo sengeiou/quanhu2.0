@@ -30,7 +30,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/px60"
+                android:layout_marginBottom="@dimen/px58"
                 android:layout_marginTop="@dimen/font_40"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -40,7 +40,7 @@
                     android:id="@+id/btn_resource"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/font_34"
+                    android:layout_marginRight="@dimen/font_44"
                     android:background="@drawable/find_chainaresour"
                     android:textColor="@color/black"
                     />
@@ -56,7 +56,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px30"
+                android:layout_height="@dimen/px14"
                 android:background="@color/color_F8F8F8"
                 ></View>
 
@@ -79,7 +79,7 @@
                     android:layout_toRightOf="@+id/circle_theme"
                     android:padding="@dimen/px44"
                     android:text="@string/circle_hot_famous"
-                    android:textColor="@color/color_000000"
+                    android:textColor="@color/color_6b6b6b"
                     android:textSize="@dimen/px48"
                     />
 
@@ -89,10 +89,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px60"
+                    android:layout_marginRight="@dimen/font_44"
                     android:text="查看更多"
-                    android:textColor="#58A2FF"
-                    android:textSize="@dimen/px48"/>
+                    android:textColor="@color/color_0185FF"
+                    android:textSize="@dimen/px38"/>
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -106,7 +106,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px30"
+                android:layout_height="@dimen/px14"
                 android:background="@color/color_F8F8F8"
                 ></View>
 
@@ -129,7 +129,7 @@
                     android:layout_toRightOf="@+id/iv_subject"
                     android:padding="@dimen/px44"
                     android:text="@string/circle_hot_subject"
-                    android:textColor="@color/color_000000"
+                    android:textColor="@color/color_6b6b6b"
                     android:textSize="@dimen/px48"
                     />
 
@@ -139,23 +139,23 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px60"
+                    android:layout_marginRight="@dimen/font_44"
                     android:text="查看更多"
-                    android:textColor="#58A2FF"
-                    android:textSize="@dimen/px48"/>
+                    android:textColor="@color/color_0185FF"
+                    android:textSize="@dimen/px38"/>
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/circle_subject_rcv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/px34"
+                android:paddingBottom="@dimen/px60"
                 >
             </android.support.v7.widget.RecyclerView>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px30"
+                android:layout_height="@dimen/px14"
                 android:background="@color/color_F8F8F8"
                 ></View>
 
@@ -181,7 +181,7 @@
                     android:layout_marginLeft="@dimen/px44"
                     android:layout_toRightOf="@+id/iv_activity"
                     android:text="@string/circle_new_activity"
-                    android:textColor="@color/color_000000"
+                    android:textColor="@color/color_6b6b6b"
                     android:textSize="@dimen/px48"
                     />
 
@@ -191,10 +191,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px60"
+                    android:layout_marginRight="@dimen/font_44"
                     android:text="查看更多"
-                    android:textColor="#58A2FF"
-                    android:textSize="@dimen/px48"/>
+                    android:textColor="@color/color_0185FF"
+                    android:textSize="@dimen/px38"/>
             </RelativeLayout>
 
             <com.rz.circled.widget.MListView

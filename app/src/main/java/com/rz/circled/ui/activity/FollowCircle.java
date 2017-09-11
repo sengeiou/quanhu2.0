@@ -15,6 +15,7 @@ import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
 
 import java.util.ArrayList;
@@ -36,11 +37,13 @@ public class FollowCircle extends BaseActivity {
     Button mBtnPress;
     @BindView(R.id.gv_follow)
     GridView mGvFollow;
-    private List<CircleEntrModle> allCircle=new ArrayList<>();
+    private List<CircleEntrModle> allCircle = new ArrayList<>();
     private CommonAdapter<CircleEntrModle> mAdapter;
     private ImageView mIvFollow;
     private ImageView mIvCb;
     private CirclePresenter mPresenter;
+    List<String> list=new ArrayList<>();
+    StringBuffer sb=new StringBuffer();
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -59,8 +62,8 @@ public class FollowCircle extends BaseActivity {
         mAdapter = new CommonAdapter<CircleEntrModle>(mContext, allCircle, R.layout.follow_item) {
             @Override
             public void convert(ViewHolder helper, CircleEntrModle item) {
-                mIvFollow =helper.getView(R.id.iv_follow);
-                mIvCb =helper.getView(R.id.iv_cb);
+                mIvFollow = helper.getView(R.id.iv_follow);
+                mIvCb = helper.getView(R.id.iv_cb);
                 if (item.isSeleced()) {
                     mIvCb.setImageResource(R.drawable.select);
                 } else {
@@ -77,13 +80,13 @@ public class FollowCircle extends BaseActivity {
                 boolean isSeleced = circleEntrModle.isSeleced();
                 String appId = circleEntrModle.appId;
                 if (isSeleced) {
+                    list.remove(appId);
                     circleEntrModle.setSeleced(false);
                     mIvCb.setImageResource(R.drawable.no_select);
-                    mPresenter.removeLoveCircle(appId,Session.getUserId());
                 } else {
+                    list.add(appId);
                     circleEntrModle.setSeleced(true);
                     mIvCb.setImageResource(R.drawable.select);
-                    mPresenter.addLoveCircle(appId,Session.getUserId());
                 }
                 mAdapter.notifyDataSetChanged();
             }
@@ -99,7 +102,7 @@ public class FollowCircle extends BaseActivity {
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (t!=null){
+        if (t != null) {
             allCircle.addAll((Collection<? extends CircleEntrModle>) t);
             mAdapter.notifyDataSetChanged();
         }
@@ -120,7 +123,23 @@ public class FollowCircle extends BaseActivity {
     @OnClick({R.id.btn_jump, R.id.btn_press})
     public void onClick(View view) {
         Session.setUserIsFirstDownload(false);
+        switch (view.getId()) {
+            case R.id.btn_jump:
                 finish();
-                skipActivity(aty,MainActivity.class);
+                skipActivity(aty, MainActivity.class);
+                break;
+            case R.id.btn_press:
+                if (list.size()==0){
+                    Toasty.info(mContext,getString(R.string.select_circle)).show();
+                    return;
+                }
+                for (String s : list) {
+                    sb.append(s+",");
+                }
+                mPresenter.addLoveCircle(sb.toString(), Session.getUserId());
+                finish();
+                skipActivity(aty, MainActivity.class);
+                break;
+        }
     }
 }

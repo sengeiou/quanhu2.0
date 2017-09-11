@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="@dimen/px520"
+              android:layout_width="@dimen/px494"
                 android:layout_marginLeft="@dimen/font_34"
                 android:background="@drawable/hot_subject_bg"
-              android:layout_height="wrap_content">
+              android:layout_height="@dimen/px194">
 <ImageView
     android:id="@+id/topic_iv"
     android:layout_width="@dimen/px180"
@@ -13,23 +13,26 @@
         android:id="@+id/topic_name"
         android:layout_width="@dimen/px300"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/px20"
-        android:layout_marginLeft="@dimen/font_34"
+        android:paddingTop="@dimen/px26"
+        android:layout_marginLeft="@dimen/px22"
         android:layout_toRightOf="@+id/topic_iv"
-        android:textColor="@color/black"
+        android:textColor="@color/color_2c2c2c"
         android:textStyle="bold"
         android:maxLines="2"
+        android:textSize="@dimen/font_40"
         android:text="#怎么画好一幅画啊?#"
         />
     <TextView
         android:id="@+id/topic_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/font_34"
+        android:layout_marginLeft="@dimen/px22"
+        android:layout_marginTop="@dimen/px26"
         android:layout_toRightOf="@+id/topic_iv"
         android:layout_below="@+id/topic_name"
         android:text="2343人参与"
         android:maxLines="1"
+        android:textSize="@dimen/font_38"
         android:textColor="@color/color_666666"
         />
 </RelativeLayout>
