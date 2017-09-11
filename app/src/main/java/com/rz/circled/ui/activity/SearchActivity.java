@@ -44,6 +44,7 @@ public class SearchActivity extends BaseActivity {
     private SearchAdapter searchAdapter;
 
 
+
     public static final int TYPE_CONTENT = 0;
     public static final int TYPE_PERSON = 1;
     public static final int TYPE_PRIVATE = 2;

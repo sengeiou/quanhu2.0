@@ -26,11 +26,15 @@ public class CircleApi {
      */
     public static final String CIRCLE_BANNER_LIST = "v3/recommend/banner";
     /**
-     * 首页热门话题
+     * 发现热门话题
      */
-    public static final String CIRCLE_SUBJECT_LIST = "v3/recommend/topic";
+    public static final String CIRCLE_SUBJECT_LIST = "v3/resource/getRecommendTopic";
     /**
-     * 首页圈子达人
+     * 发现更多话题
+     */
+    public static final String MORE_CIRCLE_SUBJECT = "v3/resource/getTopicList";
+    /**
+     * 发现圈子达人
      */
     public static final String CIRCLE_FAMOUS_LIST = "v3/star/starCommend";
     /**
@@ -45,7 +49,7 @@ public class CircleApi {
     /**
      * 首页动态
      */
-    public static final String CIRCLE_DYNAMIC_GET = "v3/dynamic/get";
+    public static final String CIRCLE_DYNAMIC_GET = "v3/resource/recommend";
 
     /**
      * 我的收藏列表

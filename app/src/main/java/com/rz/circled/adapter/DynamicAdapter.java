@@ -41,25 +41,29 @@ public class DynamicAdapter extends CircleContentAdapter {
         TextView mTvCircleName = helper.getView(R.id.tv_circle_name);//圈子来自
 
 //        ImageView iv_other_left = (ImageView) helper.getViewById(R.id.iv_other_left);
-//        TextView tv_other_left = (TextView) helper.getViewById(R.id.tv_other_left);
+        TextView tv_other_left = (TextView) helper.getViewById(R.id.tv_other_left);
 
 //        ImageView ll_other_left_type1_iv1 = (ImageView) helper.getViewById(R.id.ll_other_left_type1_iv1);
 //        TextView ll_other_left_type1_tv2 = (TextView) helper.getViewById(R.id.ll_other_left_type1_tv2);
 //        ImageView ll_other_mid_type1_iv1 = (ImageView) helper.getViewById(R.id.ll_other_mid_type1_iv1);
 //        TextView ll_other_mid_type1_tv2 = (TextView) helper.getViewById(R.id.ll_other_mid_type1_tv2);
 //        ImageView ll_other_right_type1_iv1 = (ImageView) helper.getViewById(R.id.ll_other_right_type1_iv1);
-//        TextView ll_other_right_type1_tv2 = (TextView) helper.getViewById(R.id.ll_other_right_type1_tv2);
+        TextView fromWhere = (TextView) helper.getViewById(R.id.ll_other_right_type1_tv2);
 //        ViewGroup rl_other_left_content = helper.getView(R.id.rl_other_left_content);//rl 左边的other信息 content
 
-        if (Protect.checkLoadImageStatus(mContext) && item.user != null) {
-            Glide.with(mContext).load(item.user.custImg).transform(new GlideCircleImage(mContext)).
+        if (Protect.checkLoadImageStatus(mContext) && item.cust != null) {
+            Glide.with(mContext).load(item.cust.custImg).transform(new GlideCircleImage(mContext)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(mCivHead);
         }
-        if (item.user != null) {
-            mTvName.setText(Protect.setName(item.user.custNname, item.user.custNameNote));
-        }
 
-        mTvTime.setText(StringUtils.formatDisplayTime(item.createTime, "yyyy-MM-dd HH:mm:ss"));
+        mTvName.setText(item.cust.custNname);
+        tv_other_left.setText(item.readNum+"阅读");
+        if (item.coterieId==null||item.coterieName==null){
+            fromWhere.setText("来自圈子"+item.circleName);
+        }else {
+            fromWhere.setText("来自私圈"+item.coterieName);
+        }
+        mTvTime.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd HH:mm:ss"));
         mTvCircleName.setText(mContext.getString(R.string.from)  + item.circleName);
         mTvCircleName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +77,7 @@ public class DynamicAdapter extends CircleContentAdapter {
             @Override
             public void onClick(View v) {
                 if (isLogin()) {
-                    if (item.user != null) {
+                    if (item.cust != null) {
 //                        V3FriendInfoActivity.newFrindInfo(mContext, item.user.custId);
                     }
                 }
@@ -83,7 +87,7 @@ public class DynamicAdapter extends CircleContentAdapter {
             @Override
             public void onClick(View v) {
                 if (isLogin()) {
-                    if (item.user != null) {
+                    if (item.cust != null) {
 //                        V3FriendInfoActivity.newFrindInfo(mContext, item.user.custId);
                     }
                 }

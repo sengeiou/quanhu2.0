@@ -10,6 +10,8 @@ public class NewsBean {
     public static final int TYPE_USER = 2;
     public static final int TYPE_ARTICLE = 3;
     public static final int TYPE_ANNOUNCEMENT = 4;
+    public static final int TYPE_GROUP = 5;
+    public static final int TYPE_INTERACTIVE = 6;
 
     private int viewType;
 

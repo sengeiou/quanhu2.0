@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/px44">
+    android:paddingBottom="@dimen/px58"
+    android:paddingLeft="@dimen/px44"
+    android:paddingRight="@dimen/px44"
+    android:paddingTop="@dimen/px58">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -13,10 +16,10 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img"
-            android:layout_width="@dimen/px220"
-            android:layout_height="@dimen/px220"
+            android:layout_width="@dimen/px216"
+            android:layout_height="@dimen/px216"
             android:scaleType="centerCrop"
-            android:src="@android:color/holo_green_light"
+            android:src="@mipmap/icon_logo"
             app:riv_corner_radius="8dp"
             app:riv_mutate_background="true"
             app:riv_oval="false" />
@@ -25,12 +28,12 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/px52"
+        android:layout_marginLeft="@dimen/px44"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/px10"
-        android:paddingTop="@dimen/px10">
+        android:paddingBottom="@dimen/px14"
+        android:paddingTop="@dimen/px14">
 
         <TextView
             android:id="@+id/tv_title"
@@ -40,7 +43,7 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:textColor="@color/font_gray_xl"
-            android:textSize="@dimen/font_54"
+            android:textSize="@dimen/font_50"
             tool:text="这里是标题" />
 
         <TextView
@@ -53,8 +56,8 @@
             android:lines="1"
             android:paddingTop="@dimen/px10"
             android:textColor="@color/font_gray_s"
-            android:textSize="@dimen/font_40"
-            tool:text="这里是个人简介" />
+            android:textSize="@dimen/font_38"
+            tool:text="09-09" />
 
     </LinearLayout>
 

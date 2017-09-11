@@ -14,7 +14,7 @@
         android:layout_height="@dimen/px58"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/px14"
-        android:src="@drawable/follow_no"
+        android:src="@drawable/no_select"
         />
     <ImageView
         android:layout_toRightOf="@+id/iv_cb"

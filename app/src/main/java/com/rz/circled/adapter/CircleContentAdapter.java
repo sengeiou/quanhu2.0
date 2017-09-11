@@ -44,6 +44,8 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             ImageView iv_circle_img01 = helper.getView(R.id.iv_circle_img01);//iv 第一张小图
             ImageView iv_circle_img02 = helper.getView(R.id.iv_circle_img02);//iv 第二张小图
             ImageView iv_circle_img03 = helper.getView(R.id.iv_circle_img03);//iv 第三张小图
+            ImageView iv_thumbnail = helper.getView(R.id.iv_one_icon);//iv 只展示一张大图
+            RelativeLayout iv_thumbnail_layout = helper.getView(R.id.iv_onely_thumbnail);//iv 展示一张大图的布局
             RelativeLayout rl_circle_video_content = helper.getView(R.id.rl_circle_video_content);//rl 视频content
             ImageView iv_video_preview = helper.getView(R.id.iv_video_preview);//iv 视频预览大图
             ViewGroup rl_otherinfo_content = helper.getView(R.id.rl_otherinfo_content);//rl 其他信息 content
@@ -51,51 +53,43 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             rl_circle_video_content.getLayoutParams().height = newWidth * 559 / 994;
             rl_circle_video_content.getLayoutParams().width = newWidth;
             rl_circle_video_content.requestLayout();
-            if (TextUtils.isEmpty(item.infoThumbnail)) {
                 mIvThumbnail.setVisibility(View.GONE);
-
+            if (TextUtils.isEmpty(item.thumbnail)) {
+                iv_thumbnail_layout.setVisibility(View.GONE);
             } else {
-                mIvThumbnail.setVisibility(View.VISIBLE);
-                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.infoThumbnail,R.dimen.px288,R.dimen.px260);
-                helper.setImageByUrlTransger(mIvThumbnail, url, R.drawable.ic_default_thumbnail);
-                if (!TextUtils.isEmpty(item.infoDesc)) {
-                    mdes.setMaxLines(2);
-                }
+                iv_thumbnail_layout.setVisibility(View.VISIBLE);
+                rl_circle_video_content.setVisibility(View.GONE);
+                ll_circle_3imgs.setVisibility(View.GONE);
+                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.thumbnail,R.dimen.px288,R.dimen.px260);
+                helper.setImageByUrlTransger(iv_thumbnail, url, R.drawable.ic_default_thumbnail);
             }
-            if (TextUtils.isEmpty(item.infoTitle)) {
-                mTitle.setVisibility(View.GONE);
-            } else {
-                mTitle.setVisibility(View.VISIBLE);
-//                mTitle.setLines(1);
-                mTitle.setText(item.infoTitle);
-            }
-
-            if (TextUtils.isEmpty(item.infoDesc)) {
+            mTitle.setText(item.title);
+            if (TextUtils.isEmpty(item.content)) {
                 mdes.setVisibility(View.GONE);
             } else {
-                if (TextUtils.isEmpty(item.infoTitle)) {
+                if (TextUtils.isEmpty(item.title)) {
                     mdes.setVisibility(View.GONE);
                     mTitle.setVisibility(View.VISIBLE);
-                    mTitle.setMaxLines(3);
-                    mTitle.setText(item.infoDesc);
+                    mTitle.setMaxLines(2);
+                    mTitle.setText(item. content);
                 } else {
                     mdes.setVisibility(View.VISIBLE);
-                    String s = item.infoDesc.trim().replaceAll("\\t", "");
+                    String s = item.content.trim().replaceAll("\\t", "");
                     Log.d("yeying", "adapter infoDesc " + s);
                     mdes.setText(s);
                 }
             }
 
             //多图区域
-            if (TextUtils.isEmpty(item.infoPic)) {
+            if (TextUtils.isEmpty(item.pics)) {
                 mImageLayout.setVisibility(View.GONE);
             } else {
                 mImageLayout.setVisibility(View.VISIBLE);
-                String[] pics = item.infoPic.split(",");
+                String[] pics = item.pics.split(",");
                 if (pics.length == 1) {
                     iv_circle_1img.setVisibility(View.VISIBLE);
                     ll_circle_3imgs.setVisibility(View.GONE);
-                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.infoPic,R.dimen.px994,R.dimen.px558);
+                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.pics,R.dimen.px994,R.dimen.px558);
                     helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
                 } else {
                     iv_circle_1img.setVisibility(View.GONE);
@@ -124,9 +118,10 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                 }
             }
 
-            if (!TextUtils.isEmpty(item.infoVideoPic)) {
+            if (!TextUtils.isEmpty(item.videoPic)) {
                 rl_circle_video_content.setVisibility(View.VISIBLE);
-                helper.setImageByUrlTransger(iv_video_preview, item.infoVideoPic, R.color.black);
+                ll_circle_3imgs.setVisibility(View.GONE);
+                helper.setImageByUrlTransger(iv_video_preview, item.videoPic, R.color.black);
             } else {
                 rl_circle_video_content.setVisibility(View.GONE);
             }
@@ -156,48 +151,48 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             rl_circle_video_content.getLayoutParams().width = newWidth;
             rl_circle_video_content.requestLayout();
 
-            if (TextUtils.isEmpty(item.infoThumbnail)) {
+            if (TextUtils.isEmpty(item.thumbnail)) {
                 mIvThumbnail.setVisibility(View.GONE);
             } else {
                 mIvThumbnail.setVisibility(View.VISIBLE);
-                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.infoThumbnail,R.dimen.px288,R.dimen.px260);
+                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.thumbnail,R.dimen.px288,R.dimen.px260);
                 helper.setImageByUrlTransger(mIvThumbnail,url, R.drawable.ic_default_thumbnail);
             }
-            if (TextUtils.isEmpty(item.infoTitle)) {
+            if (TextUtils.isEmpty(item.title)) {
                 mTitle.setVisibility(View.GONE);
             } else {
                 mTitle.setVisibility(View.VISIBLE);
-                int index = item.infoTitle.indexOf(searchBox);
+                int index = item.title.indexOf(searchBox);
                 if (index != -1) {
-                    TextViewUtils.setSpannableStyle(item.infoTitle, index, searchBox.length() + index, mTitle);
+                    TextViewUtils.setSpannableStyle(item.title, index, searchBox.length() + index, mTitle);
                 } else {
-                    mTitle.setText(item.infoTitle);
+                    mTitle.setText(item.title);
                 }
 
             }
 
-            if (TextUtils.isEmpty(item.infoDesc)) {
+            if (TextUtils.isEmpty(item.content)) {
                 mdes.setVisibility(View.GONE);
             } else {
                 mdes.setVisibility(View.VISIBLE);
-                int index = item.infoDesc.indexOf(searchBox);
+                int index = item.content.indexOf(searchBox);
                 if (index != -1) {
-                    TextViewUtils.setSpannableStyle(item.infoDesc, index, searchBox.length() + index, mdes);
+                    TextViewUtils.setSpannableStyle(item.content, index, searchBox.length() + index, mdes);
                 } else {
-                    mdes.setText(item.infoDesc);
+                    mdes.setText(item.content);
                 }
             }
 
             //多图区域
-            if (TextUtils.isEmpty(item.infoPic)) {
+            if (TextUtils.isEmpty(item.pics)) {
                 mImageLayout.setVisibility(View.GONE);
             } else {
                 mImageLayout.setVisibility(View.VISIBLE);
-                String[] pics = item.infoPic.split(",");
+                String[] pics = item.pics.split(",");
                 if (pics.length == 1) {
                     iv_circle_1img.setVisibility(View.VISIBLE);
                     ll_circle_3imgs.setVisibility(View.GONE);
-                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.infoPic,R.dimen.px994,R.dimen.px558);
+                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.pics,R.dimen.px994,R.dimen.px558);
                     helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
                 } else {
                     iv_circle_1img.setVisibility(View.GONE);
@@ -226,9 +221,11 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                 }
             }
 
-            if (!TextUtils.isEmpty(item.infoVideoPic)) {
+            if (!TextUtils.isEmpty(item.videoPic)) {
                 rl_circle_video_content.setVisibility(View.VISIBLE);
-                helper.setImageByUrlTransger(iv_video_preview, item.infoVideoPic, R.color.black);
+                ll_circle_3imgs.setVisibility(View.GONE);
+                mIvThumbnail.setVisibility(View.GONE);
+                helper.setImageByUrlTransger(iv_video_preview, item.videoPic, R.color.black);
             } else {
                 rl_circle_video_content.setVisibility(View.GONE);
             }

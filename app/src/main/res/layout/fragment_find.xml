@@ -7,6 +7,10 @@
     android:id="@+id/layout_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"></FrameLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/find_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.rz.circled.widget.observable.ObservableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -202,5 +206,6 @@
             </com.rz.circled.widget.MListView>
         </LinearLayout>
     </com.rz.circled.widget.observable.ObservableScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

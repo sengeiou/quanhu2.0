@@ -28,44 +28,22 @@ public interface ApiNewsService {
             @Field("custId") String custId
     );
 
+    /**
+     * @param custId
+     * @param type   通知公告：1 系统消息：2 互动消息：3 推荐与活动：4 账户与安全：5
+     * @param label  评论：100 问答：101 私圈：102 活动：103
+     * @param limit
+     * @param start
+     * @return
+     */
     @FormUrlEncoded
-    @POST(ApiNews.NEWS_ANNOUNCEMENT)
-    Call<ResponseData<List<NewsBean>>> newsAnncouncement(
+    @POST(ApiNews.NEWS_MULTI_LIST)
+    Call<ResponseData<List<NewsBean>>> newsMulitList(
             @Field("custId") String custId,
-            @Field("limit") String limit,
-            @Field("readTime") String readTime
-    );
-
-    @FormUrlEncoded
-    @POST(ApiNews.NEWS_SYSTEM_INFORMATION)
-    Call<ResponseData<List<NewsBean>>> newsSystemInformation(
-            @Field("custId") String custId,
-            @Field("limit") String limit,
-            @Field("readTime") String readTime
-    );
-
-    @FormUrlEncoded
-    @POST(ApiNews.NEWS_ACCOUNT_INFORMATION)
-    Call<ResponseData<List<NewsBean>>> newsAccountInformation(
-            @Field("custId") String custId,
-            @Field("limit") String limit,
-            @Field("readTime") String readTime
-    );
-
-    @FormUrlEncoded
-    @POST(ApiNews.NEWS_INTERACTIVE)
-    Call<ResponseData<List<NewsBean>>> newsInteractive(
-            @Field("custId") String custId,
-            @Field("limit") String limit,
-            @Field("readTime") String readTime
-    );
-
-    @FormUrlEncoded
-    @POST(ApiNews.NEWS_RECOMMEND)
-    Call<ResponseData<List<NewsBean>>> newsRecommend(
-            @Field("custId") String custId,
-            @Field("limit") String limit,
-            @Field("readTime") String readTime
+            @Field("type") int type,
+            @Field("label") int label,
+            @Field("limit") int limit,
+            @Field("start") int start
     );
 
 }

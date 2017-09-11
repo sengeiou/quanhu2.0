@@ -166,6 +166,10 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.6'
     // 此处以JCore 1.1.7 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.5'
+    /**
+     * 选择控件
+     */
+    compile 'com.kyleduo.switchbutton:library:1.4.6'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
