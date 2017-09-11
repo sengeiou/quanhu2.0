@@ -16,8 +16,8 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.presenter.impl.CirclePresenter;
-import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
 import com.rz.httpapi.bean.CircleEntrModle;
@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.rz.circled.widget.CommomUtils.trackUser;
+import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
 
 
 /**
@@ -102,6 +103,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             public void onItemClick(View view, int pos, int status) {
 //                if (isLogin()) {
                 CircleEntrModle circleEntrModle = onLines.get(pos);
+                circleEntrModle.click+=1;
                 String appId = circleEntrModle.appId;
                 if (isEdit) {
                     onLines.remove(circleEntrModle);
@@ -227,10 +229,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                 if (isEdit) {
                     isEdit = false;
                     mTvBaseTitleRight.setText("编辑");
-                    //点击完成后联网
-                    mPresenter.addLoveCircle("", Session.getUserId());
-                    mPresenter.removeLoveCircle("", Session.getUserId());
-
+                 EventBus.getDefault().post(new BaseEvent(UPDATE_LOVE_CIRCLE));
                 } else {
                     isEdit = true;
                     mTvBaseTitleRight.setText("完成");
@@ -328,7 +327,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         public void onBindViewHolder(ComingPublishedViewHolder holder, int position) {
             CircleEntrModle circleEntrModle = onLines.get(position);
             if (Protect.checkLoadImageStatus(AllCirclesAty.this)) {
-                Glide.with(AllCirclesAty.this).load(circleEntrModle.circleIcon).transform(new GlideCircleImage(AllCirclesAty.this)).
+                Glide.with(AllCirclesAty.this).load(circleEntrModle.circleIcon).
                         placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(holder.civ_circleImg);
             }
             holder.itemView.setTag(position);//holder和position对应,pos塞进去

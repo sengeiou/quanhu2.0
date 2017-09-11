@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.EntityCache;
@@ -231,24 +232,13 @@ public class CommomUtils {
     /**
      * 首页和搜索的动态跳转
      *
-     * @param circleUrl
+     * @param
      * @param moduleId
-     * @param infoId
+     * @param
      * @return
      */
-    public static String getDymanicUrl(String circleUrl, String moduleId, String infoId) {
-        if (TextUtils.isEmpty(circleUrl)) {
-            return "";
-        } else {
-            if (circleUrl.endsWith("/")) {
-                circleUrl = circleUrl.substring(0, circleUrl.length() - 1);
-            }
-        }
-        if (!TextUtils.isEmpty(infoId)) {
-            infoId = infoId.split("\\.")[0];
-        }
-//        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId + "/dynamic";
-        String url = circleUrl + "/redirect/" + moduleId + "/" + infoId + "?type=dynamic";
+    public static String getDymanicUrl(String moduleId, String coterieId,String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl+"/redirect/coterie/"+coterieId+"/"+moduleId+"/"+resourceId;
         return url;
     }
 

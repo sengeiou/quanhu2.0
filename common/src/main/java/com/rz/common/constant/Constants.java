@@ -13,6 +13,7 @@ public class Constants {
      */
     public static final String FOLLOW="FOLLOW";
     public static final String FOLLOW_ID="FOLLOW_ID";
+    public static final String UPDATE_LOVE_CIRCLE="UPDATE_LOVE_CIRCLE";
 
     /**
      * 设置关注

@@ -36,6 +36,7 @@
                 android:layout_marginBottom="@dimen/px2"
                 android:includeFontPadding="false"
                 android:maxLines="2"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_52" />
 
@@ -184,7 +185,6 @@
             </RelativeLayout>
         </LinearLayout>
     </FrameLayout>
-
     <RelativeLayout
         android:id="@+id/rl_circle_video_content"
         android:layout_width="wrap_content"
@@ -234,10 +234,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/px8"
+            android:layout_marginBottom="@dimen/font_40"
+            android:layout_marginRight="@dimen/font_34"
             android:layout_toLeftOf="@+id/ff_xzanwei"
-            android:background="@drawable/shape_item_circle_videoinfo"
+            android:background="@drawable/video_time"
             android:text="03:00"
+            android:gravity="center"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/font_34"
             android:visibility="gone" />

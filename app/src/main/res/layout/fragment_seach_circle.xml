@@ -5,16 +5,22 @@
               android:background="@color/white"
               android:orientation="vertical">
 
-    <GridView
-        android:id="@+id/gv_search_circle"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:horizontalSpacing="@dimen/app_base_padding"
-        android:listSelector="@color/transparent"
-        android:numColumns="3"
-        android:paddingLeft="@dimen/app_base_padding"
-        android:paddingRight="@dimen/app_base_padding"
-        android:paddingTop="@dimen/app_base_padding"
-        android:verticalSpacing="@dimen/px60"/>
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/gv_search_circle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="@dimen/app_base_padding"
+            android:listSelector="@color/transparent"
+            android:numColumns="3"
+            android:paddingLeft="@dimen/app_base_padding"
+            android:paddingRight="@dimen/app_base_padding"
+            android:paddingTop="@dimen/app_base_padding"
+            android:verticalSpacing="@dimen/px60"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
@@ -17,7 +18,7 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
     @Override
     public void convert(ViewHolder helper, Object item, int position) {
-        TextView avatarTxt = (TextView) helper.getViewById(R.id.iv_search_person);
+        ImageView avatarImg = (ImageView) helper.getViewById(R.id.iv_search_person);
         TextView rewardTxt = (TextView) helper.getViewById(R.id.tv_reward);
         TextView tvName = (TextView) helper.getViewById(R.id.tv_name);
         TextView tvContent = (TextView) helper.getViewById(R.id.tv_content);

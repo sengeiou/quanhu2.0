@@ -26,6 +26,7 @@
                 android:background="@color/transparent"
                 android:hint="英语"
                 android:maxLines="1"
+                android:focusable="false"
                 android:paddingRight="@dimen/px10"
                 android:textColor="@color/font_gray_m"
                 android:textColorHint="@color/font_gray_a"

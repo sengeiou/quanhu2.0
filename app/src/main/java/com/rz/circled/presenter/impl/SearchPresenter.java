@@ -18,6 +18,9 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.PrivateGroupBean;
+import com.rz.httpapi.bean.SearchDataBean;
+import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.util.ArrayList;
@@ -25,6 +28,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static com.xiaomi.push.thrift.a.T;
 
 /**
  * Created by Gsm on 2017/9/2.
@@ -56,13 +61,31 @@ public class SearchPresenter extends GeneralPresenter {
     private IViewController mView;
     private Context mContext;
 
-    private int dynamicPos = 0;
-    private int collectPos = 0;
-    private int custPos = 0;
+//    private int dynamicPos = 0;
+//    private int collectPos = 0;
+//    private int custPos = 0;
+
+
+    //每页分页标记
+    private int start = 0;
+
+    //记录每页分页标记
+    private int record_start = 0;
+
+    //是否没有数据
+    private boolean isNoData;
 
     //处理缓存
     private EntityCache<CircleDynamic> mCirclesCache;
-    private List<CircleDynamic> currentData = new ArrayList<>();
+    private EntityCache<StarListBean> mStarListCache;
+
+    private SearchDataBean searchDataBean = new SearchDataBean();
+
+    private List<CircleDynamic> resoueces = new ArrayList<>();
+    private List<StarListBean> custInfos = new ArrayList<>();
+    private List coterieInfos = new ArrayList();
+    private List circleInfos = new ArrayList();
+    private List rewards = new ArrayList();
 
     @Override
     public Object getCacheData() {
@@ -85,104 +108,99 @@ public class SearchPresenter extends GeneralPresenter {
      * 搜索内容
      */
 
-    public void searchQH(final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType){
+    /**
+     *
+     *  @Field("circleId") String circleId,
+        @Field("coterieId") String coterieId,
+        @Field("keyWord") String keyWord,
+        @Field("limit") int limit,
+        @Field("resourceType") String resourceType,
+        @Field("searchType") int searchType,
+        @Field("start") int start
+     */
+
+    public void searchQH(final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, final int searchType){
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
-        Call<ResponseData<List<CircleDynamic>>> call = mUserService.searchQH(
-                circleId,
-                coterieId,
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+        if (!loadMore) {
+            start = 0;
+        } else {
+            if (isNoData) {
+                start = record_start;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+
+        Call<ResponseData<SearchDataBean>> call = mUserService.searchQH(
+                "",
+                "",
                 keyWord,
-                10,
-                resourceType,
+                5,
+                "",
                 searchType,
-                Constants.PAGESIZE);
+                0);
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
+        call.enqueue(new BaseCallback<ResponseData<SearchDataBean>>() {
             @Override
-            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
+            public void onResponse(Call<ResponseData<SearchDataBean>> call, Response<ResponseData<SearchDataBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData res = response.body();
-                    if (!loadMore) {
-                        dynamicPos = 0;
-                    }
-//                    dynamicPos += Constants.PAGESIZE;
-                    dynamicPos += 50;
+
+                    ResponseData<SearchDataBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<CircleDynamic> model = (List<CircleDynamic>) res.getData();
-                        if (null != model && model.size() != 0) {
-                            //发送成功
-                            mView.updateViewWithLoadMore(model, loadMore);
+                        SearchDataBean model = (SearchDataBean) res.getData();
+
+                        List dataList = null;
+                        if(searchType == 1){
+                            dataList = model.getResoueces();
+                        }else if(searchType == 2){
+                            dataList = model.getCustInfos();
+                        }else if(searchType == 3){
+                            dataList = model.getCoterieInfos();
+                        }else if(searchType == 4){
+                            dataList = model.getCircleInfos();
+                        }else if(searchType == 5){
+                            dataList = model.getRewards();
+                        }
+
+                        if (null != dataList && !dataList.isEmpty()) {
+                            isNoData = false;
+                            mView.updateViewWithLoadMore(dataList, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                        try {
-                            if (loadMore) {
-                                currentData.addAll(model);
-                            } else {
-                                currentData = new ArrayList<CircleDynamic>(model);
-                            }
-                            if (!loadMore) {
-                                mCirclesCache.putListEntity(model);
-                            } else {
-                                mCirclesCache.putListEntity(currentData);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.d("test", "cacheData failed " + e.getMessage());
+                            mView.updateViewWithLoadMore(dataList, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            isNoData = true;
                         }
                         return;
-                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        //发送失败
-                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        isNoData = true;
                         return;
                     }
                 }
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                isNoData = true;
+
             }
 
             @Override
-            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<SearchDataBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
     }
-
-//    /**
-//     *  搜索用户
-//     */
-//    public void searchPerson(String keyWord) {
-//
-//    }
-//
-//    /**
-//     * 搜索私圈
-//     */
-//    public void searchPrivateCircle(String keyWord){
-//
-//
-//    }
-//
-//    /**
-//     * 搜索圈子
-//     */
-//    public void searchCircle(String keyWord){
-//
-//
-//    }
-//
-//    /**
-//     *  搜索悬赏
-//     */
-//    public void searchReward(String keyWord){
-//
-//
-//    }
-
 
 }

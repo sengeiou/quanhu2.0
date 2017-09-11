@@ -63,6 +63,11 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     }
 
     @Override
+    protected boolean needSwipeBack() {
+        return hadError;
+    }
+
+    @Override
     public void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         AndroidBug5497Workaround.assistActivity(this);

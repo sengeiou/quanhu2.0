@@ -13,6 +13,7 @@ import com.rz.httpapi.bean.ClubStats;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
+import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.OpusData;
@@ -21,6 +22,7 @@ import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
@@ -33,7 +35,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -291,17 +295,14 @@ public interface ApiService {
     /**
      * 获取首页圈子动态列表
      *
-     * @param custId
-     * @param start
-     * @param limit
      * @return
      */
-    @FormUrlEncoded
-    @POST(CircleApi.CIRCLE_DYNAMIC_GET)
-    public Call<ResponseData<List<CircleDynamic>>> getCircleDynamic(
-            @Field("custId") String custId,
-            @Field("start") int start,
-            @Field("limit") int limit
+    @GET(CircleApi.CIRCLE_DYNAMIC_GET)
+    public Observable<ResponseData<List<CircleDynamic>>> getCircleDynamic(
+            @Query("cityCode") String cityCode,
+            @Query("createTime") long createTime,
+            @Query("custId") String custId,
+            @Query("pageNo") int pageNo
     );
 
 
@@ -433,6 +434,20 @@ public interface ApiService {
     @POST(CircleApi.MORE_FAMOUS_LIST)
     public Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
             @Field("appIds") String appIds
+    );
+    /**
+     * 获取推荐话题
+     */
+    @GET(CircleApi.CIRCLE_SUBJECT_LIST)
+    public Observable<ResponseData<List<HotSubjectModel>>> getSubject(
+    );
+    /**
+     * 获取更多话题
+     */
+    @GET(CircleApi.MORE_CIRCLE_SUBJECT)
+    public Observable<ResponseData<List<HotSubjectModel>>> getMoreSubject(
+            @Query("limit") int limit,
+            @Query("start") int start
     );
 
     /**
@@ -777,7 +792,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.QH_SEARCH)
-    Call<ResponseData<List<CircleDynamic>>> searchQH(
+    Call<ResponseData<SearchDataBean>> searchQH(
             @Field("circleId") String circleId,
             @Field("coterieId") String coterieId,
             @Field("keyWord") String keyWord,

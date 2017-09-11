@@ -8,117 +8,102 @@ import java.io.Serializable;
 
 public class CircleDynamic implements Serializable {
 
-    public static class User implements Serializable {
 
-        public String custId;
-        public String custNname;//用户昵称
+    /**
+     * audio : audio
+     * circleId : t2uvj7cmjh8i
+     * circleName : 创业达人圈
+     * circleRoute : cyq
+     * cityCode : 110100
+     * completeTime : 85848
+     * content : content5
+     * coterieId : coterieId
+     * coterieName : 测试内容e1w5
+     * createTime : 68756
+     * cust : {"custDesc":1,"custId":"测试内容ommi","custImg":1,"custLevel":1,"custName":1,"custRole":1,"custSex":1,"custSignature":1,"nameNotes":1}
+     * custId : yehao-test
+     * custImg : 测试内容m66e
+     * custNname : 测试内容6r8d
+     * extjson : {"avtiviAddress":"湖北省武汉市洪山区"}
+     * gps : 114.00265,36.325321
+     * heat : 0
+     * moduleEnum : 300-1001
+     * orderby : 4
+     * ownerIntro : 1
+     * ownerName : 测试内容8462
+     * partNum : 0
+     * pics : https://www.baidu.com/logo.png,https://www.baidu.com/logo.png
+     * readNum : 0
+     * resourceId : 19441761d7ff48b0bd9930001617a0a3
+     * resourceTag : 分类
+     * resourceType : 1001
+     * summary : summary5
+     * talentType : 0
+     * thumbnail : https://www.baidu.com/logo.png
+     * title : title
+     * updateTime : 18770
+     * video : https://www.baidu.com/video.mp4
+     * videoPic : https://www.baidu.com/logo.png
+     */
 
-        public String nameNotes;//好友备注名称
-        public String custImg;//用户头像地址
-
-        public String custPhone;
-
-        public String custSignature;
-
-        public String custNameNote;
-
-        @Override
-        public String toString() {
-            return "User{" +
-                    "custId='" + custId + '\'' +
-                    ", custNname='" + custNname + '\'' +
-                    ", nameNotes='" + nameNotes + '\'' +
-                    ", custImg='" + custImg + '\'' +
-                    ", custPhone='" + custPhone + '\'' +
-                    ", custSignature='" + custSignature + '\'' +
-                    ", custNameNote='" + custNameNote + '\'' +
-                    '}';
-        }
-    }
-
-//    appId
-//            String
-//
-//    圈子ID
-//    moduleId	String	 	栏目Id
-//    infoId	String	 	信息Id
-//    circleName	String	 	圈子名称
-//    circleUrl	String	 	圈子主页地址
-//
-//            infoTitle
-//    String
-//
-//            信息标题
-//    infoDesc	String	 	信息简介
-//    infoThumbnail	String	 	信息缩略图
-//    infoPic	String	 	图片列表，以逗号分隔
-//    infoVideo	String	 	视频地址
-//    infoVideoPic	String	 	视频预览图片
-//    circleUrl	String	 	详情跳转地址，不带域名地址格式
-//    reateTime	String	 	创建时间
-//
-//    leftIcon	String	 	左侧图标
-//    leftText	String	 	左侧文本
-//    rightIcon1	String
-//    rightText1	String
-//    rightIcon2	String
-//    rightText2	String
-//    rightIcon3	String
-//    rightText3	String
-
-
-    public User user;
-
-    public String appId;
-    //圈子ID
+    public String audio;
+    public String circleId;
     public String circleName;
-    //所属圈子名称（未完成）
-    public String infoId;//信息Id
+    public String circleRoute;
+    public String cityCode;
+    public long completeTime;
+    public String content;
+    public String coterieId;
+    public String coterieName;
+    public long createTime;
+    public CustBean cust;
+    public String custId;
+    public String custImg;
+    public String custNname;
+    public String extjson;
+    public String gps;
+    public int heat;
+    public String moduleEnum;
+    public int orderby;
+    public String ownerIntro;
+    public String ownerName;
+    public int partNum;
+    public String pics;
+    public int readNum;
+    public String resourceId;
+    public String resourceTag;
+    public String resourceType;
+    public String summary;
+    public int talentType;
+    public String thumbnail;
+    public String title;
+    public long updateTime;
+    public String video;
+    public String videoPic;
+    public int click;
 
-    public String moduleId;
-    public String infoTitle;
-    // 信息标题
-    public String infoDesc;    //信息简介
-    public String infoThumbnail;    //信息缩略图
-    public String infoPic;    //图片列表，以逗号分隔
-    public String infoVideo;    //视频地址
-    public String infoVideoPic;//视频预览图片
-    public String circleUrl;    //详情跳转地址，不带域名地址格式
-    public String createTime;    //创建时间
-    public String leftIcon;    //左侧图标
-    public String leftText;    //左侧文本
-    public String rightIcon1;
-    public String rightText1;
-    public String rightIcon2;
-    public String rightText2;
-    public String rightIcon3;
-    public String rightText3;
+    public static class CustBean {
+        /**
+         * custDesc : 1
+         * custId : 测试内容ommi
+         * custImg : 1
+         * custLevel : 1
+         * custName : 1
+         * custRole : 1
+         * custSex : 1
+         * custSignature : 1
+         * nameNotes : 1
+         */
 
+        public String custDesc;
+        public String custId;
+        public String custImg;
+        public int custLevel;
+        public String custNname;
+        public int custRole;
+        public int custSex;
+        public String custSignature;
+        public String nameNotes;
 
-    @Override
-    public String toString() {
-        return "CircleDynamic{" +
-                "user=" + user +
-                ", appId='" + appId + '\'' +
-                ", circleName='" + circleName + '\'' +
-                ", infoId='" + infoId + '\'' +
-                ", moduleId='" + moduleId + '\'' +
-                ", infoTitle='" + infoTitle + '\'' +
-                ", infoDesc='" + infoDesc + '\'' +
-                ", infoThumbnail='" + infoThumbnail + '\'' +
-                ", infoPic='" + infoPic + '\'' +
-                ", infoVideo='" + infoVideo + '\'' +
-                ", infoVideoPic='" + infoVideoPic + '\'' +
-                ", circleUrl='" + circleUrl + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", leftIcon='" + leftIcon + '\'' +
-                ", leftText='" + leftText + '\'' +
-                ", rightIcon1='" + rightIcon1 + '\'' +
-                ", rightText1='" + rightText1 + '\'' +
-                ", rightIcon2='" + rightIcon2 + '\'' +
-                ", rightText2='" + rightText2 + '\'' +
-                ", rightIcon3='" + rightIcon3 + '\'' +
-                ", rightText3='" + rightText3 + '\'' +
-                '}';
     }
 }

@@ -187,18 +187,17 @@
                     <Button
                         android:id="@+id/id_login_btn"
                         android:layout_width="@dimen/px836"
-                        android:layout_height="@dimen/px126"
+                        android:layout_height="@dimen/px152"
                         android:layout_marginTop="@dimen/px100"
                         android:gravity="center"
-                        android:minHeight="0dp"
-                        android:padding="@dimen/px32"
+                        android:padding="@dimen/px12"
                         android:text="@string/login_with_space"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/px50"
-                        android:visibility="visible"
                         android:layout_below="@id/et_layout"
-                        android:background="@drawable/shape_btn_blue_d7_selector"
+                        android:background="@mipmap/submit_login_btn_bg"
                         android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
                         />
 
                     <LinearLayout
