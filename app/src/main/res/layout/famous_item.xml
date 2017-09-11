@@ -21,14 +21,14 @@
 
             <ImageView
                 android:id="@+id/famous_iv"
-                android:layout_width="@dimen/px145"
-                android:layout_height="@dimen/px145"
+                android:layout_width="@dimen/px172"
+                android:layout_height="@dimen/px172"
                 android:scaleType="fitXY"/>
 
             <TextView
                 android:id="@+id/famous_level"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/px30"
+                android:layout_width="@dimen/px72"
+                android:layout_height="@dimen/px34"
                 android:layout_centerInParent="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
                 android:maxLines="1"
                 android:text="是逻辑封杀了"
                 android:textColor="@color/color_000000"
-                android:textSize="@dimen/px43"/>
+                android:textSize="@dimen/px46"/>
 
             <TextView
                 android:id="@+id/famous_mark"
@@ -68,8 +68,8 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="老师地脚螺栓"
-                android:textColor="@color/color_999"
-                android:textSize="@dimen/px38"/>
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/px34"/>
 
         </LinearLayout>
 

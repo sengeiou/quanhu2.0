@@ -158,7 +158,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position);
-        String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId);
+        String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId,circleDynamic.resourceId);
         WebContainerActivity.startActivity(mActivity, url);
     }
 
