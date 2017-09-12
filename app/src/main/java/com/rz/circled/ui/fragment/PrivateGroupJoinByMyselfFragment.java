@@ -30,6 +30,7 @@ import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.PrivateGroupListBean;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
@@ -82,6 +85,8 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
@@ -109,6 +114,22 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     @Override
     public void initData() {
         loadData(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case PRIVATE_GROUP_TAB_REFRESH:
+                loadData(false);
+                break;
+        }
     }
 
     private void loadData(final boolean loadMore) {

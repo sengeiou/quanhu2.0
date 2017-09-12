@@ -44,7 +44,6 @@
         <TextView
             android:id="@+id/tv_desc"
             style="@style/NewsDescStyle"
-            android:textStyle="bold"
             tools:text="最新通知" />
     </LinearLayout>
 </LinearLayout>

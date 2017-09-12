@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
+import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
+import com.rz.circled.adapter.viewholder.extra.NewsInteractiveExtra;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -32,6 +36,12 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
+        NewsInteractiveExtra extra = new Gson().fromJson(item.getBody().toString(), NewsInteractiveExtra.class);
+        holder.tvName.setText(extra.getCustName());
+        Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).into(holder.avatar);
+        holder.tvContent.setText(extra.getBodyTitle());
+        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).into(holder.img);
+        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), extra.getCircleName()));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,6 +57,8 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         ImageView img;
         @BindView(R.id.tv_content)
         TextView tvContent;
+        @BindView(R.id.tv_from)
+        TextView tvFrom;
 
         ViewHolder(View itemView) {
             super(itemView);

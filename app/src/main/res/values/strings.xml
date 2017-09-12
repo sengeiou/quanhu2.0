@@ -179,7 +179,7 @@
     <string name="private_group_no_create">还没有创建私圈哦！</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
-    <string name="private_group_from">来自%1$s</string>
+    <string name="private_group_from">来自 %1$s</string>
     <string name="private_group_free">免费</string>
     <string name="private_group_price">%1$d圈币</string>
     <string name="private_group_youran_price">%1$d悠然币</string>

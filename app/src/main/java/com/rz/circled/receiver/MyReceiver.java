@@ -12,6 +12,7 @@ import com.rz.circled.BuildConfig;
 import com.rz.circled.constants.JPushTypeConstants;
 import com.rz.circled.db.dao.SystemInformationDao;
 import com.rz.circled.db.model.SystemInformation;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.MyPushInfo;
 import com.rz.circled.ui.activity.MainActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
@@ -57,7 +58,7 @@ public class MyReceiver extends BroadcastReceiver {
                         case JPushTypeConstants.InteractiveMessage.TYPE:
                         case JPushTypeConstants.AccoutNotification.TYPE:
                         case JPushTypeConstants.RecommendedActivities.TYPE:
-//                            EventBus.getDefault().post(new BaseEvent(SYSTEM_INFORMATION_UNREAD_CHANGE));
+                            EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
                             break;
                     }
                 } catch (Exception e) {

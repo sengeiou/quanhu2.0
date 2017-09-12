@@ -32,6 +32,7 @@ import com.rz.circled.js.FriendInfoHandler;
 import com.rz.circled.js.HttpHeaderHandler;
 import com.rz.circled.js.HttpRequestHandler;
 import com.rz.circled.js.JoinTeamHandler;
+import com.rz.circled.js.JumpUrlHandler;
 import com.rz.circled.js.LocationHandler;
 import com.rz.circled.js.LoginHandler;
 import com.rz.circled.js.NavigateHandler;
@@ -195,6 +196,8 @@ public class QHApplication extends BaseApplication {
         RegisterList.registerServerHandlerClass(FinishLoadingHandler.class);
         //保存图片
         RegisterList.registerServerHandlerClass(SaveImageHandler.class);
+        //跳转
+        RegisterList.registerServerHandlerClass(JumpUrlHandler.class);
     }
 
     public void configExo() {

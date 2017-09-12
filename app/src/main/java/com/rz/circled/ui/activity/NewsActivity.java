@@ -89,13 +89,13 @@ public class NewsActivity extends BaseActivity {
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_SYSTEM_INFORMATION);
                         break;
                     case 2:
-                        NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_ACCOUNT);
-                        break;
-                    case 3:
                         startActivity(new Intent(mContext, NewsInteractiveActivity.class));
                         break;
-                    case 4:
+                    case 3:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_RECOMMEND);
+                        break;
+                    case 4:
+                        NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_ACCOUNT);
                         break;
                 }
             }
@@ -181,7 +181,7 @@ public class NewsActivity extends BaseActivity {
             @Override
             public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>> response) {
                 super.onResponse(call, response);
-                if (response.isSuccessful() && !response.body().isSuccessful()) {
+                if (response.isSuccessful() && response.body().isSuccessful()) {
                     HashMap<String, String> data = response.body().getData();
                     parsesData(data);
                     initDotView();
@@ -192,7 +192,7 @@ public class NewsActivity extends BaseActivity {
             @Override
             public void onResponse(Call<ResponseData<HashMap<String, NewsBean>>> call, Response<ResponseData<HashMap<String, NewsBean>>> response) {
                 super.onResponse(call, response);
-                if (response.isSuccessful() && !response.body().isSuccessful()) {
+                if (response.isSuccessful() && response.body().isSuccessful()) {
                     initMessageOverview(response.body().getData());
                 }
             }
@@ -269,17 +269,22 @@ public class NewsActivity extends BaseActivity {
     }
 
     private void initMessageOverview(HashMap<String, NewsBean> data) {
-        for (int i = 0; i < mTypeId.size(); i++) {
-            Integer id = mTypeId.get(i);
+        List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
+        for (NewsOverviewBean cache : mCacheData) {
+            Integer id = cache.getTypeId();
             if (data.containsKey(String.valueOf(id))) {
                 NewsBean item = data.get(String.valueOf(id));
                 for (NewsOverviewBean bean : mAdapter.getData()) {
                     if (bean.getTypeId() == id) {
                         bean.setDesc(item.getTitle());
                         bean.setTime(item.getCreateTime());
+                        cache.setDesc(item.getTitle());
+                        cache.setTime(item.getCreateTime());
                     }
                 }
             }
         }
+        mCache.putListEntity(mCacheData);
+        mAdapter.notifyDataSetChanged();
     }
 }

@@ -3,8 +3,10 @@ package com.rz.circled.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
@@ -26,6 +28,7 @@ import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.PrivateGroupBean;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +62,7 @@ public class NewsCommonFragment extends BaseFragment {
 
     private NewsMultiTypeAdapter mAdapter;
     private int type;
+    private int refreshType = -1;
 
     public static NewsCommonFragment newInstance(int type) {
         NewsCommonFragment fragment = new NewsCommonFragment();
@@ -100,9 +104,139 @@ public class NewsCommonFragment extends BaseFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) switch (type) {
+    protected void onVisible() {
+        super.onVisible();
+        clearUnreadByType(type);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e(TAG, "onDestroyView: " + getUserVisibleHint());
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+        if (getUserVisibleHint())
+            clearUnreadByType(refreshType);
+    }
+
+    @Override
+    public void initView() {
+        list.setAdapter(mAdapter = new NewsMultiTypeAdapter());
+        layoutRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        layoutRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    loadData(false);
+                } else {
+                    loadData(true);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void initData() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+        loadData(false);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case EventConstant.NEWS_COME_UNREAD:
+                if (type == (int) event.getData()) {
+                    refreshType = (int) event.getData();
+                    loadData(false);
+                }
+                break;
+        }
+    }
+
+    private void loadData(final boolean loadMore) {
+        int ontType;
+        Integer twoType = null;
+        switch (type) {
+            case NEWS_ANNOUNCEMENT:
+                ontType = NewsTypeConstants.NEWS_ANNOUNCEMENT;
+                break;
+            case NEWS_SYSTEM_INFORMATION:
+                ontType = NewsTypeConstants.NEWS_SYSTEM;
+                break;
+            case NEWS_RECOMMEND:
+                ontType = NewsTypeConstants.NEWS_RECOMMEND;
+                break;
+            case NEWS_ACCOUNT:
+                ontType = NewsTypeConstants.NEWS_ACCOUNT;
+                break;
+            case NEWS_COMMENT:
+                twoType = NewsTypeConstants.NEWS_COMMENT;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
+                break;
+            case NEWS_QA:
+                twoType = NewsTypeConstants.NEWS_ANSWER;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
+                break;
+            case NEWS_PRIVATE_GROUP:
+                twoType = NewsTypeConstants.NEWS_GROUP;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
+                break;
+            case NEWS_ACTIVITY:
+                twoType = NewsTypeConstants.NEWS_ACTIVITY;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
+                break;
+            default:
+                ontType = NewsTypeConstants.NEWS_ANNOUNCEMENT;
+                break;
+        }
+
+        Http.getApiService(ApiNewsService.class).newsMultiList(Session.getUserId(), ontType, twoType, loadMore ? mAdapter.getItemCount() : 0, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<NewsBean>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<NewsBean>>> call, Response<ResponseData<List<NewsBean>>> response) {
+                super.onResponse(call, response);
+                layoutRefresh.setRefreshing(false);
+                if (response.isSuccessful()) {
+                    if (!response.body().isSuccessful()) {
+                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
+                    } else {
+                        List<NewsBean> data = response.body().getData();
+                        if (data != null && data.size() > 0) {
+                            if (loadMore) {
+                                List<NewsBean> oldData = mAdapter.getItems() == null ? new ArrayList<NewsBean>() : (List<NewsBean>) mAdapter.getItems();
+                                oldData.addAll(data);
+                                mAdapter.setItems(oldData);
+                            } else {
+                                mAdapter.setItems(data);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            onLoadingStatus(CommonCode.General.NEWS_EMPTY);
+                        }
+                    }
+                } else {
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<NewsBean>>> call, Throwable t) {
+                super.onFailure(call, t);
+                layoutRefresh.setRefreshing(false);
+                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+            }
+        });
+    }
+
+    private void clearUnreadByType(int type) {
+        if (type == -1)
+            return;
+        switch (type) {
             case NEWS_ANNOUNCEMENT:
                 if (Session.getNewsAnnouncementNum() != 0) {
                     Session.setNewsAnnouncementNum(0);
@@ -152,110 +286,6 @@ public class NewsCommonFragment extends BaseFragment {
                 }
                 break;
         }
-    }
-
-    @Override
-    public void initView() {
-        list.setAdapter(mAdapter = new NewsMultiTypeAdapter());
-        layoutRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
-        layoutRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    loadData(false);
-                } else {
-                    loadData(true);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void initData() {
-//        List<NewsBean> data = new ArrayList<>();
-//        for (int i = 0; i < 7; i++) {
-//            NewsBean item = new NewsBean();
-//            item.setViewCode(String.valueOf(i));
-//            data.add(item);
-//        }
-//        mAdapter.setItems(data);
-//        mAdapter.notifyDataSetChanged();
-
-        loadData(false);
-    }
-
-    private void loadData(final boolean loadMore) {
-        int ontType;
-        Integer twoType = null;
-        switch (type) {
-            case NEWS_ANNOUNCEMENT:
-                ontType = NewsTypeConstants.NEWS_ANNOUNCEMENT;
-                break;
-            case NEWS_SYSTEM_INFORMATION:
-                ontType = NewsTypeConstants.NEWS_SYSTEM;
-                break;
-            case NEWS_RECOMMEND:
-                ontType = NewsTypeConstants.NEWS_RECOMMEND;
-                break;
-            case NEWS_ACCOUNT:
-                ontType = NewsTypeConstants.NEWS_ACCOUNT;
-                break;
-            case NEWS_COMMENT:
-                twoType = NewsTypeConstants.NEWS_COMMENT;
-                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
-                break;
-            case NEWS_QA:
-                twoType = NewsTypeConstants.NEWS_ANSWER;
-                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
-                break;
-            case NEWS_PRIVATE_GROUP:
-                twoType = NewsTypeConstants.NEWS_GROUP;
-                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
-                break;
-            case NEWS_ACTIVITY:
-                twoType = NewsTypeConstants.NEWS_ACTIVITY;
-                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
-                break;
-            default:
-                ontType = NewsTypeConstants.NEWS_ANNOUNCEMENT;
-                break;
-        }
-
-        Http.getApiService(ApiNewsService.class).newsMultiList(Session.getUserId(), ontType, twoType, mAdapter.getItemCount(), PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<NewsBean>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<NewsBean>>> call, Response<ResponseData<List<NewsBean>>> response) {
-                super.onResponse(call, response);
-                layoutRefresh.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    if (!response.body().isSuccessful()) {
-                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                    } else {
-                        List<NewsBean> data = response.body().getData();
-                        if (data != null && data.size() > 0) {
-                            if (loadMore) {
-                                List<NewsBean> oldData = mAdapter.getItems() == null ? new ArrayList<NewsBean>() : (List<NewsBean>) mAdapter.getItems();
-                                oldData.addAll(data);
-                                mAdapter.setItems(oldData);
-                            } else {
-                                mAdapter.setItems(data);
-                            }
-                            mAdapter.notifyDataSetChanged();
-                        } else {
-                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                    }
-                } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<List<NewsBean>>> call, Throwable t) {
-                super.onFailure(call, t);
-                layoutRefresh.setRefreshing(false);
-                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-            }
-        });
     }
 
 }

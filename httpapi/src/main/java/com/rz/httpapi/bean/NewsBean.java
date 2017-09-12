@@ -1,5 +1,11 @@
 package com.rz.httpapi.bean;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 /**
  * Created by rzw2 on 2017/9/5.
  */
@@ -32,7 +38,7 @@ public class NewsBean {
     private String img;
     private String link;
     private String createTime;
-    private BodyBean body;
+    private JsonObject body;
 
     public String getMessageId() {
         return messageId;
@@ -122,83 +128,11 @@ public class NewsBean {
         this.createTime = createTime;
     }
 
-    public BodyBean getBody() {
+    public JsonObject getBody() {
         return body;
     }
 
-    public void setBody(BodyBean body) {
+    public void setBody(JsonObject body) {
         this.body = body;
-    }
-
-    public static class BodyBean {
-        /**
-         * serialVersionUID : {"$numberLong":"-7378469458462122189"}
-         * circleId : t2uvj7cmjh8i
-         * circleName : 创业达人圈
-         * coterieId : y993kg5o9kd2
-         * coterieName : 孙悟dd
-         */
-
-        private SerialVersionUIDBean serialVersionUID;
-        private String circleId;
-        private String circleName;
-        private String coterieId;
-        private String coterieName;
-
-        public SerialVersionUIDBean getSerialVersionUID() {
-            return serialVersionUID;
-        }
-
-        public void setSerialVersionUID(SerialVersionUIDBean serialVersionUID) {
-            this.serialVersionUID = serialVersionUID;
-        }
-
-        public String getCircleId() {
-            return circleId;
-        }
-
-        public void setCircleId(String circleId) {
-            this.circleId = circleId;
-        }
-
-        public String getCircleName() {
-            return circleName;
-        }
-
-        public void setCircleName(String circleName) {
-            this.circleName = circleName;
-        }
-
-        public String getCoterieId() {
-            return coterieId;
-        }
-
-        public void setCoterieId(String coterieId) {
-            this.coterieId = coterieId;
-        }
-
-        public String getCoterieName() {
-            return coterieName;
-        }
-
-        public void setCoterieName(String coterieName) {
-            this.coterieName = coterieName;
-        }
-
-        public static class SerialVersionUIDBean {
-            /**
-             * $numberLong : -7378469458462122189
-             */
-
-            private String $numberLong;
-
-            public String get$numberLong() {
-                return $numberLong;
-            }
-
-            public void set$numberLong(String $numberLong) {
-                this.$numberLong = $numberLong;
-            }
-        }
     }
 }

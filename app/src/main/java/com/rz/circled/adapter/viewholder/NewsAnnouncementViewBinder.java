@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.httpapi.bean.NewsBean;
+import com.rz.httpapi.bean.NewsOverviewBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

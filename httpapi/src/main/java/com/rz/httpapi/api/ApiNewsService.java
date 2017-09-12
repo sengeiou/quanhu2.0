@@ -31,8 +31,8 @@ public interface ApiNewsService {
 
     /**
      * @param custId
-     * @param type   通知公告：1 系统消息：2 互动消息：3 推荐与活动：4 账户与安全：5
-     * @param label  评论：100 问答：101 私圈：102 活动：103
+     * @param type   通知公告：1 系统消息：2 互动消息：4 推荐与活动：5 账户与安全：3
+     * @param label
      * @param limit
      * @param start
      * @return

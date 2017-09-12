@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.httpapi.bean.NewsBean;
@@ -32,6 +33,7 @@ public class NewsUserViewBinder extends ItemViewBinder<NewsBean, NewsUserViewBin
         holder.tvTime.setText(item.getCreateTime());
         holder.tvName.setText(item.getTitle());
         holder.tvIntro.setText(item.getContent());
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.avatar);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

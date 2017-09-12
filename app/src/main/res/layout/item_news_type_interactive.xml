@@ -99,11 +99,13 @@
         <View style="@style/line_horizontal_gray_s" />
 
         <TextView
+            android:id="@+id/tv_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/px20"
+            android:layout_marginBottom="@dimen/px26"
             android:layout_marginLeft="@dimen/px44"
             android:layout_marginTop="@dimen/px20"
+            android:includeFontPadding="false"
             android:textColor="@color/font_gray_s"
             android:textSize="@dimen/font_34"
             tool:text="来自 什么圈呢" />

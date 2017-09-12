@@ -54,6 +54,9 @@ public class SaveImageHandler extends ServerHandler {
             org.json.JSONObject jsonObject = new org.json.JSONObject(dataJson);
             String name = jsonObject.getString("name");
             String data = jsonObject.getString("data");
+            if (data.split(",").length == 2) {
+                data = data.split(",")[1];
+            }
             byte[] bytes = Base64.decode(data, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             saveFile(bitmap, TextUtils.isEmpty(name) ? System.currentTimeMillis() + ".jpg" : name, "");

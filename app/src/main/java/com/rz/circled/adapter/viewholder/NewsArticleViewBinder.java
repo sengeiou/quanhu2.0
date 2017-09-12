@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.rz.circled.R;
+import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -33,9 +35,10 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
-        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.img);
+        NewsArticleExtra extra = new Gson().fromJson(item.getBody().toString(), NewsArticleExtra.class);
+        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).into(holder.img);
+        holder.tvContent.setText(extra.getBodyTitle());
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 

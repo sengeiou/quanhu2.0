@@ -8,11 +8,10 @@ public class EventConstant {
     public static final int USER_CREATE_PRIVATE_GROUP_NUM = 20001;
     public static final int USER_JOIN_PRIVATE_GROUP_NUM = 20002;
 
-
     public static final int PRIVATE_GROUP_SEARCH_KEY = 20003;
     public static final int PRIVATE_GROUP_BELONG_ID = 200005;
     public static final int PRIVATE_GROUP_ESSENCE_MORE = 200006;
-    public static final int PRIVATE_GROUP_ESSENCE_REFRESH = 200007;
+    public static final int PRIVATE_GROUP_TAB_REFRESH = 200007;
     public static final int PRIVATE_GROUP_JOIN_WAY = 200016;
 
     public static final int NEWS_COME_UNREAD = 200004;

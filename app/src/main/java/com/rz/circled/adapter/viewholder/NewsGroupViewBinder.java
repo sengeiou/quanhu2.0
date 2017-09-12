@@ -7,8 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
+import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
+import com.rz.circled.adapter.viewholder.extra.NewsGroupExtra;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -31,7 +35,18 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
-        holder.tvDesc.setText(item.getContent());
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.avatar);
+        NewsGroupExtra extra = new Gson().fromJson(item.getBody().toString(), NewsGroupExtra.class);
+        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), extra.getCircleName()));
+        holder.tvScan.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_joined_user), extra.getMemberNum()));
+        holder.tvDesc.setText(extra.getOwnerName() + "  " + extra.getOwnerIntro());
+        if (extra.getJoinFee() == 0) {
+            holder.tvStatus.setText(R.string.private_group_free);
+            holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.font_color_blue));
+        } else {
+            holder.tvStatus.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_price), extra.getJoinFee()));
+            holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.color_F5CD45));
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
