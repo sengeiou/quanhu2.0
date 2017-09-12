@@ -12,7 +12,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/color_ffffff"
+            >
 
             <View
                 android:layout_width="match_parent"
@@ -23,7 +25,7 @@
                 android:id="@+id/id_person_news_rela"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_main"
+                android:background="@mipmap/perision_info_head"
                 android:clickable="true"
                 android:paddingBottom="@dimen/px50"
                 android:paddingLeft="@dimen/px45"

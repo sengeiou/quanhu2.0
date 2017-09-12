@@ -137,13 +137,15 @@ public class SearchPresenter extends GeneralPresenter {
         }
 
         Call<ResponseData<SearchDataBean>> call = mUserService.searchQH(
-                "",
-                "",
+                null,
+                null,
                 keyWord,
                 5,
-                "",
+                null,
                 searchType,
                 0);
+
+
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<SearchDataBean>>() {
             @Override
@@ -174,7 +176,7 @@ public class SearchPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             mView.updateViewWithLoadMore(dataList, loadMore);
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             isNoData = true;
                         }
                         return;

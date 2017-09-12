@@ -16,6 +16,7 @@ import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.ImageAdaptationUtils;
+import com.rz.common.utils.StringFormatUtil;
 import com.rz.common.utils.TextViewUtils;
 import com.rz.httpapi.bean.CircleDynamic;
 
@@ -28,11 +29,20 @@ import java.util.List;
 
 public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> {
 
-    public CircleContentAdapter(Context context, List mDatas, int itemLayoutId) {
-        super(context, mDatas, itemLayoutId);
+    private String keyWord = "";
+    public StringFormatUtil stringFormatUtil;
+
+    public void setKeyWord(String keyWord){
+        this.keyWord = keyWord;
     }
 
-    public static void bindCircleContent(ViewHolder helper, CircleDynamic item) {
+    public CircleContentAdapter(Context context, List mDatas, int itemLayoutId) {
+        super(context, mDatas, itemLayoutId);
+        this.mContext = context;
+
+    }
+
+    public  void bindCircleContent(ViewHolder helper, CircleDynamic item) {
         if (item != null) {
             LinearLayout mll_circleinfo_content = helper.getView(R.id.ll_circle_info_content);//展位图,标题,描述 content
             ImageView mIvThumbnail = helper.getView(R.id.iv_thumbnail);//展位图
@@ -67,12 +77,21 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                     mdes.setVisibility(View.GONE);
                     mTitle.setVisibility(View.VISIBLE);
                     mTitle.setMaxLines(2);
-                    mTitle.setText(item. content);
+                    mTitle.setText(item.content);
                 } else {
                     mdes.setVisibility(View.VISIBLE);
                     String s = item.content.trim().replaceAll("\\t", "");
                     Log.d("yeying", "adapter infoDesc " + s);
-                    mdes.setText(s);
+
+//                    StringStaticFormatUtil.fillColor(s, SearchActivity.searchWord,R.color.colorAccent);
+
+                    if(TextUtils.isEmpty(keyWord)){
+                        mdes.setText(s);
+                    }else{
+                        stringFormatUtil = new StringFormatUtil(mContext, s, keyWord, R.color.colorAccent).fillColor();
+
+                        mdes.setText(stringFormatUtil.getResult());
+                    }
                 }
             }
 

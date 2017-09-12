@@ -25,6 +25,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.widget.toasty.Toasty;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,6 +43,8 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.vp_search)
     ViewPager vpSearch;
     private SearchAdapter searchAdapter;
+
+    public static String searchWord = "";
 
 
 
@@ -139,8 +142,12 @@ public class SearchActivity extends BaseActivity {
      * 去搜索
      */
     private void toSearch() {
+        searchWord = etKeyword.getText().toString();
         String keyWord = etKeyword.getText().toString();
-        if (TextUtils.isEmpty(keyWord)) return;
+        if (TextUtils.isEmpty(keyWord)) {
+            Toasty.info(mContext,mContext.getString(R.string.search_attention_title)).show();
+            return;
+        }
         BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.SEARCH_KEYWORD, keyWord);
         EventBus.getDefault().post(baseEvent);
     }
@@ -172,7 +179,6 @@ public class SearchActivity extends BaseActivity {
                 return SearchCircleFragment.newInstance();            //搜索圈子
             if (position == TYPE_REWARD)
                 return SearchRewardFragment.newInstance();      //搜索悬赏
-
 
 
             return SearchContentFragment.newInstance();

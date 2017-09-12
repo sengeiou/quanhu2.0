@@ -30,6 +30,7 @@ public class DynamicAdapter extends CircleContentAdapter {
     }
 
 
+
     @Override
     public void convert(ViewHolder helper, final CircleDynamic item) {
         bindCircleContent(helper, item);

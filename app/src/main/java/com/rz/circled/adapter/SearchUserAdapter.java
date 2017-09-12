@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.StringFormatUtil;
 import com.rz.httpapi.bean.StarListBean;
 
 /**
@@ -17,9 +18,15 @@ import com.rz.httpapi.bean.StarListBean;
 public class SearchUserAdapter extends SearchCommonAdapter {
 
     private boolean isTalentPage = false;
+    private String keyWord = "";
+    StringFormatUtil stringFormatUtil;
 
     public SearchUserAdapter(Context context, int layoutId) {
         super(context, layoutId);
+    }
+
+    public void setKeyWord(String keyWord){
+        this.keyWord = keyWord;
     }
 
     public void setTalentPage(boolean isTalentPage) {
@@ -35,8 +42,11 @@ public class SearchUserAdapter extends SearchCommonAdapter {
         ImageView ivIcon = (ImageView) helper.getViewById(R.id.iv_search_person);
         ImageView ivTalent = (ImageView) helper.getViewById(R.id.iv_search_person_talent);
 
-        //name  或者 info 包含keyWord 则显示为蓝色字体
-        tvName.setText(starListBean.getCustNname());
+
+        stringFormatUtil = new StringFormatUtil(mContext, starListBean.getCustNname(), keyWord, R.color.colorAccent).fillColor();
+
+                //name  或者 info 包含keyWord 则显示为蓝色字体
+        tvName.setText(stringFormatUtil.getResult());
         tvName.append(getSpan(""));//替换文本
         Glide.with(mContext).load(starListBean.getCustImg()).transform(new GlideCircleImage(mContext)).into(ivIcon);
         tvInfo.setText("1111");

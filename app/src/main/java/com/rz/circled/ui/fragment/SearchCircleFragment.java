@@ -2,6 +2,7 @@ package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.SearchRewardBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -41,18 +43,12 @@ public class SearchCircleFragment extends BaseFragment {
     private SearchCircleAdapter circleAdapter;
     private List<CircleEntrModle> circleBeanList = new ArrayList<>();
     private SearchPresenter searchPresenter;
-    public  static String keyWord = "";
+    private  String keyWord = "";
 
     public static SearchCircleFragment newInstance() {
         SearchCircleFragment frg = new SearchCircleFragment();
         return frg;
     }
-
-    @Override
-    protected boolean needLoadingView() {
-        return true;
-    }
-
 
     @Nullable
     @Override
@@ -79,7 +75,12 @@ public class SearchCircleFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
+                if(!TextUtils.isEmpty(keyWord)){
+                    ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CIRCLE);
+                }else{
+                    Toasty.info(mActivity,mActivity.getString(R.string.search_attention_title)).show();
+                }
+
                 mRefresh.setRefreshing(false);
             }
         });
@@ -104,7 +105,7 @@ public class SearchCircleFragment extends BaseFragment {
             //去搜索
             keyWord = (String) baseEvent.getData();
 
-            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CIRCLE);
+            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CIRCLE);
         }
     }
 
@@ -118,6 +119,7 @@ public class SearchCircleFragment extends BaseFragment {
                     circleBeanList.clear();
                 }
                 circleBeanList.addAll(mDatas);
+                circleAdapter.setKeyWord(keyWord);
                 circleAdapter.setData(circleBeanList);
                 circleAdapter.notifyDataSetChanged();
             } else {
