@@ -14,9 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -183,11 +185,17 @@ public class PrivateCircledFragment extends BaseFragment {
 
     private void initViewpagerBanner(List<GroupBannerBean> pics) {
         List<View> imageViews = new ArrayList<>(); // 滑动的图片集合
-        for (GroupBannerBean pic : pics) {
+        for (final GroupBannerBean pic : pics) {
             ImageView imageView = new ImageView(getContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(getContext()).load(pic.getPicUrl()).into(imageView);
             imageViews.add(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                }
+            });
         }
         viewpager.setAdapter(new MyPagerAdapter(imageViews));
         viewpager.stopAutoScroll();

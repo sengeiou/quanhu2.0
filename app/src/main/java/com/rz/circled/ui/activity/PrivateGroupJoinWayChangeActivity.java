@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.toasty.Toasty;
@@ -38,6 +41,12 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
     @BindView(R.id.btn_add)
     TextView btnAdd;
 
+    public static void startJoinWay(Context context, int money) {
+        Intent i = new Intent(context, PrivateGroupJoinWayChangeActivity.class);
+        i.putExtra(IntentKey.EXTRA_MONEY, money);
+        context.startActivity(i);
+    }
+
     @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_join_private_group_way_change, null, false);
@@ -45,6 +54,15 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        int price = getIntent().getExtras().getInt(IntentKey.EXTRA_MONEY);
+        if (price == 0) {
+            cbxFree.setChecked(true);
+            cbxPay.setChecked(false);
+        } else {
+            cbxFree.setChecked(false);
+            cbxPay.setChecked(true);
+            etvNum.setText(String.valueOf(price));
+        }
         setTitle(R.string.private_group_join_way_change);
         setTitleRightText(R.string.submit);
         setTitleRightListener(new View.OnClickListener() {

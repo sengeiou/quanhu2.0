@@ -177,7 +177,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 ApplyForPrivateGroupBelongActivity.startPrivateGroupBelong(mContext, TextUtils.isEmpty(circleId) ? "" : circleId);
                 break;
             case R.id.btn_way:
-                startActivity(new Intent(mContext, PrivateGroupJoinWayChangeActivity.class));
+                PrivateGroupJoinWayChangeActivity.startJoinWay(mContext, price);
                 break;
             case R.id.btn_protocol:
 

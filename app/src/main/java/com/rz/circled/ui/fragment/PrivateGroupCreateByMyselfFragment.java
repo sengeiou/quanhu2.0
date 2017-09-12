@@ -14,9 +14,12 @@ import android.widget.TextView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -100,7 +103,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PrivateGroupBean item = mAdapter.getItem(position);
                 if (item.getStatus() == 3) {
-
+                    WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + CommomUtils.getPrivateGroupHomeUrl(item.getCircleRoute(), item.getCoterieId()));
                 }
             }
         });

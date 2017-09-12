@@ -30,6 +30,7 @@ public class PrivateGroupBean implements Serializable {
      */
     private String circleId;
     private String circleName;
+    private String circleRoute;
     private int consultingFee;
     private String coterieId;
     private String createDate;
@@ -47,6 +48,14 @@ public class PrivateGroupBean implements Serializable {
     private String ownerName;
     private String qrUrl;
     private int status;
+
+    public String getCircleRoute() {
+        return circleRoute;
+    }
+
+    public void setCircleRoute(String circleRoute) {
+        this.circleRoute = circleRoute;
+    }
 
     public String getCircleName() {
         return circleName;

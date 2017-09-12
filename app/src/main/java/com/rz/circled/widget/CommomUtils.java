@@ -237,8 +237,8 @@ public class CommomUtils {
      * @param
      * @return
      */
-    public static String getDymanicUrl(String moduleId, String coterieId,String resourceId) {
-        String url = BuildConfig.WebHomeBaseUrl+"/redirect/coterie/"+coterieId+"/"+moduleId+"/"+resourceId;
+    public static String getDymanicUrl(String moduleId, String coterieId, String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl + "/redirect/coterie/" + coterieId + "/" + moduleId + "/" + resourceId;
         return url;
     }
 
@@ -302,5 +302,11 @@ public class CommomUtils {
         return false;
     }
 
+    public static String getPrivateGroupHomeUrl(String circleRoute, String coterieId) {
+        return "/" + circleRoute + "/coterie/" + coterieId;
+    }
 
+    public static String getPrivateGroupRescourceUrl(String circleRoute, String coterieId, String modelId, String resourceId) {
+        return "/" + circleRoute + "/redirect/coterie/" + coterieId + "/" + modelId + "/" + resourceId;
+    }
 }
