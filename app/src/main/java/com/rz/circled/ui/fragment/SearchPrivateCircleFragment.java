@@ -1,6 +1,7 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,13 @@ import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.SearchDataBean;
+import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,10 +38,13 @@ import butterknife.BindView;
  */
 public class SearchPrivateCircleFragment extends BaseFragment {
 
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout mRefresh;
     @BindView(R.id.lv_search_content)
     ListView lvContent;
     private DefaultPricePrivateGroupAdapter mAdapter;
     private SearchDataBean searchDataBean = new SearchDataBean();
+    private List<PrivateGroupBean> coterieInfosData = new ArrayList<>();
     private SearchPresenter searchPresenter;
     public  static String keyWord = "";
 
@@ -69,7 +76,16 @@ public class SearchPrivateCircleFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        Log.e(TAG,"-----SearchPrivateCircleFragment------");
 
+        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CONTENT);
+                mRefresh.setRefreshing(false);
+            }
+        });
     }
 
 
@@ -90,7 +106,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
             //去搜索
 
             keyWord = (String) baseEvent.getData();
-            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"2140","23",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
+            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
         }
     }
 
@@ -122,12 +138,21 @@ public class SearchPrivateCircleFragment extends BaseFragment {
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
         if (t != null) {
-            if (!loadMore) {
-                searchDataBean.getCoterieInfos().clear();
+            List<PrivateGroupBean> mDatas = (List<PrivateGroupBean>) t;
+            if (null != mDatas && !mDatas.isEmpty()) {
+                if (!loadMore) {
+                    coterieInfosData.clear();
+                }
+                coterieInfosData.addAll(mDatas);
+                mAdapter.setData(coterieInfosData);
+                mAdapter.notifyDataSetChanged();
+            } else {
+                if (!loadMore) {
+                    coterieInfosData.clear();
+                }
+                mAdapter.notifyDataSetChanged();
             }
-            searchDataBean.getCircleInfos().addAll((Collection<? extends SearchDataBean>) t);
         }
-        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -136,16 +161,6 @@ public class SearchPrivateCircleFragment extends BaseFragment {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void onVisible(){
-
-        Log.e(TAG,"请求数据");
-
-        if(!keyWord.isEmpty()){
-            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"2140","23",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
-        }
     }
 
 }

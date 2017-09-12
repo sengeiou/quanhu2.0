@@ -18,6 +18,7 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.constans.ReturnCode;
@@ -27,6 +28,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static com.xiaomi.push.thrift.a.T;
 
 /**
  * Created by Gsm on 2017/9/2.
@@ -58,15 +61,25 @@ public class SearchPresenter extends GeneralPresenter {
     private IViewController mView;
     private Context mContext;
 
-    private int dynamicPos = 0;
-    private int collectPos = 0;
-    private int custPos = 0;
+//    private int dynamicPos = 0;
+//    private int collectPos = 0;
+//    private int custPos = 0;
+
+
+    //每页分页标记
+    private int start = 0;
+
+    //记录每页分页标记
+    private int record_start = 0;
+
+    //是否没有数据
+    private boolean isNoData;
 
     //处理缓存
     private EntityCache<CircleDynamic> mCirclesCache;
     private EntityCache<StarListBean> mStarListCache;
 
-    private SearchDataBean currentData = new SearchDataBean();
+    private SearchDataBean searchDataBean = new SearchDataBean();
 
     private List<CircleDynamic> resoueces = new ArrayList<>();
     private List<StarListBean> custInfos = new ArrayList<>();
@@ -109,15 +122,27 @@ public class SearchPresenter extends GeneralPresenter {
     public void searchQH(final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, final int searchType){
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+        if (!loadMore) {
+            start = 0;
+        } else {
+            if (isNoData) {
+                start = record_start;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+
         Call<ResponseData<SearchDataBean>> call = mUserService.searchQH(
                 "",
                 "",
-                "还有涂鸦跳跃",
+                keyWord,
                 5,
                 "",
-                3,
+                searchType,
                 0);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<SearchDataBean>>() {
@@ -125,58 +150,48 @@ public class SearchPresenter extends GeneralPresenter {
             public void onResponse(Call<ResponseData<SearchDataBean>> call, Response<ResponseData<SearchDataBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData res = response.body();
-                    if (!loadMore) {
-                        dynamicPos = 0;
-                    }
-//                    dynamicPos += Constants.PAGESIZE;
-                    dynamicPos += 50;
+
+                    ResponseData<SearchDataBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         SearchDataBean model = (SearchDataBean) res.getData();
-                        if (null != model) {
-                            //发送成功
-                            mView.updateViewWithLoadMore(model, loadMore);
+
+                        List dataList = null;
+                        if(searchType == 1){
+                            dataList = model.getResoueces();
+                        }else if(searchType == 2){
+                            dataList = model.getCustInfos();
+                        }else if(searchType == 3){
+                            dataList = model.getCoterieInfos();
+                        }else if(searchType == 4){
+                            dataList = model.getCircleInfos();
+                        }else if(searchType == 5){
+                            dataList = model.getRewards();
+                        }
+
+                        if (null != dataList && !dataList.isEmpty()) {
+                            isNoData = false;
+                            mView.updateViewWithLoadMore(dataList, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                        try {
-//                            if (loadMore) {
-//                                if(searchType == 1){
-//                                    resoueces.addAll(model.getResoueces());
-//                                }else if(searchType == 2){
-//                                    custInfos.addAll(model.getCustInfos());
-//                                }else if(searchType == 3){
-//                                    coterieInfos.addAll(model.getCoterieInfos());
-//                                }else if(searchType == 4){
-//                                    circleInfos.addAll(model.getCircleInfos());
-//                                }else if(searchType == 5){
-//                                    rewards.addAll(model.getRewards());
-//                                }
-//                            } else {
-//                                currentData = new ArrayList<CircleDynamic>(model);
-//                                mView.updateView(model);
-//                            }
-//                            if (!loadMore) {
-//                                if()
-//
-//                                mCirclesCache.putListEntity(model);
-//                            } else {
-//                                mCirclesCache.putListEntity(currentData);
-//                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.d("test", "cacheData failed " + e.getMessage());
+                            mView.updateViewWithLoadMore(dataList, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            isNoData = true;
                         }
                         return;
-                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        //发送失败
-                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        isNoData = true;
                         return;
                     }
                 }
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.load_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                isNoData = true;
+
             }
 
             @Override

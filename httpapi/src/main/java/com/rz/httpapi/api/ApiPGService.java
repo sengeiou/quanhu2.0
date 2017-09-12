@@ -3,6 +3,8 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
+import com.rz.httpapi.bean.CircleBelongBean;
+import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.GroupBannerBean;
 import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.PrivateGroupBean;
@@ -99,4 +101,8 @@ public interface ApiPGService {
     @FormUrlEncoded
     @POST(ApiPG.PRIVATE_GROUP_MYSELF_CREATE)
     Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfCreate(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
+
+    @FormUrlEncoded
+    @POST(ApiPG.PRIVATE_GROUP_BELONG)
+    Call<ResponseData<CircleBelongBean>> privateGroupBelong(@Field("custId") String custId);
 }

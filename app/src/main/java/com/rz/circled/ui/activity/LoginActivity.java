@@ -12,6 +12,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -104,7 +105,7 @@ public class LoginActivity extends BaseActivity {
      * 登录
      */
     @BindView(R.id.id_login_btn)
-    TextView mLoginBtn;
+    Button mLoginBtn;
 
 //    /**
 //     * 3.0版本title

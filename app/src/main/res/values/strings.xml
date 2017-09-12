@@ -179,7 +179,7 @@
     <string name="private_group_no_create">还没有创建私圈哦！</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
-    <string name="private_group_from">来自%1$s</string>
+    <string name="private_group_from">来自 %1$s</string>
     <string name="private_group_free">免费</string>
     <string name="private_group_price">%1$d圈币</string>
     <string name="private_group_youran_price">%1$d悠然币</string>
@@ -200,6 +200,7 @@
     <string name="news_interactive_tab_qa">问答</string>
     <string name="news_interactive_tab_group">私圈</string>
     <string name="news_interactive_tab_activity">活动</string>
+    <string name="news_no_data_now">暂时没有消息</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -523,5 +524,6 @@
     <string name="mine_person_ex7">扫一扫上面的二维码,加我吧 长按保存图片</string>
     <string name="setting_norao">打开后将不会在系统通知栏接受到系统消息</string>
     <string name="data_loading">加载中</string>
+
 
 </resources>
