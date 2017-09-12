@@ -43,6 +43,7 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_BELONG_ID;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
 import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
 import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
@@ -87,7 +88,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     TextView btnProtocol;
 
     private String coverPath;
-    private String circleId = "y2caoa2g2jcb";
+    private String circleId;
     private int price;
     private UploadPicManager upManager;
 
@@ -196,6 +197,13 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     price = (int) event.getData();
                     tvWay.setText(String.format(mContext.getString(R.string.private_group_youran_price), price));
                     lineCbx.setVisibility(View.GONE);
+                }
+                break;
+            case PRIVATE_GROUP_BELONG_ID:
+                String[] array = ((String) event.getData()).split("\\|");
+                if (array.length == 2) {
+                    circleId = array[0];
+                    tvGroup.setText(array[1]);
                 }
                 break;
         }

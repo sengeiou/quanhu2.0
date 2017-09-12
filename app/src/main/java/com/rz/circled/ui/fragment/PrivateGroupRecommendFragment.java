@@ -15,6 +15,7 @@ import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.ui.activity.AllPrivateGroupActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
 import com.rz.common.widget.svp.SVProgressHUD;
@@ -25,12 +26,18 @@ import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.PrivateGroupListBean;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 
 /**
  * Created by rzw2 on 2017/8/31.
@@ -60,6 +67,8 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_SCAN));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +109,22 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case PRIVATE_GROUP_TAB_REFRESH:
+                initData();
+                break;
+        }
     }
 
     @OnClick(R.id.tv)

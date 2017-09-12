@@ -250,10 +250,10 @@
                             <Button
                                 android:id="@+id/id_regist_btn"
                                 android:layout_width="@dimen/px836"
-                                android:layout_height="wrap_content"
+                                android:layout_height="@dimen/px152"
                                 android:layout_centerInParent="true"
                                 android:layout_marginTop="@dimen/px150"
-                                android:background="@drawable/shape_btn_blue_d7_selector"
+                                android:background="@mipmap/submit_login_btn_bg"
                                 android:gravity="center"
                                 android:minHeight="0dp"
                                 android:padding="@dimen/px32"

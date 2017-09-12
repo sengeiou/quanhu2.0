@@ -1,6 +1,7 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.widget.ListView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchPersonAdapter;
+import com.rz.circled.adapter.SearchUserAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -32,13 +35,15 @@ import butterknife.BindView;
  */
 public class SearchPersonFragment extends BaseFragment {
 
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout mRefresh;
+
     @BindView(R.id.lv_search_content)
     ListView lvPerson;
-    private SearchPersonAdapter personAdapter;
+    private SearchUserAdapter personAdapter;
     private SearchPresenter searchPresenter;
-    private SearchDataBean searchDataBean = new SearchDataBean();
     public  static String keyWord = "";
-    private List<StarListBean> moreFamousList = new ArrayList<>();
+    private List<StarListBean.CustInfoBean> dataCustInfos = new ArrayList<>();
 
 
     public static SearchPersonFragment newInstance() {
@@ -54,15 +59,30 @@ public class SearchPersonFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
         int basePadding = (int) getResources().getDimension(R.dimen.app_base_padding);
         lvPerson.setPadding(basePadding, 0, basePadding, 0);
 
-        personAdapter = new SearchPersonAdapter(getActivity(), R.layout.item_search_person);
+        personAdapter = new SearchUserAdapter(getActivity(), R.layout.item_search_person);
+        personAdapter.setData(dataCustInfos);
         lvPerson.setAdapter(personAdapter);
     }
 
     @Override
     public void initData() {
+
+        Log.e(TAG,"-----SearchPersonFragment------");
+
+        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
+                mRefresh.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -76,15 +96,15 @@ public class SearchPersonFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onVisible(){
-
-        Log.e(TAG,"请求数据");
-
-        if(!keyWord.isEmpty()){
-            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"2140","23",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
-        }
-    }
+//    @Override
+//    public void onVisible(){
+//
+//        Log.e(TAG,"请求数据");
+//
+////        if(!keyWord.isEmpty()){
+//            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",2);
+////        }
+//    }
 
 
     /**
@@ -97,21 +117,10 @@ public class SearchPersonFragment extends BaseFragment {
 //            (final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType)
             keyWord = (String) baseEvent.getData();
 
-            /**
-             * {
-             "circleId": "测试内容d9lr",
-             "coterieId": "测试内容u4tu",
-             "keyWord": "测试内容b3yj",
-             "limit": 36207,
-             "resourceType": "测试内容v8t7",
-             "searchType": 68182,
-             "start": 61457
-             }
-             */
-
-            ((SearchPresenter) searchPresenter).searchQH(true,"ti","测试内容","测试内容u4tu","测试内容v8t7",68182);
+            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
         }
     }
+
 
     @Override
     public <T> void updateView(T t) {
@@ -123,7 +132,7 @@ public class SearchPersonFragment extends BaseFragment {
 
 //                    NotifyEvent notifyEvent = new NotifyEvent("register", model, true);
 //                    EventBus.getDefault().post(notifyEvent);
-                    personAdapter.setData(moreFamousList);
+//                    personAdapter.setData(moreFamousList);
 
                     /**
                      * 更新界面，更新adapter数据
@@ -141,12 +150,22 @@ public class SearchPersonFragment extends BaseFragment {
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
         if (t != null) {
-            if (!loadMore) {
-                searchDataBean.getCustInfos().clear();
+            List<StarListBean.CustInfoBean> mDatas = (List<StarListBean.CustInfoBean>) t;
+            if (null != mDatas && !mDatas.isEmpty()) {
+                if (!loadMore) {
+                    dataCustInfos.clear();
+                }
+                dataCustInfos.addAll(mDatas);
+                personAdapter.setData(dataCustInfos);
+                personAdapter.notifyDataSetChanged();
+            } else {
+                if (!loadMore) {
+                    dataCustInfos.clear();
+                }
+                personAdapter.notifyDataSetChanged();
             }
-            searchDataBean.getCustInfos().addAll((Collection<? extends SearchDataBean>) t);
         }
-        personAdapter.notifyDataSetChanged();
+
     }
 
 

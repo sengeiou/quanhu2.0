@@ -131,11 +131,11 @@ public class PrivateGroupAllFragment extends BaseFragment {
                         if (data != null && data.size() > 0) {
                             if (loadMore) {
                                 mAdapter.addData(data);
-                                pageNo++;
                             } else {
                                 mAdapter.setData(data);
                                 pageNo = 1;
                             }
+                            pageNo++;
                         } else {
                             onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }

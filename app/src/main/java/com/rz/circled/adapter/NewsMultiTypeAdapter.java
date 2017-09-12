@@ -9,6 +9,7 @@ import com.rz.circled.adapter.viewholder.NewsGroupViewBinder;
 import com.rz.circled.adapter.viewholder.NewsInteractiveViewBinder;
 import com.rz.circled.adapter.viewholder.NewsTextViewBinder;
 import com.rz.circled.adapter.viewholder.NewsUserViewBinder;
+import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.httpapi.bean.NewsBean;
 
 import me.drakeet.multitype.ClassLinker;
@@ -39,20 +40,21 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
             @NonNull
             @Override
             public Class<? extends ItemViewBinder<NewsBean, ?>> index(@NonNull NewsBean data) {
-                switch (data.getViewType()) {
-                    case NewsBean.TYPE_TEXT:
-                        return NewsTextViewBinder.class;
-                    case NewsBean.TYPE_ACTIVITY:
-                        return NewsActivityViewBinder.class;
-                    case NewsBean.TYPE_ARTICLE:
-                        return NewsArticleViewBinder.class;
-                    case NewsBean.TYPE_USER:
-                        return NewsUserViewBinder.class;
-                    case NewsBean.TYPE_ANNOUNCEMENT:
+                switch (Integer.parseInt(data.getViewCode())) {
+                    case NewsTypeConstants.TYPE_ANNOUNCEMENT:
                         return NewsAnnouncementViewBinder.class;
-                    case NewsBean.TYPE_GROUP:
+                    case NewsTypeConstants.TYPE_SAFE:
+                    case NewsTypeConstants.TYPE_SYSTEM_1:
+                        return NewsTextViewBinder.class;
+                    case NewsTypeConstants.TYPE_SYSTEM_2:
+                        return NewsArticleViewBinder.class;
+                    case NewsTypeConstants.TYPE_RECOMMEND_1:
+                        return NewsActivityViewBinder.class;
+                    case NewsTypeConstants.TYPE_RECOMMEND_2:
+                        return NewsUserViewBinder.class;
+                    case NewsTypeConstants.TYPE_RECOMMEND_3:
                         return NewsGroupViewBinder.class;
-                    case NewsBean.TYPE_INTERACTIVE:
+                    case NewsTypeConstants.TYPE_INTERACTIVE:
                         return NewsInteractiveViewBinder.class;
                     default:
                         return NewsTextViewBinder.class;

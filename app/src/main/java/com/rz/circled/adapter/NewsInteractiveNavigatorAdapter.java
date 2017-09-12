@@ -62,16 +62,16 @@ public class NewsInteractiveNavigatorAdapter extends CommonNavigatorAdapter {
             }
         });
         if (mDataList.get(i).getUnReadNum() == 0) {
-//            badgePagerTitleView.setBadgeView(null);
-            View badgeImageView = LayoutInflater.from(context).inflate(R.layout.item_news_interactive_tab_img, null);
-            badgePagerTitleView.setBadgeView(badgeImageView);
+            badgePagerTitleView.setBadgeView(null);
+//            View badgeImageView = LayoutInflater.from(context).inflate(R.layout.item_news_interactive_tab_img, null);
+//            badgePagerTitleView.setBadgeView(badgeImageView);
         } else {
             View badgeImageView = LayoutInflater.from(context).inflate(R.layout.item_news_interactive_tab_img, null);
             badgePagerTitleView.setBadgeView(badgeImageView);
         }
         badgePagerTitleView.setInnerPagerTitleView(simplePagerTitleView);
-        badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, -UIUtil.dip2px(context, 0.5)));
-        badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, -UIUtil.dip2px(context, 0.5)));
+        badgePagerTitleView.setXBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_RIGHT, 0));
+        badgePagerTitleView.setYBadgeRule(new BadgeRule(BadgeAnchor.CONTENT_TOP, 0));
         // don't cancel badge when tab selected
         badgePagerTitleView.setAutoCancelBadge(false);
         return badgePagerTitleView;

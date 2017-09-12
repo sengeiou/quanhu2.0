@@ -69,6 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:includeFontPadding="false"
                 android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_40"
                 tool:text="来自私圈 巴拉巴拉" />

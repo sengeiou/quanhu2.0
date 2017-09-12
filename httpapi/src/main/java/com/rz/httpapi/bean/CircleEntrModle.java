@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/4/13 0013.
  */
 
-public class CircleEntrModle implements Serializable{
+public class CircleEntrModle implements Serializable {
 
 //
 //    “appId”:””,
@@ -26,6 +26,7 @@ public class CircleEntrModle implements Serializable{
     public long createTime;
     public int isRecommend;
     private boolean isSeleced;
+    public int click;
 
     public boolean isSeleced() {
         return isSeleced;

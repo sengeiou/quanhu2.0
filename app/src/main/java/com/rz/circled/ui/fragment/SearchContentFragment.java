@@ -1,6 +1,7 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +38,9 @@ import static com.rz.circled.R.layout.fragment_search_content;
  * Created by Gsm on 2017/9/2.
  */
 public class SearchContentFragment extends BaseFragment {
+
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout mRefresh;
 
     @BindView(R.id.lv_search_content)
     ListView lvContent;
@@ -67,6 +73,16 @@ public class SearchContentFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        Log.e(TAG,"-----SearchContentFragment------");
+
+        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CONTENT);
+                mRefresh.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -74,6 +90,9 @@ public class SearchContentFragment extends BaseFragment {
     @Override
     public void initPresenter() {
         super.initPresenter();
+
+
+
         //搜索接口
         searchPresenter = new SearchPresenter();
         searchPresenter.attachView(this);
@@ -86,22 +105,9 @@ public class SearchContentFragment extends BaseFragment {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
-//            (final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType)
             keyWord = (String) baseEvent.getData();
 
-            /**
-             * {
-             "circleId": "测试内容d9lr",
-             "coterieId": "测试内容u4tu",
-             "keyWord": "测试内容b3yj",
-             "limit": 36207,
-             "resourceType": "测试内容v8t7",
-             "searchType": 68182,
-             "start": 61457
-             }
-             */
-
-            ((SearchPresenter) searchPresenter).searchQH(true,"ti","测试内容","测试内容u4tu","测试内容v8t7",68182);
+            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CONTENT);
         }
     }
 
@@ -132,13 +138,19 @@ public class SearchContentFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
-        if (t != null) {
+        List<CircleDynamic> mDatas = (List<CircleDynamic>) t;
+        if (null != mDatas && !mDatas.isEmpty()) {
             if (!loadMore) {
                 circleDynamicList.clear();
             }
-            circleDynamicList.addAll((Collection<? extends CircleDynamic>) t);
+            circleDynamicList.addAll(mDatas);
+            dynamicAdapter.notifyDataSetChanged();
+        } else {
+            if (!loadMore) {
+                circleDynamicList.clear();
+            }
+            dynamicAdapter.notifyDataSetChanged();
         }
-        dynamicAdapter.notifyDataSetChanged();
     }
 
 
@@ -149,14 +161,16 @@ public class SearchContentFragment extends BaseFragment {
             EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onVisible(){
-
-        Log.e(TAG,"请求数据");
-
-        if(!keyWord.isEmpty()){
-            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"2140","23",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
-        }
-    }
+//    @Override
+//    public void onVisible(){
+//
+//        Log.e(TAG,"请求数据");
+//
+////        if(!keyWord.isEmpty()){
+////            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"ti","",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
+////        }
+//
+//        ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CONTENT);
+//    }
 
 }

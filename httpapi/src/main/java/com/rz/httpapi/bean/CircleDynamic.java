@@ -80,6 +80,7 @@ public class CircleDynamic implements Serializable {
     public long updateTime;
     public String video;
     public String videoPic;
+    public int click;
 
     public static class CustBean {
         /**
