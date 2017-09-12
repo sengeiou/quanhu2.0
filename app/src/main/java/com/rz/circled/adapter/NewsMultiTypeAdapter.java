@@ -9,6 +9,7 @@ import com.rz.circled.adapter.viewholder.NewsGroupViewBinder;
 import com.rz.circled.adapter.viewholder.NewsInteractiveViewBinder;
 import com.rz.circled.adapter.viewholder.NewsTextViewBinder;
 import com.rz.circled.adapter.viewholder.NewsUserViewBinder;
+import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.httpapi.bean.NewsBean;
 
 import me.drakeet.multitype.ClassLinker;
@@ -40,20 +41,20 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
             @Override
             public Class<? extends ItemViewBinder<NewsBean, ?>> index(@NonNull NewsBean data) {
                 switch (Integer.parseInt(data.getViewCode())) {
-                    case NewsBean.TYPE_ANNOUNCEMENT:
+                    case NewsTypeConstants.TYPE_ANNOUNCEMENT:
                         return NewsAnnouncementViewBinder.class;
-                    case NewsBean.TYPE_SAFE:
-                    case NewsBean.TYPE_SYSTEM_1:
+                    case NewsTypeConstants.TYPE_SAFE:
+                    case NewsTypeConstants.TYPE_SYSTEM_1:
                         return NewsTextViewBinder.class;
-                    case NewsBean.TYPE_SYSTEM_2:
+                    case NewsTypeConstants.TYPE_SYSTEM_2:
                         return NewsArticleViewBinder.class;
-                    case NewsBean.TYPE_RECOMMEND_1:
+                    case NewsTypeConstants.TYPE_RECOMMEND_1:
                         return NewsActivityViewBinder.class;
-                    case NewsBean.TYPE_RECOMMEND_2:
+                    case NewsTypeConstants.TYPE_RECOMMEND_2:
                         return NewsUserViewBinder.class;
-                    case NewsBean.TYPE_RECOMMEND_3:
+                    case NewsTypeConstants.TYPE_RECOMMEND_3:
                         return NewsGroupViewBinder.class;
-                    case NewsBean.TYPE_INTERACTIVE:
+                    case NewsTypeConstants.TYPE_INTERACTIVE:
                         return NewsInteractiveViewBinder.class;
                     default:
                         return NewsTextViewBinder.class;

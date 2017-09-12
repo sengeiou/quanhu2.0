@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btn_system_information"
+    style="@style/NewsLineStyle">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img"
+            style="@style/NewsImgStyle"
+            tools:src="@mipmap/ic_news_system_information" />
+
+        <ImageView
+            android:id="@+id/dot"
+            style="@style/NewsDotStyle" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/px30"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/NewsTitleStyle"
+                tools:text="@string/system_information" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/NewsTimeStyle"
+                tools:text="09-09" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_desc"
+            style="@style/NewsDescStyle"
+            android:textStyle="bold"
+            tools:text="最新通知" />
+    </LinearLayout>
+</LinearLayout>

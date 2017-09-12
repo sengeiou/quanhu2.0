@@ -49,7 +49,7 @@ public interface ApiNewsService {
 
     @FormUrlEncoded
     @POST(ApiNews.NEWS_OVERVIEW)
-    Call<ResponseData> newsOverview(
+    Call<ResponseData<HashMap<String, NewsBean>>> newsOverview(
             @Field("custId") String custId
     );
 

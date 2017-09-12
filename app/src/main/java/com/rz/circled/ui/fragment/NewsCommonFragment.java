@@ -10,6 +10,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.NewsMultiTypeAdapter;
+import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -188,35 +189,35 @@ public class NewsCommonFragment extends BaseFragment {
         Integer twoType = null;
         switch (type) {
             case NEWS_ANNOUNCEMENT:
-                ontType = ApiNews.NEWS_ANNOUNCEMENT;
+                ontType = NewsTypeConstants.NEWS_ANNOUNCEMENT;
                 break;
             case NEWS_SYSTEM_INFORMATION:
-                ontType = ApiNews.NEWS_SYSTEM;
+                ontType = NewsTypeConstants.NEWS_SYSTEM;
                 break;
             case NEWS_RECOMMEND:
-                ontType = ApiNews.NEWS_RECOMMEND;
+                ontType = NewsTypeConstants.NEWS_RECOMMEND;
                 break;
             case NEWS_ACCOUNT:
-                ontType = ApiNews.NEWS_ACCOUNT;
+                ontType = NewsTypeConstants.NEWS_ACCOUNT;
                 break;
             case NEWS_COMMENT:
-                twoType = ApiNews.NEWS_COMMENT;
-                ontType = ApiNews.NEWS_INTERACTIVE;
+                twoType = NewsTypeConstants.NEWS_COMMENT;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
                 break;
             case NEWS_QA:
-                twoType = ApiNews.NEWS_ANSWER;
-                ontType = ApiNews.NEWS_INTERACTIVE;
+                twoType = NewsTypeConstants.NEWS_ANSWER;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
                 break;
             case NEWS_PRIVATE_GROUP:
-                twoType = ApiNews.NEWS_GROUP;
-                ontType = ApiNews.NEWS_INTERACTIVE;
+                twoType = NewsTypeConstants.NEWS_GROUP;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
                 break;
             case NEWS_ACTIVITY:
-                twoType = ApiNews.NEWS_ACTIVITY;
-                ontType = ApiNews.NEWS_INTERACTIVE;
+                twoType = NewsTypeConstants.NEWS_ACTIVITY;
+                ontType = NewsTypeConstants.NEWS_INTERACTIVE;
                 break;
             default:
-                ontType = ApiNews.NEWS_ANNOUNCEMENT;
+                ontType = NewsTypeConstants.NEWS_ANNOUNCEMENT;
                 break;
         }
 

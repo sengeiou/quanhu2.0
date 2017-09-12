@@ -5,18 +5,6 @@ package com.rz.httpapi.bean;
  */
 
 public class NewsBean {
-    public static final int TYPE_ANNOUNCEMENT = 1000;
-
-    public static final int TYPE_SYSTEM_1 = 2001;
-    public static final int TYPE_SYSTEM_2 = 2002;
-
-    public static final int TYPE_INTERACTIVE = 3000;
-
-    public static final int TYPE_RECOMMEND_1 = 4001;
-    public static final int TYPE_RECOMMEND_2 = 4002;
-    public static final int TYPE_RECOMMEND_3 = 4003;
-
-    public static final int TYPE_SAFE = 5000;
 
     /**
      * messageId : 900ec35e4add4844b1951efe0701ce1a
