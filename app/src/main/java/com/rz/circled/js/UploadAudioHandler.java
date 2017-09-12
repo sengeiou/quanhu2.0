@@ -3,7 +3,7 @@ package com.rz.circled.js;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.rz.circled.ui.activity.UploadAudioActivity;
+import com.rz.circled.ui.activity.VoicePubActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.constant.IntentKey;
 import com.rz.sgt.jsbridge.BaseParamsObject;
@@ -32,7 +32,7 @@ public class UploadAudioHandler extends ServerHandler {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(mActivity, UploadAudioActivity.class);
+                Intent i = new Intent(mActivity, VoicePubActivity.class);
                 if (mActivity instanceof WebContainerActivity)
                     i.putExtra(IntentKey.EXTRA_URL, ((WebContainerActivity) mActivity).getOssDir());
                 mActivity.startActivity(i);

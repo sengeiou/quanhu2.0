@@ -16,6 +16,7 @@ import com.rz.common.oss.OssManager;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.FileUtils;
+import com.rz.common.utils.NetUtils;
 import com.rz.sgt.jsbridge.JsEvent;
 
 import java.util.HashMap;
@@ -52,6 +53,10 @@ public class UploadAudioActivity extends BaseActivity {
         return super.loadView(inflater);
     }
 
+    @Override
+    protected boolean needShowTitle() {
+        return false;
+    }
 
     @Override
     public void initView() {
@@ -185,11 +190,11 @@ public class UploadAudioActivity extends BaseActivity {
 
         View view = getLayoutInflater().inflate(R.layout.dialog_one_button, null, false);
         TextView tv = (TextView) view.findViewById(R.id.id_tv_message);
-//        if (NetUtils.isNetworkConnected(this)) {
-//            tv.setText("音频上传失败");
-//        } else {
-//            tv.setText(getString(R.string.status_un_network));
-//        }
+        if (NetUtils.isNetworkConnected(this)) {
+            tv.setText("音频上传失败");
+        } else {
+            tv.setText(getString(R.string.status_un_network));
+        }
         view.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
