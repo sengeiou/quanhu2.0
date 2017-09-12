@@ -6,10 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.rz.circled.R;
-import com.rz.circled.modle.AccountModel;
+import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.Currency;
+import com.rz.httpapi.bean.AccountBean;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,6 +27,7 @@ public class MyBalanceAty extends BaseActivity {
     //账户余额
     @BindView(R.id.id_account_money_txt)
     TextView mTxtAccount;
+    private PayPresenter mPresenter;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -36,24 +40,26 @@ public class MyBalanceAty extends BaseActivity {
 
     @Override
     public void initPresenter() {
-//        presenter = new PayPresenter(false);
+        mPresenter = new PayPresenter(false);
+        mPresenter.attachView(this);
     }
 
     @Override
     public void initView() {
         //消费明细
-//        setTitleRightText(getString(R.string.cost_detail_v3), new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
-//            }
-//        });
+        setTitleRightText(getString(R.string.cost_detail_v3));
+        setTitleRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                                AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
+            }
+        });
         setTitleRightTextColor(R.color.color_main);
     }
 
     @Override
     public void initData() {
-//        ((PayPresenter) presenter).getUserAccount(Session.getUserId(), getString(R.string.data_loading));
+        mPresenter.getUserAccount(Session.getUserId(), getString(R.string.data_loading));
     }
 
     @OnClick(R.id.id_submit_btn)
@@ -66,10 +72,10 @@ public class MyBalanceAty extends BaseActivity {
     @Override
     public <T> void updateView(final T t) {
         if (null != t) {
-            AccountModel model = (AccountModel) t;
+            AccountBean model = (AccountBean) t;
             if (null != model) {
                 Session.setUserMoneyState(model.getAccountState() == 1 ? true : false);
-//                mTxtAccount.setText(Currency.returnDollar(Currency.RMB, model.getAccountSum(), 0).replace(getString(R.string.yuan), ""));
+                mTxtAccount.setText(Currency.returnDollar(Currency.RMB, model.accountSum, 0).replace(getString(R.string.yuan), ""));
             }
         }
     }

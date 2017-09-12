@@ -30,7 +30,7 @@ public class MyAccountAty extends BaseActivity {
 
     }
 
-    @OnClick({R.id.id_layout_cost_account, R.id.id_layout_award_score, R.id.id_layout_red_bag, R.id.id_layout_bank_card})
+    @OnClick({R.id.id_layout_cost_account, R.id.id_layout_award_score})
     public void onClick(View view) {
         switch (view.getId()) {
             //消费账户
@@ -40,16 +40,6 @@ public class MyAccountAty extends BaseActivity {
             //
             case R.id.id_layout_award_score:
                 showActivity(this, RewardScoreAty.class);
-                break;
-            //红包记录
-            case R.id.id_layout_red_bag:
-//                Intent bag = new Intent(aty, MyReceiveMoneyListAty.class);
-//                bag.putExtra(IntentKey.KEY_TYPE, Type.TYPE_RECORD_BAG);
-//                startActivity(bag);
-                break;
-            //银行卡
-            case R.id.id_layout_bank_card:
-                BankCardListAty.startBankCardList(aty, 1);
                 break;
         }
     }

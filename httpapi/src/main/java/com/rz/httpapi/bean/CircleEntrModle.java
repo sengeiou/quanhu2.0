@@ -27,6 +27,7 @@ public class CircleEntrModle implements Serializable{
     public int isRecommend;
     private boolean isSeleced;
     public int click;
+    public int type;
 
     public boolean isSeleced() {
         return isSeleced;

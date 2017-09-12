@@ -15,8 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
-import com.jakewharton.rxbinding.view.RxView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
@@ -27,12 +27,15 @@ import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.PersonInfoAty;
-import com.rz.circled.ui.activity.SearchActivity;
+import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
+import com.rz.circled.widget.MListView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.EntityCache;
@@ -40,11 +43,9 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.event.BaseEvent;
-import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
-import com.rz.circled.widget.MListView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,11 +54,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 import static com.rz.circled.widget.CommomUtils.trackUser;
 
@@ -467,24 +466,21 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 0:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "通讯录");
-//                    showActivity(frg, ContactsAty.class);
+                    jump(ContactsAty.class);
                 }
                 break;
             //我的账户
             case 1:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的账户");
-//                    showActivity(frg, MyAccountAty.class);
+                    jump(MyAccountAty.class);
                 }
                 break;
             //我的二维码
             case 3:
-//                if (isLogin()) {
-//                    showActivity(frg, MyCollectionAty.class);
-//                }
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的二维码");
-//                    showActivity(frg, PersonScanAty.class);
+                    jump(PersonScanAty.class);
                 }
                 break;
             //转发券

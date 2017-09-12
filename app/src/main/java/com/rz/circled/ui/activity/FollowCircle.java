@@ -136,7 +136,7 @@ public class FollowCircle extends BaseActivity {
                 for (String s : list) {
                     sb.append(s+",");
                 }
-                mPresenter.addLoveCircle(sb.toString(), Session.getUserId());
+                mPresenter.addLoveCircle(sb.toString(), 1);
                 finish();
                 skipActivity(aty, MainActivity.class);
                 break;

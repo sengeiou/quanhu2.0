@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.rz.rz_rrz.widget.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                      style="@style/DefaultSvStyle"
-                                     android:background="@color/color_F5F5F5">
+                                     android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +18,8 @@
             android:padding="@dimen/px44">
 
             <ImageView
-                android:layout_width="@dimen/px45"
-                android:layout_height="@dimen/px45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/r_balance"
                 android:scaleType="fitXY"/>
 
@@ -56,8 +56,8 @@
             android:padding="@dimen/px44">
 
             <ImageView
-                android:layout_width="@dimen/px45"
-                android:layout_height="@dimen/px45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/r_reward_score"
                 android:scaleType="fitXY"/>
 
@@ -86,72 +86,6 @@
             android:layout_marginRight="@dimen/px30"
             android:background="@color/color_E7E7E7"/>
 
-        <LinearLayout
-            android:id="@+id/id_layout_red_bag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/comm_item_selector"
-            android:gravity="center_vertical"
-            android:padding="@dimen/px44">
 
-            <ImageView
-                android:layout_width="@dimen/px45"
-                android:layout_height="@dimen/px45"
-                android:background="@drawable/r_redbag_record"
-                android:scaleType="fitXY"/>
-
-            <TextView
-                style="@style/DefaultTvStyle"
-                android:layout_width="0dp"
-                android:layout_marginLeft="@dimen/px45"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/redbag_record"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_46"/>
-
-            <ImageView
-                android:layout_width="@dimen/px30"
-                android:layout_height="@dimen/px46"
-                android:background="@drawable/ic_right_arrow"
-                android:scaleType="fitXY"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px30"
-            android:background="@color/color_F5F5F5"/>
-
-        <LinearLayout
-            android:id="@+id/id_layout_bank_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/comm_item_selector"
-            android:gravity="center_vertical"
-            android:padding="@dimen/px44">
-
-            <ImageView
-                android:layout_width="@dimen/px45"
-                android:layout_height="@dimen/px45"
-                android:background="@drawable/r_bankcard"
-                android:scaleType="fitXY"/>
-
-            <TextView
-                style="@style/DefaultTvStyle"
-                android:layout_width="0dp"
-                android:layout_marginLeft="@dimen/px45"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/bank_card"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_46"/>
-
-            <ImageView
-                android:layout_width="@dimen/px30"
-                android:layout_height="@dimen/px46"
-                android:background="@drawable/ic_right_arrow"
-                android:scaleType="fitXY"/>
-        </LinearLayout>
     </LinearLayout>
-</com.rz.rz_rrz.widget.OverScrollView>
+</ScrollView>

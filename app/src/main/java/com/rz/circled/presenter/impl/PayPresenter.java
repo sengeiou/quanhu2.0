@@ -34,11 +34,13 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.AccountBean;
+import com.rz.httpapi.bean.BillDetailModel;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -384,68 +386,66 @@ public class PayPresenter extends AbsPresenter {
         });
     }
 
-//    /**
-//     * 获取消费或者收益明细
-//     *
-//     * @param loadmore true 加载更多 false 刷新
-//     */
-//    public void requestGetBillList(final boolean loadmore, int type) {
-//        if (!NetUtils.isNetworkConnected(activity)) {
-//            mView.onLoadingStatus(CommonCode.General.ERROR_NET, loadmore);
-//            return;
-//        }
-//        if (isDataError) {
-//            start = record_start;
-//        } else {
-//            if (!loadmore) {
-//                start = 0;
-//            } else {
-//                start += Constants.PAGESIZE;
-//            }
-//            record_start = start;
-//        }
-////        Call<ResponseData<List<BillDetailModel>>> call = mUserService
-////                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
-//        Call<ResponseData<List<BillDetailModel>>> call = Http.getTestService(activity)
-//                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<BillDetailModel>>> call, Response<ResponseData<List<BillDetailModel>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData<List<BillDetailModel>> res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<BillDetailModel> dataList = res.getData();
-//                        if (null != dataList && !dataList.isEmpty()) {
-//                            isDataError = false;
-//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_FULL, "");
-//                            mView.updateViewWithLoadMore(dataList, loadmore);
-//                        } else {
-//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_NULL, "");
-//                            isDataError = true;
-//                        }
-//                        return;
-//                    } else {
-//                        if (HandleRetCode.handler(activity, res)) {
-//                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-//                            isDataError = true;
-//                            return;
-//                        }
-//                    }
-//                }
-//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
-//                isDataError = true;
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
-//                isDataError = true;
-//            }
-//        });
-//    }
+    /**
+     * 获取消费或者收益明细
+     *
+     * @param loadmore true 加载更多 false 刷新
+     */
+    public void requestGetBillList(final boolean loadmore, int type) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        if (isDataError) {
+            start = record_start;
+        } else {
+            if (!loadmore) {
+                start = 0;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+        Call<ResponseData<List<BillDetailModel>>> call = mUserService
+                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<BillDetailModel>>> call, Response<ResponseData<List<BillDetailModel>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<List<BillDetailModel>> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<BillDetailModel> dataList = res.getData();
+                        if (null != dataList && !dataList.isEmpty()) {
+                            isDataError = false;
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.updateViewWithLoadMore(dataList, loadmore);
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            isDataError = true;
+                        }
+                        return;
+                    } else {
+                        if (HandleRetCode.handler(activity, res)) {
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                            isDataError = true;
+                            return;
+                        }
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                isDataError = true;
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                isDataError = true;
+            }
+        });
+    }
 
 //    /**
 //     * 收益消费到账户

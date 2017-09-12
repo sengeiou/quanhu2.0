@@ -241,6 +241,10 @@ public class CommomUtils {
         String url = BuildConfig.WebHomeBaseUrl+"/redirect/coterie/"+coterieId+"/"+moduleId+"/"+resourceId;
         return url;
     }
+    public static String getCircleUrl(String moduleId, String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl+"/redirect/"+moduleId+"/"+resourceId;
+        return url;
+    }
 
     /**
      * 转发详情页内嵌Webview网址
