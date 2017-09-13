@@ -431,10 +431,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.rl_editor_two_sort:
                 EditorConfigTwoModel sortModel = (EditorConfigTwoModel) rlSort.getTag();
-                if (sortModel.isEditable()) {
+                if (sortModel.isEditable() == null || sortModel.isEditable()) {
                     long currentId = -1;
-                    if (dataSource != null)
+                    if (dataSource != null && dataSource.getClassifyItemId() != null) {
                         currentId = dataSource.getClassifyItemId();
+                    }
                     if (categoryBean != null && categoryBean.getData() != null && categoryBean.getData().size() > 0) {
                         Intent sortIntent = new Intent(this, EditorTwoSortActivity.class);
                         sortIntent.putExtra(IntentKey.EXTRA_ID, currentId);
@@ -870,7 +871,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 dataSource.setClassifyItemName(categoryBean.getDefaultText());
                 tvSort.setText(dataSource.getClassifyItemName());
             }
-            ivSortArrow.setVisibility(sortModel.isEditable() ? View.VISIBLE : View.INVISIBLE);
+            ivSortArrow.setVisibility((sortModel.isEditable() == null || sortModel.isEditable()) ? View.VISIBLE : View.INVISIBLE);
             rlSort.setTag(sortModel);
         } else {
             rlSort.setVisibility(View.GONE);

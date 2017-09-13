@@ -45,7 +45,7 @@ public class EditorConfigTwoModel implements Serializable {
     /**
      * 分类专用 true 可編輯
      */
-    private boolean editable = true;
+    private Boolean editable = null;
 
     private EditorAuthorityRootBean data;//权限使用
 
@@ -57,7 +57,7 @@ public class EditorConfigTwoModel implements Serializable {
         this.data = data;
     }
 
-    public boolean isEditable() {
+    public Boolean isEditable() {
         return editable;
     }
 
