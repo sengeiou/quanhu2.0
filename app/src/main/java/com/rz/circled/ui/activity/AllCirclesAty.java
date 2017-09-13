@@ -51,6 +51,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
     List<CircleEntrModle> followOnLines = new ArrayList<>();
     List<CircleEntrModle> noFollow = new ArrayList<>();
     List<CircleEntrModle> loveList = new ArrayList<>();;
+    List<CircleEntrModle> loveAllList = new ArrayList<>();;
     PublishedAdapter publishedAdapter;
     ComingPublishedAdapter comingPublishedAdapter;
     ImageView mIvBaseTitleLeft;
@@ -111,8 +112,13 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                     initShowCircle();
                     publishedAdapter.notifyDataSetChanged();
                     comingPublishedAdapter.notifyDataSetChanged();
-                    mPresenter.addLoveCircle(appId,Session.getUserId());
+                    mPresenter.addLoveCircle(appId,1);
                 } else {
+                    circleEntrModle.click += 1;
+                    if (circleEntrModle.click >= 3) {
+                        mPresenter.addLoveCircle(circleEntrModle.appId, 2);
+                        circleEntrModle.click=0;
+                    }
                     WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
                 }
 //                }
@@ -204,7 +210,12 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
     @Override
     public <T> void updateView(T t) {
         if (t != null) {
-            loveList = (List<CircleEntrModle>) t;
+            loveAllList = (List<CircleEntrModle>) t;
+            for (int i = 0; i < loveAllList.size(); i++) {
+                if (loveAllList.get(i).type==1){
+                    loveList.add(loveAllList.get(i));
+                }
+            }
             initShowCircle();
             publishedAdapter.notifyDataSetChanged();
         }

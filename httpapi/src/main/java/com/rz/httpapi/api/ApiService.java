@@ -6,6 +6,7 @@ import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.BillDetailModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
@@ -263,7 +264,8 @@ public interface ApiService {
     @POST(CircleApi.SAVE_FAVORITE_CIRCLE)
     public Observable<ResponseData> addLoveCircle(
             @Field("circleId") String circleId,
-            @Field("custId") String custId
+            @Field("custId") String custId,
+            @Field("type") int type
     );
     /**
      * 删除喜欢的圈子
@@ -801,5 +803,21 @@ public interface ApiService {
             @Field("searchType") int searchType,
             @Field("start") int start
     );
-
+//我的api
+    /**
+     * 查询账单明细
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.GET_BILL_ORDER)
+    Call<ResponseData<List<BillDetailModel>>> getBillList(
+            @Field("productType") int productType,
+            @Field("custId") String custId,
+            @Field("date") String date,
+            @Field("type") int type,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
 }

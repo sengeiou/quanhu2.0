@@ -8,12 +8,14 @@ public class AccountBean {
 
     //消费余额
     public String accountSum;
-    //收益余额
+    //积分余额
     public String integralSum;
     //累计余额
     public String costSum;
     //1表示账户正常，0表示账户被冻结
     private int accountState;
+    //是否开通小额免密，0，不开通；1，开通
+    public int smallNopass;
 
     public void setAccountSum(String accountSum) {
         this.accountSum = accountSum;

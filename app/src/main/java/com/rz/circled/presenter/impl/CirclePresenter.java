@@ -451,11 +451,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     /**
      * 添加喜欢的圈子
      */
-    public void addLoveCircle(String circleId,String custId) {
+    public void addLoveCircle(String circleId,int type) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.addLoveCircle(circleId,custId)
+        mUserService.addLoveCircle(circleId,Session.getUserId(),type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData>() {

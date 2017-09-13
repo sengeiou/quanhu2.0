@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.rz.circled.R;
-import com.rz.circled.modle.AccountModel;
+import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
-import com.rz.common.utils.StringUtils;
-import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.common.utils.Currency;
+import com.rz.httpapi.bean.AccountBean;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +30,7 @@ public class RewardScoreAty extends BaseActivity {
 
     //记录用户的悠然币
     private String integralSum;
+    private PayPresenter mPresenter;
 
     @Override
     public boolean hasDataInPage() {
@@ -42,57 +44,43 @@ public class RewardScoreAty extends BaseActivity {
 
     @Override
     public void initPresenter() {
-//        presenter = new PayPresenter(false);
+        mPresenter = new PayPresenter(false);
+        mPresenter.attachView(this);
     }
 
     @Override
     public void initView() {
         setTitleText(getString(R.string.all_point));
-//        setTitleRightText(getString(R.string.account_detail), new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
-//            }
-//        });
+        setTitleRightText(getString(R.string.account_detail));
+        setTitleRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
+            }
+        });
         setTitleRightTextColor(R.color.color_main);
     }
 
     @Override
     public void initData() {
-//        ((PayPresenter) presenter).getUserAccount(Session.getUserId(), getString(R.string.data_loading));
+        mPresenter.getUserAccount(Session.getUserId(), getString(R.string.data_loading));
     }
 
     @Override
     public <T> void updateView(T t) {
         if (null != t) {
-            AccountModel model = (AccountModel) t;
+            AccountBean model = (AccountBean) t;
             if (null != model) {
                 Session.setUserMoneyState(model.getAccountState() == 1 ? true : false);
                 integralSum = model.getIntegralSum();
-//                mTvScoreUsable.setText(Currency.returnDollar(Currency.RMB, integralSum, 0));
+                mTvScoreUsable.setText(Currency.returnDollar(Currency.RMB, integralSum, 0));
             }
         }
     }
 
-    @OnClick({R.id.id_btn_recharge, R.id.id_btn_to_bank, R.id.tv_reward_score_to_rule})
+    @OnClick({R.id.tv_reward_score_to_rule})
     public void onClick(View view) {
         switch (view.getId()) {
-            //兑换到消费账户
-            case R.id.id_btn_recharge:
-                if (StringUtils.isEmpty(integralSum) || Double.parseDouble(integralSum) <= 0) {
-                    SVProgressHUD.showInfoWithStatus(this, getString(R.string.duihuan_yrb));
-                } else {
-//                    RechargeAty.startRecharge(aty, integralSum);
-                }
-                break;
-            //提现
-            case R.id.id_btn_to_bank:
-                if (StringUtils.isEmpty(integralSum) || Double.parseDouble(integralSum) <= 0) {
-                    SVProgressHUD.showInfoWithStatus(this, getString(R.string.tixian_yrb));
-                } else {
-//                    ToBankCardAty.startBankCard(this, integralSum);
-                }
-                break;
             //平台奖励规则
             case R.id.tv_reward_score_to_rule:
 //                CommH5Aty.startCommonH5(aty, H5Address.REWARD_RULE, getString(R.string.yizhi));

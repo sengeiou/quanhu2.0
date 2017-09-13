@@ -49,6 +49,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
+
 /**
  * Created by Gsm on 2017/8/29.
  */
@@ -80,10 +82,6 @@ public class FindFragment extends BaseFragment {
     private List<HotSubjectModel> subjectList = new ArrayList<>();
     private List<HotSubjectModel> activityList = new ArrayList<>();
     private RecyclerView.Adapter mFamousAdapter;
-    private List<CircleEntrModle> mLoveList = new ArrayList<>();
-    private List<CircleEntrModle> allCircle = new ArrayList<>();
-    private List<CircleEntrModle> noFollow = new ArrayList<>();
-    private List<CircleEntrModle> Follow = new ArrayList<>();
     private RecyclerView.Adapter mSubjectAdapter;
 
     @Nullable
@@ -94,18 +92,8 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-
-//        try {
-//            helper.getUserDao().deleteBuilder()
-//            List<User> users = helper.getUserDao().queryForAll();
-//            int desc = users.get(0).getCount();
-//            Log.i(TAG, "initPresenter: "+desc);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
-        mPresenter.getCircleEntranceList(0);
         mPresenter.getUserLoveCircle(Session.getUserId());
         mPresenter.getFamousList(7);
         mPresenter.getSubjectList(2);
@@ -299,7 +287,6 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 mPresenter.getUserLoveCircle(Session.getUserId());
-                mPresenter.getCircleEntranceList(0);
                 mPresenter.getFamousList(7);
                 mPresenter.getSubjectList(2);
                 mFindRefresh.setRefreshing(false);
@@ -309,38 +296,15 @@ public class FindFragment extends BaseFragment {
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
-        mPresenter.getUserLoveCircle(Session.getUserId());
-        mPresenter.getCircleEntranceList(0);
+        if (UPDATE_LOVE_CIRCLE.equals(event.getInfo())) {
+            mPresenter.getUserLoveCircle(Session.getUserId());
+        }
     };
 
 
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (flag == 0) {
-            allCircle.clear();
-            Follow.clear();
-            noFollow.clear();
-            allCircle.addAll((List<CircleEntrModle>) t);
-            for (int i = 0; i < allCircle.size(); i++) {
-                boolean isfind = false;
-                for (int j = 0; j < mLoveList.size(); j++) {
-                    if (allCircle.get(i).appId.equals(mLoveList.get(j).appId)) {
-                        Follow.add(allCircle.get(i));
-                        isfind = true;
-                        break;
-                    }
-                }
-                if (!isfind) {
-                    noFollow.add(allCircle.get(i));
-                }
-            }
-            circleEntrModleList.clear();
-            circleEntrModleList.addAll(Follow);
-            circleEntrModleList.addAll(noFollow);
-            addMore();
-            return;
-        }
         if (flag == 2) {
             subjectList.clear();
             subjectList.addAll((Collection<? extends HotSubjectModel>) t);
@@ -355,17 +319,8 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public <T> void updateView(T t) {
-        mLoveList.clear();
-        mLoveList = (List<CircleEntrModle>) t;
-    }
-
-    private void addMore() {
-//        if (mLoveList.size()>=7){
-//            circleEntrModleList.addAll(mLoveList);
-//        }else {
-//            circleEntrModleList.addAll(mLoveList);
-//            circleEntrModleList.addAll(allCircle);
-//        }
+        circleEntrModleList.clear();
+        circleEntrModleList = (List<CircleEntrModle>) t;
         CircleEntrModle c = new CircleEntrModle();
         c.appId = getString(R.string.FIND_MORE);
         if (circleEntrModleList.size() >= 8) {
@@ -398,7 +353,7 @@ public class FindFragment extends BaseFragment {
 //                jump(MorePlayActivity.class);
                 break;
             case R.id.btn_resource:
-                CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/zgzyq");
+                CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/zgzyq/");
                 break;
             case R.id.btn_quanle:
                 CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/activity/qql");

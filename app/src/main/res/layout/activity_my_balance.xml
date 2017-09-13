@@ -12,8 +12,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/px80"
-            android:layout_marginTop="@dimen/px107"
+            android:layout_marginBottom="@dimen/px84"
+            android:layout_marginTop="@dimen/px114"
             android:background="@drawable/ic_treasure"
             android:scaleType="fitXY"/>
 
@@ -32,15 +32,15 @@
             <TextView
                 android:id="@+id/id_account_money_txt"
                 style="@style/DefaultTvStyle"
-                android:layout_marginRight="@dimen/px38"
-                android:textColor="@color/v3_text_color_main_blue"
+                android:layout_marginRight="@dimen/px12"
+                android:textColor="@color/color_F5BB1E"
                 android:textSize="@dimen/px116"
-                android:textStyle="bold"/>
+                />
 
             <TextView
                 style="@style/DefaultTvStyle"
                 android:text="@string/youranbi"
-                android:textColor="@color/black"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/font_44"/>
         </LinearLayout>
 
