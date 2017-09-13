@@ -474,10 +474,15 @@
     <string name="answer_success">验证成功</string>
     <string name="question_success">设置成功</string>
     <string name="name">名称</string>
-    <string name="pwd_space">****&#160;****&#160;****&#160;</string>
+    <string name="pwd_space">****&#160;****&#160;****&#160;</string>a
     <string name="easy_pay_intr">开启后50悠然币以下的支付行为,无需输入支付密码</string>
     <string name="shine_rule">“随手晒”使用规则</string>
     <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
+    <string name="article_info">文章</string>
+    <string name="my_purchase">我的购买</string>
+    <string name="my_level">我的等级</string>
+    
+
 
     <!-- 个人信息 -->
 

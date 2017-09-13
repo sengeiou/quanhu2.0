@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
+import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -604,7 +605,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     //
 //
-    public void getCircleStats(String userId) {
+//    public void getCircleStats(String userId) {
 //        Call<ResponseData<CircleStatsModel>> call = null;
 //        call = mUserService.getCircleStats(userId);
 //        CallManager.add(call);
@@ -634,8 +635,8 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //                //发送验证码失败
 //            }
 //        });
-    }
-//
+//    }
+
 //    /**
 //     * 转发统计
 //     *
@@ -659,26 +660,26 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //                            mView.updateView(model);
 //                            return;
 //                        } else {
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, "");
+//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
 //                        }
 //                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
 //                        //发送失败
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
+//                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
 //                        return;
 //                    }
 //                }
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
 //            }
 //
 //            @Override
 //            public void onFailure(Call<ResponseData<CircleStatsModel>> call, Throwable t) {
 //                super.onFailure(call, t);
 //                //发送验证码失败
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
 //            }
 //        });
 //    }
-//
+
 //    /**
 //     * 点赞状态
 //     */

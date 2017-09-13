@@ -1,238 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_show_root_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/title_bar_padding_top">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/id_had_data_ll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:background="@color/color_ffffff"
-            >
+            android:visibility="visible">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px120"
-                android:background="@color/color_main"/>
-
-            <RelativeLayout
-                android:id="@+id/id_person_news_rela"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/perision_info_head"
-                android:clickable="true"
-                android:paddingBottom="@dimen/px50"
-                android:paddingLeft="@dimen/px45"
-                android:paddingRight="@dimen/px44"
-                android:paddingTop="@dimen/px50">
-
-                <ImageView
-                    android:id="@+id/id_person_head_img"
-                    android:layout_width="@dimen/px188"
-                    android:layout_height="@dimen/px188"
-                    android:layout_centerVertical="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_default_head"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/px30"
-                    android:layout_marginRight="@dimen/px30"
-                    android:layout_toRightOf="@+id/id_person_head_img"
-                    android:orientation="vertical"
-                    android:paddingRight="@dimen/px30">
-
-                    <TextView
-                        android:id="@+id/id_person_name_txt"
-                        style="@style/DefaultTvStyle"
-                        android:ellipsize="end"
-                        android:includeFontPadding="false"
-                        android:gravity="start"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_48"/>
-
-                    <TextView
-                        android:gravity="start"
-                        android:id="@+id/id_person_login_days"
-                        style="@style/DefaultTvStyle"
-                        android:paddingTop="@dimen/px16"
-                        android:ellipsize="end"
-                        android:includeFontPadding="false"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_34"/>
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/id_person_scan_img"
-                    android:layout_width="@dimen/px64"
-                    android:layout_height="@dimen/px64"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px30"
-                    android:layout_toLeftOf="@+id/id_arrow_img"
-                    android:background="@drawable/ic_scan_code"
-                    android:scaleType="matrix"
-                    android:visibility="gone"/>
-
-                <ImageView
-                    android:id="@+id/id_arrow_img"
-                    style="@style/SettingImgStyle"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_right_arrow"/>
-            </RelativeLayout>
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="29px"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:background="#F5F5F5"></LinearLayout>-->
-
-            <LinearLayout
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/IconTvStyle"
-                    android:drawableLeft="@drawable/ic_mine_me"
-                    android:drawablePadding="@dimen/px53"
-                    android:paddingLeft="@dimen/px30"
-                    android:text="@string/mine_title"
-                    android:textSize="@dimen/font_48"
-                    android:visibility="gone"/>
-
-                <!--<View style="@style/DefaultHLineStyle"/>-->
-
-                <LinearLayout
+                <com.rz.common.swiperefresh.SwipyRefreshLayout
+                    android:id="@+id/id_comm_refresh_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/px30"
-                    android:paddingTop="@dimen/px30">
+                    android:fadingEdge="none"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
 
-                    <LinearLayout
-                        android:id="@+id/btn_my_circle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                    <com.rz.circled.widget.ObservableListView
+                        android:id="@+id/id_comm_listview"
+                        style="@style/DefaultLvStyle"
+                        android:dividerHeight="0dp"
+                        android:footerDividersEnabled="false" />
+                </com.rz.common.swiperefresh.SwipyRefreshLayout>
 
-                        <!--<ImageView-->
-                        <!--style="@style/SettingImgStyle"-->
-                        <!--android:layout_width="@dimen/px116"-->
-                        <!--android:layout_height="@dimen/px116"-->
-                        <!--android:background="@drawable/ic_mine_work_new"/>-->
+            </FrameLayout>
 
-                        <TextView
-                            android:id="@+id/tv_circle_count"
-                            style="@style/DefaultTvStyle"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/font_48"/>
-
-                        <TextView
-                            style="@style/DefaultTvStyle"
-                            android:paddingTop="@dimen/px15"
-                            android:text="@string/my_circle"
-                            android:textColor="@color/color_666666"
-                            android:textSize="@dimen/font_44"/>
-                    </LinearLayout>
-
-                    <!--<View style="@style/DefaultVLineStyle"/>-->
-
-                    <LinearLayout
-                        android:id="@+id/btn_my_transfer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <!--<ImageView-->
-                        <!--style="@style/SettingImgStyle"-->
-                        <!--android:layout_width="@dimen/px116"-->
-                        <!--android:layout_height="@dimen/px116"-->
-                        <!--android:background="@drawable/ic_mine_transfer_new"/>-->
-                        <TextView
-                            android:id="@+id/tv_transfer_count"
-                            style="@style/DefaultTvStyle"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/font_48"/>
-
-                        <TextView
-                            style="@style/DefaultTvStyle"
-                            android:paddingTop="@dimen/px15"
-                            android:text="@string/v3_my_reward"
-                            android:textColor="@color/color_666666"
-                            android:textSize="@dimen/font_44"/>
-                    </LinearLayout>
-
-                    <!--<View style="@style/DefaultVLineStyle"/>-->
-
-                    <LinearLayout
-                        android:id="@+id/btn_my_collect"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <!--<ImageView-->
-                        <!--style="@style/SettingImgStyle"-->
-                        <!--android:layout_width="@dimen/px116"-->
-                        <!--android:layout_height="@dimen/px116"-->
-                        <!--android:background="@drawable/ic_mine_shine_new"/>-->
-
-                        <TextView
-                            android:id="@+id/tv_collect_count"
-                            style="@style/DefaultTvStyle"
-                            android:text="0"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/font_48"/>
-
-                        <TextView
-                            style="@style/DefaultTvStyle"
-                            android:paddingTop="@dimen/px15"
-                            android:text="@string/my_collect"
-                            android:textColor="@color/color_666666"
-                            android:textSize="@dimen/font_44"/>
-                    </LinearLayout>
-
-                    <!--<View style="@style/DefaultVLineStyle"/>-->
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="29px"
-                android:layout_alignParentTop="true"
-                android:background="#F5F5F5"/>
-
-            <com.rz.circled.widget.MListView
-                android:id="@+id/id_contacts_listv"
-                style="@style/DefaultLvStyle"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dp"/>
         </LinearLayout>
-    </ScrollView>
 
-    <FrameLayout
+    </LinearLayout>
+
+    <RelativeLayout
         android:id="@+id/title_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/px20">
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -167,6 +167,8 @@ public class SearchActivity extends BaseActivity {
             return getString(itemName[position]);
         }
 
+
+
         @Override
         public Fragment getItem(int position) {
             if (position == TYPE_CONTENT)

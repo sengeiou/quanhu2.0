@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,7 +59,10 @@ public class DynamicAdapter extends CircleContentAdapter {
         }
 
         mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
-        mTvName.setText(item.cust.custNname);
+        if(item.cust!=null && TextUtils.isEmpty(item.cust.custNname)){
+            mTvName.setText(item.cust.custNname);
+        }
+
         tv_other_left.setText(item.readNum+"阅读");
         if (item.coterieId==null||item.coterieName==null){
             fromWhere.setText("来自圈子"+item.circleName);
