@@ -14,11 +14,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/px35"
+                android:paddingTop="@dimen/px35"
+                android:background="@color/white"
+                >
+                <TextView
+                    android:id="@+id/mess_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_50"
+                    android:textColor="@color/color_000000"
+                    android:text="消息免打扰"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px14"
+                    android:layout_marginBottom="@dimen/font_44"
+                    android:layout_below="@+id/mess_no"
+                    android:text="@string/setting_norao"
+                    android:textSize="@dimen/font_34"
+                    android:textColor="@color/color_999999"
+                    />
+
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/id_layout_account_and_safe"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px158"
                 android:layout_marginBottom="@dimen/px30"
                 android:layout_marginTop="@dimen/px30"
                 android:background="@drawable/comm_item_selector"
@@ -60,44 +88,6 @@
                     android:layout_width="@dimen/px27"
                     android:layout_height="@dimen/px45"
                     android:src="@drawable/ic_right_arrow" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px3"
-                android:layout_marginLeft="@dimen/px30"
-                android:layout_marginRight="@dimen/px30"
-                android:background="@color/color_EEEEEE" />
-
-            <LinearLayout
-                android:id="@+id/id_layout_update"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/comm_item_selector"
-                android:gravity="center_vertical"
-                android:padding="@dimen/px35">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/setting_update"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_50" />
-
-                <TextView
-                    android:id="@+id/tv_version_name"
-                    style="@style/DefaultTvStyle"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/px30"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/font_48" />
-
-                <ImageView
-                    android:layout_width="@dimen/px27"
-                    android:layout_height="@dimen/px45"
-                    android:src="@drawable/ic_right_arrow" />
-
             </LinearLayout>
 
             <View

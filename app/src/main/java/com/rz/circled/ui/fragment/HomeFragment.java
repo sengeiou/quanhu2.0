@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getBannerList("2");
-        mPresenter.getCircleDynamicList("",false);
+        mPresenter.getCircleDynamicList("", false);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void onRefresh() {
                 mPresenter.getBannerList("2");
-                mPresenter.getCircleDynamicList("",false);
+                mPresenter.getCircleDynamicList("", false);
                 mRefresh.setRefreshing(false);
             }
         });
@@ -154,12 +154,22 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
 
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position);
-        circleDynamic.click+=1;
-        String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId,circleDynamic.resourceId);
-//        WebContainerActivity.startActivity(mActivity, url);
+        circleDynamic.click += 1;
+        if (circleDynamic.click >= 3) {
+            mPresenter.addLoveCircle(circleDynamic.circleId, 2);
+            circleDynamic.click=0;
+        }
+        if (circleDynamic.coterieId == null || circleDynamic.coterieName == null) {
+            String circleUrl = CommomUtils.getCircleUrl(circleDynamic.moduleEnum, circleDynamic.resourceId);
+            WebContainerActivity.startActivity(mActivity, circleUrl);
+        } else {
+            String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId, circleDynamic.resourceId);
+            WebContainerActivity.startActivity(mActivity, url);
+        }
     }
 
     @Override

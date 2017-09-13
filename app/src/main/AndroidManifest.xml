@@ -310,6 +310,8 @@
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity android:name=".ui.activity.AccountDetailAty"/>
+        <activity android:name=".ui.activity.PersonScanAty"/>
 
     </application>
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_F5F5F5"
+        android:paddingBottom="@dimen/px20"
+        android:paddingLeft="@dimen/px30"
+        android:paddingRight="@dimen/px30"
+        android:paddingTop="@dimen/px20">
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerVertical="true"
+            android:text="@string/time"
+            android:textColor="@color/black"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_centerHorizontal="true"
+            android:text="@string/income"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/mingcheng"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+
+  <ListView
+      android:id="@+id/lv_detail"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"></ListView>
+
+</LinearLayout>

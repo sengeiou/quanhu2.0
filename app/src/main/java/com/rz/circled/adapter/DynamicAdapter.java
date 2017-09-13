@@ -6,7 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CircleImageView;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.ViewHolder;
@@ -28,12 +30,9 @@ public class DynamicAdapter extends CircleContentAdapter {
     public DynamicAdapter(Context context, List mDatas) {
         super(context, mDatas, R.layout.item_dynamic_home);
     }
-
-
     @Override
     public void convert(ViewHolder helper, final CircleDynamic item) {
         bindCircleContent(helper, item);
-
         ImageView mCivHead = helper.getView(R.id.civ_head);//用户头像
         CircleImageView mCivSuperV = helper.getView(R.id.civ_superV);//头像加V
         TextView mTvName = helper.getView(R.id.tv_name);//用户名字
@@ -71,6 +70,16 @@ public class DynamicAdapter extends CircleContentAdapter {
             public void onClick(View v) {
                 if (isLogin()) {
 //                    WebContainerAty.startAty(mContext, item.circleUrl);
+                }
+            }
+        });
+        fromWhere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.coterieId==null||item.coterieName==null){
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleId+"/");
+                }else {
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleId+"/coterie/"+item.coterieId);
                 }
             }
         });
