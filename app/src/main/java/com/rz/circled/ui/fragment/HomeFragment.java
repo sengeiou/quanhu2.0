@@ -23,6 +23,7 @@ import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.ACache;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 
@@ -113,6 +114,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initData() {
+        ACache mCache = ACache.get(mActivity);
+        List<CircleDynamic> model = (List<CircleDynamic>) mCache.getAsObject("cache");
+        updateViewWithLoadMore(model,false);
         mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

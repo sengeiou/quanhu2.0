@@ -169,6 +169,7 @@
     <string name="private_group_no_more">没有更多了</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
     <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
+    <string name="private_group_create_submit">提交中···</string>
     <string name="private_group_joined_user">%1$d人加入</string>
     <string name="private_group_status_0">待审核</string>
     <string name="private_group_status_1">通过</string>
@@ -524,6 +525,10 @@
     <string name="mine_person_ex7">扫一扫上面的二维码,加我吧 长按保存图片</string>
     <string name="setting_norao">打开后将不会在系统通知栏接受到系统消息</string>
     <string name="data_loading">加载中</string>
+    <string name="jifen">积分</string>
+    <string name="shuoming">说明</string>
+    <string name="jump_url_null">跳转链接为空</string>
+    <string name="unsupport_service">暂不支持此服务</string>
 
 
 </resources>

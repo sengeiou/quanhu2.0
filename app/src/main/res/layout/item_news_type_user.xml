@@ -36,7 +36,6 @@
                 android:layout_width="@dimen/px166"
                 android:layout_height="@dimen/px166"
                 android:scaleType="centerCrop"
-                android:src="@android:color/holo_green_light"
                 app:riv_mutate_background="true"
                 app:riv_oval="true" />
 

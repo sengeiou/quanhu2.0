@@ -170,7 +170,7 @@ public class SettingActivity extends BaseActivity {
                         dialog.dismiss();
 //                        ((UpdateOrExitPresenter) presenter).ExitApp();
 //                        exitApp();
-
+                        Session.clearShareP();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                         startActivity(intent);
 

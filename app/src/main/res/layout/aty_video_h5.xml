@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F5F5"
+    android:orientation="vertical">
+
+    <!--<include layout="@layout/action_bar_layout"></include>-->
+
+    <FrameLayout
+        android:id="@+id/nonVideoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/titlebar_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:id="@+id/top_title_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px146"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true">
+
+                    <TextView
+                        android:id="@+id/titlebar_back_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/v3_dark_left_arrow"
+                        android:drawablePadding="@dimen/px6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/px40"
+                        android:paddingRight="15dp"
+                        android:singleLine="true"
+                        android:textColor="@color/sel_title_txt_col"
+                        android:textSize="@dimen/px52" />
+
+                    <ImageView
+                        android:id="@+id/titlebar_login_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_main_login"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/titlebar_scan_text"
+                        android:layout_width="@dimen/px146"
+                        android:layout_height="@dimen/px146"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/px30"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_home_scan"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/titlebar_title_text"
+                        style="@style/DefaultTvStyle"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:clickable="false"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxEms="8"
+                        android:maxLines="1"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/px64" />
+
+                    <ImageView
+                        android:id="@+id/titlebar_middle_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/px90"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/titlebar_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/px10"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/sel_title_txt_col"
+                        android:textSize="@dimen/px52"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/id_pic_mag_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/px30"
+                        android:clickable="true"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:textColor="@color/color_666666"
+                        android:textSize="17sp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/titlebar_login_icon_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/titlebar_right_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:clickable="true"
+                        android:paddingRight="@dimen/px30"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/titlebar_right_icon_img"
+                            android:layout_width="@dimen/px60"
+                            android:layout_height="@dimen/px63"
+                            android:layout_centerVertical="true" />
+
+
+                        <ImageView
+                            android:id="@+id/titlebar_right_icon_dot"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_alignRight="@+id/titlebar_right_icon_img"
+                            android:layout_alignTop="@+id/titlebar_right_icon_img"
+                            android:layout_marginTop="-3dp"
+                            android:src="@drawable/shape_dot_red"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/titlebar_right_icon2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="@dimen/px20"
+                        android:clickable="true"
+                        android:paddingBottom="12dp"
+                        android:paddingLeft="@dimen/px10"
+                        android:paddingRight="@dimen/px10"
+                        android:paddingTop="12dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/titlebar_right_icon_img2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:scaleType="fitXY" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_toRightOf="@id/titlebar_right_icon_img2">
+
+                            <TextView
+                                android:id="@+id/notice_name"
+                                android:layout_width="@dimen/px115"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:text="@string/announcement"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/px50" />
+
+                            <ImageView
+                                android:id="@+id/notice_dot"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignRight="@+id/notice_name"
+                                android:layout_marginLeft="10dp"
+                                android:background="@drawable/red"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/top_title_container"
+                    android:background="@color/color_999"></View>
+            </RelativeLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <WebView
+                    android:id="@+id/id_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/id_error_ulr_txt"
+                    style="@style/DefaultTvStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:padding="10dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/videoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone">
+
+        <!-- View that will be shown while the fullscreen video loads. For example you could include
+        a "Loading..." message. However, in this particular example this view is actually defined in
+        view_loading_video.xml and inflated programmatically in ExampleActivity.java. The reason for
+        this is to keep the main layout (this file) cleaner. -->
+        <!-- <View
+            android:id="@+id/videoLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" /> -->
+
+    </RelativeLayout>
+
+</RelativeLayout>

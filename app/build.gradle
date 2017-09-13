@@ -59,10 +59,10 @@ android {
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
-                                    AMAP_KEY     : "fadba6d91674d925460af5bf3cf24899",
+                                    AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
                                     JPUSH_PKGNAME: defaultConfig.applicationId,
                                     //JPush上注册的包名对应的appkey.
-                                    JPUSH_APPKEY : "40869323ab400d45aa046896",
+                                    JPUSH_APPKEY : "5d039491265682e4f14536b0",
                                     //暂时填写默认值即可.
                                     JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
@@ -79,10 +79,10 @@ android {
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m-mo.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
-                                    AMAP_KEY     : "fadba6d91674d925460af5bf3cf24899",
+                                    AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
                                     JPUSH_PKGNAME: defaultConfig.applicationId,
                                     //JPush上注册的包名对应的appkey.
-                                    JPUSH_APPKEY : "40869323ab400d45aa046896",
+                                    JPUSH_APPKEY : "5d039491265682e4f14536b0",
                                     //暂时填写默认值即可.
                                     JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
@@ -99,10 +99,10 @@ android {
             buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
-                                    AMAP_KEY     : "fadba6d91674d925460af5bf3cf24899",
+                                    AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
                                     JPUSH_PKGNAME: defaultConfig.applicationId,
                                     //JPush上注册的包名对应的appkey.
-                                    JPUSH_APPKEY : "40869323ab400d45aa046896",
+                                    JPUSH_APPKEY : "4ca5c25ed02f766b715f8aa1",
                                     //暂时填写默认值即可.
                                     JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false

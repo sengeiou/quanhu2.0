@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.j256.ormlite.table.TableUtils;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -37,6 +38,7 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
@@ -44,6 +46,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -107,14 +110,14 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.id_login_btn)
     Button mLoginBtn;
 
-//    /**
+    //    /**
 //     * 3.0版本title
 //     */
 //    @BindView(R.id.titlebar_main_tv)
 //    TextView mTvTitle;
     @BindView(R.id.titlebar_main_left_btn)
     ImageView mIvBack;
-//    @BindView(R.id.titlebar_root)
+    //    @BindView(R.id.titlebar_root)
 //    RelativeLayout mRlTitleRoot;
     private int loginType;
     private int mGuideType;
@@ -180,9 +183,9 @@ public class LoginActivity extends BaseActivity {
 //        });
         mLoginBtn.setEnabled(true);
 
-        if(mEditPass.getText().length()>0){
+        if (mEditPass.getText().length() > 0) {
             mImgWatchPw.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mImgWatchPw.setVisibility(View.GONE);
         }
     }
@@ -224,9 +227,9 @@ public class LoginActivity extends BaseActivity {
                     mImgClearPass.setVisibility(View.GONE);
                 }
 
-                if(mEditPass.getText().length()>0){
+                if (mEditPass.getText().length() > 0) {
                     mImgWatchPw.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mImgWatchPw.setVisibility(View.GONE);
                 }
 
@@ -237,7 +240,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
         loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
-        mGuideType = getIntent().getIntExtra(IntentKey.GUIDE_KEY,-1);
+        mGuideType = getIntent().getIntExtra(IntentKey.GUIDE_KEY, -1);
         loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
@@ -402,12 +405,12 @@ public class LoginActivity extends BaseActivity {
 
 //                MobclickAgent.onEvent(aty, "login");
                 //单独记录随手晒缓存记录，防止刷新
-                if (TextUtils.equals(Session.getBeforeUserId(),model.getCustId())){
+                if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
                     EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
                     List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
 //                    ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
                     entityCache.putListEntity(showCaches);
-                }else{
+                } else {
 //                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
                 }
 
@@ -445,6 +448,11 @@ public class LoginActivity extends BaseActivity {
                     Session.setUserLoginPw(false);
                 }
 
+                if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
+                    EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
+                    entityCache.clean();
+                }
+
                 Set<String> sset = new HashSet<String>();
                 sset.add(Constants.Lottery_Tag);
 
@@ -459,12 +467,12 @@ public class LoginActivity extends BaseActivity {
                     //从圈子过来跳转登录的
 //                    JsEvent.callJsEvent(getLoginWebResultData(), true);
                     finish();
-                } else if(mGuideType == Type.TYPE_LOGIN_GUIDE){
+                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
                     //从向导页面过来
 
                     skipActivity(aty, FollowCircle.class);
                     finish();
-                }else {
+                } else {
                     BaseEvent event = new BaseEvent();
 //                    event.key = LOGIN_IN_SUCCESS;
                     EventBus.getDefault().post(event);

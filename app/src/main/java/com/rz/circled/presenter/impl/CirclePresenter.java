@@ -172,6 +172,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     public void onNext(ResponseData<List<CircleDynamic>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<CircleDynamic> model =res.getData();
+                            ACache mCache = ACache.get(mContext);
+                            mCache.put("cache", (Serializable) model);
                             dynamicCreateTime=model.get(model.size()-1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功

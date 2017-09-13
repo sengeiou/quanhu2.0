@@ -3,6 +3,7 @@ package com.rz.circled.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
@@ -19,19 +20,26 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2016/7/20 0020.
  * 消费明细或者收益明细
  */
-public class AccountDetailAty extends BaseActivity{
+public class AccountDetailAty extends BaseActivity {
 
     @BindView(R.id.lv_detail)
     ListView mListView;
+    @BindView(R.id.income)
+    TextView mIncome;
+    @BindView(R.id.produce_type)
+    TextView mProduceType;
 
     private CommonAdapter<BillDetailModel> mAdapter;
 
@@ -53,6 +61,7 @@ public class AccountDetailAty extends BaseActivity{
         intent.putExtra(IntentKey.KEY_TYPE, type);
         activity.startActivity(intent);
     }
+
     @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.aty_account_detail, null);
@@ -69,8 +78,12 @@ public class AccountDetailAty extends BaseActivity{
         type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
         if (type == Type.TYPE_BALANCE) {
             setTitleText(R.string.cost_detail_v3);
+            mIncome.setText(R.string.income);
+            mProduceType.setText(R.string.mingcheng);
         } else if (type == Type.TYPE_SCORE) {
             setTitleText(R.string.jf_details);
+            mIncome.setText(R.string.jifen);
+            mProduceType.setText(R.string.shuoming);
         }
         mAdapter = new CommonAdapter<BillDetailModel>(aty, mBillDetails, R.layout.layout_account_detail_item) {
             @Override
@@ -86,7 +99,9 @@ public class AccountDetailAty extends BaseActivity{
                     mPay.setText("+" + Currency.returnDollar(Currency.RMB, item.cost, 0));
                     mPay.setTextColor(Color.parseColor("#FF6060"));
                 }
-//                helper.setText(R.id.id_tv_date, item.createTime);
+                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
+                String times = sdr.format(new Date(item.createTime * 1000L));
+                helper.setText(R.id.id_tv_date, times);
             }
         };
         mListView.setAdapter(mAdapter);
@@ -114,5 +129,12 @@ public class AccountDetailAty extends BaseActivity{
                 mAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

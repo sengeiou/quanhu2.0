@@ -56,7 +56,9 @@ public class DynamicAdapter extends CircleContentAdapter {
         }
 
         mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
-        mTvName.setText(item.cust.custNname);
+        if (item.cust != null) {
+            mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);
+        }
         tv_other_left.setText(item.readNum+"阅读");
         if (item.coterieId==null||item.coterieName==null){
             fromWhere.setText("来自圈子"+item.circleName);
@@ -64,22 +66,13 @@ public class DynamicAdapter extends CircleContentAdapter {
             fromWhere.setText("来自私圈"+item.coterieName);
         }
         mTvTime.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd HH:mm:ss"));
-        mTvCircleName.setText(mContext.getString(R.string.from)  + item.circleName);
-        mTvCircleName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isLogin()) {
-//                    WebContainerAty.startAty(mContext, item.circleUrl);
-                }
-            }
-        });
         fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (item.coterieId==null||item.coterieName==null){
-                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleId+"/");
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/");
                 }else {
-                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleId+"/coterie/"+item.coterieId);
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/coterie/"+item.coterieId);
                 }
             }
         });
