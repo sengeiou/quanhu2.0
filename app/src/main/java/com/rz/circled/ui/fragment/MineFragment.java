@@ -27,6 +27,7 @@ import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
@@ -42,6 +43,8 @@ import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.IntentKey;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Protect;
@@ -487,9 +490,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 2:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的卡券");
-//                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-//                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
+                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
+                    startActivity(intent);
                 }
                 break;
             case 4:

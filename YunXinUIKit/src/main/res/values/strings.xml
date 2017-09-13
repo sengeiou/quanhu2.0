@@ -325,6 +325,9 @@
     <string name="team_unknown_notice">未知通知</string>
     <string name="shoot_video">拍摄视频</string>
     <string name="choose_video_from_album">从相册中选择视频</string>
+    <string name="choose_from_album">从手机相册中选取</string>
+    <string name="record_audio">录制音频</string>
+    <string name="choose_from_phone">从手机中选取</string>
     <string name="map_message">贴图消息</string>
     <string name="type_not_support_transfer">该类型不支持转发</string>
     <string name="switch_to_speaker">切换成扬声器播放</string>

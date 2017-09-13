@@ -524,6 +524,8 @@
     <string name="mine_person_ex7">扫一扫上面的二维码,加我吧 长按保存图片</string>
     <string name="setting_norao">打开后将不会在系统通知栏接受到系统消息</string>
     <string name="data_loading">加载中</string>
+    <string name="jifen">积分</string>
+    <string name="shuoming">说明</string>
 
 
 </resources>
