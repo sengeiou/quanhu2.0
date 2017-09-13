@@ -88,6 +88,7 @@ public class LocationActivity extends BaseActivity {
             mLocationClient = null;
             mLocationOption = null;
         }
+        JsEvent.callJsEvent(null, false);
     }
 
     //声明定位回调监听器
