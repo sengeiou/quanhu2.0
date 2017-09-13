@@ -526,6 +526,8 @@
     <string name="data_loading">加载中</string>
     <string name="jifen">积分</string>
     <string name="shuoming">说明</string>
+    <string name="jump_url_null">跳转链接为空</string>
+    <string name="unsupport_service">暂不支持此服务</string>
 
 
 </resources>

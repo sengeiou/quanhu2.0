@@ -14,6 +14,8 @@ public interface IntentKey {
      * position
      */
     String EXTRA_POSITION = "extraPosition";
+    String KEY_DESC = "key_desc";
+    String KEY_URL = "key_url";
     /**
      * boolean值
      */

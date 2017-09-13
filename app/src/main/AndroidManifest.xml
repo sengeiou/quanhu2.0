@@ -313,6 +313,7 @@
         <activity android:name=".ui.activity.AccountDetailAty"/>
         <activity android:name=".ui.activity.PersonScanAty"/>
         <activity android:name=".ui.activity.AwesomeTabsAty"/>
+        <activity android:name=".ui.activity.VideoH5Aty"/>
 
     </application>
 
