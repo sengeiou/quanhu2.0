@@ -1,8 +1,10 @@
 package com.rz.circled.ui.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
@@ -20,16 +22,23 @@ import com.czt.mp3recorder.MP3Recorder;
 import com.rz.circled.R;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.oss.OssManager;
 import com.rz.common.permission.AfterPermissionGranted;
 import com.rz.common.permission.AppSettingsDialog;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.DialogUtils;
+import com.rz.common.utils.FileUtils;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.Record;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
+import com.rz.sgt.jsbridge.JsEvent;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -73,8 +82,10 @@ public class VoicePubActivity extends BaseActivity {
     private final int PLAY_START = 12;//点击开始播放
     private final int PLAY_ING = 13;//正在播放 -> 点击暂停播放
 
-
     private int voiceStatus = RECORD_START;
+
+    private boolean canUpload = false;//是否可以上传
+    private String uploadUrl;//上传url
 
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -88,6 +99,11 @@ public class VoicePubActivity extends BaseActivity {
 
         nativePubish = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, true);
 
+        uploadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
+
+        if (uploadedUrl != null)
+            mOssManager = new OssManager();
+
         if (isAanswer) {
             tvVoiceChangeText.setVisibility(View.VISIBLE);
             setTitleText(R.string.reply);
@@ -99,13 +115,20 @@ public class VoicePubActivity extends BaseActivity {
 
         setTitleLeftText(R.string.cancel);
         setTitleRightText(R.string.complete);
+        setTitleRightTextColor(R.color.font_gray_m);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.putExtra(IntentKey.EXTRA_PATH, audioPath);
-                setResult(RESULT_OK, i);
-                finish();
+                if (!canUpload) return;
+                if (TextUtils.isEmpty(uploadUrl)) {
+                    Intent i = new Intent();
+                    i.putExtra(IntentKey.EXTRA_PATH, audioPath);
+                    setResult(RESULT_OK, i);
+                    finish();
+                } else {
+                    initAudioDuration();
+                    oss();
+                }
             }
         });
 
@@ -208,8 +231,9 @@ public class VoicePubActivity extends BaseActivity {
         ivVoiceRecord.setVisibility(View.GONE);
         Glide.with(mContext).load(R.drawable.icon_record_voice).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivVoiceRecordGif);
         tvVoiceReAnswer.setVisibility(View.GONE);
-
+        canUpload = false;
         voiceStatus = RECORD_ING;
+        setTitleRightTextColor(R.color.font_gray_m);
     }
 
     /**
@@ -225,9 +249,10 @@ public class VoicePubActivity extends BaseActivity {
         if (isAanswer)
             tvVoiceReAnswer.setText(R.string.re_answer);
         else tvVoiceReAnswer.setText(R.string.re_record);
-        tvVoiceTime.setText(mRecordTime + "s");//显示录制时长
-
+        tvVoiceTime.setText(mRecordTime / 10 + "s");//显示录制时长
+        canUpload = true;
         voiceStatus = PLAY_START;
+        setTitleRightTextColor(R.color.font_color_blue);
     }
 
     /**
@@ -240,8 +265,9 @@ public class VoicePubActivity extends BaseActivity {
         tvVoiceStatus.setText(R.string.click_start_record);//点击开始录音
         tvVoiceTime.setText(getString(R.string.max) + CommonCode.Constant.MAX_INTERVAL_TIME + "s");//最多xxs
         tvVoiceReAnswer.setVisibility(View.GONE);
-
+        canUpload = false;
         voiceStatus = RECORD_START;
+        setTitleRightTextColor(R.color.font_gray_m);
     }
 
     /**
@@ -253,10 +279,11 @@ public class VoicePubActivity extends BaseActivity {
         ivVoiceRecordGif.setVisibility(View.VISIBLE);
         ivVoiceRecord.setVisibility(View.GONE);
         tvVoiceStatus.setText(R.string.click_stop);//点击暂停
-        tvVoiceTime.setText(mRecordTime + "s");//显示录制时长
+        tvVoiceTime.setText(mRecordTime / 10 + "s");//显示录制时长
         tvVoiceReAnswer.setVisibility(View.GONE);
-
+        canUpload = true;
         voiceStatus = PLAY_ING;
+        setTitleRightTextColor(R.color.font_color_blue);
     }
 
     @Override
@@ -389,5 +416,127 @@ public class VoicePubActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    //****************************************js 与 oss 部分********************************************//
+
+    private String fileName;
+
+    protected String uploadedUrl;
+
+    private String currentUploadId;
+
+    private long audioDuration;
+    private long audioSize;
+
+    private OssManager mOssManager;
+
+    Dialog dialog;
+
+    public String ossDir;
+
+    public void oss() {
+        if (!TextUtils.isEmpty(audioPath)) {
+            String[] result = audioPath.split("/");
+            fileName = result[result.length - 1];
+            String[] s = fileName.split("\\.");
+            if (s != null && s.length > 0) {
+                fileName = UUID.randomUUID().toString() + "." + s[s.length - 1];
+            }
+            uploadAudioFile();
+        }
+    }
+
+    public void callResult(boolean result) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("url", uploadedUrl);
+        map.put("audioTime", audioDuration);
+        map.put("size", audioSize);
+        JsEvent.callJsEvent(map, result);
+        finish();
+    }
+
+    private void uploadAudioFile() {
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Log.d("test", "uploadVideoFile uoloadId is " + currentUploadId);
+        if (mOssManager == null)
+            mOssManager = new OssManager();
+        mOssManager.asyncMultipartUpload(audioPath, fileName, OssManager.AUDIO, new OssManager.OssCallBack() {
+            @Override
+            public void onSuccess(String url, String uploadId) {
+                Log.d("multipartUpload", "OssCallBack onSuccess url " + url + "\nuploadId " + uploadId);
+                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                currentUploadId = "";
+                uploadedUrl = url;
+                callResult(true);
+            }
+
+            @Override
+            public void onFailure(String uploadId) {
+                if (!TextUtils.isEmpty(uploadId)) {
+                    currentUploadId = uploadId;
+                }
+                onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                showRetryPublishVideoDialog();
+                Log.d("multipartUpload", "OssCallBack onFailure uploadId " + uploadId);
+            }
+
+            @Override
+            public void onProgress(String uploadId, float progress) {
+                Log.d("multipartUpload", "OssCallBack onProgress  " + progress + "");
+                if (!TextUtils.isEmpty(uploadId)) {
+                    currentUploadId = uploadId;
+                }
+            }
+        }, currentUploadId, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir);
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
+    }
+
+    private void showRetryPublishVideoDialog() {
+        if (isFinishing()) {
+            return;
+        }
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_one_button, null, false);
+        TextView tv = (TextView) view.findViewById(R.id.id_tv_message);
+        if (NetUtils.isNetworkConnected(this)) {
+            tv.setText("音频上传失败");
+        } else {
+            tv.setText(getString(R.string.status_un_network));
+        }
+        view.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                uploadAudioFile();
+            }
+        });
+
+        dialog = DialogUtils.selfDialog(this, view, false);
+        dialog.show();
+    }
+
+    private void initAudioDuration() {
+        try {
+            audioDuration = Long.parseLong(codeMediaInfo(audioPath));
+            audioSize = new Double(FileUtils.getFileSize(audioPath, FileUtils.SIZETYPE_KB)).longValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String codeMediaInfo(String url) throws Exception {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        Log.d("UploadAudioAty", "str:" + url);
+        mmr.setDataSource(url);
+        String mime = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_MIMETYPE);
+        Log.d("UploadAudioAty", "mime:" + mime);
+        String duration = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); // 播放时长单位为毫秒
+        Log.d("UploadAudioAty", "duration:" + duration);
+        mmr.release();
+        return duration;
     }
 }

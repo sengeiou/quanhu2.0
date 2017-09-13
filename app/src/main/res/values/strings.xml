@@ -169,6 +169,7 @@
     <string name="private_group_no_more">没有更多了</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
     <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
+    <string name="private_group_create_submit">提交中···</string>
     <string name="private_group_joined_user">%1$d人加入</string>
     <string name="private_group_status_0">待审核</string>
     <string name="private_group_status_1">通过</string>

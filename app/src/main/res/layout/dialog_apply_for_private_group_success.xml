@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/px72"
+        android:includeFontPadding="false"
         android:text="@string/private_group_apply_for_success"
         android:textColor="@color/color_f5cd45"
         android:textSize="@dimen/font_54"
@@ -17,9 +18,11 @@
 
     <TextView
         style="@style/DefaultTvStyle"
-        android:layout_marginBottom="@dimen/px58"
-        android:layout_marginTop="@dimen/px58"
+        android:layout_marginBottom="@dimen/px72"
+        android:layout_marginTop="@dimen/px50"
+        android:includeFontPadding="false"
         android:singleLine="false"
+        android:lineSpacingExtra="@dimen/px26"
         android:text="@string/private_group_apply_for_tip"
         android:textSize="@dimen/font_46" />
 

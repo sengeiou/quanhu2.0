@@ -23,10 +23,10 @@ public class PrivateGroupEssenceAdapter extends CommonAdapter<PrivateGroupResour
 
     @Override
     public void convert(ViewHolder helper, PrivateGroupResourceBean item, int position) {
-        helper.setText(R.id.tv_title, item.getOwnerName() + "  " + item.getOwnerIntro());
+        helper.setText(R.id.tv_title, item.getCust().getCustNname() + "  " + item.getCust().getCustDesc());
         helper.setText(R.id.tv_desc, item.getTitle());
         helper.setText(R.id.tv_scan, String.format(mContext.getString(R.string.private_group_essence_scan), item.getReadNum()));
         if (Protect.checkLoadImageStatus(mContext))
-            Glide.with(mContext).load(item.getCustImg()).error(R.mipmap.icon_logo).into((ImageView) helper.getView(R.id.avatar));
+            Glide.with(mContext).load(item.getCust().getCustImg()).error(R.mipmap.icon_logo).into((ImageView) helper.getView(R.id.avatar));
     }
 }

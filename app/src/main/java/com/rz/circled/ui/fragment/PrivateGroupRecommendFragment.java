@@ -9,10 +9,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.ui.activity.AllPrivateGroupActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -73,7 +77,8 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                PrivateGroupBean item = mAdapter.getItem(position);
+                CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
             }
         });
     }
@@ -99,14 +104,14 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                         }
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+//                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
-                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+//                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
     }

@@ -14,9 +14,13 @@ import android.widget.TextView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -100,7 +104,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PrivateGroupBean item = mAdapter.getItem(position);
                 if (item.getStatus() == 3) {
-
+                    CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
                 }
             }
         });
@@ -119,6 +123,11 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @Override
     public void initData() {
         loadData(false);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 
     @Override
@@ -165,15 +174,24 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                     pageNo = 1;
                                 }
                                 pageNo++;
-                            } else {
+                            }
+                            if (mAdapter.getCount() == 0) {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             }
                         }
                         EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, data.size()));
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+                    if (type != TYPE_PART)
+                        SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                if (type != TYPE_PART)
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
     }

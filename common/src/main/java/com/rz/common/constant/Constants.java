@@ -9,16 +9,15 @@ import android.os.Environment;
 public class Constants {
     /**
      * 关注圈子名字
-     *
      */
-    public static final String FOLLOW="FOLLOW";
-    public static final String FOLLOW_ID="FOLLOW_ID";
-    public static final String UPDATE_LOVE_CIRCLE="UPDATE_LOVE_CIRCLE";
+    public static final String FOLLOW = "FOLLOW";
+    public static final String FOLLOW_ID = "FOLLOW_ID";
+    public static final String UPDATE_LOVE_CIRCLE = "UPDATE_LOVE_CIRCLE";
 
     /**
      * 设置关注
      */
-public static final String FOLLOW_DATA="follow_data";
+    public static final String FOLLOW_DATA = "follow_data";
     /**
      * 默认数值
      */
@@ -122,8 +121,8 @@ public static final String FOLLOW_DATA="follow_data";
 
     public static final class Bugly {
         //TODO CHANGED
-        public static final String APP_ID = "2c2da76959";
-        public static final String APP_KEY = "cd5849f6-c003-4cec-a4e2-2ed3dc077b41";
+        public static final String APP_ID = "d2a9cccb9f";
+        public static final String APP_KEY = "241d5838-1e23-4a5a-9a51-d1c0e34c2986";
     }
 
     public static final int[] COLOR_SCHEMES = {
@@ -300,7 +299,6 @@ public static final String FOLLOW_DATA="follow_data";
     public static final String LOGIN_OUT_SUCCESS = "login_out_success";
 
     public static final String SWITCH_SHARE_SUCCESS = "switch_share_success";
-
 
 
 }

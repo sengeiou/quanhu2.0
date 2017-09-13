@@ -76,6 +76,7 @@ public class NewsCommonFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
+        clearUnreadByType(type);
     }
 
     @Nullable
@@ -151,9 +152,45 @@ public class NewsCommonFragment extends BaseFragment {
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
             case EventConstant.NEWS_COME_UNREAD:
-                if (type == (int) event.getData()) {
-                    refreshType = (int) event.getData();
-                    loadData(false);
+                String[] data = ((String) event.getData()).split("-");
+                if (data.length == 2) {
+                    int _type = Integer.parseInt(data[0]);
+                    int _label = Integer.parseInt(data[1]);
+                    int mType = 0;
+                    switch (_type) {
+                        case NewsTypeConstants.NEWS_ANNOUNCEMENT:
+                            mType = NEWS_ANNOUNCEMENT;
+                            break;
+                        case NewsTypeConstants.NEWS_SYSTEM:
+                            mType = NEWS_SYSTEM_INFORMATION;
+                            break;
+                        case NewsTypeConstants.NEWS_ACCOUNT:
+                            mType = NEWS_ACCOUNT;
+                            break;
+                        case NewsTypeConstants.NEWS_INTERACTIVE:
+                            switch (_label) {
+                                case NewsTypeConstants.NEWS_COMMENT:
+                                    mType = NEWS_COMMENT;
+                                    break;
+                                case NewsTypeConstants.NEWS_ANSWER:
+                                    mType = NEWS_QA;
+                                    break;
+                                case NewsTypeConstants.NEWS_GROUP:
+                                    mType = NEWS_PRIVATE_GROUP;
+                                    break;
+                                case NewsTypeConstants.NEWS_ACTIVITY:
+                                    mType = NEWS_ACTIVITY;
+                                    break;
+                            }
+                            break;
+                        case NewsTypeConstants.NEWS_RECOMMEND:
+                            mType = NEWS_RECOMMEND;
+                            break;
+                    }
+                    if (type == mType) {
+                        refreshType = mType;
+                        loadData(false);
+                    }
                 }
                 break;
         }
@@ -215,9 +252,9 @@ public class NewsCommonFragment extends BaseFragment {
                                 mAdapter.setItems(data);
                             }
                             mAdapter.notifyDataSetChanged();
-                        } else {
-                            onLoadingStatus(CommonCode.General.NEWS_EMPTY);
                         }
+                        if (mAdapter.getItemCount() == 0)
+                            onLoadingStatus(CommonCode.General.NEWS_EMPTY);
                     }
                 } else {
                     SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));

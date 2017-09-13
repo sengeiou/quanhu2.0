@@ -31,6 +31,8 @@
     <string name="pic_shoot">拍摄图片</string>
     <string name="video_choose_local">从本地选择视频</string>
     <string name="video_shoot">拍摄视频</string>
+    <string name="audio_choose_local">从本地选择音频</string>
+    <string name="audio_shoot">录制音频</string>
     <string name="please_choose_video">请选择一个视频作品发布</string>
     <string name="not_found_video">抱歉,没有找到该视频资源</string>
     <string name="not_found_audio">抱歉,没有找到该音频资源</string>
