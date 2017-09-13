@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.event.BaseEvent;
@@ -73,7 +74,7 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PrivateGroupResourceBean item = mAdapter.getItem(position);
-                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + CommomUtils.getPrivateGroupResourceUrl(item.getCircleRoute(), item.getCoterieId(), item.getModuleEnum(), item.getResourceId()));
+                CommonH5JumpHelper.startResourceDetail(mActivity, item.getCircleRoute(), item.getCoterieId(), item.getModuleEnum(), item.getResourceId());
             }
         });
     }

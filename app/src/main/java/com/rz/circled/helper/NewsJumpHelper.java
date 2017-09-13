@@ -35,28 +35,28 @@ public class NewsJumpHelper {
                 CommonH5Activity.startCommonH5(context, "", data.getLink());
                 break;
             case NewsTypeConstants.COTERIE_HOME:
-                NewsH5JumpHelper.startGroupHome(context, data.getCircleRoute(), data.getCoterieId());
+                CommonH5JumpHelper.startGroupHome(context, data.getCircleRoute(), data.getCoterieId());
                 break;
             case NewsTypeConstants.TOPIC_HOME:
-                NewsH5JumpHelper.startTopicHome(context, data.getCircleRoute(), data.getResourceId());
+                CommonH5JumpHelper.startTopicHome(context, data.getCircleRoute(), data.getResourceId());
                 break;
             case NewsTypeConstants.REWARD_DETAIL:
-                NewsH5JumpHelper.startRewardDetail(context, data.getResourceId());
+                CommonH5JumpHelper.startRewardDetail(context, data.getResourceId());
                 break;
             case NewsTypeConstants.COMMON_DETAIL:
-                NewsH5JumpHelper.startResourceDetail(context, data.getCircleRoute(), data.getCoterieId(), data.getModuleEnum(), data.getResourceId());
+                CommonH5JumpHelper.startResourceDetail(context, data.getCircleRoute(), data.getCoterieId(), data.getModuleEnum(), data.getResourceId());
                 break;
             case NewsTypeConstants.APPLY_LIST:
-                NewsH5JumpHelper.startMemberAudit(context, data.getCircleRoute(), data.getCoterieId());
+                CommonH5JumpHelper.startMemberAudit(context, data.getCircleRoute(), data.getCoterieId());
                 break;
             case NewsTypeConstants.ACTIVITY_SIGNUP:
-                NewsH5JumpHelper.startSignActivity(context, data.getResourceId());
+                CommonH5JumpHelper.startSignActivity(context, data.getResourceId());
                 break;
             case NewsTypeConstants.ACTIVITY_VOTE:
-                NewsH5JumpHelper.startVoteActivity(context, data.getResourceId());
+                CommonH5JumpHelper.startVoteActivity(context, data.getResourceId());
                 break;
             case NewsTypeConstants.ACTIVITY_RESULT:
-                NewsH5JumpHelper.startWinningScan(context, data.getResourceId());
+                CommonH5JumpHelper.startWinningScan(context, data.getResourceId());
                 break;
         }
     }

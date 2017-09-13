@@ -13,6 +13,7 @@ import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.ui.activity.AllPrivateGroupActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommomUtils;
@@ -77,7 +78,7 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PrivateGroupBean item = mAdapter.getItem(position);
-                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + CommomUtils.getPrivateGroupHomeUrl(item.getCircleRoute(), item.getCoterieId()));
+                CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
             }
         });
     }

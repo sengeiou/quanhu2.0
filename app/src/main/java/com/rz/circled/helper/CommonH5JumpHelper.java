@@ -2,6 +2,7 @@ package com.rz.circled.helper;
 
 import android.content.Context;
 
+import com.rz.circled.BuildConfig;
 import com.rz.circled.ui.activity.WebContainerActivity;
 
 import java.util.Formatter;
@@ -10,7 +11,7 @@ import java.util.Formatter;
  * Created by rzw2 on 2017/9/13.
  */
 
-public class NewsH5JumpHelper {
+public class CommonH5JumpHelper {
 
     //私圈首页 /:sjmwq/coterie/:coterieId
     private static final String PRIVATE_GROUP_HOME = "/%s/coterie/%s";
@@ -33,41 +34,45 @@ public class NewsH5JumpHelper {
 
     public static void startGroupHome(Context context, String circleRoute, String coterieId) {
         String url = formatter.format(PRIVATE_GROUP_HOME, circleRoute, coterieId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startTopicHome(Context context, String circleRoute, String resourceId) {
         String url = formatter.format(TOPIC_HOME, circleRoute, resourceId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startRewardDetail(Context context, String resourceId) {
         String url = formatter.format(REWARD_DETAIL, resourceId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startResourceDetail(Context context, String circleRoute, String coterieId, String moduleEnum, String resourceId) {
         String url = formatter.format(RESOURCE_DETAIL, circleRoute, coterieId, moduleEnum, resourceId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startMemberAudit(Context context, String circleRoute, String coterieId) {
         String url = formatter.format(MEMBER_AUDIT, circleRoute, coterieId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startSignActivity(Context context, String resourceId) {
         String url = formatter.format(SIGN_ACTIVITY, resourceId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startVoteActivity(Context context, String resourceId) {
         String url = formatter.format(VOTE_ACTIVITY, resourceId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startWinningScan(Context context, String resourceId) {
         String url = formatter.format(WINNING_SCAN, resourceId).toString();
-        WebContainerActivity.startActivity(context, url);
+        WebContainerActivity.startActivity(context, getUrl(url));
+    }
+
+    private static String getUrl(String url) {
+        return BuildConfig.WebHomeBaseUrl + url;
     }
 }
