@@ -73,7 +73,7 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 PrivateGroupResourceBean item = mAdapter.getItem(position);
-                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + CommomUtils.getPrivateGroupRescourceUrl(item.getCircleRoute(), item.getCoterieId(), item.getModuleEnum(), item.getResourceId()));
+                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + CommomUtils.getPrivateGroupResourceUrl(item.getCircleRoute(), item.getCoterieId(), item.getModuleEnum(), item.getResourceId()));
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -137,9 +138,11 @@ public class NewsActivity extends BaseActivity {
     }
 
     private void loadCacheData() {
+        Log.e(TAG, "loadCacheData: ");
         mCache = new EntityCache<>(mContext, NewsOverviewBean.class);
         List<NewsOverviewBean> data = new ArrayList<>();
-        if (mCache.getListEntity(NewsOverviewBean.class) == null) {
+        List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
+        if (mCacheData == null) {
             for (int i = 0; i < mTypeId.size(); i++) {
                 NewsOverviewBean item = new NewsOverviewBean();
                 item.setTitle(getString(mTitle.get(i)));
@@ -149,7 +152,6 @@ public class NewsActivity extends BaseActivity {
                 data.add(item);
             }
         } else {
-            List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
             for (int i = 0; i < mCacheData.size(); i++) {
                 NewsOverviewBean item = mCacheData.get(i);
                 switch (item.getTypeId()) {
@@ -177,6 +179,7 @@ public class NewsActivity extends BaseActivity {
     }
 
     private void loadData() {
+        Log.e(TAG, "loadData: ");
         Http.getApiService(ApiNewsService.class).newsUnread(Session.getUserId()).enqueue(new BaseCallback<ResponseData<HashMap<String, String>>>() {
             @Override
             public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>> response) {
@@ -215,35 +218,37 @@ public class NewsActivity extends BaseActivity {
             unreadBeanList.add(new NewsUnreadBean(type, label, num));
         }
 
-        Map<String, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (NewsUnreadBean item : unreadBeanList) {
-            Integer val = map.get(item.getType());
             if (item.getType() == NewsTypeConstants.NEWS_INTERACTIVE) {
+                Integer val = map.get(item.getLabel());
                 if (val == null) {
-                    map.put(String.valueOf(item.getLabel()), item.getNum());
+                    map.put(item.getLabel(), item.getNum());
                 } else {
-                    map.put(String.valueOf(item.getLabel()), val + item.getNum());
+                    map.put(item.getLabel(), val + item.getNum());
                 }
             } else {
+                Integer val = map.get(item.getType());
                 if (val == null) {
-                    map.put(String.valueOf(item.getType()), item.getNum());
+                    map.put(item.getType(), item.getNum());
                 } else {
-                    map.put(String.valueOf(item.getType()), val + item.getNum());
+                    map.put(item.getType(), val + item.getNum());
                 }
             }
         }
 
-        Session.setNewsAnnouncementNum(map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != null ? map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) : Session.getNewsAnnouncementNum());
-        Session.setNewsSystemInformationNum(map.get(NewsTypeConstants.NEWS_SYSTEM) != null ? map.get(NewsTypeConstants.NEWS_SYSTEM) : Session.getNewsSystemInformationNum());
-        Session.setNewsAccountInformationNum(map.get(NewsTypeConstants.NEWS_ACCOUNT) != null ? map.get(NewsTypeConstants.NEWS_ACCOUNT) : Session.getNewsAccountInformationNum());
-        Session.setNewsRecommendNum(map.get(NewsTypeConstants.NEWS_RECOMMEND) != null ? map.get(NewsTypeConstants.NEWS_RECOMMEND) : Session.getNewsRecommendNum());
-        Session.setNewsCommentNum(map.get(NewsTypeConstants.NEWS_COMMENT) != null ? map.get(NewsTypeConstants.NEWS_COMMENT) : Session.getNewsCommentNum());
-        Session.setNewsQaNum(map.get(NewsTypeConstants.NEWS_ANSWER) != null ? map.get(NewsTypeConstants.NEWS_ANSWER) : Session.getNewsQaNum());
-        Session.setNewsGroupNum(map.get(NewsTypeConstants.NEWS_GROUP) != null ? map.get(NewsTypeConstants.NEWS_GROUP) : Session.getNewsGroupNum());
-        Session.setNewsActivityNum(map.get(NewsTypeConstants.NEWS_ACTIVITY) != null ? map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
+        Session.setNewsAnnouncementNum(map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != null && map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != 0 ? Session.getNewsAnnouncementNum() + map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) : Session.getNewsAnnouncementNum());
+        Session.setNewsSystemInformationNum(map.get(NewsTypeConstants.NEWS_SYSTEM) != null && map.get(NewsTypeConstants.NEWS_SYSTEM) != 0 ? Session.getNewsSystemInformationNum() + map.get(NewsTypeConstants.NEWS_SYSTEM) : Session.getNewsSystemInformationNum());
+        Session.setNewsAccountInformationNum(map.get(NewsTypeConstants.NEWS_ACCOUNT) != null && map.get(NewsTypeConstants.NEWS_ACCOUNT) != 0 ? Session.getNewsAccountInformationNum() + map.get(NewsTypeConstants.NEWS_ACCOUNT) : Session.getNewsAccountInformationNum());
+        Session.setNewsRecommendNum(map.get(NewsTypeConstants.NEWS_RECOMMEND) != null && map.get(NewsTypeConstants.NEWS_RECOMMEND) != 0 ? Session.getNewsRecommendNum() + map.get(NewsTypeConstants.NEWS_RECOMMEND) : Session.getNewsRecommendNum());
+        Session.setNewsCommentNum(map.get(NewsTypeConstants.NEWS_COMMENT) != null && map.get(NewsTypeConstants.NEWS_COMMENT) != 0 ? Session.getNewsCommentNum() + map.get(NewsTypeConstants.NEWS_COMMENT) : Session.getNewsCommentNum());
+        Session.setNewsQaNum(map.get(NewsTypeConstants.NEWS_ANSWER) != null && map.get(NewsTypeConstants.NEWS_ANSWER) != 0 ? Session.getNewsQaNum() + map.get(NewsTypeConstants.NEWS_ANSWER) : Session.getNewsQaNum());
+        Session.setNewsGroupNum(map.get(NewsTypeConstants.NEWS_GROUP) != null && map.get(NewsTypeConstants.NEWS_GROUP) != 0 ? Session.getNewsGroupNum() + map.get(NewsTypeConstants.NEWS_GROUP) : Session.getNewsGroupNum());
+        Session.setNewsActivityNum(map.get(NewsTypeConstants.NEWS_ACTIVITY) != null && map.get(NewsTypeConstants.NEWS_ACTIVITY) != 0 ? Session.getNewsActivityNum() + map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
     }
 
     private void initDotView() {
+        Log.e(TAG, "initDotView: ");
         List<NewsOverviewBean> data = mAdapter.getData();
         for (int i = 0; i < data.size(); i++) {
             NewsOverviewBean item = data.get(i);
@@ -269,6 +274,7 @@ public class NewsActivity extends BaseActivity {
     }
 
     private void initMessageOverview(HashMap<String, NewsBean> data) {
+        Log.e(TAG, "initMessageOverview: ");
         List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
         for (NewsOverviewBean cache : mCacheData) {
             Integer id = cache.getTypeId();

@@ -103,14 +103,14 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                         }
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+//                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
-                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+//                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
     }

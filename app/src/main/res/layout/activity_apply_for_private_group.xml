@@ -224,14 +224,16 @@
                         android:textSize="@dimen/font_38" />
                 </LinearLayout>
 
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/img_group"
                     android:layout_width="@dimen/px216"
                     android:layout_height="@dimen/px216"
                     android:background="@color/white"
                     android:scaleType="centerCrop"
-                    android:src="@color/colorPrimary"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    app:riv_corner_radius="8dp"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="false" />
             </FrameLayout>
 
             <View style="@style/line_horizontal_gray_s" />
@@ -244,17 +246,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="私圈名称"
                     android:textColor="@color/font_gray_xl"
                     android:textSize="@dimen/font_50" />
 
                 <EditText
                     android:id="@+id/etv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
                     android:maxLength="7"

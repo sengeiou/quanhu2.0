@@ -114,4 +114,16 @@ public class EntityCache<T> {
         SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
         sp.edit().clear().apply();
     }
+
+    public void clean() {
+        clean("");
+    }
+
+    public void clean(String tag) {
+        if (mClass != null) {
+            SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
+            String key = LIST_KEY + tag + mClass.getCanonicalName();
+            sp.edit().remove(key).apply();
+        }
+    }
 }

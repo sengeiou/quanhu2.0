@@ -9,9 +9,12 @@ import android.widget.ListView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -78,7 +81,8 @@ public class PrivateGroupAllFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                PrivateGroupBean item = mAdapter.getItem(position);
+                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + CommomUtils.getPrivateGroupHomeUrl(item.getCircleRoute(), item.getCoterieId()));
             }
         });
         layoutRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
@@ -136,7 +140,8 @@ public class PrivateGroupAllFragment extends BaseFragment {
                                 pageNo = 1;
                             }
                             pageNo++;
-                        } else {
+                        }
+                        if (mAdapter.getCount() == 0) {
                             onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }
                     }

@@ -125,6 +125,11 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
@@ -168,15 +173,24 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                     pageNo = 1;
                                 }
                                 pageNo++;
-                            } else {
+                            }
+                            if (mAdapter.getCount() == 0) {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             }
                         }
                         EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, data.size()));
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+                    if (type != TYPE_PART)
+                        SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                if (type != TYPE_PART)
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
     }
