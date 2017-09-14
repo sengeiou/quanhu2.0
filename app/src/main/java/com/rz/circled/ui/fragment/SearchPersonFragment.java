@@ -42,7 +42,7 @@ public class SearchPersonFragment extends BaseFragment {
     ListView lvPerson;
     private SearchUserAdapter personAdapter;
     private SearchPresenter searchPresenter;
-    public  static String keyWord = "";
+    private  String keyWord = "";
     private List<StarListBean.CustInfoBean> dataCustInfos = new ArrayList<>();
 
 
@@ -156,6 +156,7 @@ public class SearchPersonFragment extends BaseFragment {
                     dataCustInfos.clear();
                 }
                 dataCustInfos.addAll(mDatas);
+                personAdapter.setKeyWord(keyWord);
                 personAdapter.setData(dataCustInfos);
                 personAdapter.notifyDataSetChanged();
             } else {

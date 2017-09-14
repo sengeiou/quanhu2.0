@@ -42,7 +42,7 @@ public class SearchRewardFragment extends BaseFragment {
     private SearchRewardAdapter rewardAdapter;
     private List<SearchRewardBean> rewardBeanList = new ArrayList<>();
     private SearchPresenter searchPresenter;
-    public  static String keyWord = "";
+    private String keyWord = "";
 
     public SearchRewardFragment() {
     }
@@ -76,7 +76,7 @@ public class SearchRewardFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
+                ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_REWARD);
                 mRefresh.setRefreshing(false);
             }
         });
@@ -101,7 +101,7 @@ public class SearchRewardFragment extends BaseFragment {
             //去搜索
             keyWord = (String) baseEvent.getData();
 
-            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
+            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_REWARD);
         }
     }
 
@@ -157,6 +157,16 @@ public class SearchRewardFragment extends BaseFragment {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
     }
 
 }

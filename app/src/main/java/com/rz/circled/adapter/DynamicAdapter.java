@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class DynamicAdapter extends CircleContentAdapter {
     public DynamicAdapter(Context context, List mDatas) {
         super(context, mDatas, R.layout.item_dynamic_home);
     }
+
     @Override
     public void convert(ViewHolder helper, final CircleDynamic item) {
         bindCircleContent(helper, item);
@@ -56,6 +58,7 @@ public class DynamicAdapter extends CircleContentAdapter {
         }
 
         mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
+
         if (item.cust != null) {
             mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);
         }

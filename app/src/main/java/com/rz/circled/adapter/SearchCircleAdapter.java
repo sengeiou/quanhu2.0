@@ -1,20 +1,29 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.StringFormatUtil;
 import com.rz.httpapi.bean.CircleEntrModle;
 
 /**
  * Created by Gsm on 2017/9/2.
  */
 public class SearchCircleAdapter extends SearchCommonAdapter {
+    private String keyWord = "";
+    StringFormatUtil stringFormatUtil;
 
     public SearchCircleAdapter(Context context, int layoutId) {
         super(context, layoutId);
     }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
+
 
     @Override
     public void convert(ViewHolder helper, Object item, int position) {
@@ -22,6 +31,18 @@ public class SearchCircleAdapter extends SearchCommonAdapter {
         CircleEntrModle model = (CircleEntrModle) item;
         tvName.setSelected(model.isSeleced());
         tvName.setText("");
-        tvName.append(getSpan(model.circleName));
+
+//        if(stringFormatUtil == null){
+//            stringFormatUtil = new StringFormatUtil(mContext, model.circleName, keyWord, R.color.colorAccent).fillColor();
+//
+//            tvName.setText(stringFormatUtil.getResult());
+//
+//        }
+        stringFormatUtil = new StringFormatUtil(mContext, model.circleName, keyWord, R.color.colorAccent).fillColor();
+
+        tvName.setText(stringFormatUtil.getResult());
+
+
+//        tvName.append(getSpan(model.circleName));
     }
 }

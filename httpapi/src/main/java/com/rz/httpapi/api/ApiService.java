@@ -820,4 +820,17 @@ public interface ApiService {
             @Field("start") int start,
             @Field("limit") int limit
     );
+
+//    /**
+//     * 转发统计
+//     *
+//     * @param custId
+//     * @return
+//     */
+//    @FormUrlEncoded
+//    @POST(CircleApi.CIRCLE_TRANSFER_STATS)
+//    public Call<ResponseData<CircleStatsModel>> getCircleStats(
+//            @Field("custId") String custId
+//    );
+
 }

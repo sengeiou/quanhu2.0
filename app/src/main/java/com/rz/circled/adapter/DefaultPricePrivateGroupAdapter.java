@@ -14,6 +14,7 @@ import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.Protect;
+import com.rz.common.utils.StringFormatUtil;
 import com.rz.common.utils.TextViewUtils;
 import com.rz.httpapi.bean.PrivateGroupBean;
 
@@ -23,6 +24,7 @@ import com.rz.httpapi.bean.PrivateGroupBean;
 
 public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter {
     private String keyWord;
+    private StringFormatUtil stringFormatUtil;
 
     public DefaultPricePrivateGroupAdapter(Context context, int layoutId, int type) {
         super(context, layoutId, type);
@@ -39,8 +41,15 @@ public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter 
             tvStatus.setText(String.format(mContext.getString(R.string.private_group_price), item.getConsultingFee()));
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_F5CD45));
         }
-//        ((TextView) helper.getView(R.id.tv_title)).setText(TextUtils.isEmpty(item.getName()) ? "" : TextViewUtils.getSpan(item.getName(), keyWord));
-        ((TextView) helper.getView(R.id.tv_title)).setText(item.getName());
+
+        stringFormatUtil = new StringFormatUtil(mContext, item.getName(), keyWord, R.color.colorAccent).fillColor();
+
+        if(keyWord != null){
+            ((TextView) helper.getView(R.id.tv_title)).setText(TextUtils.isEmpty(item.getName()) ? "" : stringFormatUtil.getResult());
+        }else{
+            ((TextView) helper.getView(R.id.tv_title)).setText(item.getName());
+        }
+
     }
 
     public void setKeyWord(String keyWord) {

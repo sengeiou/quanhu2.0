@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,11 +34,13 @@ import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.PersonInfoAty;
-import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
-import com.rz.circled.widget.MListView;
+import com.rz.circled.widget.ObservableListView;
+import com.rz.circled.widget.observable.ObservableScrollViewCallbacks;
+import com.rz.circled.widget.observable.ScrollState;
+import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.EntityCache;
@@ -71,41 +75,47 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     /**
      * 用户头像
      */
-    @BindView(R.id.id_person_head_img)
     ImageView mImgPersonHead;
-    @BindView(R.id.id_person_news_rela)
     RelativeLayout idPersonNewsRela;
-    @BindView(R.id.id_person_login_days)
     TextView idPersonLoginDays;
+
     /**
      * 用户昵称
      */
-    @BindView(R.id.id_person_name_txt)
-    TextView mTxtPersonName;
     @BindView(R.id.title_content)
-    FrameLayout mTitleContent;
+    RelativeLayout mTitleContent;
     /**
      * 展示内容
      */
-    @BindView(R.id.id_contacts_listv)
-    MListView mListView;
+    @BindView(R.id.id_comm_listview)
+    ObservableListView mListView;
+
+    @BindView(R.id.id_comm_refresh_ll)
+    SwipyRefreshLayout swipeRefreshLayout;
+
 
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
     public static String MINEFRGFOCUS = "mine_focus_push";
 
     List<MineFragItemModel> mModelList;
     CommonAdapter adapter;
-    @BindView(R.id.tv_circle_count)
     TextView tvCircleCount;
-    @BindView(R.id.tv_transfer_count)
     TextView tvTransferCount;
-    @BindView(R.id.tv_collect_count)
     TextView tvCollectCount;
+    TextView tvActivityCount;
+
 //    private SplashPresenter mSplashPresenter;
     protected IPresenter presenter;
     private MessageReceiver receiver;
     private CustormServiceModel mCustormServiceModel;
     private SharedPreferences mSp;
+
+    private TextView mTxtPersonName;
+
+    View header;
+    View newTitilbar;
+    private int headHight;
+
 
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -132,12 +142,16 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     public void initView() {
         mSp = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
         initUserNews();
-        View newtitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
-        newtitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
-        TextView tv = (TextView) newtitilbar.findViewById(R.id.titlebar_main_tv);
-        tv.setText("我");
-        mTitleContent.addView(newtitilbar);
-        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
+        newTitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
+        newTitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
+        TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
+        ImageView iv = (ImageView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
+        iv.setImageResource(R.mipmap.ic_message);
+        tv.setText("我的");
+        mTitleContent.addView(newTitilbar);
+        swipeRefreshLayout.setRefreshing(false);
+//        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
+
     }
 
 
@@ -163,19 +177,94 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     //初始化用户信息
     public void initUserNews() {
-        if (Session.getUserIsLogin()) {
-            mTxtPersonName.setText(Session.getUserName());
-            if (TextUtils.isEmpty(Session.getUser_signatrue()))
+
+        if (mListView.getHeaderViewsCount() == 0) {
+            Log.d("yeying", "addview refreshUserInfoView");
+            header = View.inflate(getActivity(), R.layout.header_show_frag, null);
+            header.findViewById(R.id.id_person_news_rela).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isLogin()) {
+                        jump(PersonInfoAty.class);
+                    }
+                }
+            });
+
+            mImgPersonHead = (ImageView) header.findViewById(R.id.id_person_head_img);
+            RelativeLayout bgRlyout = (RelativeLayout) header.findViewById(R.id.bg_rl_head);
+            idPersonLoginDays = (TextView) header.findViewById(R.id.id_person_login_days);
+            tvCircleCount = (TextView) header.findViewById(R.id.tv_circle_count);
+            tvTransferCount = (TextView) header.findViewById(R.id.tv_transfer_count);
+            tvCollectCount = (TextView) header.findViewById(R.id.tv_collect_count);
+            tvActivityCount = (TextView) header.findViewById(R.id.tv_activity_count);
+
+            bgRlyout.getBackground().setAlpha(77);
+            if (Protect.checkLoadImageStatus(mActivity)) {
+                Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
+                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
+            }
+
+            mTxtPersonName = (TextView) header.findViewById(R.id.id_person_name_txt);
+            if (Session.getUserIsLogin()) {
+                mTxtPersonName.setText(Session.getUserName());
+                if (TextUtils.isEmpty(Session.getUser_signatrue()))
+                    idPersonLoginDays.setText("");
+                else
+                    idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
+            } else {
+                mTxtPersonName.setText(getString(R.string.mine_no_login));
                 idPersonLoginDays.setText("");
-            else
-                idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
-        } else {
-            mTxtPersonName.setText(getString(R.string.mine_no_login));
-            idPersonLoginDays.setText("");
-        }
-        if (Protect.checkLoadImageStatus(mActivity)) {
-            Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
-                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
+            }
+
+//            ImageView iv = (ImageView) header.findViewById(R.id.iv_show_top);
+//            iv.getLayoutParams().height = ScreenUtil.getDisplayWidth() * 288 / 720;
+//            iv.requestLayout();
+
+//            ImageView iv = (ImageView) header.findViewById(R.id.id_person_news_rela);
+//            iv.getLayoutParams().height = ScreenUtil.getDisplayWidth() * 288 / 720;
+//            iv.requestLayout();
+//            mListView.addHeaderView(header);
+//            headHight = iv.getLayoutParams().height + DensityUtils.dip2px(mActivity, 20);
+            mListView.addHeaderView(header);
+
+            mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                }
+            });
+
+//            headHight = iv.getLayoutParams().height + DensityUtils.dip2px(mActivity, 20);
+            mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+                @Override
+                public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+                    if (scrollY <= 0) {
+                        newTitilbar.getBackground().mutate().setAlpha(0);
+                    } else if (scrollY > 0 && scrollY <= headHight) {
+                        float scale = (float) scrollY / headHight;
+                        float alpha = (255 * scale);
+                        // 只是layout背景透明(仿知乎滑动效果)
+                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+                    } else {
+                        newTitilbar.getBackground().mutate().setAlpha(255);
+                    }
+                }
+
+                @Override
+                public void onDownMotionEvent() {
+
+                }
+
+                @Override
+                public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+
+                }
+            });
         }
 
     }
@@ -230,7 +319,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             initUserNews();
         }
         if (!TextUtils.isEmpty(Session.getUserId())) {
-            ((V3CirclePresenter) presenter).getCircleStats("");
+//            ((V3CirclePresenter) presenter).getCircleStats("");
         }
     }
 
@@ -246,31 +335,34 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         mModelList = new ArrayList<MineFragItemModel>();
 //        MineFragItemModel model8 = new MineFragItemModel(getString(R.string.mine_my_contacts), "管理好友", R.drawable.ic_mine_contacts_new, false);
-        MineFragItemModel model8 = new MineFragItemModel(getString(R.string.mine_my_contacts), R.mipmap.icon_code, false);
-        MineFragItemModel model0 = new MineFragItemModel(getString(R.string.mine_my_account), R.mipmap.icon_code, false);
-        MineFragItemModel model2 = new MineFragItemModel(getString(R.string.mine_my_ticket), R.mipmap.icon_code, false);
-        MineFragItemModel model3 = new MineFragItemModel(getString(R.string.mine_my_collection), R.mipmap.icon_code, false);
-        //增加我的推广fengan
-//        MineFragItemModel model9 = new MineFragItemModel(getString(R.string.mine_my_invite), R.drawable.ic_mine_promotion_new, false);
+        MineFragItemModel model = new MineFragItemModel(getString(R.string.my_purchase), R.mipmap.ic_buy, false);
+        MineFragItemModel mode2 = new MineFragItemModel(getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
+        MineFragItemModel mode3 = new MineFragItemModel(getString(R.string.my_collect), R.mipmap.ic_colection, true);
+        MineFragItemModel mode4 = new MineFragItemModel(getString(R.string.my_level), R.mipmap.ic_level, false);
+        MineFragItemModel mode5 = new MineFragItemModel(getString(R.string.mine_my_account), R.mipmap.ic_count, false);
+        MineFragItemModel mode6 = new MineFragItemModel(getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
+        MineFragItemModel mode7 = new MineFragItemModel(getString(R.string.mine_my_contacts), R.mipmap.ic_addlist, false);
+        MineFragItemModel mode8 = new MineFragItemModel(getString(R.string.mine_my_qrcode), R.mipmap.ic_code, false);
+        MineFragItemModel mode9 = new MineFragItemModel(getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
 
-        MineFragItemModel model4 = new MineFragItemModel(getString(R.string.mine_my_qrcode), R.mipmap.icon_code, false);
-        MineFragItemModel model6 = new MineFragItemModel(getString(R.string.mine_my_invite_friend), R.mipmap.icon_code, true);
-//        MineFragItemModel model4 = new MineFragItemModel(getString(R.string.mine_notice), R.drawable.ic_mine_accouncement, false);
-        MineFragItemModel model5 = new MineFragItemModel(getString(R.string.mine_my_setting), R.mipmap.icon_code, false);
-        MineFragItemModel model7 = new MineFragItemModel(getString(R.string.v3_customer_service), R.mipmap.icon_code, false);
+        MineFragItemModel mode10 = new MineFragItemModel(getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
+        MineFragItemModel mode11 = new MineFragItemModel(getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
 
 
-        mModelList.add(model8);//通讯录
-        mModelList.add(model0);//我的账户
-        mModelList.add(model2);//我的卡卷
+        mModelList.add(model);//我的购买
+        mModelList.add(mode2);//我的打赏
+        mModelList.add(mode3);//我的收藏
 
-//        mModelList.add(model3);//我的收藏
-        mModelList.add(model4);//我的二维码
-        mModelList.add(model6);//一键分享
-//        mModelList.add(model9);//我的推广
+        mModelList.add(mode4);//我的等级
+        mModelList.add(mode5);//我的账户
 
-        mModelList.add(model7);//在线留言
-        mModelList.add(model5);//设置
+        mModelList.add(mode6);//我的卡卷
+        mModelList.add(mode7);//通讯录
+
+        mModelList.add(mode8);//我的二维码
+        mModelList.add(mode9);//一键邀请好友
+        mModelList.add(mode10);//联系客服
+        mModelList.add(mode11);//设置
 
         mListView.setAdapter(adapter = new CommonAdapter<MineFragItemModel>(mActivity, mModelList, R.layout.adp_mine_frg) {
 
@@ -368,7 +460,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //        }
     }
 
-    @OnClick({R.id.id_person_news_rela, R.id.btn_my_transfer, R.id.id_person_head_img, R.id.btn_my_collect, R.id.btn_my_circle})
+//    @OnClick()
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_my_collect:
@@ -466,53 +558,80 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             //通讯录
-            case 0:
+            case 1:
                 if (isLogin()) {
-                    trackUser("我的", "入口名称", "通讯录");
+                    trackUser("我的", "入口名称", "我的购买");
+//                    showActivity(frg, ContactsAty.class);
                     jump(ContactsAty.class);
                 }
                 break;
             //我的账户
-            case 1:
+            case 2:
                 if (isLogin()) {
-                    trackUser("我的", "入口名称", "我的账户");
+                    trackUser("我的", "入口名称", "我的打赏");
+//                    showActivity(frg, MyAccountAty.class);
                     jump(MyAccountAty.class);
                 }
                 break;
-            //我的二维码
+
             case 3:
+                if (isLogin()) {
+                    trackUser("我的", "入口名称", "我的收藏");
+//                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
+//                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
+//                    startActivity(intent);
+                }
+                break;
+
+            //我的二维码
+            case 4:
+//                if (isLogin()) {
+//                    showActivity(frg, MyCollectionAty.class);
+//                }
+                if (isLogin()) {
+                    trackUser("我的", "入口名称", "我的等级");
+//                    showActivity(frg, PersonScanAty.class);
+                }
+                break;
+            //转发券
+
+            case 5:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的二维码");
                     jump(PersonScanAty.class);
                 }
                 break;
-            //转发券
-            case 2:
-                if (isLogin()) {
-                    trackUser("我的", "入口名称", "我的卡券");
-                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-                    startActivity(intent);
-                }
-                break;
-            case 4:
-                if (isLogin()) {
-//                    trackUser("我的","入口名称","一键邀请好友");
-//                    ShareNewsAty.startShareNews(frg, new ShareModel(
-//                                    "悠然一指，一指进入你的圈子",
-//                                    "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
-//                                    H5Address.ONLINE_TUIGUANG),
-//                            IntentCode.PAGE_ADDFRIEND);
-                }
-                break;
-            //设置
+
             case 6:
-                trackUser("我的","入口名称","设置");
-                Intent intent = new Intent(mActivity, SettingActivity.class);
-                startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
+                if (isLogin()) {
+                    trackUser("我的","入口名称","我的卡卷");
+
+                }
                 break;
+
+            case 7:
+                if (isLogin()) {
+                    trackUser("我的","入口名称","通讯录");
+
+                }
+                break;
+
+            case 8:
+                if (isLogin()) {
+                    trackUser("我的","入口名称","我的二维码");
+
+                }
+                break;
+
+            case 9:
+                if (isLogin()) {
+                    trackUser("我的","入口名称","一键邀请好友");
+
+                }
+                break;
+
             //联系客服
-            case 5:
+            case 10:
                 if (isLogin() && null != mCustormServiceModel) {
                     trackUser("我的", "入口名称", "联系客服");
                     starCustormService();
@@ -522,6 +641,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //                }
                     break;
                 }
+                //设置
+            case 11:
+                trackUser("我的","入口名称","设置");
+                Intent intent = new Intent(mActivity, SettingActivity.class);
+                startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
+                break;
         }
     }
 

@@ -20,9 +20,9 @@ public abstract class SearchCommonAdapter extends CommonAdapter {
         super(context, layoutId);
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
-    }
+//    public void setKeyWord(String keyWord) {
+//        this.keyWord = keyWord;
+//    }
 
     protected SpannableString getSpan(String content) {
         SpannableString span = new SpannableString(content);

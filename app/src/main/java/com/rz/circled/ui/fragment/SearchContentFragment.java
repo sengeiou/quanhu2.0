@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.litesuits.common.utils.HexUtil;
@@ -37,7 +38,7 @@ import static com.rz.circled.R.layout.fragment_search_content;
 /**
  * Created by Gsm on 2017/9/2.
  */
-public class SearchContentFragment extends BaseFragment {
+public class SearchContentFragment extends BaseFragment implements AdapterView.OnItemClickListener{
 
     @BindView(R.id.refresh)
     SwipeRefreshLayout mRefresh;
@@ -47,7 +48,7 @@ public class SearchContentFragment extends BaseFragment {
     private DynamicAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private SearchPresenter searchPresenter;
-    public  static String keyWord = "";
+    public  String keyWord = "";
 
     public static SearchContentFragment newInstance() {
         SearchContentFragment frg = new SearchContentFragment();
@@ -79,19 +80,16 @@ public class SearchContentFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CONTENT);
+                ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CONTENT);
                 mRefresh.setRefreshing(false);
             }
         });
 
     }
 
-
     @Override
     public void initPresenter() {
         super.initPresenter();
-
-
 
         //搜索接口
         searchPresenter = new SearchPresenter();
@@ -144,6 +142,7 @@ public class SearchContentFragment extends BaseFragment {
                 circleDynamicList.clear();
             }
             circleDynamicList.addAll(mDatas);
+            dynamicAdapter.setKeyWord(keyWord);
             dynamicAdapter.notifyDataSetChanged();
         } else {
             if (!loadMore) {
@@ -161,16 +160,19 @@ public class SearchContentFragment extends BaseFragment {
             EventBus.getDefault().unregister(this);
     }
 
-//    @Override
-//    public void onVisible(){
-//
-//        Log.e(TAG,"请求数据");
-//
-////        if(!keyWord.isEmpty()){
-////            ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"ti","",SearchPresenter.SEARCH_TYPE_ARTICLE,SearchPresenter.SEARCH_CONTENT);
-////        }
-//
-//        ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CONTENT);
-//    }
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+    }
 }

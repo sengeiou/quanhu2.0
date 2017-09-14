@@ -46,7 +46,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
     private SearchDataBean searchDataBean = new SearchDataBean();
     private List<PrivateGroupBean> coterieInfosData = new ArrayList<>();
     private SearchPresenter searchPresenter;
-    public  static String keyWord = "";
+    private String keyWord = "";
 
     public static SearchPrivateCircleFragment newInstance() {
         SearchPrivateCircleFragment frg = new SearchPrivateCircleFragment();
@@ -82,7 +82,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_CONTENT);
+                ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
                 mRefresh.setRefreshing(false);
             }
         });
@@ -106,7 +106,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
             //去搜索
 
             keyWord = (String) baseEvent.getData();
-            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
+            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
         }
     }
 
@@ -144,6 +144,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
                     coterieInfosData.clear();
                 }
                 coterieInfosData.addAll(mDatas);
+                mAdapter.setKeyWord(keyWord);
                 mAdapter.setData(coterieInfosData);
                 mAdapter.notifyDataSetChanged();
             } else {
@@ -162,5 +163,6 @@ public class SearchPrivateCircleFragment extends BaseFragment {
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
     }
+
 
 }
