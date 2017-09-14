@@ -33,7 +33,7 @@ public class NewsAnnouncementViewBinder extends ItemViewBinder<NewsBean, NewsAnn
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.tvTitle.setText(item.getTitle());
         holder.tvTime.setText(item.getCreateTime());
-        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.img);
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).into(holder.img);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
