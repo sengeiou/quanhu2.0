@@ -38,6 +38,7 @@ public class RewardFragment extends BaseFragment {
 
     private WebViewProxy mWebViewProxy;
 
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {

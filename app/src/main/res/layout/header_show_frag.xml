@@ -149,7 +149,7 @@
             android:paddingTop="@dimen/px30">
 
             <LinearLayout
-                android:id="@+id/btn_my_circle"
+                android:id="@+id/btn_my_article"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -219,7 +219,7 @@
             <!--<View style="@style/DefaultVLineStyle"/>-->
 
             <LinearLayout
-                android:id="@+id/btn_my_collect"
+                android:id="@+id/btn_my_circle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

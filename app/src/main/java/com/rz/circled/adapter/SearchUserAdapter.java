@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,8 +50,18 @@ public class SearchUserAdapter extends SearchCommonAdapter {
         tvName.setText(stringFormatUtil.getResult());
         tvName.append(getSpan(""));//替换文本
         Glide.with(mContext).load(starListBean.getCustImg()).transform(new GlideCircleImage(mContext)).into(ivIcon);
-        tvInfo.setText("1111");
-        tvInfo.append(getSpan(""));//替换文本
+
+        if(TextUtils.isEmpty(starListBean.getCustSignature())){
+            tvInfo.setText(starListBean.getCustSignature());
+        }
+
+        if(starListBean.getCustRole() == 0){
+            ivTalent.setVisibility(View.GONE);
+        }else{
+            ivTalent.setVisibility(View.VISIBLE);
+        }
+
+//        tvInfo.append(getSpan(""));//替换文本
 
         if (isTalentPage) {//达人列表
             int basePadding = (int) mContext.getResources().getDimension(R.dimen.px20);

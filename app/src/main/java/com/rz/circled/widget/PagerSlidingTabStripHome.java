@@ -771,4 +771,7 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
         setLineFitFont(false);
     }
 
+    public void setTempPosition(int tempPosition) {
+        this.tempPosition = tempPosition;
+    }
 }

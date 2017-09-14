@@ -301,10 +301,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
 
+        <activity
+            android:name=".ui.activity.MyArticleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity android:name=".ui.activity.FollowCircle"/>
 
         <activity
             android:name=".ui.activity.LocationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+
+        <activity android:name=".ui.activity.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
 

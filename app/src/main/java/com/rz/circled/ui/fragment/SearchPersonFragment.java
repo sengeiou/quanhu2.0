@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchPersonAdapter;
 import com.rz.circled.adapter.SearchUserAdapter;
@@ -30,13 +32,16 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
+
 /**
  * Created by Gsm on 2017/9/2.
  */
 public class SearchPersonFragment extends BaseFragment {
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefresh;
+    SwipyRefreshLayout mRefresh;
 
     @BindView(R.id.lv_search_content)
     ListView lvPerson;
@@ -73,17 +78,19 @@ public class SearchPersonFragment extends BaseFragment {
     @Override
     public void initData() {
 
-        Log.e(TAG,"-----SearchPersonFragment------");
+        initRefresh();
 
-        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
-        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    }
+
+    private void initRefresh() {
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_PERSION);
                 mRefresh.setRefreshing(false);
             }
         });
-
     }
 
     @Override
@@ -117,7 +124,7 @@ public class SearchPersonFragment extends BaseFragment {
 //            (final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType)
             keyWord = (String) baseEvent.getData();
 
-            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",SearchPresenter.SEARCH_PERSION);
+            ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_PERSION);
         }
     }
 
@@ -177,5 +184,14 @@ public class SearchPersonFragment extends BaseFragment {
             EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return personAdapter != null && personAdapter.getCount() != 0;
+    }
 
 }

@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
@@ -34,6 +36,8 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.circled.R.layout.fragment_search_content;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 
 /**
  * Created by Gsm on 2017/9/2.
@@ -41,7 +45,7 @@ import static com.rz.circled.R.layout.fragment_search_content;
 public class SearchContentFragment extends BaseFragment implements AdapterView.OnItemClickListener{
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefresh;
+    SwipyRefreshLayout mRefresh;
 
     @BindView(R.id.lv_search_content)
     ListView lvContent;
@@ -66,6 +70,7 @@ public class SearchContentFragment extends BaseFragment implements AdapterView.O
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
 
         //泛型要改
         dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);
@@ -75,16 +80,19 @@ public class SearchContentFragment extends BaseFragment implements AdapterView.O
     @Override
     public void initData() {
         Log.e(TAG,"-----SearchContentFragment------");
+        initRefresh();
 
-        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
-        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    }
+
+    private void initRefresh() {
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CONTENT);
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                ((SearchPresenter) searchPresenter).searchQH(direction != SwipyRefreshLayoutDirection.TOP,keyWord,"","","",SearchPresenter.SEARCH_CONTENT);
                 mRefresh.setRefreshing(false);
             }
         });
-
     }
 
     @Override
@@ -105,7 +113,7 @@ public class SearchContentFragment extends BaseFragment implements AdapterView.O
             //去搜索
             keyWord = (String) baseEvent.getData();
 
-            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CONTENT);
+            ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_CONTENT);
         }
     }
 
@@ -167,7 +175,7 @@ public class SearchContentFragment extends BaseFragment implements AdapterView.O
 
     @Override
     protected boolean hasDataInPage() {
-        return true;
+        return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
     @Override
