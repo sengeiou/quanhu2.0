@@ -13,14 +13,49 @@
     <string name="push_news_loading">正在提交信息</string>
     <string name="submit_news_loading">正在提交信息</string>
     <string name="action_fail">操作失败</string>
+    <string name="easy_pay_open">已开启免密支付</string>
+    <string name="easy_pay_close">已关闭免密支付</string>
     <string name="is_loading">正在加载...</string>
     <string name="loading_data_faile">获取数据失败</string>
     <string name="exit_fail">退出失败</string>
     <string name="exit_success">退出成功</string>
     <string name="exit_loading">正在退出...</string>
     <string name="check_loading">正在提交...</string>
+    <string name="bind">绑定</string>
+    <string name="had_bind">已绑定</string>
+    <string name="cancel_bind">解绑</string>
+    <string name="auth_phone">手机号</string>
+    <string name="safety_info_note">为保障账户安全，请输入您真实的姓名和身份证号码。该信息一经设定，不能修改，请仔细填写。</string>
+    <string name="hint_enter_name">请输入您的姓名</string>
+    <string name="id_card">身份证号码</string>
+    <string name="hint_enter_id_card">请输入您的身份证号码</string>
+    <string name="safe_protect_info">安全保护信息</string>
+    <string name="setting_safe_info">设置安全保护信息</string>
+    <string name="unbind_card_fail">解绑失败</string>
+    <string name="webo_login">微博登录</string>
+    <string name="weibo">微博</string>
+    <string name="weixin_login">微信登录</string>
+    <string name="weixin">微信</string>
+    <string name="qq_login">腾讯QQ</string>
+    <string name="qq">QQ</string>
     <string name="edit_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890</string>
-
+    <string name="name_length">姓名长度需在2～20位之间</string>
+    <string name="id_length">身份证号码长度需为18位</string>
+    <string name="setting_sucess">设置成功</string>
+    <string name="reset_desc">为保障您的账户安全，请先完成身份验证。请输入在设置安全保护信息时填写的姓名和身份证号码。</string>
+    <string name="verification_code">验证码</string>
+    <string name="rest_pay_pw">重置支付密码</string>
+    <string name="input_code">请输入验证码</string>
+    <string name="bind_phone">请先绑定手机号</string>
+    <string name="input_old_pwd">输入旧密码</string>
+    <string name="pay_pw_explain"> 请输入6位数字的支付密码</string>
+    <string name="safety_note">为保障账户安全，请及时设置安全保护信息</string>
+    <string name="modify_pay_pw">修改支付密码</string>
+    <string name="setting_pay_pw">设置支付密码</string>
+    <string name="pay_pw_success">支付密码设置成功</string>
+    <string name="reast_password">重置支付密码</string>
+    <string name="open_small_pay_no_psw">开启小额免密支付功能</string>
+    <string name="password_sucess">密码重置成功</string>
 
     <string name="tab_home">首页</string>
     <string name="tab_find">发现</string>
@@ -213,6 +248,7 @@
 
 
     <string name="modify_fail">修改失败</string>
+    <string name="setting_fail">设置失败</string>
     <string name="report_fail">举报失败</string>
     <string name="refunds_success">举报成功</string>
     <string name="refunds_fail">举报失败</string>
@@ -303,6 +339,7 @@
     <string name="forget_no_regist_introduce">您还没有注册悠然一指，现在开通：</string>
     <string name="forget_no_agree">请同意相关协议</string>
     <string name="change_pw_success">重置密码成功</string>
+    <string name="reset_fail">重置失败</string>
     <string name="change_pw_fail">重置密码失败</string>
     <string name="input_old_pay_pw">请输入6位旧密码</string>
     <string name="no_equal_pay_pw">两次密码不一致</string>
@@ -535,6 +572,13 @@
     <string name="shuoming">说明</string>
     <string name="jump_url_null">跳转链接为空</string>
     <string name="unsupport_service">暂不支持此服务</string>
+    <string name="current_login">注册账户</string>
+    <string name="forget_pay_password">忘记支付密码</string>
+    <string name="safe_info">安全保护信息</string>
+    <string name="protect_account_safe">保障账户安全，如找回支付密码等</string>
+    <string name="easy_pay">小额免密</string>
+    <string name="safe_to_input">为了您的账户安全请输入支付密码</string>
+    <string name="get_info_fail">获取信息失败</string>
 
 
 </resources>

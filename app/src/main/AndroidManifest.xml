@@ -316,6 +316,11 @@
         <activity android:name=".ui.activity.PersonScanAty"/>
         <activity android:name=".ui.activity.AwesomeTabsAty"/>
         <activity android:name=".ui.activity.VideoH5Aty"/>
+        <activity android:name=".ui.activity.SettingSafeUserAty"/>
+        <activity android:name=".ui.activity.AccountSafeAty"/>
+        <activity android:name=".ui.activity.ResetPayPwAty"/>
+        <activity android:name=".ui.activity.ModifyPwdAty"/>
+        <activity android:name=".ui.activity.SetPayPassAty"/>
 
     </application>
 

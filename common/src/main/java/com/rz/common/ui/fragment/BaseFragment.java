@@ -17,6 +17,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
+import com.rz.common.utils.ACache;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     protected boolean isViewInit = false;
     private boolean isAddIn = false;
     private BaseLoadView mLoadView;
+    public ACache mACache;
 
     public BaseFragment() {
         TAG = getClass().getSimpleName();
@@ -42,6 +44,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
+        mACache = ACache.get(mActivity);
     }
 
     @Nullable

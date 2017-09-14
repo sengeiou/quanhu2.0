@@ -3,10 +3,7 @@ package com.rz.circled.presenter.impl;
 import android.content.Context;
 import android.os.Handler;
 
-
-import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.modle.RegisterModel;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -19,11 +16,9 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.RegisterBean;
+import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.constans.ReturnCode;
-
-import java.io.IOException;
-import java.util.TreeMap;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -307,56 +302,56 @@ public class UserInfoPresenter extends GeneralPresenter {
     /**
      * 验证安全信息
      */
-//    public void checkCode(String phone, String code, String name, String problem) {
-//        if (!NetUtils.isNetworkConnected(mContext)) {
-//            mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_NET, mContext.getString(R.string.no_net_work));
-//            return;
-//        }
-//        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_LOADING, "验证中...");
-////        Call<ResponseData<RegisterModel>> call = mUserService.checkProblem(
-//        Call<ResponseData<RegisterModel>> call = Http.getApiService(mContext).checkProblem(
-//                1076,
-//                Session.getUserId(),
-//                phone,
-//                code,
-//                name,
-//                problem);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<RegisterModel>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<RegisterModel>> call, Response<ResponseData<RegisterModel>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        //验证短信验证码成功
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, "");
-//                        mView.updateView("1");
-//                        return;
-//                    } else {
-////                        if (HandleRetCode.handler(mContext, res)) {
-//                            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
-//                                }
-//                            }, 2000);
-////                        }
-//                        return;
-//                    }
-//                }
-//                //验证短信验证码失败
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "验证失败");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<RegisterModel>> call, Throwable t) {
-//                super.onFailure(call, t);
-//                //验证短信验证码失败
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "验证失败");
-//            }
-//        });
-//    }
+    public void checkCode(String phone, String code, String name, String problem) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, "验证中...");
+//        Call<ResponseData<RegisterModel>> call = mUserService.checkProblem(
+        Call<ResponseData<RegisterModel>> call = mUserService.checkProblem(
+                1076,
+                Session.getUserId(),
+                phone,
+                code,
+                name,
+                problem);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<RegisterModel>>() {
+            @Override
+            public void onResponse(Call<ResponseData<RegisterModel>> call, Response<ResponseData<RegisterModel>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        //验证短信验证码成功
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                        mView.updateView("1");
+                        return;
+                    } else {
+//                        if (HandleRetCode.handler(mContext, res)) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                                }
+                            }, 2000);
+//                        }
+                        return;
+                    }
+                }
+                //验证短信验证码失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "验证失败");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<RegisterModel>> call, Throwable t) {
+                super.onFailure(call, t);
+                //验证短信验证码失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "验证失败");
+            }
+        });
+    }
 
 //    /**
 //     * 验证手机号是否注册
