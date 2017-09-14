@@ -483,7 +483,6 @@
     <string name="article_info">文章</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
-    
 
 
     <!-- 个人信息 -->
@@ -537,4 +536,47 @@
     <string name="unsupport_service">暂不支持此服务</string>
 
 
+    <string name="share_to">分享到</string>
+    <string name="share_note">(无法获得平台圈币)</string>
+    <string name="wx_friend">微信好友</string>
+    <string name="firend_circle">朋友圈</string>
+    <string name="sina_weibo">新浪微博</string>
+    <string name="qq_friend">QQ好友</string>
+    <string name="qq_zone">QQ空间</string>
+    <string name="youren_firend">圈乎好友</string>
+    <string name="select_firend">选择好友</string>
+
+
+    <string name="report">举报</string>
+    <string name="youyouquan">悠友圈</string>
+
+
+    <string name="share_qh_tofriends">邀请好友加入圈乎,\n共享资源扩展人脉！</string>
+    <string name="coll_suc">收藏成功~</string>
+    <string name="share_suc">分享成功~</string>
+    <string name="share_fail">分享失败~</string>
+    <string name="buzhifu">该内容暂不支持分享</string>
+    <string name="qh_zuop">圈乎作品</string>
+    <string name="get_path_fail">图片路径获取失败</string>
+    <string name="video_error_un_share">视频资源错误，不可分享</string>
+    <string name="video_max_length">视频最大时长15秒，您的视频过大</string>
+    <string name="video_path_error">视频地址获取失败</string>
+
+    <string name="share_object">选择分享对象</string>
+    <string name="good_friend">好友</string>
+    <string name="recent_contacts">选择最近联系人</string>
+
+
+    <string name="share_to_other">分享给</string>
+    <string name="leave_message_to_friend">给朋友留言</string>
+
+
+    <string name="keyword_search">请输入关键字进行搜索</string>
+    <string name="select_group">选择群</string>
+    <string name="team_search">输入群名称搜索</string>
+    <string name="select_taolun">选择讨论组</string>
+    <string name="taolun_search">输入讨论组名称搜索</string>
+
+    <string name="add_qh_square">邀请您的好友，加入我们的圈乎广场吧</string>
+    <string name="input_nick">输入昵称和手机号搜索</string>
 </resources>
