@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CircleImageView;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.ViewHolder;
@@ -30,12 +32,9 @@ public class DynamicAdapter extends CircleContentAdapter {
         super(context, mDatas, R.layout.item_dynamic_home);
     }
 
-
-
     @Override
     public void convert(ViewHolder helper, final CircleDynamic item) {
         bindCircleContent(helper, item);
-
         ImageView mCivHead = helper.getView(R.id.civ_head);//用户头像
         CircleImageView mCivSuperV = helper.getView(R.id.civ_superV);//头像加V
         TextView mTvName = helper.getView(R.id.tv_name);//用户名字
@@ -59,10 +58,10 @@ public class DynamicAdapter extends CircleContentAdapter {
         }
 
         mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
-        if(item.cust!=null && TextUtils.isEmpty(item.cust.custNname)){
-            mTvName.setText(item.cust.custNname);
-        }
 
+        if (item.cust != null) {
+            mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);
+        }
         tv_other_left.setText(item.readNum+"阅读");
         if (item.coterieId==null||item.coterieName==null){
             fromWhere.setText("来自圈子"+item.circleName);
@@ -70,12 +69,13 @@ public class DynamicAdapter extends CircleContentAdapter {
             fromWhere.setText("来自私圈"+item.coterieName);
         }
         mTvTime.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd HH:mm:ss"));
-        mTvCircleName.setText(mContext.getString(R.string.from)  + item.circleName);
-        mTvCircleName.setOnClickListener(new View.OnClickListener() {
+        fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isLogin()) {
-//                    WebContainerAty.startAty(mContext, item.circleUrl);
+                if (item.coterieId==null||item.coterieName==null){
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/");
+                }else {
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/coterie/"+item.coterieId);
                 }
             }
         });

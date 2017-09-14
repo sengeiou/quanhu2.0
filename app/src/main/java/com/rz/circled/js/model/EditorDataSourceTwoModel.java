@@ -67,7 +67,7 @@ public class EditorDataSourceTwoModel implements Serializable {
         this.coterieId = coterieId;
     }
 
-    public long getClassifyItemId() {
+    public Long getClassifyItemId() {
         return classifyItemId;
     }
 

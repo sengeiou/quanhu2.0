@@ -111,14 +111,14 @@
     <string name="unallowed_join_hint">该群已设置不允许任何人加入</string>
     <string name="mine_my_account">我的账户</string>
     <string name="consumer_account">消费账户</string>
-    <string name="account_profit">悠然账户</string>
+    <string name="account_profit">奖励值</string>
     <string name="redbag_record">红包记录</string>
     <string name="bank_card">银行卡</string>
     <string name="cost_detail_v3">消费明细</string>
     <string name="account_remain">账户余额</string>
     <string name="youranbi">悠然币</string>
     <string name="recharge">充值</string>
-    <string name="all_point">悠然账户</string>
+    <string name="all_point">奖励值</string>
     <string name="duihuan_yrb">您暂无可兑换悠然币</string>
     <string name="tixian_yrb">您暂无可提现悠然币</string>
     <string name="yizhi">悠然一指</string>
@@ -169,6 +169,7 @@
     <string name="private_group_no_more">没有更多了</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
     <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
+    <string name="private_group_create_submit">提交中···</string>
     <string name="private_group_joined_user">%1$d人加入</string>
     <string name="private_group_status_0">待审核</string>
     <string name="private_group_status_1">通过</string>
@@ -179,7 +180,7 @@
     <string name="private_group_no_create">还没有创建私圈哦！</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
-    <string name="private_group_from">来自%1$s</string>
+    <string name="private_group_from">来自 %1$s</string>
     <string name="private_group_free">免费</string>
     <string name="private_group_price">%1$d圈币</string>
     <string name="private_group_youran_price">%1$d悠然币</string>
@@ -200,6 +201,7 @@
     <string name="news_interactive_tab_qa">问答</string>
     <string name="news_interactive_tab_group">私圈</string>
     <string name="news_interactive_tab_activity">活动</string>
+    <string name="news_no_data_now">暂时没有消息</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -405,7 +407,7 @@
     <string name="mine_title">我的</string>
     <string name="mine_info">原创作品</string>
     <string name="send_friends">推荐给朋友</string>
-    <string name="share_app">分享圈呼</string>
+    <string name="share_app">分享圈乎</string>
     <string name="mine_forward_circle">悠然广场转发</string>
     <string name="mine_no_login">点击登录</string>
     <string name="mine_identified">已认证</string>
@@ -438,7 +440,7 @@
     <string name="setting_new">有新版本</string>
     <string name="download_start">开始下载</string>
     <string name="getversion_error">获取系统版本号出错</string>
-    <string name="setting_clear_cache">清理缓存</string>
+    <string name="setting_clear_cache">清除缓存</string>
     <string name="setting_cache">是否清除缓存</string>
     <string name="cache_size">当前缓存大小为</string>
     <string name="setting_about">关于我们</string>
@@ -497,7 +499,7 @@
     <string name="mine_person_ex4">世界那么大 我想去看看！</string>
     <string name="mine_person_ex5">个人简介</string>
     <string name="mine_person_ex6">输入昵称</string>
-    <string name="mine_person_ex7">扫一扫上面的二维码，加我吧 长按保存图片</string>
+
     <string name="mine_person_camera">相机</string>
     <string name="mine_person_from_camera">从相机上传</string>
     <string name="mine_person_save_picture">保存图片</string>
@@ -519,5 +521,20 @@
     <string name="NO_LOVA">您还没有喜欢的圈子,\r\n赶快添加阅读更多精彩内容吧!</string>
     <string name="select_circle">请选择喜欢的圈子</string>
     <string name="search_attention_title">请输入搜索内容</string>
+    <string name="jifenpoint">点</string>
+    <string name="shengyupoint">剩余点</string>
+    <string name="account_detail">账户明细</string>
+    <string name="income">收支</string>
+    <string name="mingcheng">名称</string>
+    <string name="time">时间</string>
+    <string name="jf_details">积分明细</string>
+    <string name="mine_person_ex7">扫一扫上面的二维码,加我吧 长按保存图片</string>
+    <string name="setting_norao">打开后将不会在系统通知栏接受到系统消息</string>
+    <string name="data_loading">加载中</string>
+    <string name="jifen">积分</string>
+    <string name="shuoming">说明</string>
+    <string name="jump_url_null">跳转链接为空</string>
+    <string name="unsupport_service">暂不支持此服务</string>
+
 
 </resources>

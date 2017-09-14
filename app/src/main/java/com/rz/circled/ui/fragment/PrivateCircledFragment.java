@@ -1,14 +1,11 @@
 package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,9 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -40,14 +39,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_REFRESH;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
 import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
 
@@ -176,7 +174,7 @@ public class PrivateCircledFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_ESSENCE_REFRESH));
+                    EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_TAB_REFRESH));
                 } else {
                     EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_ESSENCE_MORE));
                 }
@@ -187,11 +185,17 @@ public class PrivateCircledFragment extends BaseFragment {
 
     private void initViewpagerBanner(List<GroupBannerBean> pics) {
         List<View> imageViews = new ArrayList<>(); // 滑动的图片集合
-        for (GroupBannerBean pic : pics) {
+        for (final GroupBannerBean pic : pics) {
             ImageView imageView = new ImageView(getContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(getContext()).load(pic.getPicUrl()).into(imageView);
             imageViews.add(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                }
+            });
         }
         viewpager.setAdapter(new MyPagerAdapter(imageViews));
         viewpager.stopAutoScroll();

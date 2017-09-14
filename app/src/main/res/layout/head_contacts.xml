@@ -11,7 +11,7 @@
 
         <ImageView
             style="@style/ContactHeadImgStyle"
-            android:src="@mipmap/ic_new_friend"/>
+            android:src="@drawable/ic_new_friend"/>
 
         <TextView
             style="@style/DefaultTvStyle"
@@ -55,7 +55,7 @@
 
         <ImageView
             style="@style/ContactHeadImgStyle"
-            android:src="@mipmap/ic_team_advance"/>
+            android:src="@drawable/ic_team_advance"/>
 
         <TextView
             style="@style/DefaultTvStyle"
@@ -86,7 +86,7 @@
 
         <ImageView
             style="@style/ContactHeadImgStyle"
-            android:src="@mipmap/ic_team_normal"/>
+            android:src="@drawable/ic_team_normal"/>
 
         <TextView
             style="@style/DefaultTvStyle"
@@ -117,7 +117,7 @@
 
         <ImageView
             style="@style/ContactHeadImgStyle"
-            android:src="@mipmap/ic_team_system_message"/>
+            android:src="@drawable/ic_team_system_message"/>
 
         <TextView
             style="@style/DefaultTvStyle"
@@ -152,8 +152,8 @@
 
     <View
         style="@style/line_horizontal_gray_s"
-        android:layout_marginLeft="@dimen/px20"
-        android:layout_marginRight="@dimen/px20"/>
+        android:layout_height="@dimen/px30"
+        />
 
     <TextView
         style="@style/DefaultTvStyle"
@@ -163,7 +163,7 @@
         android:gravity="left|center_vertical"
         android:paddingLeft="@dimen/px44"
         android:text="@string/my_friends"
-        android:textColor="@color/font_gray_m"
+        android:textColor="@color/color_000000"
         android:textSize="@dimen/font_46"/>
 
 </LinearLayout>

@@ -14,8 +14,6 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:descendantFocusability="blocksDescendants"
-        android:paddingLeft="@dimen/px44"
-        android:paddingRight="@dimen/px44"
         app:layoutManager="LinearLayoutManager" />
 
 </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>

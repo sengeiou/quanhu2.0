@@ -1,5 +1,6 @@
 package com.rz.circled.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.VideoH5Aty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
@@ -182,7 +184,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
                 trackUser("推广","Banner图",url);
                         if (url.contains("opus")) {
                             if (url.contains("opus-h")){
-//                                VideoH5Aty.startCommonH5((Activity) v.getContext(),url,context.getString(R.string.app_name));
+                                VideoH5Aty.startCommonH5((Activity) v.getContext(),url,context.getString(R.string.app_name));
                             }else{
                                 WebContainerActivity.startActivity(v.getContext(), url);
                             }

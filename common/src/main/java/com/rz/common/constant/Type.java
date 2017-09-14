@@ -58,7 +58,7 @@ public interface Type {
      */
     public static final int TYPE_LOGIN_WEB = 5;
     /**
-     *从向导跳转登录
+     * 从向导跳转登录
      */
     public static final int TYPE_LOGIN_GUIDE = 9;
     /**
@@ -94,6 +94,10 @@ public interface Type {
      * 功能码--更换手机
      */
     public static String FUNCTION_CODE_5 = "5";
+    /**
+     * 转发券
+     */
+    int TYPE_TICKET = 12;
 
 
     interface JpushMessageType {

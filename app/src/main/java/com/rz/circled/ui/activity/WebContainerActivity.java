@@ -37,12 +37,20 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     private AdvancedWebView mWebView;
     private WebViewProxy mWebViewProxy;
 
-    private boolean hadError = false;
+    private boolean processBack = false;
     private WebChromeClient webChromeClient;
+    private boolean processLoading = false;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebContainerActivity.class);
         intent.putExtra(IntentKey.EXTRA_URL, url);
+        context.startActivity(intent);
+    }
+
+    public static void startActivity(Context context, String url, boolean processLoading) {
+        Intent intent = new Intent(context, WebContainerActivity.class);
+        intent.putExtra(IntentKey.EXTRA_URL, url);
+        intent.putExtra(IntentKey.EXTRA_BOOLEAN, processLoading);
         context.startActivity(intent);
     }
 
@@ -64,7 +72,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
     @Override
     protected boolean needSwipeBack() {
-        return hadError;
+        return false;
     }
 
     @Override
@@ -84,11 +92,13 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 //        mWebView.setVisibility(View.INVISIBLE);
 
         setRefreshListener(this);
-
+        processLoading = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, false);
         String loadUrl = getIntent().getStringExtra(IntentKey.EXTRA_URL);
         mWebViewProxy.removeRepetLoadUrl(loadUrl);
+        if (processLoading)
+            processBack = false;
 
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
+//        onLoadingStatus(CommonCode.General.DATA_LOADING);
 
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
@@ -99,10 +109,10 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-//                if (newProgress >= 98 && !hadError) {
-//                    mWebView.setVisibility(View.VISIBLE);
-//                    onLoadingStatus(CodeStatus.General.DATA_SUCCESS);
-//                }
+                if (newProgress >= 98 && processLoading) {
+                    mWebView.setVisibility(View.VISIBLE);
+                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                }
             }
         };
         mWebView.setWebChromeClient(webChromeClient);
@@ -140,7 +150,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
     @Override
     public void refreshPage() {
-        hadError = false;
+        processBack = false;
         mWebView.reload();
         onLoadingStatus(CommonCode.General.DATA_LOADING);
     }
@@ -160,7 +170,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
         @Override
         public void onPageError(int errorCode, String description, String failingUrl) {
-            hadError = true;
+            processBack = false;
             onLoadingStatus(CommonCode.General.WEB_ERROR);
         }
 
@@ -193,6 +203,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
             case CommonCode.EventType.FINISH_LOADING:
 //                if (mWebView != null)
 //                    mWebView.setVisibility(View.VISIBLE);
+                processBack = true;
                 onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 break;
         }
@@ -233,7 +244,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
     @Override
     public void onBackPressed() {
-        if (hadError)
+        if (!processBack)
             super.onBackPressed();
         else {
             RequestBackHandler backHandler = new RequestBackHandler(this);

@@ -23,6 +23,7 @@ import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.ACache;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 
@@ -66,7 +67,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getBannerList("2");
-        mPresenter.getCircleDynamicList("",false);
+        mPresenter.getCircleDynamicList("", false);
     }
 
     @Override
@@ -113,12 +114,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initData() {
+        ACache mCache = ACache.get(mActivity);
+        List<CircleDynamic> model = (List<CircleDynamic>) mCache.getAsObject("cache");
+        updateViewWithLoadMore(model,false);
         mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.getBannerList("2");
-                mPresenter.getCircleDynamicList("",false);
+                mPresenter.getCircleDynamicList("", false);
                 mRefresh.setRefreshing(false);
             }
         });
@@ -154,12 +158,22 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
 
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position);
-        circleDynamic.click+=1;
-        String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId,circleDynamic.resourceId);
-//        WebContainerActivity.startActivity(mActivity, url);
+        circleDynamic.click += 1;
+        if (circleDynamic.click >= 3) {
+            mPresenter.addLoveCircle(circleDynamic.circleId, 2);
+            circleDynamic.click=0;
+        }
+        if (circleDynamic.coterieId == null || circleDynamic.coterieName == null) {
+            String circleUrl = CommomUtils.getCircleUrl(circleDynamic.moduleEnum, circleDynamic.resourceId);
+            WebContainerActivity.startActivity(mActivity, circleUrl);
+        } else {
+            String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId, circleDynamic.resourceId);
+            WebContainerActivity.startActivity(mActivity, url);
+        }
     }
 
     @Override

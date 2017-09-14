@@ -16,12 +16,12 @@ import android.widget.TextView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.StatusCode;
-import com.netease.nimlib.sdk.msg.SystemMessageObserver;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
 import com.rz.circled.adapter.ContactsAdp;
 import com.rz.circled.presenter.impl.FriendPresenter1;
+import com.rz.circled.ui.fragment.MineFragment;
 import com.rz.circled.widget.SideBar;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -40,7 +40,6 @@ import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.UIKitLogTag;
 import com.yryz.yunxinim.uikit.cache.FriendDataCache;
 import com.yryz.yunxinim.uikit.contact.core.item.ItemTypes;
-import com.yryz.yunxinim.uikit.uinfo.UserInfoHelper;
 import com.yryz.yunxinim.uikit.uinfo.UserInfoObservable;
 
 import org.greenrobot.eventbus.EventBus;
@@ -119,6 +118,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
     @Override
     public void initPresenter() {
         presenter = new FriendPresenter1();
+        presenter.attachView(this);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
         receiver = new MessageReceiver();
         IntentFilter filter_dynamic = new IntentFilter();
-//        filter_dynamic.addAction(MineFrg.MINEFRGFOCUS);
+        filter_dynamic.addAction(MineFragment.MINEFRGFOCUS);
         registerReceiver(receiver, filter_dynamic);
 
         setFocusNum(Session.getUserFocusNum());
@@ -156,7 +156,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         if (FriendPresenter1.FRIEND_APPLY_EVENT.equals(event.info)
                 || FriendPresenter1.CANCEL_FRIEND_EVENT.equals(event.info)) {
             Log.e("tag", "好友列表更新并缓存");
-            ((FriendPresenter1) presenter).getCacheFriends(false);
+            presenter.getCacheFriends(false);
         }
     }
 
@@ -407,9 +407,9 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     private void registerObserver(boolean register) {
         if (register) {
-            UserInfoHelper.registerObserver(userInfoObserver);
+//            UserInfoHelper.registerObserver(userInfoObserver);
         } else {
-            UserInfoHelper.unregisterObserver(userInfoObserver);
+//            UserInfoHelper.unregisterObserver(userInfoObserver);
         }
 
         FriendDataCache.getInstance().registerFriendDataChangedObserver(friendDataChangedObserver, register);
@@ -509,8 +509,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
      * @param register
      */
     private void registerSystemMessageObservers(boolean register) {
-        NIMClient.getService(SystemMessageObserver.class).observeUnreadCountChange(sysMsgUnreadCountChangedObserver,
-                register);
+//        NIMClient.getService(SystemMessageObserver.class).observeUnreadCountChange(sysMsgUnreadCountChangedObserver,
+//                register);
     }
 
     private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {

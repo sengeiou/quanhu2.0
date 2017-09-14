@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,14 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kyleduo.switchbutton.SwitchButton;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.dialog.ApplyForGroupSuccessDialog;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -38,14 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_BELONG_ID;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
-import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
-import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
 import static com.rz.circled.ui.activity.PictureSelectedActivity.PUBLISH_RESULT_CAMERA;
 
 /**
@@ -66,7 +65,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     @BindView(R.id.btn_update_pic)
     LinearLayout btnUpdatePic;
     @BindView(R.id.img_group)
-    ImageView imgGroup;
+    RoundedImageView imgGroup;
     @BindView(R.id.etv_name)
     EditText etvName;
     @BindView(R.id.tv_name_num)
@@ -87,7 +86,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     TextView btnProtocol;
 
     private String coverPath;
-    private String circleId = "y2caoa2g2jcb";
+    private String circleId;
     private int price;
     private UploadPicManager upManager;
 
@@ -104,12 +103,16 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(circleId)) {
+                    Toast.makeText(mContext, "请选择圈子", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(coverPath)) {
                     Toast.makeText(mContext, "封面图为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(circleId)) {
-                    Toast.makeText(mContext, "请选择圈子", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(etvName.getText().toString().trim())) {
+                    Toast.makeText(mContext, "私圈名称为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!cbxProtocol.isChecked()) {
@@ -159,6 +162,11 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
@@ -176,10 +184,10 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 ApplyForPrivateGroupBelongActivity.startPrivateGroupBelong(mContext, TextUtils.isEmpty(circleId) ? "" : circleId);
                 break;
             case R.id.btn_way:
-                startActivity(new Intent(mContext, PrivateGroupJoinWayChangeActivity.class));
+                PrivateGroupJoinWayChangeActivity.startJoinWay(mContext, price);
                 break;
             case R.id.btn_protocol:
-
+                CommonH5Activity.startCommonH5(mContext, "", BuildConfig.WebHomeBaseUrl + AgreementConstants.PRIVATE_GROUP_CREATE_AGREEMENT);
                 break;
         }
     }
@@ -196,6 +204,13 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     price = (int) event.getData();
                     tvWay.setText(String.format(mContext.getString(R.string.private_group_youran_price), price));
                     lineCbx.setVisibility(View.GONE);
+                }
+                break;
+            case PRIVATE_GROUP_BELONG_ID:
+                String[] array = ((String) event.getData()).split("\\|");
+                if (array.length == 2) {
+                    circleId = array[0];
+                    tvGroup.setText(array[1]);
                 }
                 break;
         }
@@ -235,20 +250,28 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                 super.onResponse(call, response);
+                getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
                 if (response.isSuccessful() && response.body().isSuccessful()) {
+                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ApplyForGroupSuccessDialog.newInstance().show(ft, "");
+                } else {
+                    onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
+                getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
+                onLoadingStatus(CommonCode.General.ERROR_DATA);
             }
         });
     }
 
     private void updateCoverPic() {
+        onLoadingStatus(CommonCode.General.DATA_LOADING, getString(R.string.private_group_create_submit));
+        getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(false);
         /**
          * oss上传图片，得到回调之后，保存图片地址到本地
          */
@@ -261,10 +284,15 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     @Override
     public void onResult(boolean result, List<UploadPicManager.UploadInfo> resultList) {
-        String groupName = etvName.getText().toString().trim();
-        String groupDesc = etvGroupDesc.getText().toString().trim();
-        String ownDesc = etvDesc.getText().toString().trim();
-        createPrivateGroupSubmit(resultList.get(0).fileSavePath, groupName, groupDesc, ownDesc);
+        if (result) {
+            String groupName = etvName.getText().toString().trim();
+            String groupDesc = etvGroupDesc.getText().toString().trim();
+            String ownDesc = etvDesc.getText().toString().trim();
+            createPrivateGroupSubmit(resultList.get(0).fileSavePath, groupName, groupDesc, ownDesc);
+        } else {
+            getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
+            onLoadingStatus(CommonCode.General.ERROR_DATA);
+        }
     }
 
 }

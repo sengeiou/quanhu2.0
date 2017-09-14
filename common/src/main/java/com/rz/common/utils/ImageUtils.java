@@ -27,6 +27,8 @@ import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.rz.common.cache.CachePath;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -195,8 +197,7 @@ public class ImageUtils {
 
     public static File saveFile(Bitmap bm, String fileName, Context context)
             throws IOException {
-//        String subForder = CachePath.save_pic_path;
-        String subForder = "";
+        String subForder = CachePath.save_pic_path;
         File foder = new File(subForder);
         if (!foder.exists()) {
             foder.mkdirs();

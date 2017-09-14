@@ -21,7 +21,7 @@
         android:textSize="@dimen/px60"
         android:visibility="invisible"/>
 
-    <com.rz.rz_rrz.widget.SideBar
+    <com.rz.circled.widget.SideBar
         android:id="@+id/id_sidrbar"
         android:layout_width="@dimen/px60"
         android:layout_height="@dimen/px1080"

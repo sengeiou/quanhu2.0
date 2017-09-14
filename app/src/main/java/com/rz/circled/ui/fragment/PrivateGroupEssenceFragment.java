@@ -4,43 +4,39 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
-import com.rz.common.constant.CommonCode;
+import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
-import com.rz.common.widget.MyListView;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
-import com.rz.httpapi.bean.PrivateGroupListBean;
 import com.rz.httpapi.bean.PrivateGroupResourceBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_REFRESH;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_SEARCH_KEY;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 
 /**
@@ -77,7 +73,8 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                PrivateGroupResourceBean item = mAdapter.getItem(position);
+                CommonH5JumpHelper.startResourceDetail(mActivity, item.getCircleRoute(), item.getCoterieId(), item.getModuleEnum(), item.getResourceId());
             }
         });
     }
@@ -104,7 +101,7 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             case PRIVATE_GROUP_ESSENCE_MORE:
                 loadData(true);
                 break;
-            case PRIVATE_GROUP_ESSENCE_REFRESH:
+            case PRIVATE_GROUP_TAB_REFRESH:
                 loadData(false);
                 break;
         }

@@ -5,10 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.httpapi.bean.NewsBean;
+import com.rz.httpapi.bean.NewsOverviewBean;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
@@ -24,14 +30,24 @@ public class NewsAnnouncementViewBinder extends ItemViewBinder<NewsBean, NewsAnn
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean MTI_NAME) {
-
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.tvTitle.setText(item.getTitle());
+        holder.tvTime.setText(item.getCreateTime());
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.img);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.img)
+        RoundedImageView img;
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
+        @BindView(R.id.tv_time)
+        TextView tvTime;
 
         ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
+
 }

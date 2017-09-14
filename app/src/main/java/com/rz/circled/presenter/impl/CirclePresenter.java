@@ -172,6 +172,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     public void onNext(ResponseData<List<CircleDynamic>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<CircleDynamic> model =res.getData();
+                            ACache mCache = ACache.get(mContext);
+                            mCache.put("cache", (Serializable) model);
                             dynamicCreateTime=model.get(model.size()-1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功
@@ -451,11 +453,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     /**
      * 添加喜欢的圈子
      */
-    public void addLoveCircle(String circleId,String custId) {
+    public void addLoveCircle(String circleId,int type) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.addLoveCircle(circleId,custId)
+        mUserService.addLoveCircle(circleId,Session.getUserId(),type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData>() {

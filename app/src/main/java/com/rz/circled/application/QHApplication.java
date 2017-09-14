@@ -32,6 +32,7 @@ import com.rz.circled.js.FriendInfoHandler;
 import com.rz.circled.js.HttpHeaderHandler;
 import com.rz.circled.js.HttpRequestHandler;
 import com.rz.circled.js.JoinTeamHandler;
+import com.rz.circled.js.JumpUrlHandler;
 import com.rz.circled.js.LocationHandler;
 import com.rz.circled.js.LoginHandler;
 import com.rz.circled.js.NavigateHandler;
@@ -57,15 +58,18 @@ import com.rz.circled.js.UploadVideoHandler;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.sgt.jsbridge.RegisterList;
+import com.tencent.bugly.Bugly;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -104,9 +108,11 @@ public class QHApplication extends BaseApplication {
     private void init() {
         configOkHttp();
         configExo();
+        configBugly();
 //        configRecord();
         registerJsServerInterface();
         configFresco();
+        configJpush();
     }
 
 
@@ -195,6 +201,8 @@ public class QHApplication extends BaseApplication {
         RegisterList.registerServerHandlerClass(FinishLoadingHandler.class);
         //保存图片
         RegisterList.registerServerHandlerClass(SaveImageHandler.class);
+        //跳转
+        RegisterList.registerServerHandlerClass(JumpUrlHandler.class);
     }
 
     public void configExo() {
@@ -208,6 +216,18 @@ public class QHApplication extends BaseApplication {
 
     public HttpDataSource.Factory buildHttpDataSourceFactory(DefaultBandwidthMeter bandwidthMeter) {
         return new DefaultHttpDataSourceFactory(userAgent, bandwidthMeter);
+    }
+
+    private void configBugly() {
+        Bugly.init(this, Constants.Bugly.APP_ID, BuildConfig.DEBUG);
+    }
+
+    /**
+     * 极光推送初始化
+     */
+    private void configJpush() {
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
     }
 
     private void configOkHttp() {

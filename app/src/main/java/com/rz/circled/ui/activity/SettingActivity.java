@@ -2,16 +2,12 @@ package com.rz.circled.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
@@ -19,30 +15,21 @@ import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
-import com.rz.common.cache.CachePath;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
-import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.DialogUtils;
-import com.rz.common.utils.SystemUtils;
-import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.login.LogoutHelper;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.annotations.Beta;
 
 /**
  * 我的设置
@@ -60,10 +47,6 @@ public class SettingActivity extends BaseActivity {
     //缓存大小
     @BindView(R.id.id_close_cache_txt)
     TextView mTxtCacheNum;
-
-    //版本号
-    @BindView(R.id.tv_version_name)
-    TextView mTvVersionName;
 
     //退出
     @BindView(R.id.id_btn_exit)
@@ -91,7 +74,6 @@ public class SettingActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText("设置");
-        mTvVersionName.setText(SystemUtils.getVersionName(this));
         if (!Session.getUserIsLogin()) {
             mExitBtn.setVisibility(View.GONE);
 //            mAccountView.setVisibility(View.GONE);
@@ -146,17 +128,17 @@ public class SettingActivity extends BaseActivity {
 //        }
     }
 
-    @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_update, R.id.id_layout_clean_cache, R.id.id_btn_exit})
+    @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit})
     public void onClick(View view) {
         switch (view.getId()) {
             //账户与安全
             case R.id.id_layout_account_and_safe:
-//                if (isLogin()) {
-//                    if (CountDownTimer.isFastClick()) {
-//                        return;
-//                    }
+                if (isLogin()) {
+                    if (CountDownTimer.isFastClick()) {
+                        return;
+                    }
 //                    jump(AccountSafeAty.class);
-//                }
+                }
                 break;
             //推荐给朋友
             case R.id.id_layout_send_friend_ll:
@@ -165,23 +147,6 @@ public class SettingActivity extends BaseActivity {
 //                                "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
 //                                H5Address.ONLINE_TUIGUANG),
 //                        IntentCode.Setting.SETTING_RESULT_CODE);
-                break;
-            case R.id.id_layout_update:
-                /***** 检查更新 *****/
-//                Beta.checkUpgrade();
-//
-//                /***** 获取升级信息 *****/
-//                UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-//
-//                if (upgradeInfo != null) {
-//                    BaseEvent event = new BaseEvent();
-//                    event.info = "versionUpdate";
-//                    EventBus.getDefault().post(event);
-//                } else {
-//                    BaseEvent event = new BaseEvent();
-//                    event.info = "noVersionUpdate";
-//                    EventBus.getDefault().post(event);
-//                }
                 break;
             //清除缓存
             case R.id.id_layout_clean_cache:
@@ -205,7 +170,7 @@ public class SettingActivity extends BaseActivity {
                         dialog.dismiss();
 //                        ((UpdateOrExitPresenter) presenter).ExitApp();
 //                        exitApp();
-
+                        Session.clearShareP();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                         startActivity(intent);
 
@@ -294,18 +259,6 @@ public class SettingActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
         if (snsPresenter != null) {
             snsPresenter.detachView();
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void eventUpdate(BaseEvent event) {
-        if (TextUtils.equals("versionUpdate", event.info)) {
-            mTvVersionName.setText("有更新");
-            mTvVersionName.setTextColor(Color.RED);
-
-        } else if (TextUtils.equals("noVersionUpdate", event.info)) {
-            mTvVersionName.setText(SystemUtils.getVersionName(this));
-            mTvVersionName.setTextColor(getResources().getColor(R.color.color_666666));
         }
     }
 

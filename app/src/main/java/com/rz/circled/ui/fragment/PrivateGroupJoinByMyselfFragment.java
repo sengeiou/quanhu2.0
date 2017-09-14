@@ -12,10 +12,14 @@ import android.widget.TextView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -30,6 +34,7 @@ import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.PrivateGroupListBean;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +45,8 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
@@ -82,6 +89,8 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
@@ -91,7 +100,8 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                PrivateGroupBean item = mAdapter.getItem(position);
+                CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
             }
         });
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
@@ -109,6 +119,22 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     @Override
     public void initData() {
         loadData(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case PRIVATE_GROUP_TAB_REFRESH:
+                loadData(false);
+                break;
+        }
     }
 
     private void loadData(final boolean loadMore) {
@@ -139,20 +165,24 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                                     pageNo = 1;
                                 }
                                 pageNo++;
-                            } else {
+                            }
+                            if (mAdapter.getCount() == 0) {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             }
                         }
                         EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, data.size()));
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
+                    if (type != TYPE_PART)
+                        SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
+                if (type != TYPE_PART)
+                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
     }

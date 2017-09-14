@@ -20,8 +20,8 @@
         android:background="@drawable/ic_news_content_bg"
         android:orientation="vertical"
         android:paddingBottom="@dimen/px10"
-        android:paddingRight="@dimen/px8"
-        android:paddingLeft="@dimen/px8">
+        android:paddingLeft="@dimen/px8"
+        android:paddingRight="@dimen/px8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,8 +66,7 @@
                     android:id="@+id/img"
                     android:layout_width="@dimen/px172"
                     android:layout_height="@dimen/px172"
-                    android:scaleType="fitCenter"
-                    android:src="@android:color/holo_green_light" />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/tv_content"
@@ -87,9 +86,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/px20"
+            android:layout_marginBottom="@dimen/px26"
             android:layout_marginLeft="@dimen/px44"
             android:layout_marginTop="@dimen/px20"
+            android:includeFontPadding="false"
             android:textColor="@color/font_gray_s"
             android:textSize="@dimen/font_34"
             tool:text="来自 什么圈呢" />

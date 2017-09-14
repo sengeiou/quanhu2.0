@@ -52,7 +52,7 @@ public class PrivateGroupResourceBean implements Serializable {
     private String extjson;
     private String gps;
     private int heat;
-    private String moduleId;
+    private String moduleEnum;
     private int orderby;
     private int partNum;
     private String pics;
@@ -72,6 +72,110 @@ public class PrivateGroupResourceBean implements Serializable {
     private String custDesc;
     private String ownerName;
     private String ownerIntro;
+    private Cust cust;
+
+    public class Cust {
+
+        /**
+         * custId : r3l7bbgi
+         * custNname : 孙悟空
+         * custImg :
+         * custSignature : 俺老孙来也
+         * custDesc : 看我七十二变
+         * custLevel : 5
+         * custRole : 0
+         * custSex : 0
+         */
+
+        private String custId;
+        private String custNname;
+        private String custImg;
+        private String custSignature;
+        private String custDesc;
+        private String custLevel;
+        private int custRole;
+        private String custSex;
+
+        public String getCustId() {
+            return custId;
+        }
+
+        public void setCustId(String custId) {
+            this.custId = custId;
+        }
+
+        public String getCustNname() {
+            return custNname;
+        }
+
+        public void setCustNname(String custNname) {
+            this.custNname = custNname;
+        }
+
+        public String getCustImg() {
+            return custImg;
+        }
+
+        public void setCustImg(String custImg) {
+            this.custImg = custImg;
+        }
+
+        public String getCustSignature() {
+            return custSignature;
+        }
+
+        public void setCustSignature(String custSignature) {
+            this.custSignature = custSignature;
+        }
+
+        public String getCustDesc() {
+            return custDesc;
+        }
+
+        public void setCustDesc(String custDesc) {
+            this.custDesc = custDesc;
+        }
+
+        public String getCustLevel() {
+            return custLevel;
+        }
+
+        public void setCustLevel(String custLevel) {
+            this.custLevel = custLevel;
+        }
+
+        public int getCustRole() {
+            return custRole;
+        }
+
+        public void setCustRole(int custRole) {
+            this.custRole = custRole;
+        }
+
+        public String getCustSex() {
+            return custSex;
+        }
+
+        public void setCustSex(String custSex) {
+            this.custSex = custSex;
+        }
+    }
+
+    public Cust getCust() {
+        return cust;
+    }
+
+    public void setCust(Cust cust) {
+        this.cust = cust;
+    }
+
+    public String getModuleEnum() {
+        return moduleEnum;
+    }
+
+    public void setModuleEnum(String moduleEnum) {
+        this.moduleEnum = moduleEnum;
+    }
 
     public String getOwnerName() {
         return ownerName;
@@ -215,14 +319,6 @@ public class PrivateGroupResourceBean implements Serializable {
 
     public void setHeat(int heat) {
         this.heat = heat;
-    }
-
-    public String getModuleId() {
-        return moduleId;
-    }
-
-    public void setModuleId(String moduleId) {
-        this.moduleId = moduleId;
     }
 
     public int getOrderby() {

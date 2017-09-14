@@ -21,7 +21,7 @@
 
         <TextView
             style="@style/DefaultTvStyle"
-            android:text="@string/account_balance"
+            android:text="@string/shengyupoint"
             android:textColor="@color/black"
             android:textSize="@dimen/px58"/>
 
@@ -35,69 +35,40 @@
                 android:id="@+id/tv_score_usable"
                 style="@style/DefaultTvStyle"
                 android:layout_marginRight="@dimen/px38"
-                android:textColor="#1bc2b8"
-                android:textSize="@dimen/px116"
-                android:textStyle="bold"/>
+                android:textColor="@color/color_F5BB1E"
+                android:textSize="@dimen/px116"/>
 
             <TextView
                 style="@style/DefaultTvStyle"
-                android:text="@string/youran_currency"
-                android:textColor="@color/black"
+                android:text="@string/jifenpoint"
+                android:textColor="@color/color_333333"
                 android:textSize="@dimen/font_44"/>
         </LinearLayout>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/id_submit_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/px75"
-            android:layout_marginRight="@dimen/px75"
-            android:layout_marginTop="@dimen/px229"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/id_btn_recharge"
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_bg_blue_sel"
-                android:gravity="center"
-                android:minHeight="0dp"
-                android:padding="@dimen/px32"
-                android:text="@string/transfer_cost_account"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_52"/>
-
-            <View
-                android:layout_width="@dimen/px68"
-                android:layout_height="wrap_content"
-                android:background="@color/white"/>
-
-            <Button
-                android:id="@+id/id_btn_to_bank"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_bg_blue_sel"
-                android:gravity="center"
-                android:minHeight="0dp"
-                android:padding="@dimen/px32"
-                android:text="@string/draw_title"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_52"/>
-
-        </LinearLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/px72"
+            android:layout_marginRight="@dimen/px72"
+            android:layout_marginTop="@dimen/px230"
+            android:background="@drawable/shape_bg_blue_sel"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:padding="@dimen/px34"
+            android:text="@string/recharge"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_50"/>
 
         <TextView
             android:id="@+id/tv_reward_score_to_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px48"
+            android:layout_marginTop="@dimen/px72"
             android:padding="@dimen/px20"
             android:text="@string/reward_rules"
-            android:textColor="@color/color_1bc2b8"
+            android:textColor="@color/color_0185FF"
             android:textSize="@dimen/px42"/>
 
     </LinearLayout>

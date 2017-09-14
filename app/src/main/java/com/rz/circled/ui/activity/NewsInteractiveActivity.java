@@ -118,6 +118,7 @@ public class NewsInteractiveActivity extends BaseActivity {
             mFragments.add(newsCommonFragment);
         }
         viewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));
+        viewpager.setOffscreenPageLimit(4);
     }
 
     private void initIndicatorGroup() {

@@ -12,6 +12,8 @@ import com.rz.circled.BuildConfig;
 import com.rz.circled.constants.JPushTypeConstants;
 import com.rz.circled.db.dao.SystemInformationDao;
 import com.rz.circled.db.model.SystemInformation;
+import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.circled.modle.MyPushInfo;
 import com.rz.circled.ui.activity.MainActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
@@ -19,6 +21,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
+import com.rz.httpapi.bean.NewsBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -27,8 +30,6 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
-
-import static com.rz.circled.event.EventConstant.SYSTEM_INFORMATION_UNREAD_CHANGE;
 
 /**
  * Created by rzw2 on 2017/8/14.
@@ -51,16 +52,9 @@ public class MyReceiver extends BroadcastReceiver {
                 try {
                     Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
                     String str = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-                    Gson gson = new Gson();
-                    MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
-                    switch (mInfo.getColType()) {
-                        case JPushTypeConstants.Announcement.TYPE:
-                        case JPushTypeConstants.SystemInformation.TYPE:
-                        case JPushTypeConstants.InteractiveMessage.TYPE:
-                        case JPushTypeConstants.AccoutNotification.TYPE:
-                        case JPushTypeConstants.RecommendedActivities.TYPE:
-                            EventBus.getDefault().post(new BaseEvent(SYSTEM_INFORMATION_UNREAD_CHANGE));
-                            break;
+                    NewsBean mInfo = new Gson().fromJson(str, NewsBean.class);
+                    if (mInfo != null) {
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mInfo.getType() + "-" + mInfo.getLabel()));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,23 +68,8 @@ public class MyReceiver extends BroadcastReceiver {
 
                 //打开自定义的Activity
                 String str = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-                Gson gson = new Gson();
-                MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
-                Intent msgIntent;
-                switch (mInfo.getColType()) {
-                    case Type.JpushMessageType.COLTYPE_USER_SAFE:
-                    case Type.JpushMessageType.COLTYPE_SYSTEM_INFORMATION:
-                        MyPushInfo<SystemInformation> systemInfo = gson.fromJson(str, new TypeToken<MyPushInfo<SystemInformation>>() {
-                        }.getType());
-                        if (systemInfo == null || systemInfo.getData() == null) return;
-                        SystemInformation systemMessageInfo = systemInfo.getData();
-                        Log.e(TAG, "onReceive: " + systemMessageInfo.toString());
-                        msgIntent = new Intent(context, WebContainerActivity.class);
-                        msgIntent.putExtra(IntentKey.EXTRA_URL, BuildConfig.WebHomeBaseUrl + systemMessageInfo.getPage());
-                        msgIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        context.startActivity(msgIntent);
-                        break;
-                }
+                NewsBean mInfo = new Gson().fromJson(str, NewsBean.class);
+                NewsJumpHelper.startAcceptActivity(context, mInfo);
 
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

@@ -65,8 +65,14 @@ public class ApplyForGroupSuccessDialog extends DialogFragment {
 
     }
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        getActivity().finish();
+    }
+
     @OnClick(R.id.id_set_pay_pw_txt)
     public void onClick() {
-        getActivity().finish();
+        dismiss();
     }
 }

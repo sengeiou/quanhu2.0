@@ -295,6 +295,9 @@ public class UploadVideoActivity extends BaseActivity {
             }
         } else {
             //图片异常直接传空的图片
+            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+            mVideoImage = "";
+            callResult(true);
         }
     }
 

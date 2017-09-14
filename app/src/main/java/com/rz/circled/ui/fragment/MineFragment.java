@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.StatusCode;
@@ -28,7 +29,10 @@ import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.AwesomeTabsAty;
+import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.widget.GlideCircleImage;
@@ -36,12 +40,15 @@ import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.ObservableListView;
 import com.rz.circled.widget.observable.ObservableScrollViewCallbacks;
 import com.rz.circled.widget.observable.ScrollState;
+import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.IntentKey;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Protect;
@@ -555,6 +562,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的购买");
 //                    showActivity(frg, ContactsAty.class);
+                    jump(ContactsAty.class);
                 }
                 break;
             //我的账户
@@ -562,6 +570,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的打赏");
 //                    showActivity(frg, MyAccountAty.class);
+                    jump(MyAccountAty.class);
                 }
                 break;
 
@@ -588,12 +597,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             case 5:
                 if (isLogin()) {
-                    trackUser("我的","入口名称","我的账户");
-//                    ShareNewsAty.startShareNews(frg, new ShareModel(
-//                                    "悠然一指，一指进入你的圈子",
-//                                    "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
-//                                    H5Address.ONLINE_TUIGUANG),
-//                            IntentCode.PAGE_ADDFRIEND);
+                    trackUser("我的", "入口名称", "我的二维码");
+                    jump(PersonScanAty.class);
                 }
                 break;
 
