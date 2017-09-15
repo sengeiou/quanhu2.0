@@ -105,4 +105,10 @@ public class APIUser {
 
 
     public static final String QH_SEARCH = "v3/search/searchQH";
+
+    /**
+     * 我的资源
+     */
+    public static final String MY_RESOURCE = "v3/resource/getMyResource";
+
 }

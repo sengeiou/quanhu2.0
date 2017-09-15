@@ -922,4 +922,19 @@ public interface ApiService {
 //            @Field("custId") String custId
 //    );
 
+    /**
+     * 设置密保问题
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.MY_RESOURCE)
+    Call<ResponseData<CircleDynamic>> getMyResource(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("resourceType") String resourceType,
+            @Field("start") int start
+    );
+
 }

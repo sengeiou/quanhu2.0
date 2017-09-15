@@ -353,6 +353,9 @@ public class UserInfoPresenter extends GeneralPresenter {
         });
     }
 
+
+
+
 //    /**
 //     * 验证手机号是否注册
 //     *

@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import android.text.TextUtils;

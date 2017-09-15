@@ -9,7 +9,9 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.widget.MListView;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -61,6 +63,9 @@ public class MyArticleActivity extends BaseActivity {
         super.initPresenter();
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
+
+        ((PersonInfoPresenter) presenter).getArticle(false, Session.getUserId() ,"10000");
+
     }
 
     private void initRefresh() {
