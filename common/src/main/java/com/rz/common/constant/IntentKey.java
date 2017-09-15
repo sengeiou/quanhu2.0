@@ -10,7 +10,6 @@ public interface IntentKey {
      * 路径
      */
     String EXTRA_PATH = "extraPath";
-    String KEY_PAGE = "key_page";
     /**
      * position
      */
@@ -57,13 +56,6 @@ public interface IntentKey {
     String EXTRA_MONEY = "extraMoney";
     String GUIDE_KEY = "guide_key";
     //用户头像
-    String KEY_HEAD = "key_head";
-    //昵称
-    String KEY_NAME = "key_name";
-    //标题
-     String KEY_TITLE = "key_title";
-    //关注我的好友数添加
-    String KEY_NUM = "key_num";
-
+    String KEXTRA_HEAD = "keyHead";
     String EXTRA_IMAGE = "extraImage";
 }

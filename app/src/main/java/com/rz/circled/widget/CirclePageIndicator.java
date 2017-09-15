@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.rz.rz_rrz.R;
+import com.rz.circled.R;
 
 /**
  * Created by rzw2 on 2017/1/9.

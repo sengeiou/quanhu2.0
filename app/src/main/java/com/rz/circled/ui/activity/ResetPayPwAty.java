@@ -239,8 +239,8 @@ public class ResetPayPwAty extends BaseActivity {
         super.updateView(t);
         Intent intent = new Intent(aty, SetPayPassAty.class);
         intent.putExtra(IntentKey.KEY_TYPE, Type.RESET_PAY_PW);
-        intent.putExtra(IntentKey.KEY_NAME, mName);
-        intent.putExtra(IntentKey.KEY_NUM, mIdCard);
+        intent.putExtra(IntentKey.EXTRA_NAME, mName);
+        intent.putExtra(IntentKey.EXTRA_NUM, mIdCard);
         showActivity(aty, intent);
         finish();
     }
