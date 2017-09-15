@@ -579,7 +579,7 @@
     <string name="easy_pay">小额免密</string>
     <string name="safe_to_input">为了您的账户安全请输入支付密码</string>
     <string name="get_info_fail">获取信息失败</string>
-
+    <string name="reward_success">打赏成功</string>
 
     <string name="share_to">分享到</string>
     <string name="share_note">(无法获得平台圈币)</string>
@@ -624,4 +624,5 @@
 
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎广场吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>
+
 </resources>

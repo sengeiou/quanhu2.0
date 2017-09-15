@@ -33,7 +33,7 @@ public class RewardGiftAdapter extends CommonAdapter<RewardGiftModel> {
         TextView mTvPrice = (TextView) helper.getViewById(R.id.tv_item_transfer_gift_price);
         ImageView mIvCheck = (ImageView) helper.getViewById(R.id.iv_item_transfer_gift_check);
         mTvName.setText(item.getName());
-        mTvPrice.setText(Integer.parseInt(item.getPrice()) / 100 + mContext.getString(R.string.youranbi));
+        mTvPrice.setText(Integer.parseInt(item.getPrice()) / 100 + mContext.getString(R.string.quanbi));
         if (checkMap.get(helper.getPosition(), false)) {
             mIvCheck.setVisibility(View.VISIBLE);
             rlRoot.setBackgroundResource(R.drawable.shape_ring_blue);
