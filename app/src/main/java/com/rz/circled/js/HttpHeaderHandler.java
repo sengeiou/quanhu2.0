@@ -56,6 +56,7 @@ public class HttpHeaderHandler extends ServerHandler {
         headerModel.custId = Session.getUserId();
         headerModel.userId = Session.getJsUserId();
         headerModel.phone = Session.getUserPhone();
+        headerModel.cityCode = Session.getCityCode();
 //        Gson gson = new Gson();
 //        paramStr= gson.toJson(headerModel);
 //        Log.e("fengan", "handle:paramStr== "+paramStr );

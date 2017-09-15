@@ -17,5 +17,6 @@ public class HeaderModel {
     public String custId;
     public String userId;
     public String phone;
+    public String cityCode;
 
 }

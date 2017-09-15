@@ -83,6 +83,11 @@ public class UserInfoBean implements Serializable {
      */
     private int isPwdExist;
 
+    /**
+     * 城市定位信息
+     */
+    private String cityCode;
+
     public String getCustId() {
         return custId;
     }
@@ -215,5 +220,13 @@ public class UserInfoBean implements Serializable {
 
     public void setIsPwdExist(int isPwdExist) {
         this.isPwdExist = isPwdExist;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 }
