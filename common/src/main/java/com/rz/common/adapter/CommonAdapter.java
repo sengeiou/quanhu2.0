@@ -86,10 +86,12 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     protected ViewHolder getViewHolder(int position, View convertView, ViewGroup parent) {
         return ViewHolder.get(mContext, convertView, parent, mLayoutId, position);
     }
+
     /**
      * 用来记录checkbox的状态
      */
     private boolean checkedDefaultValue = false;
+
     /**
      * 改变某个item的选中状态 <功能详细描述> 多选
      */

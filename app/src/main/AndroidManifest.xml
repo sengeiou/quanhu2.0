@@ -148,7 +148,7 @@
             android:theme="@style/BaseAppTheme.Translucent"/>
 
         <activity
-            android:name=".ui.activity.TransferGiftActivity"
+            android:name=".ui.activity.RewardGiftActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
 

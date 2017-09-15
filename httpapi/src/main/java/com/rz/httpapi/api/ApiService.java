@@ -19,6 +19,7 @@ import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
+import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
@@ -819,6 +820,20 @@ public interface ApiService {
             @Field("type") int type,
             @Field("start") int start,
             @Field("limit") int limit
+    );
+
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_ORDER)
+    Call<ResponseData> payOrder(
+            @Field("custId") String custId,
+            @Field("orderId") String orderId,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_ORDER_DETAILS)
+    Call<ResponseData<PayOrderInfoBean>> payOrderDetails(
+            @Field("orderId") String orderId
     );
 
 //    /**

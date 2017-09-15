@@ -7,15 +7,19 @@ package com.rz.httpapi.bean;
 public class AccountBean {
 
     //消费余额
-    public String accountSum;
+    private String accountSum;
     //积分余额
-    public String integralSum;
+    private String integralSum;
     //累计余额
-    public String costSum;
+    private String costSum;
     //1表示账户正常，0表示账户被冻结
     private int accountState;
     //是否开通小额免密，0，不开通；1，开通
-    public int smallNopass;
+    private int smallNopass;
+
+    public String getAccountSum() {
+        return accountSum;
+    }
 
     public void setAccountSum(String accountSum) {
         this.accountSum = accountSum;
@@ -43,5 +47,13 @@ public class AccountBean {
 
     public void setAccountState(int accountState) {
         this.accountState = accountState;
+    }
+
+    public int getSmallNopass() {
+        return smallNopass;
+    }
+
+    public void setSmallNopass(int smallNopass) {
+        this.smallNopass = smallNopass;
     }
 }

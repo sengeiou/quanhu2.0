@@ -124,7 +124,7 @@ public class CommomUtils {
             for (int i = 0; i < rewardGiftModelList.size(); i++) {
                 RewardGiftModel rewardGiftModel = rewardGiftModelList.get(i);
                 if (TextUtils.equals(rewardGiftModel.getPrice(), price + "")) {
-                    return rewardGiftModel.getIcon();
+                    return rewardGiftModel.getImg();
                 }
             }
         }

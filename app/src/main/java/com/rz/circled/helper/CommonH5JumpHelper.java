@@ -30,44 +30,50 @@ public class CommonH5JumpHelper {
     //投票活动中奖公布页 	/activity/platform-activity/vote/:activityId/tab/3
     private static final String WINNING_SCAN = "/activity/platform-activity/vote/%s/tab/3";
 
-    private static Formatter formatter = new Formatter();
-
     public static void startGroupHome(Context context, String circleRoute, String coterieId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(PRIVATE_GROUP_HOME, circleRoute, coterieId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startTopicHome(Context context, String circleRoute, String resourceId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(TOPIC_HOME, circleRoute, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startRewardDetail(Context context, String resourceId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(REWARD_DETAIL, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startResourceDetail(Context context, String circleRoute, String coterieId, String moduleEnum, String resourceId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(RESOURCE_DETAIL, circleRoute, coterieId, moduleEnum, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startMemberAudit(Context context, String circleRoute, String coterieId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(MEMBER_AUDIT, circleRoute, coterieId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startSignActivity(Context context, String resourceId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(SIGN_ACTIVITY, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startVoteActivity(Context context, String resourceId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(VOTE_ACTIVITY, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
     public static void startWinningScan(Context context, String resourceId) {
+        Formatter formatter = new Formatter();
         String url = formatter.format(WINNING_SCAN, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }

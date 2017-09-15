@@ -6,5 +6,5 @@ package com.rz.circled.constants;
 
 public class AgreementConstants {
     //创建私圈协议
-    public static final String PRIVATE_GROUP_CREATE_AGREEMENT = "/quanhu/service-agreement.html";
+    public static final String PRIVATE_GROUP_CREATE_AGREEMENT = "/assets/static/service-agreement.html";
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/rl_item_transfer_gift_root"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
+    android:id="@+id/rl_item_transfer_gift_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px249"
+    android:background="@drawable/shape_reward_gift_divider">
 
     <ImageView
         android:id="@+id/iv_item_transfer_gift_icon"
@@ -11,8 +11,10 @@
         android:layout_height="@dimen/px100"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px20"
-        android:scaleType="fitCenter"/>
+        android:layout_marginLeft="@dimen/px10"
+        android:layout_marginRight="@dimen/px10"
+        android:layout_marginTop="@dimen/px28"
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/tv_item_transfer_gift_name"
@@ -22,8 +24,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/px8"
         android:maxLines="1"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/px30"/>
+        android:textColor="@color/font_gray_s"
+        android:textSize="@dimen/px28" />
 
     <TextView
         android:id="@+id/tv_item_transfer_gift_price"
@@ -31,13 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_item_transfer_gift_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px14"
         android:maxLines="1"
-        android:paddingBottom="@dimen/px44"
         android:paddingLeft="@dimen/px8"
         android:paddingRight="@dimen/px5"
-        android:textColor="@color/black"
-        android:textSize="@dimen/font_34"/>
+        android:textColor="@color/font_gray_l"
+        android:textSize="@dimen/font_34" />
 
     <ImageView
         android:id="@+id/iv_item_transfer_gift_check"
@@ -46,7 +46,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/px18"
         android:layout_marginTop="@dimen/px18"
-        android:background="@drawable/ic_check_on"/>
-
+        android:background="@mipmap/check_publish_on" />
 
 </RelativeLayout>
