@@ -55,4 +55,7 @@ public interface IntentKey {
 
     String EXTRA_MONEY = "extraMoney";
     String GUIDE_KEY = "guide_key";
+    //用户头像
+    String KEXTRA_HEAD = "keyHead";
+    String EXTRA_IMAGE = "extraImage";
 }

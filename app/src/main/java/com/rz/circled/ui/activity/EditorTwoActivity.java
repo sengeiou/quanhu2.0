@@ -2302,9 +2302,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                             String code = jsonObject.getString("code");
                             if (code.equals("200")) {
                                 Toasty.info(EditorTwoActivity.this, getString(R.string.editor_two_publish_success)).show();
-                                HashMap<String, EditorDataSourceTwoModel> map = new HashMap<String, EditorDataSourceTwoModel>();
-                                map.put("dataSource", dataSource);
-                                JsEvent.callJsEvent(map, true);
+                                JsEvent.callJsEvent(rootBean, true);
                                 finish();
                             } else publishFail();
                         } else publishFail();

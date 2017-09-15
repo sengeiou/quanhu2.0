@@ -27,6 +27,7 @@ import com.rz.common.utils.ACache;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -115,7 +116,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void initData() {
         ACache mCache = ACache.get(mActivity);
-        List<CircleDynamic> model = (List<CircleDynamic>) mCache.getAsObject("cache");
+        List<CircleDynamic> model = (List<CircleDynamic>) mCache.getAsObject(Constants.HOME_FRAGMENT_CACHE);
+        List<BannerAddSubjectModel> bannerList= (List<BannerAddSubjectModel>) mACache.getAsObject(Constants.BANNER_CACHE);
+        updateViewWithFlag(bannerList,2);
         updateViewWithLoadMore(model,false);
         mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -131,9 +134,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (flag == 2) {
+        if (flag == 2&&t!=null) {
             bannerList.clear();
             bannerList.addAll((List<BannerAddSubjectModel>) t);
+            mACache.put(Constants.BANNER_CACHE, (Serializable) bannerList);
             mAuto_viewpager.setItems(bannerList);
             if (bannerList.size() == 1) {
                 mAuto_viewpager.setAutoRoll(false);

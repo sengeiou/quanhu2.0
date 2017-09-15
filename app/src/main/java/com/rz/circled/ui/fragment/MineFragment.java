@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,13 +33,13 @@ import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.PersonInfoAty;
+import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.ObservableListView;
 import com.rz.circled.widget.observable.ObservableScrollViewCallbacks;
 import com.rz.circled.widget.observable.ScrollState;
-import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.EntityCache;
@@ -50,6 +49,7 @@ import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
@@ -63,7 +63,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.rz.circled.widget.CommomUtils.trackUser;
 
@@ -562,7 +561,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的购买");
 //                    showActivity(frg, ContactsAty.class);
-                    jump(ContactsAty.class);
+
                 }
                 break;
             //我的账户
@@ -570,16 +569,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的打赏");
 //                    showActivity(frg, MyAccountAty.class);
-                    jump(MyAccountAty.class);
+
                 }
                 break;
 
             case 3:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的收藏");
-//                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-//                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-//                    startActivity(intent);
+
                 }
                 break;
 
@@ -598,13 +595,17 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 5:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的二维码");
-                    jump(PersonScanAty.class);
+                    jump(MyAccountAty.class);
+
                 }
                 break;
 
             case 6:
                 if (isLogin()) {
                     trackUser("我的","入口名称","我的卡卷");
+                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
+                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
+                    startActivity(intent);
 
                 }
                 break;
@@ -612,6 +613,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 7:
                 if (isLogin()) {
                     trackUser("我的","入口名称","通讯录");
+                    jump(ContactsAty.class);
 
                 }
                 break;
@@ -619,6 +621,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 8:
                 if (isLogin()) {
                     trackUser("我的","入口名称","我的二维码");
+                    jump(PersonScanAty.class);
 
                 }
                 break;

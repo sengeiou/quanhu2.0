@@ -4,7 +4,7 @@ package com.rz.common.event;
  * Created by Gsm on 2017/8/14.
  */
 public class BaseEvent {
-
+    public String key;
     public int type;
     public boolean flag;
     public String info;

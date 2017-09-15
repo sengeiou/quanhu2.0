@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/DefaultTvStyle"
+        android:layout_width="match_parent"
+        android:background="@color/color_F5F5F5"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/px58"
+        android:paddingLeft="@dimen/px30"
+        android:paddingTop="@dimen/px58"
+        android:text="@string/pay_pw_explain"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/font_38"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/px60"
+        android:paddingLeft="@dimen/px30"
+        android:paddingRight="@dimen/px72"
+        android:paddingTop="@dimen/px60">
+
+        <TextView
+            android:id="@+id/id_old_pay_pw_txt"
+            style="@style/DefaultTvStyle"
+            android:paddingRight="@dimen/px48"
+            android:text="@string/regist_pw"
+            android:textColor="@color/black"/>
+
+        <com.rz.circled.widget.password.GridPasswordView
+            android:id="@+id/id_old_pay_pw_pass"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px130"
+            android:gravity="center_vertical"
+            app:gpvGridColor="#ffffff"
+            app:gpvLineColor="#cccccc"
+            app:gpvLineWidth="@dimen/px2"
+            app:gpvPasswordLength="6"
+            app:gpvPasswordTransformation="＊"
+            app:gpvPasswordType="numberPassword"
+            app:gpvTextColor="@color/textColorPrimary"
+            app:gpvTextSize="25sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:background="@color/color_cccccc"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/px60"
+        android:paddingLeft="@dimen/px30"
+        android:paddingRight="@dimen/px72"
+        android:paddingTop="@dimen/px60">
+
+        <TextView
+            android:id="@+id/id_new_pay_pw_txt"
+            style="@style/DefaultTvStyle"
+            android:paddingRight="@dimen/px48"
+            android:text="@string/regist_sure_pw"/>
+
+        <com.rz.circled.widget.password.GridPasswordView
+            android:id="@+id/id_new_pay_pw_pass"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px130"
+            android:gravity="center_vertical"
+            app:gpvGridColor="#ffffff"
+            app:gpvLineColor="#cccccc"
+            app:gpvLineWidth="@dimen/px2"
+            app:gpvPasswordLength="6"
+            app:gpvPasswordTransformation="＊"
+            app:gpvPasswordType="numberPassword"
+            app:gpvTextColor="@color/textColorPrimary"
+            app:gpvTextSize="25sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:background="@color/color_cccccc"/>
+
+    <LinearLayout
+        android:id="@+id/id_sure_pay_pw_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px60"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px72"
+            android:paddingTop="@dimen/px60">
+
+            <TextView
+                android:id="@+id/id_sure_pay_pw_txt"
+                style="@style/DefaultTvStyle"
+                android:paddingRight="@dimen/px48"
+                android:text="@string/sure_new_pw"/>
+
+            <com.rz.circled.widget.password.GridPasswordView
+                android:id="@+id/id_sure_new_pw_pass"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px130"
+                android:gravity="center_vertical"
+                app:gpvGridColor="#ffffff"
+                app:gpvLineColor="#cccccc"
+                app:gpvLineWidth="@dimen/px2"
+                app:gpvPasswordLength="6"
+                app:gpvPasswordTransformation="＊"
+                app:gpvPasswordType="numberPassword"
+                app:gpvTextColor="@color/textColorPrimary"
+                app:gpvTextSize="25sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:background="@color/color_cccccc"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/id_is_set_user_txt"
+        style="@style/DefaultTvStyle"
+        android:padding="@dimen/px30"
+        android:text="@string/safety_note"
+        android:textColor="@color/color_ff0000"
+        android:textSize="@dimen/font_38"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/id_set_pay_pw_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/px132"
+        android:layout_marginRight="@dimen/px132"
+        android:layout_marginTop="@dimen/px115"
+        android:background="@drawable/shape_bg_blue_sel"
+        android:paddingRight="@dimen/px40"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_52"/>
+
+
+</LinearLayout>

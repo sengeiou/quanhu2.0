@@ -1,10 +1,12 @@
 package com.rz.httpapi.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/6/8/008.
  */
 
-public class BannerAddSubjectModel {
+public class BannerAddSubjectModel implements Serializable {
 
     /**
      * picUrl : 测试内容6692

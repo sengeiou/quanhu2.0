@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rlRoot"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/color_background">
+
+    <RelativeLayout
+        android:id="@+id/id_search_key_rela"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar_layout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_bg_white_stoke_f4f4f4"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/search_key_icon"/>
+
+        <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
+            android:id="@+id/team_search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/transparent"
+            android:hint="@string/team_search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="textImeMultiLine"
+            android:lines="1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/font_gray_xl"
+            android:textColorHint="@color/font_gray_m"
+            android:textSize="@dimen/font_44"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/group_tip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/id_search_key_rela"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/group_tip"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px126"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px44"
+            android:text="@string/select_firend"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/font_44"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/group_tip_layout"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <FrameLayout
+            android:id="@+id/id_search_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <ListView
+                android:id="@+id/contact_list_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_toLeftOf="@+id/liv_index"
+                android:cacheColorHint="@color/transparent"
+                android:divider="@color/color_split_line_d9d9d9"
+                android:dividerHeight="1px"
+                android:listSelector="@color/transparent"
+                android:scrollbars="none"/>
+
+            <TextView
+                android:id="@+id/id_nim_letter_dialog"
+                android:layout_width="@dimen/px200"
+                android:layout_height="@dimen/px200"
+                android:layout_gravity="center"
+                android:background="@mipmap/ic_letter_dialog"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px60"
+                android:visibility="invisible"/>
+
+            <com.rz.rz_rrz.widget.SideBar
+                android:id="@+id/id_nim_sidrbar"
+                android:layout_width="30.0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px100"
+                android:src="@mipmap/ic_contacts_none"/>
+
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:text="@string/add_qh_square"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/font_52"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/contact_loading_frame"
+        layout="@layout/nim_contact_loading_frame"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -11,12 +11,14 @@ import android.widget.TextView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
+import com.rz.circled.modle.ShareModel;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
@@ -137,16 +139,17 @@ public class SettingActivity extends BaseActivity {
                     if (CountDownTimer.isFastClick()) {
                         return;
                     }
-//                    jump(AccountSafeAty.class);
+                    showActivity(aty,AccountSafeAty.class);
                 }
                 break;
             //推荐给朋友
             case R.id.id_layout_send_friend_ll:
-//                ShareNewsAty.startShareNews(aty, new ShareModel(
-//                                "悠然一指，一指进入你的圈子",
-//                                "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
-//                                H5Address.ONLINE_TUIGUANG),
-//                        IntentCode.Setting.SETTING_RESULT_CODE);
+                // TODO: 2017/9/14 等产品出文案,等侯军出下载链接页面后替换信息
+                ShareNewsAty.startShareNews(aty, new ShareModel(
+                                "悠然一指，一指进入你的圈子",
+                                "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
+                                H5Address.ONLINE_REPORT),
+                        IntentCode.Setting.SETTING_RESULT_CODE);
                 break;
             //清除缓存
             case R.id.id_layout_clean_cache:

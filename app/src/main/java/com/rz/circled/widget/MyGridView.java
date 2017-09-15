@@ -25,5 +25,4 @@ public class MyGridView extends GridView {
         }
         return super.dispatchTouchEvent(ev);
     }
-
 }

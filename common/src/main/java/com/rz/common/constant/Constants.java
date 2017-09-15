@@ -13,6 +13,8 @@ public class Constants {
     public static final String FOLLOW = "FOLLOW";
     public static final String FOLLOW_ID = "FOLLOW_ID";
     public static final String UPDATE_LOVE_CIRCLE = "UPDATE_LOVE_CIRCLE";
+    public static final String HOME_FRAGMENT_CACHE = "HOME_FRAGMENT_CACHE";
+    public static final String BANNER_CACHE = "BANNER_CACHE";
 
     /**
      * 设置关注
