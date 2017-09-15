@@ -35,7 +35,7 @@
             android:text="@string/regist_pw"
             android:textColor="@color/black"/>
 
-        <com.rz.rz_rrz.widget.password.GridPasswordView
+        <com.rz.circled.widget.password.GridPasswordView
             android:id="@+id/id_old_pay_pw_pass"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px130"
@@ -74,7 +74,7 @@
             android:paddingRight="@dimen/px48"
             android:text="@string/regist_sure_pw"/>
 
-        <com.rz.rz_rrz.widget.password.GridPasswordView
+        <com.rz.circled.widget.password.GridPasswordView
             android:id="@+id/id_new_pay_pw_pass"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px130"
@@ -120,7 +120,7 @@
                 android:paddingRight="@dimen/px48"
                 android:text="@string/sure_new_pw"/>
 
-            <com.rz.rz_rrz.widget.password.GridPasswordView
+            <com.rz.circled.widget.password.GridPasswordView
                 android:id="@+id/id_sure_new_pw_pass"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px130"

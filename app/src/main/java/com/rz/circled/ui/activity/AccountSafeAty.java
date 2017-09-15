@@ -3,7 +3,6 @@ package com.rz.circled.ui.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -516,18 +515,6 @@ public class AccountSafeAty extends BaseActivity {
 //            if (SVProgressHUD.isShowing(aty)) {
 //                SVProgressHUD.dismiss(aty);
 //            }
-        } else if (TextUtils.equals("3", event.key)) {
-            //修改登录密码成功
-            SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.modify_success));
-            Session.clearShareP();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(aty, MainActivity.class);
-                    intent.putExtra(IntentKey.KEY_TYPE, IntentCode.General.APP_EXIT);
-                    skipActivity(aty, intent);
-                }
-            }, 2000);
         }
     }
 

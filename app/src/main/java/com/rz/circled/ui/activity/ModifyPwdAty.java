@@ -16,13 +16,11 @@ import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
-import com.rz.common.event.BaseEvent;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -245,9 +243,8 @@ public class ModifyPwdAty extends BaseActivity {
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        BaseEvent event = new BaseEvent();
-        event.key = "3";
-        EventBus.getDefault().post(event);
+        Session.clearShareP();
+      showActivity(aty,LoginActivity.class);
         finish();
     }
 }
