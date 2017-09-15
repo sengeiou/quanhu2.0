@@ -12,7 +12,7 @@ public class SearchDataBean {
     private List<StarListBean.CustInfoBean> custInfos;                             //用户
     private List <PrivateGroupBean> coterieInfos;                          //私圈
     private List<CircleEntrModle> circleInfos;                           //圈子
-    private List offers;                               //悬赏
+    private List <RewardModel>offers;                               //悬赏
 
 
     public List<CircleDynamic> getResoueces() {

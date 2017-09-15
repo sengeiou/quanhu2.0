@@ -48,7 +48,7 @@ public class SearchUserAdapter extends SearchCommonAdapter {
 
                 //name  或者 info 包含keyWord 则显示为蓝色字体
         tvName.setText(stringFormatUtil.getResult());
-        tvName.append(getSpan(""));//替换文本
+//        tvName.append(getSpan(""));//替换文本
         Glide.with(mContext).load(starListBean.getCustImg()).transform(new GlideCircleImage(mContext)).into(ivIcon);
 
         if(TextUtils.isEmpty(starListBean.getCustSignature())){
