@@ -32,6 +32,7 @@ import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
+import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
@@ -576,7 +577,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 3:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的收藏");
-
+                    jump(MyCollectionActivity.class);
                 }
                 break;
 

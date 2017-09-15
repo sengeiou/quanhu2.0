@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/px44"
+    android:paddingRight="@dimen/px44">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/edit_collection_no"
+        android:layout_marginRight="@dimen/font_44"
+        android:visibility="gone"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px40"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/civ_head"
+            android:layout_width="@dimen/px98"
+            android:layout_height="@dimen/px98"
+            android:src="@drawable/ic_default_head_new"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/font_40"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/px30"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_dynamic_content" />
+
+    <RelativeLayout
+        android:id="@+id/rl_otherinfo_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px30"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/px40">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/font_34" />
+
+        <TextView
+            android:id="@+id/tv_other_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/font_44" />
+
+    </RelativeLayout>
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

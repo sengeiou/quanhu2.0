@@ -165,7 +165,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CircleDynamic circleDynamic = circleDynamicList.get(position);
+        CircleDynamic circleDynamic = circleDynamicList.get(position-1);
         circleDynamic.click += 1;
         if (circleDynamic.click >= 3) {
             mPresenter.addLoveCircle(circleDynamic.circleId, 2);

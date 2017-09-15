@@ -12,6 +12,7 @@ import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
+import com.rz.httpapi.bean.CollectionBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
@@ -463,7 +464,34 @@ public interface ApiService {
             @Query("limit") int limit,
             @Query("start") int start
     );
-
+    /**
+     * 我的收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_COLLECT_LIST)
+    Observable<ResponseData<List<CollectionBean>>> getCircleCollect(
+            @Field("cid") Integer cid,
+            @Field("custId") String custId,
+            @Field("limit") int limit
+    );
+    /**
+     * 添加收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_ADD_COLLECT)
+    Observable<ResponseData> addCollect(
+            @Field("custId") String custId,
+            @Field("resourceId") String resourceId
+    );
+    /**
+     * 删除收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_DEL_COLLECT)
+    Observable<ResponseData> delCollect(
+            @Field("custId") String custId,
+            @Field("resourceId") String resourceId
+    );
     /**
      * 获取转发价格列表
      *
