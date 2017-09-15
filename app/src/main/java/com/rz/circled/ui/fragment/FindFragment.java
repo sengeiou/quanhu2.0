@@ -20,20 +20,18 @@ import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
-import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.MListView;
-import com.rz.circled.widget.ViewHolder;
 import com.rz.circled.widget.XGridView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.EntitiesBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 
@@ -80,9 +78,10 @@ public class FindFragment extends BaseFragment {
     private CirclePresenter mPresenter;
     private List<FamousModel> famousList = new ArrayList<>();
     private List<HotSubjectModel> subjectList = new ArrayList<>();
-    private List<HotSubjectModel> activityList = new ArrayList<>();
+    private List<EntitiesBean> activityList = new ArrayList<>();
     private RecyclerView.Adapter mFamousAdapter;
     private RecyclerView.Adapter mSubjectAdapter;
+    private BaseAdapter mActivityAdapter1;
 
     @Nullable
     @Override
@@ -97,6 +96,7 @@ public class FindFragment extends BaseFragment {
         mPresenter.getUserLoveCircle(Session.getUserId());
         mPresenter.getFamousList(7);
         mPresenter.getSubjectList(2);
+        mPresenter.getActivityList(3);
 
     }
 
@@ -172,15 +172,48 @@ public class FindFragment extends BaseFragment {
     }
 
     private void initActivity() {
-        activityList.add(new HotSubjectModel());
-        activityList.add(new HotSubjectModel());
-        activityList.add(new HotSubjectModel());
-        mNewActivityLv.setAdapter(new CommonAdapter<HotSubjectModel>(mActivity, activityList, R.layout.activity_item) {
+        mNewActivityLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void convert(ViewHolder helper, HotSubjectModel item) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EntitiesBean entitiesBean = activityList.get(position);
+                if (entitiesBean.getActivityType()==1){
+                    WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/platform-activity/signup/"+entitiesBean.getId());
+                }else{
+                    WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/platform-activity/vote/"+entitiesBean.getId());
 
+                }
             }
         });
+        mActivityAdapter1 = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return activityList == null ? 0 : activityList.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                EntitiesBean entitiesBean = activityList.get(position);
+                if (convertView == null) {
+                    convertView = View.inflate(mActivity, R.layout.activity_item, null);
+                }
+                TextView title = (TextView) convertView.findViewById(R.id.activity_title);
+                ImageView iv = (ImageView) convertView.findViewById(R.id.iv_activity_icon);
+                title.setText(entitiesBean.getTitle());
+                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).into(iv);
+                return convertView;
+            }
+        };
+        mNewActivityLv.setAdapter(mActivityAdapter1);
     }
 
     private void initSubject() {
@@ -290,6 +323,7 @@ public class FindFragment extends BaseFragment {
                 mPresenter.getFamousList(7);
                 mPresenter.getSubjectList(2);
                 mFindRefresh.setRefreshing(false);
+                mPresenter.getActivityList(3);
             }
         });
 
@@ -309,11 +343,19 @@ public class FindFragment extends BaseFragment {
             subjectList.clear();
             subjectList.addAll((Collection<? extends HotSubjectModel>) t);
             mSubjectAdapter.notifyDataSetChanged();
+            return;
         }
         if (flag == 7) {
             famousList.clear();
             famousList.addAll((List<FamousModel>) t);
             mFamousAdapter.notifyDataSetChanged();
+            return;
+        }
+        if (flag == 3){
+            activityList.clear();
+            activityList= (List<EntitiesBean>) t;
+            mActivityAdapter1.notifyDataSetChanged();
+            return;
         }
     }
 
@@ -350,13 +392,13 @@ public class FindFragment extends BaseFragment {
                 jump(MoreSubjectActivity.class);
                 break;
             case R.id.tv_activity_more:
-//                jump(MorePlayActivity.class);
+                WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/platform-activity");
                 break;
             case R.id.btn_resource:
-                CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/zgzyq/");
+                WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/zgzyq/");
                 break;
             case R.id.btn_quanle:
-                CommonH5Activity.startCommonH5(mActivity,"", BuildConfig.WebHomeBaseUrl+"/activity/qql");
+                WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/qql");
                 break;
         }
     }

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.rz.circled.widget.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/DefaultSvStyle"
+    android:background="@color/color_F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AccountSafeTitleTvStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px144"
+                android:layout_marginLeft="@dimen/px30"
+                android:text="@string/current_login" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_EEEEEE" />
+
+            <RelativeLayout
+                android:id="@+id/id_loginway_ll"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px188"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/id_loginway_bg_img"
+                    android:layout_width="@dimen/px128"
+                    android:layout_height="@dimen/px128"
+                    android:layout_marginBottom="@dimen/px30"
+                    android:layout_marginLeft="@dimen/px35"
+                    android:layout_marginRight="@dimen/px42"
+                    android:layout_marginTop="@dimen/px30"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/id_loginway_bg_img"
+                    android:layout_toRightOf="@+id/id_loginway_bg_img"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/id_loginway_name_txt"
+                        style="@style/DefaultTvStyle"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:paddingTop="@dimen/px10"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_50" />
+
+                    <TextView
+                        android:id="@+id/id_loginway_id_txt"
+                        style="@style/DefaultTvStyle"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/font_44" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px30"
+                android:background="@color/color_F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px144"
+                android:background="@drawable/comm_item_selector"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/px40"
+                android:paddingLeft="@dimen/px30"
+                android:paddingRight="@dimen/px30"
+                android:paddingTop="@dimen/px40">
+
+                <TextView
+                    style="@style/AccountSafeTitleTvStyle"
+                    android:text="@string/other_login_style" />
+
+                <TextView
+                    style="@style/AccountSafeDescTvStyle"
+                    android:padding="0dp"
+                    android:text="@string/replace_bind_phone" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_EEEEEE" />
+
+            <com.rz.circled.widget.MListView
+                android:id="@+id/id_loginway_list"
+                style="@style/DefaultLvStyle"
+                android:layout_height="wrap_content"
+                android:divider="@color/color_EEEEEE"
+                android:dividerHeight="1px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_loginway_pw_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px144"
+            android:layout_marginTop="@dimen/px30"
+            android:background="@drawable/comm_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px40"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30"
+            android:paddingTop="@dimen/px40">
+
+            <TextView
+                style="@style/AccountSafeTitleTvStyle"
+                android:text="@string/safe_modify_pw" />
+
+            <TextView
+                android:id="@+id/id_login_pw_txt"
+                style="@style/DefaultTvStyle"
+                android:layout_marginRight="@dimen/px30"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_50" />
+
+            <ImageView
+                android:layout_width="@dimen/px28"
+                android:layout_height="@dimen/px46"
+                android:src="@drawable/ic_right_arrow" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:background="@color/color_EEEEEE" />
+
+        <LinearLayout
+            android:id="@+id/id_loginway_pay_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px144"
+            android:background="@drawable/comm_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px40"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30"
+            android:paddingTop="@dimen/px40">
+
+            <TextView
+                style="@style/AccountSafeTitleTvStyle"
+                android:text="@string/safe_modify_pay_pw" />
+
+            <TextView
+                android:id="@+id/id_issetting_pw_txt"
+                style="@style/DefaultTvStyle"
+                android:layout_marginRight="@dimen/px30"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_50" />
+
+            <ImageView
+                android:layout_width="@dimen/px28"
+                android:layout_height="@dimen/px46"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:background="@color/color_EEEEEE" />
+
+        <LinearLayout
+            android:id="@+id/id_froget_pay_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comm_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px40"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30"
+            android:paddingTop="@dimen/px40"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/forget_pay_password"
+                android:textSize="@dimen/font_50" />
+
+            <ImageView
+                android:layout_width="@dimen/px28"
+                android:layout_height="@dimen/px46"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_user_info_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px144"
+            android:layout_marginTop="@dimen/px30"
+            android:background="@drawable/comm_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px40"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30"
+            android:paddingTop="@dimen/px40">
+
+            <TextView
+                style="@style/AccountSafeTitleTvStyle"
+                android:text="@string/safe_info" />
+
+            <TextView
+                android:id="@+id/id_issetting_user_txt"
+                style="@style/DefaultTvStyle"
+                android:layout_marginRight="@dimen/px30"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_50" />
+
+            <ImageView
+                android:layout_width="@dimen/px28"
+                android:layout_height="@dimen/px46"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/AccountSafeDescTvStyle"
+            android:text="@string/protect_account_safe" />
+
+        <LinearLayout
+            android:id="@+id/id_layout_easy_pay_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px144"
+            android:background="@drawable/comm_item_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/px24"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30"
+            android:paddingTop="@dimen/px24">
+
+            <TextView
+                style="@style/AccountSafeTitleTvStyle"
+                android:text="@string/easy_pay" />
+
+            <!--app:kswBackDrawable="@drawable/ios_back_drawable"-->
+            <!--app:kswBackMeasureRatio="1.4"-->
+            <!--app:kswThumbDrawable="@drawable/ios_thumb_selector"-->
+
+            <com.rz.circled.widget.SwitchButton
+                android:id="@+id/id_easy_pay_btn"
+                style="@style/SwitchButtonStyle"
+                android:layout_width="@dimen/px130"
+                android:layout_height="@dimen/px74"
+                android:clickable="true"
+                app:kswAnimationDuration="300"
+                app:kswTintColor="@color/color_main" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/AccountSafeDescTvStyle"
+            android:text="@string/easy_pay_intr" />
+    </LinearLayout>
+</com.rz.circled.widget.OverScrollView>

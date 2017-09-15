@@ -51,6 +51,7 @@
         android:layout_height="@dimen/px446"
         android:layout_marginTop="@dimen/px30"
         android:layout_marginBottom="@dimen/px34"
+        android:scaleType="fitXY"
         android:background="@color/color_666666"
         />
     <LinearLayout

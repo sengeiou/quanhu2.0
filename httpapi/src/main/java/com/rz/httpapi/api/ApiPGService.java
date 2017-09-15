@@ -2,25 +2,18 @@ package com.rz.httpapi.api;
 
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
-import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.CircleBelongBean;
-import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.GroupBannerBean;
-import com.rz.httpapi.bean.LoginWayBean;
 import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.PrivateGroupListBean;
 import com.rz.httpapi.bean.PrivateGroupResourceBean;
-import com.rz.httpapi.bean.RegisterBean;
-import com.rz.httpapi.bean.UserInfoBean;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import rx.Observable;
 
 /**

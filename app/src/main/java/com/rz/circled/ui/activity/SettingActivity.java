@@ -139,7 +139,7 @@ public class SettingActivity extends BaseActivity {
                     if (CountDownTimer.isFastClick()) {
                         return;
                     }
-//                    jump(AccountSafeAty.class);
+                    showActivity(aty,AccountSafeAty.class);
                 }
                 break;
             //推荐给朋友

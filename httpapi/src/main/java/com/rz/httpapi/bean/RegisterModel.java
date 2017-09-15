@@ -1,4 +1,4 @@
-package com.rz.circled.modle;
+package com.rz.httpapi.bean;
 
 /**
  * 作者：Administrator on 2016/8/20 0020 16:57

@@ -12,6 +12,7 @@ import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.ACache;
 import com.rz.common.utils.NetUtils;
@@ -23,9 +24,11 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.EntitiesBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.MoreFamousModel;
@@ -170,10 +173,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
                     @Override
                     public void onNext(ResponseData<List<CircleDynamic>> res) {
+                        Log.e("zxw", "onNext: "+res.toString() );
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<CircleDynamic> model =res.getData();
                             ACache mCache = ACache.get(mContext);
-                            mCache.put("cache", (Serializable) model);
+                            mCache.put(Constants.HOME_FRAGMENT_CACHE, (Serializable) model);
                             dynamicCreateTime=model.get(model.size()-1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功
@@ -355,6 +359,40 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
 
     }
+    /**
+     * 发现推荐活动
+     */
+    public void getActivityList(final int state) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.getActivityList(1,2)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ResponseData<ActivityBean>>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.i("lixiang", "onError: "+e);
+                        }
+
+                        @Override
+                        public void onNext(ResponseData<ActivityBean> res) {
+                            if (res.getRet() == ReturnCode.SUCCESS) {
+                                List<EntitiesBean> entities = res.getData().entities;
+                                mView.updateViewWithFlag(entities,state);
+                            } else {
+                                HandleRetCode.handler(mContext, res);
+                            }
+                        }
+                    });
+
+
+    }
 
     /**
      * 首页圈子达人
@@ -363,7 +401,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        Call<ResponseData<List<FamousModel>>> call = mUserService.getFamous("2");
+        Call<ResponseData<List<FamousModel>>> call = mUserService.getFamous(Session.getUserId());
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<FamousModel>>>() {
             @Override
@@ -392,7 +430,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.getMoreFamous("45")
+        mUserService.getMoreFamous(Session.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseData<MoreFamousModel<List<StarListBean>>>>() {
