@@ -22,7 +22,7 @@ import butterknife.OnClick;
 /**
  * Created by xiayumo on 16/8/16.
  */
-public class PersonBriefAty extends BaseActivity implements View.OnClickListener,TextWatcher {
+public class PersonBriefAty extends BaseActivity implements View.OnClickListener, TextWatcher {
 
     @BindView(R.id.id_person_brief_edit)
     EditText idPersonPriefEdit;
@@ -31,7 +31,7 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
 
     public static final String TYPE = "type";//区分个人签名和个人简介
 
-    final int RESULT_CODE1=102;//退回到个人信息
+    final int RESULT_CODE1 = 102;//退回到个人信息
     protected IPresenter presenter;
 
     @Override
@@ -43,20 +43,20 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
     public void initView() {
         setTitleText(getIntent().getExtras().getString(TYPE));
         setTitleRightText(getString(R.string.mine_person_save));
-        idPersonPriefEdit.setText(getIntent().getExtras().getString("content",""));
+        idPersonPriefEdit.setText(getIntent().getExtras().getString("content", ""));
         idPersonPriefEdit.setSelection(idPersonPriefEdit.getText().toString().length());
         idPersonPriefEdit.addTextChangedListener(this);
 
 
-        if(getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))){
+        if (getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))) {
             idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
-        }else{
+        } else {
             idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
         }
 
-        if(TextUtils.isEmpty(idPersonPriefEdit.getText().toString())){
+        if (TextUtils.isEmpty(idPersonPriefEdit.getText().toString())) {
             idPersonClearImg.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             idPersonClearImg.setVisibility(View.VISIBLE);
         }
     }
@@ -72,16 +72,16 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
     public <T> void updateView(T t) {
         super.updateView(t);
 
-            if(getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))){
-                Session.setUser_signatrue(t.toString());
+        if (getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))) {
+            Session.setUser_signatrue(t.toString());
 
-            }else{
-                Session.setUser_desc(t.toString());
-            }
+        } else {
+            Session.setUser_desc(t.toString());
+        }
 
-            setResult(RESULT_CODE1);
+        setResult(RESULT_CODE1);
 
-            finish();
+        finish();
 
     }
 
@@ -91,22 +91,22 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
 
     }
 
-    @OnClick({R.id.id_person_clear,R.id.tv_base_title_right})
+    @OnClick({R.id.id_person_clear, R.id.tv_base_title_right})
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_base_title_right:
 
-                String uid=Session.getUserId();
+                String uid = Session.getUserId();
 
-                String content=idPersonPriefEdit.getText().toString();
+                String content = idPersonPriefEdit.getText().toString();
 
-                String key=getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))?
-                        "signature":"desc";
+                String key = getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign)) ?
+                        "signature" : "desc";
 
-                if(!StringUtils.isEmpty(uid))
-                    ((PersonInfoPresenter)presenter).savePersonInfo(uid,key,content);
+                if (!StringUtils.isEmpty(uid))
+                    ((PersonInfoPresenter) presenter).savePersonInfo(uid, key, content, "");
 
                 break;
             case R.id.id_person_clear:
@@ -129,9 +129,9 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        if(TextUtils.isEmpty(s)){
+        if (TextUtils.isEmpty(s)) {
             idPersonClearImg.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             idPersonClearImg.setVisibility(View.VISIBLE);
         }
     }

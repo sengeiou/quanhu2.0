@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.j256.ormlite.table.TableUtils;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -46,7 +45,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
-import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -423,6 +421,7 @@ public class LoginActivity extends BaseActivity {
                 Session.setUserName(model.getCustNname());
                 Session.setUser_signatrue(model.getCustSignature());
                 Session.setUser_desc(model.getCustDesc());
+                Session.setCityCode(model.getCityCode());
                 if (TextUtils.equals("0", model.getCustSex())) {
                     Session.setUser_sex("女");
                 } else {

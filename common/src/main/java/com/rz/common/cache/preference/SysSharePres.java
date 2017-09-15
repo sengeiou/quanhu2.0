@@ -341,6 +341,11 @@ public class SysSharePres {
      */
     public static final String CACHE_SIZE = "cacheSize";
 
+    /**
+     * 用户个人资料地址
+     */
+    public static final String city_code = "cityCode";
+
 
     private static final String NEWS_ANNOUNCEMENT_NUM = "newsAnnouncementNum";
 
@@ -973,5 +978,13 @@ public class SysSharePres {
 
     public void setNewsAccountInformationNum(int newsAccountInformationNum) {
         mSharePres.edit().putInt(NEWS_ACCOUNT_INFORMATION_NUM, newsAccountInformationNum).apply();
+    }
+
+    public String getCityCode() {
+        return mSharePres.getString(city_code, "");
+    }
+
+    public void setCityCode(String cityCode) {
+        mSharePres.edit().putString(city_code, cityCode).apply();
     }
 }
