@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,6 +90,8 @@ public class MoreSubjectActivity extends BaseActivity {
         mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent itnent = new Intent();
+                itnent.putExtra(SearchActivity.SEARCH_TYPE,SearchActivity.TYPE_PERSON);
                 skipActivity(aty,SearchActivity.class);
             }
         });

@@ -507,6 +507,38 @@ public class PayPresenter extends AbsPresenter {
 //        });
 //    }
 
+    public void payOrder(String orderId, String pwd) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        Call<ResponseData> call = mUserService.payOrder(Session.getUserId(), orderId, pwd);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+
+                    } else {
+                        HandleRetCode.handler(activity, res);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
+            }
+        });
+    }
+
     /**
      * 检测是否开启免密支付 ,单位为分
      *
@@ -719,4 +751,5 @@ public class PayPresenter extends AbsPresenter {
         });
         mResetDialog.show();
     }
+
 }

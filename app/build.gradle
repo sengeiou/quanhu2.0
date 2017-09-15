@@ -55,7 +55,7 @@ android {
             buildConfigField "boolean", "isDebug", "false"
             buildConfigField "boolean", "addServerPrefix", "true"
             buildConfigField "String", "BaseUrl", "\"https://api.quanhu365.com/api/\""
-            buildConfigField "String", "NoticeBaseUrl", "\"https://m.quanhu365.com\""
+            buildConfigField "String", "HomeUrl", "\"https://www.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
@@ -75,7 +75,7 @@ android {
             buildConfigField "boolean", "isDebug", "true"
             buildConfigField "boolean", "addServerPrefix", "true"
             buildConfigField "String", "BaseUrl", "\"https://api-mo.quanhu365.com/api/\""
-            buildConfigField "String", "NoticeBaseUrl", "\"https://m-mo.quanhu365.com\""
+            buildConfigField "String", "HomeUrl", "\"https://www-mo.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m-mo.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
@@ -95,7 +95,7 @@ android {
             buildConfigField "boolean", "isDebug", "true"
             buildConfigField "boolean", "addServerPrefix", "true"
             buildConfigField "String", "BaseUrl", "\"http://api-dev.quanhu365.com/api/\""
-            buildConfigField "String", "NoticeBaseUrl", "\"http://m-dev.quanhu365.com\""
+            buildConfigField "String", "HomeUrl", "\"http://www-dev.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",

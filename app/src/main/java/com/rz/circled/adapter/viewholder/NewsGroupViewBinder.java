@@ -35,7 +35,7 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
-        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.avatar);
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).placeholder(R.mipmap.ic_default_private_group_icon).error(R.mipmap.ic_default_private_group_icon).into(holder.avatar);
         NewsGroupExtra extra = new Gson().fromJson(item.getBody().toString(), NewsGroupExtra.class);
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), extra.getCircleName()));
         holder.tvScan.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_joined_user), extra.getMemberNum()));

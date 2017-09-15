@@ -21,6 +21,7 @@ import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
+import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
@@ -261,6 +262,7 @@ public interface ApiService {
     public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
             @Field("status") int status
     );
+
     /**
      * 添加喜欢的圈子
      */
@@ -271,6 +273,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("type") int type
     );
+
     /**
      * 删除喜欢的圈子
      */
@@ -280,6 +283,7 @@ public interface ApiService {
             @Field("circleId") String circleId,
             @Field("custId") String custId
     );
+
     /**
      * 获取喜欢圈子列表
      */
@@ -371,7 +375,8 @@ public interface ApiService {
     Call<ResponseData> editSaveAress(
             @Field("act") int act,
             @Field("custId") String custId,
-            @Field("location") String location
+            @Field("location") String location,
+            @Field("cityCode") String cityCode
     );
 
     /**
@@ -433,6 +438,7 @@ public interface ApiService {
     public Call<ResponseData<List<FamousModel>>> getFamous(
             @Field("custId") String custId
     );
+
     /**
      * 获取更多达人
      */
@@ -441,21 +447,24 @@ public interface ApiService {
     public Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
             @Field("custId") String custId
     );
+
     /**
      * 获取推荐活动列表
      */
-    @GET(CircleApi.FIND_ACTIVITY_TABLE+"{pageNo}"+"/"+"{pageSize}")
+    @GET(CircleApi.FIND_ACTIVITY_TABLE + "{pageNo}" + "/" + "{pageSize}")
     public Observable<ResponseData<ActivityBean>> getActivityList(
             @Path("pageNo") int pageNo,
             @Path("pageSize") int pageSize
 
     );
+
     /**
      * 获取推荐话题
      */
     @GET(CircleApi.CIRCLE_SUBJECT_LIST)
     public Observable<ResponseData<List<HotSubjectModel>>> getSubject(
     );
+
     /**
      * 获取更多话题
      */
@@ -844,6 +853,7 @@ public interface ApiService {
             @Field("start") int start
     );
 //我的api
+
     /**
      * 查询账单明细
      *
@@ -860,6 +870,21 @@ public interface ApiService {
             @Field("start") int start,
             @Field("limit") int limit
     );
+
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_ORDER)
+    Call<ResponseData> payOrder(
+            @Field("custId") String custId,
+            @Field("orderId") String orderId,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_ORDER_DETAILS)
+    Call<ResponseData<PayOrderInfoBean>> payOrderDetails(
+            @Field("orderId") String orderId
+    );
+
     /**
      * 验证安全信息
      */
@@ -873,6 +898,7 @@ public interface ApiService {
             @Field("phyName") String phyName,
             @Field("phyCardNo") String phyCardNo
     );
+
     /**
      * 设置支付密码
      */
@@ -883,6 +909,7 @@ public interface ApiService {
             @Field("payPassword") String payPassword,
             @Field("oldPayPassword") String oldPayPassword
     );
+
     /**
      * 忘记支付密码
      */
@@ -895,6 +922,7 @@ public interface ApiService {
             @Field("phyName") String phyName,
             @Field("phyCardNo") String phyCardNo
     );
+
     /**
      * 开启或者关闭免密支付
      *
@@ -908,6 +936,7 @@ public interface ApiService {
             @Field("type") int type,
             @Field("password") String password
     );
+
     /**
      * 设置密保问题
      *

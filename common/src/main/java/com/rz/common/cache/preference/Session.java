@@ -303,6 +303,11 @@ public class Session {
      */
     private static String js_user_id;
 
+    /**
+     * 用户个人资料的地址信息
+     */
+    private static String city_code;
+
     public static boolean isRedbag_rule() {
         return SysSharePres.getInstance().getUserReadBagRule();
     }
@@ -948,6 +953,14 @@ public class Session {
         SysSharePres.getInstance().setNewsAccountInformationNum(newsAccountInformationNum);
     }
 
+    public static void setCityCode(String cityCode) {
+        SysSharePres.getInstance().setCityCode(cityCode);
+    }
+
+    public static String getCityCode() {
+        return SysSharePres.getInstance().getCityCode();
+    }
+
     /**
      * 清除数据
      */
@@ -998,6 +1011,8 @@ public class Session {
         Session.setSinaAccessToken("");
         Session.setSinaRefreshAccessToken("");
         Session.setOpenId("");
+        Session.setCityCode("");
+
     }
 
     //版本更新時清理数据

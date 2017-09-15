@@ -5,7 +5,7 @@
               android:background="@color/white">
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,5 +22,5 @@
             android:listSelector="@color/transparent"
             android:scrollbars="none"
             />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 </LinearLayout>

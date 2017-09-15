@@ -162,7 +162,7 @@ public class SearchPresenter extends GeneralPresenter {
                         }else if(searchType == 4){
                             dataList = model.getCircleInfos();
                         }else if(searchType == 5){
-                            dataList = model.getRewards();
+                            dataList = model.getOffers();
                         }
 
                         if (null != dataList && !dataList.isEmpty()) {

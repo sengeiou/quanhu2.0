@@ -60,7 +60,7 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
 
             case R.id.tv_base_title_right:
 
-                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "sex", sex + "");
+                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "sex", sex + "", "");
 
                 break;
             default:

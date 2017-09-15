@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.alibaba.fastjson.JSONObject;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -16,6 +15,7 @@ import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.sgt.jsbridge.JsEvent;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -98,14 +98,14 @@ public class LocationActivity extends BaseActivity {
             if (amapLocation != null) {
                 if (amapLocation.getErrorCode() == 0) {
                     //可在其中解析amapLocation获取相应内容。
-                    JSONObject json = new JSONObject();
-                    json.put("longitude", amapLocation.getLongitude());
-                    json.put("latitude", amapLocation.getLatitude());
-                    json.put("province", amapLocation.getProvince());
-                    json.put("city", amapLocation.getCity());
-                    json.put("region", amapLocation.getDistrict());
-                    json.put("cityCode", amapLocation.getCityCode());
-                    JsEvent.callJsEvent(json, true);
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("longitude", amapLocation.getLongitude());
+                    hashMap.put("latitude", amapLocation.getLatitude());
+                    hashMap.put("province", amapLocation.getProvince());
+                    hashMap.put("city", amapLocation.getCity());
+                    hashMap.put("region", amapLocation.getDistrict());
+                    hashMap.put("cityCode", amapLocation.getAdCode());
+                    JsEvent.callJsEvent(hashMap, true);
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                     Log.e("AmapError", "location Error, ErrCode:"

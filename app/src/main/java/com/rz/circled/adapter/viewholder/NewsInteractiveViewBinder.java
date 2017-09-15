@@ -38,9 +38,9 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         holder.tvTitle.setText(item.getTitle());
         NewsInteractiveExtra extra = new Gson().fromJson(item.getBody().toString(), NewsInteractiveExtra.class);
         holder.tvName.setText(extra.getCustName());
-        Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).into(holder.avatar);
+        Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).placeholder(R.mipmap.ic_default_avatar_small).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
         holder.tvContent.setText(extra.getBodyTitle());
-        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).into(holder.img);
+        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).into(holder.img);
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), extra.getCircleName()));
     }
 

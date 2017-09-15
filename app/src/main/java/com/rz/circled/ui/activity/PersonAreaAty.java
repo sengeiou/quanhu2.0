@@ -62,6 +62,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     //上一个页面带过来的type
     private String keyType;
     private PersonInfoPresenter personInfoPresenter;
+    private String locationCityCode;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -198,7 +199,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                     setResult(RESULT_CODE1, mIntent);
                     finish();
                 } else {
-                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas);
+                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas, areaModel.code);
                 }
             }
 
@@ -223,7 +224,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                         paramas = paramas + " " + index[i];
                     }
                     paramas = paramas.trim();
-                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas);
+                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas, locationCityCode);
                 }
             }
         }
@@ -343,6 +344,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
 
     //声明定位回调监听器
     private AMapLocationListener mLocationListener = new AMapLocationListener() {
+
         @Override
         public void onLocationChanged(AMapLocation amapLocation) {
             if (amapLocation != null) {
@@ -350,6 +352,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                     //可在其中解析amapLocation获取相应内容。
                     Log.e("zxw", amapLocation.getAddress());
                     mTvLocation.setText(amapLocation.getCountry() + " " + amapLocation.getProvince() + " " + amapLocation.getCity());
+                    locationCityCode = amapLocation.getCityCode();
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                     Log.e("AmapError", "location Error, ErrCode:"

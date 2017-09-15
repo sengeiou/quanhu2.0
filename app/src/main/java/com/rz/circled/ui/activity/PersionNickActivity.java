@@ -13,7 +13,6 @@ import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
-import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 
@@ -76,7 +75,7 @@ public class PersionNickActivity extends BaseActivity implements View.OnClickLis
         finish();
     }
 
-    @OnClick({R.id.id_person_clear,R.id.tv_base_title_right})
+    @OnClick({R.id.id_person_clear, R.id.tv_base_title_right})
     @Override
     public void onClick(View v) {
 
@@ -96,7 +95,7 @@ public class PersionNickActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
 
-                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "nickName", nickName);
+                ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "nickName", nickName, "");
 
                 break;
             case R.id.id_person_clear:

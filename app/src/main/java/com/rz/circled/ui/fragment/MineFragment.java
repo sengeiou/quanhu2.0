@@ -32,10 +32,13 @@ import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
+import com.rz.circled.ui.activity.MyArticleActivity;
+import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.ObservableListView;
@@ -149,9 +152,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         iv.setImageResource(R.mipmap.ic_message);
         tv.setText("我的");
         mTitleContent.addView(newTitilbar);
-        swipeRefreshLayout.setRefreshing(false);
 //        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -181,11 +183,50 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (mListView.getHeaderViewsCount() == 0) {
             Log.d("yeying", "addview refreshUserInfoView");
             header = View.inflate(getActivity(), R.layout.header_show_frag, null);
+            //个人中心
             header.findViewById(R.id.id_person_news_rela).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (isLogin()) {jump(UserInfoActivity.class);
+
+                    }
+                }
+            });
+
+            //文章
+            header.findViewById(R.id.btn_my_article).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (isLogin()) {
-                        jump(PersonInfoAty.class);
+                        jump(MyArticleActivity.class);
+                    }
+                }
+            });
+
+            //悬赏
+            header.findViewById(R.id.btn_my_transfer).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isLogin()) {
+//                        jump(Pci.class);
+                    }
+                }
+            });
+
+            //私圈
+            header.findViewById(R.id.btn_my_circle).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isLogin()) {
+                        MyPrivateGroupActivity.startMyPrivateGroup(mActivity,0);
+                    }
+                }
+            });
+
+            header.findViewById(R.id.btn_activity_collect).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isLogin()) {
                     }
                 }
             });
@@ -463,36 +504,36 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //    @OnClick()
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_my_collect:
-                if (isLogin()) {
-                    trackUser("我的","入口名称","我的收藏");
-//                    showActivity(mActivity, V3MyCollectedAty.class);
-                }
-                break;
-            case R.id.btn_my_transfer:
-                if (isLogin()) {
-//                    trackUser("我的","入口名称","我的打赏");
-//                    BaseInfo baseInfo = new BaseInfo();
-//                    baseInfo.setCustId(Session.getUserId());
-//                    baseInfo.setCustNname(Session.getUserName());
-//                    baseInfo.setCustLocation(Session.getUser_area());
-//                    baseInfo.setCustSignature(Session.getUser_signatrue());
-//                    baseInfo.setCustImg(Session.getUserPicUrl());
-//                    V3UserShareActivity.toUserShare(mActivity, baseInfo);
-                }
-                break;
-            case R.id.btn_my_circle:
-                if (isLogin()) {
-//                    trackUser("我的","入口名称","我的圈子");
-//                    BaseInfo baseInfo = new BaseInfo();
-//                    baseInfo.setCustId(Session.getUserId());
-//                    baseInfo.setCustNname(Session.getUserName());
-//                    baseInfo.setCustLocation(Session.getUser_area());
-//                    baseInfo.setCustSignature(Session.getUser_signatrue());
-//                    baseInfo.setCustImg(Session.getUserPicUrl());
-//                    V3UserCircleActivity.toUserCircle(frg, Session.getUserId(), baseInfo);
-                }
-                break;
+//            case R.id.btn_my_collect:
+//                if (isLogin()) {
+//                    trackUser("我的","入口名称","我的收藏");
+////                    showActivity(mActivity, V3MyCollectedAty.class);
+//                }
+//                break;
+//            case R.id.btn_my_transfer:
+//                if (isLogin()) {
+////                    trackUser("我的","入口名称","我的打赏");
+////                    BaseInfo baseInfo = new BaseInfo();
+////                    baseInfo.setCustId(Session.getUserId());
+////                    baseInfo.setCustNname(Session.getUserName());
+////                    baseInfo.setCustLocation(Session.getUser_area());
+////                    baseInfo.setCustSignature(Session.getUser_signatrue());
+////                    baseInfo.setCustImg(Session.getUserPicUrl());
+////                    V3UserShareActivity.toUserShare(mActivity, baseInfo);
+//                }
+//                break;
+//            case R.id.btn_my_circle:
+//                if (isLogin()) {
+////                    trackUser("我的","入口名称","我的圈子");
+////                    BaseInfo baseInfo = new BaseInfo();
+////                    baseInfo.setCustId(Session.getUserId());
+////                    baseInfo.setCustNname(Session.getUserName());
+////                    baseInfo.setCustLocation(Session.getUser_area());
+////                    baseInfo.setCustSignature(Session.getUser_signatrue());
+////                    baseInfo.setCustImg(Session.getUserPicUrl());
+////                    V3UserCircleActivity.toUserCircle(frg, Session.getUserId(), baseInfo);
+//                }
+//                break;
             case R.id.id_person_head_img:
                 if (isLogin()) {
                     trackUser("我的","入口名称","我的头像");
