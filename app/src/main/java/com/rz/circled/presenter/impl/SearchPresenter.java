@@ -2,12 +2,10 @@ package com.rz.circled.presenter.impl;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
-import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.inter.IViewController;
@@ -18,7 +16,6 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleDynamic;
-import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.constans.ReturnCode;
@@ -28,8 +25,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static com.xiaomi.push.thrift.a.T;
 
 /**
  * Created by Gsm on 2017/9/2.
@@ -124,7 +119,7 @@ public class SearchPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {

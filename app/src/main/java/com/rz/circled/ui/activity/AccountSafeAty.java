@@ -210,7 +210,7 @@ public class AccountSafeAty extends BaseActivity {
                                 if (item.getType() == Type.LOGIN_PHONE) {
                                     //手机绑定
                                     Intent bind = new Intent(aty, RegisterActivity.class);
-                                    bind.putExtra(IntentKey.KEY_PAGE, IntentCode.Register.REGISTER_RESULT_CODE);
+                                    bind.putExtra(IntentKey.EXTRA_PAGE, IntentCode.Register.REGISTER_RESULT_CODE);
                                     showActivity(aty, bind);
                                 } else {
                                     if (CountDownTimer.isFastClick()) {
@@ -400,7 +400,7 @@ public class AccountSafeAty extends BaseActivity {
                             //未设置登录密码-去设置登录密码
                             //手机绑定
                             Intent bind = new Intent(aty, RegisterActivity.class);
-                            bind.putExtra(IntentKey.KEY_PAGE, IntentCode.Register.REGISTER_RESULT_CODE);
+                            bind.putExtra(IntentKey.EXTRA_PAGE, IntentCode.Register.REGISTER_RESULT_CODE);
                             showActivity(aty, bind);
                         }
                     }

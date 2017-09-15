@@ -88,9 +88,9 @@ public class SetPayPassAty extends BaseActivity {
         //类型
         type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
         //姓名
-        mName = getIntent().getStringExtra(IntentKey.KEY_NAME);
+        mName = getIntent().getStringExtra(IntentKey.EXTRA_NAME);
         //身份证号码
-        mIdCard = getIntent().getStringExtra(IntentKey.KEY_NUM);
+        mIdCard = getIntent().getStringExtra(IntentKey.EXTRA_NUM);
 
         if (Session.getUserSafetyproblem()) {
             mTxtIsSetUser.setVisibility(View.GONE);
