@@ -2,6 +2,7 @@ package com.rz.circled.presenter.impl;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -16,10 +17,12 @@ import com.rz.circled.R;
 import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.pay.PayResult;
 import com.rz.circled.presenter.AbsPresenter;
+import com.rz.circled.ui.activity.SetPayPassAty;
 import com.rz.circled.widget.password.GridPasswordView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.Currency;
@@ -504,6 +507,38 @@ public class PayPresenter extends AbsPresenter {
 //        });
 //    }
 
+    public void payOrder(String orderId, String pwd) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        Call<ResponseData> call = mUserService.payOrder(Session.getUserId(), orderId, pwd);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+
+                    } else {
+                        HandleRetCode.handler(activity, res);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
+            }
+        });
+    }
+
     /**
      * 检测是否开启免密支付 ,单位为分
      *
@@ -605,75 +640,75 @@ public class PayPresenter extends AbsPresenter {
         });
     }
 
-//    /**
-//     * 检测用户是否设置了支付密码
-//     */
-//    public void checkIsSetPw() {
-//        if (Session.getUserSetpaypw()) {
-//            checkPayPw();
-//        } else {
-//            //未设置，去设置
-//            View mSetPayPw = LayoutInflater.from(activity).inflate(R.layout.dialog_to_set_pay_passw, null);
-//            final Dialog mSetDialog = DialogUtils.selfDialog(activity, mSetPayPw, true);
-//            mSetDialog.setCancelable(true);
-//            mSetDialog.setCanceledOnTouchOutside(true);
-//            mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    mSetDialog.dismiss();
-//                    Intent intent = new Intent(activity, SetPayPassAty.class);
-//                    intent.putExtra(IntentKey.General.KEY_TYPE, Type.HAD_NO_SET_PW);
-//                    activity.startActivity(intent);
-//                }
-//            });
-//            mSetDialog.show();
-//        }
-//    }
+    /**
+     * 检测用户是否设置了支付密码
+     */
+    public void checkIsSetPw() {
+        if (Session.getUserSetpaypw()) {
+            checkPayPw();
+        } else {
+            //未设置，去设置
+            View mSetPayPw = LayoutInflater.from(activity).inflate(R.layout.dialog_to_set_pay_passw, null);
+            final Dialog mSetDialog = DialogUtils.selfDialog(activity, mSetPayPw, true);
+            mSetDialog.setCancelable(true);
+            mSetDialog.setCanceledOnTouchOutside(true);
+            mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mSetDialog.dismiss();
+                    Intent intent = new Intent(activity, SetPayPassAty.class);
+                    intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
+                    activity.startActivity(intent);
+                }
+            });
+            mSetDialog.show();
+        }
+    }
 
-//    /**
-//     * 弹出验证支付密码弹出框
-//     */
-//    public void checkPayPw() {
-//        View payViwe = LayoutInflater.from(activity).inflate(R.layout.window_check_pwd, null);
-//        final Dialog mPayDialog = DialogUtils.selfDialog(activity, payViwe, false);
-//        mPayDialog.setCancelable(true);
-//        mPayDialog.setCanceledOnTouchOutside(true);
-//        mPayDialog.show();
-//        payViwe.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mPayDialog.dismiss();
-//                mView.updateView("");
-//                mCheckPayPw = "";
-//            }
-//        });
-//        payViwe.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (StringUtils.isEmpty(mCheckPayPw)) {
-////                    SVProgressHUD.showInfoWithStatus(activity, "请输入支付密码");
-//                    Toasty.error(activity, Context.getString(com.rz.rz_rrz.R.string.pay_password)).show();
-//                } else {
-//                    mPayDialog.dismiss();
-//                    mView.updateView(mCheckPayPw);
-//                    mCheckPayPw = "";
-//                }
-//            }
-//        });
-//        GridPasswordView payPass = (GridPasswordView) payViwe.findViewById(R.id.id_check_pay_pw);
-//        //支付密码
-//        payPass.setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
-//            @Override
-//            public void onTextChanged(String psw) {
-//            }
-//
-//            @Override
-//            public void onInputFinish(String psw) {
-//                mCheckPayPw = psw;
-//                hideInputMethod();
-//            }
-//        });
-//    }
+    /**
+     * 弹出验证支付密码弹出框
+     */
+    public void checkPayPw() {
+        View payViwe = LayoutInflater.from(activity).inflate(R.layout.window_check_pwd, null);
+        final Dialog mPayDialog = DialogUtils.selfDialog(activity, payViwe, false);
+        mPayDialog.setCancelable(true);
+        mPayDialog.setCanceledOnTouchOutside(true);
+        mPayDialog.show();
+        payViwe.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPayDialog.dismiss();
+                mView.updateView("");
+                mCheckPayPw = "";
+            }
+        });
+        payViwe.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (StringUtils.isEmpty(mCheckPayPw)) {
+//                    SVProgressHUD.showInfoWithStatus(activity, "请输入支付密码");
+                    Toasty.error(activity, "请输入支付密码").show();
+                } else {
+                    mPayDialog.dismiss();
+                    mView.updateView(mCheckPayPw);
+                    mCheckPayPw = "";
+                }
+            }
+        });
+        GridPasswordView payPass = (GridPasswordView) payViwe.findViewById(R.id.id_check_pay_pw);
+        //支付密码
+        payPass.setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
+            @Override
+            public void onTextChanged(String psw) {
+            }
+
+            @Override
+            public void onInputFinish(String psw) {
+                mCheckPayPw = psw;
+                hideInputMethod();
+            }
+        });
+    }
 
     //记录验证支付密码的免密
     private String mCheckPayPw;
@@ -716,4 +751,5 @@ public class PayPresenter extends AbsPresenter {
         });
         mResetDialog.show();
     }
+
 }

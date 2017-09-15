@@ -188,7 +188,7 @@ public class PrivateCircledFragment extends BaseFragment {
         for (final GroupBannerBean pic : pics) {
             ImageView imageView = new ImageView(getContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(getContext()).load(pic.getPicUrl()).into(imageView);
+            Glide.with(getContext()).load(pic.getPicUrl()).placeholder(R.mipmap.ic_default_banner).error(R.mipmap.ic_default_banner).into(imageView);
             imageViews.add(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override

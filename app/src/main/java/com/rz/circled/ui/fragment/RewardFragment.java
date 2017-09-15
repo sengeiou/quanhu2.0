@@ -52,8 +52,8 @@ public class RewardFragment extends BaseFragment {
         mWebViewProxy.registerAll(RegisterList.getAllRegisterHandler(getActivity()));
 
 //        mWebView.setVisibility(View.INVISIBLE);
-        mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + "/activity/reward");
-//        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
+//        mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + "/activity/reward");
+        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
 
     @Override

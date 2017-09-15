@@ -4,6 +4,10 @@ package com.rz.common.constant;
  * 接口返回数据 类别标识
  */
 public interface Type {
+    /**
+     * 重置支付密码
+     */
+    public static int RESET_PAY_PW = 2;
 
     /**
      * 设置了支付密码
@@ -14,11 +18,19 @@ public interface Type {
      * 没有支付密码
      */
     int HAD_NO_SET_PW = 0;
+    /**
+     * 功能码--找回支付密码
+     */
+   String FUNCTION_CODE_6 = "6";
 
     /**
      * 开启了免密支付
      */
     int OPEN_EASY_PAY = 1;
+    /**
+     * 没有开启了免密支付
+     */
+    public static int CLOSE_EASY_PAY = 0;
     //收益流水
     public static final int TYPE_SCORE = 2;
     //消费流水

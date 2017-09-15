@@ -9,14 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.ui.activity.AllPrivateGroupActivity;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -40,7 +37,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 
 /**
@@ -91,6 +87,7 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
+                        //TODO
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
                     } else {
                         List<PrivateGroupBean> data = response.body().getData().getList();

@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/px64"
                 android:layout_marginTop="@dimen/px24"
                 android:scaleType="centerCrop"
-                android:src="@android:color/holo_green_light"
+                android:src="@mipmap/ic_default_avatar_small"
                 app:riv_mutate_background="true"
                 app:riv_oval="true" />
 

@@ -124,7 +124,7 @@ public class CommomUtils {
             for (int i = 0; i < rewardGiftModelList.size(); i++) {
                 RewardGiftModel rewardGiftModel = rewardGiftModelList.get(i);
                 if (TextUtils.equals(rewardGiftModel.getPrice(), price + "")) {
-                    return rewardGiftModel.getIcon();
+                    return rewardGiftModel.getImg();
                 }
             }
         }
@@ -306,13 +306,5 @@ public class CommomUtils {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public static String getPrivateGroupHomeUrl(String circleRoute, String coterieId) {
-        return "/" + circleRoute + AgreementConstants.PRIVATE_GROUP_HOME_AGREEMENT + coterieId;
-    }
-
-    public static String getPrivateGroupResourceUrl(String circleRoute, String coterieId, String modelId, String resourceId) {
-        return "/" + circleRoute + AgreementConstants.PRIVATE_GROUP_RESOURCE_AGREEMENT + coterieId + "/" + modelId + "/" + resourceId;
     }
 }

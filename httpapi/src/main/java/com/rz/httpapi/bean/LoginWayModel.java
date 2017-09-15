@@ -5,7 +5,7 @@ package com.rz.httpapi.bean;
  * 功能：登录方式
  * 说明：
  */
-public class LoginWayBean {
+public class LoginWayModel {
 
     //是否绑定 有值绑定 没有值 未绑定
 //    private String openId;

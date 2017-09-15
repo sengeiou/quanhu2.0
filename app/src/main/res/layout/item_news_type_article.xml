@@ -66,6 +66,7 @@
                     android:id="@+id/img"
                     android:layout_width="@dimen/px172"
                     android:layout_height="@dimen/px172"
+                    android:src="@mipmap/ic_default_bg"
                     android:scaleType="centerCrop" />
 
                 <TextView

@@ -24,17 +24,14 @@
                 android:padding="6dp"
                 android:src="@drawable/search_key_icon" />
 
-            <EditText
-                android:id="@+id/etv_search"
+            <TextView
+                android:id="@+id/tv_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="输入私圈名称搜索"
-                android:imeOptions="actionSearch"
-                android:inputType="textImeMultiLine"
-                android:textColor="@color/font_gray_m"
-                android:textColorHint="@color/font_gray_s"
+                android:text="输入私圈名称搜索"
+                android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_40" />
         </LinearLayout>
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AccountBean;
+import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BaseInfo;
@@ -15,12 +16,14 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
-import com.rz.httpapi.bean.LoginWayBean;
+import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
+import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.RegisterBean;
+import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.SearchDataBean;
@@ -38,6 +41,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -220,7 +224,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.LOGIN_METHOD)
-    Call<ResponseData<List<LoginWayBean>>> getLoginMethod(
+    Call<ResponseData<List<LoginWayModel>>> getLoginMethod(
             @Field("act") int act,
             @Field("custId") String custId
     );
@@ -427,7 +431,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_FAMOUS_LIST)
     public Call<ResponseData<List<FamousModel>>> getFamous(
-            @Field("appIds") String appIds
+            @Field("custId") String custId
     );
     /**
      * 获取更多达人
@@ -435,7 +439,16 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.MORE_FAMOUS_LIST)
     public Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
-            @Field("appIds") String appIds
+            @Field("custId") String custId
+    );
+    /**
+     * 获取推荐活动列表
+     */
+    @GET(CircleApi.FIND_ACTIVITY_TABLE+"{pageNo}"+"/"+"{pageSize}")
+    public Observable<ResponseData<ActivityBean>> getActivityList(
+            @Path("pageNo") int pageNo,
+            @Path("pageSize") int pageSize
+
     );
     /**
      * 获取推荐话题
@@ -821,6 +834,82 @@ public interface ApiService {
             @Field("limit") int limit
     );
 
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_ORDER)
+    Call<ResponseData> payOrder(
+            @Field("custId") String custId,
+            @Field("orderId") String orderId,
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_ORDER_DETAILS)
+    Call<ResponseData<PayOrderInfoBean>> payOrderDetails(
+            @Field("orderId") String orderId
+    );
+
+    /**
+     * 验证安全信息
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.CHECK_SECURITY_PROBLEM)
+    public Call<ResponseData<RegisterModel>> checkProblem(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("phone") String phone,
+            @Field("veriCode") String veriCode,
+            @Field("phyName") String phyName,
+            @Field("phyCardNo") String phyCardNo
+    );
+    /**
+     * 设置支付密码
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.SETORMODIFY_PAYPW)
+    public Call<ResponseData> setOrModifyPayPw(
+            @Field("custId") String custId,
+            @Field("payPassword") String payPassword,
+            @Field("oldPayPassword") String oldPayPassword
+    );
+    /**
+     * 忘记支付密码
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.SETORMODIFY_PAYPW)
+    public Call<ResponseData> forgetPayPw(
+            @Field(value = "act") int act,
+            @Field("custId") String custId,
+            @Field("payPassword") String payPassword,
+            @Field("phyName") String phyName,
+            @Field("phyCardNo") String phyCardNo
+    );
+    /**
+     * 开启或者关闭免密支付
+     *
+     * @param type 0 不设置 1 设置
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.OPEN_OR_CLOSE_EASY_PAY)
+    public Call<ResponseData> closeOrOpenPay(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("type") int type,
+            @Field("password") String password
+    );
+    /**
+     * 设置密保问题
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(PayAPI.SET_SECURITY_PROBLEM)
+    Call<ResponseData> setSecurityProblem(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("phyName") String phyName,
+            @Field("phyCardNo") String phyCardNo
+    );
 //    /**
 //     * 转发统计
 //     *

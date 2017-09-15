@@ -35,6 +35,7 @@
                 android:id="@+id/avatar"
                 android:layout_width="@dimen/px166"
                 android:layout_height="@dimen/px166"
+                android:src="@mipmap/ic_default_avatar_big"
                 android:scaleType="centerCrop"
                 app:riv_mutate_background="true"
                 app:riv_oval="true" />

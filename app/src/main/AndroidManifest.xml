@@ -80,6 +80,21 @@
                 <data android:scheme="wxf7ece255b91036cd"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
 
         <!--end-->
 
@@ -148,7 +163,7 @@
             android:theme="@style/BaseAppTheme.Translucent"/>
 
         <activity
-            android:name=".ui.activity.TransferGiftActivity"
+            android:name=".ui.activity.RewardGiftActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
 
@@ -231,15 +246,42 @@
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity android:name=".ui.activity.AllPrivateGroupActivity"/>
-        <activity android:name=".ui.activity.MyPrivateGroupActivity"/>
-        <activity android:name=".ui.activity.ApplyForCreatePrivateGroupActivity"/>
-        <activity android:name=".ui.activity.ApplyForPrivateGroupBelongActivity"/>
-        <activity android:name=".ui.activity.PrivateGroupJoinWayChangeActivity"/>
-        <activity android:name=".ui.activity.NewsActivity"/>
-        <activity android:name=".ui.activity.NewsAnnounceDetailsActivity"/>
-        <activity android:name=".ui.activity.NewsFragmentActivity"/>
-        <activity android:name=".ui.activity.NewsInteractiveActivity"/>
+        <activity
+            android:name=".ui.activity.AllPrivateGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MyPrivateGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ApplyForCreatePrivateGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ApplyForPrivateGroupBelongActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.PrivateGroupJoinWayChangeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.NewsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.NewsAnnounceDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.NewsFragmentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.NewsInteractiveActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
             android:name=".ui.activity.AllCirclesAty"
             android:screenOrientation="portrait"
@@ -322,10 +364,40 @@
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity android:name=".ui.activity.AccountDetailAty"/>
-        <activity android:name=".ui.activity.PersonScanAty"/>
-        <activity android:name=".ui.activity.AwesomeTabsAty"/>
+        <activity
+            android:name=".ui.activity.AccountDetailAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.PersonScanAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.AwesomeTabsAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
         <activity android:name=".ui.activity.VideoH5Aty"/>
+        <activity
+            android:name=".ui.activity.ShareNewsAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ShareSwitchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ShareTeamListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ShareFriendsListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity android:name=".ui.activity.SettingSafeUserAty"/>
+        <activity android:name=".ui.activity.AccountSafeAty"/>
+        <activity android:name=".ui.activity.ResetPayPwAty"/>
+        <activity android:name=".ui.activity.ModifyPwdAty"/>
+        <activity android:name=".ui.activity.SetPayPassAty"/>
 
     </application>
 

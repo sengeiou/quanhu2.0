@@ -75,7 +75,7 @@ public class MyBalanceAty extends BaseActivity {
             AccountBean model = (AccountBean) t;
             if (null != model) {
                 Session.setUserMoneyState(model.getAccountState() == 1 ? true : false);
-                mTxtAccount.setText(Currency.returnDollar(Currency.RMB, model.accountSum, 0).replace(getString(R.string.yuan), ""));
+                mTxtAccount.setText(Currency.returnDollar(Currency.RMB, model.getAccountSum(), 0).replace(getString(R.string.yuan), ""));
             }
         }
     }
