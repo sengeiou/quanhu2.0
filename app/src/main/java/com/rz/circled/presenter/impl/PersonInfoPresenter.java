@@ -1,10 +1,12 @@
 package com.rz.circled.presenter.impl;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.application.BaseApplication;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
@@ -50,13 +52,24 @@ public class PersonInfoPresenter extends GeneralPresenter {
 
     }
 
+    public void initForLocation(Activity activity) {
+        mUserService = Http.getApiService(ApiService.class);
+        mContext = activity;
+    }
+
     /**
-     * 保存等信息
+     * 保存个人信息
+     *
+     * @param id
+     * @param paramasType
+     * @param paramas
+     * @param cityCode
      */
-    public void savePersonInfo(String id, String paramasType, final String paramas) {
+    public void savePersonInfo(String id, final String paramasType, final String paramas, String cityCode) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.status_un_network));
+            if (mView != null)
+                mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.status_un_network));
             return;
         }
 
@@ -76,7 +89,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
                 call = mUserService.editSaveSignature(1050, id, paramas);
                 break;
             case "location":
-                call = mUserService.editSaveAress(1050, id, paramas);
+                call = mUserService.editSaveAress(1050, id, paramas, cityCode);
                 break;
             case "desc":
                 call = mUserService.editSaveDesc(1050, id, paramas);
@@ -93,22 +106,27 @@ public class PersonInfoPresenter extends GeneralPresenter {
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-
-                        mView.updateView(paramas);
+                        if (mView != null)
+                            mView.updateView(paramas);
+                        if (paramasType.equals("location"))
+                            Session.setUser_area(paramas);
 
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        SVProgressHUD.showErrorWithStatus(mContext, res.getMsg());
+                        if (mView != null)
+                            SVProgressHUD.showErrorWithStatus(mContext, res.getMsg());
 
                     }
                 } else {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.modify_fail));
+                    if (mView != null)
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.modify_fail));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.modify_fail));
+                if (mView != null)
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.modify_fail));
             }
         });
     }

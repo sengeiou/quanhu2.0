@@ -142,6 +142,7 @@
 
 
 
+
 </script>
 <script>
 
@@ -227,7 +228,7 @@ function testClick1(index) {
     } else if (index == 11) {
         yryz.getNetWorkStatus(Object.assign(callback))
     } else if (index == 12) {
-        yryz.getLocation(Object.assign(callback))
+        yryz.getLocation(Object.assign({'isGetCityCode':1}, callback))
     } else if (index == 13) {
         yryz.backHome(Object.assign(callback))
     } else if (index == 14) {
@@ -479,6 +480,7 @@ function testClick1(index) {
 },callback))
     }
 }
+
 
 
 

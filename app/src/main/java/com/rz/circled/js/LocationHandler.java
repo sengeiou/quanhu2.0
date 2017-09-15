@@ -3,7 +3,10 @@ package com.rz.circled.js;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.google.gson.Gson;
+import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.circled.ui.activity.LocationActivity;
+import com.rz.common.cache.preference.Session;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -11,7 +14,6 @@ import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +23,8 @@ import java.util.Map;
  */
 
 public class LocationHandler extends ServerHandler {
+
+    private boolean isGetCityCode;
 
     public LocationHandler(Activity mActivity) {
         super(mActivity);
@@ -33,6 +37,14 @@ public class LocationHandler extends ServerHandler {
 
     @Override
     public void handle(String params, ParamsObject paramObj, Callback callback) {
+        Gson gson = new Gson();
+        String dataJson = gson.toJson(paramObj.getData());
+        try {
+            org.json.JSONObject jsonObject = new org.json.JSONObject(dataJson);
+            isGetCityCode = jsonObject.getInt("isGetCityCode") == 1 ? true : false;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(mActivity, LocationActivity.class);
         mActivity.startActivity(intent);
     }
@@ -42,18 +54,13 @@ public class LocationHandler extends ServerHandler {
         Callback callback = new Callback(webViewProxy, paramsObject.getInvokeId(), paramsObject.getInvokeName()) {
             @Override
             public void invoke(Object businessParms, BaseParamsObject baseParamsObject) {
-                JSONObject json = (JSONObject) businessParms;
+                HashMap<String, Object> hashMap = (HashMap<String, Object>) businessParms;
                 Map<String, Object> map = new HashMap<>();
-                try {
-                    map.put("longitude", json.getDouble("longitude"));
-                    map.put("latitude", json.getDouble("latitude"));
-                    map.put("province", json.getString("province"));
-                    map.put("city", json.getString("city"));
-                    map.put("cityCode", json.getString("cityCode"));
-                    map.put("region", json.getString("region"));
-                    baseParamsObject.data = map;
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                baseParamsObject.data = hashMap;
+                if (isGetCityCode) {//去修改用户资料
+                    PersonInfoPresenter personInfoPresenter = new PersonInfoPresenter();
+                    personInfoPresenter.initForLocation(mActivity);
+                    personInfoPresenter.savePersonInfo(Session.getUserId(), "location", (String) hashMap.get("province") + (String) hashMap.get("city"), (String) hashMap.get("cityCode"));
                 }
             }
         };

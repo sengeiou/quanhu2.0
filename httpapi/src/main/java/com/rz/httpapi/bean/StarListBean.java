@@ -28,6 +28,25 @@ public class StarListBean {
         private String custNname;
         private String nameNotes;
 
+        private int custRole;
+        private String custSignature;
+
+        public int getCustRole() {
+            return custRole;
+        }
+
+        public void setCustRole(int custRole) {
+            this.custRole = custRole;
+        }
+
+        public String getCustSignature() {
+            return custSignature;
+        }
+
+        public void setCustSignature(String custSignature) {
+            this.custSignature = custSignature;
+        }
+
         public String getCustId() {
             return custId;
         }

@@ -46,7 +46,8 @@ public class SearchActivity extends BaseActivity {
 
     public static String searchWord = "";
 
-
+    private int type = 0;
+    public static final String SEARCH_TYPE = "search_type";
 
     public static final int TYPE_CONTENT = 0;
     public static final int TYPE_PERSON = 1;
@@ -67,6 +68,10 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        Intent intent = getIntent();
+        type = intent.getIntExtra(IntentKey.EXTRA_TYPE,0);
+
         etKeyword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -92,6 +97,10 @@ public class SearchActivity extends BaseActivity {
         searchAdapter = new SearchAdapter(getSupportFragmentManager());
         vpSearch.setAdapter(searchAdapter);
         vpSearch.setOffscreenPageLimit(5);
+
+        vpSearch.setCurrentItem(type);
+        tabPagerSearch.setTempPosition(type);
+
         tabPagerSearch.setViewPager(vpSearch);
         tabPagerSearch.notifyDataSetChanged();
         tabPagerSearch.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -78,6 +78,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
     public void initPresenter() {
         super.initPresenter();
         personInfoPresenter = new PersonInfoPresenter();
+        personInfoPresenter.attachView(this);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
                 setResult(RESULT_CODE, mIntent);
                 finish();
             } else {
-                personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas);
+                personInfoPresenter.savePersonInfo(Session.getUserId(), "location", paramas, model.children.get(position - 1).code);
             }
         }
     }
