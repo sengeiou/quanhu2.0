@@ -31,8 +31,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-
 /**
  * 设置或者修改支付密码或者忘记
  */

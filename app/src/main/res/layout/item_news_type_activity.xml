@@ -50,6 +50,7 @@
             android:layout_height="@dimen/px446"
             android:layout_marginTop="@dimen/px44"
             android:scaleType="centerCrop"
+            android:src="@mipmap/ic_default_holder"
             app:riv_corner_radius="@dimen/px18"
             app:riv_mutate_background="true"
             app:riv_oval="false" />

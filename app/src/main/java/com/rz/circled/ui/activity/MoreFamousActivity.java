@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,10 @@ public class MoreFamousActivity extends BaseActivity {
         mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                skipActivity(aty,SearchActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(SearchActivity.SEARCH_TYPE,SearchActivity.TYPE_PERSON);
+//                skipActivity(aty,SearchActivity.class,bundle);
+                SearchActivity.stratActivity(mContext,SearchActivity.TYPE_PERSON);
             }
         });
 

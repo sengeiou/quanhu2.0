@@ -27,6 +27,6 @@ public class PrivateGroupEssenceAdapter extends CommonAdapter<PrivateGroupResour
         helper.setText(R.id.tv_desc, item.getTitle());
         helper.setText(R.id.tv_scan, String.format(mContext.getString(R.string.private_group_essence_scan), item.getReadNum()));
         if (Protect.checkLoadImageStatus(mContext))
-            Glide.with(mContext).load(item.getCust().getCustImg()).error(R.mipmap.icon_logo).into((ImageView) helper.getView(R.id.avatar));
+            Glide.with(mContext).load(item.getCust().getCustImg()).placeholder(R.mipmap.ic_default_avatar_small).error(R.mipmap.ic_default_avatar_small).into((ImageView) helper.getView(R.id.avatar));
     }
 }

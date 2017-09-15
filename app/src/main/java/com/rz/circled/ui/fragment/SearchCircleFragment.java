@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
 
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchCircleAdapter;
 import com.rz.circled.adapter.SearchRewardAdapter;
@@ -30,6 +32,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
+
 /**
  * Created by Gsm on 2017/9/2.
  */
@@ -37,7 +42,7 @@ public class SearchCircleFragment extends BaseFragment {
 
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefresh;
+    SwipyRefreshLayout mRefresh;
     @BindView(R.id.gv_search_circle)
     GridView gvCircle;
     private SearchCircleAdapter circleAdapter;
@@ -71,20 +76,22 @@ public class SearchCircleFragment extends BaseFragment {
     public void initData() {
         Log.e(TAG,"-----SearchCircleFragment------");
 
-        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
-        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        initRefresh();
+    }
+
+    private void initRefresh() {
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+
                 if(!TextUtils.isEmpty(keyWord)){
-                    ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CIRCLE);
-                }else{
-                    Toasty.info(mActivity,mActivity.getString(R.string.search_attention_title)).show();
+                    ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_CIRCLE);
                 }
 
                 mRefresh.setRefreshing(false);
             }
         });
-
     }
 
     @Override
@@ -104,8 +111,10 @@ public class SearchCircleFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
             keyWord = (String) baseEvent.getData();
+            if(!TextUtils.isEmpty(keyWord)){
+                ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_CIRCLE);
+            }
 
-            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_CIRCLE);
         }
     }
 
@@ -161,5 +170,15 @@ public class SearchCircleFragment extends BaseFragment {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return circleAdapter != null && circleAdapter.getCount() != 0;
     }
 }

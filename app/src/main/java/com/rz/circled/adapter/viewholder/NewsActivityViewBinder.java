@@ -36,7 +36,7 @@ public class NewsActivityViewBinder extends ItemViewBinder<NewsBean, NewsActivit
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
-        Glide.with(holder.itemView.getContext()).load(item.getImg()).into(holder.img);
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).placeholder(R.mipmap.ic_default_holder).error(R.mipmap.ic_default_holder).into(holder.img);
         NewsActivityExtra extra = new Gson().fromJson(item.getBody().toString(), NewsActivityExtra.class);
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), extra.getCircleName()));
     }

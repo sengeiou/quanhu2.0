@@ -57,7 +57,6 @@ public class SnsAuthPresenter extends GeneralPresenter {
     //记录解绑时的第三方的openid
     private String mSaveOpenId;
 
-//    private UMShareAPI mShareAPI;
 
     private boolean isLogin = false;
 
@@ -69,8 +68,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
     public void attachView(IViewController view) {
         this.mView = view;
         mContext = getContext(mView);
-//        mShareAPI = UMShareAPI.get(mContext);
-//        mUserService = Http.getUserService(mContext);
+        mShareAPI = UMShareAPI.get(mContext);
         mUserService = Http.getApiService(ApiService.class);
     }
 

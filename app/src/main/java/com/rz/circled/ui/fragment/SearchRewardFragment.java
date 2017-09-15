@@ -2,11 +2,14 @@ package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchPersonAdapter;
 import com.rz.circled.adapter.SearchRewardAdapter;
@@ -15,6 +18,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.httpapi.bean.RewardModel;
 import com.rz.httpapi.bean.SearchRewardBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -28,6 +32,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
+
 /**
  * Created by Gsm on 2017/9/2.
  */
@@ -35,12 +42,12 @@ public class SearchRewardFragment extends BaseFragment {
 
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefresh;
+    SwipyRefreshLayout mRefresh;
     @BindView(R.id.lv_search_content)
     ListView lvReward;
 
     private SearchRewardAdapter rewardAdapter;
-    private List<SearchRewardBean> rewardBeanList = new ArrayList<>();
+    private List<RewardModel> rewardBeanList = new ArrayList<>();
     private SearchPresenter searchPresenter;
     private String keyWord = "";
 
@@ -72,16 +79,22 @@ public class SearchRewardFragment extends BaseFragment {
     public void initData() {
         Log.e(TAG,"-----SearchRewardFragment------");
 
-        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
-        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        initRefresh();
+    }
+
+    private void initRefresh() {
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_REWARD);
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                if(!TextUtils.isEmpty(keyWord)){
+                    ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
+                }
                 mRefresh.setRefreshing(false);
             }
         });
-
     }
+
 
     @Override
     public void initPresenter() {
@@ -100,8 +113,10 @@ public class SearchRewardFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
             keyWord = (String) baseEvent.getData();
+            if(!TextUtils.isEmpty(keyWord)){
+                ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
+            }
 
-            ((SearchPresenter) searchPresenter).searchQH(false,"测试","","","",SearchPresenter.SEARCH_REWARD);
         }
     }
 
@@ -109,7 +124,7 @@ public class SearchRewardFragment extends BaseFragment {
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
         if (t != null) {
-            List<SearchRewardBean> mDatas = (List<SearchRewardBean>) t;
+            List<RewardModel> mDatas = (List<RewardModel>) t;
             if (null != mDatas && !mDatas.isEmpty()) {
                 if (!loadMore) {
                     rewardBeanList.clear();
@@ -166,7 +181,7 @@ public class SearchRewardFragment extends BaseFragment {
 
     @Override
     protected boolean hasDataInPage() {
-        return true;
+        return rewardAdapter != null && rewardAdapter.getCount() != 0;
     }
 
 }

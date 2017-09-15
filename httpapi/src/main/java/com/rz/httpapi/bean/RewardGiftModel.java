@@ -26,10 +26,6 @@ public class RewardGiftModel implements Serializable {
      */
     private String name;
 
-    private String icon;
-
-    public int imgResourceId;
-
     public String getPrice() {
         return price;
     }
@@ -60,13 +56,5 @@ public class RewardGiftModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 }

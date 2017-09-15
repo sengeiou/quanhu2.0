@@ -43,6 +43,7 @@
                     android:layout_width="@dimen/px64"
                     android:layout_height="@dimen/px64"
                     android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_default_avatar_small"
                     app:riv_mutate_background="true"
                     app:riv_oval="true" />
 
@@ -79,6 +80,7 @@
                     android:id="@+id/img"
                     android:layout_width="@dimen/px172"
                     android:layout_height="@dimen/px172"
+                    android:src="@mipmap/ic_default_bg"
                     android:scaleType="centerCrop" />
 
                 <TextView

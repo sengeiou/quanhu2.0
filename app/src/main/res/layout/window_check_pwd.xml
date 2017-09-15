@@ -27,7 +27,7 @@
             android:layout_marginRight="@dimen/px15"
             android:background="@color/color_f5f5f5" />
 
-        <com.rz.rz_rrz.widget.password.GridPasswordView
+        <com.rz.circled.widget.password.GridPasswordView
             android:id="@+id/id_check_pay_pw"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px130"

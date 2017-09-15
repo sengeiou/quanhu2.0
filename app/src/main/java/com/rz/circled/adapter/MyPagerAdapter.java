@@ -34,6 +34,7 @@ public class MyPagerAdapter extends PagerAdapter {
         return POSITION_NONE;
     }
 
+    @Override
     public void destroyItem(View arg0, int arg1, Object arg2) {// 销毁view对象
         ((ViewPager) arg0).removeView(listViews.get(arg1 % size));
     }
@@ -41,10 +42,10 @@ public class MyPagerAdapter extends PagerAdapter {
     public void finishUpdate(View arg0) {
     }
 
+    @Override
     public Object instantiateItem(View arg0, int arg1) {// 返回view对象
         try {
             ((ViewPager) arg0).addView(listViews.get(arg1 % size), 0);
-
         } catch (Exception e) {
         }
         return listViews.get(arg1 % size);
@@ -52,5 +53,9 @@ public class MyPagerAdapter extends PagerAdapter {
 
     public boolean isViewFromObject(View arg0, Object arg1) {
         return arg0 == arg1;
+    }
+
+    public Object getItem(int index) {
+        return listViews.get(index % size);
     }
 }

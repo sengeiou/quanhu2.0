@@ -53,7 +53,7 @@ public class MyPrivateGroupActivity extends BaseActivity {
         Intent i = new Intent(context, MyPrivateGroupActivity.class);
         i.putExtra(IntentKey.EXTRA_POSITION, index);
         context.startActivity(i);
-    }
+}
 
     @Override
     protected View loadView(LayoutInflater inflater) {
