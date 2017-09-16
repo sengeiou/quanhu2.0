@@ -42,7 +42,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -451,10 +450,20 @@ public interface ApiService {
     /**
      * 获取推荐活动列表
      */
-    @GET(CircleApi.FIND_ACTIVITY_TABLE + "{pageNo}" + "/" + "{pageSize}")
+    @GET(CircleApi.FIND_ACTIVITY_TABLE)
     public Observable<ResponseData<ActivityBean>> getActivityList(
-            @Path("pageNo") int pageNo,
-            @Path("pageSize") int pageSize
+            @Query("pageNo") int pageNo,
+            @Query("pageSize") int pageSize
+
+    );
+    /**
+     * 我的页面活动列表
+     */
+    @GET(CircleApi.MINE_ACTIVITY)
+    public Observable<ResponseData<ActivityBean>> getMineActivityList(
+            @Query("pageNo") int pageNo,
+            @Query("pageSize") int pageSize,
+            @Query("paramId") String paramId
 
     );
 
@@ -499,7 +508,7 @@ public interface ApiService {
     @POST(CircleApi.CIRCLE_DEL_COLLECT)
     Observable<ResponseData> delCollect(
             @Field("custId") String custId,
-            @Field("resourceId") String resourceId
+            @Field("cid") int cid
     );
     /**
      * 获取转发价格列表

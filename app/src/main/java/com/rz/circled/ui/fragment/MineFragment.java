@@ -31,8 +31,10 @@ import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.MinePageActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
+import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
@@ -227,6 +229,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
+                        jump(MinePageActivity.class);
                     }
                 }
             });
@@ -629,14 +632,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //                }
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的等级");
-//                    showActivity(frg, PersonScanAty.class);
+                    jump(MyLevelActivity.class);
                 }
                 break;
             //转发券
 
             case 5:
                 if (isLogin()) {
-                    trackUser("我的", "入口名称", "我的二维码");
+                    trackUser("我的", "入口名称", "账户");
                     jump(MyAccountAty.class);
 
                 }

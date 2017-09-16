@@ -124,7 +124,7 @@ public class CollectionBean {
         private String cityCode;
         private int completeTime;
         private String content;
-        private String extjson;
+        public String extjson;
         private String gps;
         private int heat;
         private String moduleEnum;
@@ -178,14 +178,6 @@ public class CollectionBean {
 
         public void setContent(String content) {
             this.content = content;
-        }
-
-        public String getExtjson() {
-            return extjson;
-        }
-
-        public void setExtjson(String extjson) {
-            this.extjson = extjson;
         }
 
         public String getGps() {

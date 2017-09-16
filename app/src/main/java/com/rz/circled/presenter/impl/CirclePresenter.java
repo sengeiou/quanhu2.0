@@ -648,11 +648,12 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
+    Integer cid=null;
     public void getCircleCollection() {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-       mUserService.getCircleCollect(null,Session.getUserId(), Constants.PAGESIZE)
+       mUserService.getCircleCollect(cid,Session.getUserId(), Constants.PAGESIZE)
                .subscribeOn(Schedulers.io())
                .observeOn(AndroidSchedulers.mainThread())
                .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
@@ -663,13 +664,13 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
                    @Override
                    public void onError(Throwable e) {
-
                    }
 
                    @Override
                    public void onNext(ResponseData<List<CollectionBean>> res) {
                        if (res.getRet() == ReturnCode.SUCCESS) {
                            List<CollectionBean> data = res.getData();
+                           cid=data.get(data.size()-1).cid;
                            mView.updateView(data);
 
                        }
@@ -684,11 +685,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
-    public void requestDeleteCollected(String resourceId) {
+    public void requestDeleteCollected(int cid) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.delCollect(Session.getUserId(),resourceId)
+        mUserService.delCollect(Session.getUserId(),cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData>() {

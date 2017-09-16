@@ -1,5 +1,8 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +16,7 @@ import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
 import com.rz.circled.ui.fragment.MyCircleFragment;
 import com.rz.circled.ui.fragment.MyRewardFragment;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -41,7 +45,22 @@ public class UserInfoActivity extends BaseActivity{
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_user_info, null);
     }
+    public static void newFrindInfo(Context context, String id) {
 
+        Intent intent = new Intent(context, UserInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(IntentKey.KEY_ID, id);
+        intent.putExtras(bundle);
+//        if (!StringUtils.isEmpty(model.getCustNname())) {
+//            tvNick.setText(model.getCustNname());
+//        } else {
+//            tvNick.setText("");
+//        }
+
+        context.startActivity(intent);
+
+
+    }
     @Override
     public void initView() {
 

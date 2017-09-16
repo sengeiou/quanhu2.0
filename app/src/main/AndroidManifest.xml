@@ -401,6 +401,8 @@
         <activity android:name=".ui.activity.ModifyPwdAty"/>
         <activity android:name=".ui.activity.SetPayPassAty"/>
         <activity android:name=".ui.activity.MyCollectionActivity"/>
+        <activity android:name=".ui.activity.MinePageActivity"/>
+        <activity android:name=".ui.activity.MyLevelActivity"/>
 
     </application>
 
