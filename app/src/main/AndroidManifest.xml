@@ -39,6 +39,7 @@
             <!-- </intent-filter> -->
         </activity>
 
+
         <!-- 支付宝 -->
         <!-- alipay sdk begin -->
         <activity
@@ -111,42 +112,52 @@
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.FindPwdActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.FindPwdActivity2"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.WebContainerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.AudioChooseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.EditorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.EditorTwoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.EditorTwoSortActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.ImagePagerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.PictureSelectedActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.MediaActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -156,26 +167,32 @@
             android:name=".ui.activity.ReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.RewardGiftActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.UploadAudioActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.UploadVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.UploadPicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.VideoChooseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.VoicePubActivity"
             android:screenOrientation="portrait"
@@ -184,6 +201,7 @@
             android:name=".ui.activity.EditorTwoAuthorityActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.SplashAty"
             android:screenOrientation="portrait"
@@ -310,27 +328,34 @@
             android:name=".ui.activity.RechargePayAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.PictureManagerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.PersionNickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.PersonSexActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.PersonBriefAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.MyArticleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity android:name=".ui.activity.FollowCircle"/>
+
         <activity
             android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait"
@@ -339,6 +364,7 @@
             android:name=".ui.activity.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"
@@ -377,6 +403,8 @@
         <activity android:name=".ui.activity.ResetPayPwAty"/>
         <activity android:name=".ui.activity.ModifyPwdAty"/>
         <activity android:name=".ui.activity.SetPayPassAty"/>
+        <activity android:name=".ui.activity.MyCollectionActivity"/>
+
         <activity android:name=".ui.activity.ChooseProveIdentityActivity">
         </activity>
         <activity android:name=".ui.activity.ProveWriteInfoActivity">

@@ -28,6 +28,7 @@ import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.CollectionBean;
 import com.rz.httpapi.bean.EntitiesBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
@@ -642,84 +643,74 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //    }
 //
 //
-//    /**
-//     * 我的收藏
-//     *
-//     * @param
-//     */
-//    public void getCircleCollection(final boolean loadMore) {
-//        Call<ResponseData<List<V3CircleTransfer>>> call = null;
-//        call = mUserService.getCircleCollect(Session.getUserId(), loadMore ? collectPos : 0, Constants.PAGESIZE);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<V3CircleTransfer>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<V3CircleTransfer>>> call, Response<ResponseData<List<V3CircleTransfer>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (!loadMore) {
-//                        collectPos = 0;
-//                    }
-//                    collectPos += Constants.PAGESIZE;
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<CircleDynamic> model = (List<CircleDynamic>) res.getData();
-//                        if (null != model && model.size() > 0) {
-//                            //发送成功
-//                            mView.updateViewWithLoadMore(model, loadMore);
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, loadMore);
-//                        } else {
-//                            mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_NULL, loadMore);
-//                        }
-//                        return;
-//                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-//                        //发送失败
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, res.getMsg());
-//                        return;
-//                    }
-//                }
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<V3CircleTransfer>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//                //发送验证码失败
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.load_fail));
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 取消收藏
-//     *
-//     * @param circleTransfer
-//     */
-//    public void requestDeleteCollected(final V3CircleTransfer circleTransfer) {
-//        Call<ResponseData> call = null;
-//        call = mUserService.deleteCircleCollect(Session.getUserId(), circleTransfer.cid);
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData>() {
-//            @Override
-//            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        mView.updateView(circleTransfer);
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.DATA_SUCCESS_FULL, R.string.cancel_success);
-//                    } else {
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, R.string.cancel_fail);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData> call, Throwable t) {
-//                super.onFailure(call, t);
-//                mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, R.string.cancel_fail);
-//            }
-//        });
-//    }
+    /**
+     * 我的收藏
+     *
+     * @param
+     */
+    public void getCircleCollection() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+       mUserService.getCircleCollect(null,Session.getUserId(), Constants.PAGESIZE)
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread())
+               .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
+                   @Override
+                   public void onCompleted() {
+
+                   }
+
+                   @Override
+                   public void onError(Throwable e) {
+
+                   }
+
+                   @Override
+                   public void onNext(ResponseData<List<CollectionBean>> res) {
+                       if (res.getRet() == ReturnCode.SUCCESS) {
+                           List<CollectionBean> data = res.getData();
+                           mView.updateView(data);
+
+                       }
+
+                   }
+               });
+
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @param
+     */
+    public void requestDeleteCollected(String resourceId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.delCollect(Session.getUserId(),resourceId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData responseData) {
+
+                    }
+                });
+
+
+    }
+
 //
 //    /**
 //     * 提交评论

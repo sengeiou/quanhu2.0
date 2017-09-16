@@ -12,6 +12,7 @@ import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
+import com.rz.httpapi.bean.CollectionBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
@@ -472,7 +473,34 @@ public interface ApiService {
             @Query("limit") int limit,
             @Query("start") int start
     );
-
+    /**
+     * 我的收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_COLLECT_LIST)
+    Observable<ResponseData<List<CollectionBean>>> getCircleCollect(
+            @Field("cid") Integer cid,
+            @Field("custId") String custId,
+            @Field("limit") int limit
+    );
+    /**
+     * 添加收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_ADD_COLLECT)
+    Observable<ResponseData> addCollect(
+            @Field("custId") String custId,
+            @Field("resourceId") String resourceId
+    );
+    /**
+     * 删除收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_DEL_COLLECT)
+    Observable<ResponseData> delCollect(
+            @Field("custId") String custId,
+            @Field("resourceId") String resourceId
+    );
     /**
      * 获取转发价格列表
      *
@@ -527,7 +555,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(PayAPI.GET_ACCOUNT)
+    @POST(ApiPay.GET_ACCOUNT)
     Call<ResponseData<AccountBean>> getUserAccount(
             @Field("act") int act,
             @Field("custId") String custId
@@ -540,7 +568,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(PayAPI.SEARCH_USER_NEWS)
+    @POST(ApiPay.SEARCH_USER_NEWS)
     Call<ResponseData<UserInfoModel>> searchUserNews(
             @Field("act") int act,
             @Field("custId") String custId
@@ -797,7 +825,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(PayAPI.PAY)
+    @POST(ApiPay.PAY)
     Call<ResponseData<PaySignModel>> payProvingSign(
             @Field("act") int act,
             @Field("custId") String custId,
@@ -833,7 +861,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(PayAPI.GET_BILL_ORDER)
+    @POST(ApiPay.GET_BILL_ORDER)
     Call<ResponseData<List<BillDetailModel>>> getBillList(
             @Field("productType") int productType,
             @Field("custId") String custId,
@@ -861,7 +889,7 @@ public interface ApiService {
      * 验证安全信息
      */
     @FormUrlEncoded
-    @POST(PayAPI.CHECK_SECURITY_PROBLEM)
+    @POST(ApiPay.CHECK_SECURITY_PROBLEM)
     public Call<ResponseData<RegisterModel>> checkProblem(
             @Field("act") int act,
             @Field("custId") String custId,
@@ -875,7 +903,7 @@ public interface ApiService {
      * 设置支付密码
      */
     @FormUrlEncoded
-    @POST(PayAPI.SETORMODIFY_PAYPW)
+    @POST(ApiPay.SETORMODIFY_PAYPW)
     public Call<ResponseData> setOrModifyPayPw(
             @Field("custId") String custId,
             @Field("payPassword") String payPassword,
@@ -886,7 +914,7 @@ public interface ApiService {
      * 忘记支付密码
      */
     @FormUrlEncoded
-    @POST(PayAPI.SETORMODIFY_PAYPW)
+    @POST(ApiPay.SETORMODIFY_PAYPW)
     public Call<ResponseData> forgetPayPw(
             @Field(value = "act") int act,
             @Field("custId") String custId,
@@ -901,7 +929,7 @@ public interface ApiService {
      * @param type 0 不设置 1 设置
      */
     @FormUrlEncoded
-    @POST(PayAPI.OPEN_OR_CLOSE_EASY_PAY)
+    @POST(ApiPay.OPEN_OR_CLOSE_EASY_PAY)
     public Call<ResponseData> closeOrOpenPay(
             @Field("act") int act,
             @Field("custId") String custId,
@@ -916,7 +944,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(PayAPI.SET_SECURITY_PROBLEM)
+    @POST(ApiPay.SET_SECURITY_PROBLEM)
     Call<ResponseData> setSecurityProblem(
             @Field("act") int act,
             @Field("custId") String custId,

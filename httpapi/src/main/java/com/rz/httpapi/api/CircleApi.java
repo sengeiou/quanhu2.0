@@ -59,6 +59,14 @@ public class CircleApi {
      * 我的收藏列表
      */
     public static final String CIRCLE_DELETE_COLLECT = "v3/collection/delete";
+    /**
+     * 添加收藏
+     */
+    public static final String CIRCLE_ADD_COLLECT = "v3/collection/add";
+    /**
+     * 添加收藏
+     */
+    public static final String CIRCLE_DEL_COLLECT = "v3/collection/delete";
 
     /**
      * 3.3查询转发列表（我转别人）

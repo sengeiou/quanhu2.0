@@ -13,6 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
+import com.litesuits.common.utils.HexUtil;
+import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.pay.PayResult;
@@ -38,6 +40,7 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.BillDetailModel;
+import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
@@ -521,7 +524,7 @@ public class PayPresenter extends AbsPresenter {
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-
+                        mView.updateView(res.getRet());
                     } else {
                         HandleRetCode.handler(activity, res);
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -533,6 +536,38 @@ public class PayPresenter extends AbsPresenter {
 
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
+            }
+        });
+    }
+
+    public void payOrderDetails(String orderId) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        Call<ResponseData<PayOrderInfoBean>> call = mUserService.payOrderDetails(orderId);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<PayOrderInfoBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<PayOrderInfoBean>> call, Response<ResponseData<PayOrderInfoBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.isSuccessful()) {
+                        mView.updateView(response.body().getData());
+                    } else {
+                        HandleRetCode.handler(activity, res);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<PayOrderInfoBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
             }
@@ -752,4 +787,51 @@ public class PayPresenter extends AbsPresenter {
         mResetDialog.show();
     }
 
+    private void pay(String orderId, double mPayMoney, double mUserMoney, int flag) {
+        if (Session.getUserIsLogin()) {
+            SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.please_go_login));
+            return;
+        }
+        if (Session.getUserMoneyState()) {
+            SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.user_money_freeze));
+            return;
+        }
+        if (mPayMoney <= mUserMoney) {
+            SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.money_less));
+            return;
+        }
+        if (Session.getUserSetpaypw()) {
+            //设置了支付密码
+            if (flag == 2 || flag == 3) {
+                showPayDialog(mPayMoney, "", flag);
+            } else {
+                if (Session.getIsOpenGesture()) {
+                    //开启免密支付
+                    if (mPayMoney <= Constants.EasyPayMoney) {
+                        //--去支付
+                        payOrder(orderId, "");
+                    } else {
+                        //支付金额大于免密支付额
+                        showPayDialog(mPayMoney, "", flag);
+                    }
+                } else {
+                    showPayDialog(mPayMoney, "", flag);
+                }
+            }
+        } else {
+            //未设置，去设置
+            View mSetPayPw = LayoutInflater.from(activity).inflate(R.layout.dialog_to_set_pay_passw, null);
+            final Dialog mSetDialog = DialogUtils.selfDialog(activity, mSetPayPw, true);
+            mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                                mSetDialog.dismiss();
+//                                Intent intent = new Intent(activity, SetPayPassAty.class);
+//                                intent.putExtra(IntentKey.General.KEY_TYPE, Type.HAD_NO_SET_PW);
+//                                activity.startActivity(intent);
+                }
+            });
+            mSetDialog.show();
+        }
+    }
 }

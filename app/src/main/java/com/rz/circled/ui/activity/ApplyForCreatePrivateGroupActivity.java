@@ -107,12 +107,20 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     Toast.makeText(mContext, "请选择圈子", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (TextUtils.isEmpty(etvDesc.getText().toString().trim())) {
+                    Toast.makeText(mContext, "请填写身份简介", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(coverPath)) {
                     Toast.makeText(mContext, "封面图为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(etvName.getText().toString().trim())) {
                     Toast.makeText(mContext, "私圈名称为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())) {
+                    Toast.makeText(mContext, "请填写私圈简介", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!cbxProtocol.isChecked()) {

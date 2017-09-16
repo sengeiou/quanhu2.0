@@ -1,8 +1,10 @@
 package com.rz.circled.ui.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.litesuits.common.utils.HexUtil;
+import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.circled.adapter.RewardGiftAdapter;
@@ -23,6 +27,7 @@ import com.rz.circled.presenter.impl.RewardGiftPresenter;
 import com.rz.circled.widget.BounceBackViewPager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
@@ -30,8 +35,14 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.Currency;
+import com.rz.common.utils.DialogUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.common.widget.toasty.Toasty;
+import com.rz.httpapi.api.ApiPayService;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.AccountBean;
+import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.RewardBean;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.RewardInfoBean;
@@ -49,6 +60,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * 打赏通用界面
@@ -192,8 +209,9 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
                     mPayPresenter.checkIsOpenEasyPay(Double.parseDouble(mGiftModel.getPrice()), mUserBalance, getString(R.string.pay_amount), 0);
                 }
             } else if (t instanceof String) {
+                String pw = (String) t;
                 //去支付
-                mPayPresenter.payOrder(orderId, (String) t);
+                mPayPresenter.payOrder(orderId, TextUtils.isEmpty(pw) ? "" : HexUtil.encodeHexStr(MD5Util.md5(pw)));
             } else if (t instanceof List) {
                 List list = (List) t;
                 if (!list.isEmpty() && list.size() > 0 && list.get(0) instanceof RewardGiftModel) {
@@ -207,6 +225,15 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
                 orderId = data.getOrderId();
                 //去支付
                 mPayPresenter.isSettingPw(true);
+            } else if (t instanceof Integer) {
+                mPayPresenter.payOrderDetails(orderId);
+            } else if (t instanceof PayOrderInfoBean) {
+                PayOrderInfoBean data = (PayOrderInfoBean) t;
+                if (data.getOrderState() == 1) {
+                    //打赏成功
+                    Toasty.success(mContext, getString(R.string.reward_success)).show();
+                    finish();
+                }
             }
         }
     }
@@ -280,6 +307,28 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
 //                    Intent intent = new Intent(aty, RechargeMoneyAty.class);
 //                    startActivityForResult(intent, IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE);
 //                }
+                Observable<ResponseData<UserInfoModel>> observable = Http.getApiService(ApiPayService.class).searchUserNews(Session.getUserId());
+                Http.getApiService(ApiPayService.class).searchUserNews(Session.getUserId())
+                        .map(new Func1<ResponseData<UserInfoModel>, UserInfoModel>() {
+                            @Override
+                            public UserInfoModel call(ResponseData<UserInfoModel> userInfoModelResponseData) {
+                                return userInfoModelResponseData.getData();
+                            }
+                        })
+                        .filter(new Func1<UserInfoModel, Boolean>() {
+                            @Override
+                            public Boolean call(UserInfoModel userInfoModel) {
+                                return Session.getUserIsLogin();
+                            }
+                        })
+                        .filter(new Func1<UserInfoModel, Boolean>() {
+                            @Override
+                            public Boolean call(UserInfoModel userInfoModel) {
+                                return Session.getUserMoneyState();
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
                 break;
             //支付
             case R.id.tv_transfer_gift_pay:
@@ -332,4 +381,5 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
             }
         }
     }
+
 }
