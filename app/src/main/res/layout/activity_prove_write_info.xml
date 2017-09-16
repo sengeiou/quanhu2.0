@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context="com.rz.circled.ui.activity.ProveWriteInfoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_common"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/app_base_padding"
+            android:paddingRight="@dimen/app_base_padding">
+
+            <LinearLayout
+                style="@style/ProveItemRoot">
+
+                <TextView
+                    android:id="@+id/tv_prove_true_name"
+                    style="@style/ProveItemTvBlack"
+                    android:text="@string/true_name"/>
+
+                <TextView
+                    style="@style/ProveItemTvGray"
+                    android:text="@string/required"/>
+
+                <EditText
+                    android:id="@+id/et_prove_true_name"
+                    style="@style/ProveItemTvBlack.s"
+                    android:maxLength="10"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"/>
+
+            <LinearLayout
+                style="@style/ProveItemRoot">
+
+                <TextView
+                    android:id="@+id/tv_prove_phone"
+                    style="@style/ProveItemTvBlack"
+                    android:text="@string/auth_phone"/>
+
+                <TextView
+                    style="@style/ProveItemTvGray"
+                    android:text="@string/required"/>
+
+                <EditText
+                    android:id="@+id/et_prove_phone"
+                    style="@style/ProveItemTvBlack.s"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"/>
+
+            <LinearLayout
+                style="@style/ProveItemRoot">
+
+                <TextView
+                    android:id="@+id/tv_prove_id_number"
+                    style="@style/ProveItemTvBlack"
+                    android:text="@string/id_number"/>
+
+                <TextView
+                    style="@style/ProveItemTvGray"
+                    android:text="@string/required"/>
+
+                <EditText
+                    android:id="@+id/et_prove_id_number"
+                    style="@style/ProveItemTvBlack.s"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"/>
+
+            <LinearLayout
+                style="@style/ProveItemRoot">
+
+                <TextView
+                    android:id="@+id/tv_prove_area_title"
+                    style="@style/ProveItemTvBlack"
+                    android:text="@string/area_where"/>
+
+                <TextView
+                    style="@style/ProveItemTvGray"
+                    android:text="@string/required"/>
+
+                <TextView
+                    android:id="@+id/tv_prove_area"
+                    style="@style/ProveItemTvBlack.s"
+                    android:drawablePadding="@dimen/px10"
+                    android:drawableRight="@mipmap/ic_right_arrow"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"/>
+
+            <LinearLayout
+                style="@style/ProveItemRoot">
+
+                <TextView
+                    style="@style/ProveItemTvBlack"
+                    android:text="@string/industry_sector"/>
+
+                <TextView
+                    style="@style/ProveItemTvGray"
+                    android:text="@string/required"/>
+
+                <EditText
+                    android:id="@+id/et_prove_industry"
+                    style="@style/ProveItemTvBlack.s"
+                    android:maxLength="10"/>
+
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"/>
+
+            <LinearLayout
+                style="@style/ProveItemRoot">
+
+                <TextView
+                    android:id="@+id/tv_prove_media_account"
+                    style="@style/ProveItemTvBlack"
+                    android:text="@string/self_media_account"/>
+
+                <TextView
+                    style="@style/ProveItemTvGray"
+                    android:text="@string/un_required"/>
+
+                <EditText
+                    android:id="@+id/et_prove_media_account"
+                    style="@style/ProveItemTvBlack.s"
+                    android:maxLength="10"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horizontal_gray_s"/>
+
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginTop="@dimen/px30"/>
+
+        <EditText
+            android:id="@+id/et_prove_resources"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="left"
+            android:hint="@string/prove_resources_hint"
+            android:maxLength="100"
+            android:minHeight="@dimen/px270"
+            android:paddingBottom="@dimen/px30"
+            android:paddingLeft="@dimen/app_base_padding"
+            android:paddingRight="@dimen/app_base_padding"
+            android:paddingTop="@dimen/px35"
+            android:textColor="@color/font_gray_xl"
+            android:textColorHint="@color/font_gray_a"
+            android:textSize="@dimen/font_44"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px30"
+            android:paddingLeft="@dimen/app_base_padding"
+            android:paddingRight="@dimen/app_base_padding">
+
+            <TextView
+                android:id="@+id/tv_prove_resources_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/font_gray_m"
+                android:textSize="@dimen/font_38"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/100"
+                android:textColor="@color/font_gray_a"
+                android:textSize="@dimen/font_38"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/line_horizontal_gray_s"/>
+
+    </LinearLayout>
+
+</ScrollView>
