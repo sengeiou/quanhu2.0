@@ -200,21 +200,21 @@ public class PersonInfoPresenter extends GeneralPresenter {
             record_start = start;
         }
 
-        Call<ResponseData<CircleDynamic>> call = mUserService.getMyResource(
+        Call<ResponseData<List<CircleDynamic>>> call = mUserService.getMyResource(
                 custId,
-                5,
+                Constants.PAGESIZE,
                 resourceType,
-                0);
+                start);
 
 
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<CircleDynamic>>() {
+        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
             @Override
-            public void onResponse(Call<ResponseData<CircleDynamic>> call, Response<ResponseData<CircleDynamic>> response) {
+            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
 
-                    ResponseData<CircleDynamic> res = response.body();
+                    ResponseData<List<CircleDynamic>> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         List<CircleDynamic> modelList = (List<CircleDynamic>) res.getData();
 
@@ -223,8 +223,12 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.updateViewWithLoadMore(modelList, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
+                            if(loadMore == false){
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }else{
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
+                            }
                             mView.updateViewWithLoadMore(modelList, loadMore);
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             isNoData = true;
                         }
                         return;
@@ -245,7 +249,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<CircleDynamic>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);

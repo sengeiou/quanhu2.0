@@ -58,6 +58,7 @@ import com.rz.circled.js.UploadVideoHandler;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.api.Http;

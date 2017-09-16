@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.InputType;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,19 +17,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TextViewUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.UserInfoModel;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,6 +69,14 @@ public class FindPwdActivity2 extends BaseActivity {
     ImageView mImgClearPassW;
     @BindView(R.id.id_watch_pass)
     ImageView mImgWatchPass;
+
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
+    private String cityCode = "";
+    private String location = "";
 //
 //    /**
 //     * 协议
@@ -139,8 +157,34 @@ public class FindPwdActivity2 extends BaseActivity {
 
     }
 
+    private void initLocation() {
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //获取一次定位结果：
+        //该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
     @Override
     public void initData() {
+
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            initLocation();
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.location_permission), RC_LOCATION_CONTACTS_PERM, perms);
+        }
+
         mEditPassWEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
@@ -247,7 +291,7 @@ public class FindPwdActivity2 extends BaseActivity {
                     if (StringUtils.isNumber(mPassW) || StringUtils.isLetterRic(mPassW)) {
                         SVProgressHUD.showErrorWithStatus(aty, getString(R.string.pw_num_letter));
                     } else {
-                        ((UserInfoPresenter) presenter).registerUser(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassW)), mCode);
+                        ((UserInfoPresenter) presenter).registerUser(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassW)), mCode,location,cityCode);
                     }
                 }
 //            } else {
@@ -275,10 +319,13 @@ public class FindPwdActivity2 extends BaseActivity {
                 Toast.makeText(this, R.string.change_pw_success ,Toast.LENGTH_SHORT).show();
                 //重置密码成功
                 setResult(IntentCode.ForGetPw.FIND_1_RESULT_CODE);
+
             } else if (t instanceof UserInfoModel) {
                 //注册成功
                 UserInfoModel model = (UserInfoModel) t;
                 if (null != model) {
+                    Session.setCityCode(cityCode);
+
                     Intent intent = new Intent();
                     intent.putExtra(IntentKey.EXTRA_MODEL, model);
                     setResult(IntentCode.Register.REGISTER_RESULT_CODE, intent);
@@ -301,4 +348,65 @@ public class FindPwdActivity2 extends BaseActivity {
 //            super.onLoadingStatus(loadingStatus, string);
 //        }
 //    }
+
+    //声明定位回调监听器
+    private AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    //可在其中解析amapLocation获取相应内容。
+//                    HashMap<String, Object> hashMap = new HashMap<>();
+//                    hashMap.put("longitude", amapLocation.getLongitude());
+//                    hashMap.put("latitude", amapLocation.getLatitude());
+//                    hashMap.put("province", amapLocation.getProvince());
+//                    hashMap.put("city", amapLocation.getCity());
+//                    hashMap.put("region", amapLocation.getDistrict());
+//                    hashMap.put("cityCode", amapLocation.getAdCode());
+
+                    location = amapLocation.getLocationDetail();
+                    cityCode = amapLocation.getAdCode();
+
+//                    Session.setCityCode(amapLocation.getAdCode());
+//                    JsEvent.callJsEvent(hashMap, true);
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+
+    /**
+     * 销毁定位
+     *
+     * @author hongming.wang
+     * @since 2.8.0
+     */
+    private void destroyLocation() {
+        if (null != mLocationClient) {
+            /**
+             * 如果AMapLocationClient是在当前Activity实例化的，
+             * 在Activity的onDestroy中一定要执行AMapLocationClient的onDestroy
+             */
+            mLocationClient.onDestroy();
+            mLocationClient = null;
+            mLocationOption = null;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        super.onPermissionsGranted(requestCode, perms);
+        initLocation();
+    }
+
 }

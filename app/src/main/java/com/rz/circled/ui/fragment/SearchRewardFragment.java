@@ -130,6 +130,7 @@ public class SearchRewardFragment extends BaseFragment {
                     rewardBeanList.clear();
                 }
                 rewardBeanList.addAll(mDatas);
+                rewardAdapter.setKeyWord(keyWord);
                 rewardAdapter.setData(rewardBeanList);
                 rewardAdapter.notifyDataSetChanged();
             } else {

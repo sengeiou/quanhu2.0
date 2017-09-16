@@ -122,7 +122,9 @@ public interface ApiService {
             @Field("password") String password,
             @Field("veriCode") String veriCode,
             @Field("inviter") String inviter,
-            @Field("channel") String channel
+            @Field("channel") String channel,
+            @Field("cityCode") String cityCode,
+            @Field("location") String location
     );
 
     /**
@@ -943,7 +945,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.MY_RESOURCE)
-    Call<ResponseData<CircleDynamic>> getMyResource(
+    Call<ResponseData<List<CircleDynamic>>> getMyResource(
             @Field("custId") String custId,
             @Field("limit") int limit,
             @Field("resourceType") String resourceType,
