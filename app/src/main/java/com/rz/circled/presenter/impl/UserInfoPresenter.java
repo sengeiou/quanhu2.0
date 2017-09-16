@@ -105,7 +105,7 @@ public class UserInfoPresenter extends GeneralPresenter {
     /**
      * 注册用户
      */
-    public void registerUser(String phone, String password, String veriCode) {
+    public void registerUser(String phone, String password, String veriCode,String location, String cityCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
@@ -116,7 +116,10 @@ public class UserInfoPresenter extends GeneralPresenter {
                 phone,
                 password,
                 veriCode, "1",
-                ""
+                "",
+                cityCode,
+                location
+
 
         );
         CallManager.add(call);
@@ -352,6 +355,9 @@ public class UserInfoPresenter extends GeneralPresenter {
             }
         });
     }
+
+
+
 
 //    /**
 //     * 验证手机号是否注册

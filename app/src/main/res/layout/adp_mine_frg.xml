@@ -67,7 +67,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/px40"
             android:background="@drawable/ic_right_arrow"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <View

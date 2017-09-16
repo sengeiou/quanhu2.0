@@ -1238,7 +1238,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (llPage.getVisibility() == View.VISIBLE) {//封面图片
             EditorConfigTwoModel pageModel = (EditorConfigTwoModel) llPage.getTag();
             if (pageModel.getRequired() && ivPage.getTag(R.id.iv_editor_two_page) == null) {
-                Toasty.normal(this, pageModel.getErrorPrompt()).show();
+                Toasty.info(this, pageModel.getErrorPrompt()).show();
                 return;
             }
         }
@@ -1246,11 +1246,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             EditorConfigTwoModel titleModel = (EditorConfigTwoModel) llTitle.getTag();
             String titleStr = etTitle.getText().toString().trim();
             if (titleModel.getRequired() && TextUtils.isEmpty(titleStr)) {
-                Toasty.normal(this, titleModel.getErrorPrompt()).show();
+                Toasty.info(this, titleModel.getErrorPrompt()).show();
                 return;
             }
             if (!TextUtils.isEmpty(titleStr) && (titleStr.length() < titleModel.getLowerLimit() || titleStr.length() > titleModel.getUpperLimit())) {
-                Toasty.normal(this, titleModel.getErrorPrompt()).show();
+                Toasty.info(this, titleModel.getErrorPrompt()).show();
                 return;
             }
             dataSource.setTitle(titleStr);
@@ -1258,7 +1258,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (rlSort.getVisibility() == View.VISIBLE) {//分类
             EditorConfigTwoModel sortModel = (EditorConfigTwoModel) rlSort.getTag();
             if (sortModel.getRequired() && TextUtils.isEmpty(dataSource.getClassifyItemName())) {
-                Toasty.normal(this, sortModel.getErrorPrompt()).show();
+                Toasty.info(this, sortModel.getErrorPrompt()).show();
                 return;
             }
         }
@@ -1266,7 +1266,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             EditorConfigTwoModel locationModel = (EditorConfigTwoModel) rlLocation.getTag();
             String locationStr = tvLocation.getText().toString().trim();
             if (locationModel.getRequired() && TextUtils.isEmpty(locationStr)) {
-                Toasty.normal(this, locationModel.getErrorPrompt()).show();
+                Toasty.info(this, locationModel.getErrorPrompt()).show();
                 return;
             }
             if (locationStr.contains(" ")) {
@@ -1283,7 +1283,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             EditorConfigTwoModel timeModel = (EditorConfigTwoModel) rlTime.getTag();
             String timeStr = tvTime.getText().toString().trim();
             if (timeModel.getRequired() && TextUtils.isEmpty(timeStr)) {
-                Toasty.normal(this, timeModel.getErrorPrompt()).show();
+                Toasty.info(this, timeModel.getErrorPrompt()).show();
                 return;
             }
             dataSource.setDate(timeStr);
@@ -1292,11 +1292,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             EditorConfigTwoModel labelModel = (EditorConfigTwoModel) llLabel.getTag();
             String labelStr = etLabel.getText().toString().trim();
             if (labelModel.getRequired() && TextUtils.isEmpty(labelStr)) {
-                Toasty.normal(this, labelModel.getErrorPrompt()).show();
+                Toasty.info(this, labelModel.getErrorPrompt()).show();
                 return;
             }
             if (!TextUtils.isEmpty(labelStr) && (labelStr.length() < labelModel.getLowerLimit() || labelStr.length() > labelModel.getUpperLimit())) {
-                Toasty.normal(this, labelModel.getErrorPrompt()).show();
+                Toasty.info(this, labelModel.getErrorPrompt()).show();
                 return;
             }
             dataSource.setLabel(labelStr);
@@ -1305,11 +1305,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             EditorConfigTwoModel introductionModel = (EditorConfigTwoModel) llIntroduction.getTag();
             String introductionStr = etIntroduction.getText().toString().trim();
             if (introductionModel.getRequired() && TextUtils.isEmpty(introductionStr)) {
-                Toasty.normal(this, introductionModel.getErrorPrompt()).show();
+                Toasty.info(this, introductionModel.getErrorPrompt()).show();
                 return;
             }
             if (!TextUtils.isEmpty(introductionStr) && (introductionStr.length() < introductionModel.getLowerLimit() || introductionStr.length() > introductionModel.getUpperLimit())) {
-                Toasty.normal(this, introductionModel.getErrorPrompt()).show();
+                Toasty.info(this, introductionModel.getErrorPrompt()).show();
                 return;
             }
             dataSource.setDescription(introductionStr);
@@ -1318,11 +1318,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             EditorConfigTwoModel contentModel = (EditorConfigTwoModel) llContentText.getTag();
             if (contentModel != null) {
                 if (contentModel.getRequired() && contentEditCount <= 0) {
-                    Toasty.normal(this, contentModel.getErrorPrompt()).show();
+                    Toasty.info(this, contentModel.getErrorPrompt()).show();
                     return;
                 }
                 if (contentEditCount != 0 && (contentEditCount < contentModel.getLowerLimit() || contentEditCount > contentModel.getUpperLimit())) {
-                    Toasty.normal(this, contentModel.getErrorPrompt()).show();
+                    Toasty.info(this, contentModel.getErrorPrompt()).show();
                     return;
                 }
             }
@@ -1330,11 +1330,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (ivChoosePic.getVisibility() == View.VISIBLE) {//图片
             EditorConfigTwoModel picModel = (EditorConfigTwoModel) ivChoosePic.getTag();
             if (isPicText && (picModel.getRequired() && (contentImageCount < picModel.getLowerLimit() || contentImageCount > picModel.getUpperLimit()))) {
-                Toasty.normal(this, picModel.getErrorPrompt()).show();
+                Toasty.info(this, picModel.getErrorPrompt()).show();
                 return;
             }
             if (!isPicText && (picModel.getRequired() && (picList.size() < picModel.getLowerLimit() || picList.size() > picModel.getUpperLimit()))) {
-                Toasty.normal(this, picModel.getErrorPrompt()).show();
+                Toasty.info(this, picModel.getErrorPrompt()).show();
                 return;
             }
 
@@ -1342,14 +1342,14 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (ivChooseVideo.getVisibility() == View.VISIBLE) {//视频
             EditorConfigTwoModel videoModel = (EditorConfigTwoModel) ivChooseVideo.getTag();
             if (videoModel.getRequired() && rlVideo.getVisibility() != View.VISIBLE) {
-                Toasty.normal(this, videoModel.getErrorPrompt()).show();
+                Toasty.info(this, videoModel.getErrorPrompt()).show();
                 return;
             }
         }
         if (ivChooseAudio.getVisibility() == View.VISIBLE) {//音频
             EditorConfigTwoModel audioModel = (EditorConfigTwoModel) ivChooseAudio.getTag();
             if (audioModel.getRequired() && rlAudio.getVisibility() != View.VISIBLE) {
-                Toasty.normal(this, audioModel.getErrorPrompt()).show();
+                Toasty.info(this, audioModel.getErrorPrompt()).show();
                 return;
             }
         }
@@ -1362,7 +1362,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             dataSource.setFunctionType(cbVote.isChecked() ? 2 : 0);
         }
         if (contentEditCount <= 0 && contentImageCount <= 0 && picList.size() <= 0 && rlVideo.getVisibility() != View.VISIBLE && rlAudio.getVisibility() != View.VISIBLE) {
-            Toasty.normal(this, getString(R.string.editor_content_null)).show();
+            Toasty.info(this, getString(R.string.editor_content_null)).show();
             return;
         }
         jsResult = new ArrayList<>();

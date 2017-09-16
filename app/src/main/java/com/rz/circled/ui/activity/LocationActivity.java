@@ -104,7 +104,11 @@ public class LocationActivity extends BaseActivity {
                     hashMap.put("province", amapLocation.getProvince());
                     hashMap.put("city", amapLocation.getCity());
                     hashMap.put("region", amapLocation.getDistrict());
-                    hashMap.put("cityCode", amapLocation.getAdCode());
+                    String adCode = amapLocation.getAdCode();
+                    if (adCode.length() == 6) {
+                        adCode = adCode.substring(0, 3) + "000";
+                    }
+                    hashMap.put("cityCode", adCode);
                     JsEvent.callJsEvent(hashMap, true);
                 } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
