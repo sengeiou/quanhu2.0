@@ -961,6 +961,14 @@ public class Session {
         return SysSharePres.getInstance().getCityCode();
     }
 
+    public static boolean isNeedTeam() {
+        return SysSharePres.getInstance().isNeedTeam();
+    }
+
+    public static void setNeedTeam(boolean needTeam) {
+        SysSharePres.getInstance().setNeedTeam(needTeam);
+    }
+
     /**
      * 清除数据
      */

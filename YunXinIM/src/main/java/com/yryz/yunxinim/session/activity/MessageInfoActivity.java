@@ -17,6 +17,7 @@ import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.contact.activity.UserProfileActivity;
 import com.yryz.yunxinim.team.TeamCreateHelper;
+import com.yryz.yunxinim.uikit.Constants;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.cache.FriendDataCache;
 import com.yryz.yunxinim.uikit.cache.NimUserInfoCache;
@@ -171,7 +172,7 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
 //        ContactSelectActivity.Option option = TeamHelper.getCreateContactSelectOption(memberAccounts, 50);
 //        NimUIKit.startContactSelect(this, option, REQUEST_CODE_NORMAL);// 创建群
         Intent intent = new Intent();
-        intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
+        intent.setAction(Constants.CONTACTS_SELECT_ACTION);
         intent.putStringArrayListExtra("EXTRA_DATA", memberAccounts);
         startActivityForResult(intent, REQUEST_CODE_NORMAL);
     }

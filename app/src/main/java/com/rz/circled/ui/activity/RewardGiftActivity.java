@@ -148,7 +148,7 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     @Override
-    public boolean hasDataInPage() {
+    protected boolean hasDataInPage() {
         return true;
     }
 
@@ -160,6 +160,11 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected boolean needShowTitle() {
         return false;
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 
     @Override
@@ -180,11 +185,6 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
             if (t instanceof AccountBean) {
                 AccountBean model = (AccountBean) t;
                 if (null != model) {
-                    if (Type.USER_MONEY_NORMAL == model.getAccountState()) {
-                        Session.setUserMoneyState(true);
-                    } else {
-                        Session.setUserMoneyState(false);
-                    }
                     mUserBalance = Double.parseDouble(model.getAccountSum());
                     tvTransferGiftBalance.setText(Currency.returnDollar(Currency.RMB, mUserBalance + "", 0));
                     if (mUserBalance > 0) {
@@ -193,25 +193,6 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
                         tvTransferGiftBalance.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
                     }
                 }
-            } else if (t instanceof UserInfoModel) {
-                UserInfoModel user = (UserInfoModel) t;
-                if (null != user) {
-                    if (Type.HAD_SET_PW == user.getIsPayPassword()) {
-                        Session.setUserSetpaypw(true);
-                    } else {
-                        Session.setUserSetpaypw(false);
-                    }
-                    if (Type.OPEN_EASY_PAY == user.getSmallNopass()) {
-                        Session.setIsOpenGesture(true);
-                    } else {
-                        Session.setIsOpenGesture(false);
-                    }
-                    mPayPresenter.checkIsOpenEasyPay(Double.parseDouble(mGiftModel.getPrice()), mUserBalance, getString(R.string.pay_amount), 0);
-                }
-            } else if (t instanceof String) {
-                String pw = (String) t;
-                //去支付
-                mPayPresenter.payOrder(orderId, TextUtils.isEmpty(pw) ? "" : HexUtil.encodeHexStr(MD5Util.md5(pw)));
             } else if (t instanceof List) {
                 List list = (List) t;
                 if (!list.isEmpty() && list.size() > 0 && list.get(0) instanceof RewardGiftModel) {
@@ -223,8 +204,8 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
             } else if (t instanceof RewardBean) {
                 RewardBean data = (RewardBean) t;
                 orderId = data.getOrderId();
-                //去支付
-                mPayPresenter.isSettingPw(true);
+                //去检查
+                mPayPresenter.pay(orderId, Double.parseDouble(mGiftModel.getPrice()), mUserBalance, 0);
             } else if (t instanceof Integer) {
                 mPayPresenter.payOrderDetails(orderId);
             } else if (t instanceof PayOrderInfoBean) {

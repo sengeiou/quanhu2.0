@@ -83,6 +83,9 @@ public class BaseLoadView implements View.OnClickListener {
             case CommonCode.General.DATA_EMPTY://空数据
                 processDataEmpty(msg, haveData);
                 break;
+            case CommonCode.General.ERROR_DATA://错误数据
+                processLoadError(msg, haveData);
+                break;
             case CommonCode.General.DATA_LACK://数据不足够
                 processDataLack(msg, haveData);
                 break;

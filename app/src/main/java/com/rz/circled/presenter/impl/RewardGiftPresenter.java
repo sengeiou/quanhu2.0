@@ -66,6 +66,7 @@ public class RewardGiftPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
         }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         Call<ResponseData<List<RewardGiftModel>>> call = mApiService.rewardGiftList(start, limit);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<RewardGiftModel>>>() {

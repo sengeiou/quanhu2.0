@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yryz.yunxinim.uikit.Constants;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
 import com.yryz.yunxinim.uikit.cache.SimpleCallback;
@@ -562,7 +563,7 @@ public class NormalTeamInfoActivity extends UI implements OnClickListener, TAdap
 //        NimUIKit.startContactSelect(NormalTeamInfoActivity.this, option, REQUEST_CODE_CONTACT_SELECT);
 
         Intent intent = new Intent();
-        intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
+        intent.setAction(Constants.CONTACTS_SELECT_ACTION);
         intent.putStringArrayListExtra("EXTRA_DATA", (ArrayList<String>) memberAccounts);
         startActivityForResult(intent, REQUEST_CODE_CONTACT_SELECT);
     }

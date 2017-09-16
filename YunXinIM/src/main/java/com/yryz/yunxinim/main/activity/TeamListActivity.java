@@ -23,6 +23,7 @@ import com.yryz.yunxinim.session.SessionHelper;
 import com.yryz.yunxinim.team.TeamCreateHelper;
 import com.yryz.yunxinim.team.activity.AdvancedTeamJoinActivity;
 import com.yryz.yunxinim.team.activity.AdvancedTeamSearchActivity;
+import com.yryz.yunxinim.uikit.Constants;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.UserPreferences;
 import com.yryz.yunxinim.uikit.cache.NimUserInfoCache;
@@ -120,7 +121,7 @@ public class TeamListActivity extends UI implements AdapterView.OnItemClickListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
+                intent.setAction(Constants.CONTACTS_SELECT_ACTION);
                 intent.putStringArrayListExtra("EXTRA_DATA", new ArrayList<String>());
                 startActivityForResult(intent, itemType == ItemTypes.TEAMS.ADVANCED_TEAM ? REQUEST_CODE_ADVANCED : REQUEST_CODE_NORMAL);
 //                ContactSelectActivity.Option advancedOption = TeamHelper.getCreateContactSelectOption(null, 50);
