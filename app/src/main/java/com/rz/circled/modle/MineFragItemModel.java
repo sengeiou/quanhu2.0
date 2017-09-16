@@ -45,6 +45,13 @@ public class MineFragItemModel {
         this.isDivider = isDivider;
     }
 
+    public MineFragItemModel(boolean isArrow,String name, int drawable, boolean isDivider) {
+        this.name = name;
+        this.drawable = drawable;
+        this.isDivider = isDivider;
+        this.isArrow = isArrow;
+    }
+
     public MineFragItemModel(String name, String remark, int drawable, boolean isDivider) {
         this.name = name;
         this.drawable = drawable;
@@ -58,6 +65,7 @@ public class MineFragItemModel {
         this.isDivider = isDivider;
         this.isUpdate = isUpdate;
     }
+
 
     public boolean isUpdate() {
         return isUpdate;

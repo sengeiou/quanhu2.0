@@ -21,10 +21,10 @@
 
         <RelativeLayout
             android:id="@+id/bg_rl_head"
-            android:layout_width="@dimen/px217"
-            android:layout_height="@dimen/px217"
+            android:layout_width="@dimen/px227"
+            android:layout_height="@dimen/px227"
             android:background="@drawable/shape_circle"
-            android:layout_marginTop="@dimen/px146"
+            android:layout_marginTop="@dimen/px166"
             >
 
             <ImageView
@@ -42,7 +42,7 @@
             android:id="@+id/user_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px190"
+            android:layout_marginTop="@dimen/px180"
             android:layout_marginLeft="@dimen/px30"
             android:layout_marginRight="@dimen/px30"
             android:layout_toRightOf="@+id/bg_rl_head"
@@ -57,17 +57,21 @@
                 android:includeFontPadding="false"
                 android:gravity="start"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/font_48"/>
+                android:textSize="@dimen/font_48"
+                android:text="定投界的一只牛"
+                />
 
             <TextView
                 android:gravity="start"
                 android:id="@+id/id_person_login_days"
                 style="@style/DefaultTvStyle"
-                android:paddingTop="@dimen/px16"
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/font_34"/>
+                android:textSize="@dimen/font_38"
+                android:text="好看的皮囊千篇一律，有趣的灵魂万里挑一"
+                android:layout_marginTop="@dimen/px24"
+                />
 
 
 
@@ -79,18 +83,37 @@
             android:layout_below="@id/user_info_layout"
             android:layout_alignLeft="@id/user_info_layout"
             android:layout_marginRight="@dimen/px50"
+            android:layout_marginTop="@dimen/px40"
             >
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:text="积分"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_mine_rect_divider"
+                android:textSize="@dimen/font_34"
+                android:paddingLeft="@dimen/px70"
+                android:paddingRight="@dimen/px70"
+                android:paddingTop="@dimen/px3"
+                android:paddingBottom="@dimen/px3"
                 />
 
+
+            <View
+                style="@style/line_vertical_gray_s"
+                android:layout_marginLeft="@dimen/px72"
+                android:layout_marginRight="@dimen/px72"
+                android:layout_height="@dimen/px52"
+                />
+
+
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:text="互联网达人"
+                android:textColor="@color/white"
+                android:drawableLeft="@mipmap/ic_famous"
                 />
 
         </LinearLayout>
@@ -113,6 +136,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_right_arrow"
             android:layout_marginTop="@dimen/px146"
+            android:visibility="gone"
             />
     </RelativeLayout>
 
@@ -288,6 +312,13 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:id="@+id/id_divider_v"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px30"
+        android:background="#F5F5F5"
+        android:visibility="visible"/>
 
 
 

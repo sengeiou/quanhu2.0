@@ -76,11 +76,6 @@ public class SearchPresenter extends GeneralPresenter {
 
     private SearchDataBean searchDataBean = new SearchDataBean();
 
-    private List<CircleDynamic> resoueces = new ArrayList<>();
-    private List<StarListBean> custInfos = new ArrayList<>();
-    private List coterieInfos = new ArrayList();
-    private List circleInfos = new ArrayList();
-    private List rewards = new ArrayList();
 
     @Override
     public Object getCacheData() {
@@ -170,8 +165,12 @@ public class SearchPresenter extends GeneralPresenter {
                             mView.updateViewWithLoadMore(dataList, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
+                            if(loadMore == false){
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }else{
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
+                            }
                             mView.updateViewWithLoadMore(dataList, loadMore);
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
                             isNoData = true;
                         }
                         return;

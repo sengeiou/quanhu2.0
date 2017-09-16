@@ -123,7 +123,9 @@ public interface ApiService {
             @Field("password") String password,
             @Field("veriCode") String veriCode,
             @Field("inviter") String inviter,
-            @Field("channel") String channel
+            @Field("channel") String channel,
+            @Field("cityCode") String cityCode,
+            @Field("location") String location
     );
 
     /**
@@ -962,5 +964,20 @@ public interface ApiService {
 //    public Call<ResponseData<CircleStatsModel>> getCircleStats(
 //            @Field("custId") String custId
 //    );
+
+    /**
+     * 设置密保问题
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.MY_RESOURCE)
+    Call<ResponseData<List<CircleDynamic>>> getMyResource(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("resourceType") String resourceType,
+            @Field("start") int start
+    );
 
 }

@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -53,8 +54,8 @@ import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
-import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 
@@ -94,8 +95,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     ObservableListView mListView;
 
     @BindView(R.id.id_comm_refresh_ll)
-    SwipyRefreshLayout swipeRefreshLayout;
+    ScrollView swipeRefreshLayout;
 
+    RelativeLayout signLayout;
 
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
     public static String MINEFRGFOCUS = "mine_focus_push";
@@ -147,13 +149,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         initUserNews();
         newTitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
         newTitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
+        newTitilbar.getBackground().setAlpha(255);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
-        ImageView iv = (ImageView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
-        iv.setImageResource(R.mipmap.ic_message);
+//        ImageView iv = (ImageView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
+        ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
+        signLayout = (RelativeLayout) newTitilbar.findViewById(R.id.sign_layout);
+
+        ib.setVisibility(View.VISIBLE);
+        ib.setImageResource(R.mipmap.ic_message);
+//        iv.setVisibility(View.VISIBLE);
+//        iv.setImageResource(R.mipmap.ic_message);
         tv.setText("我的");
         mTitleContent.addView(newTitilbar);
 //        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
-        swipeRefreshLayout.setRefreshing(false);
+//        swipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -174,6 +183,16 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //            }
 //        });
 //
+//    }
+
+//    private void initRefresh() {
+//        swipeRefreshLayout.setDirection(null);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
 //    }
 
 
@@ -265,47 +284,57 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //            iv.getLayoutParams().height = ScreenUtil.getDisplayWidth() * 288 / 720;
 //            iv.requestLayout();
 //            mListView.addHeaderView(header);
-//            headHight = iv.getLayoutParams().height + DensityUtils.dip2px(mActivity, 20);
+            headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
 
-            mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-                }
-
-                @Override
-                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                }
-            });
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                    @Override
+                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                        if (scrollY <= 0) {
+                            newTitilbar.getBackground().mutate().setAlpha(0);
+                            signLayout.setVisibility(View.VISIBLE);
+                        } else if (scrollY > 0 && scrollY <= headHight) {
+                            float scale = (float) scrollY / headHight;
+                            float alpha = (255 * scale);
+                            // 只是layout背景透明(仿知乎滑动效果)
+                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+                        } else {
+                            newTitilbar.getBackground().mutate().setAlpha(255);
+                            signLayout.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
 
 //            headHight = iv.getLayoutParams().height + DensityUtils.dip2px(mActivity, 20);
-            mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-                @Override
-                public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-                    if (scrollY <= 0) {
-                        newTitilbar.getBackground().mutate().setAlpha(0);
-                    } else if (scrollY > 0 && scrollY <= headHight) {
-                        float scale = (float) scrollY / headHight;
-                        float alpha = (255 * scale);
-                        // 只是layout背景透明(仿知乎滑动效果)
-                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-                    } else {
-                        newTitilbar.getBackground().mutate().setAlpha(255);
-                    }
-                }
-
-                @Override
-                public void onDownMotionEvent() {
-
-                }
-
-                @Override
-                public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-
-                }
-            });
+//            mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+//                @Override
+//                public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+//                    if (scrollY <= 0) {
+//                        newTitilbar.getBackground().mutate().setAlpha(0);
+//                        signLayout.setVisibility(View.VISIBLE);
+//                    } else if (scrollY > 0 && scrollY <= headHight) {
+//                        float scale = (float) scrollY / headHight;
+//                        float alpha = (255 * scale);
+//                        // 只是layout背景透明(仿知乎滑动效果)
+//                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+//                    } else {
+//                        newTitilbar.getBackground().mutate().setAlpha(255);
+//                        signLayout.setVisibility(View.GONE);
+//                    }
+//                }
+//
+//                @Override
+//                public void onDownMotionEvent() {
+//
+//                }
+//
+//                @Override
+//                public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+//
+//                }
+//            });
         }
 
     }
@@ -376,18 +405,18 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         mModelList = new ArrayList<MineFragItemModel>();
 //        MineFragItemModel model8 = new MineFragItemModel(getString(R.string.mine_my_contacts), "管理好友", R.drawable.ic_mine_contacts_new, false);
-        MineFragItemModel model = new MineFragItemModel(getString(R.string.my_purchase), R.mipmap.ic_buy, false);
-        MineFragItemModel mode2 = new MineFragItemModel(getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
-        MineFragItemModel mode3 = new MineFragItemModel(getString(R.string.my_collect), R.mipmap.ic_colection, true);
-        MineFragItemModel mode4 = new MineFragItemModel(getString(R.string.my_level), R.mipmap.ic_level, false);
-        MineFragItemModel mode5 = new MineFragItemModel(getString(R.string.mine_my_account), R.mipmap.ic_count, false);
-        MineFragItemModel mode6 = new MineFragItemModel(getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
-        MineFragItemModel mode7 = new MineFragItemModel(getString(R.string.mine_my_contacts), R.mipmap.ic_addlist, false);
-        MineFragItemModel mode8 = new MineFragItemModel(getString(R.string.mine_my_qrcode), R.mipmap.ic_code, false);
-        MineFragItemModel mode9 = new MineFragItemModel(getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
+        MineFragItemModel model = new MineFragItemModel(false,getString(R.string.my_purchase), R.mipmap.ic_buy, true);
+        MineFragItemModel mode2 = new MineFragItemModel(false,getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
+        MineFragItemModel mode3 = new MineFragItemModel(false,getString(R.string.my_collect), R.mipmap.ic_colection, true);
+        MineFragItemModel mode4 = new MineFragItemModel(false,getString(R.string.my_level), R.mipmap.ic_level, false);
+        MineFragItemModel mode5 = new MineFragItemModel(false,getString(R.string.mine_my_account), R.mipmap.ic_count, false);
+        MineFragItemModel mode6 = new MineFragItemModel(false,getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
+        MineFragItemModel mode7 = new MineFragItemModel(false,getString(R.string.mine_my_contacts), R.mipmap.ic_addlist, false);
+        MineFragItemModel mode8 = new MineFragItemModel(false,getString(R.string.mine_my_qrcode), R.mipmap.ic_code, false);
+        MineFragItemModel mode9 = new MineFragItemModel(false,getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
 
-        MineFragItemModel mode10 = new MineFragItemModel(getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
-        MineFragItemModel mode11 = new MineFragItemModel(getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
+        MineFragItemModel mode10 = new MineFragItemModel(false,getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
+        MineFragItemModel mode11 = new MineFragItemModel(false,getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
 
 
         mModelList.add(model);//我的购买

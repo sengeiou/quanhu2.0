@@ -95,7 +95,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if(!TextUtils.isEmpty(keyWord)){
-                    ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
+                    ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
                 }
 
                 mRefresh.setRefreshing(false);
