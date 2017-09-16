@@ -37,7 +37,9 @@ import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
+import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.ObservableListView;
@@ -195,7 +197,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
 
     //初始化用户信息
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void initUserNews() {
 
         if (mListView.getHeaderViewsCount() == 0) {
@@ -286,23 +287,25 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
 
-            swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    if (scrollY <= 0) {
-                        newTitilbar.getBackground().mutate().setAlpha(0);
-                        signLayout.setVisibility(View.VISIBLE);
-                    } else if (scrollY > 0 && scrollY <= headHight) {
-                        float scale = (float) scrollY / headHight;
-                        float alpha = (255 * scale);
-                        // 只是layout背景透明(仿知乎滑动效果)
-                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-                    } else {
-                        newTitilbar.getBackground().mutate().setAlpha(255);
-                        signLayout.setVisibility(View.GONE);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                    @Override
+                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                        if (scrollY <= 0) {
+                            newTitilbar.getBackground().mutate().setAlpha(0);
+                            signLayout.setVisibility(View.VISIBLE);
+                        } else if (scrollY > 0 && scrollY <= headHight) {
+                            float scale = (float) scrollY / headHight;
+                            float alpha = (255 * scale);
+                            // 只是layout背景透明(仿知乎滑动效果)
+                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+                        } else {
+                            newTitilbar.getBackground().mutate().setAlpha(255);
+                            signLayout.setVisibility(View.GONE);
+                        }
                     }
-                }
-            });
+                });
+            }
 
 //            headHight = iv.getLayoutParams().height + DensityUtils.dip2px(mActivity, 20);
 //            mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
