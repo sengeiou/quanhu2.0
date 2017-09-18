@@ -1,7 +1,6 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CircleImageView;
 import com.rz.circled.widget.GlideCircleImage;
@@ -84,7 +84,7 @@ public class DynamicAdapter extends CircleContentAdapter {
             public void onClick(View v) {
                 if (isLogin()) {
                     if (item.cust != null) {
-//                        V3FriendInfoActivity.newFrindInfo(mContext, item.user.custId);
+                        UserInfoActivity.newFrindInfo(mContext, item.cust.custId);
                     }
                 }
             }
@@ -94,7 +94,7 @@ public class DynamicAdapter extends CircleContentAdapter {
             public void onClick(View v) {
                 if (isLogin()) {
                     if (item.cust != null) {
-//                        V3FriendInfoActivity.newFrindInfo(mContext, item.user.custId);
+                        UserInfoActivity.newFrindInfo(mContext, item.cust.custId);
                     }
                 }
             }

@@ -20,6 +20,7 @@
     <dimen name="font_48">@dimen/px48</dimen>
     <dimen name="font_46">@dimen/px46</dimen>
     <dimen name="font_44">@dimen/px44</dimen>
+    <dimen name="font_42">@dimen/px42</dimen>
     <dimen name="font_40">@dimen/px40</dimen>
     <dimen name="font_38">@dimen/px38</dimen>
     <dimen name="font_34">@dimen/px34</dimen>

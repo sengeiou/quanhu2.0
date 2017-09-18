@@ -13,6 +13,7 @@ public interface IntentKey {
     /**
      * position
      */
+    String KEY_ID = "key_id";
     String EXTRA_POSITION = "extraPosition";
     String KEY_DESC = "key_desc";
     String KEY_URL = "key_url";

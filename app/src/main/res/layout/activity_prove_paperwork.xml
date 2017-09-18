@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/app_base_padding"
+    android:paddingRight="@dimen/app_base_padding"
+    android:paddingTop="@dimen/px55"
+    tools:context="com.rz.circled.ui.activity.ProvePaperworkActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_prove_paperwork"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_prove_paperwork_choose_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="@dimen/px40"
+            android:drawableTop="@mipmap/icon_prove_add_pic"
+            android:paddingBottom="@dimen/px50"
+            android:paddingTop="@dimen/px50"
+            android:text="@string/business_license_info"
+            android:textColor="@color/font_gray_m"
+            android:textSize="@dimen/px50"/>
+
+        <ImageView
+            android:id="@+id/iv_prove_paperwork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

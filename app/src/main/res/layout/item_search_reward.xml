@@ -2,15 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@mipmap/reward_bg"
-                >
+              android:background="@mipmap/reward_bg_write"
+              android:id="@+id/reward_bg_layout"
+              >
 
     <RelativeLayout
 
         android:id="@+id/avatar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px44"
+        android:layout_marginTop="@dimen/px54"
         android:layout_alignParentTop="true"
         >
 
@@ -19,7 +20,7 @@
             android:id="@+id/iv_search_person"
             android:layout_width="@dimen/px64"
             android:layout_height="@dimen/px64"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_marginLeft="@dimen/px38"
             />
 
         <ImageView
@@ -42,7 +43,7 @@
             android:textSize="@dimen/font_40"
             android:textColor="@color/color_999999"
             android:layout_marginLeft="@dimen/px34"
-
+            android:gravity="center"
             />
 
         <TextView
@@ -50,11 +51,10 @@
             android:layout_height="wrap_content"
             android:text="赏金 99圈币"
             android:textColor="@color/color_yellow_reward"
-            android:layout_marginRight="@dimen/px28"
+            android:layout_marginRight="@dimen/px38"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="8dp"
             android:id="@+id/tv_reward"
             />
 
@@ -66,7 +66,7 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px28"
+        android:layout_marginLeft="@dimen/px38"
         android:layout_marginRight="@dimen/px28"
         android:text="悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容悬赏内容"
         android:textColor="@color/black"
@@ -79,11 +79,15 @@
 
 
     <RelativeLayout
+        android:id="@+id/end_time_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/px30"
         android:layout_marginBottom="@dimen/px26"
         android:layout_below="@id/tv_content"
+        android:layout_marginTop="@dimen/px20"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginRight="@dimen/px30"
+        android:padding="@dimen/px8"
         >
 
         <ImageView
@@ -92,29 +96,28 @@
             android:layout_height="@dimen/px40"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_reward_img"
+            android:gravity="center"
             />
 
         <TextView
             android:id="@+id/tv_search_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px20"
-            android:paddingBottom="@dimen/px10"
-            android:paddingLeft="@dimen/px35"
-            android:paddingRight="@dimen/px35"
             android:text="还剩23小时"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/font_40"
             android:visibility="visible"
             android:layout_toRightOf="@id/pic_logo_img"
             android:layout_centerVertical="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:layout_marginLeft="@dimen/px30"
             />
 
         <TextView
             android:id="@+id/tv_join_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px20"
             android:layout_marginRight="@dimen/px50"
             android:layout_toRightOf="@id/tv_search_time"
             android:maxLines="1"
@@ -122,13 +125,15 @@
             android:textSize="@dimen/font_40"
             android:text="3人已参与"
             android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/px30"
             />
 
         <TextView
             android:id="@+id/tv_search_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/px50"
+            android:layout_marginRight="@dimen/px30"
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/font_gray_m"
@@ -137,32 +142,31 @@
             android:text="进行中"
             android:layout_marginTop="@dimen/px20"
             android:layout_centerVertical="true"
+            android:visibility="visible"
             />
 
     </RelativeLayout>
 
 
-    <View
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px80"
-        android:layout_alignParentBottom="true"
-        >
 
-    </View>
 
     <LinearLayout
         android:id="@+id/place_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/empty_view"
+        android:layout_height="@dimen/px100"
+        android:orientation="horizontal"
+        android:layout_below="@+id/end_time_layout"
+        android:layout_marginBottom="@dimen/px16"
+        android:background="@drawable/shape_bg_gray"
+        android:layout_marginLeft="@dimen/px16"
+        android:layout_marginRight="@dimen/px16"
         >
 
         <ImageView
             android:layout_width="@dimen/px40"
             android:layout_height="@dimen/px40"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_marginLeft="@dimen/px16"
             android:src="@mipmap/ic_location"
 
             />
@@ -172,13 +176,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/px28"
+            android:layout_marginLeft="7dp"
             android:text="武汉市 洪山区 光谷国际广场"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/px38"
-
-            />
+            android:layout_marginStart="7dp"
+           />
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

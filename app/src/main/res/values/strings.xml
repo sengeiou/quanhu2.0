@@ -627,4 +627,34 @@
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎广场吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>
 
+    <string name="choose_prove_identity">选择认证身份</string>
+    <string name="true_name">真实姓名</string>
+    <string name="phone_number">手机号</string>
+    <string name="required">(必填)</string>
+    <string name="un_required">(非必填)</string>
+    <string name="self_media_account">自媒体账号</string>
+    <string name="oneself_media_account">个人自媒体账号</string>
+    <string name="industry_sector">行业领域</string>
+    <string name="area_where">所在地区</string>
+    <string name="area_where_city">所在城市</string>
+    <string name="id_number">身份证号</string>
+    <string name="agency_name">机构名称</string>
+    <string name="operator_name">运营者姓名</string>
+    <string name="contact_phone">联系电话</string>
+    <string name="prove_resources_hint">请描述您可提供的资源或者拥有的资源&#160;(必填)</string>
+    <string name="complete_info">完善信息</string>
+
+    <string name="true_name_error_hint">姓名为2~10以内的汉字</string>
+    <string name="agency_name_error_hint">机构名称为2~10以内的汉字</string>
+    <string name="prove_phone_error_hint">请填写正确的手机号</string>
+    <string name="prove_id_number_error_hint">请填写正确的省份证号</string>
+    <string name="prove_contact_phone_error_hint">请填写联系电话</string>
+    <string name="prove_area_error_hint">请选择所在地区</string>
+    <string name="prove_industry_error_hint">请输入行业及领域</string>
+    <string name="prove_media_error_hint">自媒体账号为2~10以内的汉字</string>
+    <string name="prove_resource_error_hint">描述得不少于10个字</string>
+
+    <string name="prove_info_success">申请成功</string>
+    <string name="prove_info_fail">申请失败</string>
+    <string name="business_license_info">营业执照副本资料</string>
 </resources>

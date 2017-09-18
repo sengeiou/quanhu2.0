@@ -9,7 +9,9 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.widget.MListView;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -61,17 +63,20 @@ public class MyArticleActivity extends BaseActivity {
         super.initPresenter();
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
+
+        ((PersonInfoPresenter) presenter).getArticle(false, Session.getUserId() ,"1000");
+
     }
 
     private void initRefresh() {
-        refreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        refreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_TAB_REFRESH));
+                    ((PersonInfoPresenter) presenter).getArticle(false, Session.getUserId() ,"1000");
                 } else {
-                    EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_ESSENCE_MORE));
+                    ((PersonInfoPresenter) presenter).getArticle(true, Session.getUserId() ,"1000");
                 }
                 refreshLayout.setRefreshing(false);
             }
@@ -94,6 +99,16 @@ public class MyArticleActivity extends BaseActivity {
             }
             dynamicAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
 }

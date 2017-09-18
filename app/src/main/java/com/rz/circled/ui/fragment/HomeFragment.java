@@ -21,9 +21,13 @@ import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.ACache;
+import com.rz.httpapi.api.ApiService;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 
@@ -35,7 +39,9 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 import static com.rz.circled.BuildConfig.WebHomeBaseUrl;
 
@@ -166,6 +172,33 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position-1);
+        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535243033497698304")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ResponseData>() {
+                    @Override
+                    public void call(ResponseData responseData) {
+
+                    }
+                });
+        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535319157498134528")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ResponseData>() {
+                    @Override
+                    public void call(ResponseData responseData) {
+
+                    }
+                });
+        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535319157498134528")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<ResponseData>() {
+                    @Override
+                    public void call(ResponseData responseData) {
+
+                    }
+                });
         circleDynamic.click += 1;
         if (circleDynamic.click >= 3) {
             mPresenter.addLoveCircle(circleDynamic.circleId, 2);

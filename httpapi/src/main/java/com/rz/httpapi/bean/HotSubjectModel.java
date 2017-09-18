@@ -63,7 +63,7 @@ public class HotSubjectModel {
     private int heat;
     private String moduleEnum;
     private int orderby;
-    private int ownerIntro;
+    private String ownerIntro;
     private String ownerName;
     private int partNum;
     private String pics;
@@ -231,11 +231,11 @@ public class HotSubjectModel {
         this.orderby = orderby;
     }
 
-    public int getOwnerIntro() {
+    public String getOwnerIntro() {
         return ownerIntro;
     }
 
-    public void setOwnerIntro(int ownerIntro) {
+    public void setOwnerIntro(String ownerIntro) {
         this.ownerIntro = ownerIntro;
     }
 
