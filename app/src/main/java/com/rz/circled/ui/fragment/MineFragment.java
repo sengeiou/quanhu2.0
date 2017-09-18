@@ -149,7 +149,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         initUserNews();
         newTitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
         newTitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
-        newTitilbar.getBackground().setAlpha(255);
+        newTitilbar.getBackground().setAlpha(0);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
 //        ImageView iv = (ImageView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
@@ -405,7 +405,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         mModelList = new ArrayList<MineFragItemModel>();
 //        MineFragItemModel model8 = new MineFragItemModel(getString(R.string.mine_my_contacts), "管理好友", R.drawable.ic_mine_contacts_new, false);
-        MineFragItemModel model = new MineFragItemModel(false,getString(R.string.my_purchase), R.mipmap.ic_buy, true);
+        MineFragItemModel model = new MineFragItemModel(false,getString(R.string.my_purchase), R.mipmap.ic_buy, false);
         MineFragItemModel mode2 = new MineFragItemModel(false,getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
         MineFragItemModel mode3 = new MineFragItemModel(false,getString(R.string.my_collect), R.mipmap.ic_colection, true);
         MineFragItemModel mode4 = new MineFragItemModel(false,getString(R.string.my_level), R.mipmap.ic_level, false);

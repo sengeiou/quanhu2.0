@@ -181,5 +181,6 @@ dependencies {
     compile project(':umshare')
     compile project(path: ':YunXinUIKit')
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
+    compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
 
 }
