@@ -27,6 +27,7 @@ import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
@@ -476,7 +477,7 @@ public class LoginActivity extends BaseActivity {
 //                    event.key = LOGIN_IN_SUCCESS;
                     EventBus.getDefault().post(event);
 
-                    EventBus.getDefault().post(new NotifyEvent("login", null, false));
+                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
 
                     setResult(IntentCode.Login.LOGIN_RESULT_CODE);
                     skipActivity(aty, MainActivity.class);

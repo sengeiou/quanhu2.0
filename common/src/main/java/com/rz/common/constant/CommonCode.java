@@ -68,6 +68,7 @@ public interface CommonCode {
         int PROVE_UPDATE = 30001;
 
         int TYPE_LOGOUT = 300002;
+        int TYPE_LOGIN = 300003;
     }
 
     /**
