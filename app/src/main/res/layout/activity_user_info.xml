@@ -61,7 +61,6 @@
         </com.cpoopc.scrollablelayoutlib.ScrollableLayout>
     </FrameLayout>
 
-
     <!--<RelativeLayout-->
     <!--android:id="@+id/title_content"-->
     <!--android:layout_width="match_parent"-->

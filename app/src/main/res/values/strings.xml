@@ -521,6 +521,8 @@
     <string name="article_info">文章</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
+    <string name="my_create_reward">我发起的悬赏 (%1$d)</string>
+    <string name="my_answer_reward">我回答的悬赏 (%1$d)</string>
 
 
     <!-- 个人信息 -->

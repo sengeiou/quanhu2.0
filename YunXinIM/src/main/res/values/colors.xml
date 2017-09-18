@@ -83,5 +83,6 @@
     <color name="color_gray_bfc2c5">#bfc2c5</color>
 
     <color name="color_e3e3e3">#e3e3e3</color>
+    <color name="sign_color">#006ACC</color>
 
 </resources>

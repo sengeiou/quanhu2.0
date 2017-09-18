@@ -116,4 +116,30 @@ public class APIUser {
      * 达人证人申请
      */
     public static final String PROVE_INFO = "v3/star/starApply";
+
+    /**
+     * 签到
+     */
+    public static final String SIGN_STATUS = "v3/event/sign";
+
+    /**
+     * 获取用户签到
+     */
+    public static final String GET_SIGN_STATUS = "v3/event/sign/status";
+
+    /**
+     * 获取用户达人
+     */
+    public static final String GET_FAMOUS_STATUS = "v3/star/getStarAuth";
+
+    /**
+     * 获取用户数据统计
+     */
+    public static final String GET_USER_STAT = "v3/user/getUserStat";
+
+    /**
+     * 获取悬赏类表
+     */
+    public static final String GET_REWARD_LIST = "v3/offer/myList";
+
 }

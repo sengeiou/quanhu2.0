@@ -58,6 +58,11 @@ public class UserInfoBean implements Serializable {
     private String custSex;
 
     /**
+     * 用户等级
+     */
+    private String custLevel;
+
+    /**
      * 用户地址
      */
     private String custLocation;
@@ -77,6 +82,12 @@ public class UserInfoBean implements Serializable {
 
     //身份证号码
     private String phyCardNo;
+
+    //积分
+    private String custPoints;
+
+    //用户角色
+    private String custRole;
 
     /**
      * 是否设置登录密码
@@ -185,6 +196,30 @@ public class UserInfoBean implements Serializable {
 
     public void setIsPayPassword(Integer isPayPassword) {
         this.isPayPassword = isPayPassword;
+    }
+
+    public String getCustPoints() {
+        return custPoints;
+    }
+
+    public void setCustPoints(String custPoints) {
+        this.custPoints = custPoints;
+    }
+
+    public String getCustLevel() {
+        return custLevel;
+    }
+
+    public void setCustLevel(String custLevel) {
+        this.custLevel = custLevel;
+    }
+
+    public String getCustRole() {
+        return custRole;
+    }
+
+    public void setCustRole(String custRole) {
+        this.custRole = custRole;
     }
 
     public Integer getSmallNopass() {

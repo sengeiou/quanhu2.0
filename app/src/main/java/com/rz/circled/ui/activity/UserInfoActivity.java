@@ -15,17 +15,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
 import com.rz.circled.ui.fragment.SearchCircleFragment;
 import com.rz.circled.ui.fragment.SearchContentFragment;
 import com.rz.circled.ui.fragment.SearchPersonFragment;
 import com.rz.circled.ui.fragment.SearchPrivateCircleFragment;
 import com.rz.circled.ui.fragment.SearchRewardFragment;
+import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
 import com.rz.circled.ui.fragment.MyCircleFragment;
 import com.rz.circled.ui.fragment.MyRewardFragment;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 
@@ -55,13 +59,29 @@ public class UserInfoActivity extends BaseActivity{
     @BindView(R.id.avatar_layout)
     RelativeLayout avatarLayout;
 
-    private InfoAdapter infoAdapter;
+    @BindView(R.id.user_avatar)
+    ImageView avatarImg;
 
+    @BindView(R.id.user_name_txt)
+    TextView nameTxt;
+
+    @BindView(R.id.level_txt)
+    TextView levelTxt;
+
+    @BindView(R.id.sign_txt)
+    TextView signTxt;
+
+    @BindView(R.id.user_role)
+    TextView userRole;
+
+    private InfoAdapter infoAdapter;
     private List<Fragment> fragmentList;
 
     View header;
     View newTitilbar;
     private int headHight;
+
+    private String userId = "";
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -78,7 +98,6 @@ public class UserInfoActivity extends BaseActivity{
 //        } else {
 //            tvNick.setText("");
 //        }
-
         context.startActivity(intent);
 
 
@@ -86,7 +105,6 @@ public class UserInfoActivity extends BaseActivity{
     @Override
     public void initView() {
         initHead();
-//        initFragmentPager(viewPager, pagerSlidingTabStrip, mScrollLayout);
 
         avatarLayout.getBackground().setAlpha(77);
 
@@ -145,25 +163,37 @@ public class UserInfoActivity extends BaseActivity{
     @Override
     public void initData() {
 
+        if(userId.equals(Session.getUserId())){
+            Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
+                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+            nameTxt.setText(Session.getUserName());
+            levelTxt.setText(Session.getUserLevel());
+            signTxt.setText(Session.getUser_signatrue());
 
+//            //普通用户
+//            if(Session.getCustRole().equals("0")){
+//
+//            }else{
+//                //达人用户，另外调达人类型接口
+//
+//
+//
+//            }
+            userRole.setText("达人");
+
+        }
 
     }
 
     public void initHead(){
 
         newTitilbar = View.inflate(this, R.layout.titlebar_mine, null);
-//        newTitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
         newTitilbar.setBackgroundResource(R.mipmap.topbar_blue_top);
         newTitilbar.getBackground().mutate().setAlpha(255);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
-//        ImageView iv = (ImageView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
-//        signLayout = (RelativeLayout) newTitilbar.findViewById(R.id.sign_layout);
-
         ib.setVisibility(View.VISIBLE);
-        ib.setImageResource(R.mipmap.ic_message);
-//        iv.setVisibility(View.VISIBLE);
-//        iv.setImageResource(R.mipmap.ic_message);
+        ib.setImageResource(R.mipmap.icon_arrow_left_gray);
         tv.setText("个人中心");
         mTitleContent.addView(newTitilbar);
 
@@ -194,19 +224,16 @@ public class UserInfoActivity extends BaseActivity{
 
         @Override
         public Fragment getItem(int position) {
-//            if (position == 0)
-//                return ListFragment.newInstance();     //搜索内容
-//            if (position == 1)
-//                return ListFragment.newInstance();      //搜索用户
-//            if (position == 2)
-//                return ListFragment.newInstance();     //搜索私圈
-//            if (position == 3)
-//                return ListFragment.newInstance();            //搜索圈子
-//            if (position == TYPE_REWARD)
-//                return SearchRewardFragment.newInstance();      //搜索悬赏
+            if (position == 0)
+                return MyArticleFragment.newInstance();     //文章
+            if (position == 1)
+                return MyRewardFragment.newInstance();      //悬赏
+            if (position == 2)
+                return PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_ALL);     //私圈
+            if (position == 3)
+                return MyActivityFragment.newInstance();   //活动
 
-
-            return SearchContentFragment.newInstance();
+            return MyArticleFragment.newInstance();
         }
 
         @Override
