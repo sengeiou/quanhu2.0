@@ -1,8 +1,15 @@
 package com.rz.circled.application;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Environment;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,7 +28,31 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.NimStrings;
+import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.SDKOptions;
+import com.netease.nimlib.sdk.StatusBarNotificationConfig;
+import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.avchat.AVChatManager;
+import com.netease.nimlib.sdk.avchat.model.AVChatAttachment;
+import com.netease.nimlib.sdk.avchat.model.AVChatData;
+import com.netease.nimlib.sdk.msg.MessageNotifierCustomization;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.attachment.MsgAttachment;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.rts.RTSManager;
+import com.netease.nimlib.sdk.rts.model.RTSData;
+import com.netease.nimlib.sdk.team.constant.TeamFieldEnum;
+import com.netease.nimlib.sdk.team.model.IMMessageFilter;
+import com.netease.nimlib.sdk.team.model.Team;
+import com.netease.nimlib.sdk.team.model.UpdateTeamAttachment;
+import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.rz.circled.BuildConfig;
+import com.rz.circled.R;
+import com.rz.circled.helper.YunXinHelper;
 import com.rz.circled.js.BackHandler;
 import com.rz.circled.js.BackHomeHandler;
 import com.rz.circled.js.CreateTeamHandler;
@@ -55,6 +86,7 @@ import com.rz.circled.js.TransferHandler;
 import com.rz.circled.js.UploadAudioHandler;
 import com.rz.circled.js.UploadPicHandler;
 import com.rz.circled.js.UploadVideoHandler;
+import com.rz.circled.ui.activity.MainActivity;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -64,9 +96,39 @@ import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.sgt.jsbridge.RegisterList;
 import com.tencent.bugly.Bugly;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareConfig;
+import com.yryz.yunxinim.DemoCache;
+import com.yryz.yunxinim.avchat.AVChatProfile;
+import com.yryz.yunxinim.avchat.activity.AVChatActivity;
+import com.yryz.yunxinim.common.util.crash.AppCrashHandler;
+import com.yryz.yunxinim.config.ExtraOptions;
+import com.yryz.yunxinim.config.preference.Preferences;
+import com.yryz.yunxinim.config.preference.UserPreferences;
+import com.yryz.yunxinim.contact.ContactHelper;
+import com.yryz.yunxinim.rts.activity.RTSActivity;
+import com.yryz.yunxinim.session.NimDemoLocationProvider;
+import com.yryz.yunxinim.session.SessionHelper;
+import com.yryz.yunxinim.session.extension.LuckyAttachment;
+import com.yryz.yunxinim.session.extension.LuckyTipAttachment;
+import com.yryz.yunxinim.uikit.ImageLoaderKit;
+import com.yryz.yunxinim.uikit.MessageFilterListener;
+import com.yryz.yunxinim.uikit.NimUIKit;
+import com.yryz.yunxinim.uikit.cache.FriendDataCache;
+import com.yryz.yunxinim.uikit.cache.NimUserInfoCache;
+import com.yryz.yunxinim.uikit.cache.TeamDataCache;
+import com.yryz.yunxinim.uikit.contact.ContactProvider;
+import com.yryz.yunxinim.uikit.contact.core.query.PinYin;
+import com.yryz.yunxinim.uikit.session.constant.Extras;
+import com.yryz.yunxinim.uikit.session.viewholder.MsgViewHolderThumbBase;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import cn.jpush.android.api.JPushInterface;
@@ -113,6 +175,8 @@ public class QHApplication extends BaseApplication {
         registerJsServerInterface();
         configFresco();
         configJpush();
+        configYunXin();
+        configUmeng();
     }
 
 
@@ -219,8 +283,31 @@ public class QHApplication extends BaseApplication {
     }
 
     private void configBugly() {
-//        Constants.Bugly.init(this, Constants.Bugly.APP_ID, BuildConfig.DEBUG);
         Bugly.init(this, Constants.Bugly.APP_ID, BuildConfig.DEBUG);
+    }
+
+
+    /**
+     * 友盟配置
+     */
+    public void configUmeng() {
+        UMShareConfig config = new UMShareConfig();
+        config.isOpenShareEditActivity(false);
+        UMShareAPI.get(this).setShareConfig(config);
+
+        UMShareAPI.get(this);
+
+        Config.DEBUG = false;
+        com.umeng.socialize.utils.Log.LOG = false;
+
+        //微信 appid appsecret
+        PlatformConfig.setWeixin(Constants.WeiXin.APP_ID, Constants.WeiXin.APP_SECRET);
+
+        //新浪微博 appkey appsecret
+        PlatformConfig.setSinaWeibo(Constants.Sina.APP_KEY, Constants.Sina.APP_SECRET, Constants.Sina.REDIRECT_URL);
+
+        // QQ和Qzone appid appkey
+        PlatformConfig.setQQZone(Constants.QQ.APP_ID, Constants.QQ.APP_KEY);
     }
 
     /**
@@ -397,5 +484,233 @@ public class QHApplication extends BaseApplication {
         //错误重连
         builder.retryOnConnectionFailure(true);
     }
+
+    private void configYunXin() {
+        DemoCache.setContext(this);
+        com.yryz.yunxinim.uikit.Constants.topBarHeight = getResources().getDimension(R.dimen.px146);
+        com.yryz.yunxinim.uikit.Constants.topBarTitleSize = getResources().getDimension(R.dimen.px55);
+        // SDK初始化（启动后台服务，若已经存在用户登录信息， SDK 将完成自动登录）
+        NIMClient.init(this, loginInfo(), options());
+        ExtraOptions.provide();
+        // crash handler
+        AppCrashHandler.getInstance(this);
+        if (SystemUtils.inMainProcess(instance)) {
+            // 注意：以下操作必须在主进程中进行
+            // 1、UI相关初始化操作
+            // 2、相关Service调用
+
+            // init pinyin
+            PinYin.init(this);
+            PinYin.validate();
+
+            // 初始化UIKit模块
+            initUIKit();
+
+            // 注册通知消息过滤器
+            registerIMMessageFilter();
+
+            // 初始化消息提醒
+            NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
+
+            // 注册网络通话来电
+            enableAVChat();
+
+            // 注册白板会话
+            enableRTS();
+
+            // 注册语言变化监听
+            registerLocaleReceiver(true);
+        }
+    }
+
+    // 如果返回值为 null，则全部使用默认参数。
+    private SDKOptions options() {
+        SDKOptions options = new SDKOptions();
+
+        // 如果将新消息通知提醒托管给SDK完成，需要添加以下配置。
+        StatusBarNotificationConfig config = UserPreferences.getStatusConfig();
+        if (config == null) {
+            config = new StatusBarNotificationConfig();
+        }
+        // 点击通知需要跳转到的界面
+        config.notificationEntrance = MainActivity.class;
+        config.notificationSmallIconId = R.mipmap.icon_logo;
+
+        // 通知铃声的uri字符串
+        config.notificationSound = "android.resource://com.netease.nim.demo/raw/msg";
+
+        // 呼吸灯配置
+        config.ledARGB = Color.GREEN;
+        config.ledOnMs = 1000;
+        config.ledOffMs = 1500;
+
+        options.statusBarNotificationConfig = config;
+        DemoCache.setNotificationConfig(config);
+        UserPreferences.setStatusConfig(config);
+
+        // 配置保存图片，文件，log等数据的目录
+        String sdkPath = Environment.getExternalStorageDirectory() + "/" + getPackageName() + "/nim";
+        options.sdkStorageRootPath = sdkPath;
+
+        // 配置数据库加密秘钥
+        options.databaseEncryptKey = "NETEASE";
+
+        // 配置是否需要预下载附件缩略图
+        options.preloadAttach = true;
+
+        // 配置附件缩略图的尺寸大小，
+        options.thumbnailSize = MsgViewHolderThumbBase.getImageMaxEdge();
+
+        // 用户信息提供者
+        options.userInfoProvider = YunXinHelper.getInstance(this).getInfoProvider();
+
+        // 定制通知栏提醒文案（可选，如果不定制将采用SDK默认文案）
+        options.messageNotifierCustomization = YunXinHelper.getInstance(this).getMessageNotifierCustomization();
+
+        // 在线多端同步未读数
+        options.sessionReadAck = true;
+
+        return options;
+    }
+
+    // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
+    private LoginInfo loginInfo() {
+        // 从本地读取上次登录成功时保存的用户登录信息
+        String account = Preferences.getUserAccount();
+        String token = Preferences.getUserToken();
+
+        if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
+            DemoCache.setAccount(account.toLowerCase());
+            return new LoginInfo(account, token);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 通知消息过滤器（如果过滤则该消息不存储不上报）
+     */
+    private void registerIMMessageFilter() {
+        NIMClient.getService(MsgService.class).registerIMMessageFilter(new IMMessageFilter() {
+            @Override
+            public boolean shouldIgnore(IMMessage message) {
+                if (UserPreferences.getMsgIgnore() && message.getAttachment() != null) {
+                    if (message.getAttachment() instanceof UpdateTeamAttachment) {
+                        UpdateTeamAttachment attachment = (UpdateTeamAttachment) message.getAttachment();
+                        for (Map.Entry<TeamFieldEnum, Object> field : attachment.getUpdatedFields().entrySet()) {
+                            if (field.getKey() == TeamFieldEnum.ICON) {
+                                return true;
+                            }
+                        }
+                    } else if (message.getAttachment() instanceof AVChatAttachment) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * 音视频通话配置与监听
+     */
+    private void enableAVChat() {
+        registerAVChatIncomingCallObserver(true);
+    }
+
+    private void registerAVChatIncomingCallObserver(boolean register) {
+        AVChatManager.getInstance().observeIncomingCall(new Observer<AVChatData>() {
+            @Override
+            public void onEvent(AVChatData data) {
+                String extra = data.getExtra();
+                Log.e("Extra", "Extra Message->" + extra);
+                // 有网络来电打开AVChatActivity
+                AVChatProfile.getInstance().setAVChatting(true);
+                AVChatActivity.launch(DemoCache.getContext(), data, AVChatActivity.FROM_BROADCASTRECEIVER);
+            }
+        }, register);
+    }
+
+    /**
+     * 白板实时时会话配置与监听
+     */
+    private void enableRTS() {
+        registerRTSIncomingObserver(true);
+    }
+
+    private void registerRTSIncomingObserver(boolean register) {
+        RTSManager.getInstance().observeIncomingSession(new Observer<RTSData>() {
+            @Override
+            public void onEvent(RTSData rtsData) {
+                RTSActivity.incomingSession(DemoCache.getContext(), rtsData, RTSActivity.FROM_BROADCAST_RECEIVER);
+            }
+        }, register);
+    }
+
+    private void registerLocaleReceiver(boolean register) {
+        if (register) {
+            updateLocale();
+            IntentFilter filter = new IntentFilter(Intent.ACTION_LOCALE_CHANGED);
+            registerReceiver(localeReceiver, filter);
+        } else {
+            unregisterReceiver(localeReceiver);
+        }
+    }
+
+    private BroadcastReceiver localeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_LOCALE_CHANGED)) {
+                updateLocale();
+            }
+        }
+    };
+
+    private void updateLocale() {
+        NimStrings strings = new NimStrings();
+        strings.status_bar_multi_messages_incoming = getString(R.string.nim_status_bar_multi_messages_incoming);
+        strings.status_bar_image_message = getString(R.string.nim_status_bar_image_message);
+        strings.status_bar_audio_message = getString(R.string.nim_status_bar_audio_message);
+        strings.status_bar_custom_message = getString(R.string.nim_status_bar_custom_message);
+        strings.status_bar_file_message = getString(R.string.nim_status_bar_file_message);
+        strings.status_bar_location_message = getString(R.string.nim_status_bar_location_message);
+        strings.status_bar_notification_message = getString(R.string.nim_status_bar_notification_message);
+        strings.status_bar_ticker_text = getString(R.string.nim_status_bar_ticker_text);
+        strings.status_bar_unsupported_message = getString(R.string.nim_status_bar_unsupported_message);
+        strings.status_bar_video_message = getString(R.string.nim_status_bar_video_message);
+        strings.status_bar_hidden_message_content = getString(R.string.nim_status_bar_hidden_msg_content);
+        NIMClient.updateStrings(strings);
+    }
+
+    private void initUIKit() {
+        // 初始化，需要传入用户信息提供者
+        NimUIKit.init(this, YunXinHelper.getInstance(this).getInfoProvider(), YunXinHelper.getInstance(this).getContactProvider());
+
+        // 设置地理位置提供者。如果需要发送地理位置消息，该参数必须提供。如果不需要，可以忽略。
+        NimUIKit.setLocationProvider(new NimDemoLocationProvider());
+
+        NimUIKit.setMessageFilterListener(new MessageFilterListener() {
+            @Override
+            public boolean messageFilter(MsgAttachment attachment) {
+                if (attachment instanceof LuckyTipAttachment) {
+                    LuckyTipAttachment lucky = (LuckyTipAttachment) attachment;
+                    if (!TextUtils.equals(lucky.getUserId(), NimUIKit.getAccount()) && !TextUtils.equals(lucky.getReceiveId(), NimUIKit.getAccount())) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        // 会话窗口的定制初始化。
+        SessionHelper.init();
+
+        // 通讯录列表定制初始化
+        ContactHelper.init();
+
+        // 添加自定义推送文案以及选项，请开发者在各端（Android、IOS、PC、Web）消息发送时保持一致，以免出现通知不一致的情况
+        NimUIKit.CustomPushContentProvider(null);
+    }
+
 
 }

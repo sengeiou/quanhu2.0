@@ -2,8 +2,10 @@ package com.rz.circled.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +15,22 @@ import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.ProveInfoBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ProveWriteInfoActivity extends BaseActivity {
+
+    public static final String EXTRA_CHANGE = "extraChange";//是否为修改资料
 
     @BindView(R.id.tv_prove_true_name)
     TextView tvProveTrueName;
@@ -52,8 +61,10 @@ public class ProveWriteInfoActivity extends BaseActivity {
 
 
     private boolean isOneSelf = true;//true个人认证,false企业认证
+    private boolean isChange = false;//是否为修改
     private ProveInfoPresenter proveInfoPresenter;
-    private final int REQUEST_PAPERWORK = -100;
+    private final int REQUEST_PAPERWORK = 5;
+    private final int REQUEST_AREA = 6;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -73,6 +84,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
     @Override
     public void initView() {
         isOneSelf = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, true);
+        isChange = getIntent().getBooleanExtra(EXTRA_CHANGE, false);
         setTitleRightTextColor(R.color.font_color_blue);
         setTitleText(R.string.complete_info);
         if (isOneSelf) {
@@ -84,8 +96,8 @@ public class ProveWriteInfoActivity extends BaseActivity {
             etProvePhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
             //身份证号
             tvProveIdNumber.setText(R.string.id_number);
-            tvProveIdNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
-            tvProveIdNumber.setKeyListener(DigitsKeyListener.getInstance(getString(R.string.edit_only_can_input)));
+            etProveIdNumber.setKeyListener(DigitsKeyListener.getInstance(getString(R.string.edit_only_can_input)));
+            etProveIdNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
             //所在地区
             tvProveAreaTitle.setText(R.string.area_where);
             //自媒体账号
@@ -99,13 +111,40 @@ public class ProveWriteInfoActivity extends BaseActivity {
             etProvePhone.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
             //联系电话
             tvProveIdNumber.setText(R.string.contact_phone);
-            etProvePhone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+            etProveIdNumber.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+            etProveIdNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
             //所在城市
             tvProveAreaTitle.setText(R.string.area_where_city);
             //个人自媒体账号
             tvProveMediaAccount.setText(R.string.oneself_media_account);
             setTitleRightText(R.string.forget_next);
         }
+        setTitleRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toSubmit();
+            }
+        });
+        etProveResources.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s)) {
+                    tvProveResourcesNum.setText(s.toString().length() + "");
+                } else {
+                    tvProveResourcesNum.setText("0");
+                }
+            }
+        });
     }
 
     @Override
@@ -122,7 +161,9 @@ public class ProveWriteInfoActivity extends BaseActivity {
 
     @OnClick(R.id.tv_prove_area)
     public void onClick() {
-        toSubmit();
+        Intent locationIntent = new Intent(this, PersonAreaAty.class);
+        locationIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
+        startActivityForResult(locationIntent, REQUEST_AREA);
     }
 
     private void toSubmit() {
@@ -140,7 +181,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
         }
         String idNumber = etProveIdNumber.getText().toString();
         String idNumberErrorInfo = isOneSelf ? getString(R.string.prove_id_number_error_hint) : getString(R.string.prove_contact_phone_error_hint);
-        if (TextUtils.isEmpty(idNumber) || (isOneSelf && (idNumber.length() != 16 || idNumber.length() != 18))) {
+        if (TextUtils.isEmpty(idNumber)) {
             Toasty.info(mContext, idNumberErrorInfo).show();
             return;
         }
@@ -175,13 +216,21 @@ public class ProveWriteInfoActivity extends BaseActivity {
         proveInfoBean.setResourceDesc(resource);
         proveInfoBean.setTradeField(industry);
         if (isOneSelf) {
+            if (!NetUtils.isNetworkConnected(mContext)) {
+                onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+                return;
+            }
+            onLoadingStatus(CommonCode.General.DATA_LOADING);
             //提交
-            Intent intent = new Intent(mContext, ProvePaperworkActivity.class);
-            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveInfoBean);
-            startActivityForResult(intent, REQUEST_PAPERWORK);
+            if (isChange)
+                proveInfoPresenter.changeProveInfo(isOneSelf, proveInfoBean);
+            else proveInfoPresenter.submitProveInfo(isOneSelf, proveInfoBean);
         } else {
             //下一步
-            proveInfoPresenter.submitProveInfo(isOneSelf, proveInfoBean);
+            Intent intent = new Intent(mContext, ProvePaperworkActivity.class);
+            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveInfoBean);
+            intent.putExtra(IntentKey.EXTRA_BOOLEAN, isChange);
+            startActivityForResult(intent, REQUEST_PAPERWORK);
         }
     }
 
@@ -189,6 +238,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
         if (flag == proveInfoPresenter.FLAG_PROVE_INFO_SUCCESS) {
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.PROVE_UPDATE));
             finish();
         }
     }
@@ -196,7 +246,14 @@ public class ProveWriteInfoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_PAPERWORK)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_PAPERWORK) {
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.PROVE_UPDATE));
             finish();
+        } else if (requestCode == REQUEST_AREA) {
+            if (data == null) return;
+            String area = data.getStringExtra(IntentKey.EXTRA_POSITION);
+            String areaId = data.getStringExtra(IntentKey.EXTRA_ID);
+            tvProveArea.setText(area);
+        }
     }
 }

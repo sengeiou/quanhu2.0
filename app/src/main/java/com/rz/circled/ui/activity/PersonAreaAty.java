@@ -40,6 +40,8 @@ import butterknife.BindView;
  */
 public class PersonAreaAty extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
+    public static final String TYPE_OTHER = "typeOther";
+
     @BindView(R.id.id_prov_list)
     ListView idProvListView;
     TextView mTvLocation;
@@ -55,12 +57,12 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
 
     String paramas = "";//二级页面返回
 
+
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-    //上一个页面带过来的type
-    private String keyType;
+    private boolean isUserInfo = true;//是否为从个人资料页面进来
     private PersonInfoPresenter personInfoPresenter;
     private String locationCityCode;
 
@@ -75,7 +77,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
         setTitle(getString(R.string.mine_person_area));
         setTitleRightText(getString(R.string.mine_person_save));
 
-        keyType = getIntent().getStringExtra(IntentKey.EXTRA_TYPE);
+        isUserInfo = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, true);
 
         View headView = LayoutInflater.from(this).inflate(R.layout.layout_area_head, null);
         mTvLocation = (TextView) headView.findViewById(R.id.tv_location);
@@ -90,7 +92,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
             public void convert(ViewHolder helper, AreaModel item, int position) {
                 ((TextView) helper.getView(R.id.id_area_text)).setText(item.name);
 
-                if (TextUtils.isEmpty(keyType))
+                if (isUserInfo)
                     ((TextView) helper.getView(R.id.id_area_check)).setText(item.isChecked ? getString(R.string.had_check) : "");
             }
         };
@@ -117,8 +119,8 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        //通用发布页面过来
-        if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+        //其他页面过来
+        if (!isUserInfo) {
             String area = t.toString();
             Intent mIntent = new Intent();
             mIntent.putExtra(IntentKey.EXTRA_POSITION, area);
@@ -184,15 +186,15 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                 Intent intent = new Intent(this, PersonSecondAreaAty.class);
                 Bundle data = new Bundle();
                 data.putSerializable("areaModel", areaList.get(position - 1));
-                data.putString(IntentKey.EXTRA_TYPE, keyType);
+                data.putBoolean(IntentKey.EXTRA_BOOLEAN, isUserInfo);
                 intent.putExtras(data);
                 startActivityForResult(intent, REQUEST_CODE);
             } else {
                 AreaModel areaModel = areaList.get(position - 1);
                 String paramas = areaModel.name + " " + areaModel.children.get(position - 1).name;
                 paramas = paramas.trim();
-                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
-                    //通用发布过来
+                if (!isUserInfo) {
+                    //其他页面过来
                     Intent mIntent = new Intent();
                     mIntent.putExtra(IntentKey.EXTRA_POSITION, paramas);
                     mIntent.putExtra(IntentKey.EXTRA_ID, areaModel.children.get(position - 1).code);
@@ -210,8 +212,8 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
              */
             String area = mTvLocation.getText().toString().trim();
             if (!TextUtils.equals(area, getString(R.string.is_location))) {
-                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
-                    //通用发布页过来
+                if (!isUserInfo) {
+                    //其他页过来
                     Intent mIntent = new Intent();
                     mIntent.putExtra(IntentKey.EXTRA_POSITION, area);
                     setResult(RESULT_CODE1, mIntent);
@@ -234,7 +236,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_CODE) {
-                if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+                if (!isUserInfo) {
                     setResult(RESULT_CODE1, data);
                     finish();
                 } else {

@@ -64,6 +64,11 @@ public interface CommonCode {
         int SEARCH_KEYWORD = 20001;
 
         String CIRCLE_FRAGMENT_REFRESH = "circle_fragment_refresh";
+
+        int PROVE_UPDATE = 30001;
+
+        int TYPE_LOGOUT = 300002;
+        int TYPE_LOGIN = 300003;
     }
 
     /**

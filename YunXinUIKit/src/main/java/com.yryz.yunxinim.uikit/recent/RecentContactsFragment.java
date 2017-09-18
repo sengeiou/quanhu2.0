@@ -29,6 +29,7 @@ import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.rz.common.cache.preference.Session;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
 import com.yryz.yunxinim.uikit.cache.FriendDataCache;
@@ -53,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +88,8 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     private RecentContactsCallback callback;
 
     private UserInfoObservable.UserInfoObserver userInfoObserver;
+
+    private List<RecentContact> loadedRecent;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -245,8 +249,6 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
         return (recent.getTag() & tag) == tag;
     }
 
-    private List<RecentContact> loadedRecents;
-
     private void requestMessages(boolean delay) {
         if (msgLoaded) {
             return;
@@ -266,7 +268,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
                         if (code != ResponseCode.RES_SUCCESS || recents == null) {
                             return;
                         }
-                        loadedRecents = recents;
+                        loadedRecent = recents;
 
                         // 此处如果是界面刚初始化，为了防止界面卡顿，可先在后台把需要显示的用户资料和群组资料在后台加载好，然后再刷新界面
                         //
@@ -282,9 +284,19 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
 
     private void onRecentContactsLoaded() {
         items.clear();
-        if (loadedRecents != null) {
-            items.addAll(loadedRecents);
-            loadedRecents = null;
+        if (loadedRecent != null) {
+            items.addAll(loadedRecent);
+            loadedRecent = null;
+
+            if (!Session.isNeedTeam()) {
+                Iterator<RecentContact> iterator = items.iterator();
+                while (iterator.hasNext()) {
+                    RecentContact item = iterator.next();
+                    if (item.getSessionType() != SessionTypeEnum.P2P) {
+                        iterator.remove();
+                    }
+                }
+            }
 
 //            for (RecentContact r : items) {
 //                if (NimUIKit.getMessageFilterListener().messageFilter(r.getAttachment())) {
@@ -464,7 +476,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
                 }
             }
 
-            if (!NimUIKit.getMessageFilterListener().messageFilter(r.getAttachment()))
+            if (!NimUIKit.getMessageFilterListener().messageFilter(r.getAttachment()) && r.getSessionType() == SessionTypeEnum.P2P)
                 items.add(r);
 
         }

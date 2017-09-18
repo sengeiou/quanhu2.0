@@ -142,4 +142,14 @@ public class APIUser {
      */
     public static final String GET_REWARD_LIST = "v3/offer/myList";
 
+
+    /**
+     * 修改达人认证申请
+     */
+    public static final String PROVE_INFO_CHANGE = "v3/star/editStarAuth";
+
+    /**
+     * 获得达人认证状态
+     */
+    public static final String GET_PROVE_STATUS = "v3/star/getStarAuth";
 }

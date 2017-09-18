@@ -18,6 +18,7 @@ import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.yryz.yunxinim.uikit.Constants;
 import com.yryz.yunxinim.uikit.ImService;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
@@ -877,13 +878,13 @@ public class AdvancedTeamInfoActivity extends UI implements
             public void onResponse(Call<ResponseData<List<CircleTeamModel>>> call, Response<ResponseData<List<CircleTeamModel>>> response) {
                 if (response.isSuccessful() && response.body().isSuccessful() && response.body().getData().size() > 0 && !TextUtils.isEmpty(response.body().getData().get(0).getAppId())) {
                     Intent intent = new Intent();
-                    intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
+                    intent.setAction(Constants.CONTACTS_SELECT_ACTION);
                     intent.putStringArrayListExtra("EXTRA_DATA", (ArrayList<String>) memberAccounts);
                     intent.putExtra("EXTRA_APPID", response.body().getData().get(0).getAppId());
                     startActivityForResult(intent, REQUEST_CODE_CONTACT_SELECT);
                 } else {
                     Intent intent = new Intent();
-                    intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
+                    intent.setAction(Constants.CONTACTS_SELECT_ACTION);
                     intent.putStringArrayListExtra("EXTRA_DATA", (ArrayList<String>) memberAccounts);
                     startActivityForResult(intent, REQUEST_CODE_CONTACT_SELECT);
                 }
@@ -892,7 +893,7 @@ public class AdvancedTeamInfoActivity extends UI implements
             @Override
             public void onFailure(Call<ResponseData<List<CircleTeamModel>>> call, Throwable t) {
                 Intent intent = new Intent();
-                intent.setAction("com.rz.yryz.FRIEND_SELECT_ACTION");
+                intent.setAction(Constants.CONTACTS_SELECT_ACTION);
                 intent.putStringArrayListExtra("EXTRA_DATA", (ArrayList<String>) memberAccounts);
                 startActivityForResult(intent, REQUEST_CODE_CONTACT_SELECT);
             }

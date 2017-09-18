@@ -18,9 +18,11 @@ import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.DialogUtils;
@@ -139,7 +141,7 @@ public class SettingActivity extends BaseActivity {
                     if (CountDownTimer.isFastClick()) {
                         return;
                     }
-                    showActivity(aty,AccountSafeAty.class);
+                    showActivity(aty, AccountSafeAty.class);
                 }
                 break;
             //推荐给朋友
@@ -176,6 +178,7 @@ public class SettingActivity extends BaseActivity {
                         Session.clearShareP();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                         startActivity(intent);
+                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
                     }
                 });

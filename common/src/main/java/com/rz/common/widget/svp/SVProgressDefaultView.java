@@ -1,6 +1,7 @@
 package com.rz.common.widget.svp;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -108,7 +109,7 @@ public class SVProgressDefaultView extends LinearLayout {
     public void showBaseStatus(int res, String string) {
         clearAnimations();
         ivSmallLoading.setImageResource(res);
-        tvMsg.setText(string);
+        tvMsg.setText(TextUtils.isEmpty(string) ? "" : string);
         ivBigLoading.setVisibility(View.GONE);
         circleProgressBar.setVisibility(View.GONE);
         ivSmallLoading.setVisibility(View.VISIBLE);

@@ -10,6 +10,62 @@
     android:paddingRight="@dimen/app_base_padding"
     tools:context="com.rz.circled.ui.activity.ChooseProveIdentityActivity">
 
+    <LinearLayout
+        android:id="@+id/ll_choose_prove_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_choose_prove_status_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px30"
+            android:layout_marginTop="@dimen/px130"
+            android:src="@mipmap/icon_submit_success"/>
+
+        <TextView
+            android:id="@+id/tv_choose_prove_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/prove_identity_hint"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/px50"/>
+
+        <TextView
+            android:id="@+id/tv_choose_prove_status_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px44"
+            android:maxLines="1"
+            android:text="@string/prove_info_verify_ing"
+            android:textColor="@color/font_gray_s"
+            android:textSize="@dimen/font_44"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_choose_prove_status_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px44"
+            android:maxLines="1"
+            android:text="@string/prove_industry_sector"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/px50"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_choose_prove_status_change"
+            style="@style/btn_big_style"
+            android:layout_marginTop="@dimen/px170"
+            android:text="@string/change_prove_info_hint"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/iv_choose_prove_oneself"
         android:layout_width="match_parent"
