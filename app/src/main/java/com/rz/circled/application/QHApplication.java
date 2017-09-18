@@ -96,6 +96,10 @@ import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.sgt.jsbridge.RegisterList;
 import com.tencent.bugly.Bugly;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareConfig;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.avchat.AVChatProfile;
 import com.yryz.yunxinim.avchat.activity.AVChatActivity;
@@ -172,6 +176,7 @@ public class QHApplication extends BaseApplication {
         configFresco();
         configJpush();
         configYunXin();
+        configUmeng();
     }
 
 
@@ -279,6 +284,30 @@ public class QHApplication extends BaseApplication {
 
     private void configBugly() {
         Bugly.init(this, Constants.Bugly.APP_ID, BuildConfig.DEBUG);
+    }
+
+
+    /**
+     * 友盟配置
+     */
+    public void configUmeng() {
+        UMShareConfig config = new UMShareConfig();
+        config.isOpenShareEditActivity(false);
+        UMShareAPI.get(this).setShareConfig(config);
+
+        UMShareAPI.get(this);
+
+        Config.DEBUG = false;
+        com.umeng.socialize.utils.Log.LOG = false;
+
+        //微信 appid appsecret
+        PlatformConfig.setWeixin(Constants.WeiXin.APP_ID, Constants.WeiXin.APP_SECRET);
+
+        //新浪微博 appkey appsecret
+        PlatformConfig.setSinaWeibo(Constants.Sina.APP_KEY, Constants.Sina.APP_SECRET, Constants.Sina.REDIRECT_URL);
+
+        // QQ和Qzone appid appkey
+        PlatformConfig.setQQZone(Constants.QQ.APP_ID, Constants.QQ.APP_KEY);
     }
 
     /**

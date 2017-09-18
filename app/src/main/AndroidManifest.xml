@@ -23,6 +23,17 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}" />
+
+        <!-- 友盟appkey -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="575511f7e0f55a414e00035a"/>
+
+        <!-- 渠道配置 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${CHANNEL}"/>
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
