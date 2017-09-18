@@ -45,11 +45,9 @@ import com.rz.common.utils.TextViewUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.UserInfoBean;
-import com.rz.sgt.jsbridge.JsEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -166,9 +164,9 @@ public class RegisterActivity extends BaseActivity {
         });
         TextViewUtils.setSpannableStyle(mTvProtocol);
 
-        if(mEditPassw.getText().length()>0){
+        if (mEditPassw.getText().length() > 0) {
             mImgWatchPw.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mImgWatchPw.setVisibility(View.GONE);
         }
     }
@@ -207,8 +205,11 @@ public class RegisterActivity extends BaseActivity {
 //                    hashMap.put("region", amapLocation.getDistrict());
 //                    hashMap.put("cityCode", amapLocation.getAdCode());
 
-                      location = amapLocation.getLocationDetail();
-                      cityCode = amapLocation.getAdCode();
+                    location = amapLocation.getLocationDetail();
+                    cityCode = amapLocation.getAdCode();
+                    if (cityCode.length() == 6) {
+                        cityCode = cityCode.substring(0, 3) + "000";
+                    }
 
 //                    Session.setCityCode(amapLocation.getAdCode());
 //                    JsEvent.callJsEvent(hashMap, true);
@@ -298,9 +299,9 @@ public class RegisterActivity extends BaseActivity {
                     mImgClearPw.setVisibility(View.GONE);
                 }
 
-                if(mEditPassw.getText().length()>0){
+                if (mEditPassw.getText().length() > 0) {
                     mImgWatchPw.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mImgWatchPw.setVisibility(View.GONE);
                 }
 
@@ -342,23 +343,23 @@ public class RegisterActivity extends BaseActivity {
 //            mCheckBox.setChecked(true);
 //        }
 //        if (mCheckBox.isChecked()) {
-            if (StringUtils.isMobile(mPhone)) {
-                if (StringUtils.isEmpty(mCode)) {
-                    SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_check_code));
+        if (StringUtils.isMobile(mPhone)) {
+            if (StringUtils.isEmpty(mCode)) {
+                SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_check_code));
+            } else {
+                if (StringUtils.isEmpty(mPassw) || mPassw.length() > 18 || mPassw.length() < 6) {
+                    SVProgressHUD.showErrorWithStatus(aty, getString(R.string.regist_input_pw));
                 } else {
-                    if (StringUtils.isEmpty(mPassw) || mPassw.length() > 18 || mPassw.length() < 6) {
-                        SVProgressHUD.showErrorWithStatus(aty, getString(R.string.regist_input_pw));
+                    if (StringUtils.isNumRic(mPassw) || StringUtils.isLetterRic(mPassw)) {
+                        SVProgressHUD.showErrorWithStatus(aty, getString(R.string.pw_num_letter));
                     } else {
-                        if (StringUtils.isNumRic(mPassw) || StringUtils.isLetterRic(mPassw)) {
-                            SVProgressHUD.showErrorWithStatus(aty, getString(R.string.pw_num_letter));
-                        } else {
-                            return true;
-                        }
+                        return true;
                     }
                 }
-            } else {
-                SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_right_phone));
             }
+        } else {
+            SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_right_phone));
+        }
 //        } else {
 //            SVProgressHUD.showErrorWithStatus(aty, getString(R.string.regist_wrong_check));
 //        }
@@ -462,7 +463,7 @@ public class RegisterActivity extends BaseActivity {
                         //绑定手机号
                         ((UserInfoPresenter) presenter).bindPhone(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassw)), mCode);
                     } else {
-                        ((UserInfoPresenter) presenter).registerUser(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassw)), mCode,location,cityCode);
+                        ((UserInfoPresenter) presenter).registerUser(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassw)), mCode, location, cityCode);
                     }
                 }
                 break;

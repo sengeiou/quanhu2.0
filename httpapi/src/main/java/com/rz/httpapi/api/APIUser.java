@@ -111,4 +111,9 @@ public class APIUser {
      */
     public static final String MY_RESOURCE = "v3/resource/getMyResource";
 
+
+    /**
+     * 达人证人申请
+     */
+    public static final String PROVE_INFO = "v3/star/starApply";
 }

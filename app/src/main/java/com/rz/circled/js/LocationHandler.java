@@ -2,6 +2,7 @@ package com.rz.circled.js;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class LocationHandler extends ServerHandler {
 
-    private boolean isGetCityCode;
+    private boolean isGetCityCode = false;
 
     public LocationHandler(Activity mActivity) {
         super(mActivity);
@@ -44,6 +45,7 @@ public class LocationHandler extends ServerHandler {
             isGetCityCode = jsonObject.getInt("isGetCityCode") == 1 ? true : false;
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("jsonException = ", e.toString());
         }
         Intent intent = new Intent(mActivity, LocationActivity.class);
         mActivity.startActivity(intent);

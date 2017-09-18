@@ -23,17 +23,20 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}"/>
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
 
@@ -99,7 +102,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
 
-        <!--end-->
+        <!-- end -->
 
         <activity
             android:name=".ui.activity.LoginActivity"
@@ -205,6 +208,7 @@
             android:theme="@style/BaseAppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -356,9 +360,8 @@
             android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-
-
-        <activity android:name=".ui.activity.UserInfoActivity"
+        <activity
+            android:name=".ui.activity.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
 
@@ -401,7 +404,15 @@
         <activity android:name=".ui.activity.ModifyPwdAty"/>
         <activity android:name=".ui.activity.SetPayPassAty"/>
         <activity android:name=".ui.activity.MyCollectionActivity"/>
+        <activity android:name=".ui.activity.MinePageActivity"/>
+        <activity android:name=".ui.activity.MyLevelActivity"/>
 
+        <activity android:name=".ui.activity.ChooseProveIdentityActivity">
+        </activity>
+        <activity android:name=".ui.activity.ProveWriteInfoActivity">
+        </activity>
+        <activity android:name=".ui.activity.ProvePaperworkActivity">
+        </activity>
     </application>
 
 </manifest>
