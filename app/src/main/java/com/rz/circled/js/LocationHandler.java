@@ -17,7 +17,6 @@ import com.rz.sgt.jsbridge.core.WebViewProxy;
 import org.json.JSONException;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/7 0007.
@@ -57,7 +56,6 @@ public class LocationHandler extends ServerHandler {
             @Override
             public void invoke(Object businessParms, BaseParamsObject baseParamsObject) {
                 HashMap<String, Object> hashMap = (HashMap<String, Object>) businessParms;
-                Map<String, Object> map = new HashMap<>();
                 baseParamsObject.data = hashMap;
                 if (isGetCityCode) {//去修改用户资料
                     PersonInfoPresenter personInfoPresenter = new PersonInfoPresenter();
