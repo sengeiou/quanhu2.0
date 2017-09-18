@@ -12,4 +12,6 @@ public class Constants {
     public static String FRIEND_INFO_ACTION = "com.rz.yryz.FRIEND_INFO_ACTION";
 
     public static String QUIT_ADVANCE_TEAM = "com.rz.yryz.QUIT_ADVANCE_TEAM";
+
+    public static final String CONTACTS_SELECT_ACTION = "com.rz.yryz.FRIEND_SELECT_ACTION";
 }

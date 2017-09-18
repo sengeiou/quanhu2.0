@@ -302,7 +302,11 @@ public class PayPresenter extends AbsPresenter {
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         AccountBean model = res.getData();
                         if (null != model) {
-                            Session.setUserMoneyState(model.getAccountState() == 1 ? true : false);
+                            if (Type.USER_MONEY_NORMAL == model.getAccountState()) {
+                                Session.setUserMoneyState(true);
+                            } else {
+                                Session.setUserMoneyState(false);
+                            }
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mView.updateView(model);
                             return;
@@ -510,12 +514,16 @@ public class PayPresenter extends AbsPresenter {
 //        });
 //    }
 
+    public void payOrder(String orderId) {
+        payOrder(orderId, "");
+    }
+
     public void payOrder(String orderId, String pwd) {
         if (!NetUtils.isNetworkConnected(activity)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
-        Call<ResponseData> call = mUserService.payOrder(Session.getUserId(), orderId, pwd);
+        Call<ResponseData> call = mUserService.payOrder(Session.getUserId(), orderId, TextUtils.isEmpty(pwd) ? "" : HexUtil.encodeHexStr(MD5Util.md5(pwd)));
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData>() {
             @Override
@@ -523,11 +531,12 @@ public class PayPresenter extends AbsPresenter {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
-                    if (res.getRet() == ReturnCode.SUCCESS) {
+                    if (res.isSuccessful()) {
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(res.getRet());
                     } else {
                         HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
@@ -537,7 +546,7 @@ public class PayPresenter extends AbsPresenter {
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, "");
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
     }
@@ -556,6 +565,7 @@ public class PayPresenter extends AbsPresenter {
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.isSuccessful()) {
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(response.body().getData());
                     } else {
                         HandleRetCode.handler(activity, res);
@@ -634,6 +644,10 @@ public class PayPresenter extends AbsPresenter {
      * 显示支付弹出框
      */
     public void showPayDialog(final double mPayMoney, String desc, int flag) {
+        showPayDialog(mPayMoney, desc, "", flag);
+    }
+
+    public void showPayDialog(final double mPayMoney, String desc, final String orderId, int flag) {
         View payViwe = LayoutInflater.from(activity).inflate(R.layout.dialog_pay, null);
         if (Session.getUserSafetyproblem()) {
             payViwe.findViewById(R.id.id_is_set_user_txt).setVisibility(View.GONE);
@@ -651,7 +665,8 @@ public class PayPresenter extends AbsPresenter {
             }
         });
         //描述
-        ((TextView) payViwe.findViewById(R.id.id_pay_des_txt)).setText(desc);
+        if (!TextUtils.isEmpty(desc))
+            ((TextView) payViwe.findViewById(R.id.id_pay_des_txt)).setText(desc);
         if (flag == 2 || flag == 0) {
             payViwe.findViewById(R.id.id_dialog_pay_yuan_txt).setVisibility(View.VISIBLE);
         } else {
@@ -670,10 +685,11 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
-                mView.updateView(psw);
+                payOrder(orderId, psw);
             }
         });
     }
+
 
     /**
      * 检测用户是否设置了支付密码
@@ -787,51 +803,104 @@ public class PayPresenter extends AbsPresenter {
         mResetDialog.show();
     }
 
-    private void pay(String orderId, double mPayMoney, double mUserMoney, int flag) {
-        if (Session.getUserIsLogin()) {
-            SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.please_go_login));
+    public void pay(String orderId, double mPayMoney, double mUserMoney, int flag) {
+        pay(orderId, mPayMoney, mUserMoney, "", flag);
+    }
+
+    public void pay(final String orderId, final double mPayMoney, final double mUserMoney, final String desc, final int flag) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
-        if (Session.getUserMoneyState()) {
-            SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.user_money_freeze));
-            return;
-        }
-        if (mPayMoney <= mUserMoney) {
-            SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.money_less));
-            return;
-        }
-        if (Session.getUserSetpaypw()) {
-            //设置了支付密码
-            if (flag == 2 || flag == 3) {
-                showPayDialog(mPayMoney, "", flag);
-            } else {
-                if (Session.getIsOpenGesture()) {
-                    //开启免密支付
-                    if (mPayMoney <= Constants.EasyPayMoney) {
-                        //--去支付
-                        payOrder(orderId, "");
+        //验证中请稍后...
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, activity.getString(R.string.check_ing));
+        Call<ResponseData<UserInfoModel>> call = mUserService.searchUserNews(1054, Session.getUserId());
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<UserInfoModel>>() {
+            @Override
+            public void onResponse(Call<ResponseData<UserInfoModel>> call, Response<ResponseData<UserInfoModel>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<UserInfoModel> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        UserInfoModel user = res.getData();
+                        if (null != user) {
+                            if (Type.HAD_SET_PW == user.getIsPayPassword()) {
+                                Session.setUserSetpaypw(true);
+                            } else {
+                                Session.setUserSetpaypw(false);
+                            }
+                            if (Type.OPEN_EASY_PAY == user.getSmallNopass()) {
+                                Session.setIsOpenGesture(true);
+                            } else {
+                                Session.setIsOpenGesture(false);
+                            }
+
+                            if (!Session.getUserIsLogin()) {
+                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.please_go_login));
+                                return;
+                            }
+                            if (!Session.getUserMoneyState()) {
+                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.user_money_freeze));
+                                return;
+                            }
+                            if (mPayMoney > mUserMoney) {
+                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.money_less));
+                                return;
+                            }
+                            if (Session.getUserSetpaypw()) {
+                                //设置了支付密码
+                                if (flag == 2 || flag == 3) {
+                                    showPayDialog(mPayMoney, desc, orderId, flag);
+                                } else {
+                                    if (Session.getIsOpenGesture()) {
+                                        //开启免密支付
+                                        if (mPayMoney <= Constants.EasyPayMoney) {
+                                            //去支付
+                                            payOrder(orderId);
+                                        } else {
+                                            //支付金额大于免密支付额
+                                            showPayDialog(mPayMoney, desc, orderId, flag);
+                                        }
+                                    } else {
+                                        showPayDialog(mPayMoney, desc, orderId, flag);
+                                    }
+                                }
+                            } else {
+                                //未设置，去设置
+                                View mSetPayPw = LayoutInflater.from(activity).inflate(R.layout.dialog_to_set_pay_passw, null);
+                                final Dialog mSetDialog = DialogUtils.selfDialog(activity, mSetPayPw, true);
+                                mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        // TODO: 2017/9/16  设置支付密码
+                                    }
+                                });
+                                mSetDialog.show();
+                            }
+                        }
                     } else {
-                        //支付金额大于免密支付额
-                        showPayDialog(mPayMoney, "", flag);
+                        if (HandleRetCode.handler(activity, res)) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                                    return;
+                                }
+                            }, 2000);
+                        }
                     }
                 } else {
-                    showPayDialog(mPayMoney, "", flag);
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, activity.getString(R.string.check_fail));
                 }
             }
-        } else {
-            //未设置，去设置
-            View mSetPayPw = LayoutInflater.from(activity).inflate(R.layout.dialog_to_set_pay_passw, null);
-            final Dialog mSetDialog = DialogUtils.selfDialog(activity, mSetPayPw, true);
-            mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                                mSetDialog.dismiss();
-//                                Intent intent = new Intent(activity, SetPayPassAty.class);
-//                                intent.putExtra(IntentKey.General.KEY_TYPE, Type.HAD_NO_SET_PW);
-//                                activity.startActivity(intent);
-                }
-            });
-            mSetDialog.show();
-        }
+
+            @Override
+            public void onFailure(Call<ResponseData<UserInfoModel>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, activity.getString(R.string.check_fail));
+            }
+        });
     }
 }

@@ -621,6 +621,8 @@
     <string name="team_search">输入群名称搜索</string>
     <string name="select_taolun">选择讨论组</string>
     <string name="taolun_search">输入讨论组名称搜索</string>
+    <string name="app_had_at">"[有人@我] "</string>
+    <string name="app_lucky_money">"[红包] "</string>
 
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎广场吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>

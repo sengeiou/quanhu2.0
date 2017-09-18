@@ -363,6 +363,9 @@ public class SysSharePres {
 
     private static final String NEWS_ACCOUNT_INFORMATION_NUM = "newsAccountInformationNum";
 
+    //是否显示全聊及其入口
+    private static final String NEED_TEAM = "needTeam";
+
     public SysSharePres() {
         System.out.println(BaseApplication.getInstance().getContext());
         mSharePres = BaseApplication.getInstance().getContext().getSharedPreferences(PRES_NAME,
@@ -986,5 +989,13 @@ public class SysSharePres {
 
     public void setCityCode(String cityCode) {
         mSharePres.edit().putString(city_code, cityCode).apply();
+    }
+
+    public boolean isNeedTeam() {
+        return mSharePres.getBoolean(NEED_TEAM, true);
+    }
+
+    public void setNeedTeam(boolean needTeam) {
+        mSharePres.edit().putBoolean(NEED_TEAM, needTeam).apply();
     }
 }

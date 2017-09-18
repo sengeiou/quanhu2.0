@@ -20,6 +20,7 @@ import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.api.ApiPGService;
@@ -193,7 +194,8 @@ public class PrivateCircledFragment extends BaseFragment {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+//                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                    startActivity(new Intent(mActivity, RecentContactActivity.class));
                 }
             });
         }

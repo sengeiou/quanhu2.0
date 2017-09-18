@@ -6,6 +6,43 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+/**
+ * 获取版本号
+ * @return versionCode
+ */
+def gitVersionCode() {
+    def cmd = "git rev-list HEAD --count"
+    version = cmd.execute().text.trim().toInteger()
+    println("versionCode:" + version)
+    return version;
+}
+
+/**
+ * 获取版本名称
+ * @return versionName
+ */
+def gitVersionName(String buildType) {
+    def defaultVersion = "1.0.0"
+    def cmd = 'git describe --tags'
+    def version = cmd.execute().text.trim()
+    println("tag:" + version)
+    int index = version.indexOf("-")
+    if (index != -1) {
+        version = version.substring(0, index)
+    }
+    def pattern = "^v(((\\d+)[.])+)(\\d+)\$"
+    if (!version.matches(pattern)) {
+        version = defaultVersion
+    }
+    if (!buildType.equals("release")) {
+        version = version + "." + gitVersionCode()
+    }
+    println("versionName:" + version)
+    println("-----")
+    version = version.substring(1)
+    return "1.0.0"
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -23,10 +60,6 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
     }
 
     signingConfigs {
@@ -121,6 +154,51 @@ android {
         javaMaxHeapSize "4g"
 
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    //打包配置
+    applicationVariants.all { variant ->
+        def buildType = variant.buildType.name
+        println("buildType:" + buildType)
+        def versionCode = gitVersionCode();
+        def versionName = gitVersionName(buildType);
+        variant.mergedFlavor.versionCode = versionCode
+        variant.mergedFlavor.versionName = versionName
+        if (variant.buildType.name.equals('release')) {
+            variant.outputs.each { output ->
+                output.outputFile = new File(
+                        output.outputFile.parent,
+                        """${buildType}-${variant.productFlavors[0].name}-${versionName}-${
+                            versionCode
+                        }.apk""")
+            }
+        }
+    }
+
+    flavorDimensions "default"
+
+    //渠道包
+    productFlavors {
+
+        //应用宝
+        yryz_yingyongbao {
+            dimension "default"
+            manifestPlaceholders = [CHANNEL: "yryz"]
+            buildConfigField "String", "serverChannel", "\"YRYZ－TXYYB\""
+        }
+    }
 }
 
 dependencies {
@@ -181,5 +259,6 @@ dependencies {
     compile project(':umshare')
     compile project(path: ':YunXinUIKit')
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
+    compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
 
 }

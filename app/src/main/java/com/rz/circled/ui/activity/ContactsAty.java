@@ -123,9 +123,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Override
     public void initView() {
-        // 注册观察者
-        registerObserver(true);
-        registerSystemMessageObservers(true);
         Log.d("contacts--", page + "---------------");
         setTitleText(getString(R.string.mine_my_contacts));
         if (page == 1) {
@@ -142,11 +139,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         mListview.addHeaderView(mheadView);
         mListview.setAdapter(mContactsAdp);
         mListview.setOnItemClickListener(this);
-
-        receiver = new MessageReceiver();
-        IntentFilter filter_dynamic = new IntentFilter();
-        filter_dynamic.addAction(MineFragment.MINEFRGFOCUS);
-        registerReceiver(receiver, filter_dynamic);
 
         setFocusNum(Session.getUserFocusNum());
     }
@@ -208,9 +200,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        unregisterReceiver(receiver);
-        registerObserver(false);
-        registerSystemMessageObservers(false);
     }
 
     @Override
@@ -218,8 +207,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         super.onResume();
         Log.e(TAG, "reloadWhenDataChanged: contacts onresume");
         //缓存部分新的好友列表，以便进入新的好友列表没有卡顿
-        ((FriendPresenter1) presenter).requestRequireList(false);
-        ((FriendPresenter1) presenter).getCacheFriends(false);
+       presenter.requestRequireList(false);
+       presenter.getCacheFriends(false);
     }
 
     @Override
@@ -381,144 +370,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         int unreadCount = NIMClient.getService(SystemMessageService.class).querySystemMessageUnreadCountByType(types);
         updateUnreadNum(unreadCount);
     }
-
-    private MessageReceiver receiver;
-
-    public class MessageReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-//            if (TextUtils.equals(MineFrg.MINEFRGFOCUS, intent.getAction())) {
-//                if (Session.getUserIsLogin() || !StringUtils.isEmpty(Session.getUserFocusNum())) {
-//                    if (null != mTxtFollowNum) {
-//                        setFocusNum(Session.getUserFocusNum());
-//                    }
-//                } else {
-//                    if (null != mTxtFollowNum) {
-//                        mTxtFollowNum.setVisibility(View.GONE);
-//                    }
-//                }
-//            }
-        }
-    }
-
-    /**
-     * *********************************** 用户资料、好友关系变更、登录数据同步完成观察者 *******************************
-     */
-
-    private void registerObserver(boolean register) {
-        if (register) {
-//            UserInfoHelper.registerObserver(userInfoObserver);
-        } else {
-//            UserInfoHelper.unregisterObserver(userInfoObserver);
-        }
-
-        FriendDataCache.getInstance().registerFriendDataChangedObserver(friendDataChangedObserver, register);
-
-        LoginSyncDataStatusObserver.getInstance().observeSyncDataCompletedEvent(loginSyncCompletedObserver);
-    }
-
-    FriendDataCache.FriendDataChangedObserver friendDataChangedObserver = new FriendDataCache.FriendDataChangedObserver() {
-        @Override
-        public void onAddedOrUpdatedFriends(List<String> accounts) {
-            reloadWhenDataChanged(accounts, "onAddedOrUpdatedFriends", true);
-        }
-
-        @Override
-        public void onDeletedFriends(List<String> accounts) {
-            reloadWhenDataChanged(accounts, "onDeletedFriends", true);
-        }
-
-        @Override
-        public void onAddUserToBlackList(List<String> accounts) {
-            reloadWhenDataChanged(accounts, "onAddUserToBlackList", true);
-        }
-
-        @Override
-        public void onRemoveUserFromBlackList(List<String> accounts) {
-            reloadWhenDataChanged(accounts, "onRemoveUserFromBlackList", true);
-        }
-    };
-
-    private UserInfoObservable.UserInfoObserver userInfoObserver = new UserInfoObservable.UserInfoObserver() {
-        @Override
-        public void onUserInfoChanged(List<String> accounts) {
-            reloadWhenDataChanged(accounts, "onUserInfoChanged", true, false); // 非好友资料变更，不用刷新界面
-        }
-    };
-
-    private Observer<Void> loginSyncCompletedObserver = new Observer<Void>() {
-        @Override
-        public void onEvent(Void aVoid) {
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    reloadWhenDataChanged(null, "onLoginSyncCompleted", false);
-                }
-            }, 50);
-        }
-    };
-
-    private void reloadWhenDataChanged(List<String> accounts, String reason, boolean reload) {
-        reloadWhenDataChanged(accounts, reason, reload, true);
-    }
-
-    private void reloadWhenDataChanged(List<String> accounts, String reason, boolean reload, boolean force) {
-        if (accounts == null || accounts.isEmpty()) {
-            return;
-        }
-
-        boolean needReload = false;
-        if (!force) {
-            // 非force：与通讯录无关的（非好友）变更通知，去掉
-            for (String account : accounts) {
-                if (FriendDataCache.getInstance().isMyFriend(account)) {
-                    needReload = true;
-                    break;
-                }
-            }
-        } else {
-            needReload = true;
-        }
-
-        if (!needReload) {
-            Log.d(UIKitLogTag.CONTACT, "no need to reload contact");
-            return;
-        }
-
-        // log
-        StringBuilder sb = new StringBuilder();
-        sb.append("ContactFragment received data changed as [" + reason + "] : ");
-        if (accounts != null && !accounts.isEmpty()) {
-            for (String account : accounts) {
-                sb.append(account);
-                sb.append(" ");
-            }
-            sb.append(", changed size=" + accounts.size());
-        }
-        Log.i(UIKitLogTag.CONTACT, sb.toString());
-
-        // reload
-        Log.e(TAG, "reloadWhenDataChanged: contacts");
-        ((FriendPresenter1) presenter).getCacheFriends(false);
-    }
-
-
-    /**
-     * 注册/注销系统消息未读数变化
-     *
-     * @param register
-     */
-    private void registerSystemMessageObservers(boolean register) {
-//        NIMClient.getService(SystemMessageObserver.class).observeUnreadCountChange(sysMsgUnreadCountChangedObserver,
-//                register);
-    }
-
-    private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {
-        @Override
-        public void onEvent(Integer unreadCount) {
-            showUnreadMsg();
-        }
-    };
 
     protected final Handler getHandler() {
         return handler;

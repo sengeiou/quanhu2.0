@@ -87,7 +87,6 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
-                        //TODO
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
                     } else {
                         List<PrivateGroupBean> data = response.body().getData().getList();

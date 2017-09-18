@@ -94,35 +94,24 @@ public class Constants {
             .getExternalStorageDirectory().getAbsolutePath()
             + "/openim/images/";
 
-    public static final class UMeng {
-        //TODO CHANGED
-        public static final String APP_KEY = "575511f7e0f55a414e00035a";
-    }
-
     public static final class Sina {
-
-        //TODO CHANGED
-        public static final String APP_KEY = "3849078579";
-        public static final String APP_SECRET = "73b8afd99da3d2d492ecb1f2b2140419";
-        //        public static final String REDIRECT_URL = "https://www.11186.com/";
-        public static final String REDIRECT_URL = "https://www.yryz.com/";
+        public static final String APP_KEY = "584112165";
+        public static final String APP_SECRET = "a4f06fcdbab55e46de60ad1bc402657a";
+        public static final String REDIRECT_URL = "https://www.quanhu365.com/";
         //        public static final String REDIRECT_URL = "http://sns.whalecloud.com/sina2/callback";
     }
 
     public static final class QQ {
-        //TODO CHANGED
-        public static final String APP_ID = "1105434576";
-        public static final String APP_KEY = "8gtD1UMGSDAszmye";
+        public static final String APP_ID = "101419427";
+        public static final String APP_KEY = "17fe3acefa3aeaae815d10f0315e9093";
     }
 
     public static final class WeiXin {
-        //TODO CHANGED
-        public static final String APP_ID = "wxf7ece255b91036cd";
-        public static final String APP_SECRET = "846846225ca5d040ec7c25a253daedac";
+        public static final String APP_ID = "wxd9f7249e4c8382a8";
+        public static final String APP_SECRET = "a3270441bda749648f20e4857e32ba97";
     }
 
     public static final class Bugly {
-        //TODO CHANGED
         public static final String APP_ID = "d2a9cccb9f";
         public static final String APP_KEY = "241d5838-1e23-4a5a-9a51-d1c0e34c2986";
     }
@@ -133,7 +122,6 @@ public class Constants {
             Color.parseColor("#ffffbb33"),
             Color.parseColor("#ff99cc00"),
     };
-
 
     /**
      * 表示首页推荐栏目的栏目id
