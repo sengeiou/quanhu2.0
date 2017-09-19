@@ -523,7 +523,11 @@
     <string name="my_level">我的等级</string>
     <string name="my_create_reward">我发起的悬赏 (%1$d)</string>
     <string name="my_answer_reward">我回答的悬赏 (%1$d)</string>
-
+    <string name="add_friend">加好友</string>
+    <string name="my_create_reward_txt">我发起的悬赏</string>
+    <string name="my_answer_reward_txt">我回答的悬赏</string>
+    <string name="reward_artical">打赏的作品</string>
+    <string name="rewarded_artical">被打赏的作品</string>
 
     <!-- 个人信息 -->
 
@@ -592,6 +596,7 @@
     <string name="qq_zone">QQ空间</string>
     <string name="youren_firend">圈乎好友</string>
     <string name="select_firend">选择好友</string>
+    <string name="look_detail_txt">查看明细></string>
 
 
     <string name="report">举报</string>
@@ -675,4 +680,5 @@
     <string name="can_use">可使用</string>
     <string name="used">已使用</string>
     <string name="expired">已过期</string>
+    <string name="receive_mine_reward">我收到的打赏</string>
 </resources>

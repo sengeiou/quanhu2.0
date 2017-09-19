@@ -152,4 +152,15 @@ public class APIUser {
      * 获得达人认证状态
      */
     public static final String GET_PROVE_STATUS = "v3/star/getStarAuth";
+
+    /**
+     * 获取我的购买
+     */
+    public static final String GET_MY_BUYING = "v3/coterie/getMyBuyingResource";
+
+    /**
+     * 获取我的打赏
+     */
+    public static final String GET_MY_REWARD = "v3/reward/getMyReward";
+
 }

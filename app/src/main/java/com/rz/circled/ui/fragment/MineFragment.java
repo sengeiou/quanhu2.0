@@ -35,8 +35,10 @@ import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
+import com.rz.circled.ui.activity.MineRewardActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
+import com.rz.circled.ui.activity.MyBuyActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
@@ -259,7 +261,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
-                        jump(UserInfoActivity.class);
+//                        jump(UserInfoActivity.class);
+                        UserInfoActivity.newFrindInfo(mActivity,Session.getUserId());
+
                     }
                 }
             });
@@ -328,6 +332,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             custPointsTxt = (TextView) header.findViewById(R.id.cust_points_txt);
             famousTxt = (TextView) header.findViewById(R.id.famous_txt);
             famousLayout = (LinearLayout) header.findViewById(R.id.famous_layout);
+            famousLayout.getBackground().setAlpha(77);
 
             famousLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -345,6 +350,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 mTxtPersonName.setText(Session.getUserName());
                 levelTxt.setText("Lv. "+Session.getUserLevel());
                 custPointsTxt.setText("积分" + Session.getCustPoints());
+                if("0".equals(Session.getCustRole())){
+                    famousTxt.setText("去认证");
+                }
+
                 if (TextUtils.isEmpty(Session.getUser_signatrue())){
                     idPersonLoginDays.setText("");
                 }
@@ -622,15 +631,15 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             data = (ProveStatusBean) t;
             if(Session.getCustRole().equals("0")){
                 famousTxt.setText("去认证");
-                famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
+//                famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
             }else if(data.getAuthStatus() == 0){
                 famousTxt.setText("认证审核中");
             }else if(data.getAuthStatus() == 1){
                 famousTxt.setText(data.getTradeField());
             }else if(data.getAuthStatus() == 2){
-                famousTxt.setText("认证失败,重新认证");
+                famousTxt.setText("认证失败");
             }else if(data.getAuthStatus() == 3){
-                famousTxt.setText("后台取消认证");
+                famousTxt.setText("认证失败");
             }
         }else {
 //            if (null != t) {
@@ -766,7 +775,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 1:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的购买");
-//                    showActivity(frg, ContactsAty.class);
+                    jump(MyBuyActivity.class);
 
                 }
                 break;
@@ -775,7 +784,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的打赏");
 //                    showActivity(frg, MyAccountAty.class);
-
+                    jump(MineRewardActivity.class);
                 }
                 break;
 

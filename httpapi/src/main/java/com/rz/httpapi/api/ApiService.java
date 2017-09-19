@@ -8,6 +8,7 @@ import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BaseInfo;
 import com.rz.httpapi.bean.BillDetailModel;
+import com.rz.httpapi.bean.BuyingBean;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
@@ -980,7 +981,7 @@ public interface ApiService {
 //    );
 
     /**
-     * 设置密保问题
+     * 我的文章
      *
      * @param custId
      * @return
@@ -1078,6 +1079,36 @@ public interface ApiService {
             @Field("limit") int limit,
             @Field("type") int type
 
+    );
+
+    /**
+     * 我的购买
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_MY_BUYING)
+    Call<ResponseData<BuyingBean>> getMyBuying(
+            @Field("custId") String custId,
+            @Field("pageNum") int pageNum,
+            @Field("pageSize") int pageSize
+    );
+
+    /**
+     * 我的打赏
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_MY_REWARD)
+    Call<ResponseData> getMyReward(
+            @Field("custId") String custId,
+            @Field("isReward") int isReward,
+            @Field("limit") int limit,
+            @Field("rewardId") String rewardId,
+            @Field("type") int type
     );
 
 }
