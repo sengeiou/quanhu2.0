@@ -7,13 +7,12 @@ import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.inter.IViewController;
-import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiProve;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
-import com.rz.httpapi.bean.ProveInfoBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 
 import retrofit2.Call;
@@ -25,6 +24,7 @@ import retrofit2.Response;
 public class ProveInfoPresenter extends GeneralPresenter {
 
     public static final int FLAG_PROVE_INFO_SUCCESS = -600;//达人认证资料成功
+    public static final int FLAG_PROVE_STATUS_ERROR = -701;//获得达人认证状态失败
     public static final int FLAG_PROVE_STATUS_SUCCESS = -700;//获得达人认证状态成功
 
 
@@ -63,14 +63,14 @@ public class ProveInfoPresenter extends GeneralPresenter {
                     ResponseData<ProveStatusBean> responseData = response.body();
                     if (responseData.isSuccessful()) {
                         mView.updateViewWithFlag(responseData.getData(), FLAG_PROVE_STATUS_SUCCESS);
-                    }
-
-                }
+                    } else mView.updateViewWithFlag(responseData.getData(), FLAG_PROVE_STATUS_ERROR);
+                } else mView.updateViewWithFlag(null, FLAG_PROVE_STATUS_ERROR);
             }
 
             @Override
             public void onFailure(Call<ResponseData<ProveStatusBean>> call, Throwable t) {
                 super.onFailure(call, t);
+                mView.updateViewWithFlag(null, FLAG_PROVE_STATUS_ERROR);
             }
         });
     }
@@ -81,7 +81,7 @@ public class ProveInfoPresenter extends GeneralPresenter {
      * @param isOneSelf true 个人申请 ,false 企业申请
      * @param proveInfo
      */
-    public void submitProveInfo(boolean isOneSelf, ProveInfoBean proveInfo) {
+    public void submitProveInfo(boolean isOneSelf, ProveStatusBean proveInfo) {
         Call<ResponseData> call;
         if (isOneSelf) call = mApiService.proveInfoPerson(proveInfo.getAuthType(),
                 Session.getUserId(), proveInfo.getRealName(), proveInfo.getContactCall(),
@@ -99,13 +99,13 @@ public class ProveInfoPresenter extends GeneralPresenter {
                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 if (response.isSuccessful()) {
                     if (response.body().isSuccessful()) {
-                        SVProgressHUD.showInfoWithStatus(mContext, mContext.getString(R.string.prove_info_success));
+                        Toasty.info(mContext, mContext.getString(R.string.prove_info_success)).show();
                         mView.updateViewWithFlag(null, FLAG_PROVE_INFO_SUCCESS);
                     } else {
-                        SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.prove_info_fail));
+                        Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.prove_info_fail));
+                    Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
                 }
             }
 
@@ -113,7 +113,7 @@ public class ProveInfoPresenter extends GeneralPresenter {
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.prove_info_fail));
+                Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
             }
         });
     }
@@ -124,7 +124,7 @@ public class ProveInfoPresenter extends GeneralPresenter {
      * @param isOneSelf true 个人申请 ,false 企业申请
      * @param proveInfo
      */
-    public void changeProveInfo(boolean isOneSelf, ProveInfoBean proveInfo) {
+    public void changeProveInfo(boolean isOneSelf, ProveStatusBean proveInfo) {
         Call<ResponseData> call;
         if (isOneSelf) call = mApiService.proveInfoPersonChange(proveInfo.getAuthType(),
                 Session.getUserId(), proveInfo.getRealName(), proveInfo.getContactCall(),
@@ -142,13 +142,13 @@ public class ProveInfoPresenter extends GeneralPresenter {
                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 if (response.isSuccessful()) {
                     if (response.body().isSuccessful()) {
-                        SVProgressHUD.showInfoWithStatus(mContext, mContext.getString(R.string.prove_info_success));
+                        Toasty.info(mContext, mContext.getString(R.string.prove_info_success)).show();
                         mView.updateViewWithFlag(null, FLAG_PROVE_INFO_SUCCESS);
                     } else {
-                        SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.prove_info_fail));
+                        Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
                     }
                 } else {
-                    SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.prove_info_fail));
+                    Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
                 }
             }
 
@@ -156,7 +156,7 @@ public class ProveInfoPresenter extends GeneralPresenter {
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.prove_info_fail));
+                Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
             }
         });
     }

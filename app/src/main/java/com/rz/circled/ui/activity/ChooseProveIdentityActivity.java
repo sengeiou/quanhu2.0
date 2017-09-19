@@ -9,10 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.bean.ProveStatusBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,10 +41,28 @@ public class ChooseProveIdentityActivity extends BaseActivity {
 
 
     private ProveStatusBean proveStatusBean;
+    private ProveInfoPresenter proveInfoPresenter;
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return false;
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_choose_prove_identity, null);
+    }
+
+    @Override
+    public void initPresenter() {
+        super.initPresenter();
+        proveInfoPresenter = new ProveInfoPresenter();
+        proveInfoPresenter.attachView(this);
     }
 
     @Override
@@ -55,30 +75,13 @@ public class ChooseProveIdentityActivity extends BaseActivity {
     public void initData() {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey(IntentKey.EXTRA_SERIALIZABLE)) {
-            setTitleText(R.string.qh_prove);
-            llStatus.setVisibility(View.VISIBLE);
             proveStatusBean = (ProveStatusBean) extras.getSerializable(IntentKey.EXTRA_SERIALIZABLE);
-            switch (proveStatusBean.getAuthStatus()) {
-                case ProveStatusBean.STATUS_ING:
-                    tvStatusTitle.setText(R.string.prove_info_submit_success);
-                    tvStatusHint.setText(R.string.prove_info_verify_ing);
-                    tvStatusHint.setVisibility(View.VISIBLE);
-                    break;
-                case ProveStatusBean.STATUS_FAIL:
-                case ProveStatusBean.STATUS_CANCEL:
-                    tvStatusTitle.setText(R.string.prove_fail);
-                    tvStatusChange.setVisibility(View.VISIBLE);
-                    tvStatusChange.setText(R.string.prove_again);
-                    break;
-                case ProveStatusBean.STATUS_SUCCESS:
-                    tvStatusTitle.setText(getString(R.string.prove_identity_hint) +
-                            (proveStatusBean.isOneSelf() ? getString(R.string.prove_oneself) : getString(R.string.prove_agency)));
-                    tvStatusContent.setText(getString(R.string.prove_industry_sector) + proveStatusBean.getTradeField());
-                    tvStatusContent.setVisibility(View.VISIBLE);
-                    tvStatusChange.setVisibility(View.VISIBLE);
-                    tvStatusChange.setText(R.string.change_prove_info_hint);
-                    break;
+            if (!NetUtils.isNetworkConnected(mContext)) {
+                onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+                return;
             }
+            onLoadingStatus(CommonCode.General.DATA_LOADING);
+            proveInfoPresenter.getProveStatus();
         } else {
             llStatus.setVisibility(View.GONE);
             setTitleText(R.string.choose_prove_identity);
@@ -98,6 +101,9 @@ public class ChooseProveIdentityActivity extends BaseActivity {
             case R.id.tv_choose_prove_status_change:
                 intent.putExtra(IntentKey.EXTRA_BOOLEAN, proveStatusBean != null ? proveStatusBean.isOneSelf() : true);
                 intent.putExtra(ProveWriteInfoActivity.EXTRA_CHANGE, true);
+                if (proveStatusBean != null) {
+                    intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
+                }
                 break;
         }
         startActivity(intent);
@@ -114,5 +120,44 @@ public class ChooseProveIdentityActivity extends BaseActivity {
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public <T> void updateViewWithFlag(T t, int flag) {
+        super.updateViewWithFlag(t, flag);
+        if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_SUCCESS) {//获得达人信息申请状态成功
+            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+            proveStatusBean = (ProveStatusBean) t;
+            processStatus();
+        }
+        if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_ERROR) {
+            onLoadingStatus(CommonCode.General.UN_NETWORK);
+        }
+    }
+
+    private void processStatus() {
+        setTitleText(R.string.qh_prove);
+        llStatus.setVisibility(View.VISIBLE);
+        switch (proveStatusBean.getAuthStatus()) {
+            case ProveStatusBean.STATUS_ING:
+                tvStatusTitle.setText(R.string.prove_info_submit_success);
+                tvStatusHint.setText(R.string.prove_info_verify_ing);
+                tvStatusHint.setVisibility(View.VISIBLE);
+                break;
+            case ProveStatusBean.STATUS_FAIL:
+            case ProveStatusBean.STATUS_CANCEL:
+                tvStatusTitle.setText(R.string.prove_fail);
+                tvStatusChange.setVisibility(View.VISIBLE);
+                tvStatusChange.setText(R.string.prove_again);
+                break;
+            case ProveStatusBean.STATUS_SUCCESS:
+                tvStatusTitle.setText(getString(R.string.prove_identity_hint) +
+                        (proveStatusBean.isOneSelf() ? getString(R.string.prove_oneself) : getString(R.string.prove_agency)));
+                tvStatusContent.setText(getString(R.string.prove_industry_sector) + proveStatusBean.getTradeField());
+                tvStatusContent.setVisibility(View.VISIBLE);
+                tvStatusChange.setVisibility(View.VISIBLE);
+                tvStatusChange.setText(R.string.change_prove_info_hint);
+                break;
+        }
     }
 }

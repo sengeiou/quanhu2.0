@@ -21,7 +21,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.widget.toasty.Toasty;
-import com.rz.httpapi.bean.ProveInfoBean;
+import com.rz.httpapi.bean.ProveStatusBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -65,6 +65,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
     private ProveInfoPresenter proveInfoPresenter;
     private final int REQUEST_PAPERWORK = 5;
     private final int REQUEST_AREA = 6;
+    private ProveStatusBean infoBean;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -118,6 +119,28 @@ public class ProveWriteInfoActivity extends BaseActivity {
             //个人自媒体账号
             tvProveMediaAccount.setText(R.string.oneself_media_account);
             setTitleRightText(R.string.forget_next);
+        }
+        if (getIntent().getExtras().containsKey(IntentKey.EXTRA_SERIALIZABLE)) {
+            infoBean = (ProveStatusBean) getIntent().getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
+            if (infoBean != null) {
+                if (isOneSelf) {
+                    etProveTrueName.setText(infoBean.getRealName());
+                    etProvePhone.setText(infoBean.getContactCall());
+                    etProveIdNumber.setText(infoBean.getIdCard());
+                    etProveIdNumber.setEnabled(false);
+                    etProveIdNumber.setFocusable(false);
+                    etProveIdNumber.setKeyListener(null);
+                } else {
+                    etProveTrueName.setText(infoBean.getOrganizationName());
+                    etProvePhone.setText(infoBean.getRealName());
+                    etProveIdNumber.setText(infoBean.getContactCall());
+                }
+                tvProveArea.setText(infoBean.getLocation());
+                etProveIndustry.setText(infoBean.getTradeField());
+                etProveMediaAccount.setText(infoBean.getOwnerAppId());
+                etProveResources.setText(infoBean.getResourceDesc());
+                tvProveResourcesNum.setText(infoBean.getResourceDesc().length() + "");
+            }
         }
         setTitleRightListener(new View.OnClickListener() {
             @Override
@@ -181,7 +204,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
         }
         String idNumber = etProveIdNumber.getText().toString();
         String idNumberErrorInfo = isOneSelf ? getString(R.string.prove_id_number_error_hint) : getString(R.string.prove_contact_phone_error_hint);
-        if (TextUtils.isEmpty(idNumber)) {
+        if (TextUtils.isEmpty(idNumber) || (isOneSelf && idNumber.length() != 16 && idNumber.length() != 18)) {
             Toasty.info(mContext, idNumberErrorInfo).show();
             return;
         }
@@ -205,16 +228,17 @@ public class ProveWriteInfoActivity extends BaseActivity {
             Toasty.info(mContext, getString(R.string.prove_resource_error_hint)).show();
             return;
         }
-        ProveInfoBean proveInfoBean = new ProveInfoBean();
-        proveInfoBean.setAuthType(isOneSelf ? 0 : 1);
-        proveInfoBean.setContactCall(isOneSelf ? phone : idNumber);
-        proveInfoBean.setIdCard(idNumber);
-        proveInfoBean.setLocation(areaInfo);
-        proveInfoBean.setOrganizationName(trueName);
-        proveInfoBean.setOwnerAppId(mediaAccount);
-        proveInfoBean.setRealName(trueName);
-        proveInfoBean.setResourceDesc(resource);
-        proveInfoBean.setTradeField(industry);
+        if (infoBean == null)
+            infoBean = new ProveStatusBean();
+        infoBean.setAuthType(isOneSelf ? 0 : 1);
+        infoBean.setContactCall(isOneSelf ? phone : idNumber);
+        infoBean.setIdCard(idNumber);
+        infoBean.setLocation(areaInfo);
+        infoBean.setOrganizationName(trueName);
+        infoBean.setOwnerAppId(mediaAccount);
+        infoBean.setRealName(trueName);
+        infoBean.setResourceDesc(resource);
+        infoBean.setTradeField(industry);
         if (isOneSelf) {
             if (!NetUtils.isNetworkConnected(mContext)) {
                 onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
@@ -223,12 +247,12 @@ public class ProveWriteInfoActivity extends BaseActivity {
             onLoadingStatus(CommonCode.General.DATA_LOADING);
             //提交
             if (isChange)
-                proveInfoPresenter.changeProveInfo(isOneSelf, proveInfoBean);
-            else proveInfoPresenter.submitProveInfo(isOneSelf, proveInfoBean);
+                proveInfoPresenter.changeProveInfo(isOneSelf, infoBean);
+            else proveInfoPresenter.submitProveInfo(isOneSelf, infoBean);
         } else {
             //下一步
             Intent intent = new Intent(mContext, ProvePaperworkActivity.class);
-            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveInfoBean);
+            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, infoBean);
             intent.putExtra(IntentKey.EXTRA_BOOLEAN, isChange);
             startActivityForResult(intent, REQUEST_PAPERWORK);
         }

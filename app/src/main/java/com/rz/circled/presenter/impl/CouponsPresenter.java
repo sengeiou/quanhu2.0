@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.rz.circled.http.ApiYylService;
 import com.rz.circled.presenter.GeneralPresenter;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.httpapi.api.BaseCallback;
@@ -52,8 +53,8 @@ public class CouponsPresenter extends GeneralPresenter {
      * @param status    类型1投票券 2自定义奖品
      */
     public void getCouponsList(final int isOverdue, int status) {
-//        Call<ResponseData<List<CouponsBean>>> call = mApiService.getCouponsList(isOverdue, Session.getUserId(), status);
-        Call<ResponseData<List<CouponsBean>>> call = mApiService.getCouponsList(isOverdue, "eldrsm2k", status);
+        Call<ResponseData<List<CouponsBean>>> call = mApiService.getCouponsList(isOverdue, Session.getUserId(), status);
+//        Call<ResponseData<List<CouponsBean>>> call = mApiService.getCouponsList(isOverdue, "eldrsm2k", status);
         call.enqueue(new BaseCallback<ResponseData<List<CouponsBean>>>() {
             @Override
             public void onResponse(Call<ResponseData<List<CouponsBean>>> call, Response<ResponseData<List<CouponsBean>>> response) {

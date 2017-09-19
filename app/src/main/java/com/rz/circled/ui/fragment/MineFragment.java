@@ -39,7 +39,6 @@ import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
-import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
@@ -281,7 +280,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                         if (proveStatusBean != null)
                             intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
                         startActivity(intent);
-                        jump(MyRewardActivity.class);
+//                        jump(MyRewardActivity.class);
                     }
                 }
             });

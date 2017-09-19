@@ -24,7 +24,7 @@ import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
-import com.rz.httpapi.bean.ProveInfoBean;
+import com.rz.httpapi.bean.ProveStatusBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class ProvePaperworkActivity extends BaseActivity {
     TextView tvChoosePic;
     @BindView(R.id.iv_prove_paperwork)
     ImageView ivProvePaperwork;
-    private ProveInfoBean proveInfo;
+    private ProveStatusBean proveInfo;
 
     private final int REQUEST_PIC = 10;
     private ProveInfoPresenter proveInfoPresenter;
@@ -62,7 +62,7 @@ public class ProvePaperworkActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        proveInfo = (ProveInfoBean) getIntent().getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
+        proveInfo = (ProveStatusBean) getIntent().getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
         isChange = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, false);
         setTitleRightText(R.string.submit);
         setTitleRightListener(new View.OnClickListener() {
@@ -77,6 +77,9 @@ public class ProvePaperworkActivity extends BaseActivity {
         });
         setTitleRightTextColor(R.color.font_color_blue);
         setTitleText(getString(R.string.upload_paperwork));
+        if (!TextUtils.isEmpty(proveInfo.getOrganizationPaper())) {
+            processImageView(proveInfo.getOrganizationPaper());
+        }
     }
 
     @Override
@@ -91,12 +94,6 @@ public class ProvePaperworkActivity extends BaseActivity {
         proveInfoPresenter.attachView(this);
     }
 
-    @OnClick(R.id.tv_prove_paperwork_choose_pic)
-    public void onClick() {
-        //调用相机相机或相册咯
-        PictureSelectedActivity.startActivityForResult(this, REQUEST_PIC, 1, false);
-    }
-
 
     private void requestOss() {
         if (!NetUtils.isNetworkConnected(mContext)) {
@@ -104,6 +101,10 @@ public class ProvePaperworkActivity extends BaseActivity {
             return;
         }
         onLoadingStatus(CommonCode.General.DATA_LOADING);
+        if (imgPath.startsWith("http")) {
+            toSubmit();
+            return;
+        }
         List<UploadPicManager.UploadInfo> uploadInfoList = new ArrayList<>();
         UploadPicManager.UploadInfo uploadInfo = new UploadPicManager.UploadInfo();
         uploadInfo.fileSavePath = imgPath;
@@ -170,5 +171,16 @@ public class ProvePaperworkActivity extends BaseActivity {
             finish();
         }
 
+    }
+
+    @OnClick({R.id.tv_prove_paperwork_choose_pic, R.id.iv_prove_paperwork})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_prove_paperwork_choose_pic:
+            case R.id.iv_prove_paperwork:
+                //调用相机相机或相册咯
+                PictureSelectedActivity.startActivityForResult(this, REQUEST_PIC, 1, false);
+                break;
+        }
     }
 }
