@@ -1,6 +1,5 @@
 package com.rz.circled.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,42 +10,44 @@ import android.widget.TextView;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
+import com.rz.circled.adapter.MineRewardAdapter;
 import com.rz.circled.adapter.RewardAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
-import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.MyRewardBean;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 
 /**
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyRewardFragment extends BaseFragment {
+public class RewardArticalFragment extends BaseFragment {
 
     @BindView(R.id.refresh)
     SwipyRefreshLayout mRefresh;
     @BindView(R.id.lv_search_content)
     ListView lvReward;
 
-    private RewardAdapter rewardAdapter;
+    private MineRewardAdapter rewardAdapter;
     private List<MyRewardBean> rewardBeanList = new ArrayList<>();
     protected IPresenter presenter;
 
     private View headView;
     private TextView createTxt;
     private TextView answerTxt;
-    private String type;
+    private int type;
 
-    public static MyRewardFragment newInstance(String type) {
-        MyRewardFragment frg = new MyRewardFragment();
+    public static RewardArticalFragment newInstance(int type) {
+        RewardArticalFragment frg = new RewardArticalFragment();
         Bundle args = new Bundle();
-        args.putString(IntentKey.KEY_ID,type);
+        args.putInt(IntentKey.KEY_ID,type);
         frg.setArguments(args);
 
         return frg;
@@ -61,42 +62,13 @@ public class MyRewardFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        type = getArguments().getString(IntentKey.KEY_ID);
+        type = getArguments().getInt(IntentKey.KEY_ID);
 
-        if("1".equals(type)){
-            headView = View.inflate(mActivity,R.layout.mine_top_layout,null);
-            createTxt = (TextView) headView.findViewById(R.id.my_create_txt);
-            answerTxt = (TextView) headView.findViewById(R.id.answer_txt);
+        TextView textView = new TextView(mActivity);
+        textView.setText("共12条内容");
+        lvReward.addHeaderView(textView);
 
-            createTxt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createTxt.setTextColor(getResources().getColor(R.color.tab_blue));
-                    createTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
-
-                    answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
-                    answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
-                    ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),0);
-                }
-            });
-
-            answerTxt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createTxt.setTextColor(getResources().getColor(R.color.color_999999));
-                    createTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
-
-                    answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
-                    answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
-
-                    ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),1);
-                }
-            });
-
-            lvReward.addHeaderView(headView);
-        }
-
-        rewardAdapter = new RewardAdapter(getActivity(), R.layout.item_search_reward);
+        rewardAdapter = new MineRewardAdapter(getActivity(), R.layout.item_reward_mine);
         rewardAdapter.setData(rewardBeanList);
         lvReward.setAdapter(rewardAdapter);
     }
@@ -105,7 +77,7 @@ public class MyRewardFragment extends BaseFragment {
     public void initData() {
         initRefresh();
 
-        ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),0);
+        ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,null);
 
     }
 
@@ -114,7 +86,7 @@ public class MyRewardFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//                ((PersonInfoPresenter) presenter).getMyreward(true, Session.getUserId(),0);
+                ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,null);
                 mRefresh.setRefreshing(false);
             }
         });

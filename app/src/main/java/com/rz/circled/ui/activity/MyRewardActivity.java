@@ -103,8 +103,8 @@ public class MyRewardActivity extends BaseActivity {
 
     private void initViewpagerGroup() {
         List<Fragment> mFragments = new ArrayList<>();
-        BaseFragment privateGroupJoinByMyselfFragment = MyRewardFragment.newInstance();
-        BaseFragment privateGroupCreateByMyselfFragment = MyRewardFragment.newInstance();
+        BaseFragment privateGroupJoinByMyselfFragment = MyRewardFragment.newInstance("2");
+        BaseFragment privateGroupCreateByMyselfFragment = MyRewardFragment.newInstance("2");
         mFragments.add(privateGroupCreateByMyselfFragment);
         mFragments.add(privateGroupJoinByMyselfFragment);
         viewpagerGroup.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));

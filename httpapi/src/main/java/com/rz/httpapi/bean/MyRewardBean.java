@@ -8,18 +8,19 @@ import java.io.Serializable;
 
 public class MyRewardBean implements Serializable {
 
+
     /**
-     * id : 187
-     * custId : 0m8xwqgrxd
-     * content : dfgdfghxdh
+     * id : 168
+     * custId : 4qqcxnbnht
+     * content : 11111111111
      * pics :
      * duration : 1
-     * complete : 1
-     * terminalTime : 2017-09-17 00:00:00
+     * complete : 2
+     * terminalTime : 2017-09-15 23:59:59
      * location :
-     * replyNum : 2
+     * replyNum : 3
      * nowTime : 2017-09-18 20:32:00
-     * user : {"custId":"0m8xwqgrxd","custNname":"悠然号1765075","custLevel":"1","custRole":0}
+     * user : {"custId":"4qqcxnbnht","custNname":"Miss余","custImg":"http://yryz-resources.oss-cn-hangzhou.aliyuncs.com/pic%2FheadImage%2F20170427103754172-6739.jpg","custSignature":"签名是个什么梗","custDesc":"Yes or No","custLevel":"1","custRole":0}
      */
 
     private int id;
@@ -33,6 +34,7 @@ public class MyRewardBean implements Serializable {
     private int replyNum;
     private String nowTime;
     private UserBean user;
+    private String price;
 
     public int getId() {
         return id;
@@ -122,18 +124,51 @@ public class MyRewardBean implements Serializable {
         this.user = user;
     }
 
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public static class UserBean {
         /**
-         * custId : 0m8xwqgrxd
-         * custNname : 悠然号1765075
+         * custId : 4qqcxnbnht
+         * custNname : Miss余
+         * custImg : http://yryz-resources.oss-cn-hangzhou.aliyuncs.com/pic%2FheadImage%2F20170427103754172-6739.jpg
+         * custSignature : 签名是个什么梗
+         * custDesc : Yes or No
          * custLevel : 1
          * custRole : 0
          */
 
         private String custId;
         private String custNname;
+        private String custImg;
+        private String custSignature;
+        private String custDesc;
         private String custLevel;
         private int custRole;
+        private String nameNotes;
+        private int relation;
+
+        public String getNameNotes() {
+            return nameNotes;
+        }
+
+        public void setNameNotes(String nameNotes) {
+            this.nameNotes = nameNotes;
+        }
+
+        public int getRelation() {
+            return relation;
+        }
+
+        public void setRelation(int relation) {
+            this.relation = relation;
+        }
 
         public String getCustId() {
             return custId;
@@ -149,6 +184,30 @@ public class MyRewardBean implements Serializable {
 
         public void setCustNname(String custNname) {
             this.custNname = custNname;
+        }
+
+        public String getCustImg() {
+            return custImg;
+        }
+
+        public void setCustImg(String custImg) {
+            this.custImg = custImg;
+        }
+
+        public String getCustSignature() {
+            return custSignature;
+        }
+
+        public void setCustSignature(String custSignature) {
+            this.custSignature = custSignature;
+        }
+
+        public String getCustDesc() {
+            return custDesc;
+        }
+
+        public void setCustDesc(String custDesc) {
+            this.custDesc = custDesc;
         }
 
         public String getCustLevel() {

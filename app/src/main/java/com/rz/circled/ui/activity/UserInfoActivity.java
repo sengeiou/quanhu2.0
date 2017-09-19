@@ -3,39 +3,35 @@ package com.rz.circled.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.fragment.MyCircleFragment;
 import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
-import com.rz.circled.ui.fragment.SearchCircleFragment;
-import com.rz.circled.ui.fragment.SearchContentFragment;
-import com.rz.circled.ui.fragment.SearchPersonFragment;
-import com.rz.circled.ui.fragment.SearchPrivateCircleFragment;
-import com.rz.circled.ui.fragment.SearchRewardFragment;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
-import com.rz.circled.ui.fragment.MyCircleFragment;
 import com.rz.circled.ui.fragment.MyRewardFragment;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.httpapi.bean.ProveStatusBean;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 
 /**
@@ -73,13 +69,24 @@ public class UserInfoActivity extends BaseActivity{
 
     @BindView(R.id.user_role)
     TextView userRole;
+    @BindView(R.id.famous_role_layout)
+    LinearLayout famousLayout;
+
+    @BindView(R.id.add_friend_layout)
+    LinearLayout addFriendLayout;
+
+    @BindView(R.id.add_friend_btn)
+    Button addFriendBtn;
 
     private InfoAdapter infoAdapter;
     private List<Fragment> fragmentList;
 
+
+
     View header;
     View newTitilbar;
     private int headHight;
+    private IPresenter presenter;
 
     private String userId = "";
 
@@ -93,18 +100,14 @@ public class UserInfoActivity extends BaseActivity{
         Bundle bundle = new Bundle();
         bundle.putString(IntentKey.KEY_ID, id);
         intent.putExtras(bundle);
-//        if (!StringUtils.isEmpty(model.getCustNname())) {
-//            tvNick.setText(model.getCustNname());
-//        } else {
-//            tvNick.setText("");
-//        }
         context.startActivity(intent);
-
 
     }
     @Override
     public void initView() {
         initHead();
+
+        userId = getIntent().getExtras().getString(IntentKey.KEY_ID);
 
         avatarLayout.getBackground().setAlpha(77);
 
@@ -134,54 +137,37 @@ public class UserInfoActivity extends BaseActivity{
 
             }
         });
-
-
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//            scrollableLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//                @Override
-//                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                    if (scrollY <= 0) {
-//                        newTitilbar.getBackground().mutate().setAlpha(0);
-//                    } else if (scrollY > 0 && scrollY <= headHight) {
-//                        float scale = (float) scrollY / headHight;
-//                        float alpha = (255 * scale);
-//                        // 只是layout背景透明(仿知乎滑动效果)
-//                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-//                    } else {
-//                        newTitilbar.getBackground().mutate().setAlpha(255);
-//                    }
-//                }
-//            });
-//        }
-
     }
-//    @Override
-//    public View getTransTitleView() {
-//        return View.inflate(this, R.layout.titlebar_mine, null);
-//    }
 
     @Override
     public void initData() {
 
+        //个人中心
         if(userId.equals(Session.getUserId())){
             Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
-            levelTxt.setText(Session.getUserLevel());
+            levelTxt.setText("Lv." + Session.getUserLevel());
             signTxt.setText(Session.getUser_signatrue());
-
-//            //普通用户
-//            if(Session.getCustRole().equals("0")){
-//
-//            }else{
-//                //达人用户，另外调达人类型接口
-//
-//
-//
-//            }
-            userRole.setText("达人");
+            addFriendLayout.setVisibility(View.GONE);
+            //普通用户
+            if(Session.getCustRole().equals("0")){
+                userRole.setText("去认证");
+            }else{
+                //达人用户，另外调达人类型接口
+                ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+            }
+        }else{   //他人中心
+            //判断他人与自己的关系（是否添加好友）
 
         }
+    }
+
+    @Override
+    public void initPresenter() {
+        super.initPresenter();
+        presenter = new V3CirclePresenter();
+        presenter.attachView(this);
 
     }
 
@@ -227,9 +213,9 @@ public class UserInfoActivity extends BaseActivity{
             if (position == 0)
                 return MyArticleFragment.newInstance();     //文章
             if (position == 1)
-                return MyRewardFragment.newInstance();      //悬赏
+                return MyRewardFragment.newInstance("1");      //悬赏
             if (position == 2)
-                return PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_ALL);     //私圈
+                return MyCircleFragment.newInstance(MyCircleFragment.TYPE_ALL);     //私圈
             if (position == 3)
                 return MyActivityFragment.newInstance();   //活动
 
@@ -245,5 +231,31 @@ public class UserInfoActivity extends BaseActivity{
         public int getCount() {
             return itemName.length;
         }
+    }
+
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if(t instanceof ProveStatusBean) {
+            ProveStatusBean data = (ProveStatusBean) t;
+            if(userId.equals(Session.getUserId())){
+                if(Session.getCustRole().equals("0")){
+                    userRole.setText("去认证");
+                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
+                }else if(data.getAuthStatus() == 1){
+                    userRole.setText(data.getTradeField());
+                }
+            }else{
+                if(data.getAuthStatus() == 1){
+                    famousLayout.setVisibility(View.VISIBLE);
+                    userRole.setText(data.getTradeField());
+                }else {
+                    famousLayout.setVisibility(View.GONE);
+                }
+            }
+
+        }
+
     }
 }

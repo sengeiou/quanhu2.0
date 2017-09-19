@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -11,6 +11,7 @@
         android:id="@+id/title_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         >
 
     </FrameLayout>
@@ -18,6 +19,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/title_content"
         >
 
 
@@ -61,6 +63,7 @@
         </com.cpoopc.scrollablelayoutlib.ScrollableLayout>
     </FrameLayout>
 
+
     <!--<RelativeLayout-->
     <!--android:id="@+id/title_content"-->
     <!--android:layout_width="match_parent"-->
@@ -69,4 +72,31 @@
     <!--&gt;-->
 
     <!--</RelativeLayout>-->
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/add_friend_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px164"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        >
+
+        <Button
+            android:id="@+id/add_friend_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/px125"
+            android:layout_marginRight="@dimen/px125"
+            android:layout_marginBottom="@dimen/px20"
+            android:layout_marginTop="@dimen/px20"
+            android:background="@drawable/shape_bg_blue_sel"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:padding="@dimen/px32"
+            android:text="@string/add_friend"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/px52" />
+
+    </LinearLayout>
+
+</RelativeLayout>

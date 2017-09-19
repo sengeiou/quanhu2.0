@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="@dimen/px356"
+    android:background="@mipmap/receive_reward_bg"
+    android:layout_marginTop="@dimen/px44"
+    android:padding="@dimen/px10"
+    android:layout_margin="@dimen/px10"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/receive_mine_reward"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/font_44"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/px34"
+        android:gravity="center"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px34"
+        android:layout_gravity="center_horizontal"
+        >
+        <TextView
+            android:id="@+id/reward_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:textSize="@dimen/px86"
+            android:text="1444.25"
+            android:textColor="@color/color_ffefB7"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_38"
+            android:gravity="top"
+            android:text="元"
+            android:layout_toRightOf="@id/reward_txt"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_marginTop="@dimen/px40"
+            />
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_ffffff"
+        android:text="@string/look_detail_txt"
+        android:textSize="@dimen/font_34"
+        android:layout_marginTop="@dimen/px34"
+        />
+
+</LinearLayout>

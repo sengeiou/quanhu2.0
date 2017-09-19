@@ -22,13 +22,15 @@
                 android:layout_height="@dimen/px216"
                 android:background="@drawable/shape_circle"
                 android:layout_centerHorizontal="true"
+                android:padding="@dimen/px10"
                 >
 
                 <ImageView
                     android:id="@+id/user_avatar"
-                    android:layout_width="@dimen/px200"
-                    android:layout_height="@dimen/px200"
+                    android:layout_width="@dimen/px188"
+                    android:layout_height="@dimen/px188"
                     android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
                     />
 
             </RelativeLayout>
@@ -88,6 +90,7 @@
             />
 
         <LinearLayout
+            android:id="@+id/famous_role_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -99,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_famous"
+                android:layout_gravity="center_vertical"
                 />
 
             <TextView
@@ -109,6 +113,7 @@
                 android:textSize="@dimen/font_38"
                 android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/px18"
+                android:layout_gravity="center_vertical"
                 />
 
         </LinearLayout>

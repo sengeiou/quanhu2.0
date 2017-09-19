@@ -966,15 +966,15 @@ public class Session {
     }
 
     public static String getCustPoints(){
-       return SysSharePres.getInstance().getCityCode();
+       return SysSharePres.getInstance().getCustPoint();
     }
 
     public static void setCustRole(String custRole){
-        SysSharePres.getInstance().setCustPoint(custRole);
+        SysSharePres.getInstance().setCustRole(custRole);
     }
 
     public static String getCustRole(){
-        return SysSharePres.getInstance().getCityCode();
+        return SysSharePres.getInstance().getCustRole();
     }
 
 

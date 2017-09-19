@@ -3,10 +3,12 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AccountBean;
+import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BaseInfo;
 import com.rz.httpapi.bean.BillDetailModel;
+import com.rz.httpapi.bean.BuyingBean;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
@@ -26,6 +28,7 @@ import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
+import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
@@ -455,6 +458,26 @@ public interface ApiService {
     );
 
     /**
+     * 获取推荐活动列表
+     */
+    @GET(CircleApi.FIND_ACTIVITY_TABLE)
+    public Observable<ResponseData<ActivityBean>> getActivityList(
+            @Query("pageNo") int pageNo,
+            @Query("pageSize") int pageSize
+
+    );
+    /**
+     * 我的页面活动列表
+     */
+    @GET(CircleApi.MINE_ACTIVITY)
+    public Observable<ResponseData<ActivityBean>> getMineActivityList(
+            @Query("pageNo") int pageNo,
+            @Query("pageSize") int pageSize,
+            @Query("paramId") String paramId
+
+    );
+
+    /**
      * 获取推荐话题
      */
     @GET(CircleApi.CIRCLE_SUBJECT_LIST)
@@ -469,7 +492,6 @@ public interface ApiService {
             @Query("limit") int limit,
             @Query("start") int start
     );
-
     /**
      * 我的收藏
      */
@@ -480,7 +502,6 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("limit") int limit
     );
-
     /**
      * 添加收藏
      */
@@ -490,7 +511,6 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("resourceId") String resourceId
     );
-
     /**
      * 删除收藏
      */
@@ -500,7 +520,6 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("cid") int cid
     );
-
     /**
      * 获取转发价格列表
      *
@@ -964,7 +983,7 @@ public interface ApiService {
 //    );
 
     /**
-     * 设置密保问题
+     * 我的文章
      *
      * @param custId
      * @return
@@ -1015,7 +1034,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.GET_FAMOUS_STATUS)
-    Call<ResponseData<UserFamousBean>> getFamousStatus(
+    Call<ResponseData<ProveStatusBean>> getFamousStatus(
             @Field("custId") String custId
     );
 
@@ -1062,6 +1081,36 @@ public interface ApiService {
             @Field("limit") int limit,
             @Field("type") int type
 
+    );
+
+    /**
+     * 我的购买
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_MY_BUYING)
+    Call<ResponseData<BuyingBean>> getMyBuying(
+            @Field("custId") String custId,
+            @Field("pageNum") int pageNum,
+            @Field("pageSize") int pageSize
+    );
+
+    /**
+     * 我的打赏
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_MY_REWARD)
+    Call<ResponseData> getMyReward(
+            @Field("custId") String custId,
+            @Field("isReward") int isReward,
+            @Field("limit") int limit,
+            @Field("rewardId") String rewardId,
+            @Field("type") int type
     );
 
     @FormUrlEncoded

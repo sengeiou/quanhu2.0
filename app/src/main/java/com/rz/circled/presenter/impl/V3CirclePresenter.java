@@ -26,6 +26,7 @@ import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.DataStatisticsBean;
 import com.rz.httpapi.bean.FamousModel;
+import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferResultBean;
@@ -1251,16 +1252,16 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             return;
         }
 //        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
-        Call<ResponseData<UserFamousBean>> call = mUserService.getFamousStatus(custId);
+        Call<ResponseData<ProveStatusBean>> call = mUserService.getFamousStatus(custId);
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<UserFamousBean>>() {
+        call.enqueue(new BaseCallback<ResponseData<ProveStatusBean>>() {
             @Override
-            public void onResponse(Call<ResponseData<UserFamousBean>> call, Response<ResponseData<UserFamousBean>> response) {
+            public void onResponse(Call<ResponseData<ProveStatusBean>> call, Response<ResponseData<ProveStatusBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData<UserFamousBean> res = response.body();
+                    ResponseData<ProveStatusBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        UserFamousBean model = res.getData();
+                        ProveStatusBean model = res.getData();
                         mView.updateView(model);
                         return;
                     } else {
@@ -1272,7 +1273,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<UserFamousBean>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<ProveStatusBean>> call, Throwable t) {
                 super.onFailure(call, t);
 //                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
