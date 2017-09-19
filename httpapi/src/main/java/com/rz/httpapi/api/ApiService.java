@@ -25,6 +25,7 @@ import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
+import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
@@ -1030,7 +1031,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.GET_FAMOUS_STATUS)
-    Call<ResponseData<UserFamousBean>> getFamousStatus(
+    Call<ResponseData<ProveStatusBean>> getFamousStatus(
             @Field("custId") String custId
     );
 

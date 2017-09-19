@@ -54,7 +54,7 @@ public class UserInfoActivity extends BaseActivity{
 //    ScrollableLayout scrollableLayout;
 
     @BindView(R.id.title_content)
-    FrameLayout mTitleContent;
+    RelativeLayout mTitleContent;
 
     @BindView(R.id.avatar_layout)
     RelativeLayout avatarLayout;
@@ -163,7 +163,7 @@ public class UserInfoActivity extends BaseActivity{
     @Override
     public void initData() {
 
-        if(userId.equals(Session.getUserId())){
+//        if(userId.equals(Session.getUserId())){
             Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
@@ -180,8 +180,9 @@ public class UserInfoActivity extends BaseActivity{
 //
 //            }
             userRole.setText("达人");
-
-        }
+//        }else{
+//            //获取用户信息
+//        }
 
     }
 

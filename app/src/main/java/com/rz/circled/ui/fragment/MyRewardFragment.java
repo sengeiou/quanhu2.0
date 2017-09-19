@@ -9,18 +9,13 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.RewardAdapter;
-import com.rz.circled.adapter.SearchRewardAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
-import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.MyRewardBean;
-import com.rz.httpapi.bean.RewardModel;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 
 /**
