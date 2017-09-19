@@ -13,12 +13,14 @@ import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
 import com.rz.httpapi.bean.CollectionBean;
+import com.rz.httpapi.bean.DataStatisticsBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MoreFamousModel;
+import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.PayOrderInfoBean;
@@ -32,8 +34,10 @@ import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
+import com.rz.httpapi.bean.UserFamousBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
+import com.rz.httpapi.bean.UserSignBean;
 
 import java.util.List;
 
@@ -987,6 +991,92 @@ public interface ApiService {
             @Field("limit") int limit,
             @Field("resourceType") String resourceType,
             @Field("start") int start
+    );
+
+
+    /**
+     * 用户签到
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.SIGN_STATUS)
+    Call<ResponseData> signRequest(
+            @Field("custId") String custId,
+            @Field("eventCode") String eventCode
+    );
+
+
+    /**
+     * 用户签到
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_SIGN_STATUS)
+    Call<ResponseData<UserSignBean>> getSignStatus(
+            @Field("custId") String custId,
+            @Field("eventCode") String eventCode
+    );
+
+
+    /**
+     * 获取用户达人
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_FAMOUS_STATUS)
+    Call<ResponseData<UserFamousBean>> getFamousStatus(
+            @Field("custId") String custId
+    );
+
+
+    /**
+     * 数据统计
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_USER_STAT)
+    Call<ResponseData<DataStatisticsBean>> getUserStat(
+            @Field("custId") String custId
+    );
+
+    /**
+     * 查询悬赏列表
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_REWARD_LIST)
+    Call<ResponseData<List<MyRewardBean>>> getRewardList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("offerId") int offerId,
+            @Field("type") int type
+
+
+    );
+
+    /**
+     * 查询悬赏列表  :  不传offid
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_REWARD_LIST)
+    Call<ResponseData<List<MyRewardBean>>> getRewardNoList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("type") int type
+
     );
 
 }

@@ -19,6 +19,7 @@ import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.constans.ReturnCode;
 
@@ -255,8 +256,86 @@ public class PersonInfoPresenter extends GeneralPresenter {
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
-
-
     }
+
+
+    /**
+     * 获取我的悬赏
+     */
+
+    public void getMyreward(final boolean loadMore, String custId, int type) {
+
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        if (!loadMore) {
+            start = 0;
+        } else {
+            if (isNoData) {
+                start = record_start;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+
+        Call<ResponseData<List<MyRewardBean>>> call = mUserService.getRewardNoList(
+                custId,
+                Constants.PAGESIZE,
+                type);
+
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<MyRewardBean>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<MyRewardBean>>> call, Response<ResponseData<List<MyRewardBean>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+
+                    ResponseData<List<MyRewardBean>> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<MyRewardBean> modelList = (List<MyRewardBean>) res.getData();
+
+                        if (null != modelList && !modelList.isEmpty()) {
+                            isNoData = false;
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        } else {
+                            if (loadMore == false) {
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            } else {
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
+                            }
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            isNoData = true;
+                        }
+                        return;
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        isNoData = true;
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                isNoData = true;
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<MyRewardBean>>> call, Throwable t) {
+                super.onFailure(call, t);
+                //发送验证码失败
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
+
+
 
 }

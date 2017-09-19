@@ -423,6 +423,9 @@ public class LoginActivity extends BaseActivity {
                 Session.setUser_signatrue(model.getCustSignature());
                 Session.setUser_desc(model.getCustDesc());
                 Session.setCityCode(model.getCityCode());
+                Session.setCustPoints(model.getCustPoints());
+                Session.setUserLevel(model.getCustLevel());
+                Session.setCustRole(model.getCustRole());
                 if (TextUtils.equals("0", model.getCustSex())) {
                     Session.setUser_sex("女");
                 } else {

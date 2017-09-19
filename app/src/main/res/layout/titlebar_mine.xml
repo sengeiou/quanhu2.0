@@ -42,19 +42,31 @@
             android:layout_alignParentRight="true"
             android:background="@mipmap/ic_sign_bg"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             >
+
+            <ImageView
+                android:id="@+id/scores_img"
+                android:layout_width="@dimen/px64"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_scores"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
 
             <TextView
                 android:id="@+id/titlebar_login_icon_img"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/px50"
                 android:visibility="visible"
                 android:text="签到"
                 android:textColor="@color/white"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
                 android:gravity="center"
+                android:layout_toLeftOf="@id/scores_img"
                 />
+
+
         </RelativeLayout>
 
 

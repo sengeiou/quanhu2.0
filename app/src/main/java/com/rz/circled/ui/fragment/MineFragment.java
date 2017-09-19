@@ -39,6 +39,8 @@ import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.activity.MyCollectionActivity;
+import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
@@ -60,6 +62,9 @@ import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
+import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.DataStatisticsBean;
+import com.rz.httpapi.bean.UserSignBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -101,16 +106,18 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     ScrollView swipeRefreshLayout;
 
     RelativeLayout signLayout;
+    TextView titlebarSignTxt;
+    ImageView scoreImg;
 
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
     public static String MINEFRGFOCUS = "mine_focus_push";
 
     List<MineFragItemModel> mModelList;
     CommonAdapter adapter;
-    TextView tvCircleCount;
-    TextView tvTransferCount;
-    TextView tvCollectCount;
-    TextView tvActivityCount;
+    TextView tvacticlesCount;        //文章
+    TextView tvrewardCount;      //悬赏
+    TextView tvcircletCount;        //私圈
+    TextView tvactivityCount;       //活动
 
     //    private SplashPresenter mSplashPresenter;
     protected IPresenter presenter;
@@ -119,6 +126,16 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private SharedPreferences mSp;
 
     private TextView mTxtPersonName;
+    private TextView levelTxt;
+    private TextView custPointsTxt;
+    private TextView famousTxt;
+
+
+
+    private TextView articleCount;
+    private TextView rewardCount;
+    private TextView circleCount;
+    private TextView activityCount;
 
     View header;
     View newTitilbar;
@@ -139,6 +156,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //        mSplashPresenter.attachView(this);
         presenter = new V3CirclePresenter();
 //        mSplashPresenter.getCustomerService();
+        presenter.attachView(this);
 
     }
 
@@ -150,28 +168,54 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initView() {
+
         mSp = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
         initUserNews();
+        getData();
         newTitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
         newTitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
         newTitilbar.getBackground().setAlpha(0);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
-//        ImageView iv = (ImageView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
         signLayout = (RelativeLayout) newTitilbar.findViewById(R.id.sign_layout);
+        signLayout.setVisibility(View.VISIBLE);
+        titlebarSignTxt = (TextView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
+        scoreImg = (ImageView) newTitilbar.findViewById(R.id.scores_img);
 
         ib.setVisibility(View.VISIBLE);
         ib.setImageResource(R.mipmap.ic_message);
-//        iv.setVisibility(View.VISIBLE);
-//        iv.setImageResource(R.mipmap.ic_message);
+
         tv.setText("我的");
         mTitleContent.addView(newTitilbar);
+
+        signLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((V3CirclePresenter) presenter).signRequest(Session.getUserId(),"15");
+            }
+        });
 //        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
 //        swipeRefreshLayout.setRefreshing(false);
 
         getUserProveStatus();
     }
 
+    private void getData(){
+        //获取签到状态
+        ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(),"15");
+
+        //获取数据统计
+        ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
+
+        if(Session.getCustRole().equals("0")){
+            famousTxt.setText("去认证");
+            famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
+        }else{
+            //获取达人信息
+            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+        }
+
+    }
 
 //    private void initTitleBar() {
 //        View v = View.inflate(getActivity(), R.layout.titlebar_transparent, null);
@@ -240,6 +284,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                         if (proveStatusBean != null)
                             intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
                         startActivity(intent);
+                        jump(MyRewardActivity.class);
                     }
                 }
             });
@@ -266,10 +311,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             mImgPersonHead = (ImageView) header.findViewById(R.id.id_person_head_img);
             RelativeLayout bgRlyout = (RelativeLayout) header.findViewById(R.id.bg_rl_head);
             idPersonLoginDays = (TextView) header.findViewById(R.id.id_person_login_days);
-            tvCircleCount = (TextView) header.findViewById(R.id.tv_circle_count);
-            tvTransferCount = (TextView) header.findViewById(R.id.tv_transfer_count);
-            tvCollectCount = (TextView) header.findViewById(R.id.tv_collect_count);
-            tvActivityCount = (TextView) header.findViewById(R.id.tv_activity_count);
+            tvacticlesCount = (TextView) header.findViewById(R.id.tv_circle_count);
+            tvrewardCount = (TextView) header.findViewById(R.id.tv_transfer_count);
+            tvcircletCount = (TextView) header.findViewById(R.id.tv_collect_count);
+            tvactivityCount = (TextView) header.findViewById(R.id.tv_activity_count);
 
             bgRlyout.getBackground().setAlpha(77);
             if (Protect.checkLoadImageStatus(mActivity)) {
@@ -278,12 +323,27 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
 
             mTxtPersonName = (TextView) header.findViewById(R.id.id_person_name_txt);
+            levelTxt = (TextView) header.findViewById(R.id.level_txt);
+            custPointsTxt = (TextView) header.findViewById(R.id.cust_points_txt);
+            famousTxt = (TextView) header.findViewById(R.id.famous_txt);
+
+            famousTxt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
             if (Session.getUserIsLogin()) {
                 mTxtPersonName.setText(Session.getUserName());
-                if (TextUtils.isEmpty(Session.getUser_signatrue()))
+                levelTxt.setText("Lv. "+Session.getUserLevel());
+                custPointsTxt.setText("积分" + Session.getCustPoints());
+                if (TextUtils.isEmpty(Session.getUser_signatrue())){
                     idPersonLoginDays.setText("");
-                else
+                }
+                else{
                     idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
+                }
             } else {
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
                 idPersonLoginDays.setText("");
@@ -520,13 +580,44 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 String messageUrl = mCustormServiceModel.getMessageUrl();
                 mSp.edit().putString(Constants.CUSTOMER_SERVICE, messageUrl).commit();
             }
-        } else {
-            if (null != t) {
-                CircleStatsModel data = (CircleStatsModel) t;
-                tvCircleCount.setText(data.getCircleNum() + "");
-                tvCollectCount.setText(data.getCollectionNum() + "");
-                tvTransferCount.setText(data.getTransferNum() + "");
+        }else if(t instanceof UserSignBean){
+            UserSignBean signBean = (UserSignBean)t;
+            if(signBean.isSignFlag()){
+                scoreImg.setVisibility(View.GONE);
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+                titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
+                titlebarSignTxt.setText("已签到");
+                titlebarSignTxt.setLayoutParams(lp);
+
+            }else{
+                titlebarSignTxt.setTextColor(getResources().getColor(R.color.white));
+                titlebarSignTxt.setText("签到");
+                scoreImg.setVisibility(View.VISIBLE);
             }
+        }else if(t instanceof ResponseData){
+            //签到成功
+            scoreImg.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
+            titlebarSignTxt.setText("已签到");
+            titlebarSignTxt.setLayoutParams(lp);
+
+        }else if(t instanceof DataStatisticsBean) {
+            DataStatisticsBean data = (DataStatisticsBean) t;
+
+            tvacticlesCount.setText(data.getArticleNum()+"");
+            tvrewardCount.setText(data.getOfferNum()+"");
+            tvcircletCount.setText(data.getCoterieNum()+"");
+//            tvactivityCount.setText(data.getArticleNum()+"");
+        } else {
+//            if (null != t) {
+//                CircleStatsModel data = (CircleStatsModel) t;
+//                tvCircleCount.setText(data.getCircleNum() + "");
+//                tvCollectCount.setText(data.getCollectionNum() + "");
+//                tvTransferCount.setText(data.getTransferNum() + "");
+//            }
         }
     }
 
@@ -781,9 +872,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentCode.MineFrg.MINE_REQUEST_CODE) {
             if (resultCode == IntentCode.Setting.SETTING_RESULT_CODE) {
-                tvCircleCount.setText("0");
-                tvCollectCount.setText("0");
-                tvTransferCount.setText("0");
+                tvacticlesCount.setText("0");
+                tvrewardCount.setText("0");
+                tvcircletCount.setText("0");
 
                 //刷新消息和随手晒界面
 //                if (((MsgFragment) getActivity().getSupportFragmentManager().findFragmentByTag("聊天") != null))
