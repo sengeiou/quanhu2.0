@@ -23,9 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * 视频，音频，图文列表,圈子
- */
 public class AwesomeTabsAty extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     /**
@@ -80,10 +77,12 @@ public class AwesomeTabsAty extends BaseActivity implements ViewPager.OnPageChan
 
     @Override
     public void initView() {
-            setTitleText(getString(R.string.mine_my_ticket));
+        setTitleText(getString(R.string.mine_my_ticket));
         adapter = new VideoPagesAdapter(getSupportFragmentManager());
         mPages.setAdapter(adapter);
         mTab.setViewPager(mPages);
+        mTab.setLineFitFont(true);
+        mTab.notifyDataSetChanged();
 
     }
 
@@ -181,7 +180,8 @@ public class AwesomeTabsAty extends BaseActivity implements ViewPager.OnPageChan
     public void onPageScrollStateChanged(int state) {
 
     }
-    private final String[] titles = { "本月领取", "累积领取" };
+
+    private final String[] titles = {"卡券", "奖品"};
 
     private class VideoPagesAdapter extends FragmentStatePagerAdapter {
 
@@ -191,16 +191,12 @@ public class AwesomeTabsAty extends BaseActivity implements ViewPager.OnPageChan
 
         @Override
         public CharSequence getPageTitle(int position) {
-//            mChannelModes.get(position).channelName
-
             return titles[position];
         }
 
         @Override
         public Fragment getItem(int position) {
-
 //                return MyTicketsFrag.newInstace(mChannelModes.get(position).channelType);
-
             return null;
         }
 

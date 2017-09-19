@@ -669,4 +669,8 @@
     <string name="prove_again">重新认证</string>
     <string name="choose_prove_img_hint">请选择营业执照副本资料</string>
     <string name="upload_paperwork">上传证件</string>
+    <string name="used_coupons_hint">已使用/已失效的卡券</string>
+    <string name="can_use">可使用</string>
+    <string name="used">已使用</string>
+    <string name="expired">已过期</string>
 </resources>

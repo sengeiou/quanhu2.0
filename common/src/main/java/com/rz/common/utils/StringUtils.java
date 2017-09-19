@@ -1489,4 +1489,18 @@ public class StringUtils {
         String dateStr = simpleDateFormat.format(date);
         return dateStr;
     }
+
+    /**
+     * 将毫秒转化成固定格式的时间
+     * 时间格式: yyyy-MM-dd
+     *
+     * @param millisecond
+     * @return
+     */
+    public static String getDateTimeFromMillisecondNo3(Long millisecond) {//new SimpleDateFormat("HH:mm")
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(millisecond);
+        String dateStr = simpleDateFormat.format(date);
+        return dateStr;
+    }
 }

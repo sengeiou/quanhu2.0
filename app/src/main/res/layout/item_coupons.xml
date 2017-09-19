@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/px310"
+              android:background="@mipmap/bg_coupons_normal_item"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="@dimen/px350"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_coupons_item_type"
+            style="@style/couponsTvType"
+            android:text="投票券"/>
+
+        <LinearLayout
+            style="@style/couponsLlCenter">
+
+            <TextView
+                android:id="@+id/tv_coupons_item_number"
+                style="@style/couponsTvNumber"
+                android:text="10"/>
+
+            <TextView
+                style="@style/couponsTvUnit"
+                android:layout_toRightOf="@id/tv_coupons_item_number"
+                android:text="票"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/px30"
+        android:paddingRight="@dimen/px30">
+
+        <TextView
+            android:id="@+id/tv_coupons_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/px65"
+            android:text="投票活动中给喜欢的内容投票投票投票"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_44"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px54"
+            android:layout_marginTop="@dimen/px10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_coupons_item_time"
+                style="@style/couponsTvTime"
+                android:text="2017.08.21-2017.08.31"/>
+
+            <TextView
+                android:id="@+id/tv_coupons_item_status"
+                style="@style/couponsTvStatus"
+                android:background="@drawable/shape_coupons_blue"
+                android:text="可使用"
+                android:textColor="@color/font_color_blue"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
