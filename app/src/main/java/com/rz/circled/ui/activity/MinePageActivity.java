@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
-import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
@@ -48,7 +48,7 @@ public class MinePageActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        Http.getApiService(ApiService.class)
+        Http.getApiService(ApiYylService.class)
                 .getMineActivityList(1, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

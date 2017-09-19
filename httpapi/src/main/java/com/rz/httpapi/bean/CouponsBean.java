@@ -4,43 +4,172 @@ package com.rz.httpapi.bean;
  * Created by Gsm on 2017/9/18.
  */
 public class CouponsBean {
-    private int cost;
-    private long expireTime;
-    private long receiveTime;
-    private int status;//券状态0:可用，1:已使用 2:已过期
-    private int useTime;
-    private String voucherDesc;
-    private int voucherId;
-    private String voucherType;
-    private String voucherTypeName;
 
-    //是否可用
-    public boolean canUse() {
-        return status == 0;
+    /**
+     * activityInfoId : 33
+     * beginTime : 2017-09-05 20:17:22
+     * canNum : 15
+     * createDate : 2017-09-07 18:02:58
+     * createUserId : eldrsm2k
+     * endTime : 2017-09-21 20:15:51
+     * id : 10
+     * lastUpdateDate : 2017-09-18 13:33:29
+     * lastUpdateUserId : eldrsm2k
+     * onlyCode : a348aca141c44595a97864eacdb46fb5
+     * phone : 13207188676
+     * prizesName : 代金券
+     * prizesNum : 5
+     * prizesType : 2
+     * prizesUnit : 英镑
+     * remark : 我是医生打算都打过
+     * status : 1
+     */
+
+    private int activityInfoId;
+    private String beginTime;
+    private int canNum;
+    private String createDate;
+    private String createUserId;
+    private String endTime;
+    private int id;
+    private String lastUpdateDate;
+    private String lastUpdateUserId;
+    private String onlyCode;
+    private String phone;
+    private String prizesName;
+    private int prizesNum;
+    private int prizesType;
+    private String prizesUnit;
+    private String remark;
+    private int status;//使用情况 （1可使用 2已使用）
+    public boolean showDetail = false;
+
+    public int getActivityInfoId() {
+        return activityInfoId;
     }
 
-    public int getCost() {
-        return cost;
+    public void setActivityInfoId(int activityInfoId) {
+        this.activityInfoId = activityInfoId;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
+    public String getBeginTime() {
+        return beginTime;
     }
 
-    public long getExpireTime() {
-        return expireTime;
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
     }
 
-    public void setExpireTime(long expireTime) {
-        this.expireTime = expireTime;
+    public int getCanNum() {
+        return canNum;
     }
 
-    public long getReceiveTime() {
-        return receiveTime;
+    public void setCanNum(int canNum) {
+        this.canNum = canNum;
     }
 
-    public void setReceiveTime(long receiveTime) {
-        this.receiveTime = receiveTime;
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(String createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(String lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String getLastUpdateUserId() {
+        return lastUpdateUserId;
+    }
+
+    public void setLastUpdateUserId(String lastUpdateUserId) {
+        this.lastUpdateUserId = lastUpdateUserId;
+    }
+
+    public String getOnlyCode() {
+        return onlyCode;
+    }
+
+    public void setOnlyCode(String onlyCode) {
+        this.onlyCode = onlyCode;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPrizesName() {
+        return prizesName;
+    }
+
+    public void setPrizesName(String prizesName) {
+        this.prizesName = prizesName;
+    }
+
+    public int getPrizesNum() {
+        return prizesNum;
+    }
+
+    public void setPrizesNum(int prizesNum) {
+        this.prizesNum = prizesNum;
+    }
+
+    public int getPrizesType() {
+        return prizesType;
+    }
+
+    public void setPrizesType(int prizesType) {
+        this.prizesType = prizesType;
+    }
+
+    public String getPrizesUnit() {
+        return prizesUnit;
+    }
+
+    public void setPrizesUnit(String prizesUnit) {
+        this.prizesUnit = prizesUnit;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public int getStatus() {
@@ -49,45 +178,5 @@ public class CouponsBean {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public int getUseTime() {
-        return useTime;
-    }
-
-    public void setUseTime(int useTime) {
-        this.useTime = useTime;
-    }
-
-    public String getVoucherDesc() {
-        return voucherDesc;
-    }
-
-    public void setVoucherDesc(String voucherDesc) {
-        this.voucherDesc = voucherDesc;
-    }
-
-    public int getVoucherId() {
-        return voucherId;
-    }
-
-    public void setVoucherId(int voucherId) {
-        this.voucherId = voucherId;
-    }
-
-    public String getVoucherType() {
-        return voucherType;
-    }
-
-    public void setVoucherType(String voucherType) {
-        this.voucherType = voucherType;
-    }
-
-    public String getVoucherTypeName() {
-        return voucherTypeName;
-    }
-
-    public void setVoucherTypeName(String voucherTypeName) {
-        this.voucherTypeName = voucherTypeName;
     }
 }

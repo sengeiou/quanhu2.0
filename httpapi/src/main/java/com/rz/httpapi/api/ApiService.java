@@ -3,7 +3,6 @@ package com.rz.httpapi.api;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AccountBean;
-import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BaseInfo;
@@ -20,6 +19,8 @@ import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MoreFamousModel;
+import com.rz.httpapi.bean.MyLevelAcountBean;
+import com.rz.httpapi.bean.MyLevelBean;
 import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
@@ -454,26 +455,6 @@ public interface ApiService {
     );
 
     /**
-     * 获取推荐活动列表
-     */
-    @GET(CircleApi.FIND_ACTIVITY_TABLE)
-    public Observable<ResponseData<ActivityBean>> getActivityList(
-            @Query("pageNo") int pageNo,
-            @Query("pageSize") int pageSize
-
-    );
-    /**
-     * 我的页面活动列表
-     */
-    @GET(CircleApi.MINE_ACTIVITY)
-    public Observable<ResponseData<ActivityBean>> getMineActivityList(
-            @Query("pageNo") int pageNo,
-            @Query("pageSize") int pageSize,
-            @Query("paramId") String paramId
-
-    );
-
-    /**
      * 获取推荐话题
      */
     @GET(CircleApi.CIRCLE_SUBJECT_LIST)
@@ -488,6 +469,7 @@ public interface ApiService {
             @Query("limit") int limit,
             @Query("start") int start
     );
+
     /**
      * 我的收藏
      */
@@ -498,6 +480,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("limit") int limit
     );
+
     /**
      * 添加收藏
      */
@@ -507,6 +490,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("resourceId") String resourceId
     );
+
     /**
      * 删除收藏
      */
@@ -516,6 +500,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("cid") int cid
     );
+
     /**
      * 获取转发价格列表
      *
@@ -1077,6 +1062,20 @@ public interface ApiService {
             @Field("limit") int limit,
             @Field("type") int type
 
+    );
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_LEVEL_ACOUNT)
+    Call<ResponseData<MyLevelAcountBean>> getLevelAcount(
+            @Field("custId") String custId
+    );
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_LEVEL_LIST)
+    Call<ResponseData<List<MyLevelBean>>> getLevelList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("start") int start
     );
 
 }

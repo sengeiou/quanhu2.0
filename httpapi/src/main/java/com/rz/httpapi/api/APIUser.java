@@ -152,4 +152,19 @@ public class APIUser {
      * 获得达人认证状态
      */
     public static final String GET_PROVE_STATUS = "v3/star/getStarAuth";
+
+    /**
+     * 获得卡券列表
+     */
+    public static final String GET_COUPONS_LIST = "v1/activity/vote/myPrizeslist";
+
+    /**
+     * 获得积分成长总值
+     */
+    public static final String GET_LEVEL_ACOUNT = "v3/event/acount";
+
+    /**
+     * 获得成长流水
+     */
+    public static final String GET_LEVEL_LIST = "/v3/event/grow/flow";
 }

@@ -51,6 +51,16 @@ public class ProvePaperworkActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
+    }
+
+    @Override
     public void initView() {
         proveInfo = (ProveInfoBean) getIntent().getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
         isChange = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, false);

@@ -29,7 +29,6 @@ import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
@@ -37,9 +36,9 @@ import com.rz.circled.ui.activity.MinePageActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
+import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
-import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
@@ -56,7 +55,6 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
@@ -64,8 +62,8 @@ import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.DataStatisticsBean;
-import com.rz.httpapi.bean.UserSignBean;
 import com.rz.httpapi.bean.ProveStatusBean;
+import com.rz.httpapi.bean.UserSignBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -131,7 +129,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private TextView famousTxt;
 
 
-
     private TextView articleCount;
     private TextView rewardCount;
     private TextView circleCount;
@@ -191,7 +188,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         signLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((V3CirclePresenter) presenter).signRequest(Session.getUserId(),"15");
+                ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
             }
         });
 //        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
@@ -200,17 +197,17 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         getUserProveStatus();
     }
 
-    private void getData(){
+    private void getData() {
         //获取签到状态
-        ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(),"15");
+        ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(), "15");
 
         //获取数据统计
         ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
 
-        if(Session.getCustRole().equals("0")){
+        if (Session.getCustRole().equals("0")) {
             famousTxt.setText("去认证");
             famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
-        }else{
+        } else {
             //获取达人信息
             ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
         }
@@ -336,12 +333,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             if (Session.getUserIsLogin()) {
                 mTxtPersonName.setText(Session.getUserName());
-                levelTxt.setText("Lv. "+Session.getUserLevel());
+                levelTxt.setText("Lv. " + Session.getUserLevel());
                 custPointsTxt.setText("积分" + Session.getCustPoints());
-                if (TextUtils.isEmpty(Session.getUser_signatrue())){
+                if (TextUtils.isEmpty(Session.getUser_signatrue())) {
                     idPersonLoginDays.setText("");
-                }
-                else{
+                } else {
                     idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
                 }
             } else {
@@ -580,9 +576,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 String messageUrl = mCustormServiceModel.getMessageUrl();
                 mSp.edit().putString(Constants.CUSTOMER_SERVICE, messageUrl).commit();
             }
-        }else if(t instanceof UserSignBean){
-            UserSignBean signBean = (UserSignBean)t;
-            if(signBean.isSignFlag()){
+        } else if (t instanceof UserSignBean) {
+            UserSignBean signBean = (UserSignBean) t;
+            if (signBean.isSignFlag()) {
                 scoreImg.setVisibility(View.GONE);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 lp.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -590,12 +586,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 titlebarSignTxt.setText("已签到");
                 titlebarSignTxt.setLayoutParams(lp);
 
-            }else{
+            } else {
                 titlebarSignTxt.setTextColor(getResources().getColor(R.color.white));
                 titlebarSignTxt.setText("签到");
                 scoreImg.setVisibility(View.VISIBLE);
             }
-        }else if(t instanceof ResponseData){
+        } else if (t instanceof ResponseData) {
             //签到成功
             scoreImg.setVisibility(View.GONE);
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -604,12 +600,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             titlebarSignTxt.setText("已签到");
             titlebarSignTxt.setLayoutParams(lp);
 
-        }else if(t instanceof DataStatisticsBean) {
+        } else if (t instanceof DataStatisticsBean) {
             DataStatisticsBean data = (DataStatisticsBean) t;
 
-            tvacticlesCount.setText(data.getArticleNum()+"");
-            tvrewardCount.setText(data.getOfferNum()+"");
-            tvcircletCount.setText(data.getCoterieNum()+"");
+            tvacticlesCount.setText(data.getArticleNum() + "");
+            tvrewardCount.setText(data.getOfferNum() + "");
+            tvcircletCount.setText(data.getCoterieNum() + "");
 //            tvactivityCount.setText(data.getArticleNum()+"");
         } else {
 //            if (null != t) {
@@ -788,9 +784,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 6:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的卡卷");
-                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-                    startActivity(intent);
+                    jump(MyCouponsActivity.class);
 
                 }
                 break;

@@ -2,15 +2,20 @@ package com.rz.circled.js;
 
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.rz.circled.ui.activity.SocializationShareAty;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,19 +40,19 @@ public class SocializationShareHandler extends ServerHandler {
         Gson gson = new Gson();
         String dataJson = gson.toJson(paramObj.getData());
         SocializationShareModel socializationShareModel = gson.fromJson(dataJson, SocializationShareModel.class);
-//        try {
-//            SocializationShareAty.start(mActivity,
-//                    "",
-//                    socializationShareModel.getCircleKey(),
-//                    !TextUtils.isEmpty(socializationShareModel.getTitle()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getTitle(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : "",
-//                    !TextUtils.isEmpty(socializationShareModel.getContent()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getContent(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : "",
-//                    socializationShareModel.getPic(),
-//                    socializationShareModel.getUrl(),
-//                    socializationShareModel.getPlat());
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//        SocializationShareAty.start(webContainerAty,
+        try {
+            SocializationShareAty.start(mActivity,
+                    "",
+                    socializationShareModel.getCircleKey(),
+                    !TextUtils.isEmpty(socializationShareModel.getTitle()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getTitle(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : "",
+                    !TextUtils.isEmpty(socializationShareModel.getContent()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getContent(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : "",
+                    socializationShareModel.getPic(),
+                    socializationShareModel.getUrl(),
+                    socializationShareModel.getPlat());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+//        SocializationShareAty.start(mActivity,
 //                "",
 //                "这里是标题",
 //                "这里是内容",

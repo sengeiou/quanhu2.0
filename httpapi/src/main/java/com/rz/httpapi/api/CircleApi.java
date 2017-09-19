@@ -9,7 +9,8 @@ public class CircleApi {
     /**
      * 获取圈子入口列表
      */
-    public static final String CIRCLE_ENTRANCE_LIST = "v3/circle/getCircleList"; /**
+    public static final String CIRCLE_ENTRANCE_LIST = "v3/circle/getCircleList";
+    /**
      * 获取喜欢圈子列表
      */
     public static final String FAVORITE_CIRCLE_LIST = "v3/circle/getFavoriteCircle";
@@ -174,9 +175,7 @@ public class CircleApi {
     public static final String SEARCH_DYNAMIC = "v3/search/dynamic";
 
     public static final String MATCH_VOUCHER = "v3/voucher/getUseableVoucher";
-    //活动url前缀
-    public static final String ACTIVITY_URL="http://opusapi-dev.quanhu365.com/yyl/";
-    public static final String MINE_ACTIVITY = ACTIVITY_URL+"v1/activity/info/mylist";
-    public static final String FIND_ACTIVITY_TABLE = ACTIVITY_URL + "v1/activity/info/recommendlist";
+    public static final String MINE_ACTIVITY = "v1/activity/info/mylist";
+    public static final String FIND_ACTIVITY_TABLE = "v1/activity/info/recommendlist";
 
 }

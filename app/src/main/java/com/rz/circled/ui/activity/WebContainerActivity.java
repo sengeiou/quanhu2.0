@@ -76,6 +76,11 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     }
 
     @Override
+    protected boolean hasDataInPage() {
+        return false;
+    }
+
+    @Override
     public void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         AndroidBug5497Workaround.assistActivity(this);
@@ -98,7 +103,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         if (processLoading)
             processBack = false;
 
-//        onLoadingStatus(CommonCode.General.DATA_LOADING);
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
 
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
