@@ -640,9 +640,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_SUCCESS) {//获得达人信息申请状态成功
             proveStatusBean = (ProveStatusBean) t;
             if (proveStatusBean == null) {
-                famousTxt.setText("去认证");
+                famousLayout.setVisibility(View.GONE);
 //                famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
-            } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
+                return;
+            }
+            famousLayout.setVisibility(View.VISIBLE);
+            if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
                 famousTxt.setText("认证审核中");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
                 famousTxt.setText(proveStatusBean.getTradeField());
@@ -650,7 +653,13 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL) {
                 famousTxt.setText("认证失败");
+            } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
+                famousTxt.setText("去认证");
             }
+            return;
+        }
+        if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_ERROR) {
+            famousLayout.setVisibility(View.GONE);
         }
     }
 
