@@ -21,6 +21,8 @@ import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MoreFamousModel;
+import com.rz.httpapi.bean.MyLevelAcountBean;
+import com.rz.httpapi.bean.MyLevelBean;
 import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
@@ -1109,6 +1111,20 @@ public interface ApiService {
             @Field("limit") int limit,
             @Field("rewardId") String rewardId,
             @Field("type") int type
+    );
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_LEVEL_ACOUNT)
+    Call<ResponseData<MyLevelAcountBean>> getLevelAcount(
+            @Field("custId") String custId
+    );
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_LEVEL_LIST)
+    Call<ResponseData<List<MyLevelBean>>> getLevelList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("start") int start
     );
 
 }

@@ -106,7 +106,7 @@ public class LocationActivity extends BaseActivity {
                     hashMap.put("region", amapLocation.getDistrict());
                     String adCode = amapLocation.getAdCode();
                     if (adCode.length() == 6) {
-                        adCode = adCode.substring(0, 3) + "000";
+                        adCode = adCode.substring(0, 4) + "00";
                     }
                     hashMap.put("cityCode", adCode);
                     JsEvent.callJsEvent(hashMap, true);

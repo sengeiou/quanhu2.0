@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextPaint;
@@ -249,7 +250,7 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
             } else {
 //                temp.setTextColor(getResources().getColor(R.color.color_666666));
 //                temp.setTypeface(tabTypeface, Typeface.NORMAL);
-                temp.setTextColor(getResources().getColor(R.color.tab_strip_uncheck));
+                temp.setTextColor(ContextCompat.getColor(getContext(), R.color.font_gray_l));
 //                rectPaint.setColor(getResources().getColor(R.color.color_666666));
             }
         }
@@ -426,7 +427,7 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
         final int height = getHeight();
 
         // draw underline
-        underlineColor = getResources().getColor(R.color.color_aaa);
+        underlineColor = getResources().getColor(R.color.color_d7);
         rectPaint.setColor(underlineColor);
         canvas.drawRect(getResources().getDimension(R.dimen.app_base_padding), height - underlineHeight, tabsContainer.getWidth() - getResources().getDimension(R.dimen.app_base_padding), height, rectPaint);
 

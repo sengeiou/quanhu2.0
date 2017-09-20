@@ -95,6 +95,6 @@
         android:id="@+id/id_expain_txt"
         style="@style/DefaultTvStyle"
         android:text="@string/recharge_problem"
-        android:textColor="@color/color_1bc2b8"
+        android:textColor="@color/color_main"
         android:textSize="@dimen/font_44"/>
 </LinearLayout>

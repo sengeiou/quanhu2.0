@@ -681,4 +681,7 @@
     <string name="used">已使用</string>
     <string name="expired">已过期</string>
     <string name="receive_mine_reward">我收到的打赏</string>
+    <string name="my_coupons">我的卡券</string>
+    <string name="tab_coupons">卡券</string>
+    <string name="tab_award">奖品</string>
 </resources>

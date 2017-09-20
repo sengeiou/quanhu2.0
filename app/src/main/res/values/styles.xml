@@ -355,7 +355,7 @@
         <item name="android:paddingRight">@dimen/px20</item>
         <item name="android:paddingTop">@dimen/px15</item>
         <item name="android:paddingBottom">@dimen/px10</item>
-        <item name="android:background">@color/trans_20</item>
+        <item name="android:background">@mipmap/bg_coupons_type</item>
     </style>
 
     <style name="couponsLlCenter">
@@ -373,7 +373,7 @@
     </style>
 
     <style name="couponsTvUnit">
-        <item name="android:layout_marginLeft">@dimen/px25</item>
+        <item name="android:layout_marginLeft">@dimen/px20</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/font_58</item>

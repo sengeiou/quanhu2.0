@@ -8,11 +8,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
@@ -46,7 +46,6 @@ public class MyActivityFragment extends BaseFragment {
     }
 
 
-
     public static MyActivityFragment newInstance() {
         MyActivityFragment frg = new MyActivityFragment();
         return frg;
@@ -54,7 +53,7 @@ public class MyActivityFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-        Http.getApiService(ApiService.class)
+        Http.getApiService(ApiYylService.class)
                 .getMineActivityList(1, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,8 +63,8 @@ public class MyActivityFragment extends BaseFragment {
                         if (res.getAct() == ReturnCode.SUCCESS) {
                             List<EntitiesBean> entities = res.getData().entities;
                             bean.addAll(entities);
-                            mIvNoData.setVisibility(bean.size()==0?View.VISIBLE:View.GONE);
-                            mLv.setVisibility(bean.size()==0?View.GONE:View.VISIBLE);
+                            mIvNoData.setVisibility(bean.size() == 0 ? View.VISIBLE : View.GONE);
+                            mLv.setVisibility(bean.size() == 0 ? View.GONE : View.VISIBLE);
                             mEntitiesBeanCommonAdapter.notifyDataSetChanged();
                         }
                     }

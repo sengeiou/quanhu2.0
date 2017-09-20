@@ -40,6 +40,7 @@ import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyBuyActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
+import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
@@ -194,7 +195,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         signLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((V3CirclePresenter) presenter).signRequest(Session.getUserId(),"15");
+                ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
             }
         });
 //        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));

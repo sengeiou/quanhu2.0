@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/px310"
-              android:background="@mipmap/bg_coupons_normal_item"
-              android:orientation="horizontal">
+              android:layout_height="@dimen/px320"
+              android:background="@mipmap/bg_coupons_item"
+              android:orientation="horizontal"
+              android:padding="@dimen/px5">
 
     <RelativeLayout
+        android:id="@+id/rl_coupons_item_left"
         android:layout_width="@dimen/px350"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_coupons_normal_item">
 
         <TextView
             android:id="@+id/tv_coupons_item_type"
@@ -35,6 +38,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/shape_bg_coupons_white"
         android:paddingLeft="@dimen/px30"
         android:paddingRight="@dimen/px30">
 

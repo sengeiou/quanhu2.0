@@ -2,17 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:background="@mipmap/bg_coupons_item"
+              android:orientation="vertical"
+              android:padding="@dimen/px5">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/px310"
-        android:background="@mipmap/bg_award_normal_item"
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/rl_award_item_left"
             android:layout_width="@dimen/px350"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@mipmap/bg_award_normal_item">
 
             <TextView
                 android:id="@+id/tv_award_item_type"
@@ -28,6 +31,7 @@
                     android:text="10"/>
 
                 <TextView
+                    android:id="@+id/tv_award_item_unit"
                     style="@style/couponsTvUnit"
                     android:layout_toRightOf="@id/tv_award_item_number"
                     android:text="元"/>
@@ -40,14 +44,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/shape_bg_coupons_white"
             android:paddingLeft="@dimen/px30"
             android:paddingRight="@dimen/px30">
 
             <TextView
+                android:id="@+id/tv_award_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/px44"
+                android:maxLines="1"
                 android:text="12314545645646545646"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_44"/>
@@ -86,14 +93,22 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px5"
+        android:background="@drawable/shape_line_coupons"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/tv_award_item_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="@dimen/px30"
-        android:text="显示奖品显示奖品显示奖品想死奖品"
+        android:text="啦啦啦啦啦"
         android:textColor="@color/font_gray_l"
-        android:textSize="@dimen/font_38"/>
+        android:textSize="@dimen/font_38"
+        android:visibility="visible"/>
 
 </LinearLayout>

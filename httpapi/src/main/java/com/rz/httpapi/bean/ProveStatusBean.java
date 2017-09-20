@@ -14,6 +14,78 @@ public class ProveStatusBean implements Serializable {
     private int authType;//认证类型 0:个人认证 1:企业/机构认证
     private int authWay;//认证方式 0:用户申请 1:平台设置
     private String tradeField;
+    private String contactCall;
+    private String idCard;
+    private String location;
+    private String organizationName;
+    private String organizationPaper;
+    private String ownerAppId = "";
+    private String realName;
+    private String resourceDesc;
+
+    public String getContactCall() {
+        return contactCall;
+    }
+
+    public void setContactCall(String contactCall) {
+        this.contactCall = contactCall;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
+    public String getOrganizationPaper() {
+        return organizationPaper;
+    }
+
+    public void setOrganizationPaper(String organizationPaper) {
+        this.organizationPaper = organizationPaper;
+    }
+
+    public String getOwnerAppId() {
+        return ownerAppId;
+    }
+
+    public void setOwnerAppId(String ownerAppId) {
+        this.ownerAppId = ownerAppId;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getResourceDesc() {
+        return resourceDesc;
+    }
+
+    public void setResourceDesc(String resourceDesc) {
+        this.resourceDesc = resourceDesc;
+    }
 
     public int getAuthStatus() {
         return authStatus;

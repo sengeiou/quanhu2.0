@@ -2,12 +2,15 @@ package com.rz.common.ui.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rz.common.R;
 import com.rz.common.constant.CommonCode;
@@ -191,11 +194,11 @@ public class BaseLoadView implements View.OnClickListener {
             statusView.setVisibility(View.VISIBLE);
             ivLoading.setVisibility(View.VISIBLE);
             llError.setVisibility(View.GONE);
-//            AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
-//                    .setAutoPlayAnimations(true)
-//                    .setUri(Uri.parse("res://" + mContext.getPackageName() + "/" + R.drawable.icon_login))//设置uri
-//                    .build();
-//            ivLoading.setController(controller);
+            AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setAutoPlayAnimations(true)
+                    .setUri(Uri.parse("res://" + mContext.getPackageName() + "/" + R.drawable.icon_login))//设置uri
+                    .build();
+            ivLoading.setController(controller);
 
         }
     }
