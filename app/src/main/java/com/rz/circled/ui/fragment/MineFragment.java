@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -29,16 +30,21 @@ import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.AwesomeTabsAty;
+import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
+import com.rz.circled.ui.activity.MineRewardActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
+import com.rz.circled.ui.activity.MyBuyActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
@@ -51,6 +57,7 @@ import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
@@ -117,7 +124,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     TextView tvcircletCount;        //私圈
     TextView tvactivityCount;       //活动
 
-//    private SplashPresenter mSplashPresenter;
+    //    private SplashPresenter mSplashPresenter;
     protected IPresenter presenter;
     private MessageReceiver receiver;
     private CustormServiceModel mCustormServiceModel;
