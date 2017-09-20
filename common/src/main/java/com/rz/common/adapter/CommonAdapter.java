@@ -2,7 +2,6 @@ package com.rz.common.adapter;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -49,7 +48,9 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
      * @param list
      */
     public void addData(List<T> list) {
-        if (mData != null && list != null)
+        if (mData == null)
+            mData = new ArrayList<>();
+        if (list != null)
             mData.addAll(list);
         notifyDataSetChanged();
     }

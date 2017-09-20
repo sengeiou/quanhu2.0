@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +33,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
     AreaModel model;
 
     public static final int RESULT_CODE = 101;
-    private String keyType;
+    private boolean isUserInfo = true;//是否为从个人资料页面进来
     private PersonInfoPresenter personInfoPresenter;
 
     @Override
@@ -52,7 +51,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
 
         model = (AreaModel) getIntent().getExtras().getSerializable("areaModel");
 
-        keyType = getIntent().getExtras().getString(IntentKey.EXTRA_TYPE);
+        isUserInfo = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, true);
 
         ArrayList<AreaModel.CityModel> cityList = model.children;
 
@@ -63,7 +62,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
         mAdapter = new CommonAdapter<AreaModel.CityModel>(this, R.layout.layout_area_item) {
             @Override
             public void convert(ViewHolder helper, AreaModel.CityModel item, int position) {
-                if (TextUtils.isEmpty(keyType))
+                if (isUserInfo)
                     ((TextView) helper.getView(R.id.id_area_check)).setText(item.isChecked ? getString(R.string.had_check) : "");
 
                 ((TextView) helper.getView(R.id.id_area_text)).setText(item.name);
@@ -84,8 +83,8 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        //通用页面过来
-        if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+        //其他页面过来
+        if (!isUserInfo) {
             String area = t.toString();
             Intent mIntent = new Intent();
             mIntent.putExtra(IntentKey.EXTRA_POSITION, area);
@@ -102,7 +101,7 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
         if (position != 0) {
             String paramas = model.name + " " + model.children.get(position - 1).name;
             paramas = paramas.trim();
-            if (!TextUtils.isEmpty(keyType) && EditorTwoActivity.TYPE_EDITOR.equals(keyType)) {
+            if (!isUserInfo) {
                 //通用发布过来
                 Intent mIntent = new Intent();
                 mIntent.putExtra(IntentKey.EXTRA_POSITION, paramas);

@@ -9,21 +9,27 @@ import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BillDetailModel;
 import com.rz.httpapi.bean.CashModel;
+import com.rz.httpapi.bean.BuyingBean;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
 import com.rz.httpapi.bean.CollectionBean;
+import com.rz.httpapi.bean.DataStatisticsBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MoreFamousModel;
+import com.rz.httpapi.bean.MyLevelAcountBean;
+import com.rz.httpapi.bean.MyLevelBean;
+import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
+import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
@@ -33,8 +39,10 @@ import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
+import com.rz.httpapi.bean.UserFamousBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
+import com.rz.httpapi.bean.UserSignBean;
 
 import java.util.HashMap;
 import java.util.List;
@@ -982,7 +990,7 @@ public interface ApiService {
 //    );
 
     /**
-     * 设置密保问题
+     * 我的文章
      *
      * @param custId
      * @return
@@ -993,6 +1001,136 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("limit") int limit,
             @Field("resourceType") String resourceType,
+            @Field("start") int start
+    );
+
+
+    /**
+     * 用户签到
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.SIGN_STATUS)
+    Call<ResponseData> signRequest(
+            @Field("custId") String custId,
+            @Field("eventCode") String eventCode
+    );
+
+
+    /**
+     * 用户签到
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_SIGN_STATUS)
+    Call<ResponseData<UserSignBean>> getSignStatus(
+            @Field("custId") String custId,
+            @Field("eventCode") String eventCode
+    );
+
+
+    /**
+     * 获取用户达人
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_FAMOUS_STATUS)
+    Call<ResponseData<ProveStatusBean>> getFamousStatus(
+            @Field("custId") String custId
+    );
+
+
+    /**
+     * 数据统计
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_USER_STAT)
+    Call<ResponseData<DataStatisticsBean>> getUserStat(
+            @Field("custId") String custId
+    );
+
+    /**
+     * 查询悬赏列表
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_REWARD_LIST)
+    Call<ResponseData<List<MyRewardBean>>> getRewardList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("offerId") int offerId,
+            @Field("type") int type
+
+
+    );
+
+    /**
+     * 查询悬赏列表  :  不传offid
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_REWARD_LIST)
+    Call<ResponseData<List<MyRewardBean>>> getRewardNoList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("type") int type
+
+    );
+
+    /**
+     * 我的购买
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_MY_BUYING)
+    Call<ResponseData<BuyingBean>> getMyBuying(
+            @Field("custId") String custId,
+            @Field("pageNum") int pageNum,
+            @Field("pageSize") int pageSize
+    );
+
+    /**
+     * 我的打赏
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_MY_REWARD)
+    Call<ResponseData> getMyReward(
+            @Field("custId") String custId,
+            @Field("isReward") int isReward,
+            @Field("limit") int limit,
+            @Field("rewardId") String rewardId,
+            @Field("type") int type
+    );
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_LEVEL_ACOUNT)
+    Call<ResponseData<MyLevelAcountBean>> getLevelAcount(
+            @Field("custId") String custId
+    );
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_LEVEL_LIST)
+    Call<ResponseData<List<MyLevelBean>>> getLevelList(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
             @Field("start") int start
     );
 

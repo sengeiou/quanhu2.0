@@ -208,7 +208,7 @@ public class RegisterActivity extends BaseActivity {
                     location = amapLocation.getLocationDetail();
                     cityCode = amapLocation.getAdCode();
                     if (cityCode.length() == 6) {
-                        cityCode = cityCode.substring(0, 3) + "000";
+                        cityCode = cityCode.substring(0, 4) + "00";
                     }
 
 //                    Session.setCityCode(amapLocation.getAdCode());

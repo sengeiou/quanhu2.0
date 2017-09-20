@@ -352,4 +352,58 @@
         <item name="android:textSize">@dimen/px28</item>
         <item name="android:visibility">gone</item>
     </style>
+
+    <!--我的卡券部分-->
+
+    <style name="couponsTvType">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_34</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingLeft">@dimen/px22</item>
+        <item name="android:paddingRight">@dimen/px20</item>
+        <item name="android:paddingTop">@dimen/px15</item>
+        <item name="android:paddingBottom">@dimen/px10</item>
+        <item name="android:background">@mipmap/bg_coupons_type</item>
+    </style>
+
+    <style name="couponsLlCenter">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="couponsTvNumber">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_130</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="couponsTvUnit">
+        <item name="android:layout_marginLeft">@dimen/px20</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_58</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="couponsTvTime">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/font_gray_s</item>
+        <item name="android:textSize">@dimen/font_32</item>
+    </style>
+
+    <style name="couponsTvStatus">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/font_38</item>
+        <item name="android:paddingLeft">@dimen/px40</item>
+        <item name="android:paddingRight">@dimen/px40</item>
+        <item name="android:paddingTop">@dimen/px12</item>
+        <item name="android:paddingBottom">@dimen/px12</item>
+    </style>
 </resources>

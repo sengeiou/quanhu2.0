@@ -116,4 +116,66 @@ public class APIUser {
      * 达人证人申请
      */
     public static final String PROVE_INFO = "v3/star/starApply";
+
+    /**
+     * 签到
+     */
+    public static final String SIGN_STATUS = "v3/event/sign";
+
+    /**
+     * 获取用户签到
+     */
+    public static final String GET_SIGN_STATUS = "v3/event/sign/status";
+
+    /**
+     * 获取用户达人
+     */
+    public static final String GET_FAMOUS_STATUS = "v3/star/getStarAuth";
+
+    /**
+     * 获取用户数据统计
+     */
+    public static final String GET_USER_STAT = "v3/user/getUserStat";
+
+    /**
+     * 获取悬赏类表
+     */
+    public static final String GET_REWARD_LIST = "v3/offer/myList";
+
+
+    /**
+     * 修改达人认证申请
+     */
+    public static final String PROVE_INFO_CHANGE = "v3/star/editStarAuth";
+
+    /**
+     * 获得达人认证状态
+     */
+    public static final String GET_PROVE_STATUS = "v3/star/getStarAuth";
+
+    /**
+     * 获取我的购买
+     */
+    public static final String GET_MY_BUYING = "v3/coterie/getMyBuyingResource";
+
+    /**
+     * 获取我的打赏
+     */
+    public static final String GET_MY_REWARD = "v3/reward/getMyReward";
+
+
+    /**
+     * 获得卡券列表
+     */
+    public static final String GET_COUPONS_LIST = "v1/activity/vote/myPrizeslist";
+
+    /**
+     * 获得积分成长总值
+     */
+    public static final String GET_LEVEL_ACOUNT = "v3/event/acount";
+
+    /**
+     * 获得成长流水
+     */
+    public static final String GET_LEVEL_LIST = "/v3/event/grow/flow";
 }

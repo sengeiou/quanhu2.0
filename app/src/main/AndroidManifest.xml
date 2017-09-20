@@ -22,11 +22,11 @@
         android:theme="@style/BaseAppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="${AMAP_KEY}" />
+            android:value="${AMAP_KEY}"/>
         <!-- 友盟appkey -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="575511f7e0f55a414e00035a" />
+            android:value="575511f7e0f55a414e00035a"/>
 
         <!-- 渠道配置 -->
         <meta-data
@@ -376,7 +376,7 @@
         <activity
             android:name=".ui.activity.RechargePayAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent" />
+            android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
             android:name=".ui.activity.RechargeAty"
             android:screenOrientation="portrait"
@@ -477,19 +477,82 @@
         <activity
             android:name=".ui.activity.ShareFriendsListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent" />
-        <activity android:name=".ui.activity.SettingSafeUserAty" />
-        <activity android:name=".ui.activity.AccountSafeAty" />
-        <activity android:name=".ui.activity.ResetPayPwAty" />
-        <activity android:name=".ui.activity.ModifyPwdAty" />
-        <activity android:name=".ui.activity.SetPayPassAty" />
-        <activity android:name=".ui.activity.MyCollectionActivity" />
-        <activity android:name=".ui.activity.MinePageActivity" />
-        <activity android:name=".ui.activity.MyLevelActivity" />
+            android:theme="@style/BaseAppTheme.Translucent"/>
 
-        <activity android:name=".ui.activity.ChooseProveIdentityActivity"></activity>
-        <activity android:name=".ui.activity.ProveWriteInfoActivity"></activity>
-        <activity android:name=".ui.activity.ProvePaperworkActivity"></activity>
+        <activity
+            android:name=".ui.activity.MyRewardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.SettingSafeUserAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.AccountSafeAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ResetPayPwAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ModifyPwdAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.SetPayPassAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MyCollectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MinePageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.MyLevelActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.ChooseProveIdentityActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ProveWriteInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ProvePaperworkActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.MyBuyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+        <activity
+            android:name=".ui.activity.MineRewardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+
+
+        <activity
+            android:name=".ui.activity.MyCouponsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.SocializationShareAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.NavigateOpenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
     </application>
 
 </manifest>

@@ -446,7 +446,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.rl_editor_two_location:
                 Intent locationIntent = new Intent(this, PersonAreaAty.class);
-                locationIntent.putExtra(IntentKey.EXTRA_TYPE, TYPE_EDITOR);
+                locationIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
                 startActivityForResult(locationIntent, REQUEST_CODE);
                 break;
             case R.id.rl_editor_two_time:

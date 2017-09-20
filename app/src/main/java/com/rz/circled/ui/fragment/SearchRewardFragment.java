@@ -1,7 +1,6 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,16 +10,12 @@ import android.widget.ListView;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
-import com.rz.circled.adapter.SearchPersonAdapter;
 import com.rz.circled.adapter.SearchRewardAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.RewardModel;
-import com.rz.httpapi.bean.SearchRewardBean;
-import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,8 +27,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 
 /**
  * Created by Gsm on 2017/9/2.

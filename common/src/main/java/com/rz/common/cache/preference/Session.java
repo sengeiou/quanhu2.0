@@ -961,6 +961,23 @@ public class Session {
         return SysSharePres.getInstance().getCityCode();
     }
 
+    public static void setCustPoints(String custPoints){
+        SysSharePres.getInstance().setCustPoint(custPoints);
+    }
+
+    public static String getCustPoints(){
+       return SysSharePres.getInstance().getCustPoint();
+    }
+
+    public static void setCustRole(String custRole){
+        SysSharePres.getInstance().setCustRole(custRole);
+    }
+
+    public static String getCustRole(){
+        return SysSharePres.getInstance().getCustRole();
+    }
+
+
     public static boolean isNeedTeam() {
         return SysSharePres.getInstance().isNeedTeam();
     }

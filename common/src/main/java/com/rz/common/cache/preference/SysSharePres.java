@@ -131,6 +131,16 @@ public class SysSharePres {
     private static final String USER_ACCOUNT = "user_account";
 
     /**
+     * 用户积分
+     */
+    private static final String CUST_POINTS = "cust_points";
+
+    /**
+     * 用户角色
+     */
+    private static final String CUST_ROLE = "cust_role";
+
+    /**
      * 用户手机号
      */
     private static final String USER_PHONE = "user_phone";
@@ -1009,4 +1019,21 @@ public class SysSharePres {
     public void setNowAct(String act) {
         mSharePres.edit().putString(NOW_ACT, act).apply();
     }
+
+    public String getCustPoint() {
+        return mSharePres.getString(CUST_POINTS, "");
+    }
+
+    public void setCustPoint(String custPoint) {
+        mSharePres.edit().putString(CUST_POINTS, custPoint).apply();
+    }
+
+    public String getCustRole() {
+        return mSharePres.getString(CUST_ROLE, "");
+    }
+
+    public void setCustRole(String custPoint) {
+        mSharePres.edit().putString(CUST_ROLE, custPoint).apply();
+    }
+
 }

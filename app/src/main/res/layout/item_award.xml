@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@mipmap/bg_coupons_item"
+              android:orientation="vertical"
+              android:padding="@dimen/px5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px310"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_award_item_left"
+            android:layout_width="@dimen/px350"
+            android:layout_height="match_parent"
+            android:background="@mipmap/bg_award_normal_item">
+
+            <TextView
+                android:id="@+id/tv_award_item_type"
+                style="@style/couponsTvType"
+                android:text="代金券"/>
+
+            <LinearLayout
+                style="@style/couponsLlCenter">
+
+                <TextView
+                    android:id="@+id/tv_award_item_number"
+                    style="@style/couponsTvNumber"
+                    android:text="10"/>
+
+                <TextView
+                    android:id="@+id/tv_award_item_unit"
+                    style="@style/couponsTvUnit"
+                    android:layout_toRightOf="@id/tv_award_item_number"
+                    android:text="元"/>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_bg_coupons_white"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px30">
+
+            <TextView
+                android:id="@+id/tv_award_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/px44"
+                android:maxLines="1"
+                android:text="12314545645646545646"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_44"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/px10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_award_item_time"
+                    style="@style/couponsTvTime"
+                    android:text="2017.08.21-2017.08.31"/>
+
+                <TextView
+                    android:id="@+id/tv_award_item_status"
+                    style="@style/couponsTvStatus"
+                    android:background="@drawable/shape_coupons_blue"
+                    android:text="可使用"
+                    android:textColor="@color/font_color_blue"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_award_item_detail_show"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:drawableRight="@mipmap/icon_award_arrow"
+                android:paddingBottom="@dimen/px20"
+                android:text="详细信息"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px5"
+        android:background="@drawable/shape_line_coupons"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_award_item_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/px30"
+        android:text="啦啦啦啦啦"
+        android:textColor="@color/font_gray_l"
+        android:textSize="@dimen/font_38"
+        android:visibility="visible"/>
+
+</LinearLayout>

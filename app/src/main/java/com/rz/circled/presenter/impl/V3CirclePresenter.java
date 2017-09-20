@@ -24,10 +24,14 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.DataStatisticsBean;
 import com.rz.httpapi.bean.FamousModel;
+import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferResultBean;
+import com.rz.httpapi.bean.UserFamousBean;
+import com.rz.httpapi.bean.UserSignBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.io.Serializable;
@@ -1162,5 +1166,157 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //        });
 //    }
 
+    /**
+     * 用户签到
+     * @param custId
+     * @param eventCode
+     */
+
+    public void signRequest(String custId, String eventCode) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Call<ResponseData> call = mUserService.signRequest(custId, eventCode);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if(res != null){
+                        mView.updateView(res);
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * 获取用户签到状态
+     * @param custId
+     * @param eventCode
+     */
+    public void getSignStatus(String custId, String eventCode) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Call<ResponseData<UserSignBean>> call = mUserService.getSignStatus(custId, eventCode);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<UserSignBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<UserSignBean>> call, Response<ResponseData<UserSignBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<UserSignBean> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        UserSignBean model = res.getData();
+                        mView.updateView(model);
+                        return;
+                    } else {
+
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<UserSignBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * 获取达人状态
+     * @param custId
+     */
+    public void getFamousStatus(String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Call<ResponseData<ProveStatusBean>> call = mUserService.getFamousStatus(custId);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<ProveStatusBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<ProveStatusBean>> call, Response<ResponseData<ProveStatusBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<ProveStatusBean> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        ProveStatusBean model = res.getData();
+                        mView.updateView(model);
+                        return;
+                    } else {
+
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<ProveStatusBean>> call, Throwable t) {
+                super.onFailure(call, t);
+//                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * 获取数据统计
+     * @param custId
+     */
+    public void getUserStat(String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Call<ResponseData<DataStatisticsBean>> call = mUserService.getUserStat(custId);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<DataStatisticsBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<DataStatisticsBean>> call, Response<ResponseData<DataStatisticsBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<DataStatisticsBean> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        DataStatisticsBean model = res.getData();
+                        mView.updateView(model);
+                        return;
+                    } else {
+
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<DataStatisticsBean>> call, Throwable t) {
+                super.onFailure(call, t);
+//                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
 
 }

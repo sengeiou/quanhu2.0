@@ -7,6 +7,7 @@ import android.util.Log;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
+import com.rz.circled.http.ApiYylService;
 import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
@@ -64,8 +65,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     private IViewController mView;
     private Context mContext;
-//    private APIService mCircleService;
+    //    private APIService mCircleService;
     private ApiService mUserService;
+    private ApiYylService mYylService;
 
     public int currentCircleId;
 
@@ -79,7 +81,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     }
 
     private int dynamicPage = 1;
-    private long dynamicCreateTime =0;
+    private long dynamicCreateTime = 0;
     private int collectPos = 0;
     private int custPos = 0;
 
@@ -90,6 +92,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         mCirclesCache = new EntityCache<CircleDynamic>(mContext, CircleDynamic.class);
 //        mCircleService = Http.getCircleService(mContext);
         mUserService = Http.getApiService(ApiService.class);
+        mYylService = Http.getApiService(ApiYylService.class);
     }
 
     @Override
@@ -149,6 +152,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //    }
 //
 //
+
     /**
      * 首页动态列表
      *
@@ -157,14 +161,14 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     public void getCircleDynamicList(String cityCode, final boolean loadMore) {
         Call<ResponseData<List<CircleDynamic>>> call = null;
         String userid = Session.getUserId();
-        Log.i("lixiang", "onNext: "+dynamicCreateTime);
-        mUserService.getCircleDynamic(cityCode,dynamicCreateTime,userid,dynamicPage)
+        Log.i("lixiang", "onNext: " + dynamicCreateTime);
+        mUserService.getCircleDynamic(cityCode, dynamicCreateTime, userid, dynamicPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<List<CircleDynamic>>>() {
                     @Override
                     public void onCompleted() {
-                            dynamicPage++;
+                        dynamicPage++;
                     }
 
                     @Override
@@ -174,12 +178,12 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
                     @Override
                     public void onNext(ResponseData<List<CircleDynamic>> res) {
-                        Log.e("zxw", "onNext: "+res.toString() );
+                        Log.e("zxw", "onNext: " + res.toString());
                         if (res.getRet() == ReturnCode.SUCCESS) {
-                            List<CircleDynamic> model =res.getData();
+                            List<CircleDynamic> model = res.getData();
                             ACache mCache = ACache.get(mContext);
                             mCache.put(Constants.HOME_FRAGMENT_CACHE, (Serializable) model);
-                            dynamicCreateTime=model.get(model.size()-1).createTime;
+                            dynamicCreateTime = model.get(model.size() - 1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功
                                 mView.updateViewWithLoadMore(model, loadMore);
@@ -273,7 +277,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         List<BannerAddSubjectModel> model = (List<BannerAddSubjectModel>) res.getData();
-                        if ("1".equals(stats)){
+                        if ("1".equals(stats)) {
                             Session.setAdv_pic_url(model.get(0).getPicUrl());
                             Session.setAdv_url(model.get(0).getUrl());
                             Session.setAdv_upIngDate(model.get(0).startTime);
@@ -300,66 +304,68 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             return;
         }
         mUserService.getSubject()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ResponseData<List<HotSubjectModel>>>() {
-                        @Override
-                        public void onCompleted() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<List<HotSubjectModel>>>() {
+                    @Override
+                    public void onCompleted() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.i("lixiang", "onError: "+e);
-                        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("lixiang", "onError: " + e);
+                    }
 
-                        @Override
-                        public void onNext(ResponseData<List<HotSubjectModel>> res) {
-                            if (res.getRet() == ReturnCode.SUCCESS) {
-                                List<HotSubjectModel> data = res.getData();
-                                mView.updateViewWithFlag(data,stats);
-                            } else {
-                                HandleRetCode.handler(mContext, res);
-                            }
+                    @Override
+                    public void onNext(ResponseData<List<HotSubjectModel>> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            List<HotSubjectModel> data = res.getData();
+                            mView.updateViewWithFlag(data, stats);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
                         }
-                    });
+                    }
+                });
 
 
     }
+
     /**
      * 发现更多话题
      */
-    public void getMoreSubjectList(int limit,int start) {
+    public void getMoreSubjectList(int limit, int start) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.getMoreSubject(limit,start)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ResponseData<List<HotSubjectModel>>>() {
-                        @Override
-                        public void onCompleted() {
+        mUserService.getMoreSubject(limit, start)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<List<HotSubjectModel>>>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<List<HotSubjectModel>> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            List<HotSubjectModel> data = res.getData();
+                            mView.updateView(data);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
                         }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(ResponseData<List<HotSubjectModel>> res) {
-                            if (res.getRet() == ReturnCode.SUCCESS) {
-                                List<HotSubjectModel> data = res.getData();
-                                mView.updateView(data);
-                            } else {
-                                HandleRetCode.handler(mContext, res);
-                            }
-                        }
-                    });
+                    }
+                });
 
 
     }
+
     /**
      * 发现推荐活动
      */
@@ -367,30 +373,30 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.getActivityList(1,2)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ResponseData<ActivityBean>>() {
-                        @Override
-                        public void onCompleted() {
+        mYylService.getActivityList(1, 2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<ActivityBean>>() {
+                    @Override
+                    public void onCompleted() {
 
-                        }
+                    }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.i("lixiang", "onError: "+e);
-                        }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("lixiang", "onError: " + e);
+                    }
 
-                        @Override
-                        public void onNext(ResponseData<ActivityBean> res) {
-                            if (res.getRet() == ReturnCode.SUCCESS) {
-                                List<EntitiesBean> entities = res.getData().entities;
-                                mView.updateViewWithFlag(entities,state);
-                            } else {
-                                HandleRetCode.handler(mContext, res);
-                            }
+                    @Override
+                    public void onNext(ResponseData<ActivityBean> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            List<EntitiesBean> entities = res.getData().entities;
+                            mView.updateViewWithFlag(entities, state);
+                        } else {
+                            HandleRetCode.handler(mContext, res);
                         }
-                    });
+                    }
+                });
 
 
     }
@@ -424,6 +430,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             }
         });
     }
+
     /**
      * 发现更多达人
      */
@@ -456,14 +463,15 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     }
                 });
     }
+
     /**
      * 删除喜欢的圈子
      */
-    public void removeLoveCircle(String circleId,String custId) {
+    public void removeLoveCircle(String circleId, String custId) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.delLoveCircle(circleId,custId)
+        mUserService.delLoveCircle(circleId, custId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData>() {
@@ -489,14 +497,15 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     }
                 });
     }
+
     /**
      * 添加喜欢的圈子
      */
-    public void addLoveCircle(String circleId,int type) {
+    public void addLoveCircle(String circleId, int type) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.addLoveCircle(circleId,Session.getUserId(),type)
+        mUserService.addLoveCircle(circleId, Session.getUserId(), type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData>() {
@@ -522,6 +531,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     }
                 });
     }
+
     /**
      * 获取用户喜欢的圈子
      */
@@ -648,35 +658,36 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
-    Integer cid=null;
+    Integer cid = null;
+
     public void getCircleCollection() {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-       mUserService.getCircleCollect(cid,Session.getUserId(), Constants.PAGESIZE)
-               .subscribeOn(Schedulers.io())
-               .observeOn(AndroidSchedulers.mainThread())
-               .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
-                   @Override
-                   public void onCompleted() {
+        mUserService.getCircleCollect(cid, Session.getUserId(), Constants.PAGESIZE)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
+                    @Override
+                    public void onCompleted() {
 
-                   }
+                    }
 
-                   @Override
-                   public void onError(Throwable e) {
-                   }
+                    @Override
+                    public void onError(Throwable e) {
+                    }
 
-                   @Override
-                   public void onNext(ResponseData<List<CollectionBean>> res) {
-                       if (res.getRet() == ReturnCode.SUCCESS) {
-                           List<CollectionBean> data = res.getData();
-                           cid=data.get(data.size()-1).cid;
-                           mView.updateView(data);
+                    @Override
+                    public void onNext(ResponseData<List<CollectionBean>> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            List<CollectionBean> data = res.getData();
+                            cid = data.get(data.size() - 1).cid;
+                            mView.updateView(data);
 
-                       }
+                        }
 
-                   }
-               });
+                    }
+                });
 
     }
 
@@ -689,7 +700,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.delCollect(Session.getUserId(),cid)
+        mUserService.delCollect(Session.getUserId(), cid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData>() {
@@ -712,7 +723,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     }
 
-//
+    //
 //    /**
 //     * 提交评论
 //     */
