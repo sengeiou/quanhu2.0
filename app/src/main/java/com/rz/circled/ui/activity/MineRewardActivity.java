@@ -37,7 +37,7 @@ public class MineRewardActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitle("我的打赏");
+        setTitleText("我的打赏");
 
         tabPagerSearch.setCustomLayoutParams(2);
         tabPagerSearch.setLineFitFont(true);

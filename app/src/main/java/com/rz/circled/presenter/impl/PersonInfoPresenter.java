@@ -20,6 +20,7 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.BuyingBean;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.MyBuyingModel;
 import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.constans.ReturnCode;
@@ -361,8 +362,8 @@ public class PersonInfoPresenter extends GeneralPresenter {
 
         Call<ResponseData<BuyingBean>> call = mUserService.getMyBuying(
                 custId,
-                Constants.PAGESIZE,
-                start);
+                1,
+                10);
 
 
         CallManager.add(call);
@@ -373,33 +374,33 @@ public class PersonInfoPresenter extends GeneralPresenter {
                 if (response.isSuccessful()) {
 
                     ResponseData<BuyingBean> res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<CircleDynamic> modelList = (List<CircleDynamic>) res.getData();
-//
-//                        if (null != modelList && !modelList.isEmpty()) {
-//                            isNoData = false;
-//                            mView.updateViewWithLoadMore(modelList, loadMore);
-//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-//                        } else {
-//                            if(loadMore == false){
-//                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-//                            }else{
-//                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
-//                            }
-//                            mView.updateViewWithLoadMore(modelList, loadMore);
-//                            isNoData = true;
-//                        }
-//                        return;
-//                    } else {
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-//                            }
-//                        }, 2000);
-//                        isNoData = true;
-//                        return;
-//                    }
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<MyBuyingModel> modelList = (List<MyBuyingModel>) res.getData().getList();
+
+                        if (null != modelList && !modelList.isEmpty()) {
+                            isNoData = false;
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        } else {
+                            if(loadMore == false){
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }else{
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
+                            }
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            isNoData = true;
+                        }
+                        return;
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        isNoData = true;
+                        return;
+                    }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                 isNoData = true;

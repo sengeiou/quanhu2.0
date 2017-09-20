@@ -61,7 +61,7 @@ public class MyRewardActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitle("悬赏");
+        setTitleText("悬赏");
         initTabTitle();
         initViewpagerGroup();
         initIndicatorGroup();
