@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:src="@mipmap/arrow_left"
                         android:padding="@dimen/px44"
-
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -264,7 +264,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/px184"
+                android:layout_marginTop="@dimen/px124"
                 >
 
                 <!--<view-->
@@ -288,7 +288,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_third_other"
+                    android:text="@string/other_login"
                     android:textColor="@color/color_999999"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"

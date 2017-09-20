@@ -571,7 +571,7 @@ public class PictureManagerActivity extends BaseActivity implements OnItemClickL
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             getImages();
         } else {
-            EasyPermissions.requestPermissions(this, "悠然一指要使用sd卡", RC_EXTENER, Manifest.permission.READ_EXTERNAL_STORAGE);
+            EasyPermissions.requestPermissions(this, "圈呼要使用sd卡", RC_EXTENER, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 

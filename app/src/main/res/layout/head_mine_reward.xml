@@ -5,7 +5,9 @@
     android:background="@mipmap/receive_reward_bg"
     android:layout_marginTop="@dimen/px44"
     android:padding="@dimen/px10"
-    android:layout_margin="@dimen/px10"
+    android:layout_marginLeft="@dimen/px44"
+    android:layout_marginRight="@dimen/px44"
+    android:id="@+id/rewarded_layout"
     >
 
     <TextView
@@ -25,7 +27,7 @@
         android:layout_gravity="center_horizontal"
         >
         <TextView
-            android:id="@+id/reward_txt"
+            android:id="@+id/reward_top_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="bottom"
@@ -41,7 +43,7 @@
             android:textSize="@dimen/font_38"
             android:gravity="top"
             android:text="元"
-            android:layout_toRightOf="@id/reward_txt"
+            android:layout_toRightOf="@id/reward_top_txt"
             android:layout_marginLeft="@dimen/px20"
             android:layout_marginTop="@dimen/px40"
             />

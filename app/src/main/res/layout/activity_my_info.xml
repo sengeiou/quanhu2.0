@@ -13,7 +13,9 @@
 
         <RelativeLayout
             android:id="@+id/id_layout_person_photo"
-            style="@style/PersonInfoLineStyle">
+            style="@style/PersonInfoLineStyle"
+            android:layout_height="@dimen/px276"
+            >
 
             <TextView
                 style="@style/PersonInfoTitleTvStyle"
@@ -21,10 +23,11 @@
 
             <ImageView
                 android:id="@+id/id_person_head_img"
-                android:layout_width="@dimen/px118"
-                android:layout_height="@dimen/px118"
+                android:layout_width="@dimen/px188"
+                android:layout_height="@dimen/px188"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/px30"
+                android:scaleType="fitXY"
                 android:layout_toLeftOf="@+id/id_right_arrow1"/>
 
             <ImageView
@@ -120,7 +123,9 @@
 
         <RelativeLayout
             android:id="@+id/id_layout_person_sex"
-            style="@style/PersonInfoLineStyle">
+            style="@style/PersonInfoLineStyle"
+            android:layout_marginTop="@dimen/px44"
+            >
 
             <TextView
                 style="@style/PersonInfoTitleTvStyle"
@@ -180,7 +185,9 @@
 
         <RelativeLayout
             android:id="@+id/id_layout_person_sign"
-            style="@style/PersonInfoLineStyle">
+            style="@style/PersonInfoLineStyle"
+            android:layout_marginTop="@dimen/px44"
+            >
 
 
             <TextView
@@ -218,7 +225,9 @@
         <RelativeLayout
             android:id="@+id/id_layout_person_brief"
             style="@style/PersonInfoLineStyle"
-            android:layout_height="@dimen/px200">
+            android:layout_height="@dimen/px200"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:id="@+id/id_text_brief"

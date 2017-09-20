@@ -1,5 +1,6 @@
 package com.rz.httpapi.api;
 
+import com.rz.httpapi.BuildConfig;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AccountBean;
@@ -20,6 +21,7 @@ import com.rz.httpapi.bean.FriendInfoModel;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
+import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.MyLevelAcountBean;
 import com.rz.httpapi.bean.MyLevelBean;
@@ -33,6 +35,7 @@ import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.RewardStatBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
@@ -1105,7 +1108,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.GET_MY_REWARD)
-    Call<ResponseData> getMyReward(
+    Call<ResponseData<List<MineRewardBean>>> getMyReward(
             @Field("custId") String custId,
             @Field("isReward") int isReward,
             @Field("limit") int limit,
@@ -1125,6 +1128,26 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("limit") int limit,
             @Field("start") int start
+    );
+
+    /**
+     * 获取我的打赏统计
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_REWARD_STAT)
+    Call<ResponseData<RewardStatBean>> getMyRewardStat(
+            @Field("custId") String custId
+    );
+
+    /**
+     * 获取活动数统计
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_LIST_COUNT)
+    Call<ResponseData> getMylistCount(
+            @Field("paramId") String paramId
     );
 
 }

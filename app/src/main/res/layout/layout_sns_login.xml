@@ -11,15 +11,17 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/layout_login_qq"
+            android:id="@+id/layout_login_webo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/px130"
             android:drawablePadding="@dimen/px30"
-            android:drawableTop="@mipmap/ic_login_qq"
+            android:drawableTop="@mipmap/ic_login_sina"
             android:gravity="center_horizontal"
-            android:textColor="#5eb5FF"
-            android:visibility="visible"/>
+            android:textColor="@color/color_999999"
+            android:visibility="visible"
+            android:text="@string/weibo"
+            />
 
         <TextView
             android:id="@+id/layout_login_weixin"
@@ -29,16 +31,20 @@
             android:drawablePadding="@dimen/px30"
             android:drawableTop="@mipmap/ic_login_wx"
             android:gravity="center_horizontal"
-            android:textColor="#5eb5FF"/>
+            android:textColor="@color/color_999999"
+            android:text="@string/weixin"
+            />
 
         <TextView
-            android:id="@+id/layout_login_webo"
+            android:id="@+id/layout_phone_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/px30"
             android:drawableTop="@mipmap/ic_login_sina"
             android:gravity="center_horizontal"
-            android:textColor="#5eb5FF"/>
+            android:textColor="@color/color_999999"
+            android:text="@string/phone_code"
+            />
 
     </LinearLayout>
 

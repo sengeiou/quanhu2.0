@@ -67,8 +67,6 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        String type = getArguments().getString(IntentKey.KEY_ID);
-
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
         lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_SCAN));

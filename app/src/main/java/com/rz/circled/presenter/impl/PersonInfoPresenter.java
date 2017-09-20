@@ -20,8 +20,10 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.BuyingBean;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MyBuyingModel;
 import com.rz.httpapi.bean.MyRewardBean;
+import com.rz.httpapi.bean.RewardStatBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.constans.ReturnCode;
 
@@ -438,7 +440,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
             record_start = start;
         }
 
-        Call<ResponseData> call = mUserService.getMyReward(
+        Call<ResponseData<List<MineRewardBean>>> call = mUserService.getMyReward(
                 custId,
                 isReward,
                 10,
@@ -446,40 +448,40 @@ public class PersonInfoPresenter extends GeneralPresenter {
                 0);
 
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData>() {
+        call.enqueue(new BaseCallback<ResponseData<List<MineRewardBean>>>() {
             @Override
-            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+            public void onResponse(Call<ResponseData<List<MineRewardBean>>> call, Response<ResponseData<List<MineRewardBean>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
 
-                    ResponseData<BuyingBean> res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<CircleDynamic> modelList = (List<CircleDynamic>) res.getData();
-//
-//                        if (null != modelList && !modelList.isEmpty()) {
-//                            isNoData = false;
-//                            mView.updateViewWithLoadMore(modelList, loadMore);
-//                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-//                        } else {
-//                            if(loadMore == false){
-//                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-//                            }else{
-//                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
-//                            }
-//                            mView.updateViewWithLoadMore(modelList, loadMore);
-//                            isNoData = true;
-//                        }
-//                        return;
-//                    } else {
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-//                            }
-//                        }, 2000);
-//                        isNoData = true;
-//                        return;
-//                    }
+                    ResponseData<List<MineRewardBean>> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<MineRewardBean> modelList = (List<MineRewardBean>) res.getData();
+
+                        if (null != modelList && !modelList.isEmpty()) {
+                            isNoData = false;
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        } else {
+                            if(loadMore == false){
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }else{
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
+                            }
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            isNoData = true;
+                        }
+                        return;
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        isNoData = true;
+                        return;
+                    }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                 isNoData = true;
@@ -487,7 +489,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
+            public void onFailure(Call<ResponseData<List<MineRewardBean>>> call, Throwable t) {
                 super.onFailure(call, t);
                 //发送验证码失败
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
@@ -495,5 +497,36 @@ public class PersonInfoPresenter extends GeneralPresenter {
         });
     }
 
+    public void getMyRewardStat(String custId) {
+        if (!NetUtils.isNetworkConnected(BaseApplication.getContext())) {
+            return;
+        }
+        Call<ResponseData<RewardStatBean>> call = mUserService.getMyRewardStat(custId);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<RewardStatBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<RewardStatBean>> call, Response<ResponseData<RewardStatBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<RewardStatBean> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        RewardStatBean model = res.getData();
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.refunds_success));
+                        mView.updateView(model);
+                    } else {
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail) + ":" + res.getMsg());
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<RewardStatBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail));
+            }
+        });
+    }
 
 }

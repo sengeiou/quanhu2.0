@@ -10,7 +10,11 @@ import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,9 +69,7 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
                 break;
             default:
                 break;
-
         }
-
     }
 
     @Override
@@ -85,6 +87,7 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initData() {
+
     }
 
     @Override
@@ -100,7 +103,14 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
 //        Session.setUser_sex(t.toString().equals("0") ? "男" : "女");
         Session.setUser_sex(t.toString().equals("0") ? "女" : "男");
         setResult(RESULT_CODE1);
+        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
 }

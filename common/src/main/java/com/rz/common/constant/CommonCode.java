@@ -69,6 +69,8 @@ public interface CommonCode {
 
         int TYPE_LOGOUT = 300002;
         int TYPE_LOGIN = 300003;
+        int TYPE_REWARD_COUNT = 300004;
+        int TYPE_USER_UPDATE = 300005;
     }
 
     /**

@@ -13,8 +13,12 @@ import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -74,7 +78,7 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
 
         if (getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))) {
             Session.setUser_signatrue(t.toString());
-
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
         } else {
             Session.setUser_desc(t.toString());
         }
@@ -88,7 +92,8 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initData() {
-
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     @OnClick({R.id.id_person_clear, R.id.tv_base_title_right})
@@ -140,4 +145,12 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
     public void afterTextChanged(Editable s) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
 }

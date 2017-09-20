@@ -14,10 +14,19 @@ import com.rz.circled.adapter.MineRewardAdapter;
 import com.rz.circled.adapter.RewardAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MyRewardBean;
+import com.rz.httpapi.bean.RewardStatBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +45,15 @@ public class RewardArticalFragment extends BaseFragment {
     ListView lvReward;
 
     private MineRewardAdapter rewardAdapter;
-    private List<MyRewardBean> rewardBeanList = new ArrayList<>();
+    private List<MineRewardBean> rewardBeanList = new ArrayList<>();
     protected IPresenter presenter;
 
     private View headView;
     private TextView createTxt;
     private TextView answerTxt;
     private int type;
+
+    private TextView topTxt;
 
     public static RewardArticalFragment newInstance(int type) {
         RewardArticalFragment frg = new RewardArticalFragment();
@@ -57,16 +68,16 @@ public class RewardArticalFragment extends BaseFragment {
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.fragment_search_reward, null);
+        return inflater.inflate(R.layout.fragment_mine_reward, null);
     }
 
     @Override
     public void initView() {
         type = getArguments().getInt(IntentKey.KEY_ID);
 
-        TextView textView = new TextView(mActivity);
-        textView.setText("共12条内容");
-        lvReward.addHeaderView(textView);
+        View headView = View.inflate(mActivity, R.layout.mine_reward_top, null);
+        topTxt = (TextView) headView.findViewById(R.id.reward_txt);
+        lvReward.addHeaderView(headView);
 
         rewardAdapter = new MineRewardAdapter(getActivity(), R.layout.item_reward_mine);
         rewardAdapter.setData(rewardBeanList);
@@ -95,7 +106,6 @@ public class RewardArticalFragment extends BaseFragment {
     @Override
     public void initPresenter() {
         super.initPresenter();
-        //搜索接口
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
 
@@ -105,7 +115,7 @@ public class RewardArticalFragment extends BaseFragment {
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
         if (t != null) {
-            List<MyRewardBean> mDatas = (List<MyRewardBean>) t;
+            List<MineRewardBean> mDatas = (List<MineRewardBean>) t;
             if (null != mDatas && !mDatas.isEmpty()) {
                 if (!loadMore) {
                     rewardBeanList.clear();
@@ -113,6 +123,8 @@ public class RewardArticalFragment extends BaseFragment {
                 rewardBeanList.addAll(mDatas);
                 rewardAdapter.setData(rewardBeanList);
                 rewardAdapter.notifyDataSetChanged();
+
+
             } else {
                 if (!loadMore) {
                     rewardBeanList.clear();
@@ -130,6 +142,17 @@ public class RewardArticalFragment extends BaseFragment {
     @Override
     protected boolean hasDataInPage() {
         return rewardAdapter != null && rewardAdapter.getCount() != 0;
+    }
+
+    /**
+     * @param baseEvent
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_REWARD_COUNT && baseEvent.data != null) {
+            RewardStatBean model = (RewardStatBean) baseEvent.getData();
+            topTxt.setText("共"+model.getTotalRewardAmount()+"条内容");
+        }
     }
 
 }

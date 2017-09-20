@@ -175,7 +175,7 @@ public class CircleApi {
     public static final String SEARCH_DYNAMIC = "v3/search/dynamic";
 
     public static final String MATCH_VOUCHER = "v3/voucher/getUseableVoucher";
-    public static final String MINE_ACTIVITY = "v1/activity/info/mylist";
-    public static final String FIND_ACTIVITY_TABLE = "v1/activity/info/recommendlist";
+    public static final String MINE_ACTIVITY = "yyl/v1/activity/info/mylist";
+    public static final String FIND_ACTIVITY_TABLE = "yyl/v1/activity/info/recommendlist";
 
 }

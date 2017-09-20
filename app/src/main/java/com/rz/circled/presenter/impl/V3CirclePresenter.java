@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
+import com.rz.circled.http.ApiYylService;
+import com.rz.circled.js.http.ActivityNumService;
 import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.EntityCache;
@@ -57,6 +59,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     private Context mContext;
 //    private APIService mCircleService;
     private ApiService mUserService;
+    private ApiYylService numService;
 
     public int currentCircleId;
 
@@ -80,6 +83,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         mCirclesCache = new EntityCache<CircleDynamic>(mContext, CircleDynamic.class);
 //        mCircleService = Http.getCircleService(mContext);
         mUserService = Http.getApiService(ApiService.class);
+        numService = Http.getApiService(ApiYylService.class);
     }
 
     @Override
@@ -1265,7 +1269,6 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         mView.updateView(model);
                         return;
                     } else {
-
                         return;
                     }
                 }
@@ -1315,6 +1318,41 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             public void onFailure(Call<ResponseData<DataStatisticsBean>> call, Throwable t) {
                 super.onFailure(call, t);
 //                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
+
+    /**
+     * 获取活动数据统计
+     * @param custId
+     */
+    public void getMylistCount(String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        Call<ResponseData> call = numService.mylistCount(custId);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        mView.updateView(res);
+                        return;
+                    } else {
+
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
             }
         });
     }
