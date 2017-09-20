@@ -1,7 +1,6 @@
 package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.ui.activity.AllPrivateGroupActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
@@ -67,7 +65,7 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        String type = getArguments().getString(IntentKey.KEY_ID);
+//        String type = getArguments().getString(IntentKey.KEY_ID);
 
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);

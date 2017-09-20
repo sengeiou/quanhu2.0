@@ -488,6 +488,10 @@
             android:name=".ui.activity.SocializationShareAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.NavigateOpenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
     </application>
 
 </manifest>

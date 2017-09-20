@@ -90,29 +90,42 @@ public class ChooseProveIdentityActivity extends BaseActivity {
 
     @OnClick({R.id.iv_choose_prove_oneself, R.id.iv_choose_prove_agency, R.id.tv_choose_prove_status_change})
     public void onClick(View view) {
-        Intent intent = new Intent(this, ProveWriteInfoActivity.class);
         switch (view.getId()) {
             case R.id.iv_choose_prove_oneself:
-                intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
+                Intent oneSelfIntent = new Intent(this, ProveWriteInfoActivity.class);
+                oneSelfIntent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
+                startActivity(oneSelfIntent);
                 break;
             case R.id.iv_choose_prove_agency:
-                intent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
+                Intent agencyIntent = new Intent(this, ProveWriteInfoActivity.class);
+                agencyIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
+                startActivity(agencyIntent);
                 break;
             case R.id.tv_choose_prove_status_change:
-                intent.putExtra(IntentKey.EXTRA_BOOLEAN, proveStatusBean != null ? proveStatusBean.isOneSelf() : true);
-                intent.putExtra(ProveWriteInfoActivity.EXTRA_CHANGE, true);
                 if (proveStatusBean != null) {
-                    intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
+                    if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL || proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL) {//失败
+                        startActivity(new Intent(mContext, ChooseProveIdentityActivity.class));
+                    } else {
+                        Intent intent = new Intent(this, ProveWriteInfoActivity.class);
+                        intent.putExtra(IntentKey.EXTRA_BOOLEAN, proveStatusBean.isOneSelf());
+                        intent.putExtra(ProveWriteInfoActivity.EXTRA_CHANGE, true);
+                        if (proveStatusBean != null) {
+                            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
+                        }
+                        startActivity(intent);
+                    }
                 }
+
                 break;
         }
-        startActivity(intent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.PROVE_UPDATE)
-            finish();
+        if (baseEvent.type == CommonCode.EventType.PROVE_UPDATE) {
+            if (baseEvent.getData() == null)
+                finish();
+        }
     }
 
     @Override
@@ -129,6 +142,9 @@ public class ChooseProveIdentityActivity extends BaseActivity {
             onLoadingStatus(CommonCode.General.DATA_SUCCESS);
             proveStatusBean = (ProveStatusBean) t;
             processStatus();
+            BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.PROVE_UPDATE);
+            baseEvent.setData(proveStatusBean);
+            EventBus.getDefault().post(baseEvent);
         }
         if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_ERROR) {
             onLoadingStatus(CommonCode.General.UN_NETWORK);

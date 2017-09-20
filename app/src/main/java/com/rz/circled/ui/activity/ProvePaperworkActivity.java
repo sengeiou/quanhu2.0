@@ -77,7 +77,7 @@ public class ProvePaperworkActivity extends BaseActivity {
         });
         setTitleRightTextColor(R.color.font_color_blue);
         setTitleText(getString(R.string.upload_paperwork));
-        if (!TextUtils.isEmpty(proveInfo.getOrganizationPaper())) {
+        if (!TextUtils.isEmpty(proveInfo.getOrganizationPaper()) && proveInfo.getOrganizationPaper().startsWith("http")) {
             processImageView(proveInfo.getOrganizationPaper());
         }
     }

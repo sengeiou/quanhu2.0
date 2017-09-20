@@ -684,4 +684,7 @@
     <string name="my_coupons">我的卡券</string>
     <string name="tab_coupons">卡券</string>
     <string name="tab_award">奖品</string>
+
+    <string name="call_phone_authorization">请授权拨打电话！</string>
+    <string name="authorization_fail">授权失败！</string>
 </resources>

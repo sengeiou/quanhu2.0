@@ -1,8 +1,14 @@
 package com.rz.circled.ui.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.rz.circled.R;
@@ -40,6 +47,8 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     private boolean processBack = false;
     private WebChromeClient webChromeClient;
     private boolean processLoading = false;
+
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     public static void startActivity(Context context, String url) {
         Intent intent = new Intent(context, WebContainerActivity.class);
@@ -160,6 +169,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         onLoadingStatus(CommonCode.General.DATA_LOADING);
     }
 
+    private String telUri = "";
 
     private class MListener implements AdvancedWebView.Listener {
 
@@ -191,13 +201,39 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
         @Override
         public void callPhoneNumber(String uri) {
-
+            telUri = uri;
+            // 检查是否获得了权限（Android6.0运行时权限）
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // 没有获得授权，申请授权
+                if (ActivityCompat.shouldShowRequestPermissionRationale(WebContainerActivity.this, Manifest.permission.CALL_PHONE)) {
+                    // 返回值：
+//                          如果app之前请求过该权限,被用户拒绝, 这个方法就会返回true.
+//                          如果用户之前拒绝权限的时候勾选了对话框中”Don’t ask again”的选项,那么这个方法会返回false.
+//                          如果设备策略禁止应用拥有这条权限, 这个方法也返回false.
+                    // 弹窗需要解释为何需要该权限，再次请求授权
+                    Toast.makeText(mContext, R.string.call_phone_authorization, Toast.LENGTH_LONG).show();
+                } else {
+                    // 不需要解释为何需要该权限，直接请求授权
+                    ActivityCompat.requestPermissions(WebContainerActivity.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                }
+            } else {
+                // 已经获得授权，可以打电话
+                callPhone();
+            }
         }
 
         @Override
         public void doUpdateVisitedHistory() {
 
         }
+    }
+
+    private void callPhone() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(telUri));
+        startActivity(intent);
+
     }
 
 
@@ -255,6 +291,20 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
             RequestBackHandler backHandler = new RequestBackHandler(this);
             backHandler.setRequestData(null);
             mWebViewProxy.requestJsFun(backHandler);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSIONS_REQUEST_CALL_PHONE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 授权成功，继续打电话
+                callPhone();
+            } else {
+                // 授权失败！
+                Toast.makeText(this, R.string.authorization_fail, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

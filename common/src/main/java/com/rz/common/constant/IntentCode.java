@@ -61,6 +61,8 @@ public class IntentCode {
     public static class MineFrg {
         //请求code
         public static final int MINE_REQUEST_CODE = 800;
+        //Q去认证页面
+        public static final int TO_PROVE_INFO = 801;
     }
 
     /**
