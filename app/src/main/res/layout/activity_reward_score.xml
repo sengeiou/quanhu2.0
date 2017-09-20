@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,18 +12,18 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/px530"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px80"
-            android:layout_marginTop="@dimen/px107"
+            android:layout_marginTop="@dimen/px112"
             android:background="@drawable/ic_treasure"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitCenter" />
 
         <TextView
             style="@style/DefaultTvStyle"
-            android:text="@string/shengyupoint"
-            android:textColor="@color/black"
-            android:textSize="@dimen/px58"/>
+            android:text="@string/account_remain"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/px44" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,42 +34,69 @@
             <TextView
                 android:id="@+id/tv_score_usable"
                 style="@style/DefaultTvStyle"
-                android:layout_marginRight="@dimen/px38"
+                android:layout_marginRight="@dimen/px20"
                 android:textColor="@color/color_F5BB1E"
-                android:textSize="@dimen/px116"/>
+                android:textSize="@dimen/px116" />
 
             <TextView
                 style="@style/DefaultTvStyle"
-                android:text="@string/jifenpoint"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/font_44"/>
+                android:text="@string/yuan"
+                android:textColor="@color/font_gray_l"
+                android:textSize="@dimen/font_40" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/id_submit_btn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="@dimen/px72"
-            android:layout_marginRight="@dimen/px72"
-            android:layout_marginTop="@dimen/px230"
-            android:background="@drawable/shape_bg_blue_sel"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:padding="@dimen/px34"
-            android:text="@string/recharge"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_50"/>
+            android:layout_marginLeft="@dimen/px96"
+            android:layout_marginRight="@dimen/px96"
+            android:layout_marginTop="@dimen/px229"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/id_btn_recharge"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/px118"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bg_blue_sel"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:alpha="0.6"
+                android:text="@string/transfer_cost_account"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_48" />
+
+            <View
+                android:layout_width="@dimen/px68"
+                android:layout_height="wrap_content"
+                android:background="@color/white" />
+
+            <Button
+                android:id="@+id/id_btn_to_bank"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/px118"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bg_blue_sel"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:text="@string/draw_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_48" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_reward_score_to_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px72"
+            android:alpha="0.8"
             android:padding="@dimen/px20"
             android:text="@string/reward_rules"
-            android:textColor="@color/color_0185FF"
-            android:textSize="@dimen/px42"/>
+            android:textColor="@color/font_color_blue"
+            android:textSize="@dimen/px42" />
 
     </LinearLayout>
 </ScrollView>

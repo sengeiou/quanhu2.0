@@ -20,6 +20,8 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
+import com.rz.circled.adapter.ContactsSearchAdapter;
+import com.rz.circled.db.dao.FriendInformationDao;
 import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.pinyin.CharacterParser;
@@ -33,7 +35,7 @@ import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TextViewUtils;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,31 +54,24 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
 
     @BindView(R.id.id_search_result_list)
     ListView mSearchList;
-
     @BindView(R.id.id_search_edit)
     EditText mSearchEdit;
-
     @BindView(R.id.id_clear)
     ImageView clearImg;
-
     @BindView(R.id.id_swipyRefreshLayout)
     SwipyRefreshLayout mSwipyRefreshLayout;
 
-    CommonAdapter<BaseInfo> mAdapter;
-
-    CharacterParser finder = CharacterParser.getInstance();
-
+    private ContactsSearchAdapter mAdapter;
+    private CharacterParser finder = CharacterParser.getInstance();
+    private FriendInformationDao friendInformationDao;
     /**
      * 当前类型所有数据集合以及搜索的过滤集合
      */
-    private List<BaseInfo> searchFriends = new ArrayList<>();
+    private List<FriendInformationBean> searchFriends = new ArrayList<>();
 
-    private List<BaseInfo> localFriends = new ArrayList<>();
+    private List<FriendInformationBean> localFriends = new ArrayList<>();
 
-    private QueryBuilder qb;
     private FriendPresenter1 presenter;
-
-//    private BaseService baseService;
 
     @Nullable
     @Override
@@ -89,11 +84,10 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
         super.updateView(t);
         if (getIntent().getExtras().getInt("type", Type.custType_3) == Type.custType_5) {
             searchFriends.clear();
-            searchFriends.addAll((List<BaseInfo>) t);
+            searchFriends.addAll((List<FriendInformationBean>) t);
 
             if (searchFriends.size() == 0) {
                 CommomUtils.showNoDataTip(aty);
-//            SVProgressHUD.showErrorWithStatus(aty, "暂无结果");
             }
 
             mAdapter.notifyDataSetChanged();
@@ -103,7 +97,7 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
              * 手机通讯录查询结果
              */
             localFriends.clear();
-            localFriends.addAll((List<BaseInfo>) t);
+            localFriends.addAll((List<FriendInformationBean>) t);
         }
     }
 
@@ -111,6 +105,7 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
     public void initPresenter() {
         super.initPresenter();
         presenter = new FriendPresenter1();
+        presenter.attachView(this);
     }
 
     @Override
@@ -155,9 +150,10 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
                     if (CountDownTimer.isFastClick(1000))
                         return true;
                     String s = mSearchEdit.getText().toString().trim();
+                    mAdapter.setKeyWord(finder.hasLetter(s) ? s.toUpperCase() : s);
                     if (getIntent().getExtras().getInt("type", Type.custType_3) == Type.custType_5) {
                         if (!TextUtils.isEmpty(s + "")) {
-                            ((FriendPresenter1) presenter).searchFriend(s + "", false);
+                            presenter.searchFriend(s + "", false);
                         } else {
                             searchFriends.clear();
                             mAdapter.notifyDataSetChanged();
@@ -201,33 +197,10 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
         });
     }
 
-    private void initQueryBuilder() {
-//        int relation = getIntent().getExtras().getInt("type", Type.custType_3);
-//        switch (relation) {
-//            case Type.custType_1:
-//                baseService = DbUtil.getFollowService();
-//                qb = baseService.queryBuilder();
-//                qb.where(FollowInfoDao.Properties.Relation.eq(relation)).build();
-//                break;
-//            case Type.custType_3:
-//                baseService = DbUtil.getFriendService();
-//                qb = baseService.queryBuilder();
-//                qb.where(FriendInfoDao.Properties.Relation.eq(Type.relation_friend)).build();
-//                break;
-//            case Type.custType_4:
-//                baseService = DbUtil.getBlackService();
-//                qb = baseService.queryBuilder();
-//                qb.where(BlackInfoDao.Properties.Relation.eq(relation)).build();
-//                break;
-//            default:
-//                break;
-//        }
-    }
-
     @Override
     public void initData() {
         EventBus.getDefault().register(this);
-
+        friendInformationDao = new FriendInformationDao(mContext);
         localFriends.clear();
         searchFriends.clear();
         int type = getIntent().getExtras().getInt("type", Type.custType_3);
@@ -235,42 +208,11 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
          * 如果是好友或我关注的则直接查询数据库，如果不是则匹配联系人
          */
         if (type == Type.custType_0) {
-            ((FriendPresenter1) presenter).queryAndFilterContacts();
+            presenter.queryAndFilterContacts();
         } else if (type != Type.custType_5) {
-//            initQueryBuilder();
-//            LazyList<BaseInfo> friends = qb.listLazy();
-//            localFriends.addAll(friends);
-//            friends.close();
+            localFriends.addAll(friendInformationDao.queryForAll());
         }
-        mAdapter = new CommonAdapter<BaseInfo>(this, R.layout.layout_contacts_search_item) {
-            @Override
-            public void convert(ViewHolder helper, BaseInfo item, int position) {
-                String str = mSearchEdit.getText().toString();
-
-                int[] indexs = SearchPingyinEngine.getkeyIndex(item, finder.hasLetter(str) ? str.toUpperCase() : str);
-                String textStr = null;
-
-                if (indexs[2] == 1) {
-                    textStr = item.getNameNotes();
-                } else {
-                    textStr = item.getCustNname();
-                }
-
-                if (!StringUtils.isEmpty(textStr))
-                    if (indexs[0] != -1)
-                        TextViewUtils.setSpannableStyle(textStr, indexs[0], indexs[1], (TextView) helper.getViewById(R.id.id_search_key));
-                    else
-                        ((TextView) helper.getViewById(R.id.id_search_key)).setText(textStr);
-
-                if (Protect.checkLoadImageStatus(aty)) {
-                    Glide.with(aty)
-                            .load(item.getCustImg())
-                            .error(R.drawable.ic_default_head)
-                            .into((ImageView) helper.getViewById(R.id.img_avatar));
-                }
-            }
-        };
-        mSearchList.setAdapter(mAdapter);
+        mSearchList.setAdapter(mAdapter = new ContactsSearchAdapter(mContext, R.layout.layout_contacts_search_item));
         mSearchList.setOnItemClickListener(this);
         mAdapter.setData(searchFriends);
     }
@@ -285,7 +227,6 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
 
         if (searchFriends.size() == 0) {
             CommomUtils.showNoDataTip(aty);
-//            SVProgressHUD.showErrorWithStatus(aty, "暂无结果");
         }
         mAdapter.setData(searchFriends);
         mAdapter.notifyDataSetChanged();
@@ -307,12 +248,12 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
         /**
          * 进入好友详情
          */
-        BaseInfo item = (BaseInfo) mAdapter.getItem(i);
+        FriendInformationBean item = mAdapter.getItem(i);
         if (item != null) {
             if (item.getRelation() == Type.relation_friend) {
 //                FriendInfoAty.newFrindInfo(aty, item.getCustId());
             } else {
-                ((FriendPresenter1) presenter).requestSaveFriendByFriend(item);
+                presenter.requestSaveFriendByFriend(item);
             }
         }
     }
@@ -321,7 +262,7 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
         String keyWord = mSearchEdit.getText().toString().trim();
         if (!TextUtils.isEmpty(keyWord))
-            ((FriendPresenter1) presenter).searchFriend(keyWord, direction != SwipyRefreshLayoutDirection.TOP);
+            presenter.searchFriend(keyWord, direction != SwipyRefreshLayoutDirection.TOP);
         else
             mSwipyRefreshLayout.setRefreshing(false);
 

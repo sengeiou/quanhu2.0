@@ -28,7 +28,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon;
 import com.yryz.yunxinim.uikit.common.util.sys.SoftKeyboardUtil;
 
@@ -112,8 +112,8 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
     ContactsSelectAdp mContactsAdp;
     OpusGeneralPresenter mPresenter;
 
-    private List<BaseInfo> mSaveAllFriends = new ArrayList<>();
-    private List<BaseInfo> mSelectedFriends = new ArrayList<>();
+    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
+    private List<FriendInformationBean> mSelectedFriends = new ArrayList<>();
     private ArrayList<String> mDisableFriends = new ArrayList<>();
     private ArrayList<String> mSelectFriends = new ArrayList<>();
 
@@ -250,11 +250,11 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
 
         mLayoutNone.setVisibility(View.GONE);
         mSaveAllFriends.clear();
-        mSaveAllFriends.addAll((List<BaseInfo>) t);
+        mSaveAllFriends.addAll((List<FriendInformationBean>) t);
 
         if (null != mDisableFriends && mDisableFriends.size() > 0)
             for (String custId : mDisableFriends) {
-                for (BaseInfo item : mSaveAllFriends) {
+                for (FriendInformationBean item : mSaveAllFriends) {
                     if (TextUtils.equals(item.getCustId(), custId)) {
                         item.setDisable(true);
                         break;
@@ -321,7 +321,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
         if (i < 0) {
             return;
         }
-        BaseInfo item = (BaseInfo) mContactsAdp.getItem(i);
+        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i);
         if (item.isDisable())
             return;
         item.setSelect(!item.isSelect());

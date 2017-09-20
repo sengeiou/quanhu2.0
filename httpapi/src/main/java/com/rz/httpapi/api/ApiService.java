@@ -5,16 +5,17 @@ import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.AnnouncementResponseBean;
+import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
-import com.rz.httpapi.bean.BaseInfo;
 import com.rz.httpapi.bean.BillDetailModel;
+import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
 import com.rz.httpapi.bean.CollectionBean;
 import com.rz.httpapi.bean.FamousModel;
-import com.rz.httpapi.bean.FriendInfoModel;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
@@ -35,6 +36,7 @@ import com.rz.httpapi.bean.TransferResultBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -458,6 +460,7 @@ public interface ApiService {
             @Query("pageSize") int pageSize
 
     );
+
     /**
      * 我的页面活动列表
      */
@@ -484,6 +487,7 @@ public interface ApiService {
             @Query("limit") int limit,
             @Query("start") int start
     );
+
     /**
      * 我的收藏
      */
@@ -494,6 +498,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("limit") int limit
     );
+
     /**
      * 添加收藏
      */
@@ -503,6 +508,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("resourceId") String resourceId
     );
+
     /**
      * 删除收藏
      */
@@ -512,6 +518,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("cid") int cid
     );
+
     /**
      * 获取转发价格列表
      *
@@ -695,7 +702,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.FRIEND_DETAIL)
-    Call<ResponseData<FriendInfoModel>> getFriendDetail(
+    Call<ResponseData<FriendInformationBean>> getFriendDetail(
             @Field("act") int act,
             @Field("custId") String custId,
             @Field("fid") String fid
@@ -805,7 +812,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.FRIEND_SEARCH)
-    Call<ResponseData<List<BaseInfo>>> searchFriend(
+    Call<ResponseData<List<FriendInformationBean>>> searchFriend(
             @Field("custId") String custId,
             @Field("keyWord") String keyword,
             @Field("start") int start,
@@ -820,7 +827,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIFriend.FRIEND_ALL_LIST)
-    Call<ResponseData<List<BaseInfo>>> friendList(
+    Call<ResponseData<List<FriendInformationBean>>> friendList(
             @Field("custId") String custId
     );
 
@@ -884,7 +891,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST(ApiPay.PAY_ORDER)
-    Call<ResponseData> payOrder(
+    Call<ResponseData<HashMap<String, String>>> payOrder(
             @Field("custId") String custId,
             @Field("orderId") String orderId,
             @Field("password") String password
@@ -987,6 +994,94 @@ public interface ApiService {
             @Field("limit") int limit,
             @Field("resourceType") String resourceType,
             @Field("start") int start
+    );
+
+    /**
+     * 获取银行卡列表
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_BAND_LIST)
+    Call<ResponseData<List<BankCardModel>>> getBankCardList(
+            @Field("act") int act,
+            @Field("custId") String custId
+    );
+
+    /**
+     * 绑定银行卡
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.BAND_CARD)
+    Call<ResponseData> bandCard(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("bankCardNo") String bankCardNo,
+            @Field("name") String name,
+            @Field("password") String password
+    );
+
+    /**
+     * 解绑银行卡
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.UNBAND_CARD)
+    Call<ResponseData> unBindCard(
+            @Field("act") int act,
+            @Field("password") String password,
+            @Field("custId") String custId,
+            @Field("cust2BankId") String cust2BankId
+    );
+
+    /**
+     * 设置默认银行卡
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.SET_DEFAULT_CARD)
+    Call<ResponseData> setDefaultCard(
+            @Field("act") int act,
+            @Field("custId") String custId,
+            @Field("cust2BankId") String cust2BankId
+    );
+
+    /**
+     * 收益消费到账户
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.POINT_TO_ACCOUNT)
+    Call<ResponseData> pointsToAccount(
+            @Field("act") int act,
+            @Field("password") String password,
+            @Field("custId") String custId,
+            @Field("cost") String cost
+    );
+
+    /**
+     * 提现
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_CASH)
+    Call<ResponseData> getCash(
+            @Field("act") int act,
+            @Field("password") String password,
+            @Field("custId") String custId,
+            @Field("cost") String cost,
+            @Field("cust2BankId") String cust2BankId
+    );
+
+    /**
+     * 计算提现手续费
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_CHARGE)
+    Call<ResponseData<List<CashModel>>> getServiceCharge(
+            @Field("act") int act
     );
 
 }

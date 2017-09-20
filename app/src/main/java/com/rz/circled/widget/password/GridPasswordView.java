@@ -432,6 +432,9 @@ public class GridPasswordView extends LinearLayout implements PasswordView {
     public void setBackgroundDrawable(Drawable background) {
     }
 
+    public int getmPasswordLength() {
+        return mPasswordLength;
+    }
 
     /**
      * Interface definition for a callback to be invoked when the password changed or is at the maximum length.

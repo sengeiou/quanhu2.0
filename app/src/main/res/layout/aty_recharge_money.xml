@@ -1,32 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/color_f5f5f5"
-              android:gravity="center_horizontal"
-              android:orientation="vertical">
-
-    <!--<ImageView-->
-    <!--android:id="@+id/id_user_head_img"-->
-    <!--android:layout_width="@dimen/px168"-->
-    <!--android:layout_height="@dimen/px168"-->
-    <!--android:layout_marginTop="@dimen/px90"-->
-    <!--android:scaleType="fitXY" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/id_user_name_txt"-->
-    <!--style="@style/DefaultTvStyle"-->
-    <!--android:layout_marginBottom="@dimen/px86"-->
-    <!--android:paddingTop="@dimen/px30"-->
-    <!--android:textColor="@color/color_1bc2b8"-->
-    <!--android:textSize="@dimen/px52" />-->
-
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/px2"-->
-    <!--android:layout_marginLeft="@dimen/px30"-->
-    <!--android:layout_marginRight="@dimen/px30"-->
-    <!--android:background="@color/color_cccccc" />-->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_gray_common"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,8 +16,8 @@
             style="@style/DefaultTvStyle"
             android:paddingTop="@dimen/px60"
             android:text="@string/choose_recharge_money"
-            android:textColor="@color/black"
-            android:textSize="@dimen/font_46"/>
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/font_46" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,20 +29,21 @@
                 style="@style/DefaultTvStyle"
                 android:paddingTop="@dimen/px36"
                 android:text="@string/balance_current"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/font_40"/>
+                android:textColor="@color/font_gray_s"
+                android:textSize="@dimen/font_40" />
 
             <TextView
                 android:id="@+id/tv_account"
                 style="@style/DefaultTvStyle"
+                android:layout_marginLeft="@dimen/px20"
                 android:paddingTop="@dimen/px36"
-                android:textColor="@color/v3_text_color_main_blue"
-                android:textSize="@dimen/font_40"/>
+                android:textColor="@color/font_color_blue"
+                android:textSize="@dimen/font_40" />
 
         </LinearLayout>
     </LinearLayout>
 
-    <com.rz.rz_rrz.widget.MyGridView
+    <com.rz.circled.widget.MyGridView
         android:id="@+id/id_recharge_gridV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +54,7 @@
         android:paddingLeft="@dimen/px44"
         android:paddingRight="@dimen/px44"
         android:scrollbars="none"
-        android:verticalSpacing="@dimen/px45"/>
+        android:verticalSpacing="@dimen/px45" />
 
     <Button
         android:id="@+id/id_recharge_btn"
@@ -89,12 +68,12 @@
         android:gravity="center"
         android:text="@string/recharge_title"
         android:textColor="@color/white"
-        android:textSize="@dimen/px50"/>
+        android:textSize="@dimen/px50" />
 
     <TextView
         android:id="@+id/id_expain_txt"
         style="@style/DefaultTvStyle"
         android:text="@string/recharge_problem"
-        android:textColor="@color/color_1bc2b8"
-        android:textSize="@dimen/font_44"/>
+        android:textColor="@color/font_color_blue"
+        android:textSize="@dimen/font_44" />
 </LinearLayout>

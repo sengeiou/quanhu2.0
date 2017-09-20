@@ -1,5 +1,6 @@
 package com.rz.httpapi.api;
 
+import com.rz.httpapi.BuildConfig;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.api.constants.IConstants;
 import com.rz.httpapi.bean.CircleBelongBean;

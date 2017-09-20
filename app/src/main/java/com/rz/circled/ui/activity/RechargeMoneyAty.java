@@ -26,6 +26,7 @@ import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TextViewUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.AccountBean;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 
@@ -98,7 +99,7 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
 //        mTxtUserName.setText(Session.getUserName());
 
         mMoney.addAll(Arrays.asList(money));
-        mAdapter = new CommonAdapter<String>(this, R.layout.adp_recharge_textview) {
+        mAdapter = new CommonAdapter<String>(this, mMoney, R.layout.adp_recharge_textview) {
 
             @Override
             public void convert(ViewHolder helper, String item, int position) {
@@ -123,7 +124,6 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
         };
         myGridView.setAdapter(mAdapter);
         myGridView.setOnItemClickListener(this);
-        mAdapter.setData(mMoney);
 
         tvAccount.setText(Session.getUserMoney() + "悠然币");
     }
@@ -150,7 +150,7 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
     public <T> void updateView(T t) {
         super.updateView(t);
         if (null != t) {
-            AccountModel model = (AccountModel) t;
+            AccountBean model = (AccountBean) t;
             if (null != model) {
                 double mUserMoney = Double.parseDouble(model.getAccountSum() + "");
                 Session.setUserMoney(mUserMoney + "");

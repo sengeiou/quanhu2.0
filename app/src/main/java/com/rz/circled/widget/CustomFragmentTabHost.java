@@ -1,5 +1,6 @@
 package com.rz.circled.widget;
 
+import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -29,13 +31,8 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
     private TabHost.OnTabChangeListener mOnTabChangeListener;
     private TabInfo mLastTab;
     private boolean mAttached;
-    private Fragment currentFragment;
 
     public InterceptTagChanged interceptTagChanged;
-
-    public Fragment getCurrentFragment() {
-        return currentFragment;
-    }
 
     public interface InterceptTagChanged {
         boolean intercept(String tabId);
@@ -290,6 +287,7 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         Parcelable superState = super.onSaveInstanceState();
         SavedState ss = new SavedState(superState);
         ss.curTab = getCurrentTabTag();
+        Log.e("zxw", "onSaveInstanceState: " + ss.curTab);
         return ss;
     }
 
@@ -298,6 +296,7 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
         setCurrentTabByTag(ss.curTab);
+        Log.e("zxw", "onRestoreInstanceState: " + ss.curTab);
     }
 
     @Override
@@ -387,10 +386,8 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
                 if (newTab.fragment == null) {
                     newTab.fragment = Fragment.instantiate(mContext, newTab.clss.getName(), newTab.args);
                     ft.add(mContainerId, newTab.fragment, newTab.tag);
-                    currentFragment = newTab.fragment;
                 } else {
                     ft.show(newTab.fragment);
-                    currentFragment = newTab.fragment;
                 }
             }
 
@@ -399,5 +396,105 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         return ft;
     }
 
+    @Override
+    public TabSpec newTabSpec(String tag) {
+        Log.e("zxw", "newTabSpec: " + tag);
+        return super.newTabSpec(tag);
+    }
 
+    @Override
+    public void setup() {
+        super.setup();
+        Log.e("zxw", "setup: ");
+    }
+
+    @Override
+    public void setup(LocalActivityManager activityGroup) {
+        Log.e("zxw", "setup: " + activityGroup.toString());
+        super.setup(activityGroup);
+    }
+
+    @Override
+    public void onTouchModeChanged(boolean isInTouchMode) {
+        Log.e("zxw", "onTouchModeChanged: " + isInTouchMode);
+        super.onTouchModeChanged(isInTouchMode);
+    }
+
+    @Override
+    public void addTab(TabSpec tabSpec) {
+        Log.e("zxw", "addTab: " + tabSpec);
+        super.addTab(tabSpec);
+    }
+
+    @Override
+    public void clearAllTabs() {
+        Log.e("zxw", "clearAllTabs: ");
+        super.clearAllTabs();
+    }
+
+    @Override
+    public TabWidget getTabWidget() {
+        Log.e("zxw", "getTabWidget: ");
+        return super.getTabWidget();
+    }
+
+    @Override
+    public int getCurrentTab() {
+        Log.e("zxw", "getCurrentTab: " + super.getCurrentTab());
+        return super.getCurrentTab();
+    }
+
+    @Override
+    public String getCurrentTabTag() {
+        Log.e("zxw", "getCurrentTabTag: " + super.getCurrentTabTag());
+        return super.getCurrentTabTag();
+    }
+
+    @Override
+    public View getCurrentTabView() {
+        Log.e("zxw", "getCurrentTabView: " + super.getCurrentTabView());
+        return super.getCurrentTabView();
+    }
+
+    @Override
+    public View getCurrentView() {
+        Log.e("zxw", "getCurrentView: " + super.getCurrentView());
+        return super.getCurrentView();
+    }
+
+    @Override
+    public void setCurrentTabByTag(String tag) {
+        Log.e("zxw", "setCurrentTabByTag: " + tag);
+        super.setCurrentTabByTag(tag);
+    }
+
+    @Override
+    public FrameLayout getTabContentView() {
+        Log.e("zxw", "getTabContentView: ");
+        return super.getTabContentView();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        Log.e("zxw", "dispatchKeyEvent: ");
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void dispatchWindowFocusChanged(boolean hasFocus) {
+        super.dispatchWindowFocusChanged(hasFocus);
+        Log.e("zxw", "getAccessibilityClassName: ");
+    }
+
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        Log.e("zxw", "getAccessibilityClassName: ");
+        return super.getAccessibilityClassName();
+    }
+
+    @Override
+    public void setCurrentTab(int index) {
+        super.setCurrentTab(index);
+        Log.e("zxw", "setCurrentTab: " + index);
+    }
 }

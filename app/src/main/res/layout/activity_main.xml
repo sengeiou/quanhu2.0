@@ -12,13 +12,13 @@
         android:layout_weight="1"/>
 
     <com.rz.circled.widget.CustomFragmentTabHost
-        android:id="@+id/tab_main"
+        android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px150"
         android:background="@color/white">
 
         <FrameLayout
-            android:id="@+id/fl_main_tab"
+            android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"/>

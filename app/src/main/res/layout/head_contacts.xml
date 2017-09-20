@@ -1,169 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/color_F5F5F5"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/id_follow_me_rela"
-        style="@style/ContactHeadRelaStyle">
+    <View style="@style/line_horizontal_gray_s" />
 
-        <ImageView
-            style="@style/ContactHeadImgStyle"
-            android:src="@drawable/ic_new_friend"/>
-
-        <TextView
-            style="@style/DefaultTvStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px130"
-            android:text="@string/new_friend"/>
-
-        <TextView
-            android:id="@+id/id_remind_num_follow_txt"
-            style="@style/DefaultTvStyle"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px60"
-            android:background="@drawable/unread_count_bg"
-            android:textColor="@color/white"
-            android:textSize="@dimen/px30"
-            android:visibility="gone"/>
-    </RelativeLayout>
-
-    <View
-        style="@style/line_horizontal_gray_s"
-        android:layout_marginLeft="@dimen/px20"
-        android:layout_marginRight="@dimen/px20"/>
-
-    <TextView
-        android:id="@+id/id_my_follow_txt"
-        style="@style/IconTvStyle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px3"
-        android:background="@drawable/comm_item_selector"
-        android:clickable="true"
-        android:drawableLeft="@mipmap/ic_my_follow"
-        android:paddingLeft="@dimen/px30"
-        android:text="@string/my_follow"
-        android:visibility="gone"/>
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/id_group_chat_rela"
-        style="@style/ContactHeadRelaStyle">
+        <RelativeLayout
+            android:id="@+id/id_follow_me_rela"
+            style="@style/ContactHeadRelaStyle">
 
-        <ImageView
-            style="@style/ContactHeadImgStyle"
-            android:src="@drawable/ic_team_advance"/>
+            <ImageView
+                style="@style/ContactHeadImgStyle"
+                android:src="@drawable/ic_new_friend" />
 
-        <TextView
-            style="@style/DefaultTvStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px130"
-            android:text="@string/group_chat"/>
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/px102"
+                android:text="@string/new_friend"
+                android:textSize="@dimen/font_48" />
 
-        <TextView
-            android:id="@+id/id_remind_num_group_txt"
-            style="@style/DefaultTvStyle"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px60"
-            android:background="@drawable/unread_count_bg"
-            android:textColor="@color/white"
-            android:textSize="@dimen/px30"
-            android:visibility="gone"/>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/id_remind_num_follow_txt"
+                style="@style/DefaultTvStyle.ContactsUnreadTvStyle" />
+        </RelativeLayout>
 
-    <View
-        style="@style/line_horizontal_gray_s"
-        android:layout_marginLeft="@dimen/px20"
-        android:layout_marginRight="@dimen/px20"/>
+        <LinearLayout
+            android:id="@+id/line_need"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    <RelativeLayout
-        android:id="@+id/id_group_discuss"
-        style="@style/ContactHeadRelaStyle">
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44" />
 
-        <ImageView
-            style="@style/ContactHeadImgStyle"
-            android:src="@drawable/ic_team_normal"/>
+            <TextView
+                android:id="@+id/id_my_follow_txt"
+                style="@style/IconTvStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px3"
+                android:background="@drawable/comm_item_selector"
+                android:clickable="true"
+                android:drawableLeft="@mipmap/ic_my_follow"
+                android:paddingLeft="@dimen/px30"
+                android:text="@string/my_follow"
+                android:visibility="gone" />
 
-        <TextView
-            style="@style/DefaultTvStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px130"
-            android:text="@string/discuss_chat"/>
+            <RelativeLayout
+                android:id="@+id/id_group_chat_rela"
+                style="@style/ContactHeadRelaStyle">
 
-        <TextView
-            android:id="@+id/id_remind_num_discuss_txt"
-            style="@style/DefaultTvStyle"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px60"
-            android:background="@drawable/unread_count_bg"
-            android:textColor="@color/white"
-            android:textSize="@dimen/px30"
-            android:visibility="gone"/>
-    </RelativeLayout>
+                <ImageView
+                    style="@style/ContactHeadImgStyle"
+                    android:src="@drawable/ic_team_advance" />
 
-    <View
-        style="@style/line_horizontal_gray_s"
-        android:layout_marginLeft="@dimen/px20"
-        android:layout_marginRight="@dimen/px20"/>
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px102"
+                    android:text="@string/group_chat"
+                    android:textSize="@dimen/font_48" />
 
-    <RelativeLayout
-        android:id="@+id/id_verify_message_rela"
-        style="@style/ContactHeadRelaStyle">
+                <TextView
+                    android:id="@+id/id_remind_num_group_txt"
+                    style="@style/DefaultTvStyle.ContactsUnreadTvStyle" />
+            </RelativeLayout>
 
-        <ImageView
-            style="@style/ContactHeadImgStyle"
-            android:src="@drawable/ic_team_system_message"/>
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44" />
 
-        <TextView
-            style="@style/DefaultTvStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px130"
-            android:text="@string/team_verification"/>
+            <RelativeLayout
+                android:id="@+id/id_group_discuss"
+                style="@style/ContactHeadRelaStyle">
 
-        <TextView
-            android:id="@+id/id_remind_num_verify_message_txt"
-            style="@style/DefaultTvStyle"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px60"
-            android:background="@drawable/unread_count_bg"
-            android:textColor="@color/white"
-            android:textSize="@dimen/px30"
-            android:visibility="gone"/>
-    </RelativeLayout>
+                <ImageView
+                    style="@style/ContactHeadImgStyle"
+                    android:src="@drawable/ic_team_normal" />
 
-    <TextView
-        android:id="@+id/id_black_name_txt"
-        style="@style/IconTvStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px3"
-        android:background="@drawable/comm_item_selector"
-        android:clickable="true"
-        android:drawableLeft="@mipmap/ic_black_name"
-        android:paddingLeft="@dimen/px30"
-        android:text="@string/black_name"
-        android:visibility="gone"/>
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px102"
+                    android:text="@string/discuss_chat"
+                    android:textSize="@dimen/font_48" />
+
+                <TextView
+                    android:id="@+id/id_remind_num_discuss_txt"
+                    style="@style/DefaultTvStyle.ContactsUnreadTvStyle" />
+            </RelativeLayout>
+
+            <View
+                style="@style/line_horizontal_gray_s"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44" />
+
+            <RelativeLayout
+                android:id="@+id/id_verify_message_rela"
+                style="@style/ContactHeadRelaStyle">
+
+                <ImageView
+                    style="@style/ContactHeadImgStyle"
+                    android:src="@drawable/ic_team_system_message" />
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/px102"
+                    android:text="@string/team_verification"
+                    android:textSize="@dimen/font_48" />
+
+                <TextView
+                    android:id="@+id/id_remind_num_verify_message_txt"
+                    style="@style/DefaultTvStyle.ContactsUnreadTvStyle" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/id_black_name_txt"
+                style="@style/IconTvStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px3"
+                android:background="@drawable/comm_item_selector"
+                android:clickable="true"
+                android:drawableLeft="@mipmap/ic_black_name"
+                android:paddingLeft="@dimen/px30"
+                android:text="@string/black_name"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line_horizontal_gray_s" />
 
     <View
         style="@style/line_horizontal_gray_s"
         android:layout_height="@dimen/px30"
-        />
+        android:background="@color/color_F8F8F8" />
+
+    <View style="@style/line_horizontal_gray_s" />
 
     <TextView
         style="@style/DefaultTvStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px144"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingLeft="@dimen/px44"
+        android:gravity="left"
+        android:includeFontPadding="false"
+        android:padding="@dimen/px44"
         android:text="@string/my_friends"
         android:textColor="@color/color_000000"
-        android:textSize="@dimen/font_46"/>
+        android:textSize="@dimen/font_44"
+        android:textStyle="bold" />
 
 </LinearLayout>

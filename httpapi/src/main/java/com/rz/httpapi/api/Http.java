@@ -1,5 +1,7 @@
 package com.rz.httpapi.api;
 
+import android.content.Context;
+
 import com.rz.httpapi.api.callback.RequestCallback;
 
 import java.io.IOException;
@@ -34,6 +36,10 @@ public class Http {
      * APIService的对象，访问接口
      */
     public static <T> T getApiService(Class<T> service) {
+        return getApiService(service, false);
+    }
+
+    public static <T> T getApiService(Class<T> service, boolean pay) {
         Object object = serviceMap.get(service.getCanonicalName());
         if (object == null) {
             Retrofit retrofit = new Retrofit.Builder()

@@ -40,7 +40,7 @@ public class TextViewUtils {
 
     public static void setSpannableStyle(String str, int start, int end, TextView textView) {
         Spannable span = new SpannableString(str);
-        span.setSpan(new ForegroundColorSpan(BaseApplication.getContext().getResources().getColor(R.color.color_23CDC3)), start,
+        span.setSpan(new ForegroundColorSpan(BaseApplication.getContext().getResources().getColor(R.color.color_0185FF)), start,
                 end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(span);
     }

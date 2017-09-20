@@ -366,6 +366,9 @@ public class SysSharePres {
     //是否显示全聊及其入口
     private static final String NEED_TEAM = "needTeam";
 
+    //当前请求act
+    private static final String NOW_ACT = "nowAct";
+
     public SysSharePres() {
         System.out.println(BaseApplication.getInstance().getContext());
         mSharePres = BaseApplication.getInstance().getContext().getSharedPreferences(PRES_NAME,
@@ -997,5 +1000,13 @@ public class SysSharePres {
 
     public void setNeedTeam(boolean needTeam) {
         mSharePres.edit().putBoolean(NEED_TEAM, needTeam).apply();
+    }
+
+    public String getNowAct() {
+        return mSharePres.getString(NOW_ACT, "");
+    }
+
+    public void setNowAct(String act) {
+        mSharePres.edit().putString(NOW_ACT, act).apply();
     }
 }

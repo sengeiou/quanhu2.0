@@ -1,8 +1,9 @@
-package com.rz.circled.modle;
+package com.rz.httpapi.bean;
 
-import com.rz.common.utils.StringUtils;
+import android.text.TextUtils;
 
 import java.io.Serializable;
+
 /**
  * 银行卡信息
  */
@@ -44,7 +45,7 @@ public class BankCardModel implements Serializable {
     }
 
     public String getBankCardNo() {
-        if (StringUtils.isEmpty(bankCardNo)) {
+        if (TextUtils.isEmpty(bankCardNo)) {
             return "";
         }
         return bankCardNo;
@@ -79,7 +80,7 @@ public class BankCardModel implements Serializable {
     }
 
     public String getBankCode() {
-        if (StringUtils.isEmpty(bankCardNo)) {
+        if (TextUtils.isEmpty(bankCardNo)) {
             bankCode = "";
         }
         return bankCode;

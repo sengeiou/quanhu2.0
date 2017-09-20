@@ -80,7 +80,7 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
         }
 
         ShareModel shareModel = (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA);
-        if (117 == shareModel.fromPage) {
+        if (117 == shareModel.getFromPage()) {
             ((TextView) findViewById(R.id.id_tv_title)).setText("选择邀请对象");
             setTitleText("邀请聊天好友");
         } else {

@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,9 +23,11 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
+import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
+import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.AwesomeTabsAty;
@@ -35,18 +36,17 @@ import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
+import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
-import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.SettingActivity;
+import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.ObservableListView;
-import com.rz.circled.widget.observable.ObservableScrollViewCallbacks;
-import com.rz.circled.widget.observable.ScrollState;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.EntityCache;
@@ -111,7 +111,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     TextView tvCollectCount;
     TextView tvActivityCount;
 
-//    private SplashPresenter mSplashPresenter;
+    //    private SplashPresenter mSplashPresenter;
     protected IPresenter presenter;
     private MessageReceiver receiver;
     private CustormServiceModel mCustormServiceModel;
@@ -208,7 +208,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             header.findViewById(R.id.id_person_news_rela).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isLogin()) {jump(UserInfoActivity.class);
+                    if (isLogin()) {
+                        jump(UserInfoActivity.class);
 
                     }
                 }
@@ -239,7 +240,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
-                        MyPrivateGroupActivity.startMyPrivateGroup(mActivity,0);
+                        MyPrivateGroupActivity.startMyPrivateGroup(mActivity, 0);
                     }
                 }
             });
@@ -408,18 +409,18 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         mModelList = new ArrayList<MineFragItemModel>();
 //        MineFragItemModel model8 = new MineFragItemModel(getString(R.string.mine_my_contacts), "管理好友", R.drawable.ic_mine_contacts_new, false);
-        MineFragItemModel model = new MineFragItemModel(false,getString(R.string.my_purchase), R.mipmap.ic_buy, false);
-        MineFragItemModel mode2 = new MineFragItemModel(false,getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
-        MineFragItemModel mode3 = new MineFragItemModel(false,getString(R.string.my_collect), R.mipmap.ic_colection, true);
-        MineFragItemModel mode4 = new MineFragItemModel(false,getString(R.string.my_level), R.mipmap.ic_level, false);
-        MineFragItemModel mode5 = new MineFragItemModel(false,getString(R.string.mine_my_account), R.mipmap.ic_count, false);
-        MineFragItemModel mode6 = new MineFragItemModel(false,getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
-        MineFragItemModel mode7 = new MineFragItemModel(false,getString(R.string.mine_my_contacts), R.mipmap.ic_addlist, false);
-        MineFragItemModel mode8 = new MineFragItemModel(false,getString(R.string.mine_my_qrcode), R.mipmap.ic_code, false);
-        MineFragItemModel mode9 = new MineFragItemModel(false,getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
+        MineFragItemModel model = new MineFragItemModel(false, getString(R.string.my_purchase), R.mipmap.ic_buy, false);
+        MineFragItemModel mode2 = new MineFragItemModel(false, getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
+        MineFragItemModel mode3 = new MineFragItemModel(false, getString(R.string.my_collect), R.mipmap.ic_colection, true);
+        MineFragItemModel mode4 = new MineFragItemModel(false, getString(R.string.my_level), R.mipmap.ic_level, false);
+        MineFragItemModel mode5 = new MineFragItemModel(false, getString(R.string.mine_my_account), R.mipmap.ic_count, false);
+        MineFragItemModel mode6 = new MineFragItemModel(false, getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
+        MineFragItemModel mode7 = new MineFragItemModel(false, getString(R.string.mine_my_contacts), R.mipmap.ic_addlist, false);
+        MineFragItemModel mode8 = new MineFragItemModel(false, getString(R.string.mine_my_qrcode), R.mipmap.ic_code, false);
+        MineFragItemModel mode9 = new MineFragItemModel(false, getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
 
-        MineFragItemModel mode10 = new MineFragItemModel(false,getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
-        MineFragItemModel mode11 = new MineFragItemModel(false,getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
+        MineFragItemModel mode10 = new MineFragItemModel(false, getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
+        MineFragItemModel mode11 = new MineFragItemModel(false, getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
 
 
         mModelList.add(model);//我的购买
@@ -533,7 +534,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //        }
     }
 
-//    @OnClick()
+    //    @OnClick()
     public void onClick(View v) {
         switch (v.getId()) {
 //            case R.id.btn_my_collect:
@@ -568,14 +569,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //                break;
             case R.id.id_person_head_img:
                 if (isLogin()) {
-                    trackUser("我的","入口名称","我的头像");
+                    trackUser("我的", "入口名称", "我的头像");
 //                    V3FriendInfoActivity.newFrindInfo(frg, Session.getUserId());
                 }
                 break;
             //查看个人详情信息
             case R.id.id_person_news_rela:
                 if (Session.getUserIsLogin()) {
-                    trackUser("我的","入口名称","个人详情");
+                    trackUser("我的", "入口名称", "个人详情");
                     jump(PersonInfoAty.class);
 
                 } else {
@@ -676,7 +677,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             case 6:
                 if (isLogin()) {
-                    trackUser("我的","入口名称","我的卡卷");
+                    trackUser("我的", "入口名称", "我的卡卷");
                     Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
                     intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
                     startActivity(intent);
@@ -686,7 +687,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             case 7:
                 if (isLogin()) {
-                    trackUser("我的","入口名称","通讯录");
+                    trackUser("我的", "入口名称", "通讯录");
                     jump(ContactsAty.class);
 
                 }
@@ -694,7 +695,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             case 8:
                 if (isLogin()) {
-                    trackUser("我的","入口名称","我的二维码");
+                    trackUser("我的", "入口名称", "我的二维码");
                     jump(PersonScanAty.class);
 
                 }
@@ -702,8 +703,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             case 9:
                 if (isLogin()) {
-                    trackUser("我的","入口名称","一键邀请好友");
-
+                    trackUser("我的", "入口名称", "一键邀请好友");
+                    ShareNewsAty.startShareNews(getContext(), new ShareModel(
+                                    getString(R.string.app_name),
+                                    getString(R.string.app_name),
+                                    AgreementConstants.SHARE_APP_AGREEMENT),
+                            IntentCode.Setting.SETTING_RESULT_CODE);
                 }
                 break;
 
@@ -720,7 +725,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
                 //设置
             case 11:
-                trackUser("我的","入口名称","设置");
+                trackUser("我的", "入口名称", "设置");
                 Intent intent = new Intent(mActivity, SettingActivity.class);
                 startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
                 break;

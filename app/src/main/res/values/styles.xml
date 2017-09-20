@@ -180,17 +180,17 @@
 
     <style name="ContactHeadRelaStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/px144</item>
+        <item name="android:layout_height">@dimen/px160</item>
         <item name="android:paddingLeft">@dimen/px44</item>
+        <item name="android:paddingRight">@dimen/px44</item>
         <item name="android:background">@drawable/comm_item_selector</item>
         <item name="android:clickable">true</item>
     </style>
 
     <style name="ContactHeadImgStyle">
-        <item name="android:layout_width">@dimen/px100</item>
-        <item name="android:layout_height">@dimen/px100</item>
+        <item name="android:layout_width">@dimen/px72</item>
+        <item name="android:layout_height">@dimen/px72</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:padding">@dimen/px8</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
 
@@ -342,5 +342,14 @@
         <item name="android:layout_marginLeft">@dimen/px25</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="DefaultTvStyle.ContactsUnreadTvStyle">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/unread_count_bg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/px28</item>
+        <item name="android:visibility">gone</item>
     </style>
 </resources>

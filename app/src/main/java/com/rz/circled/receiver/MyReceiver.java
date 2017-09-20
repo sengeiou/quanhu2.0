@@ -7,19 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.rz.circled.BuildConfig;
-import com.rz.circled.constants.JPushTypeConstants;
-import com.rz.circled.db.dao.SystemInformationDao;
-import com.rz.circled.db.model.SystemInformation;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.NewsJumpHelper;
-import com.rz.circled.modle.MyPushInfo;
-import com.rz.circled.ui.activity.MainActivity;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.httpapi.bean.NewsBean;
 

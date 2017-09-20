@@ -24,5 +24,6 @@
     <dimen name="font_40">@dimen/px40</dimen>
     <dimen name="font_38">@dimen/px38</dimen>
     <dimen name="font_34">@dimen/px34</dimen>
+    <dimen name="font_32">@dimen/px32</dimen>
 
 </resources>

@@ -32,21 +32,29 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${CHANNEL}" />
+        <!--
+            APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
+               如果 SDKOptions 中提供了，取 SDKOptions 中的值。
+       -->
+        <meta-data
+            android:name="com.netease.nim.appKey"
+            android:value="${NIM_KEY}" />
+
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <!-- zhengshi -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="${JPUSH_APPKEY}" />
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <!-- 支付宝 -->
         <!-- alipay sdk begin -->
@@ -111,7 +119,30 @@
             android:windowSoftInputMode="adjustResize" />
 
         <!--end-->
+        <!-- 腾讯Bugly自动更新 -->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:theme="@android:style/Theme.Translucent" />
 
+        <!-- QQ QQZone -->
+        <activity
+            android:name="com.umeng.qq.tencent.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent101419427" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.umeng.qq.tencent.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -346,7 +377,18 @@
             android:name=".ui.activity.RechargePayAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent" />
-
+        <activity
+            android:name=".ui.activity.RechargeAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.ToBankCardAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.AddBankCardAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PictureManagerActivity"
             android:screenOrientation="portrait"
@@ -400,7 +442,26 @@
             android:name=".ui.activity.AwesomeTabsAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent" />
-        <activity android:name=".ui.activity.VideoH5Aty" />
+        <activity
+            android:name=".ui.activity.VideoH5Aty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.AddContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.MobileContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.JsPayOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.FollowMeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ShareNewsAty"
             android:screenOrientation="portrait"

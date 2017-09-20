@@ -969,6 +969,14 @@ public class Session {
         SysSharePres.getInstance().setNeedTeam(needTeam);
     }
 
+    public static void setNowAct(String act) {
+        SysSharePres.getInstance().setNowAct(act);
+    }
+
+    public static String getNowAct() {
+        return SysSharePres.getInstance().getNowAct();
+    }
+
     /**
      * 清除数据
      */

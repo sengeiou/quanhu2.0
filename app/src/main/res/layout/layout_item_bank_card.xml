@@ -8,7 +8,7 @@
     <View
         android:id="@+id/id_bg_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px30"
+        android:layout_height="@dimen/px42"
         android:background="@color/white" />
 
     <LinearLayout
@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_bg_view"
-        android:layout_marginLeft="@dimen/px30"
-        android:layout_marginRight="@dimen/px30"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44"
         android:background="@drawable/shape_bg_red"
         android:orientation="vertical"
         android:padding="@dimen/px30"
@@ -45,14 +45,15 @@
                 <TextView
                     android:id="@+id/id_tv_bank_name"
                     style="@style/DefaultTvStyle"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_44" />
 
                 <TextView
                     android:id="@+id/id_tv_bank_type"
                     style="@style/DefaultTvStyle"
                     android:layout_marginTop="@dimen/px10"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/px32" />
+                    android:textSize="@dimen/font_32" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -67,20 +68,19 @@
 
     <ImageView
         android:id="@+id/id_iv_checkon"
-        android:layout_width="@dimen/px64"
-        android:layout_height="@dimen/px64"
+        android:layout_width="@dimen/px58"
+        android:layout_height="@dimen/px58"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/px20"
-        android:src="@drawable/ic_check_on"
+        android:layout_margin="@dimen/px64"
+        android:src="@mipmap/ic_bank_select"
         android:visibility="gone" />
-
 
     <include
         layout="@layout/layout_item_add_bank"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_bg_view"
-        android:layout_marginLeft="@dimen/px30"
-        android:layout_marginRight="@dimen/px30" />
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44" />
 </RelativeLayout>

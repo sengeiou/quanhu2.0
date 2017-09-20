@@ -46,6 +46,10 @@ public interface CommonCode {
          * 数据错误
          */
         int ERROR_DATA = 302;
+        /**
+         * 支付失败
+         */
+        int PAY_SUCCESS = 303;
     }
 
     /**
@@ -121,11 +125,27 @@ public interface CommonCode {
      */
     interface requireFriend {
         //申请加好友
-        public static final int require_type_add = 1;
+        int require_type_add = 1;
         //同意加好友
-        public static final int require_type_agree = 2;
+        int require_type_agree = 2;
         //拒绝加好友
-        public static final int require_type_refuse = 3;
+        int require_type_refuse = 3;
+    }
+
+    /**
+     * 加好友状态
+     */
+    interface requireFriendStatus {
+        //申请加好友
+        int require_status_wait = 0;
+        //同意加好友
+        int require_status_agree = 1;
+        //拒绝加好友
+        int require_status_refuse = 2;
+        //是申请发起方
+        int is_require_true = 1;
+        //否申请发起方
+        int is_require_false = 0;
     }
 
     /**

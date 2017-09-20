@@ -142,6 +142,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
+                refreshLayout.setRefreshing(false);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
@@ -181,6 +182,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
+                refreshLayout.setRefreshing(false);
                 if (type != TYPE_PART)
                     SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }

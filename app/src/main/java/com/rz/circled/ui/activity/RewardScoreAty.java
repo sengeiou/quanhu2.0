@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,13 +13,15 @@ import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.AccountBean;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * Created by Administrator on 2016/7/19 0019.
- * 奖励悠然币界面
+ * 收益账户
  */
 public class RewardScoreAty extends BaseActivity {
 
@@ -50,12 +53,12 @@ public class RewardScoreAty extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitleText(getString(R.string.all_point));
+        setTitleText(getString(R.string.income_account));
         setTitleRightText(getString(R.string.account_detail));
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
+                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
             }
         });
         setTitleRightTextColor(R.color.color_main);
@@ -78,9 +81,25 @@ public class RewardScoreAty extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tv_reward_score_to_rule})
+    @OnClick({R.id.tv_reward_score_to_rule, R.id.id_btn_recharge, R.id.id_btn_to_bank})
     public void onClick(View view) {
         switch (view.getId()) {
+            //兑换到消费账户
+            case R.id.id_btn_recharge:
+                if (TextUtils.isEmpty(integralSum) || Double.parseDouble(integralSum) <= 0) {
+                    SVProgressHUD.showInfoWithStatus(this, getString(R.string.duihuan_yrb));
+                } else {
+                    RechargeAty.startRecharge(aty, integralSum);
+                }
+                break;
+            //提现
+            case R.id.id_btn_to_bank:
+                if (TextUtils.isEmpty(integralSum) || Double.parseDouble(integralSum) <= 0) {
+                    SVProgressHUD.showInfoWithStatus(this, getString(R.string.tixian_yrb));
+                } else {
+                    ToBankCardAty.startBankCard(this, integralSum);
+                }
+                break;
             //平台奖励规则
             case R.id.tv_reward_score_to_rule:
 //                CommH5Aty.startCommonH5(aty, H5Address.REWARD_RULE, getString(R.string.yizhi));
@@ -95,7 +114,7 @@ public class RewardScoreAty extends BaseActivity {
         if (requestCode == IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE) {
             if (resultCode == IntentCode.BankCard.BankCard_RESULT_CODE) {
                 //重新获取余额
-//                ((PayPresenter) presenter).getUserAccount(Session.getUserId(), "");
+                mPresenter.getUserAccount(Session.getUserId(), "");
             }
         }
     }

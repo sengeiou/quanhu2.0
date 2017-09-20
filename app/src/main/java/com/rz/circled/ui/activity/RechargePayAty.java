@@ -75,6 +75,7 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
     @Override
     public void initPresenter() {
         presenter = new PayPresenter(true);
+        presenter.attachView(this);
     }
 
     @Override

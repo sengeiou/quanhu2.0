@@ -11,7 +11,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.rz.circled.db.model.SystemInformation;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     /**
      * 数据库名字
      */
-    private static final String DB_NAME = "sgt.db";
+    private static final String DB_NAME = "circled.db";
     /**
      * 数据库版本
      */
@@ -72,7 +72,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource) {
         // 创建表
         try {
-            TableUtils.createTable(connectionSource, SystemInformation.class);
+            TableUtils.createTable(connectionSource, FriendInformationBean.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,7 +85,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion,
                           int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, SystemInformation.class, true);
+            TableUtils.dropTable(connectionSource, FriendInformationBean.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
