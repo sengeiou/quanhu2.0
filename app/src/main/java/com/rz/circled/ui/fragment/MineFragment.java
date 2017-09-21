@@ -146,6 +146,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private int headHight;
     private ProveStatusBean proveStatusBean;
     private ProveInfoPresenter proveInfoPresenter;
+    ProveStatusBean data;
 
 
     @Override
@@ -201,13 +202,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         getUserProveStatus();
     }
 
-<<<<<<< HEAD
-    private void getData(){
-=======
+
     private void getData() {
-        //获取签到状态
-        ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(), "15");
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
 
         if(presenter != null){
             //获取签到状态
@@ -219,11 +216,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             //获取活动数统计
             ((V3CirclePresenter) presenter).getMylistCount(Session.getUserId());
 
-<<<<<<< HEAD
             //获取达人信息
             ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
         }
-=======
 //        if(Session.getCustRole().equals("0")){
 //            famousTxt.setText("去认证");
 //            famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
@@ -231,8 +226,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         //获取达人信息
 //            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
 //        }
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
-
     }
 
 //    private void initTitleBar() {
@@ -266,13 +259,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
-<<<<<<< HEAD
-                        UserInfoActivity.newFrindInfo(mActivity,Session.getUserId());
-=======
 //                        jump(UserInfoActivity.class);
                         UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
-
                     }
                 }
             });
@@ -352,15 +340,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             if (Session.getUserIsLogin()) {
                 mTxtPersonName.setText(Session.getUserName());
-<<<<<<< HEAD
-                levelTxt.setText("Lv. "+Session.getUserLevel());
-                custPointsTxt.setText("积分 " + Session.getCustPoints());
-                if("0".equals(Session.getCustRole())){
-=======
+
                 levelTxt.setText("Lv. " + Session.getUserLevel());
                 custPointsTxt.setText("积分" + Session.getCustPoints());
                 if ("0".equals(Session.getCustRole())) {
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
                     famousTxt.setText("去认证");
                 }
 
@@ -600,7 +583,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
 //            tvactivityCount.setText(data.getArticleNum()+"");
-<<<<<<< HEAD
         }else if(t instanceof  ProveStatusBean) {
             data = (ProveStatusBean) t;
             if(Session.getCustRole().equals("0")){
@@ -616,7 +598,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
         }else if(t instanceof ResponseData){
             tvactivityCount.setText(((ResponseData) t).getData()+"");
-=======
         } else {
 //            if (null != t) {
 //                CircleStatsModel data = (CircleStatsModel) t;
@@ -624,7 +605,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //                tvCollectCount.setText(data.getCollectionNum() + "");
 //                tvTransferCount.setText(data.getTransferNum() + "");
 //            }
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
         }
     }
 
@@ -886,14 +866,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (baseEvent.type == CommonCode.EventType.TYPE_LOGIN) {
             if (proveInfoPresenter != null)
                 getUserProveStatus();
-<<<<<<< HEAD
             setData();
         }
         if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
             setData();
-=======
             return;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
         }
     }
 

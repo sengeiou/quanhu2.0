@@ -1136,7 +1136,6 @@ public interface ApiService {
             @Field("start") int start
     );
 
-<<<<<<< HEAD
 //    /**
 //     * 获取我的打赏统计
 //     * @return
@@ -1172,8 +1171,7 @@ public interface ApiService {
 //    };
 
 
-=======
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
     /**
      * 获取银行卡列表
      */
@@ -1184,7 +1182,6 @@ public interface ApiService {
             @Field("custId") String custId
     );
 
-<<<<<<< HEAD
     /*
 
 =======
