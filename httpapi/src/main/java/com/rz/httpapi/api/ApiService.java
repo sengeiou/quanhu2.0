@@ -20,6 +20,7 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
+import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MoreFamousModel;
@@ -153,6 +154,23 @@ public interface ApiService {
             @Field("phone") String phone,
             @Field("password") String password
     );
+
+    /**
+     * 登录接口，POST请求，表单登录
+     *
+     * @param act
+     * @param phone    手机号
+     * @param password 密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.LOGIN)
+    Call<ResponseData<UserInfoBean>> loginVerifyCode(
+            @Field("act") int act,
+            @Field("phone") String phone,
+            @Field("verifyCode") String verifyCode
+    );
+
 
     /**
      * 第三方登录接口
@@ -924,6 +942,15 @@ public interface ApiService {
             @Field("veriCode") String veriCode,
             @Field("phyName") String phyName,
             @Field("phyCardNo") String phyCardNo
+    );
+
+    /**
+     * 获取登录方式
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_LOGIN_METHOD)
+    Call<ResponseData<LoginTypeBean>> loginMethod(
+            @Field("custId") String custId
     );
 
     /**

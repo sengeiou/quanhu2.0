@@ -149,6 +149,8 @@ public class RewardArticalFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.TYPE_REWARD_COUNT && baseEvent.data != null) {
             RewardStatBean model = (RewardStatBean) baseEvent.getData();
             topTxt.setText("共"+model.getTotalRewardAmount()+"条内容");
+        }else if(baseEvent.type == CommonCode.EventType.TYPE_EMPTY_COUNT){
+            topTxt.setText("共0条内容");
         }
     }
 

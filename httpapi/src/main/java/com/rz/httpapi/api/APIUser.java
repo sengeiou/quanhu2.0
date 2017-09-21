@@ -30,6 +30,13 @@ public class APIUser {
     // FIXME: 2017/3/27 接口拆分 没有isPwdExist这个参数
     public static final String LOGIN = "v3/user/login";
 
+
+    /**
+     * 验证码接口
+     * public static final String LOGIN = "v2/user/login";
+     */
+    public static final String VERIFY_CODE = "v3/user/loginVerifyCode";
+
     /**
      * 第三方登录
      * public static final String OTHER_LOGIN = "v2/user/thirdLogin";

@@ -2,9 +2,11 @@ package com.rz.circled.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -24,6 +26,8 @@ import com.rz.circled.R;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
+import com.rz.circled.presenter.impl.UserInfoPresenter;
+import com.rz.circled.service.BackGroundService;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -35,9 +39,11 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -63,7 +69,7 @@ public class LoginActivity extends BaseActivity {
 
     public String TAG;
     protected IPresenter presenter;
-    protected IPresenter homeBannerPresenter;
+    protected IPresenter userPresenter;
     protected SwipeBackLayout layout;
 
     @BindView(R.id.id_login_register_btn)
@@ -114,13 +120,26 @@ public class LoginActivity extends BaseActivity {
 //     */
 //    @BindView(R.id.titlebar_main_tv)
 //    TextView mTvTitle;
-    @BindView(R.id.titlebar_main_left_btn)
-    ImageView mIvBack;
-    //    @BindView(R.id.titlebar_root)
+//    @BindView(R.id.titlebar_main_left_btn)
+//    ImageView mIvBack;
+//        @BindView(R.id.titlebar_root)
 //    RelativeLayout mRlTitleRoot;
+
+    @BindView(R.id.id_regist_send_sms_btn)
+    Button mBtnSendCode;
+
+    @BindView(R.id.pwd_type_img)
+    ImageView typePwd;
+
+
     private int loginType;
     private int mGuideType;
 
+    private int codeType = 1;
+    /**
+     * 倒计时类
+     */
+    private MyCount mc;
 
     @Override
     protected boolean needSwipeBack() {
@@ -145,7 +164,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initPresenter() {
         presenter = new SnsAuthPresenter();
+        userPresenter = new UserInfoPresenter();
         presenter.attachView(this);
+        userPresenter.attachView(this);
     }
 
     @Override
@@ -159,15 +180,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView() {
 
-//        mTvTitle.setText(R.string.login);
-        mIvBack.setVisibility(View.VISIBLE);
-//        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
-        mIvBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+////        mTvTitle.setText(R.string.login);
+//        mIvBack.setVisibility(View.VISIBLE);
+////        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
+//        mIvBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 //        mRlTitleRoot.setBackgroundColor(ContextCompat.getColor(this, R.color.color_5ACBD4));
 //        setTitleText(getString(R.string.login_title));
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
@@ -259,37 +280,77 @@ public class LoginActivity extends BaseActivity {
 //        }
 //    }
 //
-//    /**
-//     * 微信登录
-//     */
-//    @OnClick(R.id.layout_login_weixin)
-//    public void wxLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).wxAuth(true);
-//        }
-//    }
-//
-//    /**
-//     * 新浪登录
-//     */
-//    @OnClick(R.id.layout_login_webo)
-//    public void sinaLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).wbAuth(true);
-//        }
-//    }
+    /**
+     * 微信登录
+     */
+    @OnClick(R.id.layout_login_weixin)
+    public void wxLogin() {
+        if (isFastClick(7000)) {
+            return;
+        }
+        if (presenter != null) {
+//            mEditPhone.setText("");
+//            mEditPass.setText("");
+            ((SnsAuthPresenter) presenter).setActionBind(-1);
+            ((SnsAuthPresenter) presenter).wxAuth(true);
+        }
+    }
+
+    /**
+     * 新浪登录
+     */
+    @OnClick(R.id.layout_login_webo)
+    public void sinaLogin() {
+        if (isFastClick(7000)) {
+            return;
+        }
+        if (presenter != null) {
+//            mEditPhone.setText("");
+//            mEditPass.setText("");
+            ((SnsAuthPresenter) presenter).setActionBind(-1);
+            ((SnsAuthPresenter) presenter).wbAuth(true);
+        }
+    }
+
+    /**
+     * 手机验证码登录
+     */
+    @OnClick(R.id.layout_phone_code)
+    public void codeLogin(){
+        if(codeType == 1){
+            mBtnSendCode.setVisibility(View.VISIBLE);
+            mEditPass.setHint("请输入验证码");
+            typePwd.setImageResource(R.mipmap.icon_code);
+            mImgWatchPw.setVisibility(View.GONE);
+            mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+            loginType = 2;
+        }else{
+            mBtnSendCode.setVisibility(View.GONE);
+            mEditPass.setHint("请输入密码");
+            mImgWatchPw.setVisibility(View.VISIBLE);
+            mEditPass.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+
+            loginType = 1;
+        }
+    }
+
+    @OnClick(R.id.id_regist_send_sms_btn)
+    public void getCode(){
+
+        mPhone = mEditPhone.getText().toString();
+        if (!StringUtils.isMobile(mPhone)) {
+            SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_right_phone));
+            return;
+        }
+        if (!NetUtils.isNetworkConnected(aty)) {
+            SVProgressHUD.showErrorWithStatus(aty, getString(R.string.no_net_work));
+        } else {
+            BackGroundService.countDownCode(Constants.COUNTDOWN * 1000);
+            startCount(Constants.COUNTDOWN * 1000);
+            ((UserInfoPresenter) userPresenter).getVeriCode(mPhone, Type.FUNCTION_CODE_9);
+        }
+    }
 
     /**
      * 清除手机号
@@ -333,10 +394,20 @@ public class LoginActivity extends BaseActivity {
         mPhone = mEditPhone.getText().toString().trim();
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
-            if (mPassword.length() >= 6 && mPassword.length() <= 18) {
-                ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
-            } else {
-                SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
+
+            if(codeType == 1){  //密码登陆
+                if (mPassword.length() >= 6 && mPassword.length() <= 18) {
+                    ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                } else {
+                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
+                }
+            }else{            //验证码登录
+                if(mPassword.length() == 4){
+                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                }else {
+                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
+                }
+
             }
         } else {
             SVProgressHUD.showErrorWithStatus(aty, getString(R.string.phone_error));
@@ -382,25 +453,28 @@ public class LoginActivity extends BaseActivity {
         if (null != t) {
             UserInfoBean model = (UserInfoBean) t;
             if (null != model) {
-//                zhugeIdentify(model);
-//                switch (Session.getLoginWay()) {
-//                    case Type.LOGIN_QQ:
-////                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
-//                        zhugeTrack("qq");
-//                        break;
-//                    case Type.LOGIN_WX:
-////                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
-//                        zhugeTrack("wx");
-//                        break;
-//                    case Type.LOGIN_SINA:
-////                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
-//                        zhugeTrack("sina");
-//                        break;
-//                    default:
-////                        MobclickAgent.onProfileSignIn(model.getCustId());
-//                        zhugeTrack("phonenum");
-//                        break;
-//                }
+                zhugeIdentify(model);
+                switch (Session.getLoginWay()) {
+                    case Type.LOGIN_QQ:
+//                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
+                        zhugeTrack("qq");
+                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(model.getCustId());
+                        return;
+                    case Type.LOGIN_WX:
+//                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
+                        zhugeTrack("wx");
+                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(model.getCustId());
+                        return;
+                    case Type.LOGIN_SINA:
+//                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
+                        zhugeTrack("sina");
+                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(model.getCustId());
+                        break;
+                    default:
+//                        MobclickAgent.onProfileSignIn(model.getCustId());
+                        zhugeTrack("phonenum");
+                        break;
+                }
 
 //                MobclickAgent.onEvent(aty, "login");
                 //单独记录随手晒缓存记录，防止刷新
@@ -494,7 +568,24 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-//    /**
+    @Override
+    public <T> void updateViewWithFlag(T t, int flag) {
+        super.updateViewWithFlag(t, flag);
+
+        if(t instanceof LoginTypeBean){
+            LoginTypeBean model = (LoginTypeBean) t;
+            if(model.getType() == 4){
+                //已经绑定过手机直接登录
+                skipActivity(aty, MainActivity.class);
+            }else{
+                //未绑定手机，前往绑定手机好
+                skipActivity(this,BoundPhoneActivity.class);
+
+            }
+        }
+    }
+
+    //    /**
 //     * web跳转登录返回数据
 //     */
 //    private HeaderModel getLoginWebResultData() {
@@ -752,10 +843,10 @@ public class LoginActivity extends BaseActivity {
         ZhugeSDK.getInstance().track(getApplicationContext(), "注册登录", eventObject);
     }
 
-    @OnClick(R.id.titlebar_main_left_btn)
-    public void onClick() {
-        finish();
-    }
+//    @OnClick(R.id.titlebar_main_left_btn)
+//    public void onClick() {
+//        finish();
+//    }
 
     @Subscribe
     public void onEvent(NotifyEvent notifyEvent) {
@@ -781,6 +872,42 @@ public class LoginActivity extends BaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    /**
+     * 启动倒计时
+     */
+    private void startCount(long time) {
+        mBtnSendCode.setEnabled(false);
+        if (null != mc) {
+            mc.cancel();
+            mc = null;
+        }
+        mc = new MyCount(time, 1000);
+        mc.start();
+    }
+
+
+    /**
+     * 倒计时类
+     */
+    public class MyCount extends CountDownTimer {
+        public MyCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            mBtnSendCode.setText(millisUntilFinished / 1000
+                    + getString(R.string.regist_second));
+        }
+
+        @Override
+        public void onFinish() {
+            mBtnSendCode.setText(getString(R.string.send_check_code));
+            mBtnSendCode.setEnabled(true);
+        }
+    }
+
 
     @Override
     public void refreshPage() {

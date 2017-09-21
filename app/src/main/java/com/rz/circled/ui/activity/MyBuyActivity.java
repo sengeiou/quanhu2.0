@@ -105,6 +105,10 @@ public class MyBuyActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean needSupportRefresh() {
+        return false;
+    }
+    @Override
     public void refreshPage() {
 
     }

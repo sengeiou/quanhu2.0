@@ -118,5 +118,11 @@ public class ApiPay {
      */
     static final String CHECK_PAY_PWD = "v3/pay/checkPayPwd";//该接口2.0已有,但是未使用,
 
+    /**
+     * 获取登录方式
+     */
+    static final String GET_LOGIN_METHOD = "v3/user/loginMethod";
+
+
 
 }

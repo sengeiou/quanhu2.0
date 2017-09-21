@@ -301,6 +301,7 @@
     <string name="login_third_other">第三方登录</string>
     <string name="other_login">其他登录方式</string>
     <string name="phone_code">验证码登录</string>
+    <string name="passcode_error">验证码不正确</string>
 
 
     <!--注册-->
