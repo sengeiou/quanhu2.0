@@ -939,24 +939,16 @@ public class Session {
         SysSharePres.getInstance().setNeedTeam(needTeam);
     }
 
-<<<<<<< HEAD
-    public static String getNowAct() {
-        return SysSharePres.getInstance().getNowAct();
-    }
 
-=======
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     public static void setNowAct(String act) {
         SysSharePres.getInstance().setNowAct(act);
     }
 
-<<<<<<< HEAD
-=======
+
     public static String getNowAct() {
         return SysSharePres.getInstance().getNowAct();
     }
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 清除数据
      */
