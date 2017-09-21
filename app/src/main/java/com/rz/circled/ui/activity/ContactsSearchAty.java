@@ -29,6 +29,10 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
+<<<<<<< HEAD
+=======
+import com.rz.common.utils.TextViewUtils;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import com.rz.httpapi.bean.FriendInformationBean;
 
 import org.greenrobot.eventbus.EventBus;

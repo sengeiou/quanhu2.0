@@ -1,6 +1,10 @@
 package com.rz.circled.dialog;
 
 import android.app.Dialog;
+<<<<<<< HEAD
+=======
+import android.content.Intent;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
@@ -9,11 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+<<<<<<< HEAD
 
 import com.rz.circled.R;
 import com.rz.common.utils.DensityUtils;
 
 import butterknife.ButterKnife;
+=======
+import android.widget.TextView;
+
+import com.rz.circled.R;
+import com.rz.circled.ui.activity.RechargeMoneyAty;
+import com.rz.common.utils.DensityUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
 /**
  * Created by rzw2 on 2017/9/4.

@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/id_add_bank_ll"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     android:layout_height="wrap_content"
     android:visibility="gone">
+=======
+    android:visibility="gone"
+    android:layout_height="wrap_content">
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
     <LinearLayout
         android:layout_width="match_parent"

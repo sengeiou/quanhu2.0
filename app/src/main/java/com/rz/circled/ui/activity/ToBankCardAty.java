@@ -2,17 +2,35 @@ package com.rz.circled.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+<<<<<<< HEAD
 import android.content.Intent;
 import android.os.Handler;
+=======
+import android.app.DialogFragment;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+<<<<<<< HEAD
+=======
+import android.view.ViewGroup;
+import android.view.Window;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+<<<<<<< HEAD
+=======
+import android.widget.RelativeLayout;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.widget.TextView;
 
 import com.litesuits.common.utils.HexUtil;
@@ -36,10 +54,18 @@ import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.UserInfoModel;
+<<<<<<< HEAD
+=======
+import com.yryz.yunxinim.uikit.common.util.sys.ScreenUtil;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
 import java.util.List;
 
 import butterknife.BindView;
+<<<<<<< HEAD
+=======
+import butterknife.ButterKnife;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import butterknife.OnClick;
 
 /**
@@ -75,12 +101,19 @@ public class ToBankCardAty extends BaseActivity {
     //输入提现金额
     @BindView(R.id.id_et_recharge)
     EditText idEtRecharge;
+<<<<<<< HEAD
+=======
+    private String mRecharge;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     @BindView(R.id.id_back_clear_img)
     ImageView mImgClearMoney;
     //提现手续费
     @BindView(R.id.id_bank_charge_txt)
     TextView mTxtCharge;
+<<<<<<< HEAD
     private String mRecharge;
+=======
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private String mCharge;
 
     //可提现收益
@@ -162,8 +195,13 @@ public class ToBankCardAty extends BaseActivity {
 
     @Override
     public void initData() {
+<<<<<<< HEAD
         presenter.getCharge();
         presenter.getBanckCardList(Session.getUserId());
+=======
+        ((BankPresenter) presenter).getCharge();
+        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     }
 
     /**
@@ -270,7 +308,11 @@ public class ToBankCardAty extends BaseActivity {
                         }, 2000);
                     } else {
                         //提现
+<<<<<<< HEAD
                         presenter.getCash(HexUtil.encodeHexStr(MD5Util.md5(pw)), mRecharge + "00", mDefaultModel.getCust2BankId());
+=======
+                        ((BankPresenter) presenter).getCash(HexUtil.encodeHexStr(MD5Util.md5(pw)), mRecharge + "00", mDefaultModel.getCust2BankId());
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
                     }
                 }
             } else if (t instanceof UserInfoModel) {
@@ -374,8 +416,13 @@ public class ToBankCardAty extends BaseActivity {
             }
         } else if (requestCode == IntentCode.BankCard.BIND_REQUEST_CODE) {
             if (resultCode == IntentCode.BankCard.BankCard_RESULT_CODE) {
+<<<<<<< HEAD
                 presenter.getCharge();
                 presenter.getBanckCardList(Session.getUserId());
+=======
+                ((BankPresenter) presenter).getCharge();
+                ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
             } else {
                 finish();
             }

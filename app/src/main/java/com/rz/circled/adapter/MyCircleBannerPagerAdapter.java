@@ -1,8 +1,15 @@
 package com.rz.circled.adapter;
 
 import android.support.v4.view.PagerAdapter;
+<<<<<<< HEAD
 import android.view.View;
 import android.view.ViewGroup;
+=======
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
 import java.util.List;
 

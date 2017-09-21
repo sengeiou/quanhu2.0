@@ -1,5 +1,7 @@
 package com.rz.httpapi.api;
 
+import android.content.Context;
+
 import com.rz.httpapi.api.callback.RequestCallback;
 
 import java.io.IOException;

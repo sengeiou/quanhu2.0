@@ -304,6 +304,9 @@ public class SysSharePres {
     private static final String NOW_ACT = "nowAct";
     private SharedPreferences mSharePres;
 
+    //当前请求act
+    private static final String NOW_ACT = "nowAct";
+
     public SysSharePres() {
         System.out.println(BaseApplication.getContext());
         mSharePres = BaseApplication.getContext().getSharedPreferences(PRES_NAME,

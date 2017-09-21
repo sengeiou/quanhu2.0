@@ -3,6 +3,7 @@ package com.rz.circled.js;
 import android.app.Activity;
 
 import com.google.gson.Gson;
+import com.rz.circled.ui.activity.NavigateOpenActivity;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -38,8 +39,7 @@ public class NavigateHandler extends ServerHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        V3NavigateMapActivity.startNavigateMap(webContainerAty, latitude, longitude);
-//        V3NavigateOpenActivity.startNavigateOpen(webContainerAty, latitude, longitude, name);
+        NavigateOpenActivity.startNavigateOpen(mActivity, latitude, longitude, name);
     }
 
     @Override

@@ -205,7 +205,11 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
             }
         };
         mListview.setAdapter(mAdapter);
+<<<<<<< HEAD
         presenter.getBanckCardList(Session.getUserId());
+=======
+        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     }
 
     public BankCardModel addCard() {
@@ -248,6 +252,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 if (TextUtils.equals("1", payPw)) {
                     //解绑成功
                     SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.unbind_card_success));
+<<<<<<< HEAD
                     presenter.getBanckCardList(Session.getUserId());
                 } else if (TextUtils.equals("2", payPw)) {
                     //设置默认银行卡成功
@@ -256,6 +261,16 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 } else {
                     //解绑银行卡
                     presenter.unBandBanck(mCust2BankId, HexUtil.encodeHexStr(MD5Util.md5(payPw)));
+=======
+                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                } else if (TextUtils.equals("2", payPw)) {
+                    //设置默认银行卡成功
+                    SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.setting_success));
+                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                } else {
+                    //解绑银行卡
+                    ((BankPresenter) presenter).unBandBanck(mCust2BankId, HexUtil.encodeHexStr(MD5Util.md5(payPw)));
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
                 }
             }
         }
@@ -263,7 +278,11 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void onRefresh() {
+<<<<<<< HEAD
         presenter.getBanckCardList(Session.getUserId());
+=======
+        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     }
 
     @Override

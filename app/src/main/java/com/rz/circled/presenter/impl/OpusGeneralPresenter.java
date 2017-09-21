@@ -20,6 +20,10 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+<<<<<<< HEAD
+=======
+import com.rz.httpapi.bean.FriendInformationBean;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
 import com.rz.httpapi.bean.FriendInformationBean;

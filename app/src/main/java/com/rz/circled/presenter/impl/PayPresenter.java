@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
+import com.google.gson.JsonObject;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -45,6 +47,8 @@ import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
+
+import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

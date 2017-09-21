@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rolle_white_bg"
     android:orientation="vertical">
+=======
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/rolle_white_bg"
+              android:orientation="vertical">
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,18 +23,31 @@
         android:paddingTop="@dimen/px50"
         android:text="@string/backcard_reference"
         android:textColor="@color/color_333333"
+<<<<<<< HEAD
         android:textSize="@dimen/font_38" />
+=======
+        android:textSize="@dimen/font_38"/>
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
     <TextView
         android:id="@+id/tv_backcard_reference_know"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:background="@drawable/shape_round_bottom_gray"
         android:gravity="center"
+=======
+        android:gravity="center"
+        android:background="@drawable/shape_round_bottom_gray"
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
         android:paddingBottom="@dimen/px40"
         android:paddingTop="@dimen/px40"
         android:text="@string/had_know"
         android:textColor="@color/color_333333"
+<<<<<<< HEAD
         android:textSize="@dimen/font_44" />
+=======
+        android:textSize="@dimen/font_44"/>
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
 </LinearLayout>

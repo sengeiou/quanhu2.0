@@ -4,14 +4,26 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+<<<<<<< HEAD
+=======
+import android.support.annotation.RequiresPermission;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.rz.circled.R;
 import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.modle.ShareModel;
+=======
+
+import com.rz.circled.R;
+import com.rz.circled.constants.AgreementConstants;
+import com.rz.circled.modle.ShareModel;
+import com.rz.common.constant.H5Address;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import com.rz.common.constant.IntentCode;
 import com.rz.common.permission.AfterPermissionGranted;
 import com.rz.common.permission.AppSettingsDialog;
@@ -35,10 +47,18 @@ import static com.rz.circled.widget.CommomUtils.trackUser;
  */
 public class AddContactsActivity extends BaseActivity implements View.OnClickListener {
 
+<<<<<<< HEAD
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
     @BindView(R.id.id_search_key)
     TextView mSearchTexdt;
 
+=======
+    @BindView(R.id.id_search_key)
+    TextView mSearchTexdt;
+
+    public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
+
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {

@@ -66,7 +66,11 @@
             android:layout_height="@dimen/px3"
             android:layout_marginLeft="@dimen/px30"
             android:layout_marginRight="@dimen/px30"
+<<<<<<< HEAD
             android:background="@color/color_EEEEEE" />
+=======
+            android:background="@color/color_EEEEEE"/>
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
         <RelativeLayout
             android:id="@+id/id_scan_layout"
@@ -122,7 +126,11 @@
             android:layout_height="@dimen/px3"
             android:layout_marginLeft="@dimen/px30"
             android:layout_marginRight="@dimen/px30"
+<<<<<<< HEAD
             android:background="@color/color_EEEEEE" />
+=======
+            android:background="@color/color_EEEEEE"/>
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
         <RelativeLayout
             android:id="@+id/id_contacts_layout"

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     android:id="@+id/rl_navigate_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +29,11 @@
             style="@style/DefaultLvStyle"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_pop_white_btn"
+<<<<<<< HEAD
             android:dividerHeight="@dimen/px5" />
+=======
+            android:dividerHeight="@dimen/px5"/>
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
         <Button
             android:id="@+id/id_popup_cancel_btn"
@@ -35,6 +45,10 @@
             android:padding="@dimen/px40"
             android:text="@string/cancel"
             android:textColor="@color/txt_pop_detail"
+<<<<<<< HEAD
             android:textSize="@dimen/px52" />
+=======
+            android:textSize="@dimen/px52"/>
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     </LinearLayout>
 </RelativeLayout>

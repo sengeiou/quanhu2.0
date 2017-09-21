@@ -4,8 +4,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+<<<<<<< HEAD
+=======
+import android.widget.LinearLayout;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -322,7 +327,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         if (i - 1 < 0) {
             return;
         }
+<<<<<<< HEAD
         FriendInformationBean item = mContactsAdp.getItem(i - 1);
+=======
+        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i - 1);
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
         /**
          * 进入好友详情
          */

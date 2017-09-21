@@ -114,9 +114,15 @@
                     android:background="@color/white"
                     android:gravity="center_vertical|right"
                     android:hint="@string/input_recharge"
+<<<<<<< HEAD
                     android:inputType="number"
                     android:maxLength="4"
                     android:paddingRight="@dimen/px20"
+=======
+                    android:paddingRight="@dimen/px20"
+                    android:inputType="number"
+                    android:maxLength="4"
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
                     android:textColor="@color/font_gray_l"
                     android:textColorHint="@color/font_gray_a"
                     android:textSize="@dimen/font_50" />
@@ -125,8 +131,13 @@
                     android:id="@+id/id_back_clear_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< HEAD
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/px20"
+=======
+                    android:layout_marginRight="@dimen/px20"
+                    android:layout_gravity="center_vertical"
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
                     android:background="@drawable/ic_clear"
                     android:visibility="gone" />
 
@@ -144,10 +155,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+<<<<<<< HEAD
             android:paddingBottom="@dimen/px30"
             android:paddingLeft="@dimen/px44"
             android:paddingRight="@dimen/px44"
             android:paddingTop="@dimen/px30">
+=======
+            android:paddingLeft="@dimen/px44"
+            android:paddingTop="@dimen/px30"
+            android:paddingBottom="@dimen/px30"
+            android:paddingRight="@dimen/px44">
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 
             <ImageView
                 android:layout_width="wrap_content"

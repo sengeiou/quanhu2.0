@@ -19,6 +19,10 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.LetterContactsAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
+<<<<<<< HEAD
+=======
+import com.rz.circled.presenter.impl.SnsAuthPresenter;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import com.rz.circled.widget.SideBar;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
@@ -39,7 +43,10 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MobileContactsActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+<<<<<<< HEAD
     protected IPresenter presenter;
+=======
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     @BindView(R.id.id_content_listv)
     ListView mListview;
     @BindView(R.id.layout_main)
@@ -50,11 +57,21 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
     SideBar mSidebar;
     @BindView(R.id.id_letter_dialog)
     TextView mTxtDialog;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 所有被匹配过的本地通讯录好友
      */
     private List<FriendInformationBean> mMoblieAllFriends = new ArrayList<>();
+<<<<<<< HEAD
     private Dialog dialog;
+=======
+
+    private Dialog dialog;
+    protected IPresenter presenter;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private LetterContactsAdapter mAdapter;
 
     @Nullable

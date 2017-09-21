@@ -30,7 +30,7 @@ public class MyAccountAty extends BaseActivity {
 
     }
 
-    @OnClick({R.id.id_layout_cost_account, R.id.id_layout_award_score})
+    @OnClick({R.id.id_layout_cost_account, R.id.id_layout_award_score, R.id.btn_bank})
     public void onClick(View view) {
         switch (view.getId()) {
             //消费账户
@@ -40,6 +40,9 @@ public class MyAccountAty extends BaseActivity {
             //
             case R.id.id_layout_award_score:
                 showActivity(this, RewardScoreAty.class);
+                break;
+            case R.id.btn_bank:
+                BankCardListAty.startBankCardList(aty, 1);
                 break;
         }
     }
