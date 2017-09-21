@@ -301,7 +301,6 @@ public class SysSharePres {
     //是否显示全聊及其入口
     private static final String NEED_TEAM = "needTeam";
     //当前请求act
-    private static final String NOW_ACT = "nowAct";
     private SharedPreferences mSharePres;
 
     //当前请求act
