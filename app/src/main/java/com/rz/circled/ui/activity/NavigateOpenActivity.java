@@ -35,21 +35,7 @@ import butterknife.OnClick;
  * 跳转打开第三方地图app
  */
 public class NavigateOpenActivity extends BaseActivity {
-    //声明AMapLocationClient类对象
-    public AMapLocationClient mLocationClient = null;
-    //声明AMapLocationClientOption对象
-    public AMapLocationClientOption mLocationOption = null;
-    @BindView(R.id.ll_navigate_map)
-    LinearLayout llMap;
-    @BindView(R.id.id_popup_listview)
-    MyListView mListView;
 
-    private double endLatitude;
-    private double endlongitude;
-    private double startLatitude;
-    private double startlongitude;
-    private String startAddress;
-    private String endName;
 
 
     private static final String EXTRA_LATITUDE = "extraLatitude";
@@ -71,7 +57,22 @@ public class NavigateOpenActivity extends BaseActivity {
      */
     private final String loadAppHost = "http://a.app.qq.com/o/simple.jsp?pkgname=";
     private final String[] hintItems = new String[]{"高德地图", "百度地图", "下载高德地图", "下载百度地图"};
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+    @BindView(R.id.ll_navigate_map)
+    LinearLayout llMap;
+    @BindView(R.id.id_popup_listview)
+    MyListView mListView;
+    private double endLatitude;
+    private double endlongitude;
+    private double startLatitude;
+    private double startlongitude;
+    private String startAddress;
+    private String endName;
     private ArrayList<String> mapList;
+
 
     /**
      * 启动h5界面
@@ -99,6 +100,8 @@ public class NavigateOpenActivity extends BaseActivity {
     public void initView() {
         checkMapApp();
     }
+
+    //----------------------------------------------------定位-------------------------------//
 
     @Override
     public void initData() {
@@ -137,6 +140,7 @@ public class NavigateOpenActivity extends BaseActivity {
         //启动定位
         mLocationClient.startLocation();
     }
+
 
 
     //声明定位回调监听器

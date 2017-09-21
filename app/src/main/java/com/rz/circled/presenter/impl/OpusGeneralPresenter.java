@@ -20,9 +20,9 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
-import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.TransferDetail;
@@ -37,19 +37,16 @@ import retrofit2.Response;
 
 public class OpusGeneralPresenter extends GeneralPresenter<List<OpusData>> {
 
+    public String categroy;
     EntityCache<OpusData> opusDataEntityCache;
-    private IViewController iViewController;
-    private Context mContext;
-    private ApiService mCircleService;
-
     int actionCode = 0;
     int type = 1;
     String authorid = null;
-    public String categroy;
     String tag;
-
     int pageCount = 0;
-
+    private IViewController iViewController;
+    private Context mContext;
+    private ApiService mCircleService;
     private List<OpusData> currentData = new ArrayList<>();
 
     private CharacterParser mCharacterParser;

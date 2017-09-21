@@ -44,20 +44,18 @@ import butterknife.BindView;
  */
 
 public class ShareFriendsListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+    public static final int INVITE_REQUEST_CODE = 117;
     private static final String EXTRA_DATA_ITEM_DATA = "EXTRA_DATA_ITEM_DATA";
-
     /**
      * 内容展示
      */
     @BindView(R.id.contact_list_view)
     ListView mListview;
-
     /**
      * 搜索输入
      */
     @BindView(R.id.team_search_edittext)
     ClearableEditTextWithIcon searchEditText;
-
     /**
      * 右侧字母导航栏
      */
@@ -74,12 +72,8 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
      */
     @BindView(R.id.layout_none)
     View mLayoutNone;
-
     CharacterParser finder = CharacterParser.getInstance();
-
     ContactsAdp mContactsAdp;
-
-    public static final int INVITE_REQUEST_CODE = 117;
     /**
      * 当前类型所有数据集合以及搜索的过滤集合
      */
@@ -177,7 +171,7 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
          * 拉取最新的好友列表并同步到最新，并且只有好友列表才有初次loading
          */
         Log.e(TAG, "reloadWhenDataChanged: share");
-        ((FriendPresenter1) presenter).getCacheFriends(false);
+        presenter.getCacheFriends(false);
     }
 
     private void matchSearchResult(String str) {
@@ -216,7 +210,8 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
             return;
         }
 
-        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i);
+        FriendInformationBean item = mContactsAdp.getItem(i);
+
         if (item == null) {
             return;
         }

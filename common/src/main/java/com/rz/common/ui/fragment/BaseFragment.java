@@ -27,7 +27,7 @@ import butterknife.Unbinder;
 /**
  * Created by Gsm on 2017/8/23.
  */
-public abstract class BaseFragment extends Fragment implements IViewController, EasyPermissions.PermissionCallbacks {
+public abstract class BaseFragment extends Fragment implements IViewController, EasyPermissions.PermissionCallbacks, BaseLoadView.RefreshListener {
     private Unbinder unbinder;
     public Activity mActivity;
     public String TAG;
@@ -56,6 +56,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         unbinder = ButterKnife.bind(this, rootView);
         isViewInit = true;
         initPresenter();
+        setRefreshListener(this);
         initView();
         initData();
         return rootView;
@@ -76,9 +77,9 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
                 layoutParams.height = -1;
                 layoutParams.width = -1;
             }
-            llContent.addView(loadView,layoutParams);
+            llContent.addView(loadView, layoutParams);
         }
-        if (loadView(inflater) != null){
+        if (loadView(inflater) != null) {
             View contentView = loadView(inflater);
             ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
             if (layoutParams == null) {
@@ -87,7 +88,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
                 layoutParams.height = -1;
                 layoutParams.width = -1;
             }
-            llContent.addView(contentView,layoutParams);
+            llContent.addView(contentView, layoutParams);
         }
     }
 
@@ -114,6 +115,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
             }
         }
     }
+
     /**
      * 指定Activity跳转，不带参数
      *
@@ -136,6 +138,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         }
         startActivity(intent);
     }
+
     /**
      * 用户是否登录
      */
@@ -276,4 +279,5 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Log.d(TAG, "onPermissionsDenied");
     }
+
 }

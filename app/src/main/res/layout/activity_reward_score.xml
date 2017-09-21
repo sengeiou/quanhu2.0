@@ -59,10 +59,10 @@
                 android:layout_height="@dimen/px118"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
+                android:alpha="0.6"
                 android:background="@drawable/shape_bg_blue_sel"
                 android:gravity="center"
                 android:minHeight="0dp"
-                android:alpha="0.6"
                 android:text="@string/transfer_cost_account"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_48" />

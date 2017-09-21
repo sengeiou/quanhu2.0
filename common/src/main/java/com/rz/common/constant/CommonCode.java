@@ -73,6 +73,8 @@ public interface CommonCode {
 
         int TYPE_LOGOUT = 300002;
         int TYPE_LOGIN = 300003;
+        int TYPE_REWARD_COUNT = 300004;
+        int TYPE_USER_UPDATE = 300005;
     }
 
     /**
@@ -112,15 +114,15 @@ public interface CommonCode {
         /**
          * 倒计时常量 单位秒
          */
-        public static final int COUNTDOWN = 90;
+        int COUNTDOWN = 90;
         /**
          * 录音限制时长
          */
-        public static final int MAX_INTERVAL_TIME = 180;
+        int MAX_INTERVAL_TIME = 180;
 
-        public static int RECORDE_SHOW = 10001;
+        int RECORDE_SHOW = 10001;
 
-        public static int RECORDE_OPUS_VIDEO = 10002;
+        int RECORDE_OPUS_VIDEO = 10002;
 
         int PAGE_SIZE = 10;
     }
@@ -158,15 +160,15 @@ public interface CommonCode {
      */
     interface PayCode {
         //取消
-        public static final int PAY_CANDEL = 1011;
+        int PAY_CANDEL = 1011;
         //支付成功
-        public static final int PAY_SUCCESS = 1012;
+        int PAY_SUCCESS = 1012;
         //支付失败，支付控件相关
-        public static final int PAY_FAIL = 1013;
+        int PAY_FAIL = 1013;
         //支付异常，包括生成支付订单错误等
-        public static final int PAY_ABNORMAL = 1014;
+        int PAY_ABNORMAL = 1014;
         //支付结果确认中
-        public static final int PAY_CONFIRM = 1015;
+        int PAY_CONFIRM = 1015;
 
     }
 

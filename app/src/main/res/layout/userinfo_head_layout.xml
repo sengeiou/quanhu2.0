@@ -43,6 +43,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/px42"
+                android:visibility="gone"
                 />
 
         </RelativeLayout>

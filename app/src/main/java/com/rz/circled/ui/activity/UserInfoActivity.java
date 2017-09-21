@@ -27,9 +27,15 @@ import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
 import com.rz.circled.ui.fragment.MyRewardFragment;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.ProveStatusBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import butterknife.BindView;
@@ -142,6 +148,10 @@ public class UserInfoActivity extends BaseActivity{
     @Override
     public void initData() {
 
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
+
         //个人中心
         if(userId.equals(Session.getUserId())){
             Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
@@ -153,6 +163,9 @@ public class UserInfoActivity extends BaseActivity{
             //普通用户
             if(Session.getCustRole().equals("0")){
                 userRole.setText("去认证");
+                userRole.setBackgroundResource(R.drawable.shape_white_bg);
+                userRole.setPadding(20,0,20,0);
+                userRole.getBackground().setAlpha(77);
             }else{
                 //达人用户，另外调达人类型接口
                 ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
@@ -173,18 +186,46 @@ public class UserInfoActivity extends BaseActivity{
 
     public void initHead(){
 
-        newTitilbar = View.inflate(this, R.layout.titlebar_mine, null);
+        newTitilbar = View.inflate(this, R.layout.titlebar_user_info, null);
         newTitilbar.setBackgroundResource(R.mipmap.topbar_blue_top);
         newTitilbar.getBackground().mutate().setAlpha(255);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
+        ImageView editImg = (ImageView) newTitilbar.findViewById(R.id.scores_img);
+        RelativeLayout editLayout = (RelativeLayout) newTitilbar.findViewById(R.id.edit_layout);
+
+        editLayout.setVisibility(View.VISIBLE);
         ib.setVisibility(View.VISIBLE);
-        ib.setImageResource(R.mipmap.icon_arrow_left_gray);
+        ib.setImageResource(R.mipmap.arrow_left);
+
         tv.setText("个人中心");
         mTitleContent.addView(newTitilbar);
 
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        editImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                skipActivity(UserInfoActivity.this,PersonInfoAty.class);
+
+            }
+        });
+
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
+            setData();
+        }
+    }
 
     @Override
     protected boolean needShowTitle() {
@@ -242,7 +283,9 @@ public class UserInfoActivity extends BaseActivity{
             if(userId.equals(Session.getUserId())){
                 if(Session.getCustRole().equals("0")){
                     userRole.setText("去认证");
+                    userRole.setPadding(20,0,20,0);
                     userRole.setBackgroundResource(R.drawable.shape_white_bg);
+                    userRole.getBackground().setAlpha(77);
                 }else if(data.getAuthStatus() == 1){
                     userRole.setText(data.getTradeField());
                 }
@@ -256,6 +299,33 @@ public class UserInfoActivity extends BaseActivity{
             }
 
         }
-
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    private void setData(){
+
+        Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
+                placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+        nameTxt.setText(Session.getUserName());
+        levelTxt.setText("Lv." + Session.getUserLevel());
+        signTxt.setText(Session.getUser_signatrue());
+        addFriendLayout.setVisibility(View.GONE);
+        //普通用户
+        if(Session.getCustRole().equals("0")){
+            userRole.setText("去认证");
+            userRole.setBackgroundResource(R.drawable.shape_white_bg);
+            userRole.setPadding(20,0,20,0);
+            userRole.getBackground().setAlpha(77);
+        }else{
+            //达人用户，另外调达人类型接口
+            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+        }
+    }
+
 }

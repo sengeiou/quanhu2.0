@@ -61,67 +61,55 @@ import retrofit2.Response;
  */
 public class FriendPresenter1 extends GeneralPresenter {
 
-    private ApiService service;
-    private IViewController mView;
-    private Context mContext;
-    private FriendInformationDao friendInformationDao;
-    private CharacterParser mCharacterParser;
-    private PinyinComparator mPyComparator;
-
-    /**
-     * 当前刷新到UI的好友列表
-     */
-    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
-
-    /**
-     * 粉丝列表分页
-     */
-    int start = 0;
-    int limit = Constants.PAGESIZE;
-
     /**
      *  通知好友页面刷新
      */
     public static final String FRIEND_EVENT = "5";
-
     /**
      *  通知好友申请页面刷新
      */
     public static final String FRIEND_APPLY_EVENT = "4";
-
-
     /**
      * 详情页面关注成功及取消关注
      */
     public static final String CANCEL_FRIEND_EVENT = "7";
-
     /**
      * 举报
      */
     public static final String REPORT_EVENT = "11";
-
     /**
      * 手机通讯录邀请
      */
     public static final String FRIEND_INVITE_EVENT = "12";
-
     /**
      * 后台插入数据标示
      */
     public static final String FRIEND_BACKBROUND_EVENT = "13";
-
     /**
      * 通讯录里面的好友
      */
     public static final String FRIEND_CONTACTS_EVENT = "14";
-
     /**
      * 通讯录里面修改备注
      *
      * @param view
      */
     public static final String FRIEND_REMARK_EVENT = "15";
-
+    /**
+     * 粉丝列表分页
+     */
+    int start = 0;
+    int limit = Constants.PAGESIZE;
+    private ApiService service;
+    private IViewController mView;
+    private Context mContext;
+    private FriendInformationDao friendInformationDao;
+    private CharacterParser mCharacterParser;
+    private PinyinComparator mPyComparator;
+    /**
+     * 当前刷新到UI的好友列表
+     */
+    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
     private long lastClickTime;
     private String currentUserId;
     private String custPhone;

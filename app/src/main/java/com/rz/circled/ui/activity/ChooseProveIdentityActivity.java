@@ -67,8 +67,7 @@ public class ChooseProveIdentityActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -131,8 +130,6 @@ public class ChooseProveIdentityActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Override

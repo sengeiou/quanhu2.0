@@ -15,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -26,15 +24,12 @@ import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.pinyin.CharacterParser;
 import com.rz.circled.widget.pinyin.SearchPingyinEngine;
-import com.rz.common.adapter.CommonAdapter;
-import com.rz.common.adapter.ViewHolder;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
-import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
-import com.rz.common.utils.TextViewUtils;
+
 import com.rz.httpapi.bean.FriendInformationBean;
 
 import org.greenrobot.eventbus.EventBus;

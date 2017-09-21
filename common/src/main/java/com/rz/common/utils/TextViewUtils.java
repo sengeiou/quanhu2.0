@@ -5,7 +5,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -22,9 +21,9 @@ import com.rz.common.application.BaseApplication;
  */
 public class TextViewUtils {
 
-    private static SpannableString spannableString;
-
     public static int mColor = R.color.color_main;
+    private static SpannableString spannableString;
+    public TextViewOnClickListener mListener;
 
     /**
      * 初始化spannableString
@@ -51,7 +50,6 @@ public class TextViewUtils {
                 end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(span);
     }
-
 
     public static void setSpannableStyleColor(String str, int start, int end, TextView textView, int color) {
         Spannable span = new SpannableString(str);
@@ -136,8 +134,6 @@ public class TextViewUtils {
         }
         return span;
     }
-
-    public TextViewOnClickListener mListener;
 
     public interface TextViewOnClickListener {
         void onTextClick(View view);

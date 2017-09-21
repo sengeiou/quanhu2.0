@@ -19,70 +19,8 @@ import java.util.List;
 
 public class BackGroundService extends IntentService {
 
-    /**
-     * 验证码时间
-     */
-    public static long time_code = 0;
-
-    public static MyCountCode countCode;
-
-    public BackGroundService() {
-        super("BackGroundService");
-    }
-
-    @Override
-    protected void onHandleIntent(Intent data) {
-    }
-
-    /**
-     * 倒计时类
-     */
-    public static class MyCountCode extends CountDownTimer {
-
-        public MyCountCode(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            time_code = millisUntilFinished;
-        }
-
-        @Override
-        public void onFinish() {
-            time_code = 0;
-        }
-    }
-
-    /**
-     * 倒计时
-     *
-     * @param time
-     * @return
-     */
-    public static void countDownCode(long time) {
-        if (null != countCode) {
-            countCode.cancel();
-            countCode = null;
-        }
-        countCode = new MyCountCode(time, 1000);
-        countCode.start();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != countCode) {
-            countCode.cancel();
-        }
-    }
-
-    private static List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
-
-
     private static final String[] PHONES_PROJECTION = new String[]{
             Phone.DISPLAY_NAME, Phone.NUMBER, Photo.PHOTO_ID, Phone.CONTACT_ID};
-
     /**
      * 联系人显示名称
      **/
@@ -99,9 +37,33 @@ public class BackGroundService extends IntentService {
      * 联系人的ID
      **/
     private static final int PHONES_CONTACT_ID_INDEX = 3;
-
+    /**
+     * 验证码时间
+     */
+    public static long time_code = 0;
+    public static MyCountCode countCode;
+    private static List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
     //处理缓存
     private static EntityCache<FriendInformationBean> mBaseInfoCache;
+
+    public BackGroundService() {
+        super("BackGroundService");
+    }
+
+    /**
+     * 倒计时
+     *
+     * @param time
+     * @return
+     */
+    public static void countDownCode(long time) {
+        if (null != countCode) {
+            countCode.cancel();
+            countCode = null;
+        }
+        countCode = new MyCountCode(time, 1000);
+        countCode.start();
+    }
 
     /**
      * 得到手机通讯录联系人信息
@@ -169,6 +131,38 @@ public class BackGroundService extends IntentService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    protected void onHandleIntent(Intent data) {
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != countCode) {
+            countCode.cancel();
+        }
+    }
+
+    /**
+     * 倒计时类
+     */
+    public static class MyCountCode extends CountDownTimer {
+
+        public MyCountCode(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            time_code = millisUntilFinished;
+        }
+
+        @Override
+        public void onFinish() {
+            time_code = 0;
         }
     }
 }

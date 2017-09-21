@@ -21,7 +21,8 @@ public class SearchPingyinEngine {
      * @param str
      */
     public static ArrayList<FriendInformationBean> searchGroup(String str,
-                                                    List<FriendInformationBean> allContacts) {
+                                                               List<FriendInformationBean> allContacts) {
+
 
         Log.e("tag", "搜索关键字＝" + str);
 

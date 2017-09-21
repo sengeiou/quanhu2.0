@@ -18,11 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.j256.ormlite.table.TableUtils;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
-import com.rz.circled.db.DBHelper;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
@@ -40,7 +38,6 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
-import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -49,7 +46,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
-import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,7 +72,7 @@ public class LoginActivity extends BaseActivity {
     TextView idLoginPwBtn;
     @BindView(R.id.reg_layout)
     LinearLayout regLayout;
-    @BindView(R.id.layout_login_qq)
+    @BindView(R.id.layout_phone_code)
     TextView layoutLoginQq;
     @BindView(R.id.layout_login_weixin)
     TextView layoutLoginWeixin;
@@ -456,13 +452,6 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
-                    try {
-                        TableUtils.dropTable(DBHelper.getHelper(mContext).getConnectionSource(), FriendInformationBean.class, true);
-                        TableUtils.createTable(DBHelper.getHelper(mContext).getConnectionSource(), FriendInformationBean.class);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
                     EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
                     entityCache.clean();
                 }

@@ -1,6 +1,5 @@
 package com.rz.circled.presenter.impl;
 
-import android.content.Context;
 import android.os.Handler;
 
 import com.rz.circled.R;

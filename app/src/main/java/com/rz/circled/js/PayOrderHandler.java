@@ -1,21 +1,15 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
 
 import com.google.gson.Gson;
-import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.circled.ui.activity.JsPayOrderActivity;
-import com.rz.circled.ui.activity.LocationActivity;
-import com.rz.common.cache.preference.Session;
+
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
-
-import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;

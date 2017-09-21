@@ -29,13 +29,20 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
      * 数据库版本
      */
     private static final int DB_VERSION = 1;
-
+    private static DBHelper instance;
     /**
      * 用来存放Dao的地图
      */
     private Map<String, Dao> daos = new HashMap<>();
 
-    private static DBHelper instance;
+    /**
+     * 构造方法
+     *
+     * @param context
+     */
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+    }
 
     /**
      * 获取单例
@@ -53,16 +60,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return instance;
-    }
-
-
-    /**
-     * 构造方法
-     *
-     * @param context
-     */
-    public DBHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
     }
 
     /**

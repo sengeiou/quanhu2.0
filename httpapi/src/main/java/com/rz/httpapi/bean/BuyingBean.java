@@ -9,7 +9,7 @@ import java.util.List;
 public class BuyingBean {
 
     private int count;
-    private List<CircleDynamic> list;
+    private List<MyBuyingModel> list;
 
     public int getCount() {
         return count;
@@ -19,11 +19,11 @@ public class BuyingBean {
         this.count = count;
     }
 
-    public List<CircleDynamic> getList() {
+    public List<MyBuyingModel> getList() {
         return list;
     }
 
-    public void setList(List<CircleDynamic> list) {
+    public void setList(List<MyBuyingModel> list) {
         this.list = list;
     }
 }

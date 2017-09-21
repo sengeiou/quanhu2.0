@@ -3,13 +3,12 @@ package com.rz.circled.widget;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.PagerAdapter;
+
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 /**
  * Created by rzw2 on 2017/9/19.
@@ -17,11 +16,13 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 public class MyAutoViewPager extends ViewPager {
     public static final int DEFAULT_INTERVAL = 1500;
+
     /**
      * auto scroll time in milliseconds, default is {@link #DEFAULT_INTERVAL}
      **/
     private long interval = DEFAULT_INTERVAL;
     private Handler handler;
+
     public static final int SCROLL_WHAT = 0;
     private boolean isAutoScroll = false;
 
@@ -72,21 +73,7 @@ public class MyAutoViewPager extends ViewPager {
         this.parentScrollView = parentScrollView;
     }
 
-    private class MyHandler extends Handler {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            switch (msg.what) {
-                case SCROLL_WHAT:
-                    scrollOnce();
-                    sendScrollMessage(interval);
-                default:
-                    break;
-            }
-        }
-    }
 
     /**
      * scroll only once
@@ -107,4 +94,21 @@ public class MyAutoViewPager extends ViewPager {
         handler.removeMessages(SCROLL_WHAT);
         handler.sendEmptyMessageDelayed(SCROLL_WHAT, delayTimeInMills);
     }
+
+    private class MyHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case SCROLL_WHAT:
+                    scrollOnce();
+                    sendScrollMessage(interval);
+                default:
+                    break;
+            }
+        }
+    }
+
 }

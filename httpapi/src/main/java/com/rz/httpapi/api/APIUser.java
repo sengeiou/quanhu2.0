@@ -167,7 +167,7 @@ public class APIUser {
     /**
      * 获得卡券列表
      */
-    public static final String GET_COUPONS_LIST = "v1/activity/vote/myPrizeslist";
+    public static final String GET_COUPONS_LIST = "yyl/v1/activity/vote/myPrizeslist";
 
     /**
      * 获得积分成长总值
@@ -178,4 +178,15 @@ public class APIUser {
      * 获得成长流水
      */
     public static final String GET_LEVEL_LIST = "/v3/event/grow/flow";
+
+    /**
+     * 获取打赏统计
+     */
+    public static final String  GET_REWARD_STAT = "v3/reward/getMyRewardStat";
+
+    /**
+     * 获取活动数统计
+     */
+    public static final String  GET_LIST_COUNT =  "yyl/v1/activity/info/mylistCount";
+
 }

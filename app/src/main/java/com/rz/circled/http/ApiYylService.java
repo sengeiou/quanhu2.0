@@ -10,6 +10,7 @@ import com.rz.httpapi.bean.CouponsBean;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -21,7 +22,7 @@ public interface ApiYylService {
     /**
      * 获取推荐活动列表
      */
-    @GET(BuildConfig.BaseYylUrl + CircleApi.FIND_ACTIVITY_TABLE)
+    @GET(BuildConfig.BaseOpusUrl + CircleApi.FIND_ACTIVITY_TABLE)
     public Observable<ResponseData<ActivityBean>> getActivityList(
             @Query("pageNo") int pageNo,
             @Query("pageSize") int pageSize
@@ -31,7 +32,7 @@ public interface ApiYylService {
     /**
      * 我的页面活动列表
      */
-    @GET(BuildConfig.BaseYylUrl + CircleApi.MINE_ACTIVITY)
+    @GET(BuildConfig.BaseOpusUrl + CircleApi.MINE_ACTIVITY)
     public Observable<ResponseData<ActivityBean>> getMineActivityList(
             @Query("pageNo") int pageNo,
             @Query("pageSize") int pageSize,
@@ -39,10 +40,16 @@ public interface ApiYylService {
 
     );
 
-    @GET(BuildConfig.BaseYylUrl + APIUser.GET_COUPONS_LIST)
+    @GET(BuildConfig.BaseOpusUrl + APIUser.GET_COUPONS_LIST)
     Call<ResponseData<List<CouponsBean>>> getCouponsList(
             @Query("isOverdue") int isOverdue,
             @Query("paramId") String paramId,
             @Query("type") int type
+    );
+
+    @GET(BuildConfig.BaseOpusUrl + APIUser.GET_COUPONS_LIST)
+    Call<ResponseData> mylistCount(
+            @Query("paramId") String paramId
+
     );
 }

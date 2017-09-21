@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/px44"
-    android:paddingRight="@dimen/px44">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,7 +100,9 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/line_horizontal_gray_s" />
+        <View style="@style/line_horizontal_gray_s"
+            android:layout_height="@dimen/px4"
+            />
 
         <TextView
             android:id="@+id/tv_from"

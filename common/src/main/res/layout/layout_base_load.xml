@@ -59,7 +59,7 @@
                 android:paddingTop="@dimen/px35"
                 android:textColor="@color/font_color_blue"
                 android:textSize="@dimen/font_46"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

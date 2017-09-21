@@ -1,7 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.Manifest;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -75,8 +75,50 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
     private UMWeb web;
     private UMShareAPI shareAPI;
     private ShareAction shareAction;
+    SimpleTarget target = new SimpleTarget<Bitmap>() {
+        @Override
+        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            web.setThumb(new UMImage(aty, resource));  //缩略图
+            shareAction.setPlatform(SHARE_MEDIA.SINA).share();
+        }
+    };
     private View mBaseView;
     private int from;
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                Toast.makeText(aty, R.string.coll_suc, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(aty, R.string.share_suc, Toast.LENGTH_SHORT).show();
+            }
+            if (platform.equals(SHARE_MEDIA.WEIXIN_CIRCLE)) {
+                zhugeTrack();
+            }
+            finish();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(aty, R.string.share_fail, Toast.LENGTH_SHORT).show();
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+            finish();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            finish();
+        }
+    };
+
 
     public static void startShareNews(Context context, ShareModel data) {
         startShareNews(context, data, Constants.DEFAULTVALUE);
@@ -159,7 +201,9 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
                 .setCallback(umShareListener);
 
         initViewPager();
+
     }
+
 
     private void initViewPager() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -204,14 +248,6 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
             EasyPermissions.requestPermissions(this, getString(R.string.sd_card_permissions), RC_EXTENER, perms);
         }
     }
-
-    SimpleTarget target = new SimpleTarget<Bitmap>() {
-        @Override
-        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-            web.setThumb(new UMImage(aty, resource));  //缩略图
-            shareAction.setPlatform(SHARE_MEDIA.SINA).share();
-        }
-    };
 
     @OnClick({R.id.id_share_cancel_btn, R.id.id_share_layout})
     public void onFinish() {
@@ -307,41 +343,6 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
         super.onActivityResult(requestCode, resultCode, data);
         shareAPI.onActivityResult(requestCode, resultCode, data);
     }
-
-    private UMShareListener umShareListener = new UMShareListener() {
-        @Override
-        public void onStart(SHARE_MEDIA share_media) {
-
-        }
-
-        @Override
-        public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat", "platform" + platform);
-            if (platform.name().equals("WEIXIN_FAVORITE")) {
-                Toast.makeText(aty, R.string.coll_suc, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(aty, R.string.share_suc, Toast.LENGTH_SHORT).show();
-            }
-            if (platform.equals(SHARE_MEDIA.WEIXIN_CIRCLE)) {
-                zhugeTrack();
-            }
-            finish();
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(aty, R.string.share_fail, Toast.LENGTH_SHORT).show();
-            if (t != null) {
-                Log.d("throw", "throw:" + t.getMessage());
-            }
-            finish();
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA platform) {
-            finish();
-        }
-    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,

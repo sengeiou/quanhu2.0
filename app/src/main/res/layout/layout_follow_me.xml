@@ -19,7 +19,8 @@
             style="@style/DefaultLvStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false" />
+c
 
     </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 

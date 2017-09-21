@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,7 +26,7 @@
             style="@style/DefaultLvStyle"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_pop_white_btn"
-            android:dividerHeight="@dimen/px5"/>
+            android:dividerHeight="@dimen/px5" />
 
         <Button
             android:id="@+id/id_popup_cancel_btn"
@@ -37,6 +38,7 @@
             android:padding="@dimen/px40"
             android:text="@string/cancel"
             android:textColor="@color/txt_pop_detail"
+            android:textSize="@dimen/px52" />
             android:textSize="@dimen/px52"/>
     </LinearLayout>
 </RelativeLayout>
