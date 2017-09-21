@@ -123,7 +123,6 @@
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:theme="@android:style/Theme.Translucent" />
-<<<<<<< HEAD
 
         <!-- QQ QQZone -->
         <activity
@@ -132,21 +131,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
-=======
-
-        <!-- QQ QQZone -->
-        <activity
-            android:name="com.umeng.qq.tencent.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent101419427" />
             </intent-filter>
         </activity>
