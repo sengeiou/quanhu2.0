@@ -267,4 +267,9 @@ public class UploadPicActivity extends BaseActivity {
                     .show();
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

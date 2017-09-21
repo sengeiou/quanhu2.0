@@ -195,6 +195,11 @@ public class CommonH5Activity extends BaseActivity {
 
     private boolean showClose = false;
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     public class WebViewClient extends android.webkit.WebViewClient {
 
         @Override

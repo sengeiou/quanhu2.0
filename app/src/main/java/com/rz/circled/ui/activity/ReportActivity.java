@@ -14,7 +14,6 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 
 
-
 /**
  * Created by rzw2 on 2017/5/27.
  */
@@ -42,7 +41,7 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
 
     @Override
     public boolean hasDataInPage() {
-        return true;
+        return false;
     }
 
     @Override
@@ -142,5 +141,9 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
     public void onExternalPageRequest(String url) {
     }
 
+    @Override
+    public void refreshPage() {
+        mWebView.loadUrl(url);
+    }
 }
 
