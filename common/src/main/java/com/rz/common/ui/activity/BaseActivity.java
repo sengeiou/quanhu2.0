@@ -22,8 +22,6 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
-import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentCode;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -34,7 +32,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks {
+public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks, BaseLoadView.RefreshListener {
     protected static final int RC_CAMERA_PERM = 123;
     protected static final int RC_LOCATION_CONTACTS_PERM = 124;
     protected static final int RC_SETTINGS_SCREEN = 125;
@@ -79,6 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         initContentView(llContent);
         ButterKnife.bind(this);
         initPresenter();
+        setRefreshListener(this);
         initView();
         initData();
     }
@@ -237,7 +236,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (mLoadView != null || isFinishing() || mLoadView != null)
             mLoadView.setRefreshListener(refreshListener);
     }
-
 
 
     /**
@@ -652,8 +650,5 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Log.d(TAG, "onPermissionsDenied");
     }
-
-
-
 
 }
