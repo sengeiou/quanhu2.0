@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
@@ -102,7 +103,7 @@ public class RewardScoreAty extends BaseActivity {
                 break;
             //平台奖励规则
             case R.id.tv_reward_score_to_rule:
-//                CommH5Aty.startCommonH5(aty, H5Address.REWARD_RULE, getString(R.string.yizhi));
+                CommonH5Activity.startCommonH5(aty, "", H5Address.REWARD_RULE);
                 break;
         }
     }

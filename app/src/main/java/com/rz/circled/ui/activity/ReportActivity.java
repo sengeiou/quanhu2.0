@@ -142,5 +142,9 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
     public void onExternalPageRequest(String url) {
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }
 
