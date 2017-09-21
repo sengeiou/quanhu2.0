@@ -6,7 +6,7 @@ package com.rz.httpapi.bean;
 public class MyLevelAcountBean {
     private String createTime;
     private long grow;
-    private int growLevel;
+    private String growLevel;
     private long score;
     private String updateTime;
 
@@ -26,11 +26,11 @@ public class MyLevelAcountBean {
         this.grow = grow;
     }
 
-    public int getGrowLevel() {
+    public String getGrowLevel() {
         return growLevel;
     }
 
-    public void setGrowLevel(int growLevel) {
+    public void setGrowLevel(String growLevel) {
         this.growLevel = growLevel;
     }
 

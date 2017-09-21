@@ -81,7 +81,7 @@ public class LevelPersenter extends GeneralPresenter {
     /**
      * 获得用户积分/成长总值
      */
-    public void getLevelList(int limit, int start) {
+    public void getLevelList(int limit, int start, final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
             return;
@@ -94,14 +94,16 @@ public class LevelPersenter extends GeneralPresenter {
                 if (response.isSuccessful()) {
                     ResponseData<List<MyLevelBean>> responseData = response.body();
                     if (responseData.isSuccessful()) {
-                        mView.updateViewWithFlag(responseData.getData(), FLAG_LEVEL_LIST);
+                        mView.updateViewWithLoadMore(responseData.getData(), loadMore);
                     }
                 }
+                mView.updateViewWithFlag(null, FLAG_LEVEL_LIST);
             }
 
             @Override
             public void onFailure(Call<ResponseData<List<MyLevelBean>>> call, Throwable t) {
                 super.onFailure(call, t);
+                mView.updateViewWithFlag(null, FLAG_LEVEL_LIST);
             }
         });
     }
