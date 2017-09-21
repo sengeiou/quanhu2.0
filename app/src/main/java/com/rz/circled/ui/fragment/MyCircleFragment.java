@@ -87,7 +87,7 @@ public class MyCircleFragment extends BaseFragment {
     @Override
     public void initView() {
 
-        headView = View.inflate(mActivity,R.layout.mine_top_layout,null);
+        headView = View.inflate(mActivity, R.layout.mine_top_layout, null);
         createTxt = (TextView) headView.findViewById(R.id.my_create_txt);
         answerTxt = (TextView) headView.findViewById(R.id.answer_txt);
         lv.addHeaderView(headView);
@@ -138,7 +138,7 @@ public class MyCircleFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position != 0){
+                if (position != 0) {
                     PrivateGroupBean item = mAdapter.getItem(position);
                     CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
                 }
@@ -148,15 +148,17 @@ public class MyCircleFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    if(typeCreateJoin == 1){
+                    if (typeCreateJoin == 1) {
+                        pageNo = 1;
                         loadDataCreate(false);
-                    }else{
+                    } else {
+                        pageNo = 1;
                         loadDataJoin(false);
                     }
                 } else {
-                    if(typeCreateJoin == 1){
+                    if (typeCreateJoin == 1) {
                         loadDataCreate(true);
-                    }else{
+                    } else {
                         loadDataJoin(true);
                     }
 
@@ -211,7 +213,6 @@ public class MyCircleFragment extends BaseFragment {
                                     mAdapter.addData(data);
                                 } else {
                                     mAdapter.setData(data);
-                                    pageNo = 1;
                                 }
                                 pageNo++;
                             }
@@ -262,7 +263,6 @@ public class MyCircleFragment extends BaseFragment {
                                     mAdapter.addData(data);
                                 } else {
                                     mAdapter.setData(data);
-                                    pageNo = 1;
                                 }
                                 pageNo++;
                             }
