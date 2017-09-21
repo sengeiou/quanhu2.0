@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F5F5F5"
+        android:orientation="vertical">
+
+        <include layout="@layout/com_search_bar" />
+
+        <View style="@style/DefaultHLineStyle" />
+
+        <include layout="@layout/view_letter_guide" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_nopress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/px450"
+            android:layout_height="@dimen/px450"
+            android:layout_marginBottom="@dimen/px100"
+            android:layout_marginTop="@dimen/px200"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_data_empty" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/px15"
+            android:text="@string/no_contacts_permissions_hint"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/px45" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px15"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/px15"
+            android:text="@string/open_contacts_permissions_hint"
+            android:textColor="@color/color_main"
+            android:textSize="@dimen/px45" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_gray_common">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_item_bank_card" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/id_tv_change_bank"
+                style="@style/DefaultTvStyle"
+                android:layout_height="@dimen/px130"
+                android:layout_alignParentRight="true"
+                android:paddingRight="@dimen/px44"
+                android:text="@string/change_bank_card"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/px38" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px110"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:text="@string/my_income_money"
+                    android:textColor="@color/color_74"
+                    android:textSize="@dimen/px40" />
+
+                <TextView
+                    android:id="@+id/id_my_shouyi_txt"
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px10"
+                    android:textColor="@color/color_74"
+                    android:textSize="@dimen/px40" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:text="@string/possible_recharge_score"
+                    android:textColor="@color/color_74"
+                    android:textSize="@dimen/px40" />
+
+                <TextView
+                    android:id="@+id/id_tv_score"
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px10"
+                    android:textColor="@color/color_F5BB1E"
+                    android:textSize="@dimen/px40" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px146"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44">
+
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:text="@string/withdraw_money"
+                android:textSize="@dimen/font_44" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/px30"
+                android:text="@string/excharge_rate"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/font_38" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/id_et_recharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|right"
+                    android:hint="@string/input_recharge"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:paddingRight="@dimen/px20"
+                    android:textColor="@color/font_gray_l"
+                    android:textColorHint="@color/font_gray_a"
+                    android:textSize="@dimen/font_50" />
+
+                <ImageView
+                    android:id="@+id/id_back_clear_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/px20"
+                    android:background="@drawable/ic_clear"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yuan"
+                    android:textColor="@color/font_gray_s"
+                    android:textSize="@dimen/px50" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px30"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44"
+            android:paddingTop="@dimen/px30">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px10"
+                android:background="@mipmap/ic_withcash_warn"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:layout_gravity="top"
+                android:layout_marginLeft="@dimen/px15"
+                android:gravity="left|top"
+                android:singleLine="false"
+                android:text="@string/withdraw_note"
+                android:textColor="@color/color_F5BB1E"
+                android:textSize="@dimen/font_40" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/px44">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_width="@dimen/px44"
+                    android:layout_height="@dimen/px44"
+                    android:background="@drawable/shape_bg_blue"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_38" />
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px30"
+                    android:text="@string/withdraw_tip1"
+                    android:textColor="@color/font_gray_s"
+                    android:textSize="@dimen/px40" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/px30"
+                android:layout_marginTop="@dimen/px30"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_width="@dimen/px44"
+                    android:layout_height="@dimen/px44"
+                    android:background="@drawable/shape_bg_blue"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_38" />
+
+                <TextView
+                    android:id="@+id/id_bank_charge_txt"
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px30"
+                    android:text="@string/withdraw_tip2"
+                    android:textColor="@color/font_gray_s"
+                    android:textSize="@dimen/px40" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_width="@dimen/px44"
+                    android:layout_height="@dimen/px44"
+                    android:background="@drawable/shape_bg_blue"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_38" />
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px30"
+                    android:gravity="left"
+                    android:singleLine="false"
+                    android:text="@string/withdraw_tip4"
+                    android:textColor="@color/font_color_blue"
+                    android:textSize="@dimen/px40" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/px30"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/DefaultTvStyle"
+                    android:layout_width="@dimen/px44"
+                    android:layout_height="@dimen/px44"
+                    android:background="@drawable/shape_bg_blue"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_38" />
+
+                <TextView
+                    android:id="@+id/tv_to_bankcard_reference"
+                    style="@style/DefaultTvStyle"
+                    android:layout_marginLeft="@dimen/px30"
+                    android:gravity="left"
+                    android:singleLine="false"
+                    android:text="@string/withdraw_tip3"
+                    android:textColor="@color/font_gray_s"
+                    android:textSize="@dimen/px40" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/id_recharge_submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/px30"
+            android:layout_marginLeft="@dimen/px120"
+            android:layout_marginRight="@dimen/px120"
+            android:layout_marginTop="@dimen/px130"
+            android:background="@drawable/shape_bg_blue_sel"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:padding="@dimen/px32"
+            android:text="@string/confirm_recharge"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_46" />
+    </LinearLayout>
+</ScrollView>

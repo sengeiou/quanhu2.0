@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rolle_white_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingBottom="@dimen/px50"
+        android:paddingLeft="@dimen/px30"
+        android:paddingRight="@dimen/px30"
+        android:paddingTop="@dimen/px50"
+        android:text="@string/backcard_reference"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/font_38" />
+
+    <TextView
+        android:id="@+id/tv_backcard_reference_know"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_round_bottom_gray"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px40"
+        android:paddingTop="@dimen/px40"
+        android:text="@string/had_know"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/font_44" />
+
+</LinearLayout>
