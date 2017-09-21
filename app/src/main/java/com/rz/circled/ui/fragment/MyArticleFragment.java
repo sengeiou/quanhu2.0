@@ -61,9 +61,9 @@ public class MyArticleFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    ((PersonInfoPresenter) presenter).getArticle(false, Session.getUserId() ,"1000");
+                    ((PersonInfoPresenter) presenter).getPersionArticle(false, Session.getUserId() ,"1000");
                 } else {
-                    ((PersonInfoPresenter) presenter).getArticle(true, Session.getUserId() ,"1000");
+                    ((PersonInfoPresenter) presenter).getPersionArticle(true, Session.getUserId() ,"1000");
                 }
                 refreshLayout.setRefreshing(false);
             }
@@ -102,7 +102,7 @@ public class MyArticleFragment extends BaseFragment {
 
     @Override
     protected boolean needLoadingView() {
-        return false;
+        return true;
     }
 
     @Override

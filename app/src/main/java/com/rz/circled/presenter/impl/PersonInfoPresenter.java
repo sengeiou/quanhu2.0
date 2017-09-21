@@ -265,6 +265,85 @@ public class PersonInfoPresenter extends GeneralPresenter {
         });
     }
 
+    /**
+     * 获取个人中心的文章
+     */
+
+    public void getPersionArticle(final boolean loadMore, String custId, String resourceType){
+
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        if (!loadMore) {
+            start = 0;
+        } else {
+            if (isNoData) {
+                start = record_start;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+
+        Call<ResponseData<List<CircleDynamic>>> call = mUserService.getMyPublicResource(
+                custId,
+                Constants.PAGESIZE,
+                resourceType,
+                start);
+
+
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<CircleDynamic>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<CircleDynamic>>> call, Response<ResponseData<List<CircleDynamic>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+
+                    ResponseData<List<CircleDynamic>> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<CircleDynamic> modelList = (List<CircleDynamic>) res.getData();
+
+                        if (null != modelList && !modelList.isEmpty()) {
+                            isNoData = false;
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        } else {
+                            if(loadMore == false){
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }else{
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK);
+                            }
+                            mView.updateViewWithLoadMore(modelList, loadMore);
+                            isNoData = true;
+                        }
+                        return;
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        isNoData = true;
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                isNoData = true;
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<CircleDynamic>>> call, Throwable t) {
+                super.onFailure(call, t);
+                //发送验证码失败
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+            }
+        });
+    }
+
 
     /**
      * 获取我的悬赏

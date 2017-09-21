@@ -33,6 +33,7 @@ import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
@@ -58,6 +59,7 @@ import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
@@ -463,7 +465,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         MineFragItemModel mode9 = new MineFragItemModel(false, getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
 
         MineFragItemModel mode10 = new MineFragItemModel(false, getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
-        MineFragItemModel mode11 = new MineFragItemModel(false, getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
+        MineFragItemModel mode11 = new MineFragItemModel(false, getString(R.string.mine_my_kefu), R.mipmap.ic_help, false);
+        MineFragItemModel mode12 = new MineFragItemModel(false, getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
 
 
         mModelList.add(model);//我的购买
@@ -479,7 +482,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         mModelList.add(mode8);//我的二维码
         mModelList.add(mode9);//一键邀请好友
         mModelList.add(mode10);//联系客服
-        mModelList.add(mode11);//设置
+        mModelList.add(mode11);//帮助
+        mModelList.add(mode12);//设置
 
         mListView.setAdapter(adapter = new CommonAdapter<MineFragItemModel>(mActivity, mModelList, R.layout.adp_mine_frg) {
 
@@ -770,7 +774,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     break;
                 }
                 //设置
+
             case 11:
+                trackUser("我的", "帮助", "设置");
+                CommonH5Activity.startCommonH5(mActivity, H5Address.USER_HELP, "帮助");
+                break;
+            case 12:
                 trackUser("我的", "入口名称", "设置");
                 Intent intent = new Intent(mActivity, SettingActivity.class);
                 startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);

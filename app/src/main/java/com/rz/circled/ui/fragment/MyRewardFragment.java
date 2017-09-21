@@ -151,7 +151,7 @@ public class MyRewardFragment extends BaseFragment {
 
     @Override
     protected boolean needLoadingView() {
-        return false;
+        return true;
     }
 
     @Override

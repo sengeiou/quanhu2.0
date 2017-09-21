@@ -1034,6 +1034,22 @@ public interface ApiService {
 
 
     /**
+     * 我的个人中心的文章
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.MY_PUBLIC_RESOURCE)
+    Call<ResponseData<List<CircleDynamic>>> getMyPublicResource(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("resourceType") String resourceType,
+            @Field("start") int start
+    );
+
+
+    /**
      * 用户签到
      *
      * @param custId
