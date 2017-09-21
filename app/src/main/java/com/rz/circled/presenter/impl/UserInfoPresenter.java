@@ -15,10 +15,13 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.constans.ReturnCode;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -359,8 +362,55 @@ public class UserInfoPresenter extends GeneralPresenter {
 
 
 
+    /**
+     * 验证手机号是否绑定
+     *
+     */
+    public void verfityBoundPhone(String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, "验证中...");
+//        Call<ResponseData<RegisterModel>> call = mUserService.checkProblem(
+        Call<ResponseData<LoginTypeBean>> call = mUserService.loginMethod(
+                Session.getUserId());
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<LoginTypeBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<LoginTypeBean>> call, Response<ResponseData<LoginTypeBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        LoginTypeBean model = (LoginTypeBean) res.getData();
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        mView.updateViewWithFlag(model,200);
+                        return;
+                    } else {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                        return;
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<LoginTypeBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                //验证短信验证码失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+            }
+        });
+    }
+
 //    /**
-//     * 验证手机号是否注册
+//     * 绑定手机号
 //     *
 //     * @param phones
 //     */

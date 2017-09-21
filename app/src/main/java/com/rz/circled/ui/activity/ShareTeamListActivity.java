@@ -313,6 +313,11 @@ public class ShareTeamListActivity extends BaseActivity implements AdapterView.O
         }
     };
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     private static class GroupStrategy extends ContactGroupStrategy {
         GroupStrategy() {
             add(ContactGroupStrategy.GROUP_NULL, 0, ""); // 默认分组

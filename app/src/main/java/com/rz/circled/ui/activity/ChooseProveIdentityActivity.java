@@ -173,4 +173,9 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

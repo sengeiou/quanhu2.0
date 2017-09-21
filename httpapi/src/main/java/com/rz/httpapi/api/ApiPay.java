@@ -54,6 +54,10 @@ public class ApiPay {
      *  计算手续费
      */
     static final String GET_CHARGE = "v3/pay/getServiceCharge";
+    /**
+     *  消息免打扰
+     */
+    static final String Message_Free = "v3/userConfig/update";
 
     /**
      * 绑定银行卡
@@ -113,6 +117,12 @@ public class ApiPay {
      * 验证支付密码
      */
     static final String CHECK_PAY_PWD = "v3/pay/checkPayPwd";//该接口2.0已有,但是未使用,
+
+    /**
+     * 获取登录方式
+     */
+    static final String GET_LOGIN_METHOD = "v3/user/loginMethod";
+
 
 
 }

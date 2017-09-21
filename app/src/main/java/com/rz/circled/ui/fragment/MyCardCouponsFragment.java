@@ -169,4 +169,9 @@ public class MyCardCouponsFragment extends BaseFragment {
         }
         if (!hasDataInPage()) onLoadingStatus(CommonCode.General.DATA_EMPTY);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

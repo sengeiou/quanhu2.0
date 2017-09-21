@@ -391,4 +391,8 @@ public class ToBankCardAty extends BaseActivity {
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

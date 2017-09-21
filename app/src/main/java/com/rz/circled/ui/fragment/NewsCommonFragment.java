@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
@@ -19,13 +18,11 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.widget.svp.SVProgressHUD;
-import com.rz.httpapi.api.ApiNews;
 import com.rz.httpapi.api.ApiNewsService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.NewsBean;
-import com.rz.httpapi.bean.PrivateGroupBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -325,4 +322,8 @@ public class NewsCommonFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

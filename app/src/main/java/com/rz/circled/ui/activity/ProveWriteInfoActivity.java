@@ -280,4 +280,9 @@ public class ProveWriteInfoActivity extends BaseActivity {
             tvProveArea.setText(area);
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

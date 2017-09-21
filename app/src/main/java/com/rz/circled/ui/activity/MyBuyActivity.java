@@ -7,13 +7,11 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.BuyingAdapter;
-import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
-import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.MyBuyingModel;
 
 import java.util.ArrayList;
@@ -106,4 +104,12 @@ public class MyBuyActivity extends BaseActivity {
         return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
+    @Override
+    protected boolean needSupportRefresh() {
+        return false;
+    }
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -303,4 +303,8 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

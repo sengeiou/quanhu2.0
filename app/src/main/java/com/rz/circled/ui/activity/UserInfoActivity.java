@@ -15,17 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.fragment.MyCircleFragment;
-import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
-import com.rz.circled.widget.GlideCircleImage;
-import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
+import com.rz.circled.ui.fragment.MyCircleFragment;
 import com.rz.circled.ui.fragment.MyRewardFragment;
+import com.rz.circled.widget.GlideCircleImage;
+import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
@@ -38,6 +38,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -230,6 +231,11 @@ public class UserInfoActivity extends BaseActivity{
     @Override
     protected boolean needShowTitle() {
         return false;
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 
 

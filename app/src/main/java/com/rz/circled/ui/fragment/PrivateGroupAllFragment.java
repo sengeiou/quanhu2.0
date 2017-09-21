@@ -9,17 +9,13 @@ import android.widget.ListView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.helper.CommonH5JumpHelper;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.common.utils.Utility;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -30,7 +26,6 @@ import com.rz.httpapi.bean.PrivateGroupBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,7 +35,6 @@ import retrofit2.Response;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_SEARCH_KEY;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_BOOLEAN;
-import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
  * Created by rzw2 on 2017/8/31.
@@ -158,5 +152,10 @@ public class PrivateGroupAllFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

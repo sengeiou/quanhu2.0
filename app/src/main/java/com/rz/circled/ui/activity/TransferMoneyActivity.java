@@ -325,4 +325,9 @@ public class TransferMoneyActivity extends BaseActivity {
             }
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

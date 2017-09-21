@@ -234,4 +234,9 @@ public class AddBankCardAty extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

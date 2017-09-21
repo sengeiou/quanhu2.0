@@ -16,4 +16,9 @@ public class NewsAnnounceDetailsActivity extends BaseActivity{
     public void initData() {
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

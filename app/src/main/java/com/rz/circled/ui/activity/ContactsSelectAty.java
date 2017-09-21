@@ -335,4 +335,8 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
         mContactsAdp.notifyDataSetChanged();
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

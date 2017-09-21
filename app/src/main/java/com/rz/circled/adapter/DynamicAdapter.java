@@ -17,6 +17,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import java.util.List;
 
@@ -62,17 +63,17 @@ public class DynamicAdapter extends CircleContentAdapter {
         if (item.cust != null) {
             mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);
         }
-        tv_other_left.setText(item.readNum+"阅读");
-        if (item.coterieId==null||item.coterieName==null){
-            fromWhere.setText("来自圈子"+item.circleName);
+        tv_other_left.setText(item.readNum+" 阅读");
+        if (StringUtil.isEmpty(item.coterieId)||StringUtil.isEmpty(item.coterieName)){
+            fromWhere.setText("来自圈子 "+item.circleName);
         }else {
-            fromWhere.setText("来自私圈"+item.coterieName);
+            fromWhere.setText("来自私圈 "+item.coterieName);
         }
         mTvTime.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd HH:mm:ss"));
         fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.coterieId==null||item.coterieName==null){
+                if (StringUtil.isEmpty(item.coterieId)||StringUtil.isEmpty(item.coterieName)){
                     WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/");
                 }else {
                     WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/coterie/"+item.coterieId);

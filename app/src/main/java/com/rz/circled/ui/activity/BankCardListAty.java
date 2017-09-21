@@ -301,4 +301,9 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

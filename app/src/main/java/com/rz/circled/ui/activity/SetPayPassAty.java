@@ -324,4 +324,9 @@ public class SetPayPassAty extends BaseActivity {
             imm.hideSoftInputFromWindow(getWindow().getDecorView().getApplicationWindowToken(), 0);
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

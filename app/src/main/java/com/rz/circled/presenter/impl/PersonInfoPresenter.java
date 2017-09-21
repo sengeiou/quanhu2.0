@@ -10,6 +10,7 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
@@ -26,6 +27,8 @@ import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.RewardStatBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.constans.ReturnCode;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -514,17 +517,18 @@ public class PersonInfoPresenter extends GeneralPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.refunds_success));
                         mView.updateView(model);
                     } else {
-                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail) + ":" + res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                        mView.updateView(CommonCode.General.DATA_EMPTY);
                     }
                 } else {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail));
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData<RewardStatBean>> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.refunds_fail));
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
     }

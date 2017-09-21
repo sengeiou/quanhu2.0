@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
-import com.rz.circled.modle.AccountModel;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.circled.widget.MyGridView;
 import com.rz.common.adapter.CommonAdapter;
@@ -229,5 +228,10 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         mAdapter.setCheckAtPosFalse(i, true);
         mRemarkMoney = (String) mAdapter.getItem(i);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

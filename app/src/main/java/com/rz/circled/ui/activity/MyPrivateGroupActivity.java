@@ -2,7 +2,6 @@ package com.rz.circled.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.httpapi.bean.TransferBean;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -27,11 +25,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
 import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
@@ -116,5 +112,10 @@ public class MyPrivateGroupActivity extends BaseActivity {
         commonNavigator.setAdjustMode(true);
         indicatorTab.setNavigator(commonNavigator);
         ViewPagerHelper.bind(indicatorTab, viewpagerGroup);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

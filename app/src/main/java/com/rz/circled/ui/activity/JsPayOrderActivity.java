@@ -98,4 +98,9 @@ public class JsPayOrderActivity extends BaseActivity {
             }
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

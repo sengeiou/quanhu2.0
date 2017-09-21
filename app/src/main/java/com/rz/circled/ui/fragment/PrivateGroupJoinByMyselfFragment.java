@@ -178,4 +178,9 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             }
         });
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

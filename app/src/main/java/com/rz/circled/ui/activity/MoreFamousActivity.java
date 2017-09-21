@@ -1,6 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,5 +80,10 @@ public class MoreFamousActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

@@ -46,4 +46,9 @@ public class MyAccountAty extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

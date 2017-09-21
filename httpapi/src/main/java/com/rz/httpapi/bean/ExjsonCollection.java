@@ -6,67 +6,112 @@ package com.rz.httpapi.bean;
 
 public class ExjsonCollection {
 
-    /**
-     * revision : 1
-     * createUserId : 73
-     * createDate : null
-     * lastUpdateUserId : 73
-     * lastUpdateDate : null
-     * appName : common
-     * tenantId : null
-     * coterieId : i9a8n67l8i6w
-     * id : 245
-     * ids : null
-     * shelveFlag : 0
-     * recommend : 0
-     * cityCode : null
-     * gps : null
-     * resourceId : 535238979048570880
-     * title : 话题发个过分
-     * imgUrl : 
-     * imgThumbnailUrl : 
-     * content : v个回家结婚vvvv哈哈给
-     * delFlag : 0
-     * heat : 85588
-     * sort : 0
-     * viewCount : 0
-     * replyCount : 0
-     * contentSource : [{"text":"v个回家结婚vvvv哈哈给"}]
-     * moduleEnum : 0230
-     * currentUserId : null
-     * revisionNext : 2
-     * currentUser : null
-     */
+    public QuestionBean question;
+    public AnswerBean answer;
 
-    public int revision;
-    public String createUserId;
-    public Object createDate;
-    public String lastUpdateUserId;
-    public Object lastUpdateDate;
-    public String appName;
-    public Object tenantId;
-    public String coterieId;
-    public int id;
-    public Object ids;
-    public int shelveFlag;
-    public int recommend;
-    public Object cityCode;
-    public Object gps;
-    public String resourceId;
-    public String title;
-    public String imgUrl;
-    public String imgThumbnailUrl;
-    public String content;
-    public int delFlag;
-    public int heat;
-    public int sort;
-    public int viewCount;
-    public int replyCount;
-    public String contentSource;
-    public String moduleEnum;
-    public Object currentUserId;
-    public int revisionNext;
-    public Object currentUser;
+    public static class QuestionBean {
+
+        public int revision;
+        public String createUserId;
+        public long createDate;
+        public Object lastUpdateUserId;
+        public long lastUpdateDate;
+        public String appName;
+        public String tenantId;
+        public String coterieId;
+        public int id;
+        public Object title;
+        public String content;
+        public String contentSource;
+        public Object imgUrl;
+        public String targetId;
+        public int type;
+        public int heat;
+        public int recommend;
+        public Object recommendDate;
+        public int shelveFlag;
+        public int delFlag;
+        public String moduleEnum;
+        public int answerCount;
+        public int likeCount;
+        public int viewCount;
+        public int commentCount;
+        public int favoriteCount;
+        public int shareCount;
+        public int answerId;
+        public long lastAnswerDate;
+        public String cityCode;
+        public String gps;
+        public String resourceId;
+        public int validTime;
+        public double chargeAmount;
+        public int isOnlyShowMe;
+        public int isAnonymity;
+        public int isValid;
+        public int refundFlag;
+        public Object password;
+        public int orderFlag;
+        public String orderId;
+        public Object refundOrderId;
+        public Object questionContent;
+        public String userName;
+        public String userImg;
+        public String nickName;
+        public String targetUserName;
+        public String targetUserImg;
+        public String targetNickName;
+        public Object myAnswerId;
+        public Object questionType;
+        public int roleFlag;
+        public int targetRoleFlag;
+        public int likeFlag;
+        public Object currentUserId;
+        public Object currentUser;
+        public int revisionNext;
+
+
+    }
+
+    public static class AnswerBean {
+        public int revision;
+        public String createUserId;
+        public long createDate;
+        public Object lastUpdateUserId;
+        public long lastUpdateDate;
+        public String appName;
+        public String tenantId;
+        public String coterieId;
+        public int id;
+        public int questionId;
+        public String content;
+        public String contentSource;
+        public String imgUrl;
+        public int heat;
+        public int shelveFlag;
+        public int delFlag;
+        public String moduleEnum;
+        public int likeCount;
+        public int commentCount;
+        public int favoriteCount;
+        public int shareCount;
+        public int type;
+        public String cityCode;
+        public String gps;
+        public String resourceId;
+        public String answerAudio;
+        public Object answerContent;
+        public int audioLength;
+        public int orderFlag;
+        public Object orderId;
+        public String userName;
+        public String userImg;
+        public String nickName;
+        public int roleFlag;
+        public int likeFlag;
+        public Object currentUserId;
+        public Object currentUser;
+        public int revisionNext;
+    }
 
    
 }

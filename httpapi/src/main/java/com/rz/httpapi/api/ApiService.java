@@ -8,7 +8,6 @@ import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BillDetailModel;
-import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.BuyingBean;
 import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -21,6 +20,7 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
+import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MoreFamousModel;
@@ -154,6 +154,23 @@ public interface ApiService {
             @Field("phone") String phone,
             @Field("password") String password
     );
+
+    /**
+     * 登录接口，POST请求，表单登录
+     *
+     * @param act
+     * @param phone    手机号
+     * @param password 密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.LOGIN)
+    Call<ResponseData<UserInfoBean>> loginVerifyCode(
+            @Field("act") int act,
+            @Field("phone") String phone,
+            @Field("verifyCode") String verifyCode
+    );
+
 
     /**
      * 第三方登录接口
@@ -928,6 +945,15 @@ public interface ApiService {
     );
 
     /**
+     * 获取登录方式
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_LOGIN_METHOD)
+    Call<ResponseData<LoginTypeBean>> loginMethod(
+            @Field("custId") String custId
+    );
+
+    /**
      * 设置支付密码
      */
     @FormUrlEncoded
@@ -1262,6 +1288,18 @@ public interface ApiService {
     @POST(ApiPay.GET_CHARGE)
     Call<ResponseData<List<CashModel>>> getServiceCharge(
             @Field("act") int act
+    );
+    /**
+     * 消息免打扰
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.Message_Free)
+    Observable<ResponseData> setMessFree(
+            @Field("custId") String custId,
+            @Field("pushStatus") int pushStatus
+
     );
 
 }

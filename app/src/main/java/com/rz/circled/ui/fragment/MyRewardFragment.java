@@ -1,6 +1,5 @@
 package com.rz.circled.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,13 +13,14 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.RewardAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
-import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.MyRewardBean;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -123,7 +123,6 @@ public class MyRewardFragment extends BaseFragment {
     @Override
     public void initPresenter() {
         super.initPresenter();
-        //搜索接口
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
 
@@ -160,4 +159,8 @@ public class MyRewardFragment extends BaseFragment {
         return rewardAdapter != null && rewardAdapter.getCount() != 0;
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

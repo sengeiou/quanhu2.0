@@ -213,4 +213,9 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     public boolean enabled(int position) {
         return true;
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -288,5 +287,10 @@ public class NewsActivity extends BaseActivity {
         }
         mCache.putListEntity(mCacheData);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

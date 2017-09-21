@@ -161,6 +161,11 @@ public class SearchActivity extends BaseActivity {
         EventBus.getDefault().post(baseEvent);
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
 
     private class SearchAdapter extends FragmentStatePagerAdapter {
 

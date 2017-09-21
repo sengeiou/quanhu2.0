@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -13,9 +14,10 @@ import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.modle.ShowListModel;
-import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
+import com.rz.circled.widget.SwitchButton;
+import com.rz.common.cache.CachePath;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -25,14 +27,18 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
+import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.yryz.yunxinim.login.LogoutHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -55,13 +61,15 @@ public class SettingActivity extends BaseActivity {
     //退出
     @BindView(R.id.id_btn_exit)
     Button mExitBtn;
+    @BindView(R.id.id_sb_mess)
+    SwitchButton mIdSbMess;
 
     /**
      * 缓存大小
      */
     private String mCacheSize;
     private SnsAuthPresenter snsPresenter;
-    protected IPresenter presenter;
+    protected UpdateOrExitPresenter presenter;
 
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -74,15 +82,30 @@ public class SettingActivity extends BaseActivity {
         presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
     }
-
+boolean isCheck=false;
     @Override
     public void initView() {
         setTitleText("设置");
+        isCheck = Session.getMessFree();
+        mIdSbMess.setChecked(isCheck);
         if (!Session.getUserIsLogin()) {
             mExitBtn.setVisibility(View.GONE);
 //            mAccountView.setVisibility(View.GONE);
             mLinearRemind.setVisibility(View.GONE);
         }
+        mIdSbMess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isCheck){
+                    isCheck=false;
+                    presenter.messageFree(0);
+                }else{
+                    isCheck=true;
+                    presenter.messageFree(1);
+                }
+                Session.setMessFree(isCheck);
+            }
+        });
     }
 
     @Override
@@ -102,34 +125,30 @@ public class SettingActivity extends BaseActivity {
 //            EventBus.getDefault().post(event);
 //        }
 //
-//        calculateCache();
+        calculateCache();
     }
 
     /**
      * 计算缓存大小
      */
     private void calculateCache() {
-//        try {
-//            //外部存储数据大小
-//            long wai = DataCleanManager.getFolderSize(new File(
-//                    CachePath.wai_path));
-////            long nei = DataCleanManager.getFolderSize(new File(
-////                    CachePath.nei_path));
-////            long databases = DataCleanManager.getFolderSize(new File(
-////                    CachePath.databases_path));
-//            //shareprefresh存储数据大小
-//            long share = DataCleanManager.getFolderSize(new File(
-//                    CachePath.share_path));
-//            long cache = wai + share;
-//            if (cache == 0) {
-//                mCacheSize = "0.00B";
-//            } else {
-//                mCacheSize = DataCleanManager.getFormatSize(cache);
-//            }
-//            mTxtCacheNum.setText(mCacheSize);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            //外部存储数据大小
+            long wai = DataCleanManager.getFolderSize(new File(
+                    CachePath.wai_path));
+            //shareprefresh存储数据大小
+            long share = DataCleanManager.getFolderSize(new File(
+                    CachePath.share_path));
+            long cache = wai + share;
+            if (cache == 0) {
+                mCacheSize = "0.00B";
+            } else {
+                mCacheSize = DataCleanManager.getFormatSize(cache);
+            }
+            mTxtCacheNum.setText(mCacheSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit})
@@ -155,10 +174,10 @@ public class SettingActivity extends BaseActivity {
                 break;
             //清除缓存
             case R.id.id_layout_clean_cache:
-//                ClearCacheUtil.clearCache(aty, 0, "");
-//                mTxtCacheNum.setText("0M");
-//                Session.setUserIsFirstDownload(false);
-//                SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.clean_cache_complete));
+                mTxtCacheNum.setText("0M");
+                DataCleanManager.clearAllCache(this);
+                Session.setUserIsFirstDownload(false);
+                SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.clean_cache_complete));
                 break;
             //退出
             case R.id.id_btn_exit:
@@ -283,4 +302,15 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.Manifest;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.netease.nimlib.sdk.NIMClient;
@@ -382,5 +380,10 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
 //            showLoginDialog();
             return false;
         }
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

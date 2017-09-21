@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
-import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
 import com.rz.common.cache.preference.Session;
@@ -28,10 +26,7 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.RegisterBean;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -184,6 +179,11 @@ public class FindPwdActivity extends BaseActivity {
         }
         mc = new MyCount(time, 1000);
         mc.start();
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 
     /**

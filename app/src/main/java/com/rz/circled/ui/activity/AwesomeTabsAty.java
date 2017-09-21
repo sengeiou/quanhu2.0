@@ -183,6 +183,11 @@ public class AwesomeTabsAty extends BaseActivity implements ViewPager.OnPageChan
 
     private final String[] titles = {"卡券", "奖品"};
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     private class VideoPagesAdapter extends FragmentStatePagerAdapter {
 
         public VideoPagesAdapter(FragmentManager fm) {

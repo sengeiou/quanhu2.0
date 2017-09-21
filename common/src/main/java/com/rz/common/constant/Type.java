@@ -106,9 +106,22 @@ public interface Type {
      * 功能码--更换手机
      */
     public static String FUNCTION_CODE_5 = "5";
+
+    /**
+     * 功能码 -- 通用
+     */
+    public static String FUNCTION_CODE_8 ="8";
+
     /**
      * 转发券
      */
+
+    /**
+     * 功能码 -- 登录
+     */
+    public static String FUNCTION_CODE_9 = "9";
+
+
     int TYPE_TICKET = 12;
 
 
