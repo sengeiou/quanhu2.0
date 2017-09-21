@@ -92,8 +92,7 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+
     }
 
     @OnClick({R.id.id_person_clear, R.id.tv_base_title_right})
@@ -144,13 +143,6 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
     @Override
     public void afterTextChanged(Editable s) {
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
 }

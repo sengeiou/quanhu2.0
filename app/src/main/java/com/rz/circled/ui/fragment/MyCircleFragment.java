@@ -87,6 +87,9 @@ public class MyCircleFragment extends BaseFragment {
     @Override
     public void initView() {
 
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
         headView = View.inflate(mActivity,R.layout.mine_top_layout,null);
         createTxt = (TextView) headView.findViewById(R.id.my_create_txt);
         answerTxt = (TextView) headView.findViewById(R.id.answer_txt);
@@ -99,13 +102,14 @@ public class MyCircleFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 typeCreateJoin = 1;
-
+                pageNo = 1;
                 createTxt.setTextColor(getResources().getColor(R.color.tab_blue));
                 createTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
 
                 answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
                 answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
 
+                mAdapter.setData(null);
                 loadDataCreate(false);
             }
         });
@@ -113,22 +117,19 @@ public class MyCircleFragment extends BaseFragment {
         answerTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 typeCreateJoin = 2;
-
+                pageNo = 1;
                 createTxt.setTextColor(getResources().getColor(R.color.color_999999));
                 createTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
 
                 answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
                 answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
-
+                mAdapter.setData(null);
                 loadDataJoin(false);
             }
         });
 
 
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
@@ -186,6 +187,10 @@ public class MyCircleFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 获取加入的私圈
+     * @param loadMore
+     */
     private void loadDataJoin(final boolean loadMore) {
         Http.getApiService(ApiPGService.class).privateGroupMyselfJoin(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
@@ -236,12 +241,16 @@ public class MyCircleFragment extends BaseFragment {
         });
     }
 
-
+    /**
+     * 获取创建的私圈
+     * @param loadMore
+     */
     private void loadDataCreate(final boolean loadMore) {
         Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
+
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
@@ -286,5 +295,17 @@ public class MyCircleFragment extends BaseFragment {
             }
         });
     }
+
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return mAdapter != null && mAdapter.getCount() != 0;
+    }
+
 
 }

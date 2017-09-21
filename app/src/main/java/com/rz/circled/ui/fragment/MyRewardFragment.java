@@ -123,7 +123,6 @@ public class MyRewardFragment extends BaseFragment {
     @Override
     public void initPresenter() {
         super.initPresenter();
-        //搜索接口
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
 

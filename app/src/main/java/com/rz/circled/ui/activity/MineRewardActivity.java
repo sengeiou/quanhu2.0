@@ -19,6 +19,7 @@ import com.rz.circled.ui.fragment.RewardArticalFragment;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.RewardStatBean;
@@ -90,7 +91,7 @@ public class MineRewardActivity extends BaseActivity {
         rewardedLyout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
             }
         });
 
@@ -165,6 +166,10 @@ public class MineRewardActivity extends BaseActivity {
             BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.TYPE_REWARD_COUNT, model);
             EventBus.getDefault().post(baseEvent);
 
+        }else{
+            rewardTxt.setText("0.00");
+            BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.TYPE_EMPTY_COUNT, 0);
+            EventBus.getDefault().post(baseEvent);
         }
 
     }

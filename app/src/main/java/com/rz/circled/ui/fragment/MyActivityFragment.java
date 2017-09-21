@@ -89,4 +89,5 @@ public class MyActivityFragment extends BaseFragment {
     public void initData() {
 
     }
+
 }

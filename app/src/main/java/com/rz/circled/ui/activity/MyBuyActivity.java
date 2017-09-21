@@ -106,4 +106,8 @@ public class MyBuyActivity extends BaseActivity {
         return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
+    @Override
+    protected boolean needSupportRefresh() {
+        return false;
+    }
 }

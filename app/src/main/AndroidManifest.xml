@@ -552,7 +552,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
-            android:name=".ui.activity.NavigateOpenActivity"
+            android:name=".ui.activity.BoundPhoneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
     </application>
