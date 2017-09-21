@@ -118,6 +118,11 @@ public class APIUser {
      */
     public static final String MY_RESOURCE = "v3/resource/getMyResource";
 
+    /**
+     * 我的个人中资源
+     */
+    public static final String MY_PUBLIC_RESOURCE = "v3/resource/getMyPublicResource";
+
 
     /**
      * 达人证人申请

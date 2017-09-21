@@ -23,4 +23,8 @@ public interface H5Address {
     String INTEGRAL_STATEGY = H5_HEAD + "common/integral-strategy/index.html";
 
 
+    //帮助
+    //用户服务协议
+    String USER_HELP = H5_HEAD + "quanhu/doc/android_list/index.html";
+
 }
