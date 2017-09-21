@@ -210,11 +210,8 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
             return;
         }
 
-<<<<<<< HEAD
         FriendInformationBean item = mContactsAdp.getItem(i);
-=======
-        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i);
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
         if (item == null) {
             return;
         }

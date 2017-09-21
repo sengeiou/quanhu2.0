@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity {
     TextView idLoginPwBtn;
     @BindView(R.id.reg_layout)
     LinearLayout regLayout;
-    @BindView(R.id.layout_login_qq)
+    @BindView(R.id.layout_phone_code)
     TextView layoutLoginQq;
     @BindView(R.id.layout_login_weixin)
     TextView layoutLoginWeixin;

@@ -3,39 +3,27 @@ package com.rz.circled.widget;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-<<<<<<< HEAD
-=======
-import android.support.v4.view.PagerAdapter;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-<<<<<<< HEAD
-=======
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 /**
  * Created by rzw2 on 2017/9/19.
  */
 
 public class MyAutoViewPager extends ViewPager {
     public static final int DEFAULT_INTERVAL = 1500;
-<<<<<<< HEAD
-    public static final int SCROLL_WHAT = 0;
-=======
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
     /**
      * auto scroll time in milliseconds, default is {@link #DEFAULT_INTERVAL}
      **/
     private long interval = DEFAULT_INTERVAL;
     private Handler handler;
-<<<<<<< HEAD
-=======
+
     public static final int SCROLL_WHAT = 0;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private boolean isAutoScroll = false;
 
     private ScrollView parentScrollView;
@@ -85,25 +73,8 @@ public class MyAutoViewPager extends ViewPager {
         this.parentScrollView = parentScrollView;
     }
 
-<<<<<<< HEAD
-=======
-    private class MyHandler extends Handler {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
 
-            switch (msg.what) {
-                case SCROLL_WHAT:
-                    scrollOnce();
-                    sendScrollMessage(interval);
-                default:
-                    break;
-            }
-        }
-    }
-
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * scroll only once
      */
@@ -123,7 +94,6 @@ public class MyAutoViewPager extends ViewPager {
         handler.removeMessages(SCROLL_WHAT);
         handler.sendEmptyMessageDelayed(SCROLL_WHAT, delayTimeInMills);
     }
-<<<<<<< HEAD
 
     private class MyHandler extends Handler {
 
@@ -140,6 +110,5 @@ public class MyAutoViewPager extends ViewPager {
             }
         }
     }
-=======
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
 }

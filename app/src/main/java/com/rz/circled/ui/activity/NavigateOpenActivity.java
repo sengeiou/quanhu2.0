@@ -35,55 +35,28 @@ import butterknife.OnClick;
  * 跳转打开第三方地图app
  */
 public class NavigateOpenActivity extends BaseActivity {
-<<<<<<< HEAD
-    private static final String EXTRA_LATITUDE = "extraLatitude";
-    private static final String EXTRA_LONGITUDE = "extraLongitude";
-    private static final String EXTRA_NAME = "extraName";
-=======
-    //声明AMapLocationClient类对象
-    public AMapLocationClient mLocationClient = null;
-    //声明AMapLocationClientOption对象
-    public AMapLocationClientOption mLocationOption = null;
-    @BindView(R.id.ll_navigate_map)
-    LinearLayout llMap;
-    @BindView(R.id.id_popup_listview)
-    MyListView mListView;
 
-    private double endLatitude;
-    private double endlongitude;
-    private double startLatitude;
-    private double startlongitude;
-    private String startAddress;
-    private String endName;
 
 
     private static final String EXTRA_LATITUDE = "extraLatitude";
     private static final String EXTRA_LONGITUDE = "extraLongitude";
     private static final String EXTRA_NAME = "extraName";
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 百度地图
      */
     private final String BAIDU_MAP = "com.baidu.BaiduMap";
-<<<<<<< HEAD
-=======
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 高德地图
      */
     private final String GAODE_MAP = "com.autonavi.minimap";
-<<<<<<< HEAD
-=======
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 下载app根路径
      */
     private final String loadAppHost = "http://a.app.qq.com/o/simple.jsp?pkgname=";
     private final String[] hintItems = new String[]{"高德地图", "百度地图", "下载高德地图", "下载百度地图"};
-<<<<<<< HEAD
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
@@ -99,27 +72,7 @@ public class NavigateOpenActivity extends BaseActivity {
     private String startAddress;
     private String endName;
     private ArrayList<String> mapList;
-    //声明定位回调监听器
-    private AMapLocationListener mLocationListener = new AMapLocationListener() {
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            if (amapLocation != null) {
-                if (amapLocation.getErrorCode() == 0) {
-                    startLatitude = amapLocation.getLatitude();
-                    startlongitude = amapLocation.getLongitude();
-                    startAddress = amapLocation.getAddress();
-                } else {
-                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Log.e("AmapError", "location Error, ErrCode:"
-                            + amapLocation.getErrorCode() + ", errInfo:"
-                            + amapLocation.getErrorInfo());
-                }
-            }
-        }
-    };
-=======
-    private ArrayList<String> mapList;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
 
     /**
      * 启动h5界面
@@ -148,11 +101,8 @@ public class NavigateOpenActivity extends BaseActivity {
         checkMapApp();
     }
 
-<<<<<<< HEAD
     //----------------------------------------------------定位-------------------------------//
 
-=======
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     @Override
     public void initData() {
         Intent intent = getIntent();
@@ -171,11 +121,8 @@ public class NavigateOpenActivity extends BaseActivity {
 
     }
 
-<<<<<<< HEAD
-=======
     //----------------------------------------------------定位-------------------------------//
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private void initLocation() {
         //初始化定位
         mLocationClient = new AMapLocationClient(getApplicationContext());
@@ -194,8 +141,7 @@ public class NavigateOpenActivity extends BaseActivity {
         mLocationClient.startLocation();
     }
 
-<<<<<<< HEAD
-=======
+
 
     //声明定位回调监听器
     private AMapLocationListener mLocationListener = new AMapLocationListener() {
@@ -216,7 +162,6 @@ public class NavigateOpenActivity extends BaseActivity {
         }
     };
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

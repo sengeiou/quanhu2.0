@@ -61,27 +61,6 @@ import retrofit2.Response;
  */
 public class FriendPresenter1 extends GeneralPresenter {
 
-<<<<<<< HEAD
-=======
-    private ApiService service;
-    private IViewController mView;
-    private Context mContext;
-    private FriendInformationDao friendInformationDao;
-    private CharacterParser mCharacterParser;
-    private PinyinComparator mPyComparator;
-
-    /**
-     * 当前刷新到UI的好友列表
-     */
-    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
-
-    /**
-     * 粉丝列表分页
-     */
-    int start = 0;
-    int limit = Constants.PAGESIZE;
-
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      *  通知好友页面刷新
      */

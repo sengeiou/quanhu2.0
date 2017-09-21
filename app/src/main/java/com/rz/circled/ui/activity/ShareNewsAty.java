@@ -1,10 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.Manifest;
-<<<<<<< HEAD
-=======
-import android.app.Activity;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -78,7 +75,6 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
     private UMWeb web;
     private UMShareAPI shareAPI;
     private ShareAction shareAction;
-<<<<<<< HEAD
     SimpleTarget target = new SimpleTarget<Bitmap>() {
         @Override
         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -123,11 +119,7 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
         }
     };
 
-=======
-    private View mBaseView;
-    private int from;
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     public static void startShareNews(Context context, ShareModel data) {
         startShareNews(context, data, Constants.DEFAULTVALUE);
     }
@@ -209,54 +201,9 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
                 .setCallback(umShareListener);
 
         initViewPager();
-<<<<<<< HEAD
-=======
+
     }
 
-    private void initViewPager() {
-        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            mBaseView.setVisibility(View.VISIBLE);
-
-            if (null != mShares && mShares.size() > PAGE_SIZE) {
-                mIndicator.setVisibility(View.VISIBLE);
-            } else {
-                mIndicator.setVisibility(View.GONE);
-            }
-
-            List<View> views = new ArrayList<>();
-            for (int i = 0; i < (mShares.size() - 1) / PAGE_SIZE + 1; i++) {
-                View view = getLayoutInflater().inflate(R.layout.item_share_vp, mViewPager, false);
-                MyGridView myGridView = (MyGridView) view.findViewById(R.id.id_share_news_gridview);
-
-                List<ShareNewsModel> data;
-                if (mShares.size() < (i + 1) * PAGE_SIZE) {
-                    data = mShares.subList(i * PAGE_SIZE, mShares.size());
-                } else {
-                    data = mShares.subList(i * PAGE_SIZE, (i + 1) * PAGE_SIZE);
-                }
-                CommonAdapter<ShareNewsModel> shareAdapter = new CommonAdapter<ShareNewsModel>(this, R.layout.popup_share_news) {
-                    @Override
-                    public void convert(ViewHolder helper, ShareNewsModel item, int position) {
-                        helper.setImageResource(R.id.id_share_icon_img, item.getDrawable());
-                        helper.setText(R.id.id_share_txt, item.getName());
-                    }
-                };
-                myGridView.setAdapter(shareAdapter);
-                shareAdapter.setData(data);
-                myGridView.setOnItemClickListener(this);
-                views.add(view);
-            }
-
-            mViewPager.setAdapter(new MyPagerAdapter(views));// 设置填充ViewPager页面的适配器
-            mViewPager.setCurrentItem(0);
-            mIndicator.setViewPager(mViewPager);
-        } else {
-            mBaseView.setVisibility(View.GONE);
-            EasyPermissions.requestPermissions(this, getString(R.string.sd_card_permissions), RC_EXTENER, perms);
-        }
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
-    }
 
     private void initViewPager() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};

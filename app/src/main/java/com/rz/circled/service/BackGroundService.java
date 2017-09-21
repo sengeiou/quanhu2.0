@@ -65,43 +65,6 @@ public class BackGroundService extends IntentService {
         countCode.start();
     }
 
-<<<<<<< HEAD
-=======
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != countCode) {
-            countCode.cancel();
-        }
-    }
-
-    private static List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
-
-
-    private static final String[] PHONES_PROJECTION = new String[]{
-            Phone.DISPLAY_NAME, Phone.NUMBER, Photo.PHOTO_ID, Phone.CONTACT_ID};
-
-    /**
-     * 联系人显示名称
-     **/
-    private static final int PHONES_DISPLAY_NAME_INDEX = 0;
-    /**
-     * 电话号码
-     **/
-    private static final int PHONES_NUMBER_INDEX = 1;
-    /**
-     * 头像ID
-     **/
-    private static final int PHONES_PHOTO_ID_INDEX = 2;
-    /**
-     * 联系人的ID
-     **/
-    private static final int PHONES_CONTACT_ID_INDEX = 3;
-
-    //处理缓存
-    private static EntityCache<FriendInformationBean> mBaseInfoCache;
-
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 得到手机通讯录联系人信息
      **/

@@ -111,11 +111,8 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
 
     ContactsSelectAdp mContactsAdp;
     OpusGeneralPresenter mPresenter;
-<<<<<<< HEAD
     CharacterParser finder = CharacterParser.getInstance();
-=======
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
     private List<FriendInformationBean> mSelectedFriends = new ArrayList<>();
     private ArrayList<String> mDisableFriends = new ArrayList<>();

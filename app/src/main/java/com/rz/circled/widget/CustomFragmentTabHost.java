@@ -32,7 +32,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
     private TabHost.OnTabChangeListener mOnTabChangeListener;
     private TabInfo mLastTab;
     private boolean mAttached;
-<<<<<<< HEAD
 
     public CustomFragmentTabHost(Context context) {
         // Note that we call through to the version that takes an AttributeSet,
@@ -43,14 +42,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
 
     public CustomFragmentTabHost(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initFragmentTabHost(context, attrs);
-=======
-
-    public InterceptTagChanged interceptTagChanged;
-
-    public interface InterceptTagChanged {
-        boolean intercept(String tabId);
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     }
 
     public InterceptTagChanged getInterceptTagChanged() {
@@ -345,43 +336,7 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         super.setup();
         Log.e("zxw", "setup: ");
     }
-<<<<<<< HEAD
 
-    @Override
-    public void setup(LocalActivityManager activityGroup) {
-        Log.e("zxw", "setup: " + activityGroup.toString());
-        super.setup(activityGroup);
-    }
-
-    @Override
-    public void onTouchModeChanged(boolean isInTouchMode) {
-        Log.e("zxw", "onTouchModeChanged: " + isInTouchMode);
-        super.onTouchModeChanged(isInTouchMode);
-    }
-
-    @Override
-    public void addTab(TabSpec tabSpec) {
-        Log.e("zxw", "addTab: " + tabSpec);
-        super.addTab(tabSpec);
-    }
-
-    @Override
-    public void clearAllTabs() {
-        Log.e("zxw", "clearAllTabs: ");
-        super.clearAllTabs();
-    }
-
-    @Override
-    public TabWidget getTabWidget() {
-        Log.e("zxw", "getTabWidget: ");
-        return super.getTabWidget();
-    }
-
-    @Override
-    public int getCurrentTab() {
-        Log.e("zxw", "getCurrentTab: " + super.getCurrentTab());
-        return super.getCurrentTab();
-    }
 
     @Override
     public void setCurrentTab(int index) {
@@ -389,38 +344,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         Log.e("zxw", "setCurrentTab: " + index);
     }
 
-    @Override
-    public String getCurrentTabTag() {
-        Log.e("zxw", "getCurrentTabTag: " + super.getCurrentTabTag());
-        return super.getCurrentTabTag();
-    }
-
-    @Override
-    public View getCurrentTabView() {
-        Log.e("zxw", "getCurrentTabView: " + super.getCurrentTabView());
-        return super.getCurrentTabView();
-    }
-
-    @Override
-    public View getCurrentView() {
-        Log.e("zxw", "getCurrentView: " + super.getCurrentView());
-        return super.getCurrentView();
-    }
-
-    @Override
-    public void setCurrentTabByTag(String tag) {
-        Log.e("zxw", "setCurrentTabByTag: " + tag);
-        super.setCurrentTabByTag(tag);
-    }
-
-    @Override
-    public FrameLayout getTabContentView() {
-        Log.e("zxw", "getTabContentView: ");
-        return super.getTabContentView();
-    }
-
-    @Override
-=======
 
     @Override
     public void setup(LocalActivityManager activityGroup) {
@@ -489,7 +412,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
     }
 
     @Override
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     public boolean dispatchKeyEvent(KeyEvent event) {
         Log.e("zxw", "dispatchKeyEvent: ");
         return super.dispatchKeyEvent(event);
@@ -507,7 +429,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         return super.getAccessibilityClassName();
     }
 
-<<<<<<< HEAD
     public interface InterceptTagChanged {
         boolean intercept(String tabId);
     }
@@ -573,11 +494,5 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
             return "FragmentTabHost.SavedState{" + Integer.toHexString(System.identityHashCode(this)) + " curTab="
                     + curTab + "}";
         }
-=======
-    @Override
-    public void setCurrentTab(int index) {
-        super.setCurrentTab(index);
-        Log.e("zxw", "setCurrentTab: " + index);
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     }
 }

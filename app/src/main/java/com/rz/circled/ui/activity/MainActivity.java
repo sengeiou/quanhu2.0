@@ -2,13 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.os.PersistableBundle;
-=======
-import android.os.Handler;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,7 +55,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @BindView(android.R.id.tabhost)
     CustomFragmentTabHost tabHost;
-<<<<<<< HEAD
     /**
      * 用户状态变化
      */
@@ -81,9 +74,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             }
         }
     };
-=======
-
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private ClickCounter mCounter;
     private Toast mToast;
     private String[] tabTags = new String[]{"home", "find", "reward", "privateCircle", "mine"};

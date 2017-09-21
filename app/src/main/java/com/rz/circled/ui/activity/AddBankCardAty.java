@@ -1,10 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Handler;
-<<<<<<< HEAD
-=======
-import android.support.annotation.Nullable;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -39,26 +35,18 @@ public class AddBankCardAty extends BaseActivity {
     //持卡人
     @BindView(R.id.id_et_user_card_name_edit)
     EditText mEtUserName;
-<<<<<<< HEAD
-=======
-    private String mUserName;
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
     @BindView(R.id.id_clear_card_name_img)
     ImageView mImgClearName;
     //银行卡号
     @BindView(R.id.id_card_bank_num_edit)
     EditText mEtBankNum;
-<<<<<<< HEAD
-    @BindView(R.id.id_clear_card_num_img)
-    ImageView mImgClearNum;
+
     private String mUserName;
-    private String mBankNum;
-=======
     private String mBankNum;
     @BindView(R.id.id_clear_card_num_img)
     ImageView mImgClearNum;
 
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private PayPresenter mPayPresenter;
     private BankPresenter presenter;
 
@@ -125,15 +113,8 @@ public class AddBankCardAty extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 curLength = s.length();
-<<<<<<< HEAD
                 isChange = !(curLength == oldLength || curLength <= 3);
-=======
-                if (curLength == oldLength || curLength <= 3) {
-                    isChange = false;
-                } else {
-                    isChange = true;
-                }
->>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+
                 if (TextUtils.isEmpty(s)) {
                     mImgClearNum.setVisibility(View.GONE);
                 } else {
