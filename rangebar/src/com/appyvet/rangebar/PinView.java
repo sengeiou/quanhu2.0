@@ -16,10 +16,13 @@ package com.appyvet.rangebar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
@@ -125,7 +128,7 @@ class PinView extends View {
      * @param pinsAreTemporary    whether to show the pin initially or just the circle
      */
     public void init(Context ctx, float y, float pinRadiusDP, int pinColor, int textColor,
-                     float circleRadius, int circleColor, int circleBoundaryColor, float circleBoundarySize, float minFont, float maxFont, boolean pinsAreTemporary) {
+                     float circleRadius, int circleColor, int circleBoundaryColor, float circleBoundarySize, float minFont, float maxFont, boolean pinsAreTemporary, float barLength) {
 
         mRes = ctx.getResources();
         mPin = ContextCompat.getDrawable(ctx, R.drawable.rotate);
@@ -136,7 +139,7 @@ class PinView extends View {
         mPinsAreTemporary = pinsAreTemporary;
 
         mPinPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                15, mRes.getDisplayMetrics());
+                12, mRes.getDisplayMetrics());
         mCircleRadiusPx = circleRadius;
         mTextYPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 3.5f, mRes.getDisplayMetrics());
@@ -242,8 +245,8 @@ class PinView extends View {
      * @param padding the size of the padding
      */
     public void setSize(float size, float padding) {
-        mPinPadding = (int) padding;
         mPinRadiusPx = (int) size;
+        mPinPadding = (int) padding;
         invalidate();
     }
 
@@ -268,6 +271,10 @@ class PinView extends View {
                 && Math.abs(y - mY + mPinPadding) <= mTargetRadiusPx);
     }
 
+    public int getmPinRadiusPx() {
+        return mPinRadiusPx;
+    }
+
     //Draw the circle regardless of pressed state. If pin size is >0 then also draw the pin and text
     @Override
     public void draw(Canvas canvas) {
@@ -275,7 +282,7 @@ class PinView extends View {
         if (mCircleBoundaryPaint != null)
             canvas.drawCircle(mX, mY, mCircleRadiusPx, mCircleBoundaryPaint);
 
-        canvas.drawCircle(mX, mY, mCircleRadiusPx, mCirclePaint);
+//        canvas.drawCircle(mX, mY, mCircleRadiusPx, mCirclePaint);
         //Draw pin if pressed
         if (mPinRadiusPx > 0 && (mHasBeenPressed || !mPinsAreTemporary)) {
             mBounds.set((int) mX - mPinRadiusPx,

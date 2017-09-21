@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.appyvet.rangebar.IRangeBarFormatter;
+import com.appyvet.rangebar.RangeBar;
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
@@ -44,8 +47,8 @@ public class MyLevelActivity extends BaseActivity {
     TextView tvMyLevelGrowCount;
     @BindView(R.id.gourp_ll)
     LinearLayout gourpLl;
-    @BindView(R.id.level_pb)
-    ProgressBar levelPb;
+    @BindView(R.id.rangebar)
+    RangeBar rangeBar;
     @BindView(R.id.lv_ten)
     TextView lvTen;
     @BindView(R.id.divider_one)
@@ -76,7 +79,9 @@ public class MyLevelActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.my_level);
         Glide.with(mContext).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mContext)).placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(ivMyLevelIcon);
+        lvLevel.setAdapter(mAdapter = new MyLevelAdapter(mContext, R.layout.item_level));
         layoutRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -102,7 +107,9 @@ public class MyLevelActivity extends BaseActivity {
         if (flag == presenter.FLAG_LEVEL_ACOUNT) {
             MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
             if (acountBean == null) return;
-            tvMyLevelCount.setText(acountBean.getGrowLevel() + "");
+            tvMyLevelCount.setText(acountBean.getGrowLevel());
+            tvMyLevelGrowCount.setText(String.valueOf(acountBean.getGrow()));
+            rangeBar.setSeekPinByIndex(Integer.parseInt(acountBean.getGrowLevel()));
         }
         if (flag == presenter.FLAG_LEVEL_LIST) {
             layoutRefresh.setRefreshing(false);

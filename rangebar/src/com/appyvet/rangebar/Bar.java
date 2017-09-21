@@ -15,7 +15,10 @@ package com.appyvet.rangebar;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.util.TypedValue;
 
 /**
@@ -27,6 +30,8 @@ public class Bar {
     // Member Variables ////////////////////////////////////////////////////////
 
     private final Paint mBarPaint;
+
+    private final Paint mBarEndPaint;
 
     private final Paint mTickPaint;
 
@@ -42,6 +47,8 @@ public class Bar {
     private float mTickDistance;
 
     private final float mTickHeight;
+
+    private final boolean isLine;
 
     // Constructor /////////////////////////////////////////////////////////////
 
@@ -60,33 +67,45 @@ public class Bar {
      * @param barColor     the color of the bar
      */
     public Bar(Context ctx,
-            float x,
-            float y,
-            float length,
-            int tickCount,
-            float tickHeightDP,
-            int tickColor,
-            float barWeight,
-            int barColor) {
+               float x,
+               float y,
+               float length,
+               int tickCount,
+               float tickHeightDP,
+               int tickColor,
+               boolean tickLine,
+               float barWeight,
+               int barColor) {
 
         mLeftX = x;
         mRightX = x + length;
         mY = y;
 
+        isLine = tickLine;
+
         mNumSegments = tickCount - 1;
         mTickDistance = length / mNumSegments;
-        mTickHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                tickHeightDP,
-                ctx.getResources().getDisplayMetrics());
+//        mTickHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+//                tickHeightDP,
+//                ctx.getResources().getDisplayMetrics());
+        mTickHeight = tickHeightDP;
 
         // Initialize the paint.
         mBarPaint = new Paint();
         mBarPaint.setColor(barColor);
         mBarPaint.setStrokeWidth(barWeight);
         mBarPaint.setAntiAlias(true);
+
+        mBarEndPaint = new Paint();
+        mBarEndPaint.setColor(barColor);
+        mBarEndPaint.setStrokeWidth(barWeight);
+        mBarEndPaint.setAntiAlias(true);
+
         mTickPaint = new Paint();
         mTickPaint.setColor(tickColor);
         mTickPaint.setStrokeWidth(barWeight);
+        if (isLine)
+            mTickPaint.setStrokeWidth((float) 5.0);
         mTickPaint.setAntiAlias(true);
     }
 
@@ -99,8 +118,9 @@ public class Bar {
      *               View#onDraw()}
      */
     public void draw(Canvas canvas) {
-
+        canvas.drawCircle(mLeftX, mY, RadiusUtils.getRadius(mTickHeight), mBarEndPaint);
         canvas.drawLine(mLeftX, mY, mRightX, mY, mBarPaint);
+        canvas.drawCircle(mRightX, mY, RadiusUtils.getRadius(mTickHeight), mBarEndPaint);
     }
 
     /**
@@ -168,14 +188,21 @@ public class Bar {
      *               View#onDraw()}
      */
     public void drawTicks(Canvas canvas) {
-
-        // Loop through and draw each tick (except final tick).
-        for (int i = 0; i < mNumSegments; i++) {
-            final float x = i * mTickDistance + mLeftX;
-            canvas.drawCircle(x, mY, mTickHeight, mTickPaint);
+        if (isLine) {
+            // Loop through and draw each tick (except final tick).
+            for (int i = 1; i < mNumSegments; i++) {
+                final float x = i * mTickDistance + mLeftX;
+                canvas.drawLine(x, mY - mTickHeight / 2, x, mY + mTickHeight / 2, mTickPaint);
+            }
+        } else {
+            // Loop through and draw each tick (except final tick).
+            for (int i = 0; i < mNumSegments; i++) {
+                final float x = i * mTickDistance + mLeftX;
+                canvas.drawCircle(x, mY, mTickHeight, mTickPaint);
+            }
+            // Draw final tick. We draw the final tick outside the loop to avoid any
+            // rounding discrepancies.
+            canvas.drawCircle(mRightX, mY, mTickHeight, mTickPaint);
         }
-        // Draw final tick. We draw the final tick outside the loop to avoid any
-        // rounding discrepancies.
-        canvas.drawCircle(mRightX, mY, mTickHeight, mTickPaint);
     }
 }

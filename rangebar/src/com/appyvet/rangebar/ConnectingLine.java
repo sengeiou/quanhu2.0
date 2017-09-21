@@ -16,7 +16,11 @@ package com.appyvet.rangebar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
+import android.util.Log;
 import android.util.TypedValue;
 
 /**
@@ -30,6 +34,10 @@ public class ConnectingLine {
 
     private final float mY;
 
+    private final float connectingLineHeight;
+
+    private final float maxLength;
+
     // Constructor /////////////////////////////////////////////////////////////
 
     /**
@@ -40,20 +48,26 @@ public class ConnectingLine {
      * @param connectingLineWeight the weight of the line
      * @param connectingLineColor  the color of the line
      */
-    public ConnectingLine(Context ctx, float y, float connectingLineWeight,
-            int connectingLineColor) {
+    public ConnectingLine(Context ctx, float y, float barLength, float connectingLineWeight,
+                          int connectingLineColor) {
 
         final Resources res = ctx.getResources();
 
         float connectingLineWeight1 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 connectingLineWeight,
                 res.getDisplayMetrics());
+        connectingLineHeight = connectingLineWeight;
+        maxLength = barLength;
+
+        //新建一个线性渐变，前两个参数是渐变开始的点坐标，第三四个参数是渐变结束的点的坐标。连接这2个点就拉出一条渐变线了，玩过PS的都懂。然后那个数组是渐变的颜色。下一个参数是渐变颜色的分布，如果为空，每个颜色就是均匀分布的。最后是模式，这里设置的是循环渐变
+        Shader mShader = new LinearGradient(0, y, barLength, y, new int[]{Color.parseColor("#52c7ff"), Color.parseColor("#0185ff")}, null, Shader.TileMode.REPEAT);
 
         // Initialize the paint, set values
         mPaint = new Paint();
         mPaint.setColor(connectingLineColor);
-        mPaint.setStrokeWidth(connectingLineWeight1);
+        mPaint.setStrokeWidth(connectingLineWeight);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setShader(mShader);
         mPaint.setAntiAlias(true);
 
         mY = y;
@@ -81,5 +95,10 @@ public class ConnectingLine {
      */
     public void draw(Canvas canvas, float leftMargin, PinView rightThumb) {
         canvas.drawLine(leftMargin, mY, rightThumb.getX(), mY, mPaint);
+        canvas.drawCircle(leftMargin, mY, RadiusUtils.getRadius(connectingLineHeight), mPaint);
+        Log.e("zxw", "draw: " + maxLength + " mWidth=" + rightThumb.getX() + "   mWidth=" + rightThumb.getmPinRadiusPx());
+        if (maxLength <= rightThumb.getX() + rightThumb.getmPinRadiusPx() * 2) {
+            canvas.drawCircle(rightThumb.getX(), mY, RadiusUtils.getRadius(connectingLineHeight), mPaint);
+        }
     }
 }
