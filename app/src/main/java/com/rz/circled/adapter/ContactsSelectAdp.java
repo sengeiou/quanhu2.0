@@ -12,8 +12,7 @@ import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
-import com.rz.httpapi.api.Http;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 public class ContactsSelectAdp extends CommonAdapter {
 
@@ -24,7 +23,7 @@ public class ContactsSelectAdp extends CommonAdapter {
 
     @Override
     public void convert(ViewHolder helper, Object item, int position) {
-        BaseInfo model = (BaseInfo) getItem(position);
+        FriendInformationBean model = (FriendInformationBean) getItem(position);
         RelativeLayout view = helper.getView(R.id.rl_contacts_select_item);
         TextView tvName = (TextView) helper.getViewById(R.id.id_friends_name);
         ImageView mImgSelect = (ImageView) helper.getViewById(R.id.imgSelect);
@@ -86,7 +85,7 @@ public class ContactsSelectAdp extends CommonAdapter {
      * 根据ListView的当前位置获取分类的首字母的Char ascii值
      */
     public int getSectionForPosition(int position) {
-        return ((BaseInfo) getItem(position)).getFirstLetter().charAt(0);
+        return ((FriendInformationBean) getItem(position)).getFirstLetter().charAt(0);
     }
 
     @Override
@@ -99,7 +98,7 @@ public class ContactsSelectAdp extends CommonAdapter {
      */
     public int getPositionForSection(int section) {
         for (int i = 0; i < getCount(); i++) {
-            String sortStr = ((BaseInfo) getItem(i)).getFirstLetter();
+            String sortStr = ((FriendInformationBean) getItem(i)).getFirstLetter();
             char firstChar = sortStr.toUpperCase().charAt(0);
             if (firstChar == section) {
                 return i;

@@ -4,22 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -36,16 +30,12 @@ import com.rz.httpapi.bean.PrivateGroupListBean;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
@@ -142,6 +132,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
+                refreshLayout.setRefreshing(false);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
                         SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
@@ -181,6 +172,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
+                refreshLayout.setRefreshing(false);
                 if (type != TYPE_PART)
                     SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }

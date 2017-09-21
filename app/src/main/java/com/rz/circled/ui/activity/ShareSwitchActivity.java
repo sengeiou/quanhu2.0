@@ -48,17 +48,14 @@ import butterknife.OnClick;
  */
 
 public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegate {
+    private static final String EXTRA_DATA_ITEM_DATA = "EXTRA_DATA_ITEM_DATA";
     @BindView(R.id.id_content_lv)
     MyListView mRecentLv;
     @BindView(R.id.layout_recent)
     LinearLayout mLayoutRecent;
-
     private RecentContactAdapter adapter;
-
     // data
     private List<RecentContact> items;
-
-    private static final String EXTRA_DATA_ITEM_DATA = "EXTRA_DATA_ITEM_DATA";
 
     public static final void start(Context context, ShareModel shareModel) {
         Intent intent = new Intent();
@@ -80,7 +77,7 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
         }
 
         ShareModel shareModel = (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA);
-        if (117 == shareModel.fromPage) {
+        if (117 == shareModel.getFromPage()) {
             ((TextView) findViewById(R.id.id_tv_title)).setText("选择邀请对象");
             setTitleText("邀请聊天好友");
         } else {

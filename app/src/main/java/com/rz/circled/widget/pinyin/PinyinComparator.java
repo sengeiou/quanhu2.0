@@ -1,16 +1,16 @@
 package com.rz.circled.widget.pinyin;
 
 
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 import java.util.Comparator;
 
 /**
  *
  */
-public class PinyinComparator implements Comparator<BaseInfo> {
+public class PinyinComparator implements Comparator<FriendInformationBean> {
 
-    public int compare(BaseInfo o1, BaseInfo o2) {
+    public int compare(FriendInformationBean o1, FriendInformationBean o2) {
         if (o1.getFirstLetter().equals("@") || o2.getFirstLetter().equals("#")) {
             return -1;
         } else if (o1.getFirstLetter().equals("#") || o2.getFirstLetter().equals("@")) {

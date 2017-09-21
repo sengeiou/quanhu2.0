@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.rz.common.utils.StringUtils;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +20,18 @@ public class SearchPingyinEngine {
      *
      * @param str
      */
-    public static ArrayList<BaseInfo> searchGroup(String str,
-                                                  List<BaseInfo> allContacts) {
+    public static ArrayList<FriendInformationBean> searchGroup(String str,
+                                                               List<FriendInformationBean> allContacts) {
 
         Log.e("tag", "搜索关键字＝" + str);
 
-        ArrayList<BaseInfo> groupList = new ArrayList<>();
+        ArrayList<FriendInformationBean> groupList = new ArrayList<>();
         CharacterParser finder = CharacterParser.getInstance();
         /**
          *优先匹配电话号码
          */
         if (finder.hasNumeric(str)) {
-            for (BaseInfo group : allContacts) {
+            for (FriendInformationBean group : allContacts) {
                 if (!StringUtils.isEmpty(group.getCustPhone())) {
                     if ((group.getCustPhone() + "").equals(str)) {
                         groupList.add(group);
@@ -48,7 +48,7 @@ public class SearchPingyinEngine {
                 /**
                  * 数字匹配昵称
                  */
-                for (BaseInfo group : allContacts) {
+                for (FriendInformationBean group : allContacts) {
                     if (!StringUtils.isEmpty(group.getCustNname()) && (group.getCustNname() + "").contains(str)) {
                         groupList.add(group);
                     } else if (!StringUtils.isEmpty(group.getNameNotes()) && (group.getNameNotes() + "").contains(str)) {
@@ -63,7 +63,7 @@ public class SearchPingyinEngine {
          * 其次匹配汉字
          */
         if (finder.hasCH(str.toString())) {
-            for (BaseInfo group : allContacts) {
+            for (FriendInformationBean group : allContacts) {
                 if (!StringUtils.isEmpty(group.getCustNname()) && (group.getCustNname() + "").contains(str)) {
                     groupList.add(group);
                 } else if (!StringUtils.isEmpty(group.getNameNotes()) && (group.getNameNotes() + "").contains(str)) {
@@ -81,7 +81,7 @@ public class SearchPingyinEngine {
          */
 
         String result = "";
-        for (BaseInfo group : allContacts) {
+        for (FriendInformationBean group : allContacts) {
             // 先将输入的字符串转换为拼音
             finder.setResource(str);
             result = finder.getSpelling();
@@ -97,7 +97,7 @@ public class SearchPingyinEngine {
      *
      * @return
      */
-    private static boolean contains(BaseInfo group, String search) {
+    private static boolean contains(FriendInformationBean group, String search) {
         if (TextUtils.isEmpty(group.getCustNname())) {
             return false;
         }
@@ -157,7 +157,7 @@ public class SearchPingyinEngine {
      * @param searchStr
      * @return
      */
-    public static int[] getkeyIndex(BaseInfo info, String searchStr) {
+    public static int[] getkeyIndex(FriendInformationBean info, String searchStr) {
 
         int[] indexs = {0, 1, 0};
 

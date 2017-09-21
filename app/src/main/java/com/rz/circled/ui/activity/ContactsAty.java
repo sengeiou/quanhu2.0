@@ -1,27 +1,21 @@
 package com.rz.circled.ui.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
 import com.rz.circled.adapter.ContactsAdp;
 import com.rz.circled.presenter.impl.FriendPresenter1;
-import com.rz.circled.ui.fragment.MineFragment;
 import com.rz.circled.widget.SideBar;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -30,17 +24,12 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
-import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.yryz.yunxinim.main.activity.SystemMessageActivity;
 import com.yryz.yunxinim.main.activity.TeamListActivity;
-import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
-import com.yryz.yunxinim.uikit.UIKitLogTag;
-import com.yryz.yunxinim.uikit.cache.FriendDataCache;
 import com.yryz.yunxinim.uikit.contact.core.item.ItemTypes;
-import com.yryz.yunxinim.uikit.uinfo.UserInfoObservable;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -55,8 +44,6 @@ import butterknife.BindView;
  * 好友列表
  */
 public class ContactsAty extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private static final Handler handler = new Handler();
-
     /**
      * 内容展示
      */
@@ -102,12 +89,10 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
      */
     private TextView mTvVerifyNum;
 
-    private List<BaseInfo> mSaveAllFriends = new ArrayList<>();
+    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
 
-    ContactsAdp mContactsAdp;
+    private ContactsAdp mContactsAdp;
 
-    //从哪里进入 0 从通讯录 1从消息
-    public static int page = 0;
     private FriendPresenter1 presenter;
 
     @Override
@@ -123,23 +108,26 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Override
     public void initView() {
-        Log.d("contacts--", page + "---------------");
         setTitleText(getString(R.string.mine_my_contacts));
-        if (page == 1) {
-            setTitleRightText(R.string.contacts_phone);
-        } else {
-            setTitleRightText(R.string.add_friends);
-        }
+        setTitleRightText(R.string.add_friends);
         setTitleRightListener(this);
         mLayoutSearch1.setVisibility(View.GONE);
         mLayoutSearch2.setVisibility(View.VISIBLE);
         initHeadView();
         mLayoutSearch2.setOnClickListener(this);
-        mContactsAdp = new ContactsAdp(aty, R.layout.adp_contacts);
         mListview.addHeaderView(mheadView);
-        mListview.setAdapter(mContactsAdp);
+        mListview.setDividerHeight(0);
+        mListview.setAdapter(mContactsAdp = new ContactsAdp(aty, mSaveAllFriends, R.layout.adp_contacts));
         mListview.setOnItemClickListener(this);
-
+        if (Session.isNeedTeam()) {
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px410), 0, 0);
+            mLayoutNone.setLayoutParams(lp);
+        } else {
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px900), 0, 0);
+            mLayoutNone.setLayoutParams(lp);
+        }
         setFocusNum(Session.getUserFocusNum());
     }
 
@@ -164,6 +152,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
      */
     private void initHeadView() {
         mheadView = LayoutInflater.from(aty).inflate(R.layout.head_contacts, null);
+        if (Session.isNeedTeam()) {
+            mheadView.findViewById(R.id.line_need).setVisibility(View.VISIBLE);
+        } else {
+            mheadView.findViewById(R.id.line_need).setVisibility(View.GONE);
+        }
         mheadView.findViewById(R.id.id_follow_me_rela).setOnClickListener(this);
         mheadView.findViewById(R.id.id_my_follow_txt).setOnClickListener(this);
         mheadView.findViewById(R.id.id_group_chat_rela).setOnClickListener(this);
@@ -190,10 +183,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Override
     public void initData() {
-
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
-
     }
 
     @Override
@@ -207,8 +198,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         super.onResume();
         Log.e(TAG, "reloadWhenDataChanged: contacts onresume");
         //缓存部分新的好友列表，以便进入新的好友列表没有卡顿
-       presenter.requestRequireList(false);
-       presenter.getCacheFriends(false);
+        presenter.requestRequireList(false);
+        presenter.getCacheFriends(false);
     }
 
     @Override
@@ -222,8 +213,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         showUnreadMsg();
 
         mSaveAllFriends.clear();
-        mSaveAllFriends.addAll((List<BaseInfo>) t);
-        mContactsAdp.setData(mSaveAllFriends);
+        mSaveAllFriends.addAll((List<FriendInformationBean>) t);
         mContactsAdp.notifyDataSetChanged();
     }
 
@@ -266,13 +256,13 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
                 break;
             //关注我的
             case R.id.id_follow_me_rela:
-                if (checkLogin()) {
-                    return;
-                }
+//                if (checkLogin()) {
+//                    return;
+//                }
                 Session.setUserFocusNum("");
 //                Intent focus = new Intent(MineFrg.MINEFRGFOCUS);
 //                sendBroadcast(focus);
-//                showActivity(aty, FollowMeAty.class);
+                showActivity(aty, FollowMeActivity.class);
                 break;
             //我关注的
             case R.id.id_my_follow_txt:
@@ -310,9 +300,9 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 //                showActivity(aty, BlackListAty.class);
                 break;
             //添加好友
-//            case R.id.titlebar_right_text:
-//                showActivity(aty, AddContactsAty.class);
-//                break;
+            case R.id.tv_base_title_right:
+                showActivity(aty, AddContactsActivity.class);
+                break;
             default:
                 break;
         }
@@ -332,20 +322,13 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         if (i - 1 < 0) {
             return;
         }
-        BaseInfo item = (BaseInfo) mContactsAdp.getItem(i - 1);
-        if (page == 1) {
-            if (null != item && !StringUtils.isEmpty(item.getCustId())) {
-            } else {
-                SVProgressHUD.showErrorWithStatus(this, mContext.getString(R.string.user_not_exsit));
-            }
-        } else {
-            /**
-             * 进入好友详情
-             */
-            if (i > 0) {
-                if (item != null) {
+        FriendInformationBean item = mContactsAdp.getItem(i - 1);
+        /**
+         * 进入好友详情
+         */
+        if (i > 0) {
+            if (item != null) {
 //                    FriendInfoAty.newFrindInfo(aty, item.getCustId());
-                }
             }
         }
     }
@@ -369,10 +352,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         types.add(SystemMessageType.undefined);
         int unreadCount = NIMClient.getService(SystemMessageService.class).querySystemMessageUnreadCountByType(types);
         updateUnreadNum(unreadCount);
-    }
-
-    protected final Handler getHandler() {
-        return handler;
     }
 
 }

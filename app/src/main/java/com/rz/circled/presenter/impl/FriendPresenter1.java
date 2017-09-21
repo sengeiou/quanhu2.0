@@ -1,15 +1,16 @@
 package com.rz.circled.presenter.impl;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Handler;
 import android.provider.ContactsContract;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.j256.ormlite.table.TableUtils;
 import com.rz.circled.R;
+import com.rz.circled.db.DBHelper;
+import com.rz.circled.db.dao.FriendInformationDao;
 import com.rz.circled.event.ResponseDataEven;
 import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.presenter.GeneralPresenter;
@@ -30,9 +31,7 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
-import com.rz.httpapi.bean.BaseInfo;
-import com.rz.httpapi.bean.FriendInfo;
-import com.rz.httpapi.bean.FriendInfoModel;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRelationModel;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
@@ -40,7 +39,9 @@ import com.rz.httpapi.constans.ReturnCode;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -60,70 +61,55 @@ import retrofit2.Response;
  */
 public class FriendPresenter1 extends GeneralPresenter {
 
-    private ApiService service;
-    private IViewController mView;
-    private Context mContext;
-
-    //    private BaseService baseService;
-//    private QueryBuilder qb;
-
-    private CharacterParser mCharacterParser;
-    private PinyinComparator mPyComparator;
-
-    /**
-     * 当前刷新到UI的好友列表
-     */
-    private List<BaseInfo> mSaveAllFriends = new ArrayList<>();
-
-    /**
-     * 粉丝列表分页
-     */
-    int start = 0;
-    int limit = Constants.PAGESIZE;
-
     /**
      *  通知好友页面刷新
      */
     public static final String FRIEND_EVENT = "5";
-
     /**
      *  通知好友申请页面刷新
      */
     public static final String FRIEND_APPLY_EVENT = "4";
-
-
     /**
      * 详情页面关注成功及取消关注
      */
     public static final String CANCEL_FRIEND_EVENT = "7";
-
     /**
      * 举报
      */
     public static final String REPORT_EVENT = "11";
-
     /**
      * 手机通讯录邀请
      */
     public static final String FRIEND_INVITE_EVENT = "12";
-
     /**
      * 后台插入数据标示
      */
     public static final String FRIEND_BACKBROUND_EVENT = "13";
-
     /**
      * 通讯录里面的好友
      */
     public static final String FRIEND_CONTACTS_EVENT = "14";
-
     /**
      * 通讯录里面修改备注
      *
      * @param view
      */
     public static final String FRIEND_REMARK_EVENT = "15";
-
+    /**
+     * 粉丝列表分页
+     */
+    int start = 0;
+    int limit = Constants.PAGESIZE;
+    private ApiService service;
+    private IViewController mView;
+    private Context mContext;
+    private FriendInformationDao friendInformationDao;
+    private CharacterParser mCharacterParser;
+    private PinyinComparator mPyComparator;
+    /**
+     * 当前刷新到UI的好友列表
+     */
+    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
     private long lastClickTime;
     private String currentUserId;
     private String custPhone;
@@ -137,7 +123,7 @@ public class FriendPresenter1 extends GeneralPresenter {
         mCharacterParser = CharacterParser.getInstance();
         mPyComparator = new PinyinComparator();
         mContext = getContext(mView);
-
+        friendInformationDao = new FriendInformationDao(mContext);
     }
 
     @Override
@@ -150,47 +136,22 @@ public class FriendPresenter1 extends GeneralPresenter {
         return null;
     }
 
-    /**
-     * 数据库query初始化
-     */
-    private void initQueryBuilder(int relation) {
-        switch (relation) {
-            case Type.relation_friend:
-//                baseService = DbUtil.getFriendService();
-//                qb = baseService.queryBuilder();
-//                qb.where(FriendInfoDao.Properties.Relation.eq(relation)).build();
-                break;
-            default:
-                break;
-        }
-    }
-
     public void getCacheFriends(boolean isBackStage) {
 
         /**
          * 初次加载的策略是通过缓存判断出来的
          */
-
-        initQueryBuilder(Type.relation_friend);
-
-//        LazyList<BaseInfo> friends = qb.listLazy();
-//
-//        List<BaseInfo> mLocalAllFriends = new ArrayList<>();
-//
-//        mLocalAllFriends.addAll(friends);
-//
-//        friends.close();
-
-//        Log.e("tag", "查询当前缓存数据 size=" + mLocalAllFriends.size());
-//
-//        if (!mLocalAllFriends.isEmpty()) {
-//            mSaveAllFriends.clear();
-//            mSaveAllFriends.addAll(mLocalAllFriends);
-//            mView.updateView(mSaveAllFriends);
-//            requestMyFriends(mLocalAllFriends, isBackStage);
-//        } else {
-//            requestMyFriends(mLocalAllFriends, isBackStage);
-//        }
+        List<FriendInformationBean> mLocalAllFriends = new ArrayList<>();
+        mLocalAllFriends.addAll(friendInformationDao.queryForAll());
+        Log.e("tag", "查询当前缓存数据 size=" + mLocalAllFriends.size());
+        if (!mLocalAllFriends.isEmpty()) {
+            mSaveAllFriends.clear();
+            mSaveAllFriends.addAll(mLocalAllFriends);
+            mView.updateView(mSaveAllFriends);
+            requestMyFriends(mLocalAllFriends, isBackStage);
+        } else {
+            requestMyFriends(mLocalAllFriends, isBackStage);
+        }
     }
 
     /**
@@ -198,26 +159,26 @@ public class FriendPresenter1 extends GeneralPresenter {
      *
      * @param mLocalAllFriends
      */
-    private synchronized void requestMyFriends(final List<BaseInfo> mLocalAllFriends, final boolean isBackStage) {
+    private synchronized void requestMyFriends(final List<FriendInformationBean> mLocalAllFriends, final boolean isBackStage) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.no_net_work));
             return;
         }
 
-        Call<ResponseData<List<BaseInfo>>> call = service
+        Call<ResponseData<List<FriendInformationBean>>> call = service
                 .friendList(Session.getUserId());
 
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<BaseInfo>>>() {
+        call.enqueue(new BaseCallback<ResponseData<List<FriendInformationBean>>>() {
             @Override
-            public void onResponse(Call<ResponseData<List<BaseInfo>>> call, Response<ResponseData<List<BaseInfo>>> response) {
+            public void onResponse(Call<ResponseData<List<FriendInformationBean>>> call, Response<ResponseData<List<FriendInformationBean>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
 //                    mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_FULL);
-                    ResponseData<List<BaseInfo>> res = response.body();
+                    ResponseData<List<FriendInformationBean>> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<BaseInfo> dataList = res.getData();
+                        List<FriendInformationBean> dataList = res.getData();
 
                         if (dataList == null) {
                             return;
@@ -232,9 +193,8 @@ public class FriendPresenter1 extends GeneralPresenter {
                              * 删除当前类型的好友列表，并插入最新的好友列表
                              * 注意逻辑顺序，必须先删除，然后插入最新匹配数据
                              */
-//                            baseService.delete(mLocalAllFriends);
-//
-//                            baseService.save(ChangeDataTypeList(dataList, Type.relation_friend));
+                            friendInformationDao.delete(mLocalAllFriends);
+                            friendInformationDao.save(dataList);
 
                             if (!isBackStage) {
                                 /**
@@ -263,7 +223,12 @@ public class FriendPresenter1 extends GeneralPresenter {
                                 mSaveAllFriends.clear();
                                 mView.updateView(mSaveAllFriends);
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, res.getMsg());
-//                                baseService.deleteAll();
+                                try {
+                                    TableUtils.dropTable(DBHelper.getHelper(mContext).getConnectionSource(), FriendInformationBean.class, true);
+                                    TableUtils.createTable(DBHelper.getHelper(mContext).getConnectionSource(), FriendInformationBean.class);
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
 
@@ -278,7 +243,7 @@ public class FriendPresenter1 extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<List<BaseInfo>>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<List<FriendInformationBean>>> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
 
@@ -306,19 +271,19 @@ public class FriendPresenter1 extends GeneralPresenter {
             start = 0;
             mSaveAllFriends.clear();
         }
-        Call<ResponseData<List<BaseInfo>>> call = service
+        Call<ResponseData<List<FriendInformationBean>>> call = service
                 .searchFriend(Session.getUserId(), keyword, start, limit);
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<BaseInfo>>>() {
+        call.enqueue(new BaseCallback<ResponseData<List<FriendInformationBean>>>() {
             @Override
-            public void onResponse(Call<ResponseData<List<BaseInfo>>> call, Response<ResponseData<List<BaseInfo>>> response) {
+            public void onResponse(Call<ResponseData<List<FriendInformationBean>>> call, Response<ResponseData<List<FriendInformationBean>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
 //                    mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_FULL);
-                    ResponseData<List<BaseInfo>> res = response.body();
+                    ResponseData<List<FriendInformationBean>> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
 
-                        List<BaseInfo> dataList = res.getData();
+                        List<FriendInformationBean> dataList = res.getData();
 
                         mSaveAllFriends.addAll(dataList);
 
@@ -334,7 +299,7 @@ public class FriendPresenter1 extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<List<BaseInfo>>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<List<FriendInformationBean>>> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
 
@@ -350,27 +315,16 @@ public class FriendPresenter1 extends GeneralPresenter {
         /**
          * 从三个表里查询三种数据后合并，进入通讯录匹配
          */
-        List<BaseInfo> filterList = new ArrayList<>();
+        List<FriendInformationBean> filterList = new ArrayList<>();
 //        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, "正在加载");
-        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-            //申请权限  第二个参数是一个 数组 说明可以同时申请多个权限
-            Log.e("zxw", "111");
-        } else {//已授权
-            Log.e("zxw", "222");
-        }
         /**
          * 注意顺序，好友包含于我关注，过滤的时候可以覆盖我关注的
          */
-        initQueryBuilder(Type.relation_friend);
-//        LazyList<BaseInfo> queryList1 = qb.listLazy();
-//        filterList.addAll(queryList1);
-
+        filterList.addAll(friendInformationDao.queryForAll());
         try {
             Cursor cursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     null, null, null, ContactsContract.CommonDataKinds.Phone.SORT_KEY_PRIMARY);
-            List<BaseInfo> dataList = new ArrayList<>();
-            Log.e("zxw", "cursor.getColumnCount()==" + cursor.getColumnCount() + "dd" + cursor.getCount() + cursor.getWantsAllOnMoveCalls());
+            List<FriendInformationBean> dataList = new ArrayList<>();
             while (cursor.moveToNext()) {
                 String name = cursor.getString(cursor
                         .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
@@ -389,7 +343,7 @@ public class FriendPresenter1 extends GeneralPresenter {
                 if (!StringUtils.isMobile(number.trim()) || TextUtils.equals(number.trim(), Session.getUserPhone()))
                     continue;
 
-                BaseInfo info = new FriendInfo();
+                FriendInformationBean info = new FriendInformationBean();
 
                 /**
                  * type0是从未被操作的本地通讯录好友
@@ -398,15 +352,14 @@ public class FriendPresenter1 extends GeneralPresenter {
                 info.setCustPhone(number.replace(" ", ""));
                 info.setRelation(Type.relation_stranger);
 
-                for (BaseInfo friend : filterList) {
-
+                for (FriendInformationBean friend : filterList) {
                     if ((number.replace(" ", "")).equals(friend.getCustPhone())) {
                         Log.e("zxw", "custNname=" + friend.getCustNname() + "  relation=" + friend.getRelation());
                         info.setCustPhone(number);
                         info.setCustImg(friend.getCustImg());
                         info.setCustId(friend.getCustId());
-                        info.setCustName(friend.getCustName());
-                        info.setRelation(friend.getRelation());
+                        info.setCustNname(friend.getCustNname());
+                        info.setRelation(Type.relation_friend);
 
                         if (!StringUtils.isEmpty(friend.getCustNname())) {
                             info.setCustNname(name + "(" + friend.getCustNname() + ")");
@@ -420,7 +373,6 @@ public class FriendPresenter1 extends GeneralPresenter {
                 dataList.add(info);
             }
             cursor.close();
-//            queryList1.close();
             changeLetter(dataList);
             mSaveAllFriends.clear();
             mSaveAllFriends.addAll(dataList);
@@ -623,7 +575,7 @@ public class FriendPresenter1 extends GeneralPresenter {
                 super.onResponse(call, response);
                 System.out.println("sssss");
                 if (response.isSuccessful()) {
-                    ResponseData<FriendInfoModel> res = response.body();
+                    ResponseData<FriendInformationBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
 
                         mView.updateView(remark);
@@ -700,7 +652,7 @@ public class FriendPresenter1 extends GeneralPresenter {
      *
      * @param info
      */
-    public void requestSaveFriendByFriend(final BaseInfo info) {
+    public void requestSaveFriendByFriend(final FriendInformationBean info) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             SVProgressHUD.showErrorWithStatus(mContext, mContext.getString(R.string.no_net_work));
@@ -776,19 +728,19 @@ public class FriendPresenter1 extends GeneralPresenter {
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
-        Call<ResponseData<FriendInfoModel>> call = service
+        Call<ResponseData<FriendInformationBean>> call = service
                 .getFriendDetail(1003, Session.getUserId(), fid);
 
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<FriendInfoModel>>() {
+        call.enqueue(new BaseCallback<ResponseData<FriendInformationBean>>() {
             @Override
-            public void onResponse(Call<ResponseData<FriendInfoModel>> call, Response<ResponseData<FriendInfoModel>> response) {
+            public void onResponse(Call<ResponseData<FriendInformationBean>> call, Response<ResponseData<FriendInformationBean>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData<FriendInfoModel> res = response.body();
+                    ResponseData<FriendInformationBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                        FriendInfoModel model = res.getData();
+                        FriendInformationBean model = res.getData();
                         mView.updateView(model);
                     } else if (HandleRetCode.handler(mContext, res)) {
                         new Handler().postDelayed(new Runnable() {
@@ -804,7 +756,7 @@ public class FriendPresenter1 extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<FriendInfoModel>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<FriendInformationBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
             }
@@ -859,49 +811,16 @@ public class FriendPresenter1 extends GeneralPresenter {
     }
 
     /**
-     * 转换成匹配的数据list进行数据库操作
-     *
-     * @param dataList
-     * @param relation
-     * @return
-     */
-    private List<BaseInfo> ChangeDataTypeList(List<BaseInfo> dataList, int relation) {
-        List<BaseInfo> saveList = new ArrayList<>();
-        for (int i = 0; i < dataList.size(); i++) {
-            Log.e("zxw", "ChangeDataTypeList==" + "custNname:" + dataList.get(i).getCustNname() + "  relation:" + dataList.get(i).getRelation());
-            switch (relation) {
-                case Type.relation_friend:
-//                    BaseInfo info1 = new FriendInfo();
-//                    info1.setCustPhone(dataList.get(i).getCustPhone());
-//                    info1.setCustNname(dataList.get(i).getCustNname());
-//                    info1.setCustId(dataList.get(i).getCustId());
-//                    info1.setCustImg(dataList.get(i).getCustImg());
-//                    info1.setCustName(dataList.get(i).getCustName());
-//                    info1.setCustNo(dataList.get(i).getCustNo());
-//                    info1.setCustSignature(dataList.get(i).getCustSignature());
-//                    info1.setNameNotes(dataList.get(i).getNameNotes());
-//                    info1.setFirstLetter(dataList.get(i).getFirstLetter());
-//                    info1.setRelation(Type.relation_friend);
-//                    saveList.add(info1);
-                    break;
-                default:
-                    break;
-            }
-        }
-        return saveList;
-    }
-
-    /**
      * 对数据进行字母排序，并保存字母的首字母
      *
      * @param friendList
      */
-    public void changeLetter(List<BaseInfo> friendList) {
+    public void changeLetter(List<FriendInformationBean> friendList) {
         for (int i = 0; i < friendList.size(); i++) {
-            BaseInfo model = friendList.get(i);
+            FriendInformationBean model = friendList.get(i);
             setModelFirstLetter(model);
         }
-//        Collections.sort(friendList, mPyComparator);
+        Collections.sort(friendList, mPyComparator);
     }
 
     /**
@@ -909,7 +828,7 @@ public class FriendPresenter1 extends GeneralPresenter {
      *
      * @param model
      */
-    public void setModelFirstLetter(BaseInfo model) {
+    public void setModelFirstLetter(FriendInformationBean model) {
         String mFirstLetter;
         if (!StringUtils.isEmpty(model.getCustNname())) {
             mFirstLetter = mCharacterParser.getSelling(model.getCustNname());

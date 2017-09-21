@@ -1,5 +1,6 @@
 package com.rz.circled.widget;
 
+import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChangeListener {
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+    public InterceptTagChanged interceptTagChanged;
     private FrameLayout mRealTabContent;
     private Context mContext;
     private FragmentManager mFragmentManager;
@@ -29,110 +32,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
     private TabHost.OnTabChangeListener mOnTabChangeListener;
     private TabInfo mLastTab;
     private boolean mAttached;
-    private Fragment currentFragment;
-
-    public InterceptTagChanged interceptTagChanged;
-
-    public Fragment getCurrentFragment() {
-        return currentFragment;
-    }
-
-    public interface InterceptTagChanged {
-        boolean intercept(String tabId);
-    }
-
-    public InterceptTagChanged getInterceptTagChanged() {
-        return interceptTagChanged;
-    }
-
-    public void setInterceptTagChanged(InterceptTagChanged interceptTagChanged) {
-        this.interceptTagChanged = interceptTagChanged;
-    }
-
-    static final class TabInfo {
-        private final String tag;
-        private final Class<?> clss;
-        private final Bundle args;
-        private Fragment fragment;
-
-        TabInfo(String _tag, Class<?> _class, Bundle _args) {
-            tag = _tag;
-            clss = _class;
-            args = _args;
-        }
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int mode = MeasureSpec.getMode(heightMeasureSpec);
-        int layoutHightPix = 0;
-        int layoutWidth = MeasureSpec.getSize(widthMeasureSpec);
-        if (layoutWidth <= 1080) {
-            layoutHightPix = (int) (layoutWidth * (140) / 1080) + 5;
-        } else if (layoutWidth <= 720) {
-            layoutHightPix = (int) (layoutWidth * (140) / 1080) + 5;// UI效果图
-        } else {
-            float ration = ((float) layoutHightPix) / layoutWidth;
-            if (ration <= 4.1f / 3) {
-                layoutHightPix = (int) (layoutWidth * (140) / 1080);
-            } else {
-                layoutHightPix = (int) (layoutWidth * (140) / 1080) + 5;// UI效果图
-            }
-        }
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(layoutHightPix, mode);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    static class DummyTabFactory implements TabHost.TabContentFactory {
-        private final Context mContext;
-
-        public DummyTabFactory(Context context) {
-            mContext = context;
-        }
-
-        @Override
-        public View createTabContent(String tag) {
-            View v = new View(mContext);
-            v.setMinimumWidth(0);
-            v.setMinimumHeight(0);
-            return v;
-        }
-    }
-
-    static class SavedState extends BaseSavedState {
-        String curTab;
-
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        private SavedState(Parcel in) {
-            super(in);
-            curTab = in.readString();
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeString(curTab);
-        }
-
-        @Override
-        public String toString() {
-            return "FragmentTabHost.SavedState{" + Integer.toHexString(System.identityHashCode(this)) + " curTab="
-                    + curTab + "}";
-        }
-
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
 
     public CustomFragmentTabHost(Context context) {
         // Note that we call through to the version that takes an AttributeSet,
@@ -144,6 +43,35 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
     public CustomFragmentTabHost(Context context, AttributeSet attrs) {
         super(context, attrs);
         initFragmentTabHost(context, attrs);
+    }
+
+    public InterceptTagChanged getInterceptTagChanged() {
+        return interceptTagChanged;
+    }
+
+    public void setInterceptTagChanged(InterceptTagChanged interceptTagChanged) {
+        this.interceptTagChanged = interceptTagChanged;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int mode = MeasureSpec.getMode(heightMeasureSpec);
+        int layoutHightPix = 0;
+        int layoutWidth = MeasureSpec.getSize(widthMeasureSpec);
+        if (layoutWidth <= 1080) {
+            layoutHightPix = layoutWidth * (140) / 1080 + 5;
+        } else if (layoutWidth <= 720) {
+            layoutHightPix = layoutWidth * (140) / 1080 + 5;// UI效果图
+        } else {
+            float ration = ((float) layoutHightPix) / layoutWidth;
+            if (ration <= 4.1f / 3) {
+                layoutHightPix = layoutWidth * (140) / 1080;
+            } else {
+                layoutHightPix = layoutWidth * (140) / 1080 + 5;// UI效果图
+            }
+        }
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(layoutHightPix, mode);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     private void initFragmentTabHost(Context context, AttributeSet attrs) {
@@ -187,7 +115,6 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         mFragmentManager = manager;
         ensureContent();
     }
-
 
     public void setup(Context context, FragmentManager manager, int containerId) {
         super.setup();
@@ -290,6 +217,7 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         Parcelable superState = super.onSaveInstanceState();
         SavedState ss = new SavedState(superState);
         ss.curTab = getCurrentTabTag();
+        Log.e("zxw", "onSaveInstanceState: " + ss.curTab);
         return ss;
     }
 
@@ -298,6 +226,7 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
         setCurrentTabByTag(ss.curTab);
+        Log.e("zxw", "onRestoreInstanceState: " + ss.curTab);
     }
 
     @Override
@@ -387,10 +316,8 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
                 if (newTab.fragment == null) {
                     newTab.fragment = Fragment.instantiate(mContext, newTab.clss.getName(), newTab.args);
                     ft.add(mContainerId, newTab.fragment, newTab.tag);
-                    currentFragment = newTab.fragment;
                 } else {
                     ft.show(newTab.fragment);
-                    currentFragment = newTab.fragment;
                 }
             }
 
@@ -399,5 +326,172 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
         return ft;
     }
 
+    @Override
+    public TabSpec newTabSpec(String tag) {
+        Log.e("zxw", "newTabSpec: " + tag);
+        return super.newTabSpec(tag);
+    }
 
+    @Override
+    public void setup() {
+        super.setup();
+        Log.e("zxw", "setup: ");
+    }
+
+    @Override
+    public void setup(LocalActivityManager activityGroup) {
+        Log.e("zxw", "setup: " + activityGroup.toString());
+        super.setup(activityGroup);
+    }
+
+    @Override
+    public void onTouchModeChanged(boolean isInTouchMode) {
+        Log.e("zxw", "onTouchModeChanged: " + isInTouchMode);
+        super.onTouchModeChanged(isInTouchMode);
+    }
+
+    @Override
+    public void addTab(TabSpec tabSpec) {
+        Log.e("zxw", "addTab: " + tabSpec);
+        super.addTab(tabSpec);
+    }
+
+    @Override
+    public void clearAllTabs() {
+        Log.e("zxw", "clearAllTabs: ");
+        super.clearAllTabs();
+    }
+
+    @Override
+    public TabWidget getTabWidget() {
+        Log.e("zxw", "getTabWidget: ");
+        return super.getTabWidget();
+    }
+
+    @Override
+    public int getCurrentTab() {
+        Log.e("zxw", "getCurrentTab: " + super.getCurrentTab());
+        return super.getCurrentTab();
+    }
+
+    @Override
+    public void setCurrentTab(int index) {
+        super.setCurrentTab(index);
+        Log.e("zxw", "setCurrentTab: " + index);
+    }
+
+    @Override
+    public String getCurrentTabTag() {
+        Log.e("zxw", "getCurrentTabTag: " + super.getCurrentTabTag());
+        return super.getCurrentTabTag();
+    }
+
+    @Override
+    public View getCurrentTabView() {
+        Log.e("zxw", "getCurrentTabView: " + super.getCurrentTabView());
+        return super.getCurrentTabView();
+    }
+
+    @Override
+    public View getCurrentView() {
+        Log.e("zxw", "getCurrentView: " + super.getCurrentView());
+        return super.getCurrentView();
+    }
+
+    @Override
+    public void setCurrentTabByTag(String tag) {
+        Log.e("zxw", "setCurrentTabByTag: " + tag);
+        super.setCurrentTabByTag(tag);
+    }
+
+    @Override
+    public FrameLayout getTabContentView() {
+        Log.e("zxw", "getTabContentView: ");
+        return super.getTabContentView();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        Log.e("zxw", "dispatchKeyEvent: ");
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void dispatchWindowFocusChanged(boolean hasFocus) {
+        super.dispatchWindowFocusChanged(hasFocus);
+        Log.e("zxw", "getAccessibilityClassName: ");
+    }
+
+    @Override
+    public CharSequence getAccessibilityClassName() {
+        Log.e("zxw", "getAccessibilityClassName: ");
+        return super.getAccessibilityClassName();
+    }
+
+    public interface InterceptTagChanged {
+        boolean intercept(String tabId);
+    }
+
+    static final class TabInfo {
+        private final String tag;
+        private final Class<?> clss;
+        private final Bundle args;
+        private Fragment fragment;
+
+        TabInfo(String _tag, Class<?> _class, Bundle _args) {
+            tag = _tag;
+            clss = _class;
+            args = _args;
+        }
+    }
+
+    static class DummyTabFactory implements TabHost.TabContentFactory {
+        private final Context mContext;
+
+        public DummyTabFactory(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        public View createTabContent(String tag) {
+            View v = new View(mContext);
+            v.setMinimumWidth(0);
+            v.setMinimumHeight(0);
+            return v;
+        }
+    }
+
+    static class SavedState extends BaseSavedState {
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+        String curTab;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            curTab = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeString(curTab);
+        }
+
+        @Override
+        public String toString() {
+            return "FragmentTabHost.SavedState{" + Integer.toHexString(System.identityHashCode(this)) + " curTab="
+                    + curTab + "}";
+        }
+    }
 }

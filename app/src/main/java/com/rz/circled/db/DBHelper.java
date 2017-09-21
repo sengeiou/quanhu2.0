@@ -11,7 +11,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.rz.circled.db.model.SystemInformation;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -24,18 +24,25 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     /**
      * 数据库名字
      */
-    private static final String DB_NAME = "sgt.db";
+    private static final String DB_NAME = "circled.db";
     /**
      * 数据库版本
      */
     private static final int DB_VERSION = 1;
-
+    private static DBHelper instance;
     /**
      * 用来存放Dao的地图
      */
     private Map<String, Dao> daos = new HashMap<>();
 
-    private static DBHelper instance;
+    /**
+     * 构造方法
+     *
+     * @param context
+     */
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+    }
 
     /**
      * 获取单例
@@ -55,16 +62,6 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         return instance;
     }
 
-
-    /**
-     * 构造方法
-     *
-     * @param context
-     */
-    public DBHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
-    }
-
     /**
      * 这里创建表
      */
@@ -72,7 +69,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase sqliteDatabase, ConnectionSource connectionSource) {
         // 创建表
         try {
-            TableUtils.createTable(connectionSource, SystemInformation.class);
+            TableUtils.createTable(connectionSource, FriendInformationBean.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,7 +82,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion,
                           int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, SystemInformation.class, true);
+            TableUtils.dropTable(connectionSource, FriendInformationBean.class, true);
             onCreate(sqLiteDatabase, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

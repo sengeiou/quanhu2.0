@@ -46,228 +46,158 @@ public class Session {
      * 用户是否登录 true 登录 false 未登录
      */
     public static boolean user_islogin;
-
-    /**
-     * 用户取消登录提示，true取消 false未取消
-     */
-    private static boolean cancel_remind_login;
-
     /**
      * 用户是否设置了密保问题
      */
     public static boolean user_SafetyProblem;
-
     /**
      * 用户是否设置了支付密码
      */
     public static boolean user_setpaypw;
-
     /**
      * SessionId 后面请求的时候回传
      */
     public static String sessionKey;
-
     /**
      * 是否开启免密支付
      */
     public static boolean isOpenGesture;
-
     /**
      * 用户设置的手势密码
      */
     public static String user_gesture;
-
     /**
      * 用户id
      */
     public static String user_id;
-
     /**
      * 用户头像网络地址
      */
     public static String user_pic_url;
-
     /**
      * 二维码图片
      */
     public static String user_loacal_url;
-
     /**
      * 用户真实姓名
      */
     public static String user_true_name;
-
     /**
      * 用户身份证号
      */
     public static String user_idcard;
-
     /**
      * 用户昵称
      */
     public static String user_name;
-
     /**
      * 用户登录账号
      */
     public static String user_account;
-
     /**
      * 用户手机号
      */
     public static String user_phone;
-
     /**
      * 用户等级
      */
     public static String user_level;
-
     /**
      * 用户认证状态
      */
     public static int user_identified;
-
     /**
      * 实名认证记录id
      */
     public static String identified_id;
-
     /**
      * 交易流水号
      */
     public static String orderserialno;
-
     /**
      * 手势密码验证机会
      */
     public static int user_gesture_chance;
-
-    /**
-     * 我的动态未读数量
-     */
-    private static int my_tread_unread;
-
-    /**
-     * 好友动态未读数量
-     */
-    private static int fri_tread_unread;
-
-    /**
-     * 系统消息未读数量
-     */
-    private static int system_message_unread;
-
-    /**
-     * 账户安全消息未读数量
-     */
-    private static int account_safe_unread;
-
     /**
      * 通讯录好友最后查询时间
      */
     public static String ContactsDate;
-
     /**
      * 通讯录关注的人最后查询时间
      */
     public static String CareFriendsDate;
-
     /**
      * 用户地区
      */
     public static String user_area;
-
     /**
      * 用户性别
      */
     public static String user_sex;
-
     /**
      * 用户简介
      */
     public static String user_desc;
-
     /**
      * 用户签名
      */
     public static String user_signatrue;
-
-    /**
-     * 用户登录方式
-     */
-    private static int login_way;
-
     /**
      * 用户账户可用余额
      */
     public static String user_money;
-
     /**
      * 用户账户余额是否冻结
      */
     public static boolean user_money_state;
-
-
     /**
      * 首页晒一晒是否有更新，提示红点用
      */
     public static boolean show_update;
-
     /**
      * 用户是否设置了登录密码
      */
     public static boolean user_login_pw;
-
     /**
      * 红包广告是否阅读协议
      */
     public static boolean redbag_rule;
-
     /**
      * 关注的数量
      */
     public static String user_focus_num;
-
     /**
      * 广告图片地址
      */
     public static String adv_pic_url;
-
     /**
      * 链接地址
      */
     public static String adv_url;
-
     /**
      * 上刊日期
      */
     public static String adv_upIngDate;
-
     /**
      * 过期日期
      */
     public static String adv_expireDate;
-
     /**
      * 记录是否关闭我的转发层级
      */
     public static boolean isCloseForward;
-
     /**
      * 记录我的转发层级
      */
     public static String is_aways_show;
-
     /**
      * 记录我的转发层级下标
      */
     public static String record_index;
-
     /**
      * 记录app版本号
      */
     public static String app_version;
-
     /**
      * 记录jpush tags
      */
@@ -276,6 +206,30 @@ public class Session {
      * 记录奖区数量
      */
     public static int lottery_area_num;
+    /**
+     * 用户取消登录提示，true取消 false未取消
+     */
+    private static boolean cancel_remind_login;
+    /**
+     * 我的动态未读数量
+     */
+    private static int my_tread_unread;
+    /**
+     * 好友动态未读数量
+     */
+    private static int fri_tread_unread;
+    /**
+     * 系统消息未读数量
+     */
+    private static int system_message_unread;
+    /**
+     * 账户安全消息未读数量
+     */
+    private static int account_safe_unread;
+    /**
+     * 用户登录方式
+     */
+    private static int login_way;
     /**
      * 记录最近播放的视频的URL
      */
@@ -449,13 +403,13 @@ public class Session {
         return SysSharePres.getInstance().getUserId();
     }
 
-    public static String getBeforeUserId() {
-        return SysSharePres.getInstance().getBeforeUserId();
-    }
-
     public static void setUserId(String user_id) {
         Session.user_id = user_id;
         SysSharePres.getInstance().setUserId(user_id);
+    }
+
+    public static String getBeforeUserId() {
+        return SysSharePres.getInstance().getBeforeUserId();
     }
 
     public static void setBeforeLoginId(String userId) {
@@ -584,6 +538,11 @@ public class Session {
         return SysSharePres.getInstance().getIdentifiedId();
     }
 
+    public static void setIdentifiedId(String identified_id) {
+        Session.identified_id = identified_id;
+        SysSharePres.getInstance().setIdentifiedId(identified_id);
+    }
+
     public static void setContactsdate(String contactsdate) {
         Session.ContactsDate = contactsdate;
         SysSharePres.getInstance().setContactsDate(contactsdate);
@@ -593,18 +552,13 @@ public class Session {
         return SysSharePres.getInstance().getContactsDate();
     }
 
-    public static void setCareFriendsDate(String CareFriendsDate) {
-        Session.CareFriendsDate = CareFriendsDate;
-        SysSharePres.getInstance().setCareFriendsDate(CareFriendsDate);
-    }
-
     public static String getCareFriendsDate() {
         return SysSharePres.getInstance().getCareFriendsDate();
     }
 
-    public static void setIdentifiedId(String identified_id) {
-        Session.identified_id = identified_id;
-        SysSharePres.getInstance().setIdentifiedId(identified_id);
+    public static void setCareFriendsDate(String CareFriendsDate) {
+        Session.CareFriendsDate = CareFriendsDate;
+        SysSharePres.getInstance().setCareFriendsDate(CareFriendsDate);
     }
 
     public static String getOrderserialno() {
@@ -953,30 +907,29 @@ public class Session {
         SysSharePres.getInstance().setNewsAccountInformationNum(newsAccountInformationNum);
     }
 
-    public static void setCityCode(String cityCode) {
-        SysSharePres.getInstance().setCityCode(cityCode);
-    }
-
     public static String getCityCode() {
         return SysSharePres.getInstance().getCityCode();
     }
 
-    public static void setCustPoints(String custPoints){
-        SysSharePres.getInstance().setCustPoint(custPoints);
+    public static void setCityCode(String cityCode) {
+        SysSharePres.getInstance().setCityCode(cityCode);
     }
 
     public static String getCustPoints(){
        return SysSharePres.getInstance().getCustPoint();
     }
 
-    public static void setCustRole(String custRole){
-        SysSharePres.getInstance().setCustRole(custRole);
+    public static void setCustPoints(String custPoints) {
+        SysSharePres.getInstance().setCustPoint(custPoints);
     }
 
     public static String getCustRole(){
         return SysSharePres.getInstance().getCustRole();
     }
 
+    public static void setCustRole(String custRole) {
+        SysSharePres.getInstance().setCustRole(custRole);
+    }
 
     public static boolean isNeedTeam() {
         return SysSharePres.getInstance().isNeedTeam();
@@ -984,6 +937,14 @@ public class Session {
 
     public static void setNeedTeam(boolean needTeam) {
         SysSharePres.getInstance().setNeedTeam(needTeam);
+    }
+
+    public static String getNowAct() {
+        return SysSharePres.getInstance().getNowAct();
+    }
+
+    public static void setNowAct(String act) {
+        SysSharePres.getInstance().setNowAct(act);
     }
 
     /**

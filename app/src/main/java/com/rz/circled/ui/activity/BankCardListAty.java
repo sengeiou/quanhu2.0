@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.litesuits.common.utils.HexUtil;
+import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
-import com.rz.circled.modle.BankCardModel;
+import com.rz.circled.presenter.impl.BankPresenter;
+import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.circled.widget.XListView;
@@ -30,6 +32,7 @@ import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.UnitUtil;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.UserInfoModel;
 
 import java.util.ArrayList;
@@ -50,15 +53,16 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     private CommonAdapter<BankCardModel> mAdapter;
     //存储银行卡列表
-    private List<BankCardModel> mBanks = new ArrayList<BankCardModel>();
+    private List<BankCardModel> mBanks = new ArrayList<>();
 
     //弹出框
     private PopupView mPopupView;
 
-    private String[] mTitle = {getString(R.string.unbind_bank_card), getString(R.string.set_default)};
-    private String[] mTitleColor = {"#333333", "#1bc2b8"};
+    private String[] mTitle;
+    private String[] mTitleColor;
 
-//    private PayPresenter mPayPresenter;
+    private PayPresenter mPayPresenter;
+    private BankPresenter presenter;
 
     //绑定银行关联ID
     private String mCust2BankId;
@@ -89,13 +93,16 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void initPresenter() {
-//        presenter = new BankPresenter();
-//        mPayPresenter = new PayPresenter(false);
-//        mPayPresenter.attachView(this);
+        presenter = new BankPresenter();
+        presenter.attachView(this);
+        mPayPresenter = new PayPresenter(false);
+        mPayPresenter.attachView(this);
     }
 
     @Override
     public void initView() {
+        mTitle = new String[]{getString(R.string.unbind_bank_card), getString(R.string.set_default)};
+        mTitleColor = new String[]{"#333333", "#0185ff"};
         type = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, Constants.DEFAULTVALUE);
         if (type == 1) {
             setTitleText(getString(R.string.bank_card));
@@ -109,14 +116,14 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                             if (CountDownTimer.isFastClick()) {
                                 return;
                             }
-//                            mPayPresenter.isSettingPw(true);
+                            mPayPresenter.isSettingPw(true);
                             break;
                         //设为默认
                         case 1:
                             if (CountDownTimer.isFastClick()) {
                                 return;
                             }
-//                            ((BankPresenter) presenter).setDefaultBanckCard(mCust2BankId);
+                            (presenter).setDefaultBanckCard(mCust2BankId);
                             break;
                     }
                 }
@@ -133,7 +140,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void initData() {
-        mAdapter = new CommonAdapter<BankCardModel>(aty, R.layout.layout_item_bank_card) {
+        mAdapter = new CommonAdapter<BankCardModel>(aty, mBanks, R.layout.layout_item_bank_card) {
             @Override
             public void convert(ViewHolder helper, final BankCardModel item, int postion) {
                 //银行卡icon
@@ -143,7 +150,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 //显示银行卡
                 LinearLayout mShowCardLL = (LinearLayout) helper.getViewById(R.id.id_layout_card);
                 //显示添加银行卡按钮
-                RelativeLayout mShowAdd = (RelativeLayout) helper.getViewById(R.id.id_add_bank_ll);
+                LinearLayout mShowAdd = (LinearLayout) helper.getViewById(R.id.id_add_bank_ll);
                 //显示默认绑卡的图标
                 ImageView mDefaultImg = (ImageView) helper.getViewById(R.id.id_iv_checkon);
                 mDefaultImg.setVisibility(View.GONE);
@@ -158,8 +165,8 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                             if (CountDownTimer.isFastClick()) {
                                 return;
                             }
-//                            Intent intent = new Intent(aty, AddBankCardAty.class);
-//                            startActivityForResult(intent, IntentCode.BankCard.BankCard_REQUEST_CODE);
+                            Intent intent = new Intent(aty, AddBankCardAty.class);
+                            startActivityForResult(intent, IntentCode.BankCard.BankCard_REQUEST_CODE);
                         }
                     });
                 } else {
@@ -198,7 +205,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
             }
         };
         mListview.setAdapter(mAdapter);
-//        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+        presenter.getBanckCardList(Session.getUserId());
     }
 
     public BankCardModel addCard() {
@@ -213,7 +220,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
             if (t instanceof List) {
                 mListview.stopRefresh();
                 List<BankCardModel> dataList = (List<BankCardModel>) t;
-                if (null != dataList && !dataList.isEmpty()) {
+                if (!dataList.isEmpty()) {
                     mBanks.clear();
                     mBanks.addAll(dataList);
                     if (type == 1) {
@@ -234,21 +241,21 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                     } else {
                         Session.setIsOpenGesture(false);
                     }
-//                    mPayPresenter.checkIsSetPw();
+                    mPayPresenter.checkIsSetPw();
                 }
             } else if (t instanceof String) {
                 String payPw = (String) t;
                 if (TextUtils.equals("1", payPw)) {
                     //解绑成功
                     SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.unbind_card_success));
-//                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                    presenter.getBanckCardList(Session.getUserId());
                 } else if (TextUtils.equals("2", payPw)) {
                     //设置默认银行卡成功
                     SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.setting_success));
-//                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                    presenter.getBanckCardList(Session.getUserId());
                 } else {
                     //解绑银行卡
-//                    ((BankPresenter) presenter).unBandBanck(mCust2BankId, HexUtil.encodeHexStr(MD5Util.md5(payPw)));
+                    presenter.unBandBanck(mCust2BankId, HexUtil.encodeHexStr(MD5Util.md5(payPw)));
                 }
             }
         }
@@ -256,7 +263,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void onRefresh() {
-//        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+        presenter.getBanckCardList(Session.getUserId());
     }
 
     @Override
@@ -267,7 +274,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
         if (TextUtils.equals(string, "error")) {
-//            mPayPresenter.showResetDialog();
+            mPayPresenter.showResetDialog();
         } else {
             mListview.stopRefresh();
             if (loadingStatus == CommonCode.General.DATA_EMPTY) {
@@ -283,7 +290,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == IntentCode.BankCard.BankCard_REQUEST_CODE) {
             if (resultCode == IntentCode.BankCard.BankCard_RESULT_CODE) {
-//                ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                (presenter).getBanckCardList(Session.getUserId());
             }
         }
     }

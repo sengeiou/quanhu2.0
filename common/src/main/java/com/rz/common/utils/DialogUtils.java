@@ -26,6 +26,7 @@ public class DialogUtils {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
+        params.width = (int) (DensityUtils.getScreenW(context) * 0.8);
         mDialog.setContentView(view, params);
         mDialog.setCanceledOnTouchOutside(canceledOnTouch);
         return mDialog;

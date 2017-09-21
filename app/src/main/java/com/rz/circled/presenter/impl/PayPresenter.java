@@ -2,6 +2,7 @@ package com.rz.circled.presenter.impl;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -46,6 +47,7 @@ import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -80,12 +82,13 @@ public class PayPresenter extends AbsPresenter {
     private int record_start = 0;
 
     //调用支付
-    private ApiService mAddSignPayService;
     private IViewController mView;
 
     private ApiService mUserService;
 
     private boolean flag;
+    //记录验证支付密码的免密
+    private String mCheckPayPw;
 
     public PayPresenter(boolean flag) {
         this.flag = flag;
@@ -120,7 +123,7 @@ public class PayPresenter extends AbsPresenter {
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
-        Call<ResponseData<PaySignModel>> call = mAddSignPayService.payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
+        Call<ResponseData<PaySignModel>> call = mUserService.payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
 //        Call<ResponseData<PaySignModel>> call = Http.getAddSignService(activity).payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<PaySignModel>>() {
@@ -171,7 +174,6 @@ public class PayPresenter extends AbsPresenter {
             }
         });
     }
-
 
     /**
      * 微信支付
@@ -234,49 +236,6 @@ public class PayPresenter extends AbsPresenter {
                             handler.sendMessage(msg);
                         }
                     });
-        }
-    }
-
-    /**
-     * 支付宝支付回调
-     */
-    private class AliPayHandler extends Handler {
-
-        private WeakReference<PayPresenter> weakref;
-
-        public AliPayHandler(PayPresenter presenter) {
-            this.weakref = new WeakReference<>(presenter);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case SDK_ALIAY: {
-                    String str = (String) msg.obj;
-                    PayResult payResult = new PayResult(str);
-                    String result = payResult.getResult();
-                    String resultStatus = payResult.getResultStatus();
-                    if (TextUtils.equals(resultStatus, ALIPAY_STATE_SUCCESS)) {
-                        //TODO 支付成功
-                        mView.onLoadingStatus(CommonCode.PayCode.PAY_SUCCESS);
-                    } else {
-                        if (TextUtils.equals(resultStatus, ALIPAY_STATE_CONFIRMING)) {
-                            //TODO 支付结果确认中
-                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CONFIRM);
-                        } else if (TextUtils.equals(resultStatus, ALIPAY_STATE_CANCEL)) {
-                            //TODO 用户支付取消
-                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CANDEL);
-                        } else {
-                            //TODO 支付失败
-                            mView.onLoadingStatus(CommonCode.PayCode.PAY_FAIL);
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
         }
     }
 
@@ -457,62 +416,58 @@ public class PayPresenter extends AbsPresenter {
         });
     }
 
-//    /**
-//     * 收益消费到账户
-//     *
-//     * @param password 支付密码
-//     * @param cost     兑换金额
-//     */
-//    public void pointsToAccount(String password, String cost) {
-//        if (!NetUtils.isNetworkConnected(activity)) {
-//            mView.onLoadingStatus(CommonCode.General.ERROR_NET, activity.getString(R.string.no_net_work));
-//            return;
-//        }
-//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, activity.getString(R.string.check_ing));
-////        Call<ResponseData> call = mUserService
-////                .pointsToAccount(1056, password, Session.getUserId(), cost);
-//        Call<ResponseData> call = Http.getTestService(activity)
-//                .pointsToAccount(1056, password, Session.getUserId(), cost);
-//
-//
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData>() {
-//            @Override
-//            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    final ResponseData res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        //收益兑换成功
-//                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS_FULL, "");
-//                        mView.updateView(res.getRet());
+    /**
+     * 收益消费到账户
+     *
+     * @param password 支付密码
+     * @param cost     兑换金额
+     */
+    public void pointsToAccount(String password, String cost) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, activity.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, activity.getString(R.string.check_ing));
+        Call<ResponseData> call = mUserService
+                .pointsToAccount(1056, password, Session.getUserId(), cost);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    final ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        //收益兑换成功
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                        mView.updateView(res.getRet());
+                        return;
+                    } else {
+//                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "error");
+//                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
 //                        return;
-//                    } else {
-////                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "error");
-////                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-////                        return;
-//                        if (HandleRetCode.handler(activity, res)) {
-//                            new Handler().postDelayed(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    mView.updateView(res.getRet());
-//                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-//                                }
-//                            }, 2000);
-//                            return;
-//                        }
-//                    }
-//                }
-//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData> call, Throwable t) {
-//                super.onFailure(call, t);
-//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
-//            }
-//        });
-//    }
+                        if (HandleRetCode.handler(activity, res)) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mView.updateView(res.getRet());
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
+                                }
+                            }, 2000);
+                            return;
+                        }
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
+            }
+        });
+    }
 
     public void payOrder(String orderId) {
         payOrder(orderId, "");
@@ -523,30 +478,39 @@ public class PayPresenter extends AbsPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
-        Call<ResponseData> call = mUserService.payOrder(Session.getUserId(), orderId, TextUtils.isEmpty(pwd) ? "" : HexUtil.encodeHexStr(MD5Util.md5(pwd)));
+        Call<ResponseData<HashMap<String, String>>> call = mUserService.payOrder(Session.getUserId(), orderId, TextUtils.isEmpty(pwd) ? "" : HexUtil.encodeHexStr(MD5Util.md5(pwd)));
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData>() {
+        call.enqueue(new BaseCallback<ResponseData<HashMap<String, String>>>() {
             @Override
-            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+            public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.isSuccessful()) {
-                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                        mView.updateView(res.getRet());
+                        if (res.getData() != null) {
+                            HashMap<String, String> data = response.body().getData();
+                            if (data.containsKey("code") && TextUtils.equals(data.get("code"), "" + 1000)) {
+                                mView.updateView(1000);
+                            } else {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.PAY_SUCCESS);
+                            mView.updateView(res.getRet());
+                        }
                     } else {
                         HandleRetCode.handler(activity, res);
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
                 } else {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
+            public void onFailure(Call<ResponseData<HashMap<String, String>>> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
             }
         });
     }
@@ -654,10 +618,20 @@ public class PayPresenter extends AbsPresenter {
         } else {
             payViwe.findViewById(R.id.id_is_set_user_txt).setVisibility(View.VISIBLE);
         }
+        final GridPasswordView payPass = (GridPasswordView) payViwe.findViewById(R.id.id_pay_pw_pass);
+
         final Dialog mPayDialog = DialogUtils.selfDialog(activity, payViwe, false);
         mPayDialog.setCancelable(true);
         mPayDialog.setCanceledOnTouchOutside(true);
         mPayDialog.show();
+        mPayDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (payPass.getPassWord().length() != payPass.getmPasswordLength()) {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.pay_cancel));
+                }
+            }
+        });
         payViwe.findViewById(R.id.id_pay_close_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -673,7 +647,6 @@ public class PayPresenter extends AbsPresenter {
             payViwe.findViewById(R.id.id_dialog_pay_yuan_txt).setVisibility(View.GONE);
         }
         ((TextView) payViwe.findViewById(R.id.id_pay_money_txt)).setText(Currency.returnDollar(Currency.RMB, mPayMoney + "", 0).replace("元", ""));
-        GridPasswordView payPass = (GridPasswordView) payViwe.findViewById(R.id.id_pay_pw_pass);
         //支付密码
         payPass.setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
             @Override
@@ -761,9 +734,6 @@ public class PayPresenter extends AbsPresenter {
         });
     }
 
-    //记录验证支付密码的免密
-    private String mCheckPayPw;
-
     public void hideInputMethod() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getApplicationWindowToken(), 0);
@@ -803,6 +773,10 @@ public class PayPresenter extends AbsPresenter {
         mResetDialog.show();
     }
 
+    public void pay(String orderId, double mPayMoney) {
+        pay(orderId, mPayMoney, mPayMoney, 0);
+    }
+
     public void pay(String orderId, double mPayMoney, double mUserMoney, int flag) {
         pay(orderId, mPayMoney, mUserMoney, "", flag);
     }
@@ -823,7 +797,6 @@ public class PayPresenter extends AbsPresenter {
                 if (response.isSuccessful()) {
                     ResponseData<UserInfoModel> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         UserInfoModel user = res.getData();
                         if (null != user) {
                             if (Type.HAD_SET_PW == user.getIsPayPassword()) {
@@ -839,14 +812,17 @@ public class PayPresenter extends AbsPresenter {
 
                             if (!Session.getUserIsLogin()) {
                                 SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.please_go_login));
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                 return;
                             }
                             if (!Session.getUserMoneyState()) {
                                 SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.user_money_freeze));
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                 return;
                             }
                             if (mPayMoney > mUserMoney) {
                                 SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.money_less));
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                 return;
                             }
                             if (Session.getUserSetpaypw()) {
@@ -868,16 +844,29 @@ public class PayPresenter extends AbsPresenter {
                                     }
                                 }
                             } else {
+                                final boolean[] toSetPayPwd = {false};
                                 //未设置，去设置
                                 View mSetPayPw = LayoutInflater.from(activity).inflate(R.layout.dialog_to_set_pay_passw, null);
                                 final Dialog mSetDialog = DialogUtils.selfDialog(activity, mSetPayPw, true);
                                 mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        // TODO: 2017/9/16  设置支付密码
+                                        Intent intent = new Intent(activity, SetPayPassAty.class);
+                                        intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
+                                        activity.startActivity(intent);
+                                        toSetPayPwd[0] = true;
+                                        mSetDialog.dismiss();
+                                        activity.finish();
                                     }
                                 });
                                 mSetDialog.show();
+                                mSetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        if (!toSetPayPwd[0])
+                                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                    }
+                                });
                             }
                         }
                     } else {
@@ -885,22 +874,65 @@ public class PayPresenter extends AbsPresenter {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                     return;
                                 }
                             }, 2000);
                         }
                     }
                 } else {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, activity.getString(R.string.check_fail));
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.check_fail));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseData<UserInfoModel>> call, Throwable t) {
                 super.onFailure(call, t);
-                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, activity.getString(R.string.check_fail));
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.check_fail));
             }
         });
+    }
+
+    /**
+     * 支付宝支付回调
+     */
+    private class AliPayHandler extends Handler {
+
+        private WeakReference<PayPresenter> weakref;
+
+        public AliPayHandler(PayPresenter presenter) {
+            this.weakref = new WeakReference<>(presenter);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case SDK_ALIAY: {
+                    String str = (String) msg.obj;
+                    PayResult payResult = new PayResult(str);
+                    String result = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+                    if (TextUtils.equals(resultStatus, ALIPAY_STATE_SUCCESS)) {
+                        //TODO 支付成功
+                        mView.onLoadingStatus(CommonCode.PayCode.PAY_SUCCESS);
+                    } else {
+                        if (TextUtils.equals(resultStatus, ALIPAY_STATE_CONFIRMING)) {
+                            //TODO 支付结果确认中
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CONFIRM);
+                        } else if (TextUtils.equals(resultStatus, ALIPAY_STATE_CANCEL)) {
+                            //TODO 用户支付取消
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CANDEL);
+                        } else {
+                            //TODO 支付失败
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_FAIL);
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
     }
 }

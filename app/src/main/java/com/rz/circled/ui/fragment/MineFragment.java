@@ -321,10 +321,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
 //                    if("0".equals(Session.getCustRole())){
-                        Intent intent = new Intent(mActivity, ChooseProveIdentityActivity.class);
-                        if (proveStatusBean != null)
-                            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
-                        startActivity(intent);
+                    Intent intent = new Intent(mActivity, ChooseProveIdentityActivity.class);
+                    if (proveStatusBean != null)
+                        intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
+                    startActivity(intent);
 //                    }
                 }
             });
@@ -820,7 +820,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (baseEvent.type == CommonCode.EventType.TYPE_LOGIN) {
             if (proveInfoPresenter != null)
                 getUserProveStatus();
-                setData();
+            setData();
         }
         if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
             setData();

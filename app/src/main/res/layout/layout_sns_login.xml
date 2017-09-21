@@ -7,43 +7,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px146"
+        android:layout_marginRight="@dimen/px146"
         android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/layout_login_webo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/px130"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/px30"
             android:drawableTop="@mipmap/ic_login_sina"
             android:gravity="center_horizontal"
+            android:text="@string/weibo"
             android:textColor="@color/color_999999"
             android:visibility="visible"
-            android:text="@string/weibo"
             />
 
         <TextView
             android:id="@+id/layout_login_weixin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/px130"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/px30"
             android:drawableTop="@mipmap/ic_login_wx"
             android:gravity="center_horizontal"
-            android:textColor="@color/color_999999"
             android:text="@string/weixin"
+            android:textColor="@color/color_999999"
             />
 
         <TextView
             android:id="@+id/layout_phone_code"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:drawablePadding="@dimen/px30"
-            android:drawableTop="@mipmap/ic_login_sina"
+            android:drawableTop="@mipmap/icon_code"
             android:gravity="center_horizontal"
-            android:textColor="@color/color_999999"
             android:text="@string/phone_code"
+            android:textColor="@color/color_999999"
             />
 
     </LinearLayout>

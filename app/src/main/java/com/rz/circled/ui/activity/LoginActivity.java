@@ -61,35 +61,51 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
 
+    private static final int MSG_SET_ALIAS = 1001;
     public String TAG;
+    private final Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            Set<String> sset = new HashSet<String>();
+            sset.add(Constants.Lottery_Tag);
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_SET_ALIAS:
+                    Log.d(TAG, "Set alias in handler.");
+                    // 调用 JPush 接口来设置别名。
+//                    JPushInterface.setAliasAndTags(getApplicationContext(),
+//                            (String) msg.obj,
+//                            sset,
+//                            mAliasCallback);
+                    break;
+                default:
+                    Log.i(TAG, "Unhandled msg - " + msg.what);
+            }
+        }
+    };
     protected IPresenter presenter;
     protected IPresenter homeBannerPresenter;
     protected SwipeBackLayout layout;
-
     @BindView(R.id.id_login_register_btn)
     TextView idLoginRegisterBtn;
     @BindView(R.id.id_login_pw_btn)
     TextView idLoginPwBtn;
     @BindView(R.id.reg_layout)
     LinearLayout regLayout;
-    @BindView(R.id.layout_login_qq)
-    TextView layoutLoginQq;
+    @BindView(R.id.layout_phone_code)
+    TextView layoutLoginPhone;
     @BindView(R.id.layout_login_weixin)
     TextView layoutLoginWeixin;
     @BindView(R.id.layout_login_webo)
     TextView layoutLoginWebo;
-    private long lastClickTime;
-
     @BindView(R.id.id_watch_pass)
     ImageView mImgWatchPw;
-
     /**
      * 手机号
      */
     @BindView(R.id.id_login_edit_phone)
     EditText mEditPhone;
-    private String mPhone;
-
     @BindView(R.id.id_login_clear_phone)
     ImageView mImgClearPhone;
 
@@ -98,17 +114,13 @@ public class LoginActivity extends BaseActivity {
      */
     @BindView(R.id.id_login_edit_pw)
     EditText mEditPass;
-    private String mPassword;
-
     @BindView(R.id.id_login_clear_pw)
     ImageView mImgClearPass;
-
     /**
      * 登录
      */
     @BindView(R.id.id_login_btn)
     Button mLoginBtn;
-
     //    /**
 //     * 3.0版本title
 //     */
@@ -116,11 +128,17 @@ public class LoginActivity extends BaseActivity {
 //    TextView mTvTitle;
     @BindView(R.id.titlebar_main_left_btn)
     ImageView mIvBack;
+    @BindView(R.id.id_regist_send_sms_btn)
+    Button codeBtn;
     //    @BindView(R.id.titlebar_root)
 //    RelativeLayout mRlTitleRoot;
+    @BindView(R.id.pwd_type_img)
+    ImageView pwdImg;
+    private long lastClickTime;
+    private String mPhone;
+    private String mPassword;
     private int loginType;
     private int mGuideType;
-
 
     @Override
     protected boolean needSwipeBack() {
@@ -156,11 +174,59 @@ public class LoginActivity extends BaseActivity {
         finish();
     }
 
+//    /**
+//     * qq登录
+//     */
+//    @OnClick(R.id.layout_login_qq)
+//    public void qqLogin() {
+//        if (isFastClick(7000)) {
+//            return;
+//        }
+//        if (presenter != null) {
+////            mEditPhone.setText("");
+////            mEditPass.setText("");
+//            ((SnsAuthPresenter) presenter).setActionBind(-1);
+//            ((SnsAuthPresenter) presenter).qqAuth(true);
+//        }
+//    }
+//
+//    /**
+//     * 微信登录
+//     */
+//    @OnClick(R.id.layout_login_weixin)
+//    public void wxLogin() {
+//        if (isFastClick(7000)) {
+//            return;
+//        }
+//        if (presenter != null) {
+////            mEditPhone.setText("");
+////            mEditPass.setText("");
+//            ((SnsAuthPresenter) presenter).setActionBind(-1);
+//            ((SnsAuthPresenter) presenter).wxAuth(true);
+//        }
+//    }
+//
+//    /**
+//     * 新浪登录
+//     */
+//    @OnClick(R.id.layout_login_webo)
+//    public void sinaLogin() {
+//        if (isFastClick(7000)) {
+//            return;
+//        }
+//        if (presenter != null) {
+////            mEditPhone.setText("");
+////            mEditPass.setText("");
+//            ((SnsAuthPresenter) presenter).setActionBind(-1);
+//            ((SnsAuthPresenter) presenter).wbAuth(true);
+//        }
+//    }
+
     @Override
     public void initView() {
 
 //        mTvTitle.setText(R.string.login);
-        mIvBack.setVisibility(View.VISIBLE);
+        mIvBack.setVisibility(View.GONE);
 //        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
         mIvBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,53 +309,16 @@ public class LoginActivity extends BaseActivity {
         loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
-//    /**
-//     * qq登录
-//     */
-//    @OnClick(R.id.layout_login_qq)
-//    public void qqLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).qqAuth(true);
-//        }
-//    }
+    /**
+     * 验证码登录
+     */
+    @OnClick(R.id.layout_phone_code)
+    public void phoneLogin() {
+        codeBtn.setVisibility(View.VISIBLE);
+        mEditPass.setHint("请输入验证码");
+        pwdImg.setImageResource(R.mipmap.icon_code);
 //
-//    /**
-//     * 微信登录
-//     */
-//    @OnClick(R.id.layout_login_weixin)
-//    public void wxLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).wxAuth(true);
-//        }
-//    }
-//
-//    /**
-//     * 新浪登录
-//     */
-//    @OnClick(R.id.layout_login_webo)
-//    public void sinaLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).wbAuth(true);
-//        }
-//    }
+    }
 
     /**
      * 清除手机号
@@ -320,7 +349,6 @@ public class LoginActivity extends BaseActivity {
         mEditPass.setSelection(length);
 
     }
-
 
     /**
      * 手机号登录操作
@@ -363,135 +391,6 @@ public class LoginActivity extends BaseActivity {
         Intent forget = new Intent(aty, FindPwdActivity.class);
         forget.putExtra(IntentKey.EXTRA_TYPE, loginType);
         startActivityForResult(forget, IntentCode.Login.LOGIN_REQUEST_CODE);
-    }
-
-    @Override
-    public boolean hasDataInPage() {
-        return true;
-    }
-
-    /**
-     * 登录成功
-     *
-     * @param t
-     * @param <T>
-     */
-    @Override
-    public <T> void updateView(T t) {
-        super.updateView(t);
-        if (null != t) {
-            UserInfoBean model = (UserInfoBean) t;
-            if (null != model) {
-//                zhugeIdentify(model);
-//                switch (Session.getLoginWay()) {
-//                    case Type.LOGIN_QQ:
-////                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
-//                        zhugeTrack("qq");
-//                        break;
-//                    case Type.LOGIN_WX:
-////                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
-//                        zhugeTrack("wx");
-//                        break;
-//                    case Type.LOGIN_SINA:
-////                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
-//                        zhugeTrack("sina");
-//                        break;
-//                    default:
-////                        MobclickAgent.onProfileSignIn(model.getCustId());
-//                        zhugeTrack("phonenum");
-//                        break;
-//                }
-
-//                MobclickAgent.onEvent(aty, "login");
-                //单独记录随手晒缓存记录，防止刷新
-                if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
-                    EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
-                    List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
-//                    ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
-                    entityCache.putListEntity(showCaches);
-                } else {
-//                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
-                }
-
-                Session.setUserIsLogin(true);
-                Session.setUserId(model.getCustId());
-                Session.setUserPicUrl(model.getCustImg());
-                Session.setSessionKey(model.getToken());
-                Session.setUserPhone(model.getCustPhone());
-                Session.setUserLocalUrl(model.getCustQr());
-                Session.setUserName(model.getCustNname());
-                Session.setUser_signatrue(model.getCustSignature());
-                Session.setUser_desc(model.getCustDesc());
-                Session.setCityCode(model.getCityCode());
-                Session.setCustPoints(model.getCustPoints());
-                Session.setUserLevel(model.getCustLevel());
-                Session.setCustRole(model.getCustRole());
-                if (TextUtils.equals("0", model.getCustSex())) {
-                    Session.setUser_sex("女");
-                } else {
-                    Session.setUser_sex("男");
-                }
-                Session.setUser_area(model.getCustLocation());
-                if (Type.HAD_SET_PW == model.getIsPayPassword()) {
-                    //设置支付密码
-                    Session.setUserSetpaypw(true);
-                } else {
-                    Session.setUserSetpaypw(false);
-                }
-                if (Type.OPEN_EASY_PAY == model.getSmallNopass()) {
-                    //开启免密支付
-                    Session.setIsOpenGesture(true);
-                } else {
-                    Session.setIsOpenGesture(false);
-                }
-                if (model.getIsPwdExist() == 1) {
-                    //设置了登录密码
-                    Session.setUserLoginPw(true);
-                } else {
-                    Session.setUserLoginPw(false);
-                }
-
-                if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
-                    EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
-                    entityCache.clean();
-                }
-
-                Set<String> sset = new HashSet<String>();
-                sset.add(Constants.Lottery_Tag);
-
-                // 调用 Handler 来异步设置别名
-                mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
-
-//                loadRewardGiftList();//加载转发打赏礼物列表
-
-                if (getIntent().getBooleanExtra("isFromSplash", false)) {
-                    skipActivity(aty, MainActivity.class);
-                } else if (loginType == Type.TYPE_LOGIN_WEB) {
-                    //从圈子过来跳转登录的
-//                    JsEvent.callJsEvent(getLoginWebResultData(), true);
-                    finish();
-                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
-                    //从向导页面过来
-
-                    skipActivity(aty, FollowCircle.class);
-                    finish();
-                } else {
-                    BaseEvent event = new BaseEvent();
-//                    event.key = LOGIN_IN_SUCCESS;
-                    EventBus.getDefault().post(event);
-
-                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
-
-                    setResult(IntentCode.Login.LOGIN_RESULT_CODE);
-                    skipActivity(aty, MainActivity.class);
-                    finish();
-                }
-
-
-//                loginYunXin(model.getCustId(), model.getCustId());
-
-            }
-        }
     }
 
 //    /**
@@ -552,26 +451,8 @@ public class LoginActivity extends BaseActivity {
 //    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentCode.Login.LOGIN_REQUEST_CODE) {
-            if (resultCode == IntentCode.Register.REGISTER_RESULT_CODE) {
-                //注册成功(包括从忘记密码中进入)
-                if (null != data) {
-                    UserInfoBean model = (UserInfoBean) data.getSerializableExtra("111");
-                    if (null != model) {
-                        updateView(model);
-                        finish();
-                        Log.e("", "");
-                    }
-                }
-            }
-//            else if (resultCode == IntentCode.Register.REGISTER_RESULT_ONLY_CODE) {
-//                //或者直接手机号注册
-//
-//            }
-        }
+    public boolean hasDataInPage() {
+        return true;
     }
 
 //    private void loginYunXin(final String account, final String token) {
@@ -655,6 +536,160 @@ public class LoginActivity extends BaseActivity {
 //        UserPreferences.setStatusConfig(config);
 //    }
 
+    /**
+     * 登录成功
+     *
+     * @param t
+     * @param <T>
+     */
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (null != t) {
+            UserInfoBean model = (UserInfoBean) t;
+            if (null != model) {
+//                zhugeIdentify(model);
+//                switch (Session.getLoginWay()) {
+//                    case Type.LOGIN_QQ:
+////                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
+//                        zhugeTrack("qq");
+//                        break;
+//                    case Type.LOGIN_WX:
+////                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
+//                        zhugeTrack("wx");
+//                        break;
+//                    case Type.LOGIN_SINA:
+////                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
+//                        zhugeTrack("sina");
+//                        break;
+//                    default:
+////                        MobclickAgent.onProfileSignIn(model.getCustId());
+//                        zhugeTrack("phonenum");
+//                        break;
+//                }
+
+//                MobclickAgent.onEvent(aty, "login");
+                //单独记录随手晒缓存记录，防止刷新
+                if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
+                    EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
+                    List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
+//                    ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
+                    entityCache.putListEntity(showCaches);
+                } else {
+//                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
+                }
+
+                Session.setUserIsLogin(true);
+                Session.setUserId(model.getCustId());
+                Session.setUserPicUrl(model.getCustImg());
+                Session.setSessionKey(model.getToken());
+                Session.setUserPhone(model.getCustPhone());
+                Session.setUserLocalUrl(model.getCustQr());
+                Session.setUserName(model.getCustNname());
+                Session.setUser_signatrue(model.getCustSignature());
+                Session.setUser_desc(model.getCustDesc());
+                Session.setCityCode(model.getCityCode());
+                Session.setCustPoints(model.getCustPoints());
+                Session.setUserLevel(model.getCustLevel());
+                Session.setCustRole(model.getCustRole());
+                if (TextUtils.equals("0", model.getCustSex())) {
+                    Session.setUser_sex("女");
+                } else {
+                    Session.setUser_sex("男");
+                }
+                Session.setUser_area(model.getCustLocation());
+                if (Type.HAD_SET_PW == model.getIsPayPassword()) {
+                    //设置支付密码
+                    Session.setUserSetpaypw(true);
+                } else {
+                    Session.setUserSetpaypw(false);
+                }
+                if (Type.OPEN_EASY_PAY == model.getSmallNopass()) {
+                    //开启免密支付
+                    Session.setIsOpenGesture(true);
+                } else {
+                    Session.setIsOpenGesture(false);
+                }
+                if (model.getIsPwdExist() == 1) {
+                    //设置了登录密码
+                    Session.setUserLoginPw(true);
+                } else {
+                    Session.setUserLoginPw(false);
+                }
+
+                if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
+//                    try {
+////                        TableUtils.dropTable(DBHelper.getHelper(mContext).getConnectionSource(), FriendInformationBean.class, true);
+////                        TableUtils.createTable(DBHelper.getHelper(mContext).getConnectionSource(), FriendInformationBean.class);
+//                    } catch (SQLException e) {
+//                        e.printStackTrace();
+//                    }
+
+                    EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
+                    entityCache.clean();
+                }
+
+                Set<String> sset = new HashSet<String>();
+                sset.add(Constants.Lottery_Tag);
+
+                // 调用 Handler 来异步设置别名
+                mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
+
+//                loadRewardGiftList();//加载转发打赏礼物列表
+
+                if (getIntent().getBooleanExtra("isFromSplash", false)) {
+                    skipActivity(aty, MainActivity.class);
+                } else if (loginType == Type.TYPE_LOGIN_WEB) {
+                    //从圈子过来跳转登录的
+//                    JsEvent.callJsEvent(getLoginWebResultData(), true);
+                    finish();
+                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
+                    //从向导页面过来
+
+                    skipActivity(aty, FollowCircle.class);
+                    finish();
+                } else {
+                    BaseEvent event = new BaseEvent();
+//                    event.key = LOGIN_IN_SUCCESS;
+                    EventBus.getDefault().post(event);
+
+                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
+
+                    setResult(IntentCode.Login.LOGIN_RESULT_CODE);
+                    skipActivity(aty, MainActivity.class);
+                    finish();
+                }
+
+
+//                loginYunXin(model.getCustId(), model.getCustId());
+
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IntentCode.Login.LOGIN_REQUEST_CODE) {
+            if (resultCode == IntentCode.Register.REGISTER_RESULT_CODE) {
+                //注册成功(包括从忘记密码中进入)
+                if (null != data) {
+                    UserInfoBean model = (UserInfoBean) data.getSerializableExtra("111");
+                    if (null != model) {
+                        updateView(model);
+                        finish();
+                        Log.e("", "");
+                    }
+                }
+            }
+//            else if (resultCode == IntentCode.Register.REGISTER_RESULT_ONLY_CODE) {
+//                //或者直接手机号注册
+//
+//            }
+        }
+    }
+
     public boolean isFastClick(long timeMillis) {
         long time = System.currentTimeMillis();
         Log.d("yeying", "time " + time);
@@ -666,30 +701,6 @@ public class LoginActivity extends BaseActivity {
         lastClickTime = time;
         return false;
     }
-
-
-    private static final int MSG_SET_ALIAS = 1001;
-    private final Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            Set<String> sset = new HashSet<String>();
-            sset.add(Constants.Lottery_Tag);
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case MSG_SET_ALIAS:
-                    Log.d(TAG, "Set alias in handler.");
-                    // 调用 JPush 接口来设置别名。
-//                    JPushInterface.setAliasAndTags(getApplicationContext(),
-//                            (String) msg.obj,
-//                            sset,
-//                            mAliasCallback);
-                    break;
-                default:
-                    Log.i(TAG, "Unhandled msg - " + msg.what);
-            }
-        }
-    };
 
 
 //    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
