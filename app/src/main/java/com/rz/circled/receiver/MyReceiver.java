@@ -7,19 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.rz.circled.BuildConfig;
-import com.rz.circled.constants.JPushTypeConstants;
-import com.rz.circled.db.dao.SystemInformationDao;
-import com.rz.circled.db.model.SystemInformation;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.NewsJumpHelper;
-import com.rz.circled.modle.MyPushInfo;
-import com.rz.circled.ui.activity.MainActivity;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.httpapi.bean.NewsBean;
 
@@ -37,6 +26,40 @@ import cn.jpush.android.api.JPushInterface;
 
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JPush";
+
+    // 打印所有的 intent extra 数据
+    private static String printBundle(Bundle bundle) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : bundle.keySet()) {
+            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+            } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
+                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+            } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
+                if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
+                    Log.i(TAG, "This message has no Extra data");
+                    continue;
+                }
+
+                try {
+                    JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+                    Iterator<String> it = json.keys();
+
+                    while (it.hasNext()) {
+                        String myKey = it.next().toString();
+                        sb.append("\nkey:" + key + ", value: [" +
+                                myKey + " - " + json.optString(myKey) + "]");
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Get message extra JSON error!");
+                }
+
+            } else {
+                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+            }
+        }
+        return sb.toString();
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -81,39 +104,5 @@ public class MyReceiver extends BroadcastReceiver {
                 Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
             }
         }
-    }
-
-    // 打印所有的 intent extra 数据
-    private static String printBundle(Bundle bundle) {
-        StringBuilder sb = new StringBuilder();
-        for (String key : bundle.keySet()) {
-            if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
-            } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
-            } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
-                if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
-                    Log.i(TAG, "This message has no Extra data");
-                    continue;
-                }
-
-                try {
-                    JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
-                    Iterator<String> it = json.keys();
-
-                    while (it.hasNext()) {
-                        String myKey = it.next().toString();
-                        sb.append("\nkey:" + key + ", value: [" +
-                                myKey + " - " + json.optString(myKey) + "]");
-                    }
-                } catch (JSONException e) {
-                    Log.e(TAG, "Get message extra JSON error!");
-                }
-
-            } else {
-                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
-            }
-        }
-        return sb.toString();
     }
 }

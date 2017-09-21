@@ -29,7 +29,7 @@ import com.rz.common.constant.IntentCode;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon;
 import com.yryz.yunxinim.uikit.uinfo.UserInfoHelper;
@@ -44,20 +44,18 @@ import butterknife.BindView;
  */
 
 public class ShareFriendsListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+    public static final int INVITE_REQUEST_CODE = 117;
     private static final String EXTRA_DATA_ITEM_DATA = "EXTRA_DATA_ITEM_DATA";
-
     /**
      * 内容展示
      */
     @BindView(R.id.contact_list_view)
     ListView mListview;
-
     /**
      * 搜索输入
      */
     @BindView(R.id.team_search_edittext)
     ClearableEditTextWithIcon searchEditText;
-
     /**
      * 右侧字母导航栏
      */
@@ -74,18 +72,14 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
      */
     @BindView(R.id.layout_none)
     View mLayoutNone;
-
     CharacterParser finder = CharacterParser.getInstance();
-
     ContactsAdp mContactsAdp;
-
-    public static final int INVITE_REQUEST_CODE = 117;
     /**
      * 当前类型所有数据集合以及搜索的过滤集合
      */
-    private List<BaseInfo> searchFriends = new ArrayList<>();
+    private List<FriendInformationBean> searchFriends = new ArrayList<>();
 
-    private List<BaseInfo> mSaveAllFriends = new ArrayList<>();
+    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
     private FriendPresenter1 presenter;
 
     public static final void start(Context context, ShareModel shareModel) {
@@ -115,7 +109,7 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
 //            setTitleText("分享到悠然聊天", null);
 //        }
         setTitleText(getString(R.string.select_firend));
-        mContactsAdp = new ContactsAdp(aty, R.layout.adp_contacts);
+        mContactsAdp = new ContactsAdp(aty, mSaveAllFriends, R.layout.adp_contacts);
         mListview.setAdapter(mContactsAdp);
         mListview.setOnItemClickListener(this);
 
@@ -177,7 +171,7 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
          * 拉取最新的好友列表并同步到最新，并且只有好友列表才有初次loading
          */
         Log.e(TAG, "reloadWhenDataChanged: share");
-        ((FriendPresenter1) presenter).getCacheFriends(false);
+        presenter.getCacheFriends(false);
     }
 
     private void matchSearchResult(String str) {
@@ -200,7 +194,7 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
         mLayoutNone.setVisibility(View.GONE);
 
         mSaveAllFriends.clear();
-        mSaveAllFriends.addAll((List<BaseInfo>) t);
+        mSaveAllFriends.addAll((List<FriendInformationBean>) t);
         mContactsAdp.notifyDataSetChanged();
     }
 
@@ -216,7 +210,11 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
             return;
         }
 
-        BaseInfo item = (BaseInfo) mContactsAdp.getItem(i);
+<<<<<<< HEAD
+        FriendInformationBean item = mContactsAdp.getItem(i);
+=======
+        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i);
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
         if (item == null) {
             return;
         }

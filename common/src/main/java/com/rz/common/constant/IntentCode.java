@@ -7,6 +7,9 @@ package com.rz.common.constant;
  */
 public class IntentCode {
 
+    public static final int PAGE_CODE_BANNER = 10001;
+    public static final int PAGE_ADDFRIEND = 100009;
+
     /**
      * 通用code
      */
@@ -61,6 +64,8 @@ public class IntentCode {
     public static class MineFrg {
         //请求code
         public static final int MINE_REQUEST_CODE = 800;
+        //Q去认证页面
+        public static final int TO_PROVE_INFO = 801;
     }
 
     /**
@@ -78,9 +83,6 @@ public class IntentCode {
         //返回code
         public static final int NOTICE_RESULT_CODE = 9001;
     }
-
-    public static final int PAGE_CODE_BANNER = 10001;
-    public static final int PAGE_ADDFRIEND = 100009;
 
     /**
      * 充值

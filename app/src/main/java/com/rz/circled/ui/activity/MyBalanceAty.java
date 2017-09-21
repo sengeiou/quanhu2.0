@@ -65,8 +65,8 @@ public class MyBalanceAty extends BaseActivity {
     @OnClick(R.id.id_submit_btn)
     public void onClick() {
         //充值
-//        Intent intent = new Intent(aty, RechargeMoneyAty.class);
-//        startActivityForResult(intent, IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE);
+        Intent intent = new Intent(aty, RechargeMoneyAty.class);
+        startActivityForResult(intent, IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class MyBalanceAty extends BaseActivity {
         if (requestCode == IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE) {
             if (resultCode == IntentCode.RechargeMoney.RECHARGE_RESULT_CODE) {
                 //重新获取余额
-//                ((PayPresenter) presenter).getUserAccount(Session.getUserId(), "");
+                mPresenter.getUserAccount(Session.getUserId(), "");
             }
         }
     }

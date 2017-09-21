@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_gray_common"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44">
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:text="@string/possible_recharge"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/font_44" />
+
+        <TextView
+            android:id="@+id/id_tv_score"
+            style="@style/DefaultTvStyle"
+            android:layout_marginLeft="@dimen/px30"
+            android:textColor="@color/color_F5BB1E"
+            android:textSize="@dimen/font_48" />
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:layout_marginLeft="@dimen/px20"
+            android:text="@string/youranbi"
+            android:textColor="@color/font_gray_s"
+            android:textSize="@dimen/font_40" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px144"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44">
+
+        <TextView
+            style="@style/DefaultTvStyle"
+            android:paddingRight="@dimen/px30"
+            android:text="@string/consume_account"
+            android:textColor="@color/font_gray_l"
+            android:textSize="@dimen/px44" />
+
+        <EditText
+            android:id="@+id/id_et_recharge"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:hint="@string/youranbi_count"
+            android:inputType="number"
+            android:textColorHint="@color/font_gray_a"
+            android:textSize="@dimen/font_40" />
+
+        <ImageView
+            android:id="@+id/id_clear_recharge_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/px30"
+            android:src="@drawable/ic_clear"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px120"
+        android:layout_marginTop="@dimen/px160"
+        android:background="@drawable/shape_bg_blue_sel"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:padding="@dimen/px32"
+        android:text="@string/confirm_change"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_50" />
+
+</LinearLayout>

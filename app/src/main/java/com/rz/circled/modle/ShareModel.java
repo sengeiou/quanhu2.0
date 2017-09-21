@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 
 public class ShareModel implements Serializable {
+    public int userAvaterRes;
     private String appId;
     private String title;
     private String desc;
@@ -23,80 +24,19 @@ public class ShareModel implements Serializable {
     //圈子id
     private String clubId;
     private int defaultPic;
-    private boolean hideReport;
+    private boolean showReport;
     private int type;
     private int mediaType; //2，音频，3，视频  //1为文字2为图片3为视频
     private boolean isCircle; //是否是圈子
-
     private String userId;//分享对象id
     private String userAvater;//分享对象头像
-    public int userAvaterRes;
     private String userName;//分享对象名称
     private SessionTypeEnum typeEnum;//分享对象类型
-
-    public int fromPage;
-
+    private int fromPage;
 
     public ShareModel() {
 
     }
-
-    /**
-     * @param title      标题
-     * @param desc       描述
-     * @param url        作品连接
-     * @param tumb       缩略图
-     * @param id         作品id或者圈子id
-     * @param defaultPic 默认图片
-     * @param hideReport 是否显示举报
-     * @param type       //0 圈子 1 作品 2我的
-     * @param mediaType  //1，音频，2，视频
-     */
-    @Deprecated
-    public ShareModel(String title, String desc, String url, String tumb, String id, int defaultPic, boolean hideReport, int type, int mediaType) {
-        this.title = title;
-        this.desc = desc;
-        this.url = url;
-        this.tumb = tumb;
-        this.id = id;
-        this.defaultPic = defaultPic;
-        this.hideReport = hideReport;
-        this.type = type;
-        this.mediaType = mediaType;
-    }
-
-    @Deprecated
-    public ShareModel(String title, String desc, String url, String tumb, String id, String clubId, boolean isCircle, int defaultPic, boolean hideReport, int type, int mediaType) {
-        this.title = title;
-        this.desc = desc;
-        this.url = url;
-        this.tumb = tumb;
-        this.id = id;
-        this.clubId = clubId;
-        this.isCircle = isCircle;
-        this.defaultPic = defaultPic;
-        this.hideReport = hideReport;
-        this.type = type;
-        this.mediaType = mediaType;
-    }
-
-    @Deprecated
-    public ShareModel(String title, String desc, String url, String tumb, String id, int defaultPic, boolean hideReport, int type, int mediaType, String userId, String userAvater, String userName, SessionTypeEnum typeEnum) {
-        this.title = title;
-        this.desc = desc;
-        this.url = url;
-        this.tumb = tumb;
-        this.id = id;
-        this.defaultPic = defaultPic;
-        this.hideReport = hideReport;
-        this.type = type;
-        this.mediaType = mediaType;
-        this.userId = userId;
-        this.userAvater = userAvater;
-        this.userName = userName;
-        this.typeEnum = typeEnum;
-    }
-
 
     /**
      * 构造方法---->添加好友、首页banner、通知
@@ -208,12 +148,29 @@ public class ShareModel implements Serializable {
         this.defaultPic = defaultPic;
     }
 
-    public boolean isHideReport() {
-        return hideReport;
+    public boolean isShowReport() {
+        return showReport;
+<<<<<<< HEAD
     }
 
-    public void setHideReport(boolean hideReport) {
-        this.hideReport = hideReport;
+    public void setShowReport(boolean showReport) {
+        this.showReport = showReport;
+    }
+
+=======
+    }
+
+    public void setShowReport(boolean showReport) {
+        this.showReport = showReport;
+    }
+
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+    public int getFromPage() {
+        return fromPage;
+    }
+
+    public void setFromPage(int fromPage) {
+        this.fromPage = fromPage;
     }
 
     public int getType() {
@@ -274,7 +231,6 @@ public class ShareModel implements Serializable {
                 ", id='" + id + '\'' +
                 ", clubId='" + clubId + '\'' +
                 ", defaultPic=" + defaultPic +
-                ", hideReport=" + hideReport +
                 ", type=" + type +
                 ", mediaType=" + mediaType +
                 ", isCircle=" + isCircle +

@@ -72,6 +72,7 @@ import com.rz.circled.js.OpenAppHandler;
 import com.rz.circled.js.OpenCircleListHandler;
 import com.rz.circled.js.OpenUrlHandler;
 import com.rz.circled.js.PasteBoardHandler;
+import com.rz.circled.js.PayOrderHandler;
 import com.rz.circled.js.PlayVideoHandler;
 import com.rz.circled.js.RechargeHandler;
 import com.rz.circled.js.ReportHandler;
@@ -86,6 +87,7 @@ import com.rz.circled.js.TransferHandler;
 import com.rz.circled.js.UploadAudioHandler;
 import com.rz.circled.js.UploadPicHandler;
 import com.rz.circled.js.UploadVideoHandler;
+import com.rz.circled.pay.DesUtils;
 import com.rz.circled.ui.activity.MainActivity;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
@@ -267,6 +269,9 @@ public class QHApplication extends BaseApplication {
         RegisterList.registerServerHandlerClass(SaveImageHandler.class);
         //跳转
         RegisterList.registerServerHandlerClass(JumpUrlHandler.class);
+        //支付
+        RegisterList.registerServerHandlerClass(PayOrderHandler.class);
+
     }
 
     public void configExo() {
@@ -322,12 +327,10 @@ public class QHApplication extends BaseApplication {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         setLoggingInterceptor(builder);
         setCookieJar(builder);
-        setHeaderInterceptor(this, builder);
-        //setParamsInterceptor(builder);
+        setHeaderInterceptor(this, builder, DesUtils.encrypt(Session.getNowAct() + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", ""));
         setCacheDirectory(builder);
         setCacheInterceptor(builder);
         setTimeout(builder);
-        //setCertificates(builder,context);
         Http.initClient(builder.build(), BuildConfig.BaseUrl);
     }
 
@@ -349,7 +352,7 @@ public class QHApplication extends BaseApplication {
      *
      * @param builder
      */
-    private static void setHeaderInterceptor(final Context mContent, OkHttpClient.Builder builder) {
+    private static void setHeaderInterceptor(final Context mContent, OkHttpClient.Builder builder, final String sign) {
         Log.d("token", "setHeaderInterceptor");
         if (builder != null) {
             Interceptor headerInterceptor = new Interceptor() {
@@ -358,7 +361,7 @@ public class QHApplication extends BaseApplication {
                     Request originalRequest = chain.request();
                     Request.Builder requestBuilder = originalRequest.newBuilder()
                             .header("devType", "2")
-                            .header("sign", "1");
+                            .header("sign", sign);
                     Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey());
                     if (!TextUtils.isEmpty(Session.getSessionKey())) {
                         requestBuilder.header("token", Session.getSessionKey());

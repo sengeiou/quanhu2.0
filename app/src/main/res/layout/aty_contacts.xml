@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/color_F8F8F8"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F8F8F8"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/id_search_key_rela2"
         layout="@layout/com_search_bar"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/id_search_key_rela1"
@@ -28,7 +28,7 @@
             android:layout_height="16dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/search_key_icon"/>
+            android:src="@drawable/search_key_icon" />
 
         <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
             android:id="@+id/team_search_edittext"
@@ -44,12 +44,12 @@
             android:lines="1"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="@color/color_000000"
-            android:textColorHint="@color/color_666666"
-            android:textSize="@dimen/font_44"/>
+            android:textColor="@color/color_aaa"
+            android:textColorHint="@color/color_aaa"
+            android:textSize="@dimen/font_40" />
     </RelativeLayout>
 
-    <include layout="@layout/view_letter_guide"/>
+    <include layout="@layout/view_letter_guide" />
 
     <!--<View style="@style/DefaultHLineStyle" />-->
 
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/select"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/font_46"/>
+                android:textSize="@dimen/font_46" />
 
             <TextView
                 android:id="@+id/tvSelectNum"
@@ -86,14 +86,14 @@
                 android:layout_marginRight="@dimen/px26"
                 android:text="0"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/px58"/>
+                android:textSize="@dimen/px58" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/person"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/font_46"/>
+                android:textSize="@dimen/font_46" />
         </LinearLayout>
 
         <Button
@@ -106,6 +106,6 @@
             android:text="@string/press"
             android:textColor="@color/white"
             android:textSize="@dimen/font_46"
-            android:visibility="visible"/>
+            android:visibility="visible" />
     </LinearLayout>
 </LinearLayout>

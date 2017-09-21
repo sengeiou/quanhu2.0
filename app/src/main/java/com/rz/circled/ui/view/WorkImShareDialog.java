@@ -92,7 +92,7 @@ public class WorkImShareDialog extends Dialog {
         if (null == mData)
             return;
 
-        if (mData.fromPage == IntentCode.ShowShare.REQUEST_CODE_SHOW_SHARE) {
+        if (mData.getFromPage() == IntentCode.ShowShare.REQUEST_CODE_SHOW_SHARE) {
             shareImgWorksType.setVisibility(mData.getMediaType() == 3 ? View.VISIBLE : View.GONE);
         }
 
@@ -140,7 +140,7 @@ public class WorkImShareDialog extends Dialog {
                 JSONObject attachmentData = new JSONObject();
                 CustomAttachment attachment;
                 String pushContent;
-                if (mData.fromPage == IntentCode.ShowShare.REQUEST_CODE_SHOW_SHARE) {
+                if (mData.getFromPage() == IntentCode.ShowShare.REQUEST_CODE_SHOW_SHARE) {
 
                     attachmentData.put(ShowAttachment.KEY_DESC, mData.getTitle());
                     attachmentData.put(ShowAttachment.KEY_IMG_URL, mData.getTumb());

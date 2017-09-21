@@ -12,46 +12,42 @@ import android.text.TextUtils;
 
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.utils.NetUtils;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BackGroundService extends IntentService {
 
+    private static final String[] PHONES_PROJECTION = new String[]{
+            Phone.DISPLAY_NAME, Phone.NUMBER, Photo.PHOTO_ID, Phone.CONTACT_ID};
+    /**
+     * 联系人显示名称
+     **/
+    private static final int PHONES_DISPLAY_NAME_INDEX = 0;
+    /**
+     * 电话号码
+     **/
+    private static final int PHONES_NUMBER_INDEX = 1;
+    /**
+     * 头像ID
+     **/
+    private static final int PHONES_PHOTO_ID_INDEX = 2;
+    /**
+     * 联系人的ID
+     **/
+    private static final int PHONES_CONTACT_ID_INDEX = 3;
     /**
      * 验证码时间
      */
     public static long time_code = 0;
-
     public static MyCountCode countCode;
+    private static List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
+    //处理缓存
+    private static EntityCache<FriendInformationBean> mBaseInfoCache;
 
     public BackGroundService() {
         super("BackGroundService");
-    }
-
-    @Override
-    protected void onHandleIntent(Intent data) {
-    }
-
-    /**
-     * 倒计时类
-     */
-    public static class MyCountCode extends CountDownTimer {
-
-        public MyCountCode(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            time_code = millisUntilFinished;
-        }
-
-        @Override
-        public void onFinish() {
-            time_code = 0;
-        }
     }
 
     /**
@@ -69,6 +65,8 @@ public class BackGroundService extends IntentService {
         countCode.start();
     }
 
+<<<<<<< HEAD
+=======
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -77,7 +75,7 @@ public class BackGroundService extends IntentService {
         }
     }
 
-    private static List<BaseInfo> mSaveAllFriends = new ArrayList<>();
+    private static List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
 
 
     private static final String[] PHONES_PROJECTION = new String[]{
@@ -101,14 +99,15 @@ public class BackGroundService extends IntentService {
     private static final int PHONES_CONTACT_ID_INDEX = 3;
 
     //处理缓存
-    private static EntityCache<BaseInfo> mBaseInfoCache;
+    private static EntityCache<FriendInformationBean> mBaseInfoCache;
 
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     /**
      * 得到手机通讯录联系人信息
      **/
     public static void getPhoneContacts(Context mContext) {
 
-        mBaseInfoCache = new EntityCache<BaseInfo>(mContext, BaseInfo.class);
+        mBaseInfoCache = new EntityCache<FriendInformationBean>(mContext, FriendInformationBean.class);
         ContentResolver resolver = mContext.getContentResolver();
         // 获取手机联系人
         Cursor phoneCursor = resolver.query(Phone.CONTENT_URI, PHONES_PROJECTION, null, null, null);
@@ -122,10 +121,10 @@ public class BackGroundService extends IntentService {
                 if (TextUtils.isEmpty(phoneNumber))
                     continue;
 
-                BaseInfo mBaseInfo = new BaseInfo();
-                mBaseInfo.setCustPhone(phoneNumber);
+                FriendInformationBean mFriendBean = new FriendInformationBean();
+                mFriendBean.setCustPhone(phoneNumber);
 
-                mSaveAllFriends.add(mBaseInfo);
+                mSaveAllFriends.add(mFriendBean);
 
                 //得到联系人名称
 //                String contactName = phoneCursor.getString(PHONES_DISPLAY_NAME_INDEX);
@@ -169,6 +168,38 @@ public class BackGroundService extends IntentService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    protected void onHandleIntent(Intent data) {
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != countCode) {
+            countCode.cancel();
+        }
+    }
+
+    /**
+     * 倒计时类
+     */
+    public static class MyCountCode extends CountDownTimer {
+
+        public MyCountCode(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            time_code = millisUntilFinished;
+        }
+
+        @Override
+        public void onFinish() {
+            time_code = 0;
         }
     }
 }

@@ -20,9 +20,13 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
-import com.rz.httpapi.bean.BaseInfo;
+<<<<<<< HEAD
+=======
+import com.rz.httpapi.bean.FriendInformationBean;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import com.rz.httpapi.bean.CircleMemberModel;
 import com.rz.httpapi.bean.ClubStats;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.OpusData;
 import com.rz.httpapi.bean.OpusTag;
 import com.rz.httpapi.bean.TransferDetail;
@@ -37,19 +41,16 @@ import retrofit2.Response;
 
 public class OpusGeneralPresenter extends GeneralPresenter<List<OpusData>> {
 
+    public String categroy;
     EntityCache<OpusData> opusDataEntityCache;
-    private IViewController iViewController;
-    private Context mContext;
-    private ApiService mCircleService;
-
     int actionCode = 0;
     int type = 1;
     String authorid = null;
-    public String categroy;
     String tag;
-
     int pageCount = 0;
-
+    private IViewController iViewController;
+    private Context mContext;
+    private ApiService mCircleService;
     private List<OpusData> currentData = new ArrayList<>();
 
     private CharacterParser mCharacterParser;
@@ -549,17 +550,17 @@ public class OpusGeneralPresenter extends GeneralPresenter<List<OpusData>> {
                             iViewController.onLoadingStatus(CommonCode.General.DATA_EMPTY);
                         }
 
-                        List<BaseInfo> friends = new ArrayList<>();
+                        List<FriendInformationBean> friends = new ArrayList<>();
                         for (int i = 0; i < opusDatas.size(); i++) {
                             CircleMemberModel item = opusDatas.get(i);
 
                             if (null != item && null != item.getUser() && !TextUtils.isEmpty(item.getUser().getCustId())) {
-                                BaseInfo baseInfo = new BaseInfo();
-                                baseInfo.setCustNname(item.getUser().getCustNname());
-                                baseInfo.setCustId(item.getUser().getCustId());
-                                baseInfo.setCustImg(item.getUser().getCustImg());
-                                baseInfo.setNameNotes(item.getUser().getCustNameNote());
-                                friends.add(baseInfo);
+                                FriendInformationBean friendBean = new FriendInformationBean();
+                                friendBean.setCustNname(item.getUser().getCustNname());
+                                friendBean.setCustId(item.getUser().getCustId());
+                                friendBean.setCustImg(item.getUser().getCustImg());
+                                friendBean.setNameNotes(item.getUser().getCustNameNote());
+                                friends.add(friendBean);
                             }
                         }
 
@@ -587,9 +588,9 @@ public class OpusGeneralPresenter extends GeneralPresenter<List<OpusData>> {
      *
      * @param friendList
      */
-    public void changeLetter(List<BaseInfo> friendList) {
+    public void changeLetter(List<FriendInformationBean> friendList) {
         for (int i = 0; i < friendList.size(); i++) {
-            BaseInfo model = friendList.get(i);
+            FriendInformationBean model = friendList.get(i);
             setModelFirstLetter(model);
         }
         Collections.sort(friendList, mPyComparator);
@@ -600,7 +601,7 @@ public class OpusGeneralPresenter extends GeneralPresenter<List<OpusData>> {
      *
      * @param model
      */
-    public void setModelFirstLetter(BaseInfo model) {
+    public void setModelFirstLetter(FriendInformationBean model) {
         String mFirstLetter;
         if (!StringUtils.isEmpty(model.getCustNname())) {
             mFirstLetter = mCharacterParser.getSelling(model.getCustNname());

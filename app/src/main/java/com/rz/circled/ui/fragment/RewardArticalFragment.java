@@ -11,17 +11,14 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MineRewardAdapter;
-import com.rz.circled.adapter.RewardAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
-import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.MineRewardBean;
-import com.rz.httpapi.bean.MyRewardBean;
 import com.rz.httpapi.bean.RewardStatBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,15 +36,13 @@ import butterknife.BindView;
 
 public class RewardArticalFragment extends BaseFragment {
 
+    protected IPresenter presenter;
     @BindView(R.id.refresh)
     SwipyRefreshLayout mRefresh;
     @BindView(R.id.lv_search_content)
     ListView lvReward;
-
     private MineRewardAdapter rewardAdapter;
     private List<MineRewardBean> rewardBeanList = new ArrayList<>();
-    protected IPresenter presenter;
-
     private View headView;
     private TextView createTxt;
     private TextView answerTxt;
@@ -86,8 +81,11 @@ public class RewardArticalFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        initRefresh();
 
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
+        initRefresh();
         ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,null);
 
     }
@@ -124,7 +122,6 @@ public class RewardArticalFragment extends BaseFragment {
                 rewardAdapter.setData(rewardBeanList);
                 rewardAdapter.notifyDataSetChanged();
 
-
             } else {
                 if (!loadMore) {
                     rewardBeanList.clear();
@@ -154,5 +151,13 @@ public class RewardArticalFragment extends BaseFragment {
             topTxt.setText("共"+model.getTotalRewardAmount()+"条内容");
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
 
 }

@@ -16,25 +16,18 @@
 
         <TextView
             style="@style/DefaultTvStyle"
-            android:paddingBottom="@dimen/px36"
-            android:paddingTop="@dimen/px36"
-            android:text="@string/safe_to_input" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px15"
-            android:layout_marginRight="@dimen/px15"
-            android:background="@color/color_f5f5f5" />
+            android:layout_marginBottom="@dimen/px78"
+            android:layout_marginTop="@dimen/px102"
+            android:text="@string/safe_to_input"
+            android:textSize="@dimen/font_46" />
 
         <com.rz.circled.widget.password.GridPasswordView
             android:id="@+id/id_check_pay_pw"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px130"
-            android:layout_marginBottom="@dimen/px74"
+            android:layout_marginBottom="@dimen/px120"
             android:layout_marginLeft="@dimen/px68"
             android:layout_marginRight="@dimen/px68"
-            android:layout_marginTop="@dimen/px74"
             android:gravity="center_vertical"
             app:gpvGridColor="#ffffff"
             app:gpvLineColor="#cccccc"
@@ -54,7 +47,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_pop_gray_btn"
+        android:background="@drawable/shape_round_bottom_gray"
         android:orientation="horizontal">
 
         <TextView
@@ -76,7 +69,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:padding="@dimen/px36"
-            android:text="@string/confirm" />
+            android:text="@string/confirm"
+            android:textColor="@color/font_color_blue" />
 
     </LinearLayout>
 </LinearLayout>

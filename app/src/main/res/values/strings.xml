@@ -147,6 +147,7 @@
     <string name="mine_my_account">我的账户</string>
     <string name="consumer_account">消费账户</string>
     <string name="account_profit">奖励值</string>
+    <string name="income_account">收益账户</string>
     <string name="redbag_record">红包记录</string>
     <string name="bank_card">银行卡</string>
     <string name="cost_detail_v3">消费明细</string>
@@ -159,6 +160,7 @@
     <string name="tixian_yrb">您暂无可提现悠然币</string>
     <string name="yizhi">悠然一指</string>
     <string name="account_balance">账户余额</string>
+    <string name="my_income_money">账户余额：</string>
     <string name="youran_currency">悠然币</string>
     <string name="transfer_cost_account">兑换到消费账户</string>
     <string name="draw_title">提现</string>
@@ -351,9 +353,11 @@
     <string name="modify_success">修改成功</string>
     <string name="bind_fail">绑定失败</string>
     <string name="bind_success">绑定成功</string>
+    <string name="bind_cancel">绑定取消</string>
 
     <string name="choose_gift">请选择要打赏的礼物</string>
-    <string name="no_money">余额不足，请充值</string>
+    <string name="no_money">余额不足，请先充值</string>
+    <string name="to_recharge">去充值</string>
     <string name="pay_amount">支付金额</string>
     <string name="dashang_for">打赏给</string>
     <string name="pay_count">支付总额</string>
@@ -375,7 +379,49 @@
     <string name="forget_password">忘记密码</string>
     <string name="reset_password">重设密码</string>
     <string name="reset_title">重设密码后可用手机号登录</string>
-
+    <string name="auth_cardmen">持卡人</string>
+    <string name="auth_true_name">输入真实姓名</string>
+    <string name="auth_card_num">银行卡号</string>
+    <string name="is_setting">正在设置</string>
+    <string name="withdraw_fail">提现失败</string>
+    <string name="name_or_card_cannot_null">姓名或者卡号不能为空</string>
+    <string name="confirm_card_sure">请确认银行卡号是否正确</string>
+    <string name="duihuan_xiaofei">兑换到消费账户</string>
+    <string name="exchange_error">兑换错误</string>
+    <string name="pls_exchange_yrb">请输入兑换悠然币</string>
+    <string name="no_ryb">不能超过可兑换悠然币</string>
+    <string name="exchange_sucess">兑换成功</string>
+    <string name="enought_yrb">没有足够的兑换悠然币</string>
+    <string name="confirm_change">确认兑换</string>
+    <string name="consume_account">兑换至消费账户:</string>
+    <string name="youranbi_count">请输入兑换悠然币数量</string>
+    <string name="possible_recharge">可兑换:</string>
+    <string name="duihuan">兑换</string>
+    <string name="tixian">提现</string>
+    <string name="anquan">安全</string>
+    <string name="mei_bangding">您还未绑定任何银行卡</string>
+    <string name="bangka">去绑卡</string>
+    <string name="shouqu">每笔提现银行收取0元服务费</string>
+    <string name="unit_shou">每笔提现银行收取</string>
+    <string name="fuwufei">服务费；</string>
+    <string name="tixian_money">请输入提现金额</string>
+    <string name="tixian_no">提现金额不足</string>
+    <string name="atmost">单笔兑换至少5元</string>
+    <string name="xiane">单笔兑换限额1000元</string>
+    <string name="fanwei">提现金额超出可提现范围</string>
+    <string name="possible_recharge_score">可提现：</string>
+    <string name="withdraw_money">提现金额</string>
+    <string name="excharge_rate">(1悠然币=1元)</string>
+    <string name="input_recharge">请输入提现金额</string>
+    <string name="withdraw_note">如因用户输入持卡人姓名、银行卡号错误或持卡人姓名和银行卡号不匹配等造成提现不成功，提现金额将退还到用户悠然账户，手续费照常扣除。</string>
+    <string name="withdraw_tip1">提现金额范围5-1000悠然币；</string>
+    <string name="withdraw_tip2">每笔提现银行收取2元服务费</string>
+    <string name="withdraw_tip3">平台于每日23：00到次日9：00进行系统维护，此时间段内暂不提供提现服务。</string>
+    <string name="withdraw_tip4">可供提现的银行卡参考</string>
+    <string name="confirm_recharge">确认提现</string>
+    <string name="had_know">知道了</string>
+    <string name="backcard_reference">&#160;&#160;&#160;&#160;鉴于银联代付（提现）暂不支持县、乡级的农村信用社等地方性金融机构的储蓄卡进行提现操作，建议用户使用全国性商业银行、股份制银行的储蓄卡提现。\n&#160;&#160;&#160;&#160;
+        可使用如下银行储蓄卡提现：中国工商银行/中国农业银行/中国银行/中国建设银行/交通银行/中国邮政储蓄银行/招商银行/浦发银行/中国光大银行/中信银行/平安银行/中国民生银行/华夏银行/广发银行/兴业银行。</string>
 
     <string name="exit_intr">退出会清除已上传的视频资源</string>
     <string name="look_again">再看看</string>
@@ -410,6 +456,7 @@
 
     <string name="contacts_search_keywords">关键字搜索</string>
     <string name="myfocus">我关注的</string>
+    <string name="follow_me">新的好友</string>
     <string name="friend">好友</string>
     <string name="new_friend">新的好友</string>
     <string name="phone_contacts">手机联系人</string>
@@ -425,7 +472,24 @@
     <string name="discuss_chat">讨论组</string>
     <string name="team_verification">群验证消息</string>
     <string name="black_name">黑名单</string>
+    <string name="search_quanhu_person">搜索圈乎用户</string>
     <string name="my_friends">我的好友</string>
+    <string name="one_key_firend">一键邀请好友</string>
+    <string name="wechat_qq">微信、微博、QQ</string>
+    <string name="add_friend_sweep">扫一扫</string>
+    <string name="sweep_introduce">扫描二维码名片</string>
+    <string name="phone_introduce">添加或邀请手机通讯录中的朋友</string>
+    <string name="contacts_permissiongs_run">圈乎要使用通讯录权限，否则app可能无法正常运行</string>
+    <string name="un_quanhu_user_invite_register">该用户还不是圈乎用户，是否邀请注册？</string>
+    <string name="at_add_download">有人@你，来玩圈乎吧！喜欢什么，就加入什么圈子。内容丰富，玩法多样！点击http://t.cn/RV2a6cS下载，我在圈乎等你哦！</string>
+    <string name="friends">已是好友</string>
+    <string name="no_contacts_permissions_hint">由于您的手机未能开启访问通讯录的权限\n此处无法获取您的手机联系人</string>
+    <string name="open_contacts_permissions_hint">请通过手机设置中\n开启“悠然一指”访问通讯录后重新尝试</string>
+    <string name="search_current_user">搜索当前页面下的用户</string>
+    <string name="already_friend">已是好友</string>
+    <string name="agree">同意</string>
+    <string name="waiting_agree">等待对方同意</string>
+    <string name="has_been_rejected">已经拒绝</string>
 
     <string name="choose_recharge_money">请选择充值金额</string>
     <string name="balance_current">当前余额为:</string>
@@ -666,6 +730,7 @@
     <string name="prove_info_success">申请成功</string>
     <string name="prove_info_fail">申请失败</string>
     <string name="business_license_info">营业执照副本资料</string>
+    <string name="pay_cancel">支付取消</string>
     <string name="prove_info_submit_success">资料提交成功</string>
     <string name="prove_info_verify_ing">系统审核中...</string>
     <string name="prove_identity_hint">当前认证身份：</string>
@@ -686,4 +751,7 @@
     <string name="my_coupons">我的卡券</string>
     <string name="tab_coupons">卡券</string>
     <string name="tab_award">奖品</string>
+
+    <string name="call_phone_authorization">请授权拨打电话！</string>
+    <string name="authorization_fail">授权失败！</string>
 </resources>

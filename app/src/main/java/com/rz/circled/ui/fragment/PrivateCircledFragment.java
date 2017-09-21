@@ -9,18 +9,17 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.adapter.MyPagerAdapter;
+import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
-import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.api.ApiPGService;
@@ -30,7 +29,6 @@ import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.GroupBannerBean;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 
 import org.greenrobot.eventbus.EventBus;
@@ -54,7 +52,8 @@ import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
  * Created by Gsm on 2017/8/29.
  */
 public class PrivateCircledFragment extends BaseFragment {
-
+    @BindView(R.id.scroll)
+    ScrollView scrollView;
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout refreshLayout;
     @BindView(R.id.viewpager)
@@ -186,42 +185,48 @@ public class PrivateCircledFragment extends BaseFragment {
 
     private void initViewpagerBanner(List<GroupBannerBean> pics) {
         List<View> imageViews = new ArrayList<>(); // 滑动的图片集合
-        for (final GroupBannerBean pic : pics) {
+        for (int i = 0; i < pics.size(); i++) {
+            final GroupBannerBean pic;
+            pic = pics.get(i);
             ImageView imageView = new ImageView(getContext());
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Glide.with(getContext()).load(pic.getPicUrl()).placeholder(R.mipmap.ic_default_banner).error(R.mipmap.ic_default_banner).into(imageView);
             imageViews.add(imageView);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
-                    startActivity(new Intent(mActivity, RecentContactActivity.class));
+                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+//                    startActivity(new Intent(mActivity, RecentContactActivity.class));
                 }
             });
         }
-        viewpager.setAdapter(new MyPagerAdapter(imageViews));
-        viewpager.stopAutoScroll();
-        viewpager.setBorderAnimation(false);
-        viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
-        });
+        viewpager.setAdapter(new MyCircleBannerPagerAdapter(imageViews));
+        viewpager.startAutoScroll();
+        viewpager.setBorderAnimation(true);
+        viewpager.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_CYCLE);
     }
 
-    private void initIndicatorBanner(List pics) {
+    private void initIndicatorBanner(final List pics) {
         CircleNavigator circleNavigator = new CircleNavigator(getContext());
         circleNavigator.setCircleCount(pics.size());
         circleNavigator.setCircleColor(getResources().getColor(R.color.color_main));
-        circleNavigator.setCircleClickListener(new CircleNavigator.OnCircleClickListener() {
+        indicatorBanner.setNavigator(circleNavigator);
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(int index) {
-                viewpager.setCurrentItem(index);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                indicatorBanner.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                indicatorBanner.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                indicatorBanner.onPageScrollStateChanged(state);
             }
         });
-        indicatorBanner.setNavigator(circleNavigator);
-        ViewPagerHelper.bind(indicatorBanner, viewpager);
     }
 
     private void initCreatedGroup() {

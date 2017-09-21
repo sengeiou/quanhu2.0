@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/id_share_layout"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/translucent"
-              android:gravity="bottom"
-              android:orientation="vertical">
+    android:id="@+id/id_share_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/translucent"
+    android:gravity="bottom"
+    android:orientation="vertical">
 
-    <View style="@style/DefaultHLineStyle"/>
+    <View style="@style/DefaultHLineStyle" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:singleLine="false"
             android:text="@string/share_to"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/font_46"/>
+            android:textSize="@dimen/font_46" />
 
         <TextView
             android:id="@+id/tv_desc"
@@ -36,11 +36,11 @@
             android:text="@string/share_note"
             android:textColor="@color/color_bfbfbf"
             android:textSize="@dimen/font_38"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <View
             style="@style/DefaultHLineStyle"
-            android:layout_marginTop="@dimen/px30"/>
+            android:layout_marginTop="@dimen/px30" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,17 +53,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px620"
                 android:paddingLeft="@dimen/px80"
-                android:paddingRight="@dimen/px80"/>
+                android:paddingRight="@dimen/px80" />
 
             <com.rz.circled.widget.CirclePageIndicator
                 android:id="@+id/cpi_share_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/px30"/>
+                android:padding="@dimen/px30" />
         </LinearLayout>
 
-        <View style="@style/DefaultHLineStyle"/>
+        <View style="@style/DefaultHLineStyle" />
 
         <Button
             android:id="@+id/id_share_cancel_btn"
@@ -73,7 +73,7 @@
             android:gravity="center"
             android:text="@string/cancel"
             android:textColor="@color/black"
-            android:textSize="@dimen/font_46"/>
+            android:textSize="@dimen/font_46" />
     </LinearLayout>
 
 </LinearLayout>

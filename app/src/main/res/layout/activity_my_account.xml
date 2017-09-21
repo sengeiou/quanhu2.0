@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                     style="@style/DefaultSvStyle"
-                                     android:background="@color/white">
+    style="@style/DefaultSvStyle"
+    android:background="@color/app_bg_gray_common">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:id="@+id/id_layout_cost_account"
@@ -21,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/r_balance"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
 
             <TextView
                 style="@style/DefaultTvStyle"
@@ -31,21 +30,19 @@
                 android:gravity="center_vertical"
                 android:text="@string/consumer_account"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_46"/>
+                android:textSize="@dimen/font_46" />
 
             <ImageView
                 android:layout_width="@dimen/px30"
                 android:layout_height="@dimen/px46"
                 android:background="@drawable/ic_right_arrow"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
         </LinearLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
+            style="@style/line_horizontal_gray_s"
             android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_E7E7E7"/>
+            android:layout_marginRight="@dimen/px30" />
 
         <LinearLayout
             android:id="@+id/id_layout_award_score"
@@ -58,8 +55,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/r_reward_score"
-                android:scaleType="fitXY"/>
+                android:background="@mipmap/ic_account_income"
+                android:scaleType="fitXY" />
 
             <TextView
                 style="@style/DefaultTvStyle"
@@ -67,25 +64,55 @@
                 android:layout_marginLeft="@dimen/px45"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/account_profit"
+                android:text="@string/income_account"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_46"/>
+                android:textSize="@dimen/font_46" />
 
             <ImageView
                 android:layout_width="@dimen/px30"
                 android:layout_height="@dimen/px46"
                 android:background="@drawable/ic_right_arrow"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px1"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_E7E7E7"/>
+        <View style="@style/line_horizontal_gray_s" />
 
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginTop="@dimen/px30" />
+
+        <LinearLayout
+            android:id="@+id/btn_bank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/comm_item_selector"
+            android:gravity="center_vertical"
+            android:padding="@dimen/px44">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_account_bank"
+                android:scaleType="fitXY" />
+
+            <TextView
+                style="@style/DefaultTvStyle"
+                android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/px45"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/bank_card"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_46" />
+
+            <ImageView
+                android:layout_width="@dimen/px30"
+                android:layout_height="@dimen/px46"
+                android:background="@drawable/ic_right_arrow"
+                android:scaleType="fitXY" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

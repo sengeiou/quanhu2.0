@@ -28,7 +28,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
-import com.rz.httpapi.bean.BaseInfo;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon;
 import com.yryz.yunxinim.uikit.common.util.sys.SoftKeyboardUtil;
 
@@ -111,13 +111,15 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
 
     ContactsSelectAdp mContactsAdp;
     OpusGeneralPresenter mPresenter;
+<<<<<<< HEAD
+    CharacterParser finder = CharacterParser.getInstance();
+=======
 
-    private List<BaseInfo> mSaveAllFriends = new ArrayList<>();
-    private List<BaseInfo> mSelectedFriends = new ArrayList<>();
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
+    private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
+    private List<FriendInformationBean> mSelectedFriends = new ArrayList<>();
     private ArrayList<String> mDisableFriends = new ArrayList<>();
     private ArrayList<String> mSelectFriends = new ArrayList<>();
-
-    CharacterParser finder = CharacterParser.getInstance();
     private FriendPresenter1 presenter;
 
     public static void startActivityForResult(Context context, ArrayList<String> mDisableFriends, int requestCode) {
@@ -193,7 +195,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
     public void eventUpdate(BaseEvent event) {
         if (FriendPresenter1.FRIEND_EVENT.equals(event.info)) {
             Log.e("tag", "好友列表更新并缓存");
-            ((FriendPresenter1) presenter).getCacheFriends(false);
+            presenter.getCacheFriends(false);
         }
     }
 
@@ -229,7 +231,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
              * 拉取最新的好友列表并同步到最新，并且只有好友列表才有初次loading
              */
             Log.e(TAG, "reloadWhenDataChanged: contactselect");
-            ((FriendPresenter1) presenter).getCacheFriends(false);
+            presenter.getCacheFriends(false);
         }
     }
 
@@ -250,11 +252,11 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
 
         mLayoutNone.setVisibility(View.GONE);
         mSaveAllFriends.clear();
-        mSaveAllFriends.addAll((List<BaseInfo>) t);
+        mSaveAllFriends.addAll((List<FriendInformationBean>) t);
 
         if (null != mDisableFriends && mDisableFriends.size() > 0)
             for (String custId : mDisableFriends) {
-                for (BaseInfo item : mSaveAllFriends) {
+                for (FriendInformationBean item : mSaveAllFriends) {
                     if (TextUtils.equals(item.getCustId(), custId)) {
                         item.setDisable(true);
                         break;
@@ -321,7 +323,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
         if (i < 0) {
             return;
         }
-        BaseInfo item = (BaseInfo) mContactsAdp.getItem(i);
+        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i);
         if (item.isDisable())
             return;
         item.setSelect(!item.isSelect());

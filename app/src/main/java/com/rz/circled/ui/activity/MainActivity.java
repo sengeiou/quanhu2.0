@@ -1,6 +1,14 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+<<<<<<< HEAD
+import android.os.PersistableBundle;
+=======
+import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +36,7 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.ClickCounter;
 import com.yryz.yunxinim.DemoCache;
@@ -50,14 +59,41 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged, ReminderManager.UnreadNumChangedCallback {
 
-    @Nullable
-    @BindView(R.id.tab_main)
+    @BindView(android.R.id.tabhost)
     CustomFragmentTabHost tabHost;
+<<<<<<< HEAD
+    /**
+     * 用户状态变化
+     */
+    Observer<StatusCode> userStatusObserver = new Observer<StatusCode>() {
+        @Override
+        public void onEvent(StatusCode code) {
+            Log.e(TAG, "onEvent: " + code.getValue());
+            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
+                kickOut(code);
+            } else {
+                if (code == StatusCode.NET_BROKEN) {
+                } else if (code == StatusCode.UNLOGIN) {
+                } else if (code == StatusCode.CONNECTING) {
+                } else if (code == StatusCode.LOGINING) {
+                } else {
+                }
+            }
+        }
+    };
+=======
+
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
     private ClickCounter mCounter;
     private Toast mToast;
-
     private String[] tabTags = new String[]{"home", "find", "reward", "privateCircle", "mine"};
-
+    private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {
+        @Override
+        public void onEvent(Integer unreadCount) {
+            SystemMessageUnreadManager.getInstance().setSysMsgUnreadCount(unreadCount);
+            ReminderManager.getInstance().updateContactUnreadNum(unreadCount);
+        }
+    };
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -95,6 +131,24 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         if (Session.getUserIsLogin()) {
             initYX(Session.getUserId(), Session.getUserId());
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState: ");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e(TAG, "onNewIntent: ");
     }
 
     private void initCounter() {
@@ -280,15 +334,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 register);
     }
 
-    private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {
-        @Override
-        public void onEvent(Integer unreadCount) {
-            SystemMessageUnreadManager.getInstance().setSysMsgUnreadCount(unreadCount);
-            ReminderManager.getInstance().updateContactUnreadNum(unreadCount);
-        }
-    };
-
-
     /**
      * 查询系统消息未读数
      */
@@ -301,26 +346,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private void registerObservers(boolean register) {
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(userStatusObserver, register);
     }
-
-    /**
-     * 用户状态变化
-     */
-    Observer<StatusCode> userStatusObserver = new Observer<StatusCode>() {
-        @Override
-        public void onEvent(StatusCode code) {
-            Log.e(TAG, "onEvent: " + code.getValue());
-            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
-                kickOut(code);
-            } else {
-                if (code == StatusCode.NET_BROKEN) {
-                } else if (code == StatusCode.UNLOGIN) {
-                } else if (code == StatusCode.CONNECTING) {
-                } else if (code == StatusCode.LOGINING) {
-                } else {
-                }
-            }
-        }
-    };
 
     private void kickOut(StatusCode code) {
         Preferences.saveUserToken("");
@@ -342,4 +367,53 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         NIMClient.getService(AuthService.class).logout();
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: ");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(TAG, "onRestart: ");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
 }

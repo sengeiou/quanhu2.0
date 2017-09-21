@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="0dp"
-             android:layout_weight="1"
-             android:background="@color/color_background">
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:background="@color/color_background">
 
     <ListView
         android:id="@+id/id_content_listv"
         style="@style/DefaultLvStyle"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/id_letter_dialog"
@@ -19,19 +19,18 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="@dimen/px60"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <com.rz.circled.widget.SideBar
         android:id="@+id/id_sidrbar"
         android:layout_width="@dimen/px60"
         android:layout_height="@dimen/px1080"
-        android:layout_gravity="right|center"/>
+        android:layout_gravity="right|center" />
 
     <LinearLayout
         android:id="@+id/layout_none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/px720"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -40,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px30"
-            android:src="@mipmap/ic_contacts_none"/>
+            android:src="@mipmap/ic_contacts_none" />
 
         <TextView
             style="@style/DefaultTvStyle"
@@ -48,6 +47,6 @@
             android:singleLine="false"
             android:text="@string/no_friend_to_add"
             android:textColor="@color/font_gray_m"
-            android:textSize="@dimen/font_46"/>
+            android:textSize="@dimen/font_44" />
     </LinearLayout>
 </FrameLayout>

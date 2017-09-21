@@ -10,7 +10,8 @@ public class ProveStatusBean implements Serializable {
     public static final int STATUS_SUCCESS = 1;
     public static final int STATUS_FAIL = 2;
     public static final int STATUS_CANCEL = 3;
-    private int authStatus;//认证状态 0:审核中 1:成功 2:失败 3:后台取消认证
+    public static final int STATUS_NORMAL = 4;
+    private int authStatus;//认证状态 0:审核中 1:成功 2:失败 3:后台取消认证 4:未认证
     private int authType;//认证类型 0:个人认证 1:企业/机构认证
     private int authWay;//认证方式 0:用户申请 1:平台设置
     private String tradeField;

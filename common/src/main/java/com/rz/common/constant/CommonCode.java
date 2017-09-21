@@ -46,6 +46,10 @@ public interface CommonCode {
          * 数据错误
          */
         int ERROR_DATA = 302;
+        /**
+         * 支付失败
+         */
+        int PAY_SUCCESS = 303;
     }
 
     /**
@@ -110,15 +114,15 @@ public interface CommonCode {
         /**
          * 倒计时常量 单位秒
          */
-        public static final int COUNTDOWN = 90;
+        int COUNTDOWN = 90;
         /**
          * 录音限制时长
          */
-        public static final int MAX_INTERVAL_TIME = 180;
+        int MAX_INTERVAL_TIME = 180;
 
-        public static int RECORDE_SHOW = 10001;
+        int RECORDE_SHOW = 10001;
 
-        public static int RECORDE_OPUS_VIDEO = 10002;
+        int RECORDE_OPUS_VIDEO = 10002;
 
         int PAGE_SIZE = 10;
     }
@@ -128,11 +132,27 @@ public interface CommonCode {
      */
     interface requireFriend {
         //申请加好友
-        public static final int require_type_add = 1;
+        int require_type_add = 1;
         //同意加好友
-        public static final int require_type_agree = 2;
+        int require_type_agree = 2;
         //拒绝加好友
-        public static final int require_type_refuse = 3;
+        int require_type_refuse = 3;
+    }
+
+    /**
+     * 加好友状态
+     */
+    interface requireFriendStatus {
+        //申请加好友
+        int require_status_wait = 0;
+        //同意加好友
+        int require_status_agree = 1;
+        //拒绝加好友
+        int require_status_refuse = 2;
+        //是申请发起方
+        int is_require_true = 1;
+        //否申请发起方
+        int is_require_false = 0;
     }
 
     /**
@@ -140,15 +160,15 @@ public interface CommonCode {
      */
     interface PayCode {
         //取消
-        public static final int PAY_CANDEL = 1011;
+        int PAY_CANDEL = 1011;
         //支付成功
-        public static final int PAY_SUCCESS = 1012;
+        int PAY_SUCCESS = 1012;
         //支付失败，支付控件相关
-        public static final int PAY_FAIL = 1013;
+        int PAY_FAIL = 1013;
         //支付异常，包括生成支付订单错误等
-        public static final int PAY_ABNORMAL = 1014;
+        int PAY_ABNORMAL = 1014;
         //支付结果确认中
-        public static final int PAY_CONFIRM = 1015;
+        int PAY_CONFIRM = 1015;
 
     }
 
