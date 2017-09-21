@@ -2,7 +2,9 @@ package com.rz.circled.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,35 +57,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @BindView(android.R.id.tabhost)
     CustomFragmentTabHost tabHost;
-    /**
-     * 用户状态变化
-     */
-    Observer<StatusCode> userStatusObserver = new Observer<StatusCode>() {
-        @Override
-        public void onEvent(StatusCode code) {
-            Log.e(TAG, "onEvent: " + code.getValue());
-            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
-                kickOut(code);
-            } else {
-                if (code == StatusCode.NET_BROKEN) {
-                } else if (code == StatusCode.UNLOGIN) {
-                } else if (code == StatusCode.CONNECTING) {
-                } else if (code == StatusCode.LOGINING) {
-                } else {
-                }
-            }
-        }
-    };
+
     private ClickCounter mCounter;
     private Toast mToast;
+
     private String[] tabTags = new String[]{"home", "find", "reward", "privateCircle", "mine"};
-    private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {
-        @Override
-        public void onEvent(Integer unreadCount) {
-            SystemMessageUnreadManager.getInstance().setSysMsgUnreadCount(unreadCount);
-            ReminderManager.getInstance().updateContactUnreadNum(unreadCount);
-        }
-    };
+
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -324,6 +303,15 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 register);
     }
 
+    private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {
+        @Override
+        public void onEvent(Integer unreadCount) {
+            SystemMessageUnreadManager.getInstance().setSysMsgUnreadCount(unreadCount);
+            ReminderManager.getInstance().updateContactUnreadNum(unreadCount);
+        }
+    };
+
+
     /**
      * 查询系统消息未读数
      */
@@ -336,6 +324,26 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private void registerObservers(boolean register) {
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(userStatusObserver, register);
     }
+
+    /**
+     * 用户状态变化
+     */
+    Observer<StatusCode> userStatusObserver = new Observer<StatusCode>() {
+        @Override
+        public void onEvent(StatusCode code) {
+            Log.e(TAG, "onEvent: " + code.getValue());
+            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
+                kickOut(code);
+            } else {
+                if (code == StatusCode.NET_BROKEN) {
+                } else if (code == StatusCode.UNLOGIN) {
+                } else if (code == StatusCode.CONNECTING) {
+                } else if (code == StatusCode.LOGINING) {
+                } else {
+                }
+            }
+        }
+    };
 
     private void kickOut(StatusCode code) {
         Preferences.saveUserToken("");
