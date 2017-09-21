@@ -107,4 +107,9 @@ public class PersonScanAty extends BaseActivity implements View.OnLongClickListe
         }
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

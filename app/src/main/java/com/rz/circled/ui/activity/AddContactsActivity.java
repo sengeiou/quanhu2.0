@@ -152,4 +152,9 @@ public class AddContactsActivity extends BaseActivity implements View.OnClickLis
                     .show();
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

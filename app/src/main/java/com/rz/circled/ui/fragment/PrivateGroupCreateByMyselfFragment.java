@@ -185,4 +185,9 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             }
         });
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

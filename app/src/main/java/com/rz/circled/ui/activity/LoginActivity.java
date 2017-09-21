@@ -781,4 +781,9 @@ public class LoginActivity extends BaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

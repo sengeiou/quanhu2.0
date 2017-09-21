@@ -178,4 +178,8 @@ public class SearchRewardFragment extends BaseFragment {
         return rewardAdapter != null && rewardAdapter.getCount() != 0;
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

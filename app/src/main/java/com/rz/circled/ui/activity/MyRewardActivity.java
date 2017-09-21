@@ -10,10 +10,7 @@ import android.view.View;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentPagerAdapter;
 import com.rz.circled.adapter.PrivateGroupNavigatorAdapter;
-import com.rz.circled.adapter.SearchRewardAdapter;
 import com.rz.circled.ui.fragment.MyRewardFragment;
-import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
-import com.rz.circled.ui.fragment.PrivateGroupJoinByMyselfFragment;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -116,5 +113,10 @@ public class MyRewardActivity extends BaseActivity {
         commonNavigator.setAdjustMode(true);
         indicatorTab.setNavigator(commonNavigator);
         ViewPagerHelper.bind(indicatorTab, viewpagerGroup);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

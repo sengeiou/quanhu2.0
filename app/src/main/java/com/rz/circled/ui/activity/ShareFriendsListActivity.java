@@ -232,4 +232,9 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
             new WorkImShareDialog(ShareFriendsListActivity.this, model).show();
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

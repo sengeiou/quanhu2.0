@@ -740,6 +740,11 @@ public class PictureManagerActivity extends BaseActivity implements OnItemClickL
 //        getWindow().setAttributes(lp);
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
 
     private class FileComparator implements Comparator<PictureModel> {
 

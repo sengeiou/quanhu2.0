@@ -358,4 +358,9 @@ public class NavigateOpenActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -378,4 +378,9 @@ public class UploadVideoActivity extends BaseActivity {
             processOss();
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

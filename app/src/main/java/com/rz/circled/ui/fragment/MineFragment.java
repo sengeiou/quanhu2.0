@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -878,6 +877,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         return rootView;
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 
     public class MessageReceiver extends BroadcastReceiver {

@@ -247,4 +247,9 @@ public class ModifyPwdAty extends BaseActivity {
       showActivity(aty,LoginActivity.class);
         finish();
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

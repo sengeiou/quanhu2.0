@@ -252,6 +252,11 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, int pos, int status);
     }

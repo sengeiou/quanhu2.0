@@ -15,7 +15,6 @@ import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
-import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -287,4 +286,8 @@ public class MyCircleFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

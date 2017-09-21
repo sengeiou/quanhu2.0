@@ -278,4 +278,9 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

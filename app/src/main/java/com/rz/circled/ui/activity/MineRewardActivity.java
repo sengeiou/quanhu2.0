@@ -117,6 +117,11 @@ public class MineRewardActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     private class InfoAdapter extends FragmentStatePagerAdapter {
 
         private final int[] itemName;

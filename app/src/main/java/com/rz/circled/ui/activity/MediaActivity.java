@@ -195,4 +195,9 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
     public void onPositionDiscontinuity() {
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

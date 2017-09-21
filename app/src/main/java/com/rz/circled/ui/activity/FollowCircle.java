@@ -142,4 +142,9 @@ public class FollowCircle extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

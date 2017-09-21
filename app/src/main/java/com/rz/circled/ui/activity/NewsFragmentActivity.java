@@ -39,4 +39,9 @@ public class NewsFragmentActivity extends BaseActivity {
         transaction.replace(R.id.layout_frame, NewsCommonFragment.newInstance(getIntent().getIntExtra(IntentKey.KEY_TYPE, 0)));
         transaction.commit();
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

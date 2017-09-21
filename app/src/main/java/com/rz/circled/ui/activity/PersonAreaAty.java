@@ -397,4 +397,8 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

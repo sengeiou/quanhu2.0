@@ -225,6 +225,11 @@ public class SplashAty extends BaseActivity {
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     /**
      * 倒计时类
      */

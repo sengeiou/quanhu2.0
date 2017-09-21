@@ -214,4 +214,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

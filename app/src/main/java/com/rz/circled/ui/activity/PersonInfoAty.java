@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
-import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.common.cache.preference.Session;
@@ -532,5 +531,10 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         //标识用户
         ZhugeSDK.getInstance().identify(getApplicationContext(), uId,
                 personObject);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

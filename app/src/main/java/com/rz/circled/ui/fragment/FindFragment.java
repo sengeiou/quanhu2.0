@@ -407,4 +407,9 @@ public class FindFragment extends BaseFragment {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

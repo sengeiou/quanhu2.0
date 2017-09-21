@@ -149,4 +149,9 @@ public class LocationActivity extends BaseActivity {
         super.onDestroy();
         destroyLocation();
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -198,6 +198,11 @@ public class EditorActivity extends BaseActivity implements View.OnClickListener
 
     public String ossDir;
 
+    @Override
+    public void refreshPage() {
+
+    }
+
 
     public static class VideoEntity implements Serializable {
         public String url;

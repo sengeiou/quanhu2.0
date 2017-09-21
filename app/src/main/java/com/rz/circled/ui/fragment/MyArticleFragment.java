@@ -110,4 +110,8 @@ public class MyArticleFragment extends BaseFragment {
         return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -308,4 +308,9 @@ boolean isCheck=false;
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

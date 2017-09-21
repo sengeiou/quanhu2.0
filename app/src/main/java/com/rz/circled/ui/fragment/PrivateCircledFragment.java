@@ -273,4 +273,8 @@ public class PrivateCircledFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

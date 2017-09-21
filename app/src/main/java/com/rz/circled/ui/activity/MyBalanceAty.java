@@ -91,4 +91,9 @@ public class MyBalanceAty extends BaseActivity {
             }
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

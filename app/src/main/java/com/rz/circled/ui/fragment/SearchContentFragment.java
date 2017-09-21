@@ -1,7 +1,6 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,21 +8,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.litesuits.common.utils.HexUtil;
-import com.litesuits.common.utils.MD5Util;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
-import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
-import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleDynamic;
-import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,14 +24,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.rz.circled.R.layout.fragment_search_content;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 
 /**
  * Created by Gsm on 2017/9/2.
@@ -184,6 +172,11 @@ public class SearchContentFragment extends BaseFragment implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+    }
+
+    @Override
+    public void refreshPage() {
 
     }
 }

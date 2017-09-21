@@ -220,5 +220,10 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
                     .show();
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }
 

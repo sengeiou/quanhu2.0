@@ -113,4 +113,8 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

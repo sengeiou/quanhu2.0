@@ -197,4 +197,9 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
             SVProgressHUD.showInfoWithStatus(aty, "充值金额有误");
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

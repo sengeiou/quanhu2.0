@@ -129,4 +129,9 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     public void onClick() {
         startActivity(new Intent(getContext(), AllPrivateGroupActivity.class));
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

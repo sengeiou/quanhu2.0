@@ -118,4 +118,9 @@ public class RewardScoreAty extends BaseActivity {
             }
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -193,4 +193,9 @@ public class RechargeAty extends BaseActivity {
             super.onLoadingStatus(loadingStatus, string);
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

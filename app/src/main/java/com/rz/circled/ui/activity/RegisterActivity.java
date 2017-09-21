@@ -379,6 +379,11 @@ public class RegisterActivity extends BaseActivity {
         mc.start();
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
 
     /**
      * 倒计时类

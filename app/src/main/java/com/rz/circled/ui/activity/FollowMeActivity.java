@@ -287,4 +287,9 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
         ((FriendPresenter1) presenter).requestRequireList((direction != SwipyRefreshLayoutDirection.TOP));
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

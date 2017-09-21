@@ -85,4 +85,9 @@ public class MyLevelActivity extends BaseActivity {
 
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

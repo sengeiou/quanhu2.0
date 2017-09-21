@@ -108,4 +108,9 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
         initPresenter();
         mActivityRefresh.setRefreshing(false);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

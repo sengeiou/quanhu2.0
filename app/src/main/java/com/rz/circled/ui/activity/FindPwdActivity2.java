@@ -409,4 +409,8 @@ public class FindPwdActivity2 extends BaseActivity {
         initLocation();
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

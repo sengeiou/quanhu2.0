@@ -338,6 +338,11 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
 
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     class viewHold {
         TextView question_name;
         TextView answer_name;

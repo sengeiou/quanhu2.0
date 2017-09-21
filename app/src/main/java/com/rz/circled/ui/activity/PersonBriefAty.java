@@ -153,4 +153,8 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
             EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

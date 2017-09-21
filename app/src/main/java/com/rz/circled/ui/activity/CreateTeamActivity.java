@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -422,4 +421,8 @@ public class CreateTeamActivity extends BaseActivity implements PopupView.OnItem
     }
 
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

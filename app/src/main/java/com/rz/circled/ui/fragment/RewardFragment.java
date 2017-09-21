@@ -1,11 +1,9 @@
 package com.rz.circled.ui.fragment;
 
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
@@ -26,7 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -121,4 +118,8 @@ public class RewardFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

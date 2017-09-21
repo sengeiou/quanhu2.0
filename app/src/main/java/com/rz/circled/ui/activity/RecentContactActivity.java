@@ -17,7 +17,6 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
-import com.yryz.yunxinim.main.model.MainTab;
 import com.yryz.yunxinim.main.reminder.ReminderManager;
 import com.yryz.yunxinim.session.SessionHelper;
 import com.yryz.yunxinim.session.extension.ArticleAttachment;
@@ -247,5 +246,10 @@ public class RecentContactActivity extends BaseActivity {
             tx.remove(previosFrg);
             tx.commit();
         }
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

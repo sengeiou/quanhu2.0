@@ -532,4 +532,9 @@ public class AccountSafeAty extends BaseActivity {
             }
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

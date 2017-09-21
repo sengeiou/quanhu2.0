@@ -36,4 +36,9 @@ public class LoginCodeActivity extends BaseActivity {
     public void initData() {
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

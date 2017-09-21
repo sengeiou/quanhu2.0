@@ -160,4 +160,8 @@ public class RewardArticalFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void refreshPage() {
+
+    }
 }
