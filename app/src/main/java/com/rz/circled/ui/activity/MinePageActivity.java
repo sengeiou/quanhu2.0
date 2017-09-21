@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Constants;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
@@ -33,12 +35,15 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/9/16/016.
  */
 
-public class MinePageActivity extends BaseActivity {
+public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     List<EntitiesBean> bean = new ArrayList<>();
     @BindView(R.id.lv)
     ListView mLv;
     @BindView(R.id.iv_no_data)
     ImageView mIvNoData;
+    int pageNo = 1;
+    @BindView(R.id.activity_refresh)
+    SwipeRefreshLayout mActivityRefresh;
     private CommonAdapter<EntitiesBean> mEntitiesBeanCommonAdapter;
 
     @Override
@@ -49,17 +54,18 @@ public class MinePageActivity extends BaseActivity {
     @Override
     public void initPresenter() {
         Http.getApiService(ApiYylService.class)
-                .getMineActivityList(1, 20, Session.getUserId())
+                .getMineActivityList(pageNo, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ResponseData<ActivityBean>>() {
                     @Override
                     public void call(ResponseData<ActivityBean> res) {
-                        if (res.getAct() == ReturnCode.SUCCESS) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            pageNo++;
                             List<EntitiesBean> entities = res.getData().entities;
                             bean.addAll(entities);
-                            mIvNoData.setVisibility(bean.size()==0?View.VISIBLE:View.GONE);
-                            mLv.setVisibility(bean.size()==0?View.GONE:View.VISIBLE);
+                            mIvNoData.setVisibility(bean.size() == 0 ? View.VISIBLE : View.GONE);
+                            mLv.setVisibility(bean.size() == 0 ? View.GONE : View.VISIBLE);
                             mEntitiesBeanCommonAdapter.notifyDataSetChanged();
                         }
                     }
@@ -69,6 +75,8 @@ public class MinePageActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mActivityRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mActivityRefresh.setOnRefreshListener(this);
         setTitleText("活动");
         mEntitiesBeanCommonAdapter = new CommonAdapter<EntitiesBean>(mContext, bean, R.layout.activity_item) {
             @Override
@@ -93,5 +101,11 @@ public class MinePageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        initPresenter();
+        mActivityRefresh.setRefreshing(false);
     }
 }

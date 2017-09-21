@@ -24,6 +24,7 @@ import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.ACache;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 
@@ -198,11 +199,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             mPresenter.addLoveCircle(circleDynamic.circleId, 2);
             circleDynamic.click=0;
         }
-        if (circleDynamic.coterieId == null || circleDynamic.coterieName == null) {
-            String circleUrl = CommomUtils.getCircleUrl(circleDynamic.moduleEnum, circleDynamic.resourceId);
+        if (StringUtils.isEmpty(circleDynamic.coterieId)||StringUtils.isEmpty(circleDynamic.coterieName)) {
+            String circleUrl = CommomUtils.getCircleUrl(circleDynamic.circleRoute,circleDynamic.moduleEnum, circleDynamic.resourceId);
             WebContainerActivity.startActivity(mActivity, circleUrl);
         } else {
-            String url = CommomUtils.getDymanicUrl(circleDynamic.moduleEnum, circleDynamic.coterieId, circleDynamic.resourceId);
+            String url = CommomUtils.getDymanicUrl(circleDynamic.circleRoute,circleDynamic.moduleEnum, circleDynamic.coterieId, circleDynamic.resourceId);
             WebContainerActivity.startActivity(mActivity, url);
         }
     }

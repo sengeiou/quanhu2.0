@@ -8,8 +8,8 @@ import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BillDetailModel;
-import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.BuyingBean;
+import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
@@ -39,7 +39,6 @@ import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
-import com.rz.httpapi.bean.UserFamousBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.bean.UserSignBean;
@@ -1220,6 +1219,18 @@ public interface ApiService {
     @POST(ApiPay.GET_CHARGE)
     Call<ResponseData<List<CashModel>>> getServiceCharge(
             @Field("act") int act
+    );
+    /**
+     * 消息免打扰
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.Message_Free)
+    Observable<ResponseData> setMessFree(
+            @Field("custId") String custId,
+            @Field("pushStatus") int pushStatus
+
     );
 
 }

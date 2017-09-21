@@ -836,7 +836,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "通讯录");
                     jump(ContactsAty.class);
-
                 }
                 break;
 

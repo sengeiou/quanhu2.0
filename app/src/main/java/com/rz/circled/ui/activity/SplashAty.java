@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.rz.common.utils.SystemUtils.trackUser;
+import static com.rz.circled.widget.CommomUtils.trackUser;
+
 
 /**
  * 作者：Administrator on 2016/6/22 0022 11:07

@@ -54,6 +54,10 @@ public class ApiPay {
      *  计算手续费
      */
     static final String GET_CHARGE = "v3/pay/getServiceCharge";
+    /**
+     *  消息免打扰
+     */
+    static final String Message_Free = "v3/userConfig/update";
 
     /**
      * 绑定银行卡

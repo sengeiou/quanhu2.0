@@ -124,6 +124,10 @@ public class SysSharePres {
      * 用户昵称
      */
     private static final String USER_NAME = "user_name";
+    /**
+     * 消息免打扰
+     */
+    private static final String MESS_FREE = "mess_free";
 
     /**
      * 用户登录账号
@@ -596,6 +600,13 @@ public class SysSharePres {
 
     public String getUserName() {
         return mSharePres.getString(USER_NAME, "");
+    }
+    public void setMessFree(boolean isChecked) {
+        mSharePres.edit().putBoolean(MESS_FREE, isChecked).commit();
+    }
+
+    public boolean getMessFree() {
+        return mSharePres.getBoolean(MESS_FREE, false);
     }
 
     public void setUserAccount(String user_account) {
