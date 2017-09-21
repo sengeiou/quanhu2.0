@@ -95,7 +95,7 @@
                 app:pinMaxFont="@dimen/px30"
                 app:pinMinFont="@dimen/px30"
                 app:pinRadius="@dimen/px26"
-                app:pinPadding="@dimen/px24"
+                app:pinPadding="@dimen/px30"
                 app:rangeBar="false"
                 app:rangeBarColor="@color/color_D7D7D7"
                 app:rangeBarPaddingBottom="@dimen/px20"
