@@ -149,4 +149,9 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

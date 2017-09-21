@@ -183,4 +183,9 @@ public class ProvePaperworkActivity extends BaseActivity {
                 break;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

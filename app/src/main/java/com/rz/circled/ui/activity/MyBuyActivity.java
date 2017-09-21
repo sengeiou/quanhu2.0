@@ -6,13 +6,13 @@ import android.view.View;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
-import com.rz.circled.adapter.DynamicAdapter;
+import com.rz.circled.adapter.BuyingAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
-import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.MyBuyingModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,8 @@ public class MyBuyActivity extends BaseActivity {
     @BindView(R.id.my_listview)
     MListView mListView;
 
-    private DynamicAdapter dynamicAdapter;
-    private List<CircleDynamic> circleDynamicList = new ArrayList<>();
+    private BuyingAdapter dynamicAdapter;
+    private List<MyBuyingModel> circleDynamicList = new ArrayList<>();
     private IPresenter presenter;
 
     @Override
@@ -42,7 +42,7 @@ public class MyBuyActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText(getString(R.string.my_purchase));
-        dynamicAdapter = new DynamicAdapter(this, circleDynamicList);
+        dynamicAdapter = new BuyingAdapter(this, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
     }
 
@@ -79,7 +79,7 @@ public class MyBuyActivity extends BaseActivity {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
-        List<CircleDynamic> mDatas = (List<CircleDynamic>) t;
+        List<MyBuyingModel> mDatas = (List<MyBuyingModel>) t;
         if (null != mDatas && !mDatas.isEmpty()) {
             if (!loadMore) {
                 circleDynamicList.clear();
@@ -104,4 +104,12 @@ public class MyBuyActivity extends BaseActivity {
         return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
+    @Override
+    protected boolean needSupportRefresh() {
+        return false;
+    }
+    @Override
+    public void refreshPage() {
+
+    }
 }

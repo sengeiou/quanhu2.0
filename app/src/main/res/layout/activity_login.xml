@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     >
 
     <ScrollView
@@ -32,9 +32,9 @@
                         android:id="@+id/titlebar_main_left_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/arrow_left"
                         android:padding="@dimen/px44"
-
+                        android:src="@mipmap/arrow_left"
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -42,10 +42,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/login_rect_background"
                     android:layout_marginLeft="@dimen/px22"
                     android:layout_marginRight="@dimen/px22"
                     android:layout_marginTop="@dimen/px282"
+                    android:background="@drawable/login_rect_background"
                     >
 
 
@@ -53,9 +53,9 @@
                         android:id="@+id/welcome_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/welcome_login"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/px100"
+                        android:text="@string/welcome_login"
                         android:textColor="@color/black"
                         android:textSize="@dimen/px62"
                         />
@@ -64,9 +64,9 @@
                         android:id="@+id/et_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_below="@id/welcome_txt"
                         android:layout_marginTop="@dimen/px46"
+                        android:orientation="vertical"
                         >
 
                         <LinearLayout
@@ -101,20 +101,20 @@
                                 android:id="@+id/id_login_clear_phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px44"
                                 android:src="@drawable/ic_clear"
                                 android:visibility="gone"
-                                android:layout_marginRight="@dimen/px44"
                                 />
 
                         </LinearLayout>
 
                         <View
+                            style="@style/line_horizontal_gray_s"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/px2"
-                            android:background="@color/color_DDDDDD"
-                            style="@style/line_horizontal_gray_s"
                             android:layout_marginLeft="@dimen/px30"
                             android:layout_marginRight="@dimen/px30"
+                            android:background="@color/color_DDDDDD"
                             />
 
                         <LinearLayout
@@ -125,6 +125,7 @@
                             android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/pwd_type_img"
                                 android:layout_width="@dimen/px42"
                                 android:layout_height="@dimen/px56"
                                 android:layout_marginLeft="@dimen/px24"
@@ -163,22 +164,38 @@
                                 android:id="@+id/id_login_clear_pw"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/px44"
                                 android:src="@drawable/ic_clear"
                                 android:visibility="gone"
-                                android:layout_marginRight="@dimen/px44"
+
                                 />
+
+
+                            <Button
+                                android:id="@+id/id_regist_send_sms_btn"
+                                android:layout_width="@dimen/px260"
+                                android:layout_height="@dimen/px86"
+                                android:layout_marginRight="@dimen/px44"
+                                android:background="@drawable/shape_btn_blue_d7_selector"
+                                android:gravity="center"
+                                android:text="@string/send_check_code"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/font_34"
+                                android:visibility="gone">
+
+                            </Button>
+
+
                         </LinearLayout>
 
 
-
-
                         <View
+                            style="@style/line_horizontal_gray_s"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/px2"
-                            android:background="@color/color_DDDDDD"
-                            style="@style/line_horizontal_gray_s"
                             android:layout_marginLeft="@dimen/px30"
                             android:layout_marginRight="@dimen/px30"
+                            android:background="@color/color_DDDDDD"
                             />
 
                     </LinearLayout>
@@ -188,16 +205,16 @@
                         android:id="@+id/id_login_btn"
                         android:layout_width="@dimen/px836"
                         android:layout_height="@dimen/px152"
+                        android:layout_below="@id/et_layout"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/px100"
+                        android:background="@mipmap/submit_login_btn_bg"
                         android:gravity="center"
                         android:padding="@dimen/px12"
                         android:text="@string/login_with_space"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/px50"
-                        android:layout_below="@id/et_layout"
-                        android:background="@mipmap/submit_login_btn_bg"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerInParent="true"
                         />
 
                     <LinearLayout
@@ -251,9 +268,9 @@
                     android:layout_width="@dimen/px242"
                     android:layout_height="@dimen/px242"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/logo_login"
-                    android:layout_marginTop="@dimen/px201"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/px201"
+                    android:src="@mipmap/logo_login"
                     />
 
             </FrameLayout>
@@ -262,9 +279,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/px124"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/px184"
+                android:orientation="horizontal"
                 >
 
                 <!--<view-->
@@ -279,29 +296,29 @@
                 <View
                     android:layout_width="@dimen/px188"
                     android:layout_height="@dimen/px2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/px28"
                     android:background="@color/color_DDDDDD"
                     android:visibility="visible"
-                    android:layout_marginRight="@dimen/px28"
-                    android:layout_gravity="center_vertical"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/login_third_other"
-                    android:textColor="@color/color_999999"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_vertical"
+                    android:text="@string/other_login"
+                    android:textColor="@color/color_999999"
                     android:textSize="@dimen/font_34"
                     />
 
                 <View
                     android:layout_width="@dimen/px188"
                     android:layout_height="@dimen/px2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/px28"
                     android:background="@color/color_DDDDDD"
                     android:visibility="visible"
-                    android:layout_marginLeft="@dimen/px28"
-                    android:layout_gravity="center_vertical"
                     />
 
 
@@ -311,19 +328,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/px44"
                 android:paddingBottom="@dimen/px20"
                 android:paddingLeft="@dimen/px100"
                 android:paddingRight="@dimen/px100"
-                android:layout_marginTop="@dimen/px44"
                 >
 
                 <include
                     layout="@layout/layout_sns_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true" />
             </RelativeLayout>
 
         </LinearLayout>

@@ -31,7 +31,7 @@
                 android:layout_height="@dimen/px124"
                 android:textSize="@dimen/font_46"
                 app:pstsIndicatorHeight="@dimen/px4"
-                app:pstsUnderlineHeight="1dp"/>
+                app:pstsUnderlineHeight="0dp"/>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_view"

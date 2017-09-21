@@ -653,4 +653,68 @@ public class SnsAuthPresenter extends GeneralPresenter {
         mShareAPI.deleteOauth((Activity) mContext, platform, delAuthListener);
     }
 
+    /**
+     * 验证码登录
+     */
+    public void codeLogin(String phone, String pw){
+
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+
+        Call<ResponseData<UserInfoBean>> call = mUserService.loginVerifyCode(1003, phone, pw);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<UserInfoBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<UserInfoBean>> call, Response<ResponseData<UserInfoBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    final ResponseData<UserInfoBean> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        UserInfoBean user = res.getData();
+                        if (null != user) {
+                            //登录成功
+                            Session.setLoginWay(Type.LOGIN_PHONE);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.login_success));
+                            mView.updateView(user);
+                         /*   Set<String> sset = new HashSet<String>();
+                            sset.add("testTag");
+                            JPushInterface.setAliasAndTags(mContext.getApplicationContext(), Session.getUserId(), sset, new TagAliasCallback() {
+                                @Override
+                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
+                                    // TODO Auto-generated method stub
+                                    Log.i("setAlias", "success");
+                                }
+                            });*/
+                            return;
+                        }
+                    } else {
+//                        if (HandleRetCode.handler(mContext, res)) {
+                        //登录失败
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
+                                Toasty.info(mContext,res.getMsg()).show();
+                            }
+                        }, 2000);
+                        return;
+//                        }
+
+                    }
+                }
+                //登录失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<UserInfoBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                //登录失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
+            }
+        });
+    }
 }

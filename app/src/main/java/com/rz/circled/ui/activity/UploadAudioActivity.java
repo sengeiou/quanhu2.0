@@ -250,4 +250,8 @@ public class UploadAudioActivity extends BaseActivity {
         return duration;
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

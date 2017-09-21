@@ -48,6 +48,9 @@ import butterknife.BindView;
 public class FollowMeActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,
         SwipyRefreshLayout.OnRefreshListener {
 
+    protected IPresenter presenter;
+    protected CommonAdapter mAdapter;
+
     @BindView(R.id.id_search_key)
     TextView mSearchTxt;
     /**
@@ -62,8 +65,6 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
      * 存储所有我关注的朋友信息
      */
     private List<FriendRequireModel> mFansAllFriends = new ArrayList<>();
-    protected IPresenter presenter;
-    protected CommonAdapter mAdapter;
 
     @Nullable
     @Override
@@ -284,6 +285,11 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
         ((FriendPresenter1) presenter).requestRequireList((direction != SwipyRefreshLayoutDirection.TOP));
+
+    }
+
+    @Override
+    public void refreshPage() {
 
     }
 }

@@ -9,22 +9,15 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
-import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.CircleDynamic;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 
 /**
  * Created by Administrator on 2017/9/14 0014.
@@ -111,4 +104,8 @@ public class MyArticleActivity extends BaseActivity {
         return dynamicAdapter != null && dynamicAdapter.getCount() != 0;
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

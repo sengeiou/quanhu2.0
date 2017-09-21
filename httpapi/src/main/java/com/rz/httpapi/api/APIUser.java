@@ -30,6 +30,13 @@ public class APIUser {
     // FIXME: 2017/3/27 接口拆分 没有isPwdExist这个参数
     public static final String LOGIN = "v3/user/login";
 
+
+    /**
+     * 验证码接口
+     * public static final String LOGIN = "v2/user/login";
+     */
+    public static final String VERIFY_CODE = "v3/user/loginVerifyCode";
+
     /**
      * 第三方登录
      * public static final String OTHER_LOGIN = "v2/user/thirdLogin";
@@ -111,6 +118,11 @@ public class APIUser {
      */
     public static final String MY_RESOURCE = "v3/resource/getMyResource";
 
+    /**
+     * 我的个人中资源
+     */
+    public static final String MY_PUBLIC_RESOURCE = "v3/resource/getMyPublicResource";
+
 
     /**
      * 达人证人申请
@@ -167,7 +179,7 @@ public class APIUser {
     /**
      * 获得卡券列表
      */
-    public static final String GET_COUPONS_LIST = "v1/activity/vote/myPrizeslist";
+    public static final String GET_COUPONS_LIST = "yyl/v1/activity/vote/myPrizeslist";
 
     /**
      * 获得积分成长总值
@@ -177,5 +189,16 @@ public class APIUser {
     /**
      * 获得成长流水
      */
-    public static final String GET_LEVEL_LIST = "v3/event/grow/flow";
+    public static final String GET_LEVEL_LIST = "/v3/event/grow/flow";
+
+    /**
+     * 获取打赏统计
+     */
+    public static final String  GET_REWARD_STAT = "v3/reward/getMyRewardStat";
+
+    /**
+     * 获取活动数统计
+     */
+    public static final String  GET_LIST_COUNT =  "yyl/v1/activity/info/mylistCount";
+
 }

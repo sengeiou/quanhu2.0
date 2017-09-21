@@ -451,5 +451,10 @@ public class AudioChooseActivity extends BaseActivity implements AdapterView.OnI
         }
         commonAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }
 

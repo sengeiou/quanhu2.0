@@ -2,9 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +30,6 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.ClickCounter;
 import com.yryz.yunxinim.DemoCache;
@@ -414,4 +411,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         Log.e(TAG, "onRestoreInstanceState: ");
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

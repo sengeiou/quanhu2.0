@@ -378,4 +378,9 @@ public class TestAty extends BaseActivity {
             return false;
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

@@ -165,4 +165,8 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

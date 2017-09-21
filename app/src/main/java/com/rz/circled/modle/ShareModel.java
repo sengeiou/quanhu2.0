@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 
 public class ShareModel implements Serializable {
+    public int userAvaterRes;
     private String appId;
     private String title;
     private String desc;
@@ -27,10 +28,8 @@ public class ShareModel implements Serializable {
     private int type;
     private int mediaType; //2，音频，3，视频  //1为文字2为图片3为视频
     private boolean isCircle; //是否是圈子
-
     private String userId;//分享对象id
     private String userAvater;//分享对象头像
-    public int userAvaterRes;
     private String userName;//分享对象名称
     private SessionTypeEnum typeEnum;//分享对象类型
     private int fromPage;
@@ -152,6 +151,7 @@ public class ShareModel implements Serializable {
     public boolean isShowReport() {
         return showReport;
     }
+
 
     public void setShowReport(boolean showReport) {
         this.showReport = showReport;

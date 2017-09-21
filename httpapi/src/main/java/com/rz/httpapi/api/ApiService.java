@@ -8,8 +8,8 @@ import com.rz.httpapi.bean.AnnouncementResponseBean;
 import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.BillDetailModel;
-import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.BuyingBean;
+import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.CircleMemberModel;
@@ -20,7 +20,9 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
+import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.LoginWayModel;
+import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.MyLevelAcountBean;
 import com.rz.httpapi.bean.MyLevelBean;
@@ -34,12 +36,12 @@ import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardGiftModel;
+import com.rz.httpapi.bean.RewardStatBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
-import com.rz.httpapi.bean.UserFamousBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.bean.UserSignBean;
@@ -152,6 +154,23 @@ public interface ApiService {
             @Field("phone") String phone,
             @Field("password") String password
     );
+
+    /**
+     * 登录接口，POST请求，表单登录
+     *
+     * @param act
+     * @param phone    手机号
+     * @param password 密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.LOGIN)
+    Call<ResponseData<UserInfoBean>> loginVerifyCode(
+            @Field("act") int act,
+            @Field("phone") String phone,
+            @Field("verifyCode") String verifyCode
+    );
+
 
     /**
      * 第三方登录接口
@@ -270,7 +289,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_ENTRANCE_LIST)
-    public Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
+    Call<ResponseData<List<CircleEntrModle>>> getCircleEntrList(
             @Field("status") int status
     );
 
@@ -279,7 +298,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.SAVE_FAVORITE_CIRCLE)
-    public Observable<ResponseData> addLoveCircle(
+    Observable<ResponseData> addLoveCircle(
             @Field("circleId") String circleId,
             @Field("custId") String custId,
             @Field("type") int type
@@ -290,7 +309,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.REMOVE_FAVORITE_CIRCLE)
-    public Observable<ResponseData> delLoveCircle(
+    Observable<ResponseData> delLoveCircle(
             @Field("circleId") String circleId,
             @Field("custId") String custId
     );
@@ -300,7 +319,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.FAVORITE_CIRCLE_LIST)
-    public Observable<ResponseData<List<CircleEntrModle>>> getLoveCircleList(
+    Observable<ResponseData<List<CircleEntrModle>>> getLoveCircleList(
             @Field("custId") String custId
     );
 
@@ -309,7 +328,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_BANNER_LIST)
-    public Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
+    Call<ResponseData<List<BannerAddSubjectModel>>> getBanner(
             @Field("bannerType") String bannerType
     );
 
@@ -319,7 +338,7 @@ public interface ApiService {
      * @return
      */
     @GET(CircleApi.CIRCLE_DYNAMIC_GET)
-    public Observable<ResponseData<List<CircleDynamic>>> getCircleDynamic(
+    Observable<ResponseData<List<CircleDynamic>>> getCircleDynamic(
             @Query("cityCode") String cityCode,
             @Query("createTime") long createTime,
             @Query("custId") String custId,
@@ -434,7 +453,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(API.REPORT)
-    public Call<ResponseData> report(
+    Call<ResponseData> report(
             @Field("custId") String custId,
             @Field("type") int type,
             @Field("sourceId") String sourceId,
@@ -446,7 +465,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_FAMOUS_LIST)
-    public Call<ResponseData<List<FamousModel>>> getFamous(
+    Call<ResponseData<List<FamousModel>>> getFamous(
             @Field("custId") String custId
     );
 
@@ -455,7 +474,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.MORE_FAMOUS_LIST)
-    public Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
+    Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
             @Field("custId") String custId
     );
 
@@ -463,7 +482,7 @@ public interface ApiService {
      * 获取推荐活动列表
      */
     @GET(CircleApi.FIND_ACTIVITY_TABLE)
-    public Observable<ResponseData<ActivityBean>> getActivityList(
+    Observable<ResponseData<ActivityBean>> getActivityList(
             @Query("pageNo") int pageNo,
             @Query("pageSize") int pageSize
 
@@ -473,7 +492,7 @@ public interface ApiService {
      * 我的页面活动列表
      */
     @GET(CircleApi.MINE_ACTIVITY)
-    public Observable<ResponseData<ActivityBean>> getMineActivityList(
+    Observable<ResponseData<ActivityBean>> getMineActivityList(
             @Query("pageNo") int pageNo,
             @Query("pageSize") int pageSize,
             @Query("paramId") String paramId
@@ -484,14 +503,14 @@ public interface ApiService {
      * 获取推荐话题
      */
     @GET(CircleApi.CIRCLE_SUBJECT_LIST)
-    public Observable<ResponseData<List<HotSubjectModel>>> getSubject(
+    Observable<ResponseData<List<HotSubjectModel>>> getSubject(
     );
 
     /**
      * 获取更多话题
      */
     @GET(CircleApi.MORE_CIRCLE_SUBJECT)
-    public Observable<ResponseData<List<HotSubjectModel>>> getMoreSubject(
+    Observable<ResponseData<List<HotSubjectModel>>> getMoreSubject(
             @Query("limit") int limit,
             @Query("start") int start
     );
@@ -544,7 +563,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(CircleApi.MATCH_VOUCHER)
-    public Call<ResponseData<Ticket>> MatchVoucher(
+    Call<ResponseData<Ticket>> MatchVoucher(
             @Field("cost") String cost,
             @Field("custId") String custId,
             @Field("type") int type);
@@ -623,7 +642,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(API.CLUB_STATS)
-    public Call<ResponseData<ClubStats>> getClubStats(
+    Call<ResponseData<ClubStats>> getClubStats(
             @Field("act") String act,
             @Field("custId") String custId,
             @Field("clubId") String clubId,
@@ -635,7 +654,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(API.TRANSFER_CLUB_DETAIL)
-    public Call<ResponseData<TransferDetail>> transferClubDetail(
+    Call<ResponseData<TransferDetail>> transferClubDetail(
             @Field("act") String actionCode,
             @Field("loginUserId") String loginUserId,
             @Field("clubId") String clubId
@@ -643,7 +662,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST(API.OPUS_TAG)
-    public Call<ResponseData<List<OpusTag>>> getOpusTag(
+    Call<ResponseData<List<OpusTag>>> getOpusTag(
             @Field("act") int actionCode,
             @Field("type") String type
     );
@@ -661,7 +680,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(API.OPUS_TAGINFO_LIST)
-    public Call<ResponseData<List<OpusData>>> searchOpusTagInfoList(
+    Call<ResponseData<List<OpusData>>> searchOpusTagInfoList(
             @Field("act") int actionCode,
             @Field("loginUserId") String loginUserId,
             @Field("type") int type,
@@ -682,7 +701,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(API.OPUS_LIST)
-    public Call<ResponseData<List<OpusData>>> getOpusList(
+    Call<ResponseData<List<OpusData>>> getOpusList(
             @Field("act") int actionCode,
             @Field("custId") String custId,
             @Field("category") String categroy,
@@ -697,7 +716,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(API.CIRCLE_IMGS)
-    public Call<ResponseData<String[]>> getCircleImgs(
+    Call<ResponseData<String[]>> getCircleImgs(
             @Field("act") int actionCode,
             @Field("custId") String custId,
             @Field("limit") int limit
@@ -916,7 +935,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(ApiPay.CHECK_SECURITY_PROBLEM)
-    public Call<ResponseData<RegisterModel>> checkProblem(
+    Call<ResponseData<RegisterModel>> checkProblem(
             @Field("act") int act,
             @Field("custId") String custId,
             @Field("phone") String phone,
@@ -926,11 +945,20 @@ public interface ApiService {
     );
 
     /**
+     * 获取登录方式
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_LOGIN_METHOD)
+    Call<ResponseData<LoginTypeBean>> loginMethod(
+            @Field("custId") String custId
+    );
+
+    /**
      * 设置支付密码
      */
     @FormUrlEncoded
     @POST(ApiPay.SETORMODIFY_PAYPW)
-    public Call<ResponseData> setOrModifyPayPw(
+    Call<ResponseData> setOrModifyPayPw(
             @Field("custId") String custId,
             @Field("payPassword") String payPassword,
             @Field("oldPayPassword") String oldPayPassword
@@ -941,7 +969,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(ApiPay.SETORMODIFY_PAYPW)
-    public Call<ResponseData> forgetPayPw(
+    Call<ResponseData> forgetPayPw(
             @Field(value = "act") int act,
             @Field("custId") String custId,
             @Field("payPassword") String payPassword,
@@ -956,7 +984,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(ApiPay.OPEN_OR_CLOSE_EASY_PAY)
-    public Call<ResponseData> closeOrOpenPay(
+    Call<ResponseData> closeOrOpenPay(
             @Field("act") int act,
             @Field("custId") String custId,
             @Field("type") int type,
@@ -998,6 +1026,22 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(APIUser.MY_RESOURCE)
     Call<ResponseData<List<CircleDynamic>>> getMyResource(
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("resourceType") String resourceType,
+            @Field("start") int start
+    );
+
+
+    /**
+     * 我的个人中心的文章
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.MY_PUBLIC_RESOURCE)
+    Call<ResponseData<List<CircleDynamic>>> getMyPublicResource(
             @Field("custId") String custId,
             @Field("limit") int limit,
             @Field("resourceType") String resourceType,
@@ -1112,7 +1156,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIUser.GET_MY_REWARD)
-    Call<ResponseData> getMyReward(
+    Call<ResponseData<List<MineRewardBean>>> getMyReward(
             @Field("custId") String custId,
             @Field("isReward") int isReward,
             @Field("limit") int limit,
@@ -1134,6 +1178,42 @@ public interface ApiService {
             @Field("start") int start
     );
 
+//    /**
+//     * 获取我的打赏统计
+//     * @return
+//     */
+//    @FormUrlEncoded
+//    @POST(APIUser.GET_REWARD_STAT)
+//    Call<ResponseData<RewardStatBean>> getMyRewardStat(){
+//
+//
+//    }
+
+    /**
+     * 获取我的打赏统计
+     *
+     * @return
+     */
+
+    @FormUrlEncoded
+    @POST(APIUser.GET_REWARD_STAT)
+    Call<ResponseData<RewardStatBean>> getMyRewardStat(
+            @Field("paramId") String paramId
+    );
+
+
+//    /**
+//     * 获取活动数统计
+//     * @return
+//     */
+//    @FormUrlEncoded
+//    @POST(APIUser.GET_LIST_COUNT)
+//    Call<ResponseData> getMylistCount(String paramId){
+//        @Field("paramId") String paramId
+//    };
+
+
+
     /**
      * 获取银行卡列表
      */
@@ -1144,7 +1224,11 @@ public interface ApiService {
             @Field("custId") String custId
     );
 
+    /*
+
+=======
     /**
+>>>>>>> 2540931ec03580503cb88e4fe7ef18497de3b69c
      * 绑定银行卡
      */
     @FormUrlEncoded
@@ -1220,6 +1304,18 @@ public interface ApiService {
     @POST(ApiPay.GET_CHARGE)
     Call<ResponseData<List<CashModel>>> getServiceCharge(
             @Field("act") int act
+    );
+    /**
+     * 消息免打扰
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.Message_Free)
+    Observable<ResponseData> setMessFree(
+            @Field("custId") String custId,
+            @Field("pushStatus") int pushStatus
+
     );
 
 }

@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.constants.AgreementConstants;
 import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.httpapi.bean.RewardGiftModel;
@@ -238,13 +237,13 @@ public class CommomUtils {
      * @param
      * @return
      */
-    public static String getDymanicUrl(String moduleId, String coterieId, String resourceId) {
-        String url = BuildConfig.WebHomeBaseUrl + "/redirect/coterie/" + coterieId + "/" + moduleId + "/" + resourceId;
+    public static String getDymanicUrl(String circleRoute,String moduleId, String coterieId, String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/coterie/" + coterieId + "/" + moduleId + "/" + resourceId;
         return url;
     }
 
-    public static String getCircleUrl(String moduleId, String resourceId) {
-        String url = BuildConfig.WebHomeBaseUrl + "/redirect/" + moduleId + "/" + resourceId;
+    public static String getCircleUrl(String circleRoute,String moduleId, String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/" + moduleId + "/" + resourceId;
         return url;
     }
 

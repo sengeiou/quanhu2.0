@@ -9,8 +9,6 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentPagerAdapter;
 import com.rz.circled.adapter.NewsInteractiveNavigatorAdapter;
 import com.rz.circled.ui.fragment.NewsCommonFragment;
-import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
-import com.rz.circled.ui.fragment.PrivateGroupJoinByMyselfFragment;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -130,4 +128,8 @@ public class NewsInteractiveActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

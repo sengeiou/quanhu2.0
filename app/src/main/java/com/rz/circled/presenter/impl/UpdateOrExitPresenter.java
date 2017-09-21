@@ -19,6 +19,9 @@ import com.rz.httpapi.constans.ReturnCode;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -54,6 +57,24 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
 
     @Override
     public void detachView() {
+
+    }
+
+    public void messageFree(int pushStatus) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mUserService.setMessFree(Session.getUserId(),pushStatus)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<ResponseData>() {
+                        @Override
+                        public void call(ResponseData res) {
+
+
+                        }
+                    });
 
     }
 

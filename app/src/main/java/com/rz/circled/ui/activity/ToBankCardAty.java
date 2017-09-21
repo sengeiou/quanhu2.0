@@ -2,24 +2,20 @@ package com.rz.circled.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
+
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 
 import com.litesuits.common.utils.HexUtil;
@@ -43,12 +39,12 @@ import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.UserInfoModel;
-import com.yryz.yunxinim.uikit.common.util.sys.ScreenUtil;
+
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import butterknife.OnClick;
 
 /**
@@ -90,6 +86,7 @@ public class ToBankCardAty extends BaseActivity {
     //提现手续费
     @BindView(R.id.id_bank_charge_txt)
     TextView mTxtCharge;
+
     private String mCharge;
 
     //可提现收益
@@ -171,8 +168,9 @@ public class ToBankCardAty extends BaseActivity {
 
     @Override
     public void initData() {
-        ((BankPresenter) presenter).getCharge();
-        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+        presenter.getCharge();
+        presenter.getBanckCardList(Session.getUserId());
+
     }
 
     /**
@@ -279,7 +277,8 @@ public class ToBankCardAty extends BaseActivity {
                         }, 2000);
                     } else {
                         //提现
-                        ((BankPresenter) presenter).getCash(HexUtil.encodeHexStr(MD5Util.md5(pw)), mRecharge + "00", mDefaultModel.getCust2BankId());
+                        presenter.getCash(HexUtil.encodeHexStr(MD5Util.md5(pw)), mRecharge + "00", mDefaultModel.getCust2BankId());
+
                     }
                 }
             } else if (t instanceof UserInfoModel) {
@@ -383,12 +382,17 @@ public class ToBankCardAty extends BaseActivity {
             }
         } else if (requestCode == IntentCode.BankCard.BIND_REQUEST_CODE) {
             if (resultCode == IntentCode.BankCard.BankCard_RESULT_CODE) {
-                ((BankPresenter) presenter).getCharge();
-                ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                presenter.getCharge();
+                presenter.getBanckCardList(Session.getUserId());
+
             } else {
                 finish();
             }
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

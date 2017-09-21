@@ -67,8 +67,7 @@ public class ChooseProveIdentityActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -131,8 +130,6 @@ public class ChooseProveIdentityActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -175,5 +172,10 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusChange.setText(R.string.change_prove_info_hint);
                 break;
         }
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

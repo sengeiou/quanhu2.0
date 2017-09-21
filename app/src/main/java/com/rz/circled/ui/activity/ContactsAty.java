@@ -1,14 +1,11 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +24,6 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
-import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
@@ -326,7 +322,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         if (i - 1 < 0) {
             return;
         }
-        FriendInformationBean item = (FriendInformationBean) mContactsAdp.getItem(i - 1);
+        FriendInformationBean item = mContactsAdp.getItem(i - 1);
+
         /**
          * 进入好友详情
          */
@@ -358,4 +355,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         updateUnreadNum(unreadCount);
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

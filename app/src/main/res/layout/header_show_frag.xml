@@ -105,7 +105,7 @@
             android:layout_below="@id/user_info_layout"
             android:layout_alignLeft="@id/user_info_layout"
             android:layout_marginRight="@dimen/px50"
-            android:layout_marginTop="@dimen/px40"
+            android:layout_marginTop="@dimen/px30"
             >
 
 
@@ -148,6 +148,15 @@
                 android:layout_marginLeft="@dimen/px32"
                 android:layout_marginRight="@dimen/px32"
                 android:layout_height="@dimen/px52"
+                android:layout_gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_famous"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/px11"
                 />
 
 
@@ -161,21 +170,18 @@
                 android:padding="@dimen/px8"
                 >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_famous"
-                    android:layout_gravity="center_vertical"
-                    />
-
                 <TextView
                     android:id="@+id/famous_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="互联网达人"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="@dimen/px14"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/font_34"
+                    android:paddingLeft="@dimen/px20"
+                    android:paddingRight="@dimen/px20"
                     />
 
             </LinearLayout>

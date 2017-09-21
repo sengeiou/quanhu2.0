@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -36,12 +35,14 @@ public class AddBankCardAty extends BaseActivity {
     //持卡人
     @BindView(R.id.id_et_user_card_name_edit)
     EditText mEtUserName;
-    private String mUserName;
+
     @BindView(R.id.id_clear_card_name_img)
     ImageView mImgClearName;
     //银行卡号
     @BindView(R.id.id_card_bank_num_edit)
     EditText mEtBankNum;
+
+    private String mUserName;
     private String mBankNum;
     @BindView(R.id.id_clear_card_num_img)
     ImageView mImgClearNum;
@@ -112,11 +113,8 @@ public class AddBankCardAty extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 curLength = s.length();
-                if (curLength == oldLength || curLength <= 3) {
-                    isChange = false;
-                } else {
-                    isChange = true;
-                }
+                isChange = !(curLength == oldLength || curLength <= 3);
+
                 if (TextUtils.isEmpty(s)) {
                     mImgClearNum.setVisibility(View.GONE);
                 } else {
@@ -235,5 +233,10 @@ public class AddBankCardAty extends BaseActivity {
                 mEtBankNum.setText("");
                 break;
         }
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

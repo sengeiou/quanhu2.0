@@ -21,11 +21,14 @@ import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.permission.AppSettingsDialog;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -125,6 +128,8 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
             Intent mIntent = new Intent();
             mIntent.putExtra(IntentKey.EXTRA_POSITION, area);
             setResult(RESULT_CODE1, mIntent);
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
+
         } else {
             Session.setUser_area(t.toString());
             setResult(RESULT_CODE1);
@@ -390,5 +395,10 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                     .build()
                     .show();
         }
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

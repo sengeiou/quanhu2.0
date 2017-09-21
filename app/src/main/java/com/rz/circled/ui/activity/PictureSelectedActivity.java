@@ -736,6 +736,11 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
 //        picManagerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
 
     private class FileComparator implements Comparator<PictureModel> {
 

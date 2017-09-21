@@ -56,6 +56,79 @@ public class GridPasswordView extends LinearLayout implements PasswordView {
     private ImeDelBugFixedEditText mInputView;
     private OnPasswordChangedListener mListener;
     private PasswordTransformationMethod mTransformationMethod;
+    private OnClickListener mOnClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            forceInputViewGetFocus();
+        }
+    };
+    private ImeDelBugFixedEditText.OnDelKeyEventListener onDelKeyEventListener = new ImeDelBugFixedEditText.OnDelKeyEventListener() {
+
+        @Override
+        public void onDeleteClick() {
+            for (int i = mPasswordArr.length - 1; i >= 0; i--) {
+                if (mPasswordArr[i] != null) {
+                    mPasswordArr[i] = null;
+                    mViewArr[i].setText(null);
+                    notifyTextChanged();
+                    break;
+                } else {
+                    mViewArr[i].setText(null);
+                }
+            }
+        }
+    };
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s == null) {
+                return;
+            }
+
+            String newStr = s.toString();
+            if (newStr.length() == 1) {
+                mPasswordArr[0] = newStr;
+                notifyTextChanged();
+            } else if (newStr.length() == 2) {
+                String newNum = newStr.substring(1);
+                for (int i = 0; i < mPasswordArr.length; i++) {
+                    if (mPasswordArr[i] == null) {
+                        mPasswordArr[i] = newNum;
+                        mViewArr[i].setText(newNum);
+                        notifyTextChanged();
+                        break;
+                    }
+                }
+                mInputView.removeTextChangedListener(this);
+                mInputView.setText(mPasswordArr[0]);
+                if (mInputView.getText().length() >= 1) {
+                    mInputView.setSelection(1);
+                }
+                mInputView.addTextChangedListener(this);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    @Deprecated
+    private OnKeyListener onKeyListener = new OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+                onDelKeyEventListener.onDeleteClick();
+                return true;
+            }
+            return false;
+        }
+    };
 
     public GridPasswordView(Context context) {
         super(context);
@@ -181,13 +254,6 @@ public class GridPasswordView extends LinearLayout implements PasswordView {
         view.setTransformationMethod(mTransformationMethod);
     }
 
-    private OnClickListener mOnClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            forceInputViewGetFocus();
-        }
-    };
-
     private GradientDrawable generateBackgroundDrawable() {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(mGridColor);
@@ -202,76 +268,6 @@ public class GridPasswordView extends LinearLayout implements PasswordView {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mInputView, InputMethodManager.SHOW_IMPLICIT);
     }
-
-    private ImeDelBugFixedEditText.OnDelKeyEventListener onDelKeyEventListener = new ImeDelBugFixedEditText.OnDelKeyEventListener() {
-
-        @Override
-        public void onDeleteClick() {
-            for (int i = mPasswordArr.length - 1; i >= 0; i--) {
-                if (mPasswordArr[i] != null) {
-                    mPasswordArr[i] = null;
-                    mViewArr[i].setText(null);
-                    notifyTextChanged();
-                    break;
-                } else {
-                    mViewArr[i].setText(null);
-                }
-            }
-        }
-    };
-
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (s == null) {
-                return;
-            }
-
-            String newStr = s.toString();
-            if (newStr.length() == 1) {
-                mPasswordArr[0] = newStr;
-                notifyTextChanged();
-            } else if (newStr.length() == 2) {
-                String newNum = newStr.substring(1);
-                for (int i = 0; i < mPasswordArr.length; i++) {
-                    if (mPasswordArr[i] == null) {
-                        mPasswordArr[i] = newNum;
-                        mViewArr[i].setText(newNum);
-                        notifyTextChanged();
-                        break;
-                    }
-                }
-                mInputView.removeTextChangedListener(this);
-                mInputView.setText(mPasswordArr[0]);
-                if (mInputView.getText().length() >= 1) {
-                    mInputView.setSelection(1);
-                }
-                mInputView.addTextChangedListener(this);
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-
-    @Deprecated
-    private OnKeyListener onKeyListener = new OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
-                onDelKeyEventListener.onDeleteClick();
-                return true;
-            }
-            return false;
-        }
-    };
 
     private void notifyTextChanged() {
         if (mListener == null)

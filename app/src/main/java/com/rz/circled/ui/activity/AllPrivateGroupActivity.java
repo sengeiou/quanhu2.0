@@ -1,6 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.rz.circled.ui.fragment.PrivateGroupAllFragment;
 import com.rz.common.ui.activity.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -43,5 +41,10 @@ public class AllPrivateGroupActivity extends BaseActivity {
     @OnClick(R.id.tv_search)
     public void onClick() {
         SearchActivity.stratActivity(mContext, SearchActivity.TYPE_PRIVATE);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

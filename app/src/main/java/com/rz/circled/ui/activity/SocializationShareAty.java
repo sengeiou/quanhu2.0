@@ -309,4 +309,9 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
         }
         finishTag = true;
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

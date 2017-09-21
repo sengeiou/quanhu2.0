@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
@@ -59,6 +59,7 @@ import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
@@ -146,6 +147,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private int headHight;
     private ProveStatusBean proveStatusBean;
     private ProveInfoPresenter proveInfoPresenter;
+    ProveStatusBean data;
 
 
     @Override
@@ -156,10 +158,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initPresenter() {
-//        mSplashPresenter = new SplashPresenter();
-//        mSplashPresenter.attachView(this);
         presenter = new V3CirclePresenter();
-//        mSplashPresenter.getCustomerService();
         presenter.attachView(this);
 
     }
@@ -204,13 +203,23 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         getUserProveStatus();
     }
 
+
     private void getData() {
-        //获取签到状态
-        ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(), "15");
 
-        //获取数据统计
-        ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
 
+        if(presenter != null){
+            //获取签到状态
+            ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(),"15");
+
+            //获取数据统计
+            ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
+
+            //获取活动数统计
+            ((V3CirclePresenter) presenter).getMylistCount(Session.getUserId());
+
+            //获取达人信息
+            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+        }
 //        if(Session.getCustRole().equals("0")){
 //            famousTxt.setText("去认证");
 //            famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
@@ -218,7 +227,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         //获取达人信息
 //            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
 //        }
-
     }
 
 //    private void initTitleBar() {
@@ -240,22 +248,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //
 //    }
 
-//    private void initRefresh() {
-//        swipeRefreshLayout.setDirection(null);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
-//    }
 
 
     //初始化用户信息
     public void initUserNews() {
 
         if (mListView.getHeaderViewsCount() == 0) {
-            Log.d("yeying", "addview refreshUserInfoView");
             header = View.inflate(getActivity(), R.layout.header_show_frag, null);
             //个人中心
             header.findViewById(R.id.id_person_news_rela).setOnClickListener(new View.OnClickListener() {
@@ -264,7 +262,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     if (isLogin()) {
 //                        jump(UserInfoActivity.class);
                         UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
-
                     }
                 }
             });
@@ -284,11 +281,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
-//                        jump(Pci.class);
-//                        Intent intent = new Intent(mActivity, ChooseProveIdentityActivity.class);
-//                        if (proveStatusBean != null)
-//                            intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
-//                        startActivity(intent);
                         jump(MyRewardActivity.class);
                     }
                 }
@@ -349,6 +341,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             if (Session.getUserIsLogin()) {
                 mTxtPersonName.setText(Session.getUserName());
+
                 levelTxt.setText("Lv. " + Session.getUserLevel());
                 custPointsTxt.setText("积分" + Session.getCustPoints());
                 if ("0".equals(Session.getCustRole())) {
@@ -365,14 +358,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 idPersonLoginDays.setText("");
             }
 
-//            ImageView iv = (ImageView) header.findViewById(R.id.iv_show_top);
-//            iv.getLayoutParams().height = ScreenUtil.getDisplayWidth() * 288 / 720;
-//            iv.requestLayout();
-
-//            ImageView iv = (ImageView) header.findViewById(R.id.id_person_news_rela);
-//            iv.getLayoutParams().height = ScreenUtil.getDisplayWidth() * 288 / 720;
-//            iv.requestLayout();
-//            mListView.addHeaderView(header);
             headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
 
@@ -396,34 +381,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 });
             }
 
-//            headHight = iv.getLayoutParams().height + DensityUtils.dip2px(mActivity, 20);
-//            mListView.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-//                @Override
-//                public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-//                    if (scrollY <= 0) {
-//                        newTitilbar.getBackground().mutate().setAlpha(0);
-//                        signLayout.setVisibility(View.VISIBLE);
-//                    } else if (scrollY > 0 && scrollY <= headHight) {
-//                        float scale = (float) scrollY / headHight;
-//                        float alpha = (255 * scale);
-//                        // 只是layout背景透明(仿知乎滑动效果)
-//                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-//                    } else {
-//                        newTitilbar.getBackground().mutate().setAlpha(255);
-//                        signLayout.setVisibility(View.GONE);
-//                    }
-//                }
-//
-//                @Override
-//                public void onDownMotionEvent() {
-//
-//                }
-//
-//                @Override
-//                public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-//
-//                }
-//            });
         }
 
     }
@@ -470,6 +427,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         // TODO: 2017/9/18 判断是否有申请达人,未申请则不去请求
         getUserProveStatus();
+        setData();
     }
 
 
@@ -496,7 +454,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             EventBus.getDefault().register(this);
 
         mModelList = new ArrayList<MineFragItemModel>();
-//        MineFragItemModel model8 = new MineFragItemModel(getString(R.string.mine_my_contacts), "管理好友", R.drawable.ic_mine_contacts_new, false);
         MineFragItemModel model = new MineFragItemModel(false, getString(R.string.my_purchase), R.mipmap.ic_buy, false);
         MineFragItemModel mode2 = new MineFragItemModel(false, getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
         MineFragItemModel mode3 = new MineFragItemModel(false, getString(R.string.my_collect), R.mipmap.ic_colection, true);
@@ -508,7 +465,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         MineFragItemModel mode9 = new MineFragItemModel(false, getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
 
         MineFragItemModel mode10 = new MineFragItemModel(false, getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
-        MineFragItemModel mode11 = new MineFragItemModel(false, getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
+        MineFragItemModel mode11 = new MineFragItemModel(false, getString(R.string.mine_my_kefu), R.mipmap.ic_help, false);
+        MineFragItemModel mode12 = new MineFragItemModel(false, getString(R.string.mine_my_setting), R.mipmap.ic_setting, false);
 
 
         mModelList.add(model);//我的购买
@@ -524,7 +482,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         mModelList.add(mode8);//我的二维码
         mModelList.add(mode9);//一键邀请好友
         mModelList.add(mode10);//联系客服
-        mModelList.add(mode11);//设置
+        mModelList.add(mode11);//帮助
+        mModelList.add(mode12);//设置
 
         mListView.setAdapter(adapter = new CommonAdapter<MineFragItemModel>(mActivity, mModelList, R.layout.adp_mine_frg) {
 
@@ -627,6 +586,21 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
 //            tvactivityCount.setText(data.getArticleNum()+"");
+        }else if(t instanceof  ProveStatusBean) {
+            data = (ProveStatusBean) t;
+            if(Session.getCustRole().equals("0")){
+                famousTxt.setText("去认证");
+            }else if(data.getAuthStatus() == 0){
+                famousTxt.setText("认证审核中");
+            }else if(data.getAuthStatus() == 1){
+                famousTxt.setText(data.getTradeField());
+            }else if(data.getAuthStatus() == 2){
+                famousTxt.setText("认证失败");
+            }else if(data.getAuthStatus() == 3){
+                famousTxt.setText("认证失败");
+            }
+        }else if(t instanceof ResponseData){
+            tvactivityCount.setText(((ResponseData) t).getData()+"");
         } else {
 //            if (null != t) {
 //                CircleStatsModel data = (CircleStatsModel) t;
@@ -684,36 +658,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     //    @OnClick()
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.btn_my_collect:
-//                if (isLogin()) {
-//                    trackUser("我的","入口名称","我的收藏");
-////                    showActivity(mActivity, V3MyCollectedAty.class);
-//                }
-//                break;
-//            case R.id.btn_my_transfer:
-//                if (isLogin()) {
-////                    trackUser("我的","入口名称","我的打赏");
-////                    BaseInfo baseInfo = new BaseInfo();
-////                    baseInfo.setCustId(Session.getUserId());
-////                    baseInfo.setCustNname(Session.getUserName());
-////                    baseInfo.setCustLocation(Session.getUser_area());
-////                    baseInfo.setCustSignature(Session.getUser_signatrue());
-////                    baseInfo.setCustImg(Session.getUserPicUrl());
-////                    V3UserShareActivity.toUserShare(mActivity, baseInfo);
-//                }
-//                break;
-//            case R.id.btn_my_circle:
-//                if (isLogin()) {
-////                    trackUser("我的","入口名称","我的圈子");
-////                    BaseInfo baseInfo = new BaseInfo();
-////                    baseInfo.setCustId(Session.getUserId());
-////                    baseInfo.setCustNname(Session.getUserName());
-////                    baseInfo.setCustLocation(Session.getUser_area());
-////                    baseInfo.setCustSignature(Session.getUser_signatrue());
-////                    baseInfo.setCustImg(Session.getUserPicUrl());
-////                    V3UserCircleActivity.toUserCircle(frg, Session.getUserId(), baseInfo);
-//                }
-//                break;
+
             case R.id.id_person_head_img:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的头像");
@@ -731,49 +676,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
                 }
                 break;
-            //原创作品
-//            case R.id.btn_my_work:
-//                if (isLogin()) {
-//                    MyOriginalWorksAty.startOriginalAty(frg, Session.getUserId(), Session.getUserPicUrl(), Session.getUserName(), Session.getUser_desc());
-//                }
-//                break;
-            //圈子转发
-//            case R.id.btn_my_transfer:
-//                if (isLogin()) {
-//                    MyForwardAty.startMyCircleAty(frg, Session.getUserId(), Session.getUserPicUrl(), Session.getUserName());
-//                }
-////                startActivity(new Intent(getActivity().getApplicationContext(), WelcomeActivity.class));
-//                break;
-            //晒一晒
-//            case R.id.btn_my_show:
-//                if (isLogin()) {
-//                    Intent intent = new Intent(getActivity(), MyShowUpAty.class);
-//                    intent.putExtra(IntentKey.General.KEY_NAME, Session.getUserName());
-////                    intent.putExtra(IntentKey.General.KEY_DESC, Session.getUser_signatrue());
-//                    intent.putExtra(IntentKey.General.KEY_HEAD, Session.getUserPicUrl());
-//                    intent.putExtra(IntentKey.General.KEY_ID, Session.getUserId());
-//                    startActivity(intent);
-//                }
-//                break;
-            //红包广告
-//            case R.id.id_mine_adv_ll:
-//                if (isLogin()) {
-//                    jump(MyRedBagAdvAty.class);
-//                }
-//                break;
         }
     }
-
-//    mModelList.add(model8);//通讯录
-//    mModelList.add(model0);//我的账户
-//    mModelList.add(model2);//我的卡卷
-//
-//    mModelList.add(model3);//我的收藏
-//    mModelList.add(model9);//我的推广
-//
-//    mModelList.add(model4);//我的二维码
-//    mModelList.add(model5);//设置
-//    mModelList.add(model7);//在线留言
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -836,7 +740,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "通讯录");
                     jump(ContactsAty.class);
-
                 }
                 break;
 
@@ -871,7 +774,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     break;
                 }
                 //设置
+
             case 11:
+                trackUser("我的", "帮助", "设置");
+                CommonH5Activity.startCommonH5(mActivity, H5Address.USER_HELP, "帮助");
+                break;
+            case 12:
                 trackUser("我的", "入口名称", "设置");
                 Intent intent = new Intent(mActivity, SettingActivity.class);
                 startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
@@ -946,20 +854,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void eventUpdate(BaseEvent event) {
-//        if (TextUtils.equals("versionUpdate", event.key)) {
-//            mModelList.get(6).setUpdate(true);
-//            adapter.notifyDataSetChanged();
-//        } else if (TextUtils.equals("noVersionUpdate", event.key)) {
-//            mModelList.get(6).setUpdate(false);
-//            adapter.notifyDataSetChanged();
-//        } else if (TextUtils.equals(LOGIN_OUT_SUCCESS, event.key)) {
-//            tvCircleCount.setText("0");
-//            tvCollectCount.setText("0");
-//            tvTransferCount.setText("0");
-//        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
@@ -979,9 +873,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (baseEvent.type == CommonCode.EventType.TYPE_LOGIN) {
             if (proveInfoPresenter != null)
                 getUserProveStatus();
+            setData();
+        }
+        if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
+            setData();
             return;
         }
-
     }
 
     @Override
@@ -989,6 +886,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         return rootView;
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 
     public class MessageReceiver extends BroadcastReceiver {
@@ -1011,6 +913,30 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         proveInfoPresenter.getProveStatus();
     }
+
+
+    private void setData(){
+        mTxtPersonName.setText(Session.getUserName());
+        levelTxt.setText("Lv. "+Session.getUserLevel());
+        custPointsTxt.setText("积分 " + Session.getCustPoints());
+
+        Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
+                placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
+
+        if("0".equals(Session.getCustRole())){
+            famousTxt.setText("去认证");
+        }
+
+        if (TextUtils.isEmpty(Session.getUser_signatrue())){
+            idPersonLoginDays.setText("");
+        }
+        else{
+            idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
+        }
+        getData();
+
+    }
+
 
 
 }

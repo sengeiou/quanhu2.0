@@ -2,7 +2,6 @@ package com.rz.circled.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.GridView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.PrivateGroupBelongAdapter;
-import com.rz.circled.adapter.SearchCircleAdapter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
@@ -25,16 +23,12 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleBelongBean;
 import com.rz.httpapi.bean.CircleEntrModle;
-import com.rz.httpapi.bean.NewsBean;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -116,5 +110,10 @@ public class ApplyForPrivateGroupBelongActivity extends BaseActivity {
                 SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.request_failed));
             }
         });
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

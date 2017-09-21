@@ -131,10 +131,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent101419427" />
             </intent-filter>
         </activity>
@@ -548,9 +546,13 @@
         <activity
             android:name=".ui.activity.SocializationShareAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.NavigateOpenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.BoundPhoneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
     </application>

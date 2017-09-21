@@ -104,4 +104,9 @@ public class MoreSubjectActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

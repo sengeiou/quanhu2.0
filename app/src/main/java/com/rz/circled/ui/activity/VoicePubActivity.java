@@ -539,4 +539,9 @@ public class VoicePubActivity extends BaseActivity {
         mmr.release();
         return duration;
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

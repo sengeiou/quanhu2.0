@@ -113,4 +113,9 @@ public class PersonSecondAreaAty extends BaseActivity implements AdapterView.OnI
             }
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

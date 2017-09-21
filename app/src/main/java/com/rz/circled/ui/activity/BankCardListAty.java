@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -206,6 +205,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
             }
         };
         mListview.setAdapter(mAdapter);
+        presenter.getBanckCardList(Session.getUserId());
         ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
     }
 
@@ -249,14 +249,15 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 if (TextUtils.equals("1", payPw)) {
                     //解绑成功
                     SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.unbind_card_success));
-                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                    presenter.getBanckCardList(Session.getUserId());
                 } else if (TextUtils.equals("2", payPw)) {
                     //设置默认银行卡成功
                     SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.setting_success));
-                    ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+                    presenter.getBanckCardList(Session.getUserId());
                 } else {
                     //解绑银行卡
-                    ((BankPresenter) presenter).unBandBanck(mCust2BankId, HexUtil.encodeHexStr(MD5Util.md5(payPw)));
+                    presenter.unBandBanck(mCust2BankId, HexUtil.encodeHexStr(MD5Util.md5(payPw)));
+
                 }
             }
         }
@@ -264,7 +265,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void onRefresh() {
-        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+        presenter.getBanckCardList(Session.getUserId());
     }
 
     @Override
@@ -298,6 +299,11 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+    }
+
+    @Override
+    public void refreshPage() {
 
     }
 }

@@ -468,5 +468,10 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
         }
         commonAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }
 

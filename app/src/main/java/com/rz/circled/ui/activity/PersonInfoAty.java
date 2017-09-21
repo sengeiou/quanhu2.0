@@ -159,7 +159,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 intent.setClass(this, PictureManagerActivity.class);
                 intent.putExtra("isSingle", true);
                 startActivityForResult(intent, REQUEST_CODE);
-                popupView.showAtLocPop(root, POPUP_ITEMS);
+//                popupView.showAtLocPop(root, POPUP_ITEMS);
                 break;
             case R.id.id_layout_person_nick:
                 trackUser("我的", "个人资料二级界面", "昵称");
@@ -507,7 +507,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this, "悠然一指要使用摄像头,使用sd卡权限，否则app可能无法正常运行")
+            new AppSettingsDialog.Builder(this, "圈呼要使用摄像头,使用sd卡权限，否则app可能无法正常运行")
                     .setPositiveButton(getString(R.string.setting))
                     .setNegativeButton(getString(R.string.cancel), null /* click listener */)
                     .setRequestCode(RC_VIDEO_AND_EXTENER)
@@ -531,5 +531,10 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         //标识用户
         ZhugeSDK.getInstance().identify(getApplicationContext(), uId,
                 personObject);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }

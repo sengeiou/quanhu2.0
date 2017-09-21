@@ -111,13 +111,12 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
 
     ContactsSelectAdp mContactsAdp;
     OpusGeneralPresenter mPresenter;
+    CharacterParser finder = CharacterParser.getInstance();
 
     private List<FriendInformationBean> mSaveAllFriends = new ArrayList<>();
     private List<FriendInformationBean> mSelectedFriends = new ArrayList<>();
     private ArrayList<String> mDisableFriends = new ArrayList<>();
     private ArrayList<String> mSelectFriends = new ArrayList<>();
-
-    CharacterParser finder = CharacterParser.getInstance();
     private FriendPresenter1 presenter;
 
     public static void startActivityForResult(Context context, ArrayList<String> mDisableFriends, int requestCode) {
@@ -193,7 +192,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
     public void eventUpdate(BaseEvent event) {
         if (FriendPresenter1.FRIEND_EVENT.equals(event.info)) {
             Log.e("tag", "好友列表更新并缓存");
-            ((FriendPresenter1) presenter).getCacheFriends(false);
+            presenter.getCacheFriends(false);
         }
     }
 
@@ -229,7 +228,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
              * 拉取最新的好友列表并同步到最新，并且只有好友列表才有初次loading
              */
             Log.e(TAG, "reloadWhenDataChanged: contactselect");
-            ((FriendPresenter1) presenter).getCacheFriends(false);
+            presenter.getCacheFriends(false);
         }
     }
 
@@ -336,4 +335,8 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
         mContactsAdp.notifyDataSetChanged();
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
 }

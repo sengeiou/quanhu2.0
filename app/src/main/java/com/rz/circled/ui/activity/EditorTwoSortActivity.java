@@ -76,4 +76,9 @@ public class EditorTwoSortActivity extends BaseActivity implements AdapterView.O
         currentId = sortList.get(position).getId();
         sortAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

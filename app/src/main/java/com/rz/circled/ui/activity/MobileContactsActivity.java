@@ -19,7 +19,6 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.LetterContactsAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
-import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.widget.SideBar;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
@@ -40,6 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MobileContactsActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+
     @BindView(R.id.id_content_listv)
     ListView mListview;
     @BindView(R.id.layout_main)
@@ -55,6 +55,7 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
      * 所有被匹配过的本地通讯录好友
      */
     private List<FriendInformationBean> mMoblieAllFriends = new ArrayList<>();
+
 
     private Dialog dialog;
     protected IPresenter presenter;
@@ -218,6 +219,11 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
                     .build()
                     .show();
         }
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }
 

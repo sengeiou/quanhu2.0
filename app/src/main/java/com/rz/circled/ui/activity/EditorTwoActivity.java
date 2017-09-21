@@ -537,6 +537,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     private class OnTitleRightClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {

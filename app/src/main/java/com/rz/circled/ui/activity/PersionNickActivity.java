@@ -12,9 +12,13 @@ import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,6 +76,7 @@ public class PersionNickActivity extends BaseActivity implements View.OnClickLis
         super.updateView(t);
         Session.setUserName(t.toString());
         setResult(RESULT_CODE1);
+        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
         finish();
     }
 
@@ -127,6 +132,18 @@ public class PersionNickActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+
+    @Override
+    public void refreshPage() {
 
     }
 }

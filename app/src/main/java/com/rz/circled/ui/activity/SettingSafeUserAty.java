@@ -197,4 +197,9 @@ public class SettingSafeUserAty extends BaseActivity {
             mEditIdCard.setText(StringUtils.replaceSubString(idCard, 2, 2));
         }
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

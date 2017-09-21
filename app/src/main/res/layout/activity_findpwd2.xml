@@ -111,6 +111,7 @@
                                 android:src="@drawable/ic_clear"
                                 android:visibility="gone"
                                 android:layout_marginTop="@dimen/px58"
+                                android:layout_centerVertical="true"
                                 />
 
                             <ImageView
@@ -124,6 +125,7 @@
                                 android:src="@mipmap/pwd_see"
                                 android:visibility="gone"
                                 android:layout_marginTop="@dimen/px58"
+                                android:layout_centerVertical="true"
                                 />
 
                             <View

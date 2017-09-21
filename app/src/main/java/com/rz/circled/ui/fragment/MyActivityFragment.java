@@ -89,4 +89,9 @@ public class MyActivityFragment extends BaseFragment {
     public void initData() {
 
     }
+
+    @Override
+    public void refreshPage() {
+
+    }
 }

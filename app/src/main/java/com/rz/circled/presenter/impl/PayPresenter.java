@@ -91,6 +91,8 @@ public class PayPresenter extends AbsPresenter {
     private ApiService mUserService;
 
     private boolean flag;
+    //记录验证支付密码的免密
+    private String mCheckPayPw;
 
     public PayPresenter(boolean flag) {
         this.flag = flag;
@@ -177,7 +179,6 @@ public class PayPresenter extends AbsPresenter {
         });
     }
 
-
     /**
      * 微信支付
      */
@@ -239,49 +240,6 @@ public class PayPresenter extends AbsPresenter {
                             handler.sendMessage(msg);
                         }
                     });
-        }
-    }
-
-    /**
-     * 支付宝支付回调
-     */
-    private class AliPayHandler extends Handler {
-
-        private WeakReference<PayPresenter> weakref;
-
-        public AliPayHandler(PayPresenter presenter) {
-            this.weakref = new WeakReference<>(presenter);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case SDK_ALIAY: {
-                    String str = (String) msg.obj;
-                    PayResult payResult = new PayResult(str);
-                    String result = payResult.getResult();
-                    String resultStatus = payResult.getResultStatus();
-                    if (TextUtils.equals(resultStatus, ALIPAY_STATE_SUCCESS)) {
-                        //TODO 支付成功
-                        mView.onLoadingStatus(CommonCode.PayCode.PAY_SUCCESS);
-                    } else {
-                        if (TextUtils.equals(resultStatus, ALIPAY_STATE_CONFIRMING)) {
-                            //TODO 支付结果确认中
-                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CONFIRM);
-                        } else if (TextUtils.equals(resultStatus, ALIPAY_STATE_CANCEL)) {
-                            //TODO 用户支付取消
-                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CANDEL);
-                        } else {
-                            //TODO 支付失败
-                            mView.onLoadingStatus(CommonCode.PayCode.PAY_FAIL);
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
         }
     }
 
@@ -780,9 +738,6 @@ public class PayPresenter extends AbsPresenter {
         });
     }
 
-    //记录验证支付密码的免密
-    private String mCheckPayPw;
-
     public void hideInputMethod() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getApplicationWindowToken(), 0);
@@ -940,5 +895,48 @@ public class PayPresenter extends AbsPresenter {
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.check_fail));
             }
         });
+    }
+
+    /**
+     * 支付宝支付回调
+     */
+    private class AliPayHandler extends Handler {
+
+        private WeakReference<PayPresenter> weakref;
+
+        public AliPayHandler(PayPresenter presenter) {
+            this.weakref = new WeakReference<>(presenter);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case SDK_ALIAY: {
+                    String str = (String) msg.obj;
+                    PayResult payResult = new PayResult(str);
+                    String result = payResult.getResult();
+                    String resultStatus = payResult.getResultStatus();
+                    if (TextUtils.equals(resultStatus, ALIPAY_STATE_SUCCESS)) {
+                        //TODO 支付成功
+                        mView.onLoadingStatus(CommonCode.PayCode.PAY_SUCCESS);
+                    } else {
+                        if (TextUtils.equals(resultStatus, ALIPAY_STATE_CONFIRMING)) {
+                            //TODO 支付结果确认中
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CONFIRM);
+                        } else if (TextUtils.equals(resultStatus, ALIPAY_STATE_CANCEL)) {
+                            //TODO 用户支付取消
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_CANDEL);
+                        } else {
+                            //TODO 支付失败
+                            mView.onLoadingStatus(CommonCode.PayCode.PAY_FAIL);
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
     }
 }

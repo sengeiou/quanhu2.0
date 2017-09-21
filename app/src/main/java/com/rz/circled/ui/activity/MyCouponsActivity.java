@@ -69,6 +69,11 @@ public class MyCouponsActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void refreshPage() {
+
+    }
+
     private class CouponsAdapter extends FragmentStatePagerAdapter {
 
         private final int[] itemName;
