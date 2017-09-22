@@ -22,6 +22,7 @@ import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.LoginWayModel;
+import com.rz.httpapi.bean.MessFreeBean;
 import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.MoreFamousModel;
 import com.rz.httpapi.bean.MyLevelAcountBean;
@@ -948,8 +949,9 @@ public interface ApiService {
      * 获取登录方式
      */
     @FormUrlEncoded
-    @POST(ApiPay.GET_LOGIN_METHOD)
-    Call<ResponseData<LoginTypeBean>> loginMethod(
+    @POST(APIUser.LOGIN_METHOD)
+    Call<ResponseData<List<LoginTypeBean>>> loginMethod(
+            @Field("act") int act,
             @Field("custId") String custId
     );
 
@@ -1316,6 +1318,16 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("pushStatus") int pushStatus
 
+    );
+    /**
+     * 查询消息免打扰
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.QUERY_Message_Free)
+    Observable<ResponseData<MessFreeBean>> queryMessFree(
+            @Field("custId") String custId
     );
 
 }

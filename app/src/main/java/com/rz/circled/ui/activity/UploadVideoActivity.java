@@ -106,7 +106,7 @@ public class UploadVideoActivity extends BaseActivity {
             Intent audio = new Intent(mContext, VideoChooseActivity.class);
             startActivityForResult(audio, SYSTEM_REQUEST_VIDEO);
         } else {
-            EasyPermissions.requestPermissions(mContext, "悠然一指要使用摄像头,读取手机状态,使用sd卡权限", RC_CAMERA_PERM, perms);
+            EasyPermissions.requestPermissions(mContext, "圈乎要使用摄像头,读取手机状态,使用sd卡权限", RC_CAMERA_PERM, perms);
         }
     }
 
@@ -131,7 +131,7 @@ public class UploadVideoActivity extends BaseActivity {
                 e.printStackTrace();
             }
         } else {
-            EasyPermissions.requestPermissions(mContext, "悠然一指要使用摄像头,读取手机状态,使用sd卡权限", RC_EXTENER, perms);
+            EasyPermissions.requestPermissions(mContext, "圈乎要使用摄像头,读取手机状态,使用sd卡权限", RC_EXTENER, perms);
         }
     }
 
@@ -346,7 +346,7 @@ public class UploadVideoActivity extends BaseActivity {
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this, "悠然一指要使用摄像头,读取手机状态,使用sd卡权限，否则app可能无法正常运行")
+            new AppSettingsDialog.Builder(this, "圈乎要使用摄像头,读取手机状态,使用sd卡权限，否则app可能无法正常运行")
                     .setPositiveButton(getString(R.string.setting))
                     .setNegativeButton(getString(R.string.cancel), null /* click listener */)
                     .setRequestCode(requestCode)

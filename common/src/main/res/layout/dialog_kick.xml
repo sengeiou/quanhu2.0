@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/id_layout_check_pwd"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/transparent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_pop_white_btn"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minEms="10"
+            android:paddingBottom="@dimen/px70"
+            android:paddingLeft="@dimen/px40"
+            android:paddingRight="@dimen/px40"
+            android:paddingTop="@dimen/px70"
+            android:singleLine="false"
+            android:text="@string/kick_hint"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/font_48"/>
+
+        <View
+            style="@style/line_horizontal_gray_s"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/tv_kick_dialog_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bg_left_bottom_roller_f5"
+                android:gravity="center"
+                android:padding="@dimen/px30"
+                android:text="@string/kick_again_login"
+                android:textColor="@color/txt_common_dialog"
+                android:textSize="@dimen/font_48"/>
+
+            <View
+                style="@style/line_vertical_gray_s"/>
+
+            <TextView
+                android:id="@+id/tv_kick_dialog_right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_bg_right_bottom_roller_f5"
+                android:gravity="center"
+                android:padding="@dimen/px30"
+                android:text="@string/kick_exit_app"
+                android:textColor="@color/txt_common_dialog"
+                android:textSize="@dimen/font_48"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

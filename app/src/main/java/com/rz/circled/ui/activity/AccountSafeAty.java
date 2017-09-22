@@ -39,7 +39,6 @@ import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.umeng.socialize.UMShareAPI;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -283,7 +282,6 @@ public class AccountSafeAty extends BaseActivity {
 
     @Override
     public void initData() {
-        EventBus.getDefault().register(this);
         //获取登录方式
         List<LoginWayModel> mWays = (List<LoginWayModel>) mAccountPresenter.getCacheData();
         if (null != mWays && !mWays.isEmpty()) {
@@ -300,7 +298,6 @@ public class AccountSafeAty extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

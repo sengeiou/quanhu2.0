@@ -85,7 +85,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.rz.circled.widget.CommomUtils.trackUser;
+import static com.rz.common.utils.SystemUtils.trackUser;
+
 
 /**
  * Created by Gsm on 2017/8/29.

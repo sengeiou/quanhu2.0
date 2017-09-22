@@ -2,6 +2,7 @@ package com.rz.common.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,11 +24,18 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
+import com.rz.common.ui.view.KickDialog;
 import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.widget.SwipeBackLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -55,6 +64,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     private InputMethodManager mImm;
 
+    private boolean isForeground = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +91,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         setRefreshListener(this);
         initView();
         initData();
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     public void initPresenter() {
@@ -627,11 +640,28 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     }
     //-------------------------------点击editText以外的区域end-----------------------------------//
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isForeground = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isForeground = false;
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mLoadView != null)
             mLoadView = null;
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
 
@@ -649,6 +679,45 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      */
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         Log.d(TAG, "onPermissionsDenied");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onKickEvent(KickEvent kickEvent) {
+        if (isForeground) {
+            //弹窗重新登录
+            Session.clearShareP();
+            final KickDialog kickDialog = new KickDialog(this) {
+
+                @Override
+                public void onClick(View v) {
+                    if (v.getId() == R.id.tv_kick_dialog_left) {
+                        try {
+                            String className = "com.rz.circled.ui.activity.LoginActivity";
+                            Class<?> aClass = Class.forName(className);
+                            startActivity(new Intent(mContext, aClass));
+                            finish();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.exit(0);
+                    }
+                    closeDialog();
+                }
+            };
+            kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                @Override
+                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+            kickDialog.setCancelable(false);
+            kickDialog.showDialog();
+        }
     }
 
 }

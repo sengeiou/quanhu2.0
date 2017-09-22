@@ -40,6 +40,7 @@ import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 import static com.rz.circled.BuildConfig.WebHomeBaseUrl;
+import static com.rz.common.utils.SystemUtils.trackUser;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -86,12 +87,14 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void call(Void aVoid) {
                 //跳搜索界面
+                trackUser("入口","首页","搜索");
                 startActivity(new Intent(mActivity, SearchActivity.class));
             }
         });
         RxView.clicks(v.findViewById(R.id.iv_mess)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
+                trackUser("入口","首页","消息");
                 //跳最近联系人界面
                 startActivity(new Intent(mActivity, RecentContactActivity.class));
             }
@@ -99,7 +102,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
-                //跳消息界面
+                //跳发布
+                trackUser("入口","首页","发布按钮");
                 WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
             }
         });

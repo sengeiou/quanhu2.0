@@ -13,13 +13,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
-import com.google.gson.JsonObject;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
-import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.pay.PayResult;
 import com.rz.circled.presenter.AbsPresenter;
 import com.rz.circled.ui.activity.SetPayPassAty;
@@ -39,6 +36,7 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.AccountBean;
@@ -47,8 +45,6 @@ import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
-
-import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

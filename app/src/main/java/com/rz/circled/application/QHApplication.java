@@ -26,6 +26,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.util.Util;
+import com.litesuits.common.assist.Network;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.NimStrings;
 import com.netease.nimlib.sdk.Observer;
@@ -46,6 +47,7 @@ import com.netease.nimlib.sdk.team.model.UpdateTeamAttachment;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.helper.YunXinHelper;
+import com.rz.circled.http.MyHandleResponse;
 import com.rz.circled.js.BackHandler;
 import com.rz.circled.js.BackHomeHandler;
 import com.rz.circled.js.CreateTeamHandler;
@@ -86,9 +88,13 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.event.KickEvent;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.SystemUtils;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.sgt.jsbridge.RegisterList;
 import com.tencent.bugly.Bugly;
 import com.umeng.socialize.Config;
@@ -111,6 +117,9 @@ import com.yryz.yunxinim.uikit.MessageFilterListener;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.contact.core.query.PinYin;
 import com.yryz.yunxinim.uikit.session.viewholder.MsgViewHolderThumbBase;
+import com.zhuge.analysis.stat.ZhugeSDK;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
@@ -119,6 +128,7 @@ import java.util.concurrent.TimeUnit;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -154,6 +164,9 @@ public class QHApplication extends BaseApplication {
     }
 
     private void init() {
+        //初始化诸葛io
+        ZhugeSDK.getInstance().openLog();
+        ZhugeSDK.getInstance().init(this);
         configOkHttp();
         configExo();
         configBugly();
@@ -316,6 +329,36 @@ public class QHApplication extends BaseApplication {
         setCacheInterceptor(builder);
         setTimeout(builder);
         Http.initClient(builder.build(), BuildConfig.BaseUrl);
+        BaseCallback.cls = MyHandleResponse.class;
+    }
+
+    public static class HandleResponse implements BaseCallback.interceptorResponse {
+
+        private static HandleResponse handleResponse;
+
+        private HandleResponse() {
+
+        }
+
+        public static HandleResponse newInstance() {
+            if (handleResponse == null)
+                handleResponse = new HandleResponse();
+            return handleResponse;
+        }
+
+        @Override
+        public void handleReson(retrofit2.Response response) {
+            if (response != null) {
+                Object object = response.body();
+                if (object != null && object instanceof ResponseData) {
+                    ResponseData responseData = (ResponseData) object;
+                    boolean needProcess = HandleRetCode.handlerExpire(responseData);
+                    if (needProcess) {
+                        EventBus.getDefault().post(new KickEvent(responseData.getRet()));
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -411,50 +454,50 @@ public class QHApplication extends BaseApplication {
      * @param builder
      */
     private static void setCacheInterceptor(OkHttpClient.Builder builder) {
-//        if (builder != null) {
-//            Interceptor cacheInterceptor = new Interceptor() {
-//                @Override
-//                public Response intercept(Chain chain) throws IOException {
-//                    Request request = chain.request();
-//                    Context context = getContext();
-//                    if (context != null) {
-//                        if (!Network.isAvailable(context)) {
-//                            request = request.newBuilder()
-//                                    .cacheControl(CacheControl.FORCE_CACHE)
-//                                    .build();
-//                        }
-//
-//                        Response response = chain.proceed(request);
-//                        if (Network.isAvailable(context)) {
-//                            int maxAge = 0;
-//                            // 有网络时,设置缓存超时时间0个小时
-//                            response.newBuilder()
-//                                    .header("Cache-Control", "public, max-age=" + maxAge)
-//                                    .removeHeader("Pragma")
-//                                    .build();
-//                        } else {
-//                            // 无网络时,设置超时为4周
-//                            int maxStale = 60 * 60 * 24 * 3;
-//                            response.newBuilder()
-//                                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-//                                    .removeHeader("Pragma")
-//                                    .build();
-//                        }
-//                        return response;
-//                    } else {
-//                        //默认当作有网络处理
-//                        int maxAge = 0;
-//                        Response response = chain.proceed(request);
-//                        response.newBuilder()
-//                                .header("Cache-Control", "public, max-age=" + maxAge)
-//                                .removeHeader("Pragma")
-//                                .build();
-//                        return response;
-//                    }
-//                }
-//            };
-//            builder.addInterceptor(cacheInterceptor);
-//        }
+        if (builder != null) {
+            Interceptor cacheInterceptor = new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request();
+                    Context context = getContext();
+                    if (context != null) {
+                        if (!Network.isAvailable(context)) {
+                            request = request.newBuilder()
+                                    .cacheControl(CacheControl.FORCE_CACHE)
+                                    .build();
+                        }
+
+                        Response response = chain.proceed(request);
+                        if (Network.isAvailable(context)) {
+                            int maxAge = 0;
+                            // 有网络时,设置缓存超时时间0个小时
+                            response.newBuilder()
+                                    .header("Cache-Control", "public, max-age=" + maxAge)
+                                    .removeHeader("Pragma")
+                                    .build();
+                        } else {
+                            // 无网络时,设置超时为4周
+                            int maxStale = 60 * 60 * 24 * 3;
+                            response.newBuilder()
+                                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                                    .removeHeader("Pragma")
+                                    .build();
+                        }
+                        return response;
+                    } else {
+                        //默认当作有网络处理
+                        int maxAge = 0;
+                        Response response = chain.proceed(request);
+                        response.newBuilder()
+                                .header("Cache-Control", "public, max-age=" + maxAge)
+                                .removeHeader("Pragma")
+                                .build();
+                        return response;
+                    }
+                }
+            };
+            builder.addInterceptor(cacheInterceptor);
+        }
     }
 
 

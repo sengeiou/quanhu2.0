@@ -58,6 +58,10 @@ public class ApiPay {
      *  消息免打扰
      */
     static final String Message_Free = "v3/userConfig/update";
+    /**
+     *  查询消息免打扰
+     */
+    static final String QUERY_Message_Free = "v3/userConfig/get";
 
     /**
      * 绑定银行卡

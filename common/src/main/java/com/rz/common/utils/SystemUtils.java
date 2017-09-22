@@ -16,7 +16,9 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.rz.common.application.BaseApplication;
 import com.rz.common.permission.EasyPermissions;
+import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +47,7 @@ public class SystemUtils {
 
 
 //记录事件
-//        ZhugeSDK.getInstance().track(App.getContext(), text, eventObject);
+        ZhugeSDK.getInstance().track(BaseApplication.getContext(), text, eventObject);
 
     }
 

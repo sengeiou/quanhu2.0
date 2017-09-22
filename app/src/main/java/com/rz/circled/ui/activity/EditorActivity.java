@@ -1467,7 +1467,7 @@ public class EditorActivity extends BaseActivity implements View.OnClickListener
     public void onPermissionsDenied(int requestCode, List<String> perms) {
 //        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
 //            if (requestCode == RC_VIDEO_AND_EXTENER) {
-//                new AppSettingsDialog.Builder(this, "悠然一指要使用摄像头,读取手机状态,使用sd卡和录音权限，否则app可能无法正常运行")
+//                new AppSettingsDialog.Builder(this, "圈乎要使用摄像头,读取手机状态,使用sd卡和录音权限，否则app可能无法正常运行")
 //                        .setPositiveButton(getString(R.string.setting))
 //                        .setNegativeButton(getString(R.string.cancel), null /* click listener */)
 //                        .setRequestCode(requestCode)

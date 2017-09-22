@@ -36,7 +36,6 @@ import com.yryz.yunxinim.uikit.recent.viewholder.RecentContactAdapter;
 import com.yryz.yunxinim.uikit.recent.viewholder.ShareRecentViewHolder;
 import com.yryz.yunxinim.uikit.uinfo.UserInfoHelper;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -83,9 +82,6 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
 
         setTitleText(R.string.share_youran_chat);
 
@@ -194,9 +190,6 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
 

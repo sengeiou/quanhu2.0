@@ -14,13 +14,8 @@ import android.widget.TextView;
 
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.httpapi.bean.RewardGiftModel;
-import com.zhuge.analysis.stat.ZhugeSDK;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -28,21 +23,6 @@ import java.util.List;
  * Created by rzw2 on 2016/10/9.
  */
 public class CommomUtils {
-    //诸葛io通用工具
-    public static void trackUser(String text, String name, String value) {
-        //定义与事件相关的属性信息
-        JSONObject eventObject = new JSONObject();
-        try {
-            eventObject.put(name, value);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-//记录事件
-        ZhugeSDK.getInstance().track(BaseApplication.getContext(), text, eventObject);
-
-    }
 
     public static void showNoDataTip(Activity mActivity) {
         TextView idRefreshStatusTxt = (TextView) mActivity.findViewById(R.id.id_refresh_status_txt);

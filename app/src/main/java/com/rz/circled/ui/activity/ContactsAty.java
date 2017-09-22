@@ -31,7 +31,6 @@ import com.yryz.yunxinim.main.activity.SystemMessageActivity;
 import com.yryz.yunxinim.main.activity.TeamListActivity;
 import com.yryz.yunxinim.uikit.contact.core.item.ItemTypes;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -183,14 +182,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

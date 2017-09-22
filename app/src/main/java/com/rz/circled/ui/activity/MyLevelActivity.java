@@ -78,6 +78,7 @@ public class MyLevelActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText(R.string.my_level);
+        setTitleRightText("升级攻略");
         Glide.with(mContext).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mContext)).placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(ivMyLevelIcon);
         lvLevel.setAdapter(mAdapter = new MyLevelAdapter(mContext, R.layout.item_level));
         layoutRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {

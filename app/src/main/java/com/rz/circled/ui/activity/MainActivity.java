@@ -49,6 +49,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.rz.common.utils.SystemUtils.trackUser;
+
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged, ReminderManager.UnreadNumChangedCallback {
 
@@ -58,7 +60,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private ClickCounter mCounter;
     private Toast mToast;
 
-    private String[] tabTags = new String[]{"home", "find", "reward", "privateCircle", "mine"};
+    private String[] tabTags = new String[]{"首页", "发现", "悬赏", "私圈", "我的"};
 
 
     @Override
@@ -142,6 +144,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onTabChanged(String s) {
+        trackUser("入口","导航栏",s);
+
 
     }
 
@@ -415,4 +419,5 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void refreshPage() {
 
     }
+
 }

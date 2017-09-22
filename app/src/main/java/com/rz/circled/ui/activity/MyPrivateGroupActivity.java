@@ -21,7 +21,6 @@ import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class MyPrivateGroupActivity extends BaseActivity {
         Intent i = new Intent(context, MyPrivateGroupActivity.class);
         i.putExtra(IntentKey.EXTRA_POSITION, index);
         context.startActivity(i);
-}
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -67,15 +66,11 @@ public class MyPrivateGroupActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe

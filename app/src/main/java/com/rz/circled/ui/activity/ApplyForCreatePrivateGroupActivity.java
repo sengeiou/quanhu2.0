@@ -32,7 +32,6 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -97,8 +96,6 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         setTitleRightText(R.string.submit);
         setTitleRightListener(new View.OnClickListener() {
             @Override
@@ -177,8 +174,6 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @OnClick({R.id.btn_update_pic, R.id.btn_group, R.id.btn_protocol, R.id.btn_way})

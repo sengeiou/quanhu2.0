@@ -497,12 +497,12 @@ public class Session {
         Session.user_name = user_name;
         SysSharePres.getInstance().setUserName(user_name);
     }
-    public static void setMessFree(boolean isChecked) {
-        SysSharePres.getInstance().setMessFree(isChecked);
-    }
-    public static boolean getMessFree() {
-       return SysSharePres.getInstance().getMessFree();
-    }
+//    public static void setMessFree(boolean isChecked) {
+//        SysSharePres.getInstance().setMessFree(isChecked);
+//    }
+//    public static boolean getMessFree() {
+//       return SysSharePres.getInstance().getMessFree();
+//    }
 
     public static String getUserAccount() {
         return SysSharePres.getInstance().getUserAccount();

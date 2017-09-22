@@ -30,6 +30,7 @@ import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.MessFreeBean;
 import com.yryz.yunxinim.login.LogoutHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,7 +64,8 @@ public class SettingActivity extends BaseActivity {
     Button mExitBtn;
     @BindView(R.id.id_sb_mess)
     SwitchButton mIdSbMess;
-
+    MessFreeBean mMessFreeBean=new MessFreeBean();
+    private int pushState=1;
     /**
      * 缓存大小
      */
@@ -81,13 +83,14 @@ public class SettingActivity extends BaseActivity {
         super.initPresenter();
         presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
+        presenter.queryMessageFree();
     }
-boolean isCheck=false;
+
+    boolean isCheck = false;
+
     @Override
     public void initView() {
         setTitleText("设置");
-        isCheck = Session.getMessFree();
-        mIdSbMess.setChecked(isCheck);
         if (!Session.getUserIsLogin()) {
             mExitBtn.setVisibility(View.GONE);
 //            mAccountView.setVisibility(View.GONE);
@@ -96,21 +99,19 @@ boolean isCheck=false;
         mIdSbMess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isCheck){
-                    isCheck=false;
+                if (isCheck) {
+                    isCheck = false;
                     presenter.messageFree(0);
-                }else{
-                    isCheck=true;
+                } else {
+                    isCheck = true;
                     presenter.messageFree(1);
                 }
-                Session.setMessFree(isCheck);
             }
         });
     }
 
     @Override
     public void initData() {
-//        EventBus.getDefault().register(this);
 //
 //        /***** 获取升级信息 *****/
 //        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
@@ -167,8 +168,8 @@ boolean isCheck=false;
             case R.id.id_layout_send_friend_ll:
                 // TODO: 2017/9/14 等产品出文案,等侯军出下载链接页面后替换信息
                 ShareNewsAty.startShareNews(aty, new ShareModel(
-                                "悠然一指，一指进入你的圈子",
-                                "悠然一指(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
+                                "圈乎，一指进入你的圈子",
+                                "圈乎(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
                                 H5Address.ONLINE_REPORT),
                         IntentCode.Setting.SETTING_RESULT_CODE);
                 break;
@@ -195,8 +196,8 @@ boolean isCheck=false;
 //                        ((UpdateOrExitPresenter) presenter).ExitApp();
 //                        exitApp();
                         Session.clearShareP();
-                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+//                        startActivity(intent);
                         finish();
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
@@ -265,6 +266,9 @@ boolean isCheck=false;
 
     @Override
     public <T> void updateView(T t) {
+        mMessFreeBean= (MessFreeBean) t;
+        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
+
     }
 
     @Override
@@ -282,7 +286,6 @@ boolean isCheck=false;
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
         if (snsPresenter != null) {
             snsPresenter.detachView();
         }

@@ -198,17 +198,39 @@
 
                         </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/forget_pw_title"
+                            android:orientation="vertical"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="@dimen/px26"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/px72"
-                            android:gravity="center"
-                            android:id="@+id/textView2" />
+                            >
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/forget_pw_title"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="@dimen/px26"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/px72"
+                                android:gravity="center"
+                                android:id="@+id/textView2" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/bound_waring_txt"
+                                android:layout_marginTop="@dimen/px26"
+                                android:textColor="@color/color_999999"
+                                android:textSize="@dimen/font_34"
+                                android:gravity="center"
+                                android:id="@+id/second_title_txt"
+                                android:visibility="gone"
+                                />
+
+
+                        </LinearLayout>
 
                     </FrameLayout>
 
