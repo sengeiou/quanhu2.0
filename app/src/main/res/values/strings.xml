@@ -158,7 +158,7 @@
     <string name="all_point">奖励值</string>
     <string name="duihuan_yrb">您暂无可兑换悠然币</string>
     <string name="tixian_yrb">您暂无可提现悠然币</string>
-    <string name="yizhi">悠然一指</string>
+    <string name="yizhi">圈乎</string>
     <string name="account_balance">账户余额</string>
     <string name="my_income_money">账户余额：</string>
     <string name="youran_currency">悠然币</string>
@@ -190,8 +190,8 @@
     <string name="change_bank_card">更换银行卡</string>
     <string name="setting_success">设置成功</string>
     <string name="unbind_card_success">解绑成功</string>
-    <string name="location_permission_run">悠然一指要使用定位权限，否则app可能无法正常运行</string>
-    <string name="carme_sd_permission">悠然一指要使用摄像头,使用sd卡权限</string>
+    <string name="location_permission_run">圈乎要使用定位权限，否则app可能无法正常运行</string>
+    <string name="carme_sd_permission">圈乎要使用摄像头,使用sd卡权限</string>
 
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
@@ -204,6 +204,8 @@
     <string name="max_size_text_hint">内容不能超过%1$d个字</string>
     <string name="user_create_private_group_num">创建的私圈  (%1$d)</string>
     <string name="user_join_private_group_num">加入的私圈  (%1$d)</string>
+    <string name="private_group">私圈</string>
+    <string name="private_group_all">全部私圈</string>
     <string name="private_group_no_more">没有更多了</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
     <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
@@ -229,6 +231,7 @@
 
     <!--消息-->
     <string name="announcement">通知公告</string>
+    <string name="news">消息</string>
     <string name="system_information">系统消息</string>
     <string name="account_information">账户消息</string>
     <string name="interactive_information">互动消息</string>
@@ -240,6 +243,24 @@
     <string name="news_interactive_tab_group">私圈</string>
     <string name="news_interactive_tab_activity">活动</string>
     <string name="news_no_data_now">暂时没有消息</string>
+
+    <!--聊天-->
+    <string name="chat">聊天</string>
+    <string name="create_group">创建讨论组</string>
+    <string name="search_team">搜索群</string>
+    <string name="clear_confirmation">确定清空聊天记录</string>
+    <string name="chat_setting">聊天设置</string>
+    <string name="share_youran_chat">分享到悠然聊天</string>
+
+    <!--分享-->
+    <string name="share_object">选择分享对象</string>
+    <string name="share_to_friend">选择分享好友</string>
+    <string name="good_friend">好友</string>
+    <string name="recent_contacts">最近联系的人</string>
+    <string name="share_to_other">分享给</string>
+    <string name="leave_message_to_friend">给朋友留言</string>
+    <string name="add_qh_square">邀请您的好友，加入我们的圈乎吧</string>
+    <string name="input_nick">输入昵称和手机号搜索</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -276,7 +297,6 @@
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
     <string name="send_gift_success">礼物打赏成功</string>
-
 
     <!-- 登录-->
     <string name="welcome_login">欢迎来到圈乎！</string>
@@ -342,7 +362,7 @@
     <string name="forget_pw_title">忘记密码</string>
     <string name="forget_next">下一步</string>
     <string name="forget_register_phone">手机号注册</string>
-    <string name="forget_no_regist_introduce">您还没有注册悠然一指，现在开通：</string>
+    <string name="forget_no_regist_introduce">您还没有注册圈乎，现在开通：</string>
     <string name="forget_no_agree">请同意相关协议</string>
     <string name="change_pw_success">重置密码成功</string>
     <string name="reset_fail">重置失败</string>
@@ -486,7 +506,7 @@
     <string name="at_add_download">有人@你，来玩圈乎吧！喜欢什么，就加入什么圈子。内容丰富，玩法多样！点击http://t.cn/RV2a6cS下载，我在圈乎等你哦！</string>
     <string name="friends">已是好友</string>
     <string name="no_contacts_permissions_hint">由于您的手机未能开启访问通讯录的权限\n此处无法获取您的手机联系人</string>
-    <string name="open_contacts_permissions_hint">请通过手机设置中\n开启“悠然一指”访问通讯录后重新尝试</string>
+    <string name="open_contacts_permissions_hint">请通过手机设置中\n开启“圈乎”访问通讯录后重新尝试</string>
     <string name="search_current_user">搜索当前页面下的用户</string>
     <string name="already_friend">已是好友</string>
     <string name="agree">同意</string>
@@ -683,15 +703,6 @@
     <string name="video_max_length">视频最大时长15秒，您的视频过大</string>
     <string name="video_path_error">视频地址获取失败</string>
 
-    <string name="share_object">选择分享对象</string>
-    <string name="good_friend">好友</string>
-    <string name="recent_contacts">选择最近联系人</string>
-
-
-    <string name="share_to_other">分享给</string>
-    <string name="leave_message_to_friend">给朋友留言</string>
-
-
     <string name="keyword_search">请输入关键字进行搜索</string>
     <string name="select_group">选择群</string>
     <string name="team_search">输入群名称搜索</string>
@@ -699,9 +710,6 @@
     <string name="taolun_search">输入讨论组名称搜索</string>
     <string name="app_had_at">"[有人@我] "</string>
     <string name="app_lucky_money">"[红包] "</string>
-
-    <string name="add_qh_square">邀请您的好友，加入我们的圈乎广场吧</string>
-    <string name="input_nick">输入昵称和手机号搜索</string>
 
     <string name="choose_prove_identity">选择认证身份</string>
     <string name="true_name">真实姓名</string>
@@ -757,4 +765,5 @@
 
     <string name="call_phone_authorization">请授权拨打电话！</string>
     <string name="authorization_fail">授权失败！</string>
+    <string name="pay_fail">支付失败</string>
 </resources>

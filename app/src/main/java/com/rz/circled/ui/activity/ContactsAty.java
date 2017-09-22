@@ -31,7 +31,6 @@ import com.yryz.yunxinim.main.activity.SystemMessageActivity;
 import com.yryz.yunxinim.main.activity.TeamListActivity;
 import com.yryz.yunxinim.uikit.contact.core.item.ItemTypes;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -121,11 +120,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         mListview.setOnItemClickListener(this);
         if (Session.isNeedTeam()) {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px410), 0, 0);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px540), 0, 0);
             mLayoutNone.setLayoutParams(lp);
         } else {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px900), 0, 0);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px1030), 0, 0);
             mLayoutNone.setLayoutParams(lp);
         }
         setFocusNum(Session.getUserFocusNum());
@@ -183,14 +182,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

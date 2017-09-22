@@ -41,7 +41,7 @@
                     android:layout_width="@dimen/px98"
                     android:layout_height="@dimen/px98"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_default_avatar_personal"/>
+                    android:src="@mipmap/ic_default_avatar_big"/>
 
                 <TextView
                     android:id="@+id/share_user_name"
@@ -78,7 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@color/color_main"/>
+                        android:src="@mipmap/ic_default_bg"/>
 
                     <ImageView
                         android:id="@+id/share_media_img_type"
@@ -168,7 +168,7 @@
                 android:background="?selectableItemBackground"
                 android:padding="@dimen/px30"
                 android:text="@string/share"
-                android:textColor="#1bc2b8"
+                android:textColor="@color/font_color_blue"
                 android:textSize="@dimen/font_46"/>
         </LinearLayout>
     </LinearLayout>

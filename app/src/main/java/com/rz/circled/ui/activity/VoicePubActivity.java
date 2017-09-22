@@ -345,7 +345,7 @@ public class VoicePubActivity extends BaseActivity {
                 processStartRecord();
             }
         } else {
-            EasyPermissions.requestPermissions(this, "悠然一指要使用录音功能，读写存储卡权限", RC_AUDIO_AND_EXTENER, perms);
+            EasyPermissions.requestPermissions(this, "圈乎要使用录音功能，读写存储卡权限", RC_AUDIO_AND_EXTENER, perms);
         }
 
     }
@@ -364,7 +364,7 @@ public class VoicePubActivity extends BaseActivity {
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this, "悠然一指要使用录音功能，读写存储卡权限，否则app可能无法正常运行")
+            new AppSettingsDialog.Builder(this, "圈乎要使用录音功能，读写存储卡权限，否则app可能无法正常运行")
                     .setPositiveButton(getString(R.string.setting))
                     .setNegativeButton(getString(R.string.cancel), null /* click listener */)
                     .setRequestCode(RC_SETTINGS_SCREEN)

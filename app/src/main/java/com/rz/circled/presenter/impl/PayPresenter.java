@@ -13,13 +13,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
-import com.google.gson.JsonObject;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
-import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.pay.PayResult;
 import com.rz.circled.presenter.AbsPresenter;
 import com.rz.circled.ui.activity.SetPayPassAty;
@@ -39,6 +36,7 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.AccountBean;
@@ -47,8 +45,6 @@ import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
-
-import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -504,7 +500,7 @@ public class PayPresenter extends AbsPresenter {
                         }
                     } else {
                         HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -815,18 +811,15 @@ public class PayPresenter extends AbsPresenter {
                             }
 
                             if (!Session.getUserIsLogin()) {
-                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.please_go_login));
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.please_go_login));
                                 return;
                             }
                             if (!Session.getUserMoneyState()) {
-                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.user_money_freeze));
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.user_money_freeze));
                                 return;
                             }
                             if (mPayMoney > mUserMoney) {
-                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.money_less));
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.money_less));
                                 return;
                             }
                             if (Session.getUserSetpaypw()) {
@@ -855,6 +848,7 @@ public class PayPresenter extends AbsPresenter {
                                 mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.auth_remind_content));
                                         Intent intent = new Intent(activity, SetPayPassAty.class);
                                         intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
                                         activity.startActivity(intent);

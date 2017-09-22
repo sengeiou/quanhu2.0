@@ -433,8 +433,11 @@
         <activity
             android:name=".ui.activity.UserInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
-
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.ChatSettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"
@@ -557,7 +560,7 @@
         <activity
             android:name=".ui.activity.SocializationShareAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.NavigateOpenActivity"
             android:screenOrientation="portrait"

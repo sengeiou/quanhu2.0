@@ -41,7 +41,6 @@ import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -114,8 +113,6 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         Intent intent = getIntent();
         rewardInfoBean = (RewardInfoBean) intent.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
     }
@@ -130,8 +127,6 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -271,32 +266,8 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
                 break;
             //充值
             case R.id.tv_transfer_gift_recharge:
-//                if (isLogin()) {
-//                    Intent intent = new Intent(aty, RechargeMoneyAty.class);
-//                    startActivityForResult(intent, IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE);
-//                }
-                Observable<ResponseData<UserInfoModel>> observable = Http.getApiService(ApiPayService.class).searchUserNews(Session.getUserId());
-                Http.getApiService(ApiPayService.class).searchUserNews(Session.getUserId())
-                        .map(new Func1<ResponseData<UserInfoModel>, UserInfoModel>() {
-                            @Override
-                            public UserInfoModel call(ResponseData<UserInfoModel> userInfoModelResponseData) {
-                                return userInfoModelResponseData.getData();
-                            }
-                        })
-                        .filter(new Func1<UserInfoModel, Boolean>() {
-                            @Override
-                            public Boolean call(UserInfoModel userInfoModel) {
-                                return Session.getUserIsLogin();
-                            }
-                        })
-                        .filter(new Func1<UserInfoModel, Boolean>() {
-                            @Override
-                            public Boolean call(UserInfoModel userInfoModel) {
-                                return Session.getUserMoneyState();
-                            }
-                        })
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
+                Intent intent = new Intent(aty, RechargeMoneyAty.class);
+                startActivityForResult(intent, IntentCode.RechargeMoney.RECHARGE_REQUEST_CODE);
                 break;
             //支付
             case R.id.tv_transfer_gift_pay:

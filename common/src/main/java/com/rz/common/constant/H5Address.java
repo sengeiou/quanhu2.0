@@ -27,4 +27,6 @@ public interface H5Address {
     //用户服务协议
     String USER_HELP = H5_HEAD + "quanhu/doc/android_list/index.html";
 
+    String CONECT_US = H5_HEAD +"quanhu/doc/contact_us/index.html";
+
 }

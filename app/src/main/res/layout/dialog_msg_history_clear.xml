@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/px100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_pop_white_btn"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_tv_message"
+            style="@style/DefaultTvStyle"
+            android:paddingBottom="@dimen/px120"
+            android:paddingLeft="@dimen/px106"
+            android:paddingRight="@dimen/px106"
+            android:paddingTop="@dimen/px142"
+            android:text="@string/clear_confirmation"
+            android:textColor="@color/font_gray_xl"
+            android:textSize="@dimen/font_46" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px2"
+            android:background="@color/color_DDDDDD" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_round_bottom_gray"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_shine_cancel_txt"
+                style="@style/DefaultTvStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/px30"
+                android:text="@string/cancel"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/font_44" />
+
+            <View
+                android:layout_width="@dimen/px2"
+                android:layout_height="match_parent"
+                android:background="@color/color_DDDDDD" />
+
+            <TextView
+                android:id="@+id/id_shine_sure_txt"
+                style="@style/DefaultTvStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/px30"
+                android:text="@string/press"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/font_44" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

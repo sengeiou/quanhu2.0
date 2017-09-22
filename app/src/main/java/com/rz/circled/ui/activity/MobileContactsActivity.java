@@ -29,7 +29,6 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.DialogUtils;
 import com.rz.httpapi.bean.FriendInformationBean;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -124,9 +123,9 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
                     Uri uri = Uri.parse("smsto:" + info.getCustPhone());
                     Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
                     //                    sendIntent.putExtra("sms_body",
-//                            "我在使用好看、好玩、又能赚钱的“悠然一指”APP，这是一个好友越多，越好玩，越赚钱的平台！现分享并邀请你加入“悠然一指”，请在手机应用商店中下载“悠然一指”。\n"
-//                                    + "我在“悠然一指”的昵称是" + Session.getUserName() + "，你可在“悠然一指---我的---通讯录---添加好友”中搜索我的昵称，添加我为好友。\n"
-//                                    + "记得也去邀请你的好友来加入“悠然一指”哦！\n"
+//                            "我在使用好看、好玩、又能赚钱的“圈乎”APP，这是一个好友越多，越好玩，越赚钱的平台！现分享并邀请你加入“圈乎”，请在手机应用商店中下载“圈乎”。\n"
+//                                    + "我在“圈乎”的昵称是" + Session.getUserName() + "，你可在“圈乎---我的---通讯录---添加好友”中搜索我的昵称，添加我为好友。\n"
+//                                    + "记得也去邀请你的好友来加入“圈乎”哦！\n"
 //                                    + "让我们在娱乐中一起去赚钱吧！");
                     sendIntent.putExtra("sms_body",
                             getString(R.string.at_add_download));
@@ -161,13 +160,11 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.contacts_permissiongs_run), RC_LOCATION_CONTACTS_PERM, Manifest.permission.READ_CONTACTS);
         }
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

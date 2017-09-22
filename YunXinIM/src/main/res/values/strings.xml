@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">悠然一指</string>
+    <string name="app_name">圈乎</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="empty"></string>
@@ -238,6 +238,7 @@
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="other">其他</string>
+    <string name="introduction">个人简介：</string>
     <string name="phone_number">手机号码</string>
     <string name="set_head_image">设置头像</string>
     <string name="user_info_update_success">设置成功</string>

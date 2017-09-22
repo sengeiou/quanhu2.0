@@ -13,6 +13,7 @@ import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.team.constant.TeamFieldEnum;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.rz.common.cache.preference.Session;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.contact.activity.UserProfileActivity;
@@ -91,6 +92,10 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
 
         ((TextView) findViewById(R.id.create_team_layout).findViewById(R.id.textViewName)).setText("");
         HeadImageView addImage = (HeadImageView) findViewById(R.id.create_team_layout).findViewById(R.id.imageViewHeader);
+        if (Session.isNeedTeam())
+            addImage.setVisibility(View.VISIBLE);
+        else
+            addImage.setVisibility(View.GONE);
         addImage.setBackgroundResource(R.drawable.smiley_add_btn);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override

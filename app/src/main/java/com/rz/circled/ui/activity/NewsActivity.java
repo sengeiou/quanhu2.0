@@ -24,7 +24,6 @@ import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.NewsUnreadBean;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -63,6 +62,7 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.news);
         lv.setAdapter(mAdapter = new NewsOverviewAdapter(mContext, R.layout.item_news));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,8 +90,6 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         loadCacheData();
         loadData();
     }
@@ -99,8 +97,6 @@ public class NewsActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe

@@ -949,7 +949,7 @@ public class SysSharePres {
     }
 
     public boolean isNeedTeam() {
-        return mSharePres.getBoolean(NEED_TEAM, true);
+        return mSharePres.getBoolean(NEED_TEAM, false);
     }
 
     public void setNeedTeam(boolean needTeam) {

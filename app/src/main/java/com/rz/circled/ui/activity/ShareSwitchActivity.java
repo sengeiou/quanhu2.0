@@ -3,6 +3,7 @@ package com.rz.circled.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,8 @@ import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.ui.view.WorkImShareDialog;
+import com.rz.circled.widget.CommomUtils;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.MyListView;
@@ -33,7 +36,6 @@ import com.yryz.yunxinim.uikit.recent.viewholder.RecentContactAdapter;
 import com.yryz.yunxinim.uikit.recent.viewholder.ShareRecentViewHolder;
 import com.yryz.yunxinim.uikit.uinfo.UserInfoHelper;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -42,6 +44,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.rz.circled.widget.CommomUtils.trackUser;
+import static com.rz.common.constant.Constants.SWITCH_SHARE_SUCCESS;
 
 /**
  * Created by rzw2 on 2017/1/5.
@@ -53,6 +58,11 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     MyListView mRecentLv;
     @BindView(R.id.layout_recent)
     LinearLayout mLayoutRecent;
+    @BindView(R.id.id_tv_title)
+    TextView tvShareTitle;
+    @BindView(R.id.layout)
+    View layoutTeam;
+
     private RecentContactAdapter adapter;
     // data
     private List<RecentContact> items;
@@ -72,22 +82,16 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
 
-        ShareModel shareModel = (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA);
-        if (117 == shareModel.getFromPage()) {
-            ((TextView) findViewById(R.id.id_tv_title)).setText("选择邀请对象");
-            setTitleText("邀请聊天好友");
+        setTitleText(R.string.share_youran_chat);
+
+        if (Session.isNeedTeam()) {
+            tvShareTitle.setText(R.string.share_object);
+            layoutTeam.setVisibility(View.VISIBLE);
         } else {
-            setTitleText("分享到悠然聊天");
+            tvShareTitle.setText(R.string.share_to_friend);
+            layoutTeam.setVisibility(View.GONE);
         }
-
-//        if (!TextUtils.isEmpty(shareModel.getAppId())) {
-//            mLayoutRecent.setVisibility(View.GONE);
-//            mRecentLv.setVisibility(View.GONE);
-//        }
 
         items = new ArrayList<>();
         adapter = new RecentContactAdapter(ShareSwitchActivity.this, items, this);
@@ -169,15 +173,15 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_group_chat_rela1:
-//                trackUser("分享", "悠友圈分享", "群聊");
+                CommomUtils.trackUser("分享", "悠友圈分享", "群聊");
                 ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.ADVANCED_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
                 break;
             case R.id.id_group_discuss1:
-//                trackUser("分享", "悠友圈分享", "讨论组");
+                CommomUtils.trackUser("分享", "悠友圈分享", "讨论组");
                 ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.NORMAL_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
                 break;
             case R.id.id_group_friend1:
-//                trackUser("分享", "悠友圈分享", "好友");
+                CommomUtils.trackUser("分享", "悠友圈分享", "好友");
                 ShareFriendsListActivity.start(getApplicationContext(), (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
                 break;
         }
@@ -186,17 +190,14 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
-//        if (TextUtils.equals(SWITCH_SHARE_SUCCESS, event.key)) {
-//            finish();
-//        }
+        if (TextUtils.equals(SWITCH_SHARE_SUCCESS, event.key)) {
+            finish();
+        }
     }
 
     @Override

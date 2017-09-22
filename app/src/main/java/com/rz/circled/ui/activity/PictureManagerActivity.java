@@ -442,7 +442,7 @@ public class PictureManagerActivity extends BaseActivity implements OnItemClickL
                 Toasty.info(mContext, mContext.getString(R.string.personal_no_sd_card)).show();
             }
         } else {
-            EasyPermissions.requestPermissions(this, "悠然一指要调用摄像头", RC_CAMERA_PERM, Manifest.permission.CAMERA);
+            EasyPermissions.requestPermissions(this, "圈乎要调用摄像头", RC_CAMERA_PERM, Manifest.permission.CAMERA);
         }
 
     }
@@ -478,7 +478,7 @@ public class PictureManagerActivity extends BaseActivity implements OnItemClickL
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this, "悠然一指要使用摄像头,和sd卡权限，否则app可能无法正常运行")
+            new AppSettingsDialog.Builder(this, "圈乎要使用摄像头,和sd卡权限，否则app可能无法正常运行")
                     .setPositiveButton(getString(R.string.setting))
                     .setNegativeButton(getString(R.string.cancel), null /* click listener */)
                     .setRequestCode(RC_SETTINGS_SCREEN)

@@ -413,4 +413,9 @@ public class FindPwdActivity2 extends BaseActivity {
     public void refreshPage() {
 
     }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 }

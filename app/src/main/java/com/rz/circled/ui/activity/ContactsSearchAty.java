@@ -29,10 +29,8 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.StringUtils;
-
 import com.rz.httpapi.bean.FriendInformationBean;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -194,7 +192,6 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initData() {
-        EventBus.getDefault().register(this);
         friendInformationDao = new FriendInformationDao(mContext);
         localFriends.clear();
         searchFriends.clear();
@@ -276,7 +273,6 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
