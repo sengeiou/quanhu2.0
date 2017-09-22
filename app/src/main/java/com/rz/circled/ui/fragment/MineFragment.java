@@ -45,8 +45,10 @@ import com.rz.circled.ui.activity.MyCollectionActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyRewardActivity;
+import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
+import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -187,6 +189,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         ib.setVisibility(View.VISIBLE);
         ib.setImageResource(R.mipmap.ic_message);
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, NewsActivity.class));
+            }
+        });
 
         tv.setText("我的");
         mTitleContent.addView(newTitilbar);
@@ -207,9 +215,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private void getData() {
 
 
-        if(presenter != null){
+        if (presenter != null) {
             //获取签到状态
-            ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(),"15");
+            ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(), "15");
 
             //获取数据统计
             ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
@@ -247,7 +255,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //        });
 //
 //    }
-
 
 
     //初始化用户信息
@@ -586,21 +593,21 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
 //            tvactivityCount.setText(data.getArticleNum()+"");
-        }else if(t instanceof  ProveStatusBean) {
+        } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
-            if(Session.getCustRole().equals("0")){
+            if (Session.getCustRole().equals("0")) {
                 famousTxt.setText("去认证");
-            }else if(data.getAuthStatus() == 0){
+            } else if (data.getAuthStatus() == 0) {
                 famousTxt.setText("认证审核中");
-            }else if(data.getAuthStatus() == 1){
+            } else if (data.getAuthStatus() == 1) {
                 famousTxt.setText(data.getTradeField());
-            }else if(data.getAuthStatus() == 2){
+            } else if (data.getAuthStatus() == 2) {
                 famousTxt.setText("认证失败");
-            }else if(data.getAuthStatus() == 3){
+            } else if (data.getAuthStatus() == 3) {
                 famousTxt.setText("认证失败");
             }
-        }else if(t instanceof ResponseData){
-            tvactivityCount.setText(((ResponseData) t).getData()+"");
+        } else if (t instanceof ResponseData) {
+            tvactivityCount.setText(((ResponseData) t).getData() + "");
         } else {
 //            if (null != t) {
 //                CircleStatsModel data = (CircleStatsModel) t;
@@ -875,7 +882,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 getUserProveStatus();
             setData();
         }
-        if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
+        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
             setData();
             return;
         }
@@ -915,28 +922,26 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
 
-    private void setData(){
+    private void setData() {
         mTxtPersonName.setText(Session.getUserName());
-        levelTxt.setText("Lv. "+Session.getUserLevel());
+        levelTxt.setText("Lv. " + Session.getUserLevel());
         custPointsTxt.setText("积分 " + Session.getCustPoints());
 
         Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
 
-        if("0".equals(Session.getCustRole())){
+        if ("0".equals(Session.getCustRole())) {
             famousTxt.setText("去认证");
         }
 
-        if (TextUtils.isEmpty(Session.getUser_signatrue())){
+        if (TextUtils.isEmpty(Session.getUser_signatrue())) {
             idPersonLoginDays.setText("");
-        }
-        else{
+        } else {
             idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
         }
         getData();
 
     }
-
 
 
 }

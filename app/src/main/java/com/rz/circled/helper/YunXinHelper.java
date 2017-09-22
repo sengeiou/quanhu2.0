@@ -79,7 +79,7 @@ public class YunXinHelper {
 
         @Override
         public int getDefaultIconResId() {
-            return R.drawable.ic_default_avatar_personal;
+            return R.mipmap.ic_default_avatar_big;
         }
 
         @Override

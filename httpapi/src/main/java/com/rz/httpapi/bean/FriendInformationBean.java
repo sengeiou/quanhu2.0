@@ -37,6 +37,8 @@ public class FriendInformationBean implements Serializable {
     @DatabaseField
     private String cityCode;
     @DatabaseField
+    private String custLocation;
+    @DatabaseField
     private String custPhone;
     @DatabaseField
     private String custQr;
@@ -168,5 +170,13 @@ public class FriendInformationBean implements Serializable {
 
     public void setRelation(int relation) {
         this.relation = relation;
+    }
+
+    public String getCustLocation() {
+        return custLocation;
+    }
+
+    public void setCustLocation(String custLocation) {
+        this.custLocation = custLocation;
     }
 }

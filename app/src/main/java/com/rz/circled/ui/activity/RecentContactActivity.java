@@ -15,6 +15,7 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
+import com.rz.circled.dialog.MsgSettringDialog;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.yryz.yunxinim.main.reminder.ReminderManager;
@@ -58,6 +59,13 @@ public class RecentContactActivity extends BaseActivity {
     public void initView() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+        setTitleText(R.string.chat);
+        setTitleRightImageView(R.mipmap.ic_recent_contact_more, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MsgSettringDialog(mContext).show();
+            }
+        });
         initUnreadCover();
     }
 
@@ -149,7 +157,7 @@ public class RecentContactActivity extends BaseActivity {
                 } else if (attachment instanceof ArticleAttachment) {
                     return "[分享作品]";
                 } else if (attachment instanceof ShowAttachment) {
-                    return "[分享悠友圈]";
+                    return "[资源分享]";
                 } else if (attachment instanceof LuckyTipAttachment) {
                     LuckyTipAttachment lucky = (LuckyTipAttachment) attachment;
 

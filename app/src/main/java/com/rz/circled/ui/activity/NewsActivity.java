@@ -63,6 +63,7 @@ public class NewsActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.news);
         lv.setAdapter(mAdapter = new NewsOverviewAdapter(mContext, R.layout.item_news));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

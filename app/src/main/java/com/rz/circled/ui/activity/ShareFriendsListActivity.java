@@ -44,7 +44,6 @@ import butterknife.BindView;
  */
 
 public class ShareFriendsListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-    public static final int INVITE_REQUEST_CODE = 117;
     private static final String EXTRA_DATA_ITEM_DATA = "EXTRA_DATA_ITEM_DATA";
     /**
      * 内容展示
@@ -102,12 +101,6 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
 
     @Override
     public void initView() {
-        ShareModel model = (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA);
-//        if (INVITE_REQUEST_CODE == model.fromPage) {
-//            setTitleText("邀请好友转发", null);
-//        } else {
-//            setTitleText("分享到悠然聊天", null);
-//        }
         setTitleText(getString(R.string.select_firend));
         mContactsAdp = new ContactsAdp(aty, mSaveAllFriends, R.layout.adp_contacts);
         mListview.setAdapter(mContactsAdp);

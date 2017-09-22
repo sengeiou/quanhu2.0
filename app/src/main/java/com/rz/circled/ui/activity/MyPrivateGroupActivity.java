@@ -58,6 +58,7 @@ public class MyPrivateGroupActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.private_group);
         initTabTitle();
         initViewpagerGroup();
         initIndicatorGroup();

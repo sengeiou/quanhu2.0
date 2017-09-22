@@ -138,9 +138,15 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@mipmap/ic_right_arrow</item>
         <item name="android:layout_marginLeft">@dimen/px30</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 
-    <style name="GridPasswordView"/>
+    <style name="DefaultArrowRightStyle.Big">
+        <item name="android:layout_width">10dp</item>
+    </style>
+
+    <style name="GridPasswordView" />
 
     <style name="GridPasswordView.TextView">
         <item name="android:layout_width">0dp</item>
@@ -405,5 +411,14 @@
         <item name="android:paddingRight">@dimen/px40</item>
         <item name="android:paddingTop">@dimen/px12</item>
         <item name="android:paddingBottom">@dimen/px12</item>
+    </style>
+
+    <style name="MsgFragMenuBtnStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px144</item>
+        <item name="android:lines">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/font_color_blue</item>
+        <item name="android:textSize">@dimen/px46</item>
     </style>
 </resources>
