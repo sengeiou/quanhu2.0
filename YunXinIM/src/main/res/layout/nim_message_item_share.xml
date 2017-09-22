@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:ellipsize="end"
-            android:text="悠然一指"
+            android:text="圈乎"
             android:textColor="@color/font_gray_m"
             android:textSize="@dimen/font_34" />
     </LinearLayout>

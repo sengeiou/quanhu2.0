@@ -226,7 +226,7 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
 
             }
         } else {
-            EasyPermissions.requestPermissions(this, "悠然一指要调用sd卡", 12, perms);
+            EasyPermissions.requestPermissions(this, "圈乎调用sd卡", 12, perms);
         }
     }
 

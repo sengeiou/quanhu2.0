@@ -136,7 +136,7 @@ public class LocationActivity extends BaseActivity {
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         finish();
-//            new AppSettingsDialog.Builder(this, "悠然一指要使用定位权限，否则app可能无法正常运行")
+//            new AppSettingsDialog.Builder(this, "圈乎要使用定位权限，否则app可能无法正常运行")
 //                    .setPositiveButton(getString(R.string.setting))
 //                    .setNegativeButton(getString(R.string.cancel), null /* click listener */)
 //                    .setRequestCode(RC_LOCATION_CONTACTS_PERM)

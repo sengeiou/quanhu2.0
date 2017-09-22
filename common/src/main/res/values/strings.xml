@@ -1,11 +1,11 @@
 <resources>
     <!--权限-->
-    <string name="sd_card_permissions">赊购通要使用sd卡权限</string>
-    <string name="sd_card_permissions_run">赊购通要使用sd卡,否则app可能无法正常运行</string>
-    <string name="camera_permissions">赊购通要调用摄像头</string>
-    <string name="camera_sd_permissions_run">赊购通要使用摄像头,使用sd卡权限，否则app可能无法正常运行</string>
+    <string name="sd_card_permissions">圈乎要使用sd卡权限</string>
+    <string name="sd_card_permissions_run">圈乎要使用sd卡,否则app可能无法正常运行</string>
+    <string name="camera_permissions">圈乎要调用摄像头</string>
+    <string name="camera_sd_permissions_run">圈乎要使用摄像头,使用sd卡权限，否则app可能无法正常运行</string>
 
-    <string name="permission_warn">请进入手机的应用管理中的权限设置允许\"赊购通\"访问</string>
+    <string name="permission_warn">请进入手机的应用管理中的权限设置允许\"圈乎\"访问</string>
     <string name="status_is_loading">正在加载中...</string>
     <string name="status_un_network">当前网络不可用，请检查网络设置</string>
     <string name="status_load_error">加载失败\n您的网络开小差了~</string>

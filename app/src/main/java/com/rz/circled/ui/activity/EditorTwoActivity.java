@@ -354,6 +354,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private HttpRequestModel httpRequestModel;
     private CommonDialog commonDialog;
 
+    private boolean openLimit = false;
+
     @Override
     protected boolean needLoadingView() {
         return true;
@@ -2170,7 +2172,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 e.printStackTrace();
             }
         } else {
-            EasyPermissions.requestPermissions(this, "悠然一指要使用摄像头,读取手机状态,使用sd卡和录音权限", RC_VIDEO_AND_EXTENER, perms);
+            EasyPermissions.requestPermissions(this, "圈乎要使用摄像头,读取手机状态,使用sd卡和录音权限", RC_VIDEO_AND_EXTENER, perms);
         }
     }
 
