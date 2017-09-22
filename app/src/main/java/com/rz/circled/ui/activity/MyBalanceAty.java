@@ -46,8 +46,9 @@ public class MyBalanceAty extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(getString(R.string.consumer_account));
         //消费明细
-        setTitleRightText(getString(R.string.cost_detail_v3));
+        setTitleRightText(getString(R.string.account_detail));
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.rz.circled.R;
-import com.rz.circled.application.QHApplication;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
@@ -22,7 +21,6 @@ import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
-import com.zhuge.analysis.stat.ZhugeSDK;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.rz.circled.widget.CommomUtils.trackUser;
+import static com.rz.common.utils.SystemUtils.trackUser;
 
 
 /**
@@ -74,9 +72,7 @@ public class SplashAty extends BaseActivity {
 
     @Override
     public View loadView(LayoutInflater inflater) {
-        ZhugeSDK.getInstance().init(QHApplication.getContext());
-        ZhugeSDK.getInstance().openLog();
-        trackUser("启动APP", "", "");
+        trackUser("入口", "启动", "");
 //        initMainRequest();
         return inflater.inflate(R.layout.activity_splash, null);
     }

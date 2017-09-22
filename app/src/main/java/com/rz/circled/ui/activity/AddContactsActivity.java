@@ -30,7 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.rz.circled.widget.CommomUtils.trackUser;
+import static com.rz.common.utils.SystemUtils.trackUser;
 
 
 /**

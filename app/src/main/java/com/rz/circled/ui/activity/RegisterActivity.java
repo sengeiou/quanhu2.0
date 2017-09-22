@@ -27,7 +27,6 @@ import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
@@ -52,6 +51,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.rz.common.utils.SystemUtils.trackUser;
 
 /**
  * Created by Administrator on 2017/9/4 0004.
@@ -463,7 +464,6 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
                 if (checkData()) {
-                    CommomUtils.trackUser("注册登录", "注册", "注册完成");
                     if (fromPage == IntentCode.Register.REGISTER_RESULT_CODE) {
                         //绑定手机号
                         ((UserInfoPresenter) presenter).bindPhone(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassw)), mCode);
@@ -518,6 +518,7 @@ public class RegisterActivity extends BaseActivity {
 //                    intent.putExtra(IntentKey.General.KEY_MODEL, model);
 //                    setResult(IntentCode.Register.REGISTER_RESULT_ONLY_CODE, intent);
                     NotifyEvent notifyEvent = new NotifyEvent("register", model, true);
+                    trackUser("注册登录","注册成功","");
                     EventBus.getDefault().post(notifyEvent);
                     Session.setCityCode(cityCode);
                     finish();

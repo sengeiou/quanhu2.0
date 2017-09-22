@@ -15,7 +15,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/font_44"
-            android:text="选择你喜欢的圈子"
+            android:text="选择你的圈子"
             android:textColor="@color/black"
             android:textSize="@dimen/px58"
             android:textStyle="bold"

@@ -78,10 +78,9 @@ public class AccountDetailAty extends BaseActivity {
         type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
         if (type == Type.TYPE_BALANCE) {
             setTitleText(R.string.cost_detail_v3);
-            mIncome.setText(R.string.income);
-            mProduceType.setText(R.string.mingcheng);
+            mIncome.setText(R.string.income); mProduceType.setText(R.string.mingcheng);
         } else if (type == Type.TYPE_SCORE) {
-            setTitleText(R.string.jf_details);
+            setTitleText(R.string.account_detail);
             mIncome.setText(R.string.jifen);
             mProduceType.setText(R.string.shuoming);
         }

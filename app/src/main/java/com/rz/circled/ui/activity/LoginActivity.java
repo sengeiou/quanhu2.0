@@ -28,7 +28,6 @@ import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -419,7 +418,6 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.id_login_register_btn)
     public void registerBtn() {
-        CommomUtils.trackUser("注册登录", "注册", "");
         Intent intent = new Intent(aty, RegisterActivity.class);
         intent.putExtra(IntentKey.EXTRA_TYPE, loginType);
 //        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
@@ -486,7 +484,9 @@ public class LoginActivity extends BaseActivity {
                 } else {
 //                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
                 }
-
+                //诸葛标识用户
+                JSONObject json=new JSONObject();
+                ZhugeSDK.getInstance().identify(getApplicationContext(),model.getCustId(), json);
                 Session.setUserIsLogin(true);
                 Session.setUserId(model.getCustId());
                 Session.setUserPicUrl(model.getCustImg());
@@ -834,7 +834,7 @@ public class LoginActivity extends BaseActivity {
         //定义与事件相关的属性信息
         JSONObject eventObject = new JSONObject();
         try {
-            eventObject.put("登录", loginType);
+            eventObject.put("登录成功", loginType);
         } catch (Exception e) {
 
         }
