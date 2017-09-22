@@ -949,8 +949,9 @@ public interface ApiService {
      * 获取登录方式
      */
     @FormUrlEncoded
-    @POST(ApiPay.GET_LOGIN_METHOD)
-    Call<ResponseData<LoginTypeBean>> loginMethod(
+    @POST(APIUser.LOGIN_METHOD)
+    Call<ResponseData<List<LoginTypeBean>>> loginMethod(
+            @Field("act") int act,
             @Field("custId") String custId
     );
 

@@ -195,7 +195,7 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
                 break;
             //充值遇到问题？请戳这里
             case R.id.id_expain_txt:
-                CommonH5Activity.startCommonH5(aty, H5Address.RECHARGE_INTRODUCE, "悠然一指");
+                CommonH5Activity.startCommonH5(aty, "", H5Address.RECHARGE_INTRODUCE);
                 break;
         }
     }

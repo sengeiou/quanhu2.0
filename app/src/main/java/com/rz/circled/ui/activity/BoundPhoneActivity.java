@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -21,11 +22,16 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.RegisterBean;
+import com.rz.httpapi.bean.UserInfoBean;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -63,6 +69,12 @@ public class BoundPhoneActivity extends BaseActivity {
     @BindView(R.id.textView2)
     TextView boundTitleTxt;
 
+    @BindView(R.id.id_find_1_next_btn)
+    Button finishBtn;
+
+    @BindView(R.id.second_title_txt)
+    TextView secondTxt;
+
     /**
      * 倒计时类
      */
@@ -72,8 +84,8 @@ public class BoundPhoneActivity extends BaseActivity {
     private String pWType;
     //记录返回的手机号
     private String mRecordPhone;
-
-
+    //接收用户信息
+    UserInfoBean loginModel;
 
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -88,6 +100,10 @@ public class BoundPhoneActivity extends BaseActivity {
     @Override
     public void initView() {
         boundTitleTxt.setText("绑定手机号");
+        secondTxt.setText(R.string.bound_waring_txt);
+        finishBtn.setText("完成");
+
+        loginModel = getIntent().getExtras().getParcelable("loginmodel");
 
         mEditPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -137,8 +153,8 @@ public class BoundPhoneActivity extends BaseActivity {
     @Override
     public void initData() {
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
-            mEditPhone.setText(Session.getUserPhone());
-            mImgClearPhone.setVisibility(View.VISIBLE);
+//            mEditPhone.setText(Session.getUserPhone());
+//            mImgClearPhone.setVisibility(View.VISIBLE);
         }
         if (BackGroundService.time_code != 0) {
             startCount(BackGroundService.time_code);
@@ -154,7 +170,7 @@ public class BoundPhoneActivity extends BaseActivity {
 
     @OnClick(R.id.titlebar_main_left_btn)
     public void onClick() {
-        finish();
+        showDialog();
     }
 
     /**
@@ -229,7 +245,14 @@ public class BoundPhoneActivity extends BaseActivity {
             mRecordPhone = "";
             BackGroundService.countDownCode(Constants.COUNTDOWN * 1000);
             startCount(Constants.COUNTDOWN * 1000);
-            ((UserInfoPresenter) presenter).getVeriCode(mPhone, Type.FUNCTION_CODE_8);
+
+            mPhone = mEditPhone.getText().toString();
+            if (StringUtils.isMobile(mPhone)) {
+                ((UserInfoPresenter) presenter).getVeriCode(mPhone, Type.FUNCTION_CODE_5);
+            }else{
+                SVProgressHUD.showInfoWithStatus(aty, getString(R.string.input_right_phone));
+            }
+
         }
     }
 
@@ -242,11 +265,13 @@ public class BoundPhoneActivity extends BaseActivity {
     public <T> void updateView(T t) {
         super.updateView(t);
         if (null != t) {
-            RegisterBean model = (RegisterBean) t;
-            if (null != model) {
-                pWType = model.code;
-                mRecordPhone = model.phone;
-//                SVProgressHUD.showSuccessWithStatus(aty, model.veriCode);
+            if(t.equals("1")){
+                skipActivity(aty, MainActivity.class);
+
+                //发送存储对象存储用户信息
+                if(loginModel!= null) {
+                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SAVE,loginModel));
+                }
             }
         }
     }
@@ -323,5 +348,40 @@ public class BoundPhoneActivity extends BaseActivity {
                 finish();
             }
         }
+    }
+
+    private void showDialog(){
+
+        View dialogView = LayoutInflater.from(aty).inflate(R.layout.comm_dialog, null);
+        final Dialog dialog = DialogUtils.selfDialog(aty, dialogView, false);
+        dialog.show();
+        ((TextView) dialogView.findViewById(R.id.id_tv_message)).setText(getString(R.string.waring_login));
+        dialogView.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (com.rz.common.utils.CountDownTimer.isFastClick()) {
+                    return;
+                }
+                dialog.dismiss();
+                Session.clearShareP();
+                finish();
+
+            }
+        });
+        dialogView.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        showDialog();
+
     }
 }
