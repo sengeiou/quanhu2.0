@@ -10,29 +10,28 @@ import com.rz.common.R;
 /**
  * Created by Gsm on 2017/9/22.
  */
-public abstract class SingleDialog extends Dialog implements View.OnClickListener {
+public abstract class KickDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private View rootView;
     private TextView tvMessage;
 
-    public SingleDialog(Context context) {
-        super(context);
+    public KickDialog(Context context) {
+        this(context, 0);
     }
 
-    public SingleDialog(Context context, int themeResId) {
+    public KickDialog(Context context, int themeResId) {
         super(context, R.style.AppTheme_DialogStyle);
         mContext = context;
         init();
     }
 
     private void init() {
-        rootView = getLayoutInflater().inflate(R.layout.dialog_single, null);
-        tvMessage = (TextView) rootView.findViewById(R.id.tv_single_dialog_message);
-        rootView.findViewById(R.id.tv_single_dialog_confirm).setOnClickListener(this);
+        rootView = getLayoutInflater().inflate(R.layout.dialog_kick, null);
+        rootView.findViewById(R.id.tv_kick_dialog_left).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_kick_dialog_right).setOnClickListener(this);
     }
 
-    public void showDialog(int stringId) {
-        tvMessage.setText(stringId);
+    public void showDialog() {
         closeDialog();
         show();
         setContentView(rootView);

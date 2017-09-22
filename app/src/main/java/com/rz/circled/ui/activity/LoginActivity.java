@@ -25,11 +25,9 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
-import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -283,6 +281,7 @@ public class LoginActivity extends BaseActivity {
 //        }
 //    }
 //
+
     /**
      * 微信登录
      */
@@ -319,8 +318,8 @@ public class LoginActivity extends BaseActivity {
      * 手机验证码登录
      */
     @OnClick(R.id.layout_phone_code)
-    public void codeLogin(){
-        if(codeType == 1){
+    public void codeLogin() {
+        if (codeType == 1) {
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
             typePwd.setImageResource(R.mipmap.icon_code);
@@ -329,7 +328,7 @@ public class LoginActivity extends BaseActivity {
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             codeType = 2;
-        }else{
+        } else {
             mBtnSendCode.setVisibility(View.GONE);
             mEditPass.setHint("请输入密码");
             mImgWatchPw.setVisibility(View.VISIBLE);
@@ -341,7 +340,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick(R.id.id_regist_send_sms_btn)
-    public void getCode(){
+    public void getCode() {
 
         mPhone = mEditPhone.getText().toString();
         if (!StringUtils.isMobile(mPhone)) {
@@ -400,16 +399,16 @@ public class LoginActivity extends BaseActivity {
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
 
-            if(codeType == 1){  //密码登陆
+            if (codeType == 1) {  //密码登陆
                 if (mPassword.length() >= 6 && mPassword.length() <= 18) {
                     ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
                 }
-            }else{            //验证码登录
-                if(mPassword.length() == 4){
+            } else {            //验证码登录
+                if (mPassword.length() == 4) {
                     ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
-                }else {
+                } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
 
@@ -520,7 +519,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     //登录成功后保存数据
-    private void saveLoginData(UserInfoBean model ){
+    private void saveLoginData(UserInfoBean model) {
 //                MobclickAgent.onEvent(aty, "login");
         //单独记录随手晒缓存记录，防止刷新
         if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
@@ -530,47 +529,47 @@ public class LoginActivity extends BaseActivity {
             entityCache.putListEntity(showCaches);
         } else {
 //                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
-                }
-                //诸葛标识用户
-                JSONObject json=new JSONObject();
-                ZhugeSDK.getInstance().identify(getApplicationContext(),model.getCustId(), json);
-                Session.setUserIsLogin(true);
-                Session.setUserId(model.getCustId());
-                Session.setUserPicUrl(model.getCustImg());
-                Session.setSessionKey(model.getToken());
-                Session.setUserPhone(model.getCustPhone());
-                Session.setUserLocalUrl(model.getCustQr());
-                Session.setUserName(model.getCustNname());
-                Session.setUser_signatrue(model.getCustSignature());
-                Session.setUser_desc(model.getCustDesc());
-                Session.setCityCode(model.getCityCode());
-                Session.setCustPoints(model.getCustPoints());
-                Session.setUserLevel(model.getCustLevel());
-                Session.setCustRole(model.getCustRole());
-                if (TextUtils.equals("0", model.getCustSex())) {
-                    Session.setUser_sex("女");
-                } else {
-                    Session.setUser_sex("男");
-                }
-                Session.setUser_area(model.getCustLocation());
-                if (Type.HAD_SET_PW == model.getIsPayPassword()) {
-                    //设置支付密码
-                    Session.setUserSetpaypw(true);
-                } else {
-                    Session.setUserSetpaypw(false);
-                }
-                if (Type.OPEN_EASY_PAY == model.getSmallNopass()) {
-                    //开启免密支付
-                    Session.setIsOpenGesture(true);
-                } else {
-                    Session.setIsOpenGesture(false);
-                }
-                if (model.getIsPwdExist() == 1) {
-                    //设置了登录密码
-                    Session.setUserLoginPw(true);
-                } else {
-                    Session.setUserLoginPw(false);
-                }
+        }
+        //诸葛标识用户
+        JSONObject json = new JSONObject();
+        ZhugeSDK.getInstance().identify(getApplicationContext(), model.getCustId(), json);
+        Session.setUserIsLogin(true);
+        Session.setUserId(model.getCustId());
+        Session.setUserPicUrl(model.getCustImg());
+        Session.setSessionKey(model.getToken());
+        Session.setUserPhone(model.getCustPhone());
+        Session.setUserLocalUrl(model.getCustQr());
+        Session.setUserName(model.getCustNname());
+        Session.setUser_signatrue(model.getCustSignature());
+        Session.setUser_desc(model.getCustDesc());
+        Session.setCityCode(model.getCityCode());
+        Session.setCustPoints(model.getCustPoints());
+        Session.setUserLevel(model.getCustLevel());
+        Session.setCustRole(model.getCustRole());
+        if (TextUtils.equals("0", model.getCustSex())) {
+            Session.setUser_sex("女");
+        } else {
+            Session.setUser_sex("男");
+        }
+        Session.setUser_area(model.getCustLocation());
+        if (Type.HAD_SET_PW == model.getIsPayPassword()) {
+            //设置支付密码
+            Session.setUserSetpaypw(true);
+        } else {
+            Session.setUserSetpaypw(false);
+        }
+        if (Type.OPEN_EASY_PAY == model.getSmallNopass()) {
+            //开启免密支付
+            Session.setIsOpenGesture(true);
+        } else {
+            Session.setIsOpenGesture(false);
+        }
+        if (model.getIsPwdExist() == 1) {
+            //设置了登录密码
+            Session.setUserLoginPw(true);
+        } else {
+            Session.setUserLoginPw(false);
+        }
 
         if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
             EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
@@ -583,25 +582,25 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
-        if(t != null){
+        if (t != null) {
             List<LoginTypeBean> model = (List<LoginTypeBean>) t;
-            if(model.size() >0 && model.size() == 4){
+            if (model.size() > 0 && model.size() == 4) {
                 //已经绑定过手机直接登录
-                if(!TextUtils.isEmpty(model.get(3).getCreateDate())){
+                if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
                     skipActivity(aty, MainActivity.class);
-                }else{
+                } else {
                     //传递登录时返回的对象
-                    if(loginModel != null){
-                        Intent intent = new Intent(this,BoundPhoneActivity.class);
+                    if (loginModel != null) {
+                        Intent intent = new Intent(this, BoundPhoneActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("loginmodel",loginModel);
+                        bundle.putSerializable("loginmodel", loginModel);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
                 }
-            }else{
+            } else {
                 //未绑定手机，前往绑定手机好
-                skipActivity(this,BoundPhoneActivity.class);
+                skipActivity(this, BoundPhoneActivity.class);
             }
         }
     }
@@ -611,7 +610,7 @@ public class LoginActivity extends BaseActivity {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_SAVE) {
             UserInfoBean loginModel = (UserInfoBean) baseEvent.getData();
-            if(loginModel != null){
+            if (loginModel != null) {
                 saveLoginData(loginModel);
             }
         }
@@ -896,13 +895,11 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     /**

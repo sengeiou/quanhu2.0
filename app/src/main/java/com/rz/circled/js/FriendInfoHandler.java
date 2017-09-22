@@ -2,6 +2,7 @@ package com.rz.circled.js;
 
 import android.app.Activity;
 
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.ServerHandler;
@@ -36,6 +37,7 @@ public class FriendInfoHandler extends ServerHandler {
             e.printStackTrace();
         }
 //        FriendInfoAty.newFrindInfo(mActivity, userId);
+        UserInfoActivity.newFrindInfo(mActivity, userId);
         JsEvent.callJsEvent(null, true);
     }
 

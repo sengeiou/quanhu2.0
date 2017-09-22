@@ -1,8 +1,6 @@
 package com.rz.common.ui.activity;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,7 +29,7 @@ import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
-import com.rz.common.ui.view.SingleDialog;
+import com.rz.common.ui.view.KickDialog;
 import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.widget.SwipeBackLayout;
 
@@ -65,6 +63,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public Activity aty;
 
     private InputMethodManager mImm;
+
+    private boolean isForeground = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -640,6 +640,20 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     }
     //-------------------------------点击editText以外的区域end-----------------------------------//
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isForeground = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isForeground = false;
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -667,51 +681,31 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         Log.d(TAG, "onPermissionsDenied");
     }
 
-
-    public ActivityManager.RunningTaskInfo getTopTask() {
-        ActivityManager mActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = mActivityManager.getRunningTasks(1);
-        if (tasks != null && !tasks.isEmpty()) {
-            return tasks.get(0);
-        }
-        return null;
-    }
-
-    public boolean isTopActivity(ActivityManager.RunningTaskInfo topTask, String packageName, String activityName) {
-        if (topTask != null) {
-            ComponentName topActivity = topTask.topActivity;
-
-            if (topActivity.getPackageName().equals(packageName) &&
-                    topActivity.getClassName().equals(activityName)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
-        if (isTopActivity(getTopTask(), getPackageName(), getClass().getName())) {
+        if (isForeground) {
             //弹窗重新登录
             Session.clearShareP();
-            final SingleDialog singleDialog = new SingleDialog(this) {
+            final KickDialog kickDialog = new KickDialog(this) {
 
                 @Override
                 public void onClick(View v) {
-                    try {
-                        String className = "com.rz.circled.ui.activity.LoginActivity";
-                        Class<?> aClass = Class.forName(className);
-                        startActivity(new Intent(mContext, aClass));
-                        finish();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+                    if (v.getId() == R.id.tv_kick_dialog_left) {
+                        try {
+                            String className = "com.rz.circled.ui.activity.LoginActivity";
+                            Class<?> aClass = Class.forName(className);
+                            startActivity(new Intent(mContext, aClass));
+                            finish();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.exit(0);
                     }
                     closeDialog();
                 }
             };
-            singleDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
                 @Override
                 public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -721,8 +715,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                     }
                 }
             });
-            singleDialog.setCancelable(false);
-            singleDialog.showDialog(R.string.user_kick_hint);
+            kickDialog.setCancelable(false);
+            kickDialog.showDialog();
         }
     }
 

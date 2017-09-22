@@ -66,4 +66,8 @@
     <string name="backstage_configuration_error">后台配置错误</string>
 
     <string name="user_kick_hint">您已在其他地方登录,请重新登录</string>
+
+    <string name="kick_again_login">重新登录</string>
+    <string name="kick_exit_app">退出应用</string>
+    <string name="kick_hint">您的账号在另一设备登录，您被迫下线。\n如有疑问，请联系客服。</string>
 </resources>

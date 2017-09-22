@@ -16,7 +16,7 @@ public class MyHandleResponse implements BaseCallback.interceptorResponse {
 
     public static MyHandleResponse handleResponse;
 
-    private MyHandleResponse() {
+    public MyHandleResponse() {
 
     }
 
