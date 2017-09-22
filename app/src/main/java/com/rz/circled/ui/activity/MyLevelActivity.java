@@ -1,14 +1,11 @@
 package com.rz.circled.ui.activity;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.appyvet.rangebar.IRangeBarFormatter;
 import com.appyvet.rangebar.RangeBar;
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -18,6 +15,7 @@ import com.rz.circled.adapter.MyLevelAdapter;
 import com.rz.circled.presenter.impl.LevelPersenter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.H5Address;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.MyListView;
 import com.rz.httpapi.bean.MyLevelAcountBean;
@@ -93,6 +91,12 @@ public class MyLevelActivity extends BaseActivity {
                 }
             }
         });
+        setTitleRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonH5Activity.startCommonH5(mContext, "", H5Address.UPGRADE_STRATEGY);
+            }
+        });
     }
 
     @Override
@@ -132,5 +136,10 @@ public class MyLevelActivity extends BaseActivity {
 
     private void loadData(boolean loadMore) {
         presenter.getLevelList(PAGE_SIZE, pageNum, loadMore);
+    }
+
+    @Override
+    public void refreshPage() {
+
     }
 }
