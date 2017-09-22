@@ -21,6 +21,7 @@ import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -143,6 +144,7 @@ public class SplashAty extends BaseActivity {
         //上刊日期
         String adv_upIngDate = Session.getAdv_upIngDate();
         String adv_exDate = Session.getAdv_expireDate();
+        if (!StringUtil.isEmpty(adv_exDate)&&!StringUtil.isEmpty(adv_exDate)){
         long startTime = sdf.parse(adv_upIngDate).getTime();
         long endTime = sdf.parse(adv_exDate).getTime();
         long upIngDate = StringUtils.isEmpty(Session.getAdv_upIngDate()) ? 0 : startTime;
@@ -175,6 +177,9 @@ public class SplashAty extends BaseActivity {
 //            recLen = 1000 * 4;
 //
 //            mImgBg.setImageResource(R.drawable.bg_splash_activity);
+            jumpTo();
+        }
+        }else{
             jumpTo();
         }
         mTxtjumpTo = (TextView) findViewById(R.id.id_jump_txt);

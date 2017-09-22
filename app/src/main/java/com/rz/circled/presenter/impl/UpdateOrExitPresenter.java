@@ -21,8 +21,8 @@ import com.rz.httpapi.constans.ReturnCode;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
@@ -70,10 +70,19 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
         mUserService.setMessFree(Session.getUserId(),pushStatus)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<ResponseData>() {
+                    .subscribe(new Observer<ResponseData>() {
                         @Override
-                        public void call(ResponseData res) {
+                        public void onCompleted() {
 
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseData responseData) {
 
                         }
                     });
@@ -88,15 +97,24 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
         mUserService.queryMessFree(Session.getUserId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<ResponseData<MessFreeBean>>() {
+                    .subscribe(new Observer<ResponseData<MessFreeBean>>() {
                         @Override
-                        public void call(ResponseData<MessFreeBean> res) {
-                        if (res.getRet()==ReturnCode.SUCCESS){
-                            MessFreeBean data = res.getData();
-                            Log.i("lixiang", "call: "+data.pushStatus);
-                            mView.updateView(data);
+                        public void onCompleted() {
 
                         }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseData<MessFreeBean> res) {
+                            if (res.getRet()==ReturnCode.SUCCESS){
+                                MessFreeBean data = res.getData();
+                                Log.i("lixiang", "call: "+data.pushStatus);
+                                mView.updateView(data);
+                            }
 
                         }
                     });
