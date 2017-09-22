@@ -723,7 +723,7 @@
     <string name="true_name_error_hint">姓名为2~10以内的汉字</string>
     <string name="agency_name_error_hint">机构名称为2~10以内的汉字</string>
     <string name="prove_phone_error_hint">请填写正确的手机号</string>
-    <string name="prove_id_number_error_hint">请填写正确的省份证号</string>
+    <string name="prove_id_number_error_hint">请填写正确的身份证号</string>
     <string name="prove_contact_phone_error_hint">请填写联系电话</string>
     <string name="prove_area_error_hint">请选择所在地区</string>
     <string name="prove_industry_error_hint">请输入行业及领域</string>

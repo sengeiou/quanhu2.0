@@ -85,6 +85,7 @@ public class PrivateGroupAllFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    pageNo = 1;
                     loadData(false);
                 } else {
                     loadData(true);
@@ -132,7 +133,6 @@ public class PrivateGroupAllFragment extends BaseFragment {
                                 mAdapter.addData(data);
                             } else {
                                 mAdapter.setData(data);
-                                pageNo = 1;
                             }
                             pageNo++;
                         }

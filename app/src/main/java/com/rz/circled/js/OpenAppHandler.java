@@ -50,7 +50,7 @@ public class OpenAppHandler extends ServerHandler {
                 mActivity.startActivity(intent);
             }
         } else {
-            CommonH5Activity.startCommonH5(mActivity, downloadUrl, mActivity.getResources().getString(R.string.app_name));
+            CommonH5Activity.startCommonH5(mActivity, "", downloadUrl);
         }
     }
 
