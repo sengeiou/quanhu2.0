@@ -30,6 +30,7 @@ import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.MessFreeBean;
 import com.yryz.yunxinim.login.LogoutHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,7 +64,8 @@ public class SettingActivity extends BaseActivity {
     Button mExitBtn;
     @BindView(R.id.id_sb_mess)
     SwitchButton mIdSbMess;
-
+    MessFreeBean mMessFreeBean=new MessFreeBean();
+    private int pushState=1;
     /**
      * 缓存大小
      */
@@ -81,13 +83,12 @@ public class SettingActivity extends BaseActivity {
         super.initPresenter();
         presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
+        presenter.queryMessageFree();
     }
 boolean isCheck=false;
     @Override
     public void initView() {
         setTitleText("设置");
-        isCheck = Session.getMessFree();
-        mIdSbMess.setChecked(isCheck);
         if (!Session.getUserIsLogin()) {
             mExitBtn.setVisibility(View.GONE);
 //            mAccountView.setVisibility(View.GONE);
@@ -103,7 +104,6 @@ boolean isCheck=false;
                     isCheck=true;
                     presenter.messageFree(1);
                 }
-                Session.setMessFree(isCheck);
             }
         });
     }
@@ -265,6 +265,9 @@ boolean isCheck=false;
 
     @Override
     public <T> void updateView(T t) {
+        mMessFreeBean= (MessFreeBean) t;
+        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
+
     }
 
     @Override

@@ -520,13 +520,13 @@ public class SysSharePres {
     public String getUserName() {
         return mSharePres.getString(USER_NAME, "");
     }
-    public void setMessFree(boolean isChecked) {
-        mSharePres.edit().putBoolean(MESS_FREE, isChecked).commit();
-    }
-
-    public boolean getMessFree() {
-        return mSharePres.getBoolean(MESS_FREE, false);
-    }
+//    public void setMessFree(boolean isChecked) {
+//        mSharePres.edit().putBoolean(MESS_FREE, isChecked).commit();
+//    }
+//
+//    public boolean getMessFree() {
+//        return mSharePres.getBoolean(MESS_FREE, false);
+//    }
 
     public void setUserName(String user_name) {
         mSharePres.edit().putString(USER_NAME, user_name).commit();

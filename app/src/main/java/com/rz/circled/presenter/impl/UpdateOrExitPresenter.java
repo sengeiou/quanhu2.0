@@ -2,6 +2,7 @@ package com.rz.circled.presenter.impl;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import com.rz.circled.R;
 import com.rz.circled.http.HandleRetCode;
@@ -15,6 +16,7 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.MessFreeBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import retrofit2.Call;
@@ -72,6 +74,29 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
                         @Override
                         public void call(ResponseData res) {
 
+
+                        }
+                    });
+
+    }
+    //查询消息状态
+    public void queryMessageFree() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mUserService.queryMessFree(Session.getUserId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<ResponseData<MessFreeBean>>() {
+                        @Override
+                        public void call(ResponseData<MessFreeBean> res) {
+                        if (res.getRet()==ReturnCode.SUCCESS){
+                            MessFreeBean data = res.getData();
+                            Log.i("lixiang", "call: "+data.pushStatus);
+                            mView.updateView(data);
+
+                        }
 
                         }
                     });
