@@ -119,9 +119,10 @@ public class CommonH5Activity extends BaseActivity {
                 clearTitleRight();
             }
             String loadUrl = extras.getString(IntentKey.EXTRA_URL);
-            if (!TextUtils.isEmpty(loadUrl) && !loadUrl.startsWith("http://") && !loadUrl.startsWith("https://") && !loadUrl.startsWith("www."))
+            if (!TextUtils.isEmpty(loadUrl) && !loadUrl.startsWith("http://") && !loadUrl.startsWith("https://") && !loadUrl.startsWith("www.")) {
+                Log.i(TAG, "commonh5 " + loadUrl);
                 mWebView.loadUrl(loadUrl);
-            else onLoadingStatus(CommonCode.General.WEB_ERROR);
+            } else onLoadingStatus(CommonCode.General.WEB_ERROR);
         } else {
             onLoadingStatus(CommonCode.General.WEB_ERROR);
         }

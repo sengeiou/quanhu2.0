@@ -267,7 +267,7 @@
         <activity
             android:name=".ui.activity.GuideActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.FullScreen"/>
         <activity
             android:name=".ui.activity.MyAccountAty"
             android:screenOrientation="portrait"
