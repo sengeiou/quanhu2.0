@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_background">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,79 +23,58 @@
                 android:paddingLeft="@dimen/px44"
                 android:text="@string/share_object"
                 android:textColor="@color/font_gray_m"
-                android:textSize="@dimen/font_44"/>
+                android:textSize="@dimen/font_44" />
 
-            <View style="@style/DefaultHLineStyle"/>
+            <View style="@style/DefaultHLineStyle" />
 
-            <RelativeLayout
-                android:id="@+id/id_group_chat_rela1"
-                style="@style/ContactHeadRelaStyle">
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <ImageView
-                    style="@style/ContactHeadImgStyle"
-                    android:src="@drawable/ic_default_avatar_team"/>
+                <RelativeLayout
+                    android:id="@+id/id_group_chat_rela1"
+                    style="@style/ContactHeadRelaStyle">
 
-                <TextView
-                    style="@style/DefaultTvStyle"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/px130"
-                    android:text="@string/group_chat"/>
+                    <ImageView
+                        style="@style/ContactHeadImgStyle"
+                        android:src="@drawable/ic_team_advance" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px44"
-                    android:src="@drawable/ic_right_arrow"/>
+                    <TextView
+                        style="@style/DefaultTvStyle"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/px102"
+                        android:text="@string/group_chat"
+                        android:textSize="@dimen/font_48" />
 
-                <TextView
-                    style="@style/DefaultTvStyle"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_remind_dot"
-                    android:gravity="center"
-                    android:textColor="@color/color_FA726F"
-                    android:textSize="@dimen/font_34"
-                    android:visibility="gone"/>
-            </RelativeLayout>
+                    <ImageView style="@style/DefaultArrowRightStyle.Big" />
 
-            <View style="@style/DefaultHLineStyle"/>
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/id_group_discuss1"
-                style="@style/ContactHeadRelaStyle">
+                <View style="@style/DefaultHLineStyle" />
 
-                <ImageView
-                    style="@style/ContactHeadImgStyle"
-                    android:src="@drawable/ic_default_avatar_team_normal"/>
+                <RelativeLayout
+                    android:id="@+id/id_group_discuss1"
+                    style="@style/ContactHeadRelaStyle">
 
-                <TextView
-                    style="@style/DefaultTvStyle"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/px130"
-                    android:text="@string/discuss_chat"/>
+                    <ImageView
+                        style="@style/ContactHeadImgStyle"
+                        android:src="@drawable/ic_team_normal" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px44"
-                    android:src="@drawable/ic_right_arrow"/>
+                    <TextView
+                        style="@style/DefaultTvStyle"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/px102"
+                        android:text="@string/discuss_chat"
+                        android:textSize="@dimen/font_48" />
 
-                <TextView
-                    style="@style/DefaultTvStyle"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_remind_dot"
-                    android:gravity="center"
-                    android:textColor="@color/color_FA726F"
-                    android:textSize="@dimen/font_34"
-                    android:visibility="gone"/>
-            </RelativeLayout>
+                    <ImageView style="@style/DefaultArrowRightStyle.Big" />
 
-            <View style="@style/DefaultHLineStyle"/>
+                </RelativeLayout>
+
+                <View style="@style/DefaultHLineStyle" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/id_group_friend1"
@@ -103,31 +82,17 @@
 
                 <ImageView
                     style="@style/ContactHeadImgStyle"
-                    android:src="@drawable/ic_default_avatar_personal"/>
+                    android:src="@drawable/ic_new_friend" />
 
                 <TextView
                     style="@style/DefaultTvStyle"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/px130"
-                    android:text="@string/good_friend"/>
+                    android:layout_marginLeft="@dimen/px102"
+                    android:text="@string/good_friend"
+                    android:textSize="@dimen/font_48" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px44"
-                    android:src="@drawable/ic_right_arrow"/>
+                <ImageView style="@style/DefaultArrowRightStyle.Big" />
 
-                <TextView
-                    style="@style/DefaultTvStyle"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_remind_dot"
-                    android:gravity="center"
-                    android:textColor="@color/color_FA726F"
-                    android:textSize="@dimen/font_34"
-                    android:visibility="gone"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -146,16 +111,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/recent_contacts"
                 android:textColor="@color/font_gray_m"
-                android:textSize="@dimen/font_44"/>
+                android:textSize="@dimen/font_44" />
 
         </LinearLayout>
 
-        <View style="@style/DefaultHLineStyle"/>
+        <View style="@style/DefaultHLineStyle" />
 
         <com.rz.common.widget.MyListView
             android:id="@+id/id_content_lv"
             style="@style/DefaultLvStyle"
             android:layout_gravity="center"
-            android:dividerHeight="0dp"/>
+            android:dividerHeight="0dp" />
     </LinearLayout>
 </ScrollView>

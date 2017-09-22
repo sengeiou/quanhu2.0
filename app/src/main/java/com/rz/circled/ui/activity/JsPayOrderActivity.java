@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.rz.circled.R;
 import com.rz.circled.dialog.InsufficientBalanceDialog;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.common.constant.CommonCode;
@@ -79,7 +80,7 @@ public class JsPayOrderActivity extends BaseActivity {
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
         if (loadingStatus == CommonCode.General.ERROR_DATA) {
-            Toasty.error(aty, "支付失败").show();
+            Toasty.error(aty, string).show();
             JsEvent.callJsEvent(data, false);
             finish();
         }

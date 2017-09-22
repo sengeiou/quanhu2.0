@@ -17,6 +17,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.NewsActivity;
+import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
@@ -93,9 +94,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         RxView.clicks(v.findViewById(R.id.iv_mess)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
-                //跳消息界面
                 trackUser("入口","首页","消息");
-                startActivity(new Intent(mActivity, NewsActivity.class));
+                //跳最近联系人界面
+                startActivity(new Intent(mActivity, RecentContactActivity.class));
             }
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {

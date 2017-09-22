@@ -120,11 +120,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         mListview.setOnItemClickListener(this);
         if (Session.isNeedTeam()) {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px410), 0, 0);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px540), 0, 0);
             mLayoutNone.setLayoutParams(lp);
         } else {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px900), 0, 0);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px1030), 0, 0);
             mLayoutNone.setLayoutParams(lp);
         }
         setFocusNum(Session.getUserFocusNum());

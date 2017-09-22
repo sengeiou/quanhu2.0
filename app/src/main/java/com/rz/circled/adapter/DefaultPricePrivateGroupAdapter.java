@@ -34,11 +34,11 @@ public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter 
     public void convert(ViewHolder helper, PrivateGroupBean item, int position) {
         super.convert(helper, item, position);
         TextView tvStatus = helper.getView(R.id.tv_status);
-        if (item.getConsultingFee() == 0) {
+        if (item.getJoinFee() == 0) {
             tvStatus.setText(R.string.private_group_free);
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.font_color_blue));
         } else {
-            tvStatus.setText(String.format(mContext.getString(R.string.private_group_price), item.getConsultingFee()));
+            tvStatus.setText(String.format(mContext.getString(R.string.private_group_price), item.getJoinFee()));
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_F5CD45));
         }
 

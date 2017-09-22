@@ -25,7 +25,6 @@ import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.contact.activity.UserProfileActivity;
 import com.yryz.yunxinim.session.action.GuessAction;
-import com.yryz.yunxinim.session.action.LuckyAction;
 import com.yryz.yunxinim.session.action.SnapChatAction;
 import com.yryz.yunxinim.session.activity.MessageHistoryActivity;
 import com.yryz.yunxinim.session.activity.MessageInfoActivity;
@@ -161,7 +160,7 @@ public class SessionHelper {
 //            }
 //            actions.add(new RTSAction());
             actions.add(new SnapChatAction());
-            actions.add(new LuckyAction());
+//            actions.add(new LuckyAction());
 //            actions.add(new GuessAction());
 //            actions.add(new FileAction());
 //            actions.add(new TipAction());
@@ -234,7 +233,7 @@ public class SessionHelper {
             ArrayList<BaseAction> actions = new ArrayList<>();
             actions.add(new SnapChatAction());
             actions.add(new GuessAction());
-            actions.add(new LuckyAction());
+//            actions.add(new LuckyAction());
 //            actions.add(new FileAction());
             myP2pCustomization.actions = actions;
             myP2pCustomization.withSticker = true;
@@ -280,7 +279,7 @@ public class SessionHelper {
 
             // 定制加号点开后可以包含的操作， 默认已经有图片，视频等消息了
             ArrayList<BaseAction> actions = new ArrayList<>();
-            actions.add(new LuckyAction());
+//            actions.add(new LuckyAction());
             teamCustomization.actions = actions;
 
             // 定制ActionBar右边的按钮，可以加多个

@@ -204,6 +204,8 @@
     <string name="max_size_text_hint">内容不能超过%1$d个字</string>
     <string name="user_create_private_group_num">创建的私圈  (%1$d)</string>
     <string name="user_join_private_group_num">加入的私圈  (%1$d)</string>
+    <string name="private_group">私圈</string>
+    <string name="private_group_all">全部私圈</string>
     <string name="private_group_no_more">没有更多了</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
     <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
@@ -229,6 +231,7 @@
 
     <!--消息-->
     <string name="announcement">通知公告</string>
+    <string name="news">消息</string>
     <string name="system_information">系统消息</string>
     <string name="account_information">账户消息</string>
     <string name="interactive_information">互动消息</string>
@@ -240,6 +243,24 @@
     <string name="news_interactive_tab_group">私圈</string>
     <string name="news_interactive_tab_activity">活动</string>
     <string name="news_no_data_now">暂时没有消息</string>
+
+    <!--聊天-->
+    <string name="chat">聊天</string>
+    <string name="create_group">创建讨论组</string>
+    <string name="search_team">搜索群</string>
+    <string name="clear_confirmation">确定清空聊天记录</string>
+    <string name="chat_setting">聊天设置</string>
+    <string name="share_youran_chat">分享到悠然聊天</string>
+
+    <!--分享-->
+    <string name="share_object">选择分享对象</string>
+    <string name="share_to_friend">选择分享好友</string>
+    <string name="good_friend">好友</string>
+    <string name="recent_contacts">最近联系的人</string>
+    <string name="share_to_other">分享给</string>
+    <string name="leave_message_to_friend">给朋友留言</string>
+    <string name="add_qh_square">邀请您的好友，加入我们的圈乎吧</string>
+    <string name="input_nick">输入昵称和手机号搜索</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -276,7 +297,6 @@
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
     <string name="send_gift_success">礼物打赏成功</string>
-
 
     <!-- 登录-->
     <string name="welcome_login">欢迎来到圈乎！</string>
@@ -683,15 +703,6 @@
     <string name="video_max_length">视频最大时长15秒，您的视频过大</string>
     <string name="video_path_error">视频地址获取失败</string>
 
-    <string name="share_object">选择分享对象</string>
-    <string name="good_friend">好友</string>
-    <string name="recent_contacts">选择最近联系人</string>
-
-
-    <string name="share_to_other">分享给</string>
-    <string name="leave_message_to_friend">给朋友留言</string>
-
-
     <string name="keyword_search">请输入关键字进行搜索</string>
     <string name="select_group">选择群</string>
     <string name="team_search">输入群名称搜索</string>
@@ -699,9 +710,6 @@
     <string name="taolun_search">输入讨论组名称搜索</string>
     <string name="app_had_at">"[有人@我] "</string>
     <string name="app_lucky_money">"[红包] "</string>
-
-    <string name="add_qh_square">邀请您的好友，加入我们的圈乎广场吧</string>
-    <string name="input_nick">输入昵称和手机号搜索</string>
 
     <string name="choose_prove_identity">选择认证身份</string>
     <string name="true_name">真实姓名</string>
@@ -757,4 +765,5 @@
 
     <string name="call_phone_authorization">请授权拨打电话！</string>
     <string name="authorization_fail">授权失败！</string>
+    <string name="pay_fail">支付失败</string>
 </resources>

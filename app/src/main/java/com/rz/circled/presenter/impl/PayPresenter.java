@@ -500,7 +500,7 @@ public class PayPresenter extends AbsPresenter {
                         }
                     } else {
                         HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -811,18 +811,15 @@ public class PayPresenter extends AbsPresenter {
                             }
 
                             if (!Session.getUserIsLogin()) {
-                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.please_go_login));
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.please_go_login));
                                 return;
                             }
                             if (!Session.getUserMoneyState()) {
-                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.user_money_freeze));
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.user_money_freeze));
                                 return;
                             }
                             if (mPayMoney > mUserMoney) {
-                                SVProgressHUD.showInfoWithStatus(activity, activity.getString(R.string.money_less));
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.money_less));
                                 return;
                             }
                             if (Session.getUserSetpaypw()) {
@@ -851,6 +848,7 @@ public class PayPresenter extends AbsPresenter {
                                 mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
+                                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.auth_remind_content));
                                         Intent intent = new Intent(activity, SetPayPassAty.class);
                                         intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
                                         activity.startActivity(intent);

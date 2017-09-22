@@ -194,7 +194,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/px360"
                             android:scaleType="fitCenter"
-                            android:src="@mipmap/ic_empty_private_group" />
+                            android:src="@mipmap/icon_data_empty" />
 
                         <TextView
                             android:layout_width="wrap_content"

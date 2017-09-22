@@ -28,6 +28,7 @@ public class AllPrivateGroupActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.private_group_all);
     }
 
     @Override
