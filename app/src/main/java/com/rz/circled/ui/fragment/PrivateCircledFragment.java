@@ -47,6 +47,7 @@ import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.circled.event.EventConstant.USER_CREATE_PRIVATE_GROUP_NUM;
 import static com.rz.circled.event.EventConstant.USER_JOIN_PRIVATE_GROUP_NUM;
+import static com.rz.common.utils.SystemUtils.trackUser;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -260,6 +261,7 @@ public class PrivateCircledFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_for:
+                trackUser("入口","创建私圈","");
                 startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
                 break;
             case R.id.btn_create_more:

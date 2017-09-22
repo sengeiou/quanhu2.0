@@ -175,7 +175,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
         public Object instantiateItem(ViewGroup container, final int position) {
             ImageView imageView = new ImageView(container.getContext());
             final int i = position % mItems.size();
-            Glide.with(container.getContext()).load(mItems.get(i).getPicUrl()).into(imageView);
+            Glide.with(container.getContext()).load(mItems.get(i).getPicUrl()).placeholder(R.drawable.banner_default).into(imageView);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setOnClickListener(new OnClickListener() {
                 @Override

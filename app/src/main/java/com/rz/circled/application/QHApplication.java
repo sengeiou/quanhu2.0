@@ -117,6 +117,7 @@ import com.yryz.yunxinim.uikit.MessageFilterListener;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.contact.core.query.PinYin;
 import com.yryz.yunxinim.uikit.session.viewholder.MsgViewHolderThumbBase;
+import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -163,6 +164,9 @@ public class QHApplication extends BaseApplication {
     }
 
     private void init() {
+        //初始化诸葛io
+        ZhugeSDK.getInstance().openLog();
+        ZhugeSDK.getInstance().init(this);
         configOkHttp();
         configExo();
         configBugly();

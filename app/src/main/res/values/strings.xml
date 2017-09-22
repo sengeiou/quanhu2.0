@@ -273,7 +273,7 @@
     <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
     <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
     <string name="search">搜索</string>
-    <string name="favorite_circle">喜欢的圈子</string>
+    <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
     <string name="send_gift_success">礼物打赏成功</string>
 
@@ -453,6 +453,7 @@
     <string name="remark_fail">备注失败</string>
     <string name="obtain_fail">获取失败</string>
     <string name="inval_sucess">邀请成功</string>
+    <string name="bound_waring_txt">为了响应国家网络实名制相关规定，请绑定手机号。</string>
 
 
     <string name="contacts_search_keywords">关键字搜索</string>
@@ -595,6 +596,7 @@
     <string name="my_answer_reward_txt">我回答的悬赏</string>
     <string name="reward_artical">打赏的作品</string>
     <string name="rewarded_artical">被打赏的作品</string>
+    <string name="waring_login">返回登录页，选择其他登录方式？</string>
 
     <!-- 个人信息 -->
 

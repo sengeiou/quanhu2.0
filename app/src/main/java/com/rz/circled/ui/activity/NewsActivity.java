@@ -166,6 +166,7 @@ public class NewsActivity extends BaseActivity {
             }
         }
         mAdapter.setData(data);
+        mCache.putListEntity(data);
     }
 
     private void loadData() {

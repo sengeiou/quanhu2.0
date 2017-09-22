@@ -30,7 +30,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.rz.circled.widget.CommomUtils.trackUser;
 import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
 
 
@@ -91,7 +90,6 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                     comingPublishedAdapter.notifyDataSetChanged();
                     mPresenter.removeLoveCircle(appId,Session.getUserId());
                 } else {
-                    trackUser("百圈纷呈", "圈子入口", onLines.get(pos).circleName);
                     WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
                 }
 //                }
