@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.rz.circled.R;
-import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.modle.SnsLoginModel;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
@@ -20,6 +19,7 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.UserInfoBean;

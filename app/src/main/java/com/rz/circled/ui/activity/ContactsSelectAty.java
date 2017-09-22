@@ -32,7 +32,6 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon;
 import com.yryz.yunxinim.uikit.common.util.sys.SoftKeyboardUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -142,7 +141,6 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
         presenter = new FriendPresenter1();
         mPresenter = new OpusGeneralPresenter();
         mPresenter.attachView(this);
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -235,7 +233,6 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

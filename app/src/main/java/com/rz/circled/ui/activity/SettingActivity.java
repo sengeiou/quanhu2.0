@@ -82,7 +82,9 @@ public class SettingActivity extends BaseActivity {
         presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
     }
-boolean isCheck=false;
+
+    boolean isCheck = false;
+
     @Override
     public void initView() {
         setTitleText("设置");
@@ -96,11 +98,11 @@ boolean isCheck=false;
         mIdSbMess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isCheck){
-                    isCheck=false;
+                if (isCheck) {
+                    isCheck = false;
                     presenter.messageFree(0);
-                }else{
-                    isCheck=true;
+                } else {
+                    isCheck = true;
                     presenter.messageFree(1);
                 }
                 Session.setMessFree(isCheck);
@@ -110,7 +112,6 @@ boolean isCheck=false;
 
     @Override
     public void initData() {
-//        EventBus.getDefault().register(this);
 //
 //        /***** 获取升级信息 *****/
 //        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
@@ -282,7 +283,6 @@ boolean isCheck=false;
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
         if (snsPresenter != null) {
             snsPresenter.detachView();
         }

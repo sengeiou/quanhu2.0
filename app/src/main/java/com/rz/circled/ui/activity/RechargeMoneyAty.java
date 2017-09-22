@@ -29,7 +29,6 @@ import com.rz.httpapi.bean.AccountBean;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -130,14 +129,12 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
     @Override
     public void initData() {
         mInvokeid = getIntent().getLongExtra(IntentKey.EXTRA_INVOKEID, -1);
-        EventBus.getDefault().register(this);
         mPayPresenter.getUserAccount(Session.getUserId(), "");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

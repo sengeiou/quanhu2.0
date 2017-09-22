@@ -33,7 +33,6 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.ProveStatusBean;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -148,9 +147,6 @@ public class UserInfoActivity extends BaseActivity{
 
     @Override
     public void initData() {
-
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
 
 
         //个人中心
@@ -310,8 +306,6 @@ public class UserInfoActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     private void setData(){

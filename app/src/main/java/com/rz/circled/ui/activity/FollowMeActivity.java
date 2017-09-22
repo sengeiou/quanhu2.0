@@ -29,7 +29,6 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.yryz.yunxinim.uikit.common.ui.dialog.CustomAlertDialog;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -239,13 +238,10 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void initData() {
-
-        EventBus.getDefault().register(this);
 
         EntityCache<FriendRequireModel> friendRequireModelEntityCache = new EntityCache<>(aty, FriendRequireModel.class);
         List<FriendRequireModel> caches = friendRequireModelEntityCache.getListEntity(FriendRequireModel.class);

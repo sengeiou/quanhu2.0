@@ -29,7 +29,6 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.DialogUtils;
 import com.rz.httpapi.bean.FriendInformationBean;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -161,13 +160,11 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.contacts_permissiongs_run), RC_LOCATION_CONTACTS_PERM, Manifest.permission.READ_CONTACTS);
         }
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

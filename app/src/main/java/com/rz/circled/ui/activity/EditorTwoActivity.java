@@ -84,7 +84,6 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.CallManager;
 import com.rz.sgt.jsbridge.JsEvent;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
@@ -417,7 +416,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void initData() {
-        EventBus.getDefault().register(this);
     }
 
     @OnClick({R.id.tv_editor_two_page_change, R.id.tv_editor_two_page_add, R.id.rl_editor_two_sort, R.id.rl_editor_two_location, R.id.rl_editor_two_time, R.id.iv_editor_two_choose_pic
@@ -2223,7 +2221,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (mRecord != null && mRecord.isPlayIng()) {
             mRecord.stopPlay();
         }
-        EventBus.getDefault().unregister(this);
     }
 
 

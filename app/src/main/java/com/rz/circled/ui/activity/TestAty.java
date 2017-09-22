@@ -28,7 +28,6 @@ import com.rz.common.utils.ImageUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
@@ -81,7 +80,6 @@ public class TestAty extends BaseActivity {
 
     @Override
     public void initView() {
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -126,7 +124,6 @@ public class TestAty extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -280,6 +280,7 @@ public class LoginActivity extends BaseActivity {
 //        }
 //    }
 //
+
     /**
      * 微信登录
      */
@@ -316,8 +317,8 @@ public class LoginActivity extends BaseActivity {
      * 手机验证码登录
      */
     @OnClick(R.id.layout_phone_code)
-    public void codeLogin(){
-        if(codeType == 1){
+    public void codeLogin() {
+        if (codeType == 1) {
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
             typePwd.setImageResource(R.mipmap.icon_code);
@@ -325,7 +326,7 @@ public class LoginActivity extends BaseActivity {
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             loginType = 2;
-        }else{
+        } else {
             mBtnSendCode.setVisibility(View.GONE);
             mEditPass.setHint("请输入密码");
             mImgWatchPw.setVisibility(View.VISIBLE);
@@ -336,7 +337,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick(R.id.id_regist_send_sms_btn)
-    public void getCode(){
+    public void getCode() {
 
         mPhone = mEditPhone.getText().toString();
         if (!StringUtils.isMobile(mPhone)) {
@@ -395,16 +396,16 @@ public class LoginActivity extends BaseActivity {
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
 
-            if(codeType == 1){  //密码登陆
+            if (codeType == 1) {  //密码登陆
                 if (mPassword.length() >= 6 && mPassword.length() <= 18) {
                     ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
                 }
-            }else{            //验证码登录
-                if(mPassword.length() == 4){
+            } else {            //验证码登录
+                if (mPassword.length() == 4) {
                     ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
-                }else {
+                } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
 
@@ -572,14 +573,14 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
-        if(t instanceof LoginTypeBean){
+        if (t instanceof LoginTypeBean) {
             LoginTypeBean model = (LoginTypeBean) t;
-            if(model.getType() == 4){
+            if (model.getType() == 4) {
                 //已经绑定过手机直接登录
                 skipActivity(aty, MainActivity.class);
-            }else{
+            } else {
                 //未绑定手机，前往绑定手机好
-                skipActivity(this,BoundPhoneActivity.class);
+                skipActivity(this, BoundPhoneActivity.class);
 
             }
         }
@@ -864,13 +865,11 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     /**

@@ -20,4 +20,7 @@ public class ReturnCode {
     //用户黑名单
     public static final int USER_BLACK = 5;
 
+    //被踢
+    public static final int USER_KICK = 6;
+
 }
