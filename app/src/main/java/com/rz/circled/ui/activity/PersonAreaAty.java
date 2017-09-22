@@ -196,7 +196,10 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                 startActivityForResult(intent, REQUEST_CODE);
             } else {
                 AreaModel areaModel = areaList.get(position - 1);
-                String paramas = areaModel.name + " " + areaModel.children.get(position - 1).name;
+                String paramas = areaModel.name;
+                if (areaModel.children != null)
+                    paramas = " " + areaModel.children.get(position - 1).name;
+
                 paramas = paramas.trim();
                 if (!isUserInfo) {
                     //其他页面过来

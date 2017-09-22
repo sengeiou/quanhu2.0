@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".application.QHApplication"
@@ -23,6 +25,13 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}"/>
+        <!-- 诸葛io appkey -->
+        <meta-data
+            android:name="ZHUGE_APPKEY"
+            android:value="dd02ba90031b4723b057e1825899f844"/>
+        <meta-data
+            android:name="ZHUGE_CHANNEL"
+            android:value="${CHANNEL}"/>
         <!-- 友盟appkey -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -185,192 +194,192 @@
         <activity
             android:name=".ui.activity.EditorTwoSortActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.ImagePagerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.PictureSelectedActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.MediaActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.activity.ReportActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.RewardGiftActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.UploadAudioActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.UploadVideoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.UploadPicActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.VideoChooseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.VoicePubActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.EditorTwoAuthorityActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.SplashAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.BankCardListAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.GuideActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.FullScreen"/>
         <activity
             android:name=".ui.activity.MyAccountAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.MyBalanceAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PersonAreaAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PersonInfoAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.RewardScoreAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.CommonH5Activity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PersonSecondAreaAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.AllPrivateGroupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.MyPrivateGroupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ApplyForCreatePrivateGroupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ApplyForPrivateGroupBelongActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PrivateGroupJoinWayChangeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.NewsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.NewsAnnounceDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.NewsFragmentActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.NewsInteractiveActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.RecentContactActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.AllCirclesAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.MoreFamousActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.MoreSubjectActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.MorePlayActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.RechargeMoneyAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.CreateTeamActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ContactsAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ContactsSearchAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ContactsSelectAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter>
-                <action android:name="com.rz.yryz.FRIEND_SELECT_ACTION"/>
+                <action android:name="com.rz.yryz.FRIEND_SELECT_ACTION" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -380,100 +389,100 @@
         <activity
             android:name=".ui.activity.RechargeAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ToBankCardAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.AddBankCardAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PictureManagerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.PersionNickActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.PersonSexActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.PersonBriefAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.MyArticleActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
-        <activity android:name=".ui.activity.FollowCircle"/>
+        <activity android:name=".ui.activity.FollowCircle" />
 
         <activity
             android:name=".ui.activity.LocationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.UserInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
 
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.AccountDetailAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.PersonScanAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.AwesomeTabsAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.VideoH5Aty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.AddContactsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.MobileContactsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.JsPayOrderActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.FollowMeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ShareNewsAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ShareSwitchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ShareTeamListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
         <activity
             android:name=".ui.activity.ShareFriendsListActivity"
             android:screenOrientation="portrait"
@@ -547,6 +556,10 @@
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
             android:name=".ui.activity.SocializationShareAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.NavigateOpenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity

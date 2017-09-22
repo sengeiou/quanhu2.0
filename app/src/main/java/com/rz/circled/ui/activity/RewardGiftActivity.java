@@ -41,7 +41,6 @@ import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -114,8 +113,6 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         Intent intent = getIntent();
         rewardInfoBean = (RewardInfoBean) intent.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
     }
@@ -130,8 +127,6 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Override

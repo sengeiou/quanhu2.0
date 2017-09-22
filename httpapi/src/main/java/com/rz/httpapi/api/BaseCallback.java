@@ -39,6 +39,8 @@ public abstract class BaseCallback<T> implements Callback<T> {
         Log.d(TAG, "code:" + response.code());
         if (null != responseBase) {
             responseBase.handleReson(response);
+//            ResponseData responseData = (ResponseData) response.body();
+//            HandleRetCode.handlerExpire(App.getContext(), responseData);
         }
         CallManager.remove(call);
     }

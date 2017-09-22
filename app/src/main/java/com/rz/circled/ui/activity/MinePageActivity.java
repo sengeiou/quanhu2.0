@@ -39,8 +39,6 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
     List<EntitiesBean> bean = new ArrayList<>();
     @BindView(R.id.lv)
     ListView mLv;
-    @BindView(R.id.iv_no_data)
-    ImageView mIvNoData;
     int pageNo = 1;
     @BindView(R.id.activity_refresh)
     SwipeRefreshLayout mActivityRefresh;
@@ -64,8 +62,6 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
                             pageNo++;
                             List<EntitiesBean> entities = res.getData().entities;
                             bean.addAll(entities);
-                            mIvNoData.setVisibility(bean.size() == 0 ? View.VISIBLE : View.GONE);
-                            mLv.setVisibility(bean.size() == 0 ? View.GONE : View.VISIBLE);
                             mEntitiesBeanCommonAdapter.notifyDataSetChanged();
                         }
                     }
@@ -108,7 +104,14 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
         initPresenter();
         mActivityRefresh.setRefreshing(false);
     }
-
+    @Override
+    protected boolean hasDataInPage() {
+        return mEntitiesBeanCommonAdapter.getCount() != 0;
+    }
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
     @Override
     public void refreshPage() {
 

@@ -25,11 +25,9 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
-import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
-import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -177,9 +175,7 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
         setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
-
         finish();
-        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
     }
 
     @Override
@@ -269,6 +265,23 @@ public class LoginActivity extends BaseActivity {
         loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
+//    /**
+//     * qq登录
+//     */
+//    @OnClick(R.id.layout_login_qq)
+//    public void qqLogin() {
+//        if (isFastClick(7000)) {
+//            return;
+//        }
+//        if (presenter != null) {
+////            mEditPhone.setText("");
+////            mEditPass.setText("");
+//            ((SnsAuthPresenter) presenter).setActionBind(-1);
+//            ((SnsAuthPresenter) presenter).qqAuth(true);
+//        }
+//    }
+//
+
 
     /**
      * 微信登录
@@ -306,8 +319,8 @@ public class LoginActivity extends BaseActivity {
      * 手机验证码登录
      */
     @OnClick(R.id.layout_phone_code)
-    public void codeLogin(){
-        if(codeType == 1){
+    public void codeLogin() {
+        if (codeType == 1) {
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
             typePwd.setImageResource(R.mipmap.icon_code);
@@ -316,7 +329,7 @@ public class LoginActivity extends BaseActivity {
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             codeType = 2;
-        }else{
+        } else {
             mBtnSendCode.setVisibility(View.GONE);
             mEditPass.setHint("请输入密码");
             mImgWatchPw.setVisibility(View.VISIBLE);
@@ -331,7 +344,7 @@ public class LoginActivity extends BaseActivity {
 
 
     @OnClick(R.id.id_regist_send_sms_btn)
-    public void getCode(){
+    public void getCode() {
 
         mPhone = mEditPhone.getText().toString();
         if (!StringUtils.isMobile(mPhone)) {
@@ -390,16 +403,16 @@ public class LoginActivity extends BaseActivity {
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
 
-            if(codeType == 1){  //密码登陆
+            if (codeType == 1) {  //密码登陆
                 if (mPassword.length() >= 6 && mPassword.length() <= 18) {
                     ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
                 }
-            }else{            //验证码登录
-                if(mPassword.length() == 4){
-                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, mPassword);
-                }else {
+            } else {            //验证码登录
+                if (mPassword.length() == 4) {
+                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
 
@@ -414,7 +427,6 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.id_login_register_btn)
     public void registerBtn() {
-        CommomUtils.trackUser("注册登录", "注册", "");
         Intent intent = new Intent(aty, RegisterActivity.class);
         intent.putExtra(IntentKey.EXTRA_TYPE, loginType);
 //        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
@@ -505,7 +517,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     //登录成功后保存数据
-    private void saveLoginData(UserInfoBean model ){
+    private void saveLoginData(UserInfoBean model) {
 //                MobclickAgent.onEvent(aty, "login");
         //单独记录随手晒缓存记录，防止刷新
         if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
@@ -516,7 +528,9 @@ public class LoginActivity extends BaseActivity {
         } else {
 //                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
         }
-
+        //诸葛标识用户
+        JSONObject json = new JSONObject();
+        ZhugeSDK.getInstance().identify(getApplicationContext(), model.getCustId(), json);
         Session.setUserIsLogin(true);
         Session.setUserId(model.getCustId());
         Session.setUserPicUrl(model.getCustImg());
@@ -566,26 +580,27 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
-        if(t != null){
+        if (t != null) {
             List<LoginTypeBean> model = (List<LoginTypeBean>) t;
-            if(model.size() >0 && model.size() == 4){
+            if (model.size() > 0 && model.size() == 4) {
                 //已经绑定过手机直接登录
-                if(!TextUtils.isEmpty(model.get(3).getCreateDate())){
+                if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
                     skipActivity(aty, MainActivity.class);
+                } else {
                     saveLoginData(loginModel);
                 }else{
                     //传递登录时返回的对象
-                    if(loginModel != null){
-                        Intent intent = new Intent(this,BoundPhoneActivity.class);
+                    if (loginModel != null) {
+                        Intent intent = new Intent(this, BoundPhoneActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("loginmodel",loginModel);
+                        bundle.putSerializable("loginmodel", loginModel);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
                 }
-            }else{
+            } else {
                 //未绑定手机，前往绑定手机好
-                skipActivity(this,BoundPhoneActivity.class);
+                skipActivity(this, BoundPhoneActivity.class);
             }
         }
     }
@@ -595,7 +610,7 @@ public class LoginActivity extends BaseActivity {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_SAVE) {
             UserInfoBean loginModel = (UserInfoBean) baseEvent.getData();
-            if(loginModel != null){
+            if (loginModel != null) {
                 saveLoginData(loginModel);
             }
         }
@@ -875,13 +890,11 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -918,6 +931,7 @@ public class LoginActivity extends BaseActivity {
             mBtnSendCode.setEnabled(true);
         }
     }
+
 
     @Override
     public void refreshPage() {

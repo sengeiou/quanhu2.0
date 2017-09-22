@@ -35,7 +35,6 @@ import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -93,9 +92,6 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     public void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         AndroidBug5497Workaround.assistActivity(this);
-
-        if (!EventBus.getDefault().isRegistered(mContext))
-            EventBus.getDefault().register(mContext);
 
         mWebView = (AdvancedWebView) findViewById(R.id.webview_container);
         mWebView.setListener(this, new MListener());
@@ -159,7 +155,6 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(mContext);
     }
 
     @Override

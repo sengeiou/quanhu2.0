@@ -2,9 +2,9 @@ package com.rz.circled.presenter.impl;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 
 import com.rz.circled.R;
-import com.rz.circled.http.HandleRetCode;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -13,14 +13,16 @@ import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.MessFreeBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
@@ -68,10 +70,51 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
         mUserService.setMessFree(Session.getUserId(),pushStatus)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<ResponseData>() {
+                    .subscribe(new Observer<ResponseData>() {
                         @Override
-                        public void call(ResponseData res) {
+                        public void onCompleted() {
 
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseData responseData) {
+
+                        }
+                    });
+
+    }
+    //查询消息状态
+    public void queryMessageFree() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mUserService.queryMessFree(Session.getUserId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ResponseData<MessFreeBean>>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseData<MessFreeBean> res) {
+                            if (res.getRet()==ReturnCode.SUCCESS){
+                                MessFreeBean data = res.getData();
+                                Log.i("lixiang", "call: "+data.pushStatus);
+                                mView.updateView(data);
+                            }
 
                         }
                     });

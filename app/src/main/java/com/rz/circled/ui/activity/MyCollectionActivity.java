@@ -169,7 +169,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                 String extjson = resourceInfo.extjson;
                 ExjsonCollection exjson = gson.fromJson(extjson, ExjsonCollection.class);
                 ExjsonCollection.AnswerBean answer = exjson.answer;
-                ExjsonCollection.QuestionBean question = exjson.question;
+                final ExjsonCollection.QuestionBean question = exjson.question;
                 Log.i(TAG, "getView: " + extjson.toString());
                 String resourceType = resourceInfo.getResourceType();
                 //文章(1000)、话题(1001)、帖子(1002)、问题(1003)、答案(1004)、活动(1005)、悬赏(1006)
@@ -210,7 +210,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         vh.ll_audio.setVisibility(View.GONE);
                         vh.answer_content.setText("A:  " + answer.content);
                     }
-                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName());
+                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName()+" >");
                     vh.answer_from.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -220,12 +220,12 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                     vh.question_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, user.getCustId());
+                            UserInfoActivity.newFrindInfo(mContext, question.createUserId);
                         }
                     }); vh.answer_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, user.getCustId());
+                            UserInfoActivity.newFrindInfo(mContext, question.targetId);
                         }
                     });
 
