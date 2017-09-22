@@ -453,6 +453,7 @@
     <string name="remark_fail">备注失败</string>
     <string name="obtain_fail">获取失败</string>
     <string name="inval_sucess">邀请成功</string>
+    <string name="bound_waring_txt">为了响应国家网络实名制相关规定，请绑定手机号。</string>
 
 
     <string name="contacts_search_keywords">关键字搜索</string>
@@ -595,6 +596,7 @@
     <string name="my_answer_reward_txt">我回答的悬赏</string>
     <string name="reward_artical">打赏的作品</string>
     <string name="rewarded_artical">被打赏的作品</string>
+    <string name="waring_login">返回登录页，选择其他登录方式？</string>
 
     <!-- 个人信息 -->
 

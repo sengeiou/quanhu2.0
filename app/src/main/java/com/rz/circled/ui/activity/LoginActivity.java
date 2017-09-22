@@ -25,6 +25,7 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
@@ -50,6 +51,7 @@ import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.util.HashSet;
@@ -134,6 +136,7 @@ public class LoginActivity extends BaseActivity {
 
     private int loginType;
     private int mGuideType;
+    UserInfoBean loginModel;
 
     private int codeType = 1;
     /**
@@ -174,7 +177,9 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
         setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
+
         finish();
+        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
     }
 
     @Override
@@ -322,16 +327,18 @@ public class LoginActivity extends BaseActivity {
             mEditPass.setHint("请输入验证码");
             typePwd.setImageResource(R.mipmap.icon_code);
             mImgWatchPw.setVisibility(View.GONE);
+            mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-            loginType = 2;
+            codeType = 2;
         }else{
             mBtnSendCode.setVisibility(View.GONE);
             mEditPass.setHint("请输入密码");
             mImgWatchPw.setVisibility(View.VISIBLE);
-            mEditPass.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+            mEditPass.setText("");
+            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
-            loginType = 1;
+            codeType = 1;
         }
     }
 
@@ -451,84 +458,34 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateView(T t) {
         super.updateView(t);
         if (null != t) {
-            UserInfoBean model = (UserInfoBean) t;
-            if (null != model) {
-                zhugeIdentify(model);
+            loginModel = (UserInfoBean) t;
+            if (null != loginModel) {
+                zhugeIdentify(loginModel);
+                Session.setSessionKey(loginModel.getToken());
+//                saveLoginData(loginModel);
                 switch (Session.getLoginWay()) {
-                    case Type.LOGIN_QQ:
-//                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
-                        zhugeTrack("qq");
-                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(model.getCustId());
-                        return;
+//                    case Type.LOGIN_QQ:
+////                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
+//                        zhugeTrack("qq");
+//                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
+//                        return;
                     case Type.LOGIN_WX:
 //                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
                         zhugeTrack("wx");
-                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(model.getCustId());
+                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
                         return;
                     case Type.LOGIN_SINA:
 //                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
                         zhugeTrack("sina");
-                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(model.getCustId());
-                        break;
+                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
+                        return;
                     default:
 //                        MobclickAgent.onProfileSignIn(model.getCustId());
                         zhugeTrack("phonenum");
                         break;
                 }
 
-//                MobclickAgent.onEvent(aty, "login");
-                //单独记录随手晒缓存记录，防止刷新
-                if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
-                    EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
-                    List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
-//                    ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
-                    entityCache.putListEntity(showCaches);
-                } else {
-//                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
-                }
-
-                Session.setUserIsLogin(true);
-                Session.setUserId(model.getCustId());
-                Session.setUserPicUrl(model.getCustImg());
-                Session.setSessionKey(model.getToken());
-                Session.setUserPhone(model.getCustPhone());
-                Session.setUserLocalUrl(model.getCustQr());
-                Session.setUserName(model.getCustNname());
-                Session.setUser_signatrue(model.getCustSignature());
-                Session.setUser_desc(model.getCustDesc());
-                Session.setCityCode(model.getCityCode());
-                Session.setCustPoints(model.getCustPoints());
-                Session.setUserLevel(model.getCustLevel());
-                Session.setCustRole(model.getCustRole());
-                if (TextUtils.equals("0", model.getCustSex())) {
-                    Session.setUser_sex("女");
-                } else {
-                    Session.setUser_sex("男");
-                }
-                Session.setUser_area(model.getCustLocation());
-                if (Type.HAD_SET_PW == model.getIsPayPassword()) {
-                    //设置支付密码
-                    Session.setUserSetpaypw(true);
-                } else {
-                    Session.setUserSetpaypw(false);
-                }
-                if (Type.OPEN_EASY_PAY == model.getSmallNopass()) {
-                    //开启免密支付
-                    Session.setIsOpenGesture(true);
-                } else {
-                    Session.setIsOpenGesture(false);
-                }
-                if (model.getIsPwdExist() == 1) {
-                    //设置了登录密码
-                    Session.setUserLoginPw(true);
-                } else {
-                    Session.setUserLoginPw(false);
-                }
-
-                if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
-                    EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
-                    entityCache.clean();
-                }
+                saveLoginData(loginModel);
 
                 Set<String> sset = new HashSet<String>();
                 sset.add(Constants.Lottery_Tag);
@@ -551,7 +508,7 @@ public class LoginActivity extends BaseActivity {
                     finish();
                 } else {
                     BaseEvent event = new BaseEvent();
-//                    event.key = LOGIN_IN_SUCCESS;
+//            event.key = LOGIN_IN_SUCCESS;
                     EventBus.getDefault().post(event);
 
                     EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
@@ -561,26 +518,102 @@ public class LoginActivity extends BaseActivity {
                     finish();
                 }
 
-
-//                loginYunXin(model.getCustId(), model.getCustId());
-
             }
         }
+    }
+
+    //登录成功后保存数据
+    private void saveLoginData(UserInfoBean model ){
+//                MobclickAgent.onEvent(aty, "login");
+        //单独记录随手晒缓存记录，防止刷新
+        if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
+            EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
+            List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
+//                    ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
+            entityCache.putListEntity(showCaches);
+        } else {
+//                    ClearCacheUtil.clearCache(aty, 1, model.getCustId());
+        }
+
+        Session.setUserIsLogin(true);
+        Session.setUserId(model.getCustId());
+        Session.setUserPicUrl(model.getCustImg());
+        Session.setSessionKey(model.getToken());
+        Session.setUserPhone(model.getCustPhone());
+        Session.setUserLocalUrl(model.getCustQr());
+        Session.setUserName(model.getCustNname());
+        Session.setUser_signatrue(model.getCustSignature());
+        Session.setUser_desc(model.getCustDesc());
+        Session.setCityCode(model.getCityCode());
+        Session.setCustPoints(model.getCustPoints());
+        Session.setUserLevel(model.getCustLevel());
+        Session.setCustRole(model.getCustRole());
+        if (TextUtils.equals("0", model.getCustSex())) {
+            Session.setUser_sex("女");
+        } else {
+            Session.setUser_sex("男");
+        }
+        Session.setUser_area(model.getCustLocation());
+        if (Type.HAD_SET_PW == model.getIsPayPassword()) {
+            //设置支付密码
+            Session.setUserSetpaypw(true);
+        } else {
+            Session.setUserSetpaypw(false);
+        }
+        if (Type.OPEN_EASY_PAY == model.getSmallNopass()) {
+            //开启免密支付
+            Session.setIsOpenGesture(true);
+        } else {
+            Session.setIsOpenGesture(false);
+        }
+        if (model.getIsPwdExist() == 1) {
+            //设置了登录密码
+            Session.setUserLoginPw(true);
+        } else {
+            Session.setUserLoginPw(false);
+        }
+
+        if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
+            EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
+            entityCache.clean();
+        }
+
     }
 
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
-        if(t instanceof LoginTypeBean){
-            LoginTypeBean model = (LoginTypeBean) t;
-            if(model.getType() == 4){
+        if(t != null){
+            List<LoginTypeBean> model = (List<LoginTypeBean>) t;
+            if(model.size() >0 && model.size() == 4){
                 //已经绑定过手机直接登录
-                skipActivity(aty, MainActivity.class);
+                if(!TextUtils.isEmpty(model.get(3).getCreateDate())){
+                    skipActivity(aty, MainActivity.class);
+                }else{
+                    //传递登录时返回的对象
+                    if(loginModel != null){
+                        Intent intent = new Intent(this,BoundPhoneActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("loginmodel",loginModel);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }
             }else{
                 //未绑定手机，前往绑定手机好
                 skipActivity(this,BoundPhoneActivity.class);
+            }
+        }
+    }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_SAVE) {
+            UserInfoBean loginModel = (UserInfoBean) baseEvent.getData();
+            if(loginModel != null){
+                saveLoginData(loginModel);
             }
         }
     }
@@ -907,6 +940,7 @@ public class LoginActivity extends BaseActivity {
             mBtnSendCode.setEnabled(true);
         }
     }
+
 
 
     @Override

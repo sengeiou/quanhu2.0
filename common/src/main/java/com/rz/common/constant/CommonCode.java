@@ -76,6 +76,7 @@ public interface CommonCode {
         int TYPE_REWARD_COUNT = 300004;
         int TYPE_USER_UPDATE = 300005;
         int TYPE_EMPTY_COUNT = 300006;
+        int TYPE_SAVE = 300007;
     }
 
     /**

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
@@ -88,12 +89,13 @@ public class UserInfoActivity extends BaseActivity{
     private InfoAdapter infoAdapter;
     private List<Fragment> fragmentList;
 
-
+    ImageView editImg;
 
     View header;
     View newTitilbar;
     private int headHight;
     private IPresenter presenter;
+    private IPresenter friendPresenter;
 
     private String userId = "";
 
@@ -173,6 +175,10 @@ public class UserInfoActivity extends BaseActivity{
             }
         }else{   //他人中心
             //判断他人与自己的关系（是否添加好友）
+            // TODO: 2017/9/22 0022
+            editImg.setVisibility(View.GONE);
+
+            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
 
         }
     }
@@ -183,7 +189,12 @@ public class UserInfoActivity extends BaseActivity{
         presenter = new V3CirclePresenter();
         presenter.attachView(this);
 
+        friendPresenter = new FriendPresenter1();
+        friendPresenter.attachView(this);
+
     }
+
+
 
     public void initHead(){
 
@@ -192,7 +203,7 @@ public class UserInfoActivity extends BaseActivity{
         newTitilbar.getBackground().mutate().setAlpha(255);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
-        ImageView editImg = (ImageView) newTitilbar.findViewById(R.id.scores_img);
+        editImg = (ImageView) newTitilbar.findViewById(R.id.scores_img);
         RelativeLayout editLayout = (RelativeLayout) newTitilbar.findViewById(R.id.edit_layout);
 
         editLayout.setVisibility(View.VISIBLE);

@@ -10,6 +10,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
@@ -22,6 +23,7 @@ import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -89,6 +91,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        Toasty.info(mContext, res.getMsg()).show();
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
@@ -272,7 +275,7 @@ public class UserInfoPresenter extends GeneralPresenter {
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData res = response.body();
+                    final ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         //绑定手机号成功
                         Session.setUserLoginPw(true);
@@ -285,7 +288,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                                 }
                             }, 2000);
                             return;
@@ -373,17 +376,17 @@ public class UserInfoPresenter extends GeneralPresenter {
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, "验证中...");
 //        Call<ResponseData<RegisterModel>> call = mUserService.checkProblem(
-        Call<ResponseData<LoginTypeBean>> call = mUserService.loginMethod(
-                Session.getUserId());
+        Call<ResponseData<List<LoginTypeBean>>> call = mUserService.loginMethod(1020,
+                custId);
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<LoginTypeBean>>() {
+        call.enqueue(new BaseCallback<ResponseData<List<LoginTypeBean>>>() {
             @Override
-            public void onResponse(Call<ResponseData<LoginTypeBean>> call, Response<ResponseData<LoginTypeBean>> response) {
+            public void onResponse(Call<ResponseData<List<LoginTypeBean>>> call, Response<ResponseData<List<LoginTypeBean>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        LoginTypeBean model = (LoginTypeBean) res.getData();
+                        List<LoginTypeBean> model = (List<LoginTypeBean>) res.getData();
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateViewWithFlag(model,200);
                         return;
@@ -401,9 +404,8 @@ public class UserInfoPresenter extends GeneralPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<LoginTypeBean>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<List<LoginTypeBean>>> call, Throwable t) {
                 super.onFailure(call, t);
-                //验证短信验证码失败
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
             }
         });
