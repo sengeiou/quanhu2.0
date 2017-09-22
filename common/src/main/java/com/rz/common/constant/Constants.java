@@ -97,7 +97,7 @@ public class Constants {
     public static final class Sina {
         public static final String APP_KEY = "584112165";
         public static final String APP_SECRET = "a4f06fcdbab55e46de60ad1bc402657a";
-        public static final String REDIRECT_URL = "https://www.quanhu365.com/";
+        public static final String REDIRECT_URL = "https://www.quanhu365.com";
         //        public static final String REDIRECT_URL = "http://sns.whalecloud.com/sina2/callback";
     }
 

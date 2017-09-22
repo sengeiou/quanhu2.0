@@ -42,7 +42,7 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
 
     @Override
     public boolean hasDataInPage() {
-        return true;
+        return false;
     }
 
     @Override

@@ -474,7 +474,7 @@ public class RegisterActivity extends BaseActivity {
                 break;
             //服务条款
             case R.id.find_pass2_protocol:
-                CommonH5Activity.startCommonH5(aty, H5Address.USER_SERVER, "圈呼");
+                CommonH5Activity.startCommonH5(aty, "", H5Address.USER_SERVER);
                 break;
         }
     }
