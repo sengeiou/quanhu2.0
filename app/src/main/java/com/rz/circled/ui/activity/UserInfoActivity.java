@@ -32,6 +32,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -85,6 +86,7 @@ public class UserInfoActivity extends BaseActivity{
 
     @BindView(R.id.add_friend_btn)
     Button addFriendBtn;
+
 
     private InfoAdapter infoAdapter;
     private List<Fragment> fragmentList;
@@ -175,9 +177,7 @@ public class UserInfoActivity extends BaseActivity{
             }
         }else{   //他人中心
             //判断他人与自己的关系（是否添加好友）
-            // TODO: 2017/9/22 0022
             editImg.setVisibility(View.GONE);
-
             ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
 
         }
@@ -193,8 +193,6 @@ public class UserInfoActivity extends BaseActivity{
         friendPresenter.attachView(this);
 
     }
-
-
 
     public void initHead(){
 
@@ -235,7 +233,7 @@ public class UserInfoActivity extends BaseActivity{
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
         if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
-            setData();
+            setData(null);
         }
     }
 
@@ -315,6 +313,9 @@ public class UserInfoActivity extends BaseActivity{
                 }
             }
 
+        }else if(t instanceof FriendInformationBean){
+            FriendInformationBean model = (FriendInformationBean) t;
+            setData(model);
         }
     }
 
@@ -325,23 +326,41 @@ public class UserInfoActivity extends BaseActivity{
             EventBus.getDefault().unregister(this);
     }
 
-    private void setData(){
+    private void setData(FriendInformationBean model){
 
-        Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
-                placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
-        nameTxt.setText(Session.getUserName());
-        levelTxt.setText("Lv." + Session.getUserLevel());
-        signTxt.setText(Session.getUser_signatrue());
-        addFriendLayout.setVisibility(View.GONE);
-        //普通用户
-        if(Session.getCustRole().equals("0")){
-            userRole.setText("去认证");
-            userRole.setBackgroundResource(R.drawable.shape_white_bg);
-            userRole.setPadding(20,0,20,0);
-            userRole.getBackground().setAlpha(77);
-        }else{
-            //达人用户，另外调达人类型接口
-            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+        if(model == null){
+            if(userId.equals(Session.getUserId())){
+                Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
+                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+                nameTxt.setText(Session.getUserName());
+                levelTxt.setText("Lv." + Session.getUserLevel());
+                signTxt.setText(Session.getUser_signatrue());
+                addFriendLayout.setVisibility(View.GONE);
+                //普通用户
+                if(Session.getCustRole().equals("0")){
+                    userRole.setText("去认证");
+                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
+                    userRole.setPadding(20,0,20,0);
+                    userRole.getBackground().setAlpha(77);
+                }else{
+                    //达人用户，另外调达人类型接口
+                    ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+                }
+            }
+        }else {
+            Glide.with(this).load(model.getCustImg()).transform(new GlideCircleImage(this)).
+                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+            nameTxt.setText(model.getCustNname());
+            levelTxt.setText("Lv." + model.getCustLevel());
+            signTxt.setText(model.getCustSignature());
+            if(model.getRelation() == 0){
+                //陌生人
+                addFriendLayout.setVisibility(View.VISIBLE);
+            }else{
+                addFriendLayout.setVisibility(View.GONE);
+            }
+            userRole.setText(model.getCustRole());
+
         }
     }
 

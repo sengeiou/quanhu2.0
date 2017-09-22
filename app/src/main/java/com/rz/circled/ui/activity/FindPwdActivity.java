@@ -320,4 +320,9 @@ public class FindPwdActivity extends BaseActivity {
             }
         }
     }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 }

@@ -105,7 +105,7 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             tvTime.setVisibility(View.VISIBLE);
 
             String time = TimeUtil.getTime(dateNowStr,model.getTerminalTime());
-            String timeArray[] = time.split(",-");
+            String timeArray[] = time.replace("-","").split(",");
             String time1 = timeArray[0];
             String time2 = timeArray[1];
             String time3 = timeArray[2];

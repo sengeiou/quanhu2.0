@@ -269,22 +269,7 @@ public class LoginActivity extends BaseActivity {
         loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
     }
 
-//    /**
-//     * qq登录
-//     */
-//    @OnClick(R.id.layout_login_qq)
-//    public void qqLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).qqAuth(true);
-//        }
-//    }
-//
+
     /**
      * 微信登录
      */
@@ -341,6 +326,9 @@ public class LoginActivity extends BaseActivity {
             codeType = 1;
         }
     }
+
+
+
 
     @OnClick(R.id.id_regist_send_sms_btn)
     public void getCode(){
@@ -410,7 +398,7 @@ public class LoginActivity extends BaseActivity {
                 }
             }else{            //验证码登录
                 if(mPassword.length() == 4){
-                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, mPassword);
                 }else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
@@ -456,7 +444,6 @@ public class LoginActivity extends BaseActivity {
      */
     @Override
     public <T> void updateView(T t) {
-        super.updateView(t);
         if (null != t) {
             loginModel = (UserInfoBean) t;
             if (null != loginModel) {
@@ -464,11 +451,6 @@ public class LoginActivity extends BaseActivity {
                 Session.setSessionKey(loginModel.getToken());
 //                saveLoginData(loginModel);
                 switch (Session.getLoginWay()) {
-//                    case Type.LOGIN_QQ:
-////                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
-//                        zhugeTrack("qq");
-//                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
-//                        return;
                     case Type.LOGIN_WX:
 //                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
                         zhugeTrack("wx");
@@ -590,6 +572,7 @@ public class LoginActivity extends BaseActivity {
                 //已经绑定过手机直接登录
                 if(!TextUtils.isEmpty(model.get(3).getCreateDate())){
                     skipActivity(aty, MainActivity.class);
+                    saveLoginData(loginModel);
                 }else{
                     //传递登录时返回的对象
                     if(loginModel != null){
@@ -876,11 +859,6 @@ public class LoginActivity extends BaseActivity {
         ZhugeSDK.getInstance().track(getApplicationContext(), "注册登录", eventObject);
     }
 
-//    @OnClick(R.id.titlebar_main_left_btn)
-//    public void onClick() {
-//        finish();
-//    }
-
     @Subscribe
     public void onEvent(NotifyEvent notifyEvent) {
         if (notifyEvent != null && notifyEvent.tag.equals("register")) {
@@ -940,8 +918,6 @@ public class LoginActivity extends BaseActivity {
             mBtnSendCode.setEnabled(true);
         }
     }
-
-
 
     @Override
     public void refreshPage() {

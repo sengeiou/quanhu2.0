@@ -160,11 +160,10 @@ public interface ApiService {
      *
      * @param act
      * @param phone    手机号
-     * @param password 密码
      * @return
      */
     @FormUrlEncoded
-    @POST(APIUser.LOGIN)
+    @POST(APIUser.VERIFY_CODE)
     Call<ResponseData<UserInfoBean>> loginVerifyCode(
             @Field("act") int act,
             @Field("phone") String phone,

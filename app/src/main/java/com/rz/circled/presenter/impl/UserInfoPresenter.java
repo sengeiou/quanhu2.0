@@ -446,4 +446,106 @@ public class UserInfoPresenter extends GeneralPresenter {
 //        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, mContext.getString(R.string.send_code_failed));
 //    }
 
+
+    /**
+     * 绑定手机号
+     */
+    public void boundPhone(final String phone, String password, String veriCode,String custId) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
+        Call<ResponseData> call = mUserService.bindPhone(
+                1012,
+                custId,
+                phone,
+                password,
+                veriCode);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData>() {
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    final ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        //绑定手机号成功
+                        Session.setUserLoginPw(true);
+                        Session.setUserPhone(phone);
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.bind_success));
+                        mView.updateView("1");
+                        return;
+                    } else {
+//                        if (HandleRetCode.handler(mContext, res)) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                            }
+                        }, 2000);
+                        return;
+//                        }
+                    }
+                }
+                //绑定手机号失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.bind_fail));
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData> call, Throwable t) {
+                super.onFailure(call, t);
+                //绑定手机号失败
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.bind_fail));
+            }
+        });
+    }
+
+
+    /**
+     * 获得验证码
+     *
+     * @param phone
+     */
+    public void getVeriCode2(String phone, final String function) {
+
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+        Call<ResponseData<RegisterBean>> call = null;
+        call = mUserService.sendVeriCode(1001, phone, Type.VERIFY_CODE, function);
+
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<RegisterBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<RegisterBean>> call, Response<ResponseData<RegisterBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        RegisterBean model = (RegisterBean) res.getData();
+                        if (model != null) {
+                            if (function == null || function.length() == 0 || Type.FUNCTION_CODE_5.equals(function)) {
+                                mView.updateView(model);
+                            } else {
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            }
+                        }
+                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        Toasty.info(mContext, res.getMsg()).show();
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<RegisterBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                //发送验证码失败
+                mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
+            }
+        });
+    }
+
+
+
 }

@@ -769,10 +769,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     starCustormService();
                 } else {
 //                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
-//                    CommH5Aty.startCommonH5(frg, customer_url);
-//                }
-                    break;
+                    CommonH5Activity.startCommonH5(mActivity, "客服",H5Address.CONECT_US);
                 }
+                    break;
                 //设置
 
             case 11:
@@ -795,10 +794,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         boolean isWrokDate = isCurrentInTimeScope(startHour, startMinute, endHour, endMinute);
         if (mCustormServiceModel.getStatus() == 1 && isWrokDate == true) {
 
-//            CommH5Aty.startCommonH5(frg, mCustormServiceModel.getCustomUrl());
+            CommonH5Activity.startCommonH5(mActivity, "客服",mCustormServiceModel.getCustomUrl());
         } else {
 
-//            CommH5Aty.startCommonH5(frg, mCustormServiceModel.getMessageUrl());
+            CommonH5Activity.startCommonH5(mActivity, "客服",mCustormServiceModel.getMessageUrl());
         }
     }
 
