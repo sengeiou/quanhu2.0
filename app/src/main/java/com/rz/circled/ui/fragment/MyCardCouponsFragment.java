@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
@@ -31,7 +32,8 @@ public class MyCardCouponsFragment extends BaseFragment {
 
     private final int TYPE_COUPONS = 0;
     private final int TYPE_AWARD = 1;
-
+    @BindView(R.id.sv_card_coupons)
+    ScrollView scrollCoupons;
     @BindView(R.id.lv_card_coupons_normal)
     MyListView lvNormal;
     @BindView(R.id.tv_card_coupons_hint)
@@ -107,7 +109,6 @@ public class MyCardCouponsFragment extends BaseFragment {
                 couponsPresenter.getCouponsList(1, isCoupons ? 1 : 2);
             }
         });
-
     }
 
     @Override
@@ -168,6 +169,7 @@ public class MyCardCouponsFragment extends BaseFragment {
             llHint.setVisibility(awardExpireAdapter.getCount() == 0 ? View.GONE : View.VISIBLE);
         }
         if (!hasDataInPage()) onLoadingStatus(CommonCode.General.DATA_EMPTY);
+        scrollCoupons.smoothScrollTo(0, 0);
     }
 
     @Override

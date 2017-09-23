@@ -141,8 +141,10 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                 if (authorityRootBean.getContentPrice() != price)
                     tvPrice.setSelected(false);
                 else tvPrice.setSelected(true);
-                if (authorityRootBean.getContentPrice() == 0 && position == 0)
+                if (authorityRootBean.getContentPrice() == 0 && position == 0) {
                     tvPrice.setSelected(true);
+                    authorityRootBean.setContentPrice(price);
+                }
 
                 tvPrice.setOnClickListener(new View.OnClickListener() {
                     @Override

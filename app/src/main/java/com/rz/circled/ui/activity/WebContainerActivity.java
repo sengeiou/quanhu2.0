@@ -108,9 +108,9 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         if (processLoading)
             processBack = false;
 
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
+//        onLoadingStatus(CommonCode.General.DATA_LOADING);
 
-//        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
+        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class MyCouponsAdapter extends CommonAdapter<CouponsBean> {
                 tvStatus.setText(R.string.used);
             else tvStatus.setText(R.string.expired);
             tvStatus.setBackgroundResource(R.drawable.shape_coupons_gray);
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_s));
             rlLeft.setBackgroundResource(R.mipmap.bg_coupons_expired_item);
         }
     }

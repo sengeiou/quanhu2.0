@@ -3,7 +3,6 @@ package com.rz.circled.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
@@ -66,7 +65,6 @@ import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
-import com.rz.common.event.BaseEvent;
 import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
 import com.rz.common.permission.AfterPermissionGranted;
@@ -84,8 +82,6 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.CallManager;
 import com.rz.sgt.jsbridge.JsEvent;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,16 +109,14 @@ import retrofit2.Response;
  * 2017/5/27
  * 发布图文
  */
-public class EditorTwoActivity extends BaseActivity implements View.OnClickListener, PopupView.OnItemPopupClick {
+public class EditorTwoActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.sv_editor_two_root)
     ScrollView scrollViewRoot;
-
     @BindView(R.id.ll_editor_two_root)
     LinearLayout llRoot;
     @BindView(R.id.ll_editor_two_sort_root)
     LinearLayout llSortRoot;
-
     //封面
     @BindView(R.id.iv_editor_two_page)
     SimpleDraweeView ivPage;
@@ -199,10 +193,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     LinearLayout llContentPicNum;
     @BindView(R.id.ll_editor_two_content)
     LinearLayout llContent;
-
     @BindView(R.id.ll_editor_two_bottom)
     LinearLayout llBottom;
-
     //图片,视频,音频
     @BindView(R.id.iv_editor_two_choose_pic)
     ImageView ivChoosePic;
@@ -210,12 +202,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     ImageView ivChooseAudio;
     @BindView(R.id.iv_editor_two_choose_video)
     ImageView ivChooseVideo;
-
     @BindView(R.id.ll_editor_two_media_root)
     LinearLayout llMediaRoot;
     @BindView(R.id.ll_editor_two_media)
     LinearLayout llMedia;
-
     @BindView(R.id.tv_editor_two_video_num)
     TextView tvVideoNum;
     @BindView(R.id.tv_editor_two_video_count)
@@ -230,7 +220,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     LinearLayout llAudioNum;
     @BindView(R.id.gv_editor_two_pic)
     ExpandGridView gvPic;
-
     //视频
     @BindView(R.id.rl_editor_two_video)
     RelativeLayout rlVideo;
@@ -259,17 +248,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     //权限
     @BindView(R.id.tv_editor_two_authority)
     TextView tvAuthority;
-
-
     //视频
     private String[] videoItems = {"拍摄视频", "从手机相册中选取"};
-
     private static final int TYPE_TEXT = 1;
     private static final int TYPE_IMAGE = 2;
-
-
     public final int SYSTEM_SHOOT_VIDEO = 1221;
-
     /**
      * 公共请求code
      */
@@ -277,36 +260,26 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private static final int REQUEST_CODE = 2;
     public static final String TYPE_EDITOR = "typeEditor";
     private static final int PIC_PAGE_CHANGE_REQUEST = 20;
-
     /**
      * 点击相册选择回调
      */
     private static final int PUBLISH_RESULT = 11;
-
     /**
      * 照相机回调
      */
     private static final int PUBLISH_RESULT_CAMERA = 12;
-
     private static final int VIDEO_PUBLISH_REQUEST = 15;
-
     private static final int AUDIO_PUBLISH_REQUEST = 17;
-
     /**
      * 分类回调
      */
     private static final int SORT_REQUEST = 30;
-
     private final int AUTHORITY_REQUEST = 40;
-
-    private EditorDataSourceTwoModel dataSource;
-
     public static final long maxVideoSize = 500 * 1024 * 1024;
-
     private int contentEditCount = 0;
     private int contentImageCount = 0;
     private boolean isFirstInput = true;
-
+    private EditorDataSourceTwoModel dataSource;
     private String mVideoUrl;
     private String mVideoFilePath;
     private String mVideoFileName;
@@ -314,37 +287,26 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private Bitmap mBitmap;
     private long videoDuration;
     private long videoSize;
-
-
     private String mAudioUrl;
     private String mAudioFilePath;
     private String mAudioFileName;
     private long audioDuration;
     private long audioSize;
-
     private PopupView mPopupView;
-
     private Record mRecord;
-    private AnimationDrawable animationDrawable;
-
     public String ossDir;
-
     public static final String RULE_TXT = "text";
     public static final String RULE_IMAGE = "image";
     public static final String RULE_VIDEO = "video";
     public static final String RULE_AUDIO = "audio";
-
-    //    public static final long minMill = -3 * 1000 * 60 * 60 * 24L;
     public static final long minMill = 0L;
     public static final long maxMill = 60 * 1000 * 60 * 60 * 24L;
-
     private ArrayList<Map<String, Object>> jsResult = new ArrayList<>();
     private List<ArticleItem> articleItems = new ArrayList<>();
     private UploadPicManager uploadPicManager;
     private EditorRootTwoBean rootBean;
     private TimePickerDialog mDialogYearMonthDay;
     private EditorCategoryRootTwoModel categoryBean;
-
     /**
      * 是否为图文混排
      */
@@ -353,8 +315,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private CommonAdapter picAdapter;
     private HttpRequestModel httpRequestModel;
     private CommonDialog commonDialog;
-
-    private boolean openLimit = false;
+    private String videoFilePath;
 
     @Override
     protected boolean needLoadingView() {
@@ -386,7 +347,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 });
             }
         });
-        animationDrawable = (AnimationDrawable) ContextCompat.getDrawable(mContext, R.drawable.audio_anim);
         mRecord = new Record(this);
         mRecord.setOnPlayListener(new Record.OnPlayListener() {
             @Override
@@ -413,11 +373,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 Toasty.info(mContext, getString(R.string.play_audio_fail)).show();
             }
         });
-        parseIntent();
     }
 
     @Override
     public void initData() {
+        parseIntent();
     }
 
     @OnClick({R.id.tv_editor_two_page_change, R.id.tv_editor_two_page_add, R.id.rl_editor_two_sort, R.id.rl_editor_two_location, R.id.rl_editor_two_time, R.id.iv_editor_two_choose_pic
@@ -426,10 +386,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_editor_two_page_change:
-            case R.id.tv_editor_two_page_add:
+            case R.id.tv_editor_two_page_add://选择封面
                 PictureSelectedActivity.startActivityForResult(EditorTwoActivity.this, PIC_PAGE_CHANGE_REQUEST, 1, false);
                 break;
-            case R.id.rl_editor_two_sort:
+            case R.id.rl_editor_two_sort://分类
                 EditorConfigTwoModel sortModel = (EditorConfigTwoModel) rlSort.getTag();
                 if (sortModel.isEditable() == null || sortModel.isEditable()) {
                     long currentId = -1;
@@ -444,38 +404,36 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     }
                 }
                 break;
-            case R.id.rl_editor_two_location:
+            case R.id.rl_editor_two_location://地区
                 Intent locationIntent = new Intent(this, PersonAreaAty.class);
                 locationIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
                 startActivityForResult(locationIntent, REQUEST_CODE);
                 break;
-            case R.id.rl_editor_two_time:
+            case R.id.rl_editor_two_time://选择日期
                 showDateDialog();
                 break;
-            case R.id.iv_editor_two_choose_pic:
+            case R.id.iv_editor_two_choose_pic://选择图片
                 EditorConfigTwoModel imgModel = (EditorConfigTwoModel) view.getTag();
-                if (contentImageCount < imgModel.getUpperLimit()) {
+                if (contentImageCount < imgModel.getUpperLimit())
                     PictureSelectedActivity.startActivityForResult(EditorTwoActivity.this, PIC_PUBLISH_REQUEST, imgModel.getUpperLimit() - contentImageCount, false);
-
-                } else {
+                else
                     Toasty.error(mContext, String.format(getString(R.string.max_size_choose_pic_hint), imgModel.getUpperLimit())).show();
-                }
                 break;
-            case R.id.iv_editor_two_choose_audio:
+            case R.id.iv_editor_two_choose_audio://选择音频
                 Intent audioIntent = new Intent(this, VoicePubActivity.class);
                 audioIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
                 startActivityForResult(audioIntent, AUDIO_PUBLISH_REQUEST);
                 break;
-            case R.id.iv_editor_two_choose_video:
+            case R.id.iv_editor_two_choose_video://选择视频
                 mPopupView.showAtLocPop(llRoot, videoItems);
                 break;
-            case R.id.id_iv_delete:
+            case R.id.id_iv_delete://删除图片(图文混排)
                 ViewGroup parent = (ViewGroup) view.getParent();
                 llContentText.removeView(parent);
                 mergeEditText();
                 initImageCount();
                 break;
-            case R.id.iv_editor_two_video_delete:
+            case R.id.iv_editor_two_video_delete://删除视频
                 rlVideo.setVisibility(View.INVISIBLE);
                 if (rlAudio.getVisibility() != View.VISIBLE && gvPic.getVisibility() != View.VISIBLE) {
                     llMediaRoot.setVisibility(View.GONE);
@@ -483,7 +441,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 resetVideo();
                 initContentVideoView();
                 break;
-            case R.id.iv_editor_two_audio_delete:
+            case R.id.iv_editor_two_audio_delete://删除音频
                 rlAudio.setVisibility(View.INVISIBLE);
                 if (rlVideo.getVisibility() != View.VISIBLE && gvPic.getVisibility() != View.VISIBLE) {
                     llMediaRoot.setVisibility(View.GONE);
@@ -492,7 +450,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 initContentAudioView();
                 break;
             case R.id.iv_editor_two_video_preview:
-            case R.id.iv_editor_two_video_icon:
+            case R.id.iv_editor_two_video_icon://视频播放
                 if (!TextUtils.isEmpty(mVideoFilePath)) {
                     Intent video = new Intent(this, MediaActivity.class);
                     video.putExtra(IntentKey.EXTRA_PATH, mVideoFilePath);
@@ -503,7 +461,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     startActivity(video);
                 }
                 break;
-            case R.id.iv_editor_two_audio_play:
+            case R.id.iv_editor_two_audio_play://播放音频
                 if (mRecord != null) {
                     if (!TextUtils.isEmpty(mAudioFilePath)) {
                         mRecord.player(mAudioFilePath);
@@ -512,27 +470,12 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     }
                 }
                 break;
-            case R.id.tv_editor_two_authority:
+            case R.id.tv_editor_two_authority://选择权限
                 //跳转到选择权限页面
                 EditorAuthorityRootBean authModel = (EditorAuthorityRootBean) view.getTag();
                 Intent authorityIntent = new Intent(mContext, EditorTwoAuthorityActivity.class);
                 authorityIntent.putExtra(IntentKey.EXTRA_SERIALIZABLE, authModel);
                 startActivityForResult(authorityIntent, AUTHORITY_REQUEST);
-                break;
-        }
-    }
-
-    @Override
-    public void OnItemClick(int position, String tag) {
-        switch (position) {
-            case 0:
-                toVideoRecorder(VIDEO_PUBLISH_REQUEST);
-                break;
-            case 1:
-                Intent video = new Intent(this, VideoChooseActivity.class);
-                startActivityForResult(video, VIDEO_PUBLISH_REQUEST);
-                break;
-            default:
                 break;
         }
     }
@@ -554,15 +497,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // 用户没有进行有效的设置操作，返回
-        if (resultCode == RESULT_CANCELED) {
-//            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (requestCode == PIC_PUBLISH_REQUEST) {
-            if (null == data) {
-                return;
-            }
+        if (resultCode == RESULT_CANCELED) return;
+        if (requestCode == PIC_PUBLISH_REQUEST && data != null) {
             if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT) {
                 ArrayList<String> mList = data.getExtras().getStringArrayList("picList");
                 if (null != mList && !mList.isEmpty()) {
@@ -584,55 +520,53 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     initPic();
                 }
             }
-        } else if (requestCode == VIDEO_PUBLISH_REQUEST && resultCode == RESULT_OK) {
-            if (null == data) {
-                return;
-            }
-            String filePath = null;
+            return;
+        }
+        if (requestCode == VIDEO_PUBLISH_REQUEST && resultCode == RESULT_OK && data != null) {
+            String filePath;
             try {
                 filePath = data.getStringExtra(IntentKey.EXTRA_PATH);
                 checkVideoFile(filePath);
+                resetVideo();
+                mVideoFilePath = filePath;
+                initContentVideoView();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toasty.info(mContext, getString(R.string.error_to_found_video)).show();
-                return;
             }
+            return;
+        }
+        if (requestCode == SYSTEM_SHOOT_VIDEO && resultCode == RESULT_OK) {
             resetVideo();
-            mVideoFilePath = filePath;
+            mVideoFilePath = this.videoFilePath;
             initContentVideoView();
-        } else if (requestCode == SYSTEM_SHOOT_VIDEO && resultCode == RESULT_OK) {
-            resetVideo();
-            mVideoFilePath = this.filePath;
-            initContentVideoView();
-        } else if (requestCode == RecorderContant.RECORDE_SHOW && resultCode == RESULT_OK) {
+            return;
+        }
+        if (requestCode == RecorderContant.RECORDE_SHOW && resultCode == RESULT_OK) {
             RecordResult result = new RecordResult(data);
             //得到视频地址，和缩略图地址的数组，返回十张缩略图
-            String[] thum = null;
-            String filePath = null;
-            filePath = result.getPath();
-            thum = result.getThumbnail();
+            String filePath = result.getPath();
+            String[] thumbs = result.getThumbnail();
             result.getDuration();
-            Log.d("videoTest", "视频路径:" + filePath + "图片路径:" + thum[0]);
             try {
                 checkVideoFile(filePath);
-                Log.d("videoTest", "视频路径:" + filePath + "图片路径:" + thum[0]);
+                resetVideo();
+                mVideoFilePath = filePath;
+                mVideoImage = thumbs[0];
+                initContentVideoView();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toasty.info(mContext, getString(R.string.error_to_found_video)).show();
-                return;
             }
-            resetVideo();
-            mVideoFilePath = filePath;
-            mVideoImage = thum[0];
-            initContentVideoView();
-        } else if (requestCode == AUDIO_PUBLISH_REQUEST) {
-            if (null == data) {
-                return;
-            }
+            return;
+        }
+        if (requestCode == AUDIO_PUBLISH_REQUEST && data != null) {
             resetAudio();
             mAudioFilePath = data.getStringExtra(IntentKey.EXTRA_PATH);
             initContentAudioView();
-        } else if (requestCode == PIC_PAGE_CHANGE_REQUEST) {
+            return;
+        }
+        if (requestCode == PIC_PAGE_CHANGE_REQUEST) {
             if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT) {//相册
                 ArrayList<String> picList = data.getExtras().getStringArrayList("picList");
                 if (null != picList && !picList.isEmpty()) {
@@ -643,35 +577,35 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 String picPath = data.getStringExtra("picture");
                 initPageImageView(picPath);
             }
-        } else if (requestCode == REQUEST_CODE && data != null) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE && data != null) {
             String stringArea = data.getStringExtra(IntentKey.EXTRA_POSITION);
             tvLocation.setText(stringArea.trim());
-        } else if (requestCode == SORT_REQUEST) {
-            if (data != null) {
-                long currentId = data.getLongExtra(IntentKey.EXTRA_ID, -1);
-                if (currentId > 0) {
-                    if (dataSource == null)
-                        dataSource = new EditorDataSourceTwoModel();
-                    ArrayList<EditorCategoryTwoModel> sortList = categoryBean.getData();
-                    for (EditorCategoryTwoModel categoryTwoModel : sortList) {
-                        if (categoryTwoModel.getId() == currentId) {
-                            dataSource.setClassifyItemId(categoryTwoModel.getId());
-                            dataSource.setClassifyItemName(categoryTwoModel.getCategoryName());
-                        }
+            return;
+        }
+        if (requestCode == SORT_REQUEST && data != null) {
+            long currentId = data.getLongExtra(IntentKey.EXTRA_ID, -1);
+            if (currentId > 0) {
+                if (dataSource == null) dataSource = new EditorDataSourceTwoModel();
+                ArrayList<EditorCategoryTwoModel> sortList = categoryBean.getData();
+                for (EditorCategoryTwoModel categoryTwoModel : sortList) {
+                    if (categoryTwoModel.getId() == currentId) {
+                        dataSource.setClassifyItemId(categoryTwoModel.getId());
+                        dataSource.setClassifyItemName(categoryTwoModel.getCategoryName());
                     }
                 }
-                if (dataSource != null)
-                    tvSort.setText(dataSource.getClassifyItemName());
             }
-        } else if (requestCode == AUTHORITY_REQUEST) {//权限
-            if (data != null) {
-                EditorAuthorityRootBean authorityRootBean = (EditorAuthorityRootBean) data.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
-                dataSource.setAllowGeneralizeFlag(authorityRootBean.getAllowGeneralizeFlag() == 1 ? 1 : 0);
-                dataSource.setAllowShareFlag(authorityRootBean.getAllowShareFlag() == 1 ? 1 : 0);
-                dataSource.setContentPrice(authorityRootBean.getContentPrice());
-                dataSource.setCoterieId(authorityRootBean.getCoterieId());
-                tvAuthority.setTag(authorityRootBean);
-            }
+            if (dataSource != null) tvSort.setText(dataSource.getClassifyItemName());
+            return;
+        }
+        if (requestCode == AUTHORITY_REQUEST && data != null) {//权限
+            EditorAuthorityRootBean authorityRootBean = (EditorAuthorityRootBean) data.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
+            dataSource.setAllowGeneralizeFlag(authorityRootBean.getAllowGeneralizeFlag() == 1 ? 1 : 0);
+            dataSource.setAllowShareFlag(authorityRootBean.getAllowShareFlag() == 1 ? 1 : 0);
+            dataSource.setContentPrice(authorityRootBean.getContentPrice());
+            dataSource.setCoterieId(authorityRootBean.getCoterieId());
+            tvAuthority.setTag(authorityRootBean);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -1092,7 +1026,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             tvVideoCount.setText("/" + videoModel.getUpperLimit());
             ivChooseVideo.setTag(videoModel);
             mPopupView = new PopupView(this);
-            mPopupView.setOnItemPopupClick(this);
+            mPopupView.setOnItemPopupClick(new PopupView.OnItemPopupClick() {
+                @Override
+                public void OnItemClick(int position, String tag) {
+                    if (position == 0) toVideoRecorder(VIDEO_PUBLISH_REQUEST);
+                    else startActivityForResult(new Intent(mContext, VideoChooseActivity.class), VIDEO_PUBLISH_REQUEST);
+                }
+            });
         } else {
             ivChooseVideo.setVisibility(View.GONE);
         }
@@ -1112,13 +1052,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             tvMedia.setVisibility(View.VISIBLE);
             tvMedia.setText(getString(R.string.editor_two_show_video_text));
         }
-//        int displayWidth = ScreenUtil.getDisplayWidth();
-        int padding = (int) getResources().getDimension(R.dimen.px44);
-//        int width = (displayWidth - padding * 3) / 2;
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, -1);
-//        rlAudio.setLayoutParams(layoutParams);
-//        layoutParams.setMargins(0, 0, padding, 0);
-//        rlVideo.setLayoutParams(layoutParams);
     }
 
     private void processAuthority(EditorConfigTwoModel authModel) {
@@ -1127,89 +1060,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             tvAuthority.setTag(authModel.getData());
         } else {
             tvAuthority.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * 处理内容相关数据
-     */
-    private void processContentData() {
-        ArrayList<Map<String, Object>> textList = dataSource.getContentSource();
-        for (int i = 0; i < textList.size(); i++) {
-            Map<String, Object> contentMap = textList.get(i);
-            if (contentMap != null && contentMap.size() > 0) {
-                for (Map.Entry<String, Object> contentEntry : contentMap.entrySet()) {
-                    if (RULE_TXT.equalsIgnoreCase(contentEntry.getKey())) {
-                        View lastView = llContentText.getChildAt(llContentText.getChildCount() - 1);
-                        if (lastView != null && lastView instanceof EditText) {
-                            EditText et = (EditText) lastView;
-                            String s = (String) contentEntry.getValue();
-                            if (!TextUtils.isEmpty(s)) {
-                                et.setText(s.replaceAll("\\\\n", "\\n"));
-                                et.setSelection(s.length());
-                            }
-                        }
-                    } else if (RULE_IMAGE.equalsIgnoreCase(contentEntry.getKey())) {
-                        if (isPicText) {
-                            initContentImageView((String) contentEntry.getValue());
-                        } else {
-                            picList.add((String) contentEntry.getValue());
-                        }
-                    } else if (RULE_VIDEO.equalsIgnoreCase(contentEntry.getKey())) {
-                        Map<String, Object> videoMap = (Map<String, Object>) contentEntry.getValue();
-                        resetVideo();
-                        if (videoMap.containsKey("url")) {
-                            mVideoUrl = (String) videoMap.get("url");
-                        }
-                        if (videoMap.containsKey("thumbnailImage")) {
-                            mVideoImage = (String) videoMap.get("thumbnailImage");
-                        }
-                        if (videoMap.containsKey("time")) {
-                            Object time = videoMap.get("time");
-                            if (time instanceof Double) {
-                                videoDuration = ((Double) time).longValue();
-                            } else {
-                                videoDuration = (long) time;
-                            }
-                        }
-                        if (videoMap.containsKey("size")) {
-                            Object size = videoMap.get("size");
-                            if (size instanceof Double) {
-                                videoSize = ((Double) size).longValue();
-                            } else {
-                                videoSize = (long) size;
-                            }
-                        }
-                        initContentVideoView();
-                    } else if (RULE_AUDIO.equalsIgnoreCase(contentEntry.getKey())) {
-                        Map<String, Object> audioMap = (Map<String, Object>) contentEntry.getValue();
-                        resetAudio();
-                        if (audioMap.containsKey("url")) {
-                            mAudioUrl = (String) audioMap.get("url");
-                        }
-                        if (audioMap.containsKey("time")) {
-                            Object time = audioMap.get("time");
-                            if (time instanceof Double) {
-                                audioDuration = ((Double) time).longValue();
-                            } else {
-                                audioDuration = (long) time;
-                            }
-                        }
-                        if (audioMap.containsKey("size")) {
-                            Object size = audioMap.get("size");
-                            if (size instanceof Double) {
-                                audioSize = ((Double) size).longValue();
-                            } else {
-                                audioSize = (long) size;
-                            }
-                        }
-                        initContentAudioView();
-                    }
-                }
-            }
-        }
-        if (!isPicText) {
-            initPic();
         }
     }
 
@@ -1224,10 +1074,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         tvTime.setText(format);
                     }
                 })
-//                .setMinMillseconds(System.currentTimeMillis() + minMill)
-//                .setMaxMillseconds(System.currentTimeMillis() + maxMill)
-//                .setMinMillseconds(minMill)
-//                .setMaxMillseconds(System.currentTimeMillis() + maxMill)
                 .setCyclic(false)
                 .build();
         mDialogYearMonthDay.show(getSupportFragmentManager(), "year_month_day");
@@ -1359,11 +1205,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             }
         }
         if (cbAnonymity.getVisibility() == View.VISIBLE) {//匿名
-//            EditorConfigTwoModel anonymityModel = (EditorConfigTwoModel) cbAnonymity.getTag();
             dataSource.setFunctionType(cbAnonymity.isChecked() ? 1 : 0);
         }
         if (cbVote.getVisibility() == View.VISIBLE) {//投票
-//            EditorConfigTwoModel voteModel = (EditorConfigTwoModel) cbVote.getTag();
             dataSource.setFunctionType(cbVote.isChecked() ? 2 : 0);
         }
         if (contentEditCount <= 0 && contentImageCount <= 0 && picList.size() <= 0 && rlVideo.getVisibility() != View.VISIBLE && rlAudio.getVisibility() != View.VISIBLE) {
@@ -1371,12 +1215,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             return;
         }
         jsResult = new ArrayList<>();
-//        if (!NetUtils.isNetworkConnected(this)) {
-//            onLoadingStatus(CommonCode.General.UN_NETWORK, getString(R.string.status_un_network));
-//            return;
-//        }
-//        MaterialDialog materialDialog = showProgressDialog("正在处理中");
-//        materialDialog.setCanceledOnTouchOutside(false);
         onLoadingStatus(CommonCode.General.DATA_LOADING, getString(R.string.editor_two_publish_ing));
         if (llPage.getVisibility() == View.VISIBLE)
             uploadPage();
@@ -1628,7 +1466,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             tvVideoNum.setText(1 + "");
             if (!TextUtils.isEmpty(mVideoImage)) {
                 if (Protect.checkLoadImageStatus(this)) {
-//                    Glide.with(this).load(mVideoImage).into(ivVideoPreview);
+                    Glide.with(this).load(mVideoImage).into(ivVideoPreview);
                 }
             } else {
                 mBitmap = ImageUtils.getVideoThumbnail(mVideoFilePath);
@@ -1647,12 +1485,36 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             tvVideoNum.setText(1 + "");
             if (!TextUtils.isEmpty(mVideoImage)) {
                 if (Protect.checkLoadImageStatus(this)) {
-//                    Glide.with(this).load(mVideoImage).into(ivVideoPreview);
+                    Glide.with(this).load(mVideoImage).into(ivVideoPreview);
                 }
             }
         } else {
             tvVideoNum.setText(0 + "");
             rlVideo.setVisibility(View.GONE);
+        }
+        changeChooseImageStatus();
+    }
+
+    private void changeChooseImageStatus() {
+        if (TextUtils.isEmpty(mVideoFilePath) && TextUtils.isEmpty(mVideoUrl)) {
+            ivChoosePic.setImageResource(R.mipmap.icon_editor_pic);
+            ivChoosePic.setEnabled(false);
+        } else {
+            ivChoosePic.setImageResource(R.mipmap.icon_editor_pic_gray);
+            ivChoosePic.setEnabled(false);
+        }
+    }
+
+    /**
+     * 修改视频可选状态
+     */
+    private void changeChooseVideoStatus() {
+        if (contentImageCount > 0 || picList.size() > 0) {
+            ivChooseVideo.setImageResource(R.mipmap.icon_editor_video_gray);
+            ivChooseVideo.setEnabled(false);
+        } else {
+            ivChooseVideo.setImageResource(R.mipmap.icon_editor_video);
+            ivChooseVideo.setEnabled(true);
         }
     }
 
@@ -1664,6 +1526,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             }
         }
         tvContentPicNum.setText(contentImageCount + "");
+        changeChooseVideoStatus();
     }
 
     private void initDurationText() {
@@ -1772,8 +1635,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     EditText temp = (EditText) view;
                     editText.setText(editText.getText().toString() + temp.getText().toString());
                     llContentText.removeView(temp);
-//                    contentEditCount = contentEditCount - temp.getText().length();
-//                    updateTextCount();
                     editText.requestFocus();
                     editText.setSelection(editText.getText().length());
                     break;
@@ -1864,6 +1725,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     ", time=" + time +
                     '}';
         }
+
     }
 
     private void addTextImageJsContent() {
@@ -1967,9 +1829,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             uploadPicManager = new UploadPicManager(new UploadPicManager.OnUploadCallback() {
                 @Override
                 public void onResult(boolean result, List<UploadPicManager.UploadInfo> resultList) {
-                    Log.d("yeying", "this is pic upload result result is " + result);
                     if (result) {
-                        Log.d("yeying", "this is pic upload result resultList is " + resultList.toString());
+                        Log.d(TAG, "this is pic upload result resultList is " + resultList.toString());
                         for (int i = 0; i < resultList.size(); i++) {
                             UploadPicManager.UploadInfo uploadInfo = resultList.get(i);
                             articleItems.get((Integer) uploadInfo.tag).content = uploadInfo.fileSavePath;
@@ -1977,9 +1838,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         if (jsResult == null) {
                             jsResult = new ArrayList<>();
                         }
-                        Log.d("yeying", "this is pic upload result 1 ");
                         addTextImageJsContent();
-                        Log.d("yeying", "this is pic upload result 2 ");
                         uploadVideo();
                     } else {
                         onLoadingStatus(CommonCode.General.DATA_SUCCESS);
@@ -2018,7 +1877,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 uploadPicManager = new UploadPicManager(new UploadPicManager.OnUploadCallback() {
                     @Override
                     public void onResult(boolean result, List<UploadPicManager.UploadInfo> resultList) {
-                        Log.d("yeying", "this is video pic upload result result is " + result);
+                        Log.d(TAG, "this is video pic upload result result is " + result);
                         if (result) {
                             mVideoImage = resultList.get(0).fileSavePath;
                             VideoEntity videoEntity = new VideoEntity();
@@ -2057,19 +1916,14 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 上传视频
      */
     public void uploadVideo() {
-        Log.d("yeying", "uploadVideo ");
         if (!TextUtils.isEmpty(mVideoFilePath)) {
             OssManager.uploadFile(mVideoFilePath, OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mVideoFileName, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
                 @Override
                 public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-                    Log.d("yeying", "this is mVideoFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
+                    Log.d(TAG, "this is mVideoFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
                     if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
-//                        String OSS_HOST = "http://" + OssManager.bucketName + "." + OssManager.endpoint + "/";
-                        String OSS_HOST = OssManager.CDN;
-                        if (jsResult == null) {
-                            jsResult = new ArrayList<>();
-                        }
-                        mVideoUrl = OSS_HOST + OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mVideoFileName;
+                        if (jsResult == null) jsResult = new ArrayList<>();
+                        mVideoUrl = OssManager.CDN + OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mVideoFileName;
                         uploadVideoPic();
                     } else {
                         onLoadingStatus(CommonCode.General.DATA_SUCCESS);
@@ -2107,14 +1961,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             OssManager.uploadFile(mAudioFilePath, OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mAudioFileName, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
                 @Override
                 public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-                    Log.d("yeying", "this is mAudioFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
+                    Log.d(TAG, "this is mAudioFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
                     if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
                         String OSS_HOST = OssManager.CDN;
                         if (jsResult == null) {
                             jsResult = new ArrayList<>();
                         }
                         mAudioUrl = OSS_HOST + OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mAudioFileName;
-//                        jsResult.add(getAudioHtml(mAudioUrl));
                         AudioEntity audioEntity = new AudioEntity();
                         audioEntity.url = mAudioUrl;
                         audioEntity.time = audioDuration;
@@ -2125,7 +1978,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_audio_fail), Toast.LENGTH_SHORT, true).show();
                     }
-
                 }
 
                 @Override
@@ -2146,8 +1998,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private String filePath;
-
     @AfterPermissionGranted(RC_VIDEO_AND_EXTENER)
     private void toVideoRecorder(int requestCode) {
         if (SystemUtils.isX86()) {
@@ -2160,7 +2010,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 intent.setAction("android.media.action.VIDEO_CAPTURE");
                 intent.addCategory("android.intent.category.DEFAULT");
                 File file = createMediaFile();
-                filePath = file.getAbsolutePath();
+                videoFilePath = file.getAbsolutePath();
                 if (file.exists()) {
                     file.delete();
                 }
@@ -2168,14 +2018,19 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent, SYSTEM_SHOOT_VIDEO);
             } catch (IOException e) {
-//                Toasty.error(mContext, getString(R.string.get_audio_fail_two));
                 e.printStackTrace();
             }
         } else {
-            EasyPermissions.requestPermissions(this, "圈乎要使用摄像头,读取手机状态,使用sd卡和录音权限", RC_VIDEO_AND_EXTENER, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.sd_card_permissions_run), RC_VIDEO_AND_EXTENER, perms);
         }
     }
 
+    /**
+     * 生成音频文件
+     *
+     * @return
+     * @throws IOException
+     */
     private File createMediaFile() throws IOException {
         if (FileUtils.checkSDCardAvaliable()) {
             File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
@@ -2186,7 +2041,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     return null;
                 }
             }
-            // Create an image file name
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = "VID_" + timeStamp;
             String suffix = ".mp4";
@@ -2225,7 +2079,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-
     /**
      * 通知js回调
      * 1.投票走jsSDK -> publish方法,且直接关闭页面
@@ -2243,9 +2096,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 if (httpRequestModel != null) {
                     processPublishData();
                     toPublish();
-                } else {
-                    publishFail();
-                }
+                } else publishFail();
             } catch (JSONException e) {
                 e.printStackTrace();
                 publishFail();
@@ -2269,11 +2120,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      */
     private void toPublish() throws JSONException {
         HashMap<String, String> headerMap = httpRequestModel.getHeaders();
-        if (headerMap.containsKey("userId")) {
-            String userId = headerMap.get("userId");
-            int id = (int) Double.parseDouble(userId);
-            headerMap.put("userId", id + "");
-        }
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), httpRequestModel.getBody());
         Call<JsonObject> call = null;
         if (httpRequestModel.getMethod().equalsIgnoreCase("post")) {
@@ -2345,37 +2191,91 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         return headerMap;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (isFinishing()) return;
-//        if (baseEvent.key.equals("publishResultCode")) {
-//            dismissProgress();
-//            int code = (int) baseEvent.event;
-//            if (code == 200) {
-//                Toasty.info(this, "发布成功").show();
-//                finish();
-//            } else if (code == RequestParamsObject.RESULT_CODE_CANCEL) {
-//                Toasty.info(this, "正在发布中....").show();
-//            } else {
-//                Toasty.error(this, TextUtils.isEmpty(baseEvent.infoId) ? "发布失败" : baseEvent.infoId).show();
-//            }
-//        }
-//        if (baseEvent.key.equals("publishBefore")) {
-//            int code = (int) baseEvent.event;
-//            if (code == RequestParamsObject.RESULT_CODE_FAILED) {
-//                SVProgressHUD.showErrorWithStatus(aty, baseEvent.infoId);
-//            } else if (code == RequestParamsObject.RESULT_CODE_SUCRESS) {
-//                //发布成功
-//                SVProgressHUD.showInfoWithStatus(aty, baseEvent.infoId);
-//                Object event = baseEvent.event;
-//                JsEvent.callJsEvent(event, true);
-//                finish();
-//            }
-//        }
-    }
-
     @Override
     public boolean hasDataInPage() {
         return true;
+    }
+
+    /**
+     * 处理内容相关数据
+     */
+    private void processContentData() {
+        ArrayList<Map<String, Object>> textList = dataSource.getContentSource();
+        for (int i = 0; i < textList.size(); i++) {
+            Map<String, Object> contentMap = textList.get(i);
+            if (contentMap != null && contentMap.size() > 0) {
+                for (Map.Entry<String, Object> contentEntry : contentMap.entrySet()) {
+                    if (RULE_TXT.equalsIgnoreCase(contentEntry.getKey())) {
+                        View lastView = llContentText.getChildAt(llContentText.getChildCount() - 1);
+                        if (lastView != null && lastView instanceof EditText) {
+                            EditText et = (EditText) lastView;
+                            String s = (String) contentEntry.getValue();
+                            if (!TextUtils.isEmpty(s)) {
+                                et.setText(s.replaceAll("\\\\n", "\\n"));
+                                et.setSelection(s.length());
+                            }
+                        }
+                    } else if (RULE_IMAGE.equalsIgnoreCase(contentEntry.getKey())) {
+                        if (isPicText) {
+                            initContentImageView((String) contentEntry.getValue());
+                        } else {
+                            picList.add((String) contentEntry.getValue());
+                        }
+                    } else if (RULE_VIDEO.equalsIgnoreCase(contentEntry.getKey())) {
+                        Map<String, Object> videoMap = (Map<String, Object>) contentEntry.getValue();
+                        resetVideo();
+                        if (videoMap.containsKey("url")) {
+                            mVideoUrl = (String) videoMap.get("url");
+                        }
+                        if (videoMap.containsKey("thumbnailImage")) {
+                            mVideoImage = (String) videoMap.get("thumbnailImage");
+                        }
+                        if (videoMap.containsKey("time")) {
+                            Object time = videoMap.get("time");
+                            if (time instanceof Double) {
+                                videoDuration = ((Double) time).longValue();
+                            } else {
+                                videoDuration = (long) time;
+                            }
+                        }
+                        if (videoMap.containsKey("size")) {
+                            Object size = videoMap.get("size");
+                            if (size instanceof Double) {
+                                videoSize = ((Double) size).longValue();
+                            } else {
+                                videoSize = (long) size;
+                            }
+                        }
+                        initContentVideoView();
+                    } else if (RULE_AUDIO.equalsIgnoreCase(contentEntry.getKey())) {
+                        Map<String, Object> audioMap = (Map<String, Object>) contentEntry.getValue();
+                        resetAudio();
+                        if (audioMap.containsKey("url")) {
+                            mAudioUrl = (String) audioMap.get("url");
+                        }
+                        if (audioMap.containsKey("time")) {
+                            Object time = audioMap.get("time");
+                            if (time instanceof Double) {
+                                audioDuration = ((Double) time).longValue();
+                            } else {
+                                audioDuration = (long) time;
+                            }
+                        }
+                        if (audioMap.containsKey("size")) {
+                            Object size = audioMap.get("size");
+                            if (size instanceof Double) {
+                                audioSize = ((Double) size).longValue();
+                            } else {
+                                audioSize = (long) size;
+                            }
+                        }
+                        initContentAudioView();
+                    }
+                }
+            }
+        }
+        if (!isPicText) {
+            initPic();
+        }
     }
 }
