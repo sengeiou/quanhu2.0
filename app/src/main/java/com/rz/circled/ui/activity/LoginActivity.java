@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.reg_layout)
     LinearLayout regLayout;
     @BindView(R.id.layout_phone_code)
-    TextView layoutLoginQq;
+    TextView layoutLoginPhone;
     @BindView(R.id.layout_login_weixin)
     TextView layoutLoginWeixin;
     @BindView(R.id.layout_login_webo)
@@ -181,34 +181,26 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView() {
 
-////        mTvTitle.setText(R.string.login);
-//        mIvBack.setVisibility(View.VISIBLE);
-////        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
-//        mIvBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-//        mRlTitleRoot.setBackgroundColor(ContextCompat.getColor(this, R.color.color_5ACBD4));
-//        setTitleText(getString(R.string.login_title));
+        mBtnSendCode.setVisibility(View.VISIBLE);
+        mEditPass.setHint("请输入验证码");
+        typePwd.setImageResource(R.mipmap.icon_code);
+        mImgWatchPw.setVisibility(View.GONE);
+        mEditPass.setText("");
+        mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
+        layoutLoginPhone.setBackgroundResource(R.mipmap.other_login_icon);
+
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
             mImgClearPhone.setVisibility(View.VISIBLE);
         }
-//        setTitlebackIntercept(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
+
         mLoginBtn.setEnabled(true);
 
-        if (mEditPass.getText().length() > 0) {
-            mImgWatchPw.setVisibility(View.VISIBLE);
-        } else {
-            mImgWatchPw.setVisibility(View.GONE);
-        }
+//        if (mEditPass.getText().length() > 0) {
+//            mImgWatchPw.setVisibility(View.VISIBLE);
+//        } else {
+//            mImgWatchPw.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -321,22 +313,27 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.layout_phone_code)
     public void codeLogin() {
         if (codeType == 1) {
+            mBtnSendCode.setVisibility(View.GONE);
+            mEditPass.setHint("请输入密码");
+            mImgWatchPw.setVisibility(View.VISIBLE);
+            mEditPass.setText("");
+            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            //// TODO: 2017/9/23 0023  
+//            layoutLoginPhone.setBackgroundResource(R.mipmap.);   图片
+
+            codeType = 1;
+
+        } else {
+
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
             typePwd.setImageResource(R.mipmap.icon_code);
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
+            layoutLoginPhone.setBackgroundResource(R.mipmap.other_login_icon);
 
             codeType = 2;
-        } else {
-            mBtnSendCode.setVisibility(View.GONE);
-            mEditPass.setHint("请输入密码");
-            mImgWatchPw.setVisibility(View.VISIBLE);
-            mEditPass.setText("");
-            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
-            codeType = 1;
         }
     }
 
@@ -403,19 +400,20 @@ public class LoginActivity extends BaseActivity {
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
 
-            if (codeType == 1) {  //密码登陆
-                if (mPassword.length() >= 6 && mPassword.length() <= 18) {
-                    ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
-                } else {
-                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
-                }
-            } else {            //验证码登录
+            if (codeType == 1) { //验证码登录
+
                 if (mPassword.length() == 4) {
                     ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
 
+            } else {        //密码登陆
+                if (mPassword.length() >= 6 && mPassword.length() <= 18) {
+                    ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                } else {
+                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
+                }
             }
         } else {
             SVProgressHUD.showErrorWithStatus(aty, getString(R.string.phone_error));
@@ -586,9 +584,8 @@ public class LoginActivity extends BaseActivity {
                 //已经绑定过手机直接登录
                 if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
                     skipActivity(aty, MainActivity.class);
-                } else {
                     saveLoginData(loginModel);
-                }else{
+                } else {
                     //传递登录时返回的对象
                     if (loginModel != null) {
                         Intent intent = new Intent(this, BoundPhoneActivity.class);

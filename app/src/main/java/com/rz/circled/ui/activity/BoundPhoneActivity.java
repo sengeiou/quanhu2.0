@@ -28,6 +28,7 @@ import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;

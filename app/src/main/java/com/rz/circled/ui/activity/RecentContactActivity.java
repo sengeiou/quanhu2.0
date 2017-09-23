@@ -35,6 +35,7 @@ import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 import com.yryz.yunxinim.uikit.recent.RecentContactsCallback;
 import com.yryz.yunxinim.uikit.recent.RecentContactsFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
