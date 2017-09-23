@@ -54,6 +54,7 @@ import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
+import com.rz.circled.widget.MyScrollView;
 import com.rz.circled.widget.ObservableListView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
@@ -112,7 +113,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     ObservableListView mListView;
 
     @BindView(R.id.id_comm_refresh_ll)
-    ScrollView swipeRefreshLayout;
+    MyScrollView scrollViewLayout;
 
     RelativeLayout signLayout;
     TextView titlebarSignTxt;
@@ -238,25 +239,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //        }
     }
 
-//    private void initTitleBar() {
-//        View v = View.inflate(getActivity(), R.layout.titlebar_transparent, null);
-//        mLayoutContent.addView(v);
-//        RxView.clicks(v.findViewById(R.id.et_search_keyword)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-//            @Override
-//            public void call(Void aVoid) {
-//                //跳搜索界面
-//                startActivity(new Intent(mActivity, SearchActivity.class));
-//            }
-//        });
-//        RxView.clicks(v.findViewById(R.id.iv_mess)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-//            @Override
-//            public void call(Void aVoid) {
-//                //跳消息界面
-//            }
-//        });
-//
-//    }
-
 
     //初始化用户信息
     public void initUserNews() {
@@ -369,25 +351,43 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                    @Override
-                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                        if (scrollY <= 0) {
-                            newTitilbar.getBackground().mutate().setAlpha(0);
-                            signLayout.setVisibility(View.VISIBLE);
-                        } else if (scrollY > 0 && scrollY <= headHight) {
-                            float scale = (float) scrollY / headHight;
-                            float alpha = (255 * scale);
-                            // 只是layout背景透明(仿知乎滑动效果)
-                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-                        } else {
-                            newTitilbar.getBackground().mutate().setAlpha(255);
-                            signLayout.setVisibility(View.GONE);
-                        }
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//                scrollViewLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                    @Override
+//                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                        if (scrollY <= 0) {
+//                            newTitilbar.getBackground().mutate().setAlpha(0);
+//                            signLayout.setVisibility(View.VISIBLE);
+//                        } else if (scrollY > 0 && scrollY <= headHight) {
+//                            float scale = (float) scrollY / headHight;
+//                            float alpha = (255 * scale);
+//                            // 只是layout背景透明(仿知乎滑动效果)
+//                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+//                        } else {
+//                            newTitilbar.getBackground().mutate().setAlpha(255);
+//                            signLayout.setVisibility(View.GONE);
+//                        }
+//                    }
+//                });
+//            }
+
+            scrollViewLayout.setOnScrollChanged(new MyScrollView.OnScrollChanged() {
+                @Override
+                public void onScroll(int scrollX, int scrollY, int oldX, int oldY) {
+                    if (scrollY <= 0) {
+                        newTitilbar.getBackground().mutate().setAlpha(0);
+                        signLayout.setVisibility(View.VISIBLE);
+                    } else if (scrollY > 0 && scrollY <= headHight) {
+                        float scale = (float) scrollY / headHight;
+                        float alpha = (255 * scale);
+                        // 只是layout背景透明(仿知乎滑动效果)
+                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+                    } else {
+                        newTitilbar.getBackground().mutate().setAlpha(255);
+                        signLayout.setVisibility(View.GONE);
                     }
-                });
-            }
+                }
+            });
 
         }
 
@@ -578,15 +578,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 titlebarSignTxt.setText("签到");
                 scoreImg.setVisibility(View.VISIBLE);
             }
-        } else if (t instanceof ResponseData) {
-            //签到成功
-            scoreImg.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
-            titlebarSignTxt.setText("已签到");
-            titlebarSignTxt.setLayoutParams(lp);
-
         } else if (t instanceof DataStatisticsBean) {
             DataStatisticsBean data = (DataStatisticsBean) t;
 
@@ -610,12 +601,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         } else if (t instanceof ResponseData) {
             tvactivityCount.setText(((ResponseData) t).getData() + "");
         } else {
-//            if (null != t) {
-//                CircleStatsModel data = (CircleStatsModel) t;
-//                tvCircleCount.setText(data.getCircleNum() + "");
-//                tvCollectCount.setText(data.getCollectionNum() + "");
-//                tvTransferCount.setText(data.getTransferNum() + "");
-//            }
+
         }
     }
 
@@ -645,6 +631,18 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_ERROR) {
             famousLayout.setVisibility(View.GONE);
+        }
+
+        if (flag == V3CirclePresenter.TAG_SIGN ){
+
+            //签到成功
+            scoreImg.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
+            titlebarSignTxt.setText("已签到");
+            titlebarSignTxt.setLayoutParams(lp);
+
         }
     }
 

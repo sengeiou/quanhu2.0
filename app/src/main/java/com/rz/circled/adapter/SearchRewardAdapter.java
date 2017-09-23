@@ -63,11 +63,13 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         try {
             myJsonArray = new JSONArray(model.getContentSource());
 
-            JSONObject nameObject = myJsonArray.getJSONObject(0);
-            JSONObject avatarObject = myJsonArray.getJSONObject(1);
+            if(myJsonArray.length()>2){
+                JSONObject nameObject = myJsonArray.getJSONObject(0);
+                JSONObject avatarObject = myJsonArray.getJSONObject(1);
 
-            tvName.setText(nameObject.getString("text"));
-            Glide.with(mContext).load(avatarObject.getString("image")).transform(new GlideCircleImage(mContext)).into(avatarImg);
+                tvName.setText(nameObject.getString("text"));
+                Glide.with(mContext).load(avatarObject.getString("image")).transform(new GlideCircleImage(mContext)).into(avatarImg);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();

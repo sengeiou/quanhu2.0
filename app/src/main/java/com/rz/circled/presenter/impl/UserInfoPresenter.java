@@ -85,12 +85,14 @@ public class UserInfoPresenter extends GeneralPresenter {
                         if (model != null) {
                             if (function == null || function.length() == 0 || Type.FUNCTION_CODE_2.equals(function)) {
                                 mView.updateView(model);
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             } else {
-                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             }
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        mView.updateViewWithFlag( "",200);
                         Toasty.info(mContext, res.getMsg()).show();
                     }
                 } else {

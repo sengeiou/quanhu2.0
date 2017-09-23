@@ -23,7 +23,7 @@
             android:id="@+id/id_name_txt"
             style="@style/MineMeTvStyle"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/px46"
+            android:layout_marginLeft="@dimen/px26"
             android:layout_toRightOf="@+id/id_icon_img"
             android:textColor="@color/black"
             android:textSize="@dimen/px50"/>
