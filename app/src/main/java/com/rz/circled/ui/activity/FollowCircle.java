@@ -69,7 +69,7 @@ public class FollowCircle extends BaseActivity {
                 } else {
                     mIvCb.setImageResource(R.drawable.no_select);
                 }
-                Glide.with(mContext).load(item.circleIcon).into(mIvFollow);
+                Glide.with(mContext).load(item.circleIcon).placeholder(R.drawable.circle_default).into(mIvFollow);
             }
         };
         mGvFollow.setAdapter(mAdapter);

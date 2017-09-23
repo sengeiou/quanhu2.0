@@ -131,6 +131,10 @@ public class SysSharePres {
      */
     private static final String USER_ISFIRSTDOWNLOAD = "user_isfirstdownload";
     /**
+     * 用户是否是第一次看引导页 true 是的 false不是
+     */
+    private static final String USER_ISFIRSTGUIDE = "user_isfirstguide";
+    /**
      * 用户第一次安装APP 进入首页面时 操作提示 true是的 false不是
      */
     private static final String USER_FIRSTREMINDHOME = "user_firstremindhome";
@@ -328,6 +332,15 @@ public class SysSharePres {
     public void setUserIsfirstDownload(boolean user_isfirstdownload) {
         mSharePres.edit()
                 .putBoolean(USER_ISFIRSTDOWNLOAD, user_isfirstdownload)
+                .apply();
+    }
+    public boolean getUserIsfirstGuide() {
+        return mSharePres.getBoolean(USER_ISFIRSTGUIDE, true);
+    }
+
+    public void setUserIsfirstGuide(boolean user_isfirstguide) {
+        mSharePres.edit()
+                .putBoolean(USER_ISFIRSTGUIDE, user_isfirstguide)
                 .apply();
     }
 

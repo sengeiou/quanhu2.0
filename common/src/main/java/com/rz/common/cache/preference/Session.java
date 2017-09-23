@@ -279,6 +279,13 @@ public class Session {
         Session.user_isfirstdownload = user_isfirstdownload;
         SysSharePres.getInstance().setUserIsfirstDownload(user_isfirstdownload);
     }
+    public static boolean getUserIsFirstGuide() {
+        return SysSharePres.getInstance().getUserIsfirstGuide();
+    }
+
+    public static void setUserIsFirstGuide(boolean user_isfirstguide) {
+        SysSharePres.getInstance().setUserIsfirstGuide(user_isfirstguide);
+    }
 
 
     public static boolean getUserFirstRemindHome() {
