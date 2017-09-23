@@ -31,7 +31,6 @@ import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
@@ -42,13 +41,13 @@ import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyBuyActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
+import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
-import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -65,7 +64,6 @@ import com.rz.common.constant.Constants;
 import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
@@ -735,9 +733,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 6:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的卡卷");
-                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-                    startActivity(intent);
+                    jump(MyCouponsActivity.class);
 
                 }
                 break;
@@ -775,10 +771,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     starCustormService();
                 } else {
 //                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
-                    CommonH5Activity.startCommonH5(mActivity, "客服",H5Address.CONECT_US);
+                    CommonH5Activity.startCommonH5(mActivity, "客服", H5Address.CONECT_US);
                 }
-                    break;
-                //设置
+                break;
+            //设置
 
             case 11:
                 trackUser("我的", "帮助", "设置");
@@ -800,10 +796,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         boolean isWrokDate = isCurrentInTimeScope(startHour, startMinute, endHour, endMinute);
         if (mCustormServiceModel.getStatus() == 1 && isWrokDate == true) {
 
-            CommonH5Activity.startCommonH5(mActivity, "客服",mCustormServiceModel.getCustomUrl());
+            CommonH5Activity.startCommonH5(mActivity, "客服", mCustormServiceModel.getCustomUrl());
         } else {
 
-            CommonH5Activity.startCommonH5(mActivity, "客服",mCustormServiceModel.getMessageUrl());
+            CommonH5Activity.startCommonH5(mActivity, "客服", mCustormServiceModel.getMessageUrl());
         }
     }
 
