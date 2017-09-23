@@ -54,6 +54,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     public static final int TAG_DELETE_COMMENT = 1003;
     public static final int TAG_REWARD_LIST = 1004;
     public static final int TAG_ZAN_LIST = 1005;
+    public static final int TAG_SIGN = 1006;
 
     private IViewController mView;
     private Context mContext;
@@ -1191,7 +1192,7 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
                     if(res != null){
-                        mView.updateView(res);
+                        mView.updateViewWithFlag(res,TAG_SIGN);
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);

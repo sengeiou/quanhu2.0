@@ -90,6 +90,9 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.id_watch_pass)
     ImageView mImgWatchPw;
 
+    @BindView(R.id.titlebar_main_left_btn)
+    ImageView mIvBack;
+
     /**
      * 手机号
      */
@@ -173,14 +176,28 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
-        setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
-        finish();
+        if(codeType == 1){
+            Intent intent = new Intent();
+            intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
+            setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
+            finish();
+        }else{
+            setData();
+        }
+
     }
 
     @Override
     public void initView() {
+
+//        mIvBack.setVisibility(View.GONE);
+////        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
+//        mIvBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 
         mBtnSendCode.setVisibility(View.VISIBLE);
         mEditPass.setHint("请输入验证码");
@@ -285,6 +302,12 @@ public class LoginActivity extends BaseActivity {
 //    }
 //
 
+    @OnClick(R.id.titlebar_main_left_btn)
+    public void onClick() {
+
+        setData();
+    }
+
 
     /**
      * 微信登录
@@ -323,8 +346,14 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.layout_phone_code)
     public void codeLogin() {
-        if (codeType == 1) {
+        setData();
+    }
 
+
+
+    private void setData(){
+
+        if (codeType == 1) {
             //动态设置top图片
             Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -333,9 +362,11 @@ public class LoginActivity extends BaseActivity {
 
             mBtnSendCode.setVisibility(View.GONE);
             mEditPass.setHint("请输入密码");
+            mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             mImgWatchPw.setVisibility(View.VISIBLE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            mIvBack.setVisibility(View.VISIBLE);
             //// TODO: 2017/9/23 0023
 //            typePwd.setBackgroundResource(R.mipmap.);   图片
 
@@ -348,6 +379,7 @@ public class LoginActivity extends BaseActivity {
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
             layoutLoginPhone.setText("密码登录");
+            mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
@@ -355,13 +387,12 @@ public class LoginActivity extends BaseActivity {
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-
+            mIvBack.setVisibility(View.GONE);
             codeType = 1;
         }
+
+
     }
-
-
-
 
     @OnClick(R.id.id_regist_send_sms_btn)
     public void getCode() {
@@ -957,4 +988,6 @@ public class LoginActivity extends BaseActivity {
     public void refreshPage() {
 
     }
+
+
 }

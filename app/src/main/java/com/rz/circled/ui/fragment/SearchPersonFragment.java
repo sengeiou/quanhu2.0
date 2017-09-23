@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -11,6 +12,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchUserAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -65,6 +67,14 @@ public class SearchPersonFragment extends BaseFragment {
         personAdapter = new SearchUserAdapter(getActivity(), R.layout.item_search_person);
         personAdapter.setData(dataCustInfos);
         lvPerson.setAdapter(personAdapter);
+
+        lvPerson.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserInfoActivity.newFrindInfo(mActivity, dataCustInfos.get(position).getCustId());
+            }
+        });
+
     }
 
     @Override

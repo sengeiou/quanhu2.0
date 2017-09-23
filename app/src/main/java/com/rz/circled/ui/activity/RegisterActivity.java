@@ -480,6 +480,16 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
+    public <T> void updateViewWithFlag(T t, int flag) {
+        if(flag == 200){
+            if (null != mc) {
+                mc.cancel();
+                mc.onFinish();
+            }
+        }
+    }
+
+    @Override
     public boolean hasDataInPage() {
         return true;
     }

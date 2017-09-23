@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -174,7 +175,7 @@ public class UserInfoActivity extends BaseActivity{
         }else{   //他人中心
             //判断他人与自己的关系（是否添加好友）
             editImg.setVisibility(View.GONE);
-            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(userId);
 
         }
     }
@@ -353,7 +354,7 @@ public class UserInfoActivity extends BaseActivity{
             }else{
                 addFriendLayout.setVisibility(View.GONE);
             }
-            userRole.setText(model.getCustRole());
+//            userRole.setText(model.getCustRole());
 
         }
     }

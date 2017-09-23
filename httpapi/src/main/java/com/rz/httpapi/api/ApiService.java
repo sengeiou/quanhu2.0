@@ -86,7 +86,7 @@ public interface ApiService {
      * @param act
      * @param phone 手机号
      * @param type  类型1：短信验证码，2：语音验证码
-     * @param code  功能码1：注册；2：找回密码；3：实名认证；4：设置支付密码；5：更换手机；6：找回支付密码；7：提现；
+     * @param code  功能码1：注册；2：找回密码；3：实名认证；4：设置支付密码；5：更换手机；6：找回支付密码；7：提现； 9 :登录
      * @return
      */
     @FormUrlEncoded
