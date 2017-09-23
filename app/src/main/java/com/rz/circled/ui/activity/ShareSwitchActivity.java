@@ -45,7 +45,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.rz.circled.widget.CommomUtils.trackUser;
 import static com.rz.common.constant.Constants.SWITCH_SHARE_SUCCESS;
 
 /**
@@ -172,18 +171,18 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     @OnClick({R.id.id_group_chat_rela1, R.id.id_group_discuss1, R.id.id_group_friend1})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.id_group_chat_rela1:
-                CommomUtils.trackUser("分享", "悠友圈分享", "群聊");
-                ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.ADVANCED_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
-                break;
-            case R.id.id_group_discuss1:
-                CommomUtils.trackUser("分享", "悠友圈分享", "讨论组");
-                ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.NORMAL_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
-                break;
-            case R.id.id_group_friend1:
-                CommomUtils.trackUser("分享", "悠友圈分享", "好友");
-                ShareFriendsListActivity.start(getApplicationContext(), (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
-                break;
+//            case R.id.id_group_chat_rela1:
+//                CommomUtils.trackUser("分享", "悠友圈分享", "群聊");
+//                ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.ADVANCED_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
+//                break;
+//            case R.id.id_group_discuss1:
+//                CommomUtils.trackUser("分享", "悠友圈分享", "讨论组");
+//                ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.NORMAL_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
+//                break;
+//            case R.id.id_group_friend1:
+//                CommomUtils.trackUser("分享", "悠友圈分享", "好友");
+//                ShareFriendsListActivity.start(getApplicationContext(), (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
+//                break;
         }
     }
 

@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -187,7 +188,13 @@ public class LoginActivity extends BaseActivity {
         mImgWatchPw.setVisibility(View.GONE);
         mEditPass.setText("");
         mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-        layoutLoginPhone.setBackgroundResource(R.mipmap.other_login_icon);
+
+
+        //动态设置top图片
+        Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+        layoutLoginPhone.setText("密码登录");
 
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
@@ -240,10 +247,14 @@ public class LoginActivity extends BaseActivity {
                     mImgClearPass.setVisibility(View.GONE);
                 }
 
-                if (mEditPass.getText().length() > 0) {
-                    mImgWatchPw.setVisibility(View.VISIBLE);
-                } else {
+                if(codeType == 1){
                     mImgWatchPw.setVisibility(View.GONE);
+                }else{
+                    if (mEditPass.getText().length() > 0) {
+                        mImgWatchPw.setVisibility(View.VISIBLE);
+                    } else {
+                        mImgWatchPw.setVisibility(View.GONE);
+                    }
                 }
 
             }
@@ -313,17 +324,30 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.layout_phone_code)
     public void codeLogin() {
         if (codeType == 1) {
+
+            //动态设置top图片
+            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+            layoutLoginPhone.setText("验证码登录");
+
             mBtnSendCode.setVisibility(View.GONE);
             mEditPass.setHint("请输入密码");
             mImgWatchPw.setVisibility(View.VISIBLE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            //// TODO: 2017/9/23 0023  
-//            layoutLoginPhone.setBackgroundResource(R.mipmap.);   图片
+            //// TODO: 2017/9/23 0023
+//            typePwd.setBackgroundResource(R.mipmap.);   图片
 
-            codeType = 1;
+            codeType = 2;
 
         } else {
+
+            //动态设置top图片
+            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+            layoutLoginPhone.setText("密码登录");
 
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
@@ -331,9 +355,8 @@ public class LoginActivity extends BaseActivity {
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-            layoutLoginPhone.setBackgroundResource(R.mipmap.other_login_icon);
 
-            codeType = 2;
+            codeType = 1;
         }
     }
 
