@@ -766,4 +766,5 @@
     <string name="call_phone_authorization">请授权拨打电话！</string>
     <string name="authorization_fail">授权失败！</string>
     <string name="pay_fail">支付失败</string>
+    <string name="editor_un_share_read">不可同时选择付费阅读与免费推广</string>
 </resources>
