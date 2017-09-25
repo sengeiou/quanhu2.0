@@ -65,6 +65,7 @@ import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.DataStatisticsBean;
+import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.UserSignBean;
 
@@ -125,7 +126,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     protected IPresenter presenter;
     protected IPresenter userPresenter;
-    private MessageReceiver receiver;
     private CustormServiceModel mCustormServiceModel;
     private SharedPreferences mSp;
 
