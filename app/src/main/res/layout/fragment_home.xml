@@ -24,8 +24,9 @@
             <ListView
                 android:id="@+id/id_homefrg_listview"
                 style="@style/DefaultLvStyle"
-                android:background="@color/color_F6F8F8"
+                android:background="@color/white"
                 android:clipToPadding="false"
+                android:dividerHeight="@dimen/px4"
                 android:divider="@color/color_F4F4F4"
                 />
         </android.support.v4.widget.SwipeRefreshLayout>
@@ -35,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
-            android:layout_marginBottom="@dimen/px50"
-            android:layout_marginRight="@dimen/px50"
+            android:layout_marginBottom="@dimen/font_34"
+            android:layout_marginRight="@dimen/px28"
             android:src="@drawable/home_publish"
             />
     </FrameLayout>

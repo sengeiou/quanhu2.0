@@ -16,7 +16,6 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
-import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
@@ -172,7 +171,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position-1);
-//        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535243033497698304")
+//        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"545975813174272000")
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new Action1<ResponseData>() {

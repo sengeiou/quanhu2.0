@@ -28,8 +28,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/px44"
-                android:paddingRight="@dimen/px15"
+                android:paddingLeft="@dimen/px150"
+                android:paddingRight="@dimen/px28"
                 android:src="@mipmap/icon_search"/>
 
             <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:background="@color/transparent"
                 android:hint="@string/search_keyword_hint"
                 android:maxLines="1"

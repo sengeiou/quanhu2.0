@@ -14,6 +14,7 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.LoginTypeBean;
@@ -22,7 +23,6 @@ import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.constans.ReturnCode;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -340,14 +340,14 @@ public class UserInfoPresenter extends GeneralPresenter {
                         mView.updateView("1");
                         return;
                     } else {
-//                        if (HandleRetCode.handler(mContext, res)) {
+                        if (HandleRetCode.handler(mContext, res)) {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                                 }
                             }, 2000);
-//                        }
+                        }
                         return;
                     }
                 }
