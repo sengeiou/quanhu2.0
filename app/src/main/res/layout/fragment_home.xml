@@ -31,7 +31,7 @@
                 android:dividerHeight="@dimen/px4"
                 android:divider="@color/color_F4F4F4"
                 />
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </com.rz.circled.widget.SwipyRefreshLayoutBanner>
 
         <ImageView
             android:id="@+id/home_publish"

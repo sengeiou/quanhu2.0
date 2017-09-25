@@ -42,7 +42,6 @@
                 android:gravity="center_vertical"
                 android:background="@color/transparent"
                 android:focusable="false"
-                android:gravity="center"
                 android:hint="@string/search_keyword_hint"
                 android:imeOptions="actionSearch"
                 android:inputType="textImeMultiLine"
