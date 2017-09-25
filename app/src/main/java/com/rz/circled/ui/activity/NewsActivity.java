@@ -45,13 +45,27 @@ public class NewsActivity extends BaseActivity {
     @BindView(R.id.lv)
     ListView lv;
 
-    private static Integer[] TYPEID = {
+    private static Integer[] TYPES = {
             NewsTypeConstants.NEWS_ANNOUNCEMENT,
             NewsTypeConstants.NEWS_SYSTEM,
             NewsTypeConstants.NEWS_INTERACTIVE,
             NewsTypeConstants.NEWS_RECOMMEND,
-            NewsTypeConstants.NEWS_ACCOUNT,};
-    private List<Integer> mTypeId = Arrays.asList(TYPEID);
+            NewsTypeConstants.NEWS_ACCOUNT};
+    private List<Integer> mTypeId = Arrays.asList(TYPES);
+    private static Integer[] TITLES = {
+            R.string.announcement,
+            R.string.system_information,
+            R.string.interactive_information,
+            R.string.recommend_information,
+            R.string.account_information};
+    private List<Integer> mTitleId = Arrays.asList(TITLES);
+    private static Integer[] IMAGES = {
+            R.mipmap.ic_news_announcement,
+            R.mipmap.ic_news_system_information,
+            R.mipmap.ic_news_interactive,
+            R.mipmap.ic_news_recommend,
+            R.mipmap.ic_news_account_information};
+    private List<Integer> mImageId = Arrays.asList(IMAGES);
     private NewsOverviewAdapter mAdapter;
     private EntityCache<NewsOverviewBean> mCache;
 
@@ -102,17 +116,10 @@ public class NewsActivity extends BaseActivity {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
-            case EventConstant.NEWS_COME_UNREAD:
+            case EventConstant.NEWS_OVERVIEW_CHANGE:
                 loadData();
                 break;
-            case EventConstant.NEWS_ANNOUNCEMENT_UNREAD_CHANGE:
-            case EventConstant.NEWS_ACCOUNT_INFORMATION_UNREAD_CHANGE:
-            case EventConstant.NEWS_SYSTEM_INFORMATION_UNREAD_CHANGE:
-            case EventConstant.NEWS_RECOMMEND_UNREAD_CHANGE:
-            case EventConstant.NEWS_COMMENT_UNREAD_CHANGE:
-            case EventConstant.NEWS_QA_UNREAD_CHANGE:
-            case EventConstant.NEWS_GROUP_UNREAD_CHANGE:
-            case EventConstant.NEWS_ACTIVITY_UNREAD_CHANGE:
+            case EventConstant.NEWS_UNREAD_CHANGE:
                 initDotView();
                 break;
         }
@@ -121,122 +128,80 @@ public class NewsActivity extends BaseActivity {
     private void loadCacheData() {
         Log.e(TAG, "loadCacheData: ");
         mCache = new EntityCache<>(mContext, NewsOverviewBean.class);
-        List<NewsOverviewBean> data = new ArrayList<>();
         List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
-        for (int i = 0; i < mTypeId.size(); i++) {
-            NewsOverviewBean item = new NewsOverviewBean();
-            item.setDesc(getString(R.string.news_no_data_now));
-            item.setTypeId(mTypeId.get(i));
-            switch (mTypeId.get(i)) {
-                case NewsTypeConstants.NEWS_ANNOUNCEMENT:
-                    item.setTitle(getString(R.string.announcement));
-                    item.setResId(R.mipmap.ic_news_announcement);
-                    item.setNum(Session.getNewsAnnouncementNum());
-                    break;
-                case NewsTypeConstants.NEWS_SYSTEM:
-                    item.setTitle(getString(R.string.system_information));
-                    item.setResId(R.mipmap.ic_news_system_information);
-                    item.setNum(Session.getNewsSystemInformationNum());
-                    break;
-                case NewsTypeConstants.NEWS_INTERACTIVE:
-                    item.setTitle(getString(R.string.interactive_information));
-                    item.setResId(R.mipmap.ic_news_interactive);
-                    item.setNum(Session.getNewsCommentNum() + Session.getNewsQaNum() + Session.getNewsGroupNum() + Session.getNewsActivityNum());
-                    break;
-                case NewsTypeConstants.NEWS_RECOMMEND:
-                    item.setTitle(getString(R.string.recommend_information));
-                    item.setResId(R.mipmap.ic_news_recommend);
-                    item.setNum(Session.getNewsRecommendNum());
-                    break;
-                case NewsTypeConstants.NEWS_ACCOUNT:
-                    item.setTitle(getString(R.string.account_information));
-                    item.setResId(R.mipmap.ic_news_account_information);
-                    item.setNum(Session.getNewsAccountInformationNum());
-                    break;
-            }
-            data.add(item);
-        }
         if (mCacheData != null) {
             for (NewsOverviewBean cache : mCacheData) {
-                for (NewsOverviewBean item : data) {
-                    if (cache.getTypeId() == item.getTypeId()) {
-                        item.setTime(cache.getTime());
-                        item.setDesc(item.getDesc());
-                    }
+                switch (cache.getTypeId()) {
+                    case NewsTypeConstants.NEWS_ANNOUNCEMENT:
+                        cache.setResId(R.mipmap.ic_news_announcement);
+                        cache.setNum(Session.getNewsAnnouncementNum());
+                        break;
+                    case NewsTypeConstants.NEWS_SYSTEM:
+                        cache.setResId(R.mipmap.ic_news_system_information);
+                        cache.setNum(Session.getNewsSystemInformationNum());
+                        break;
+                    case NewsTypeConstants.NEWS_INTERACTIVE:
+                        cache.setResId(R.mipmap.ic_news_interactive);
+                        cache.setNum(Session.getNewsCommentNum() + Session.getNewsQaNum() + Session.getNewsGroupNum() + Session.getNewsActivityNum());
+                        break;
+                    case NewsTypeConstants.NEWS_RECOMMEND:
+                        cache.setResId(R.mipmap.ic_news_recommend);
+                        cache.setNum(Session.getNewsRecommendNum());
+                        break;
+                    case NewsTypeConstants.NEWS_ACCOUNT:
+                        cache.setResId(R.mipmap.ic_news_account_information);
+                        cache.setNum(Session.getNewsAccountInformationNum());
+                        break;
                 }
             }
+        } else {
+            mCacheData = new ArrayList<>();
+            for (int i = 0; i < mTypeId.size(); i++) {
+                NewsOverviewBean item = new NewsOverviewBean();
+                item.setDesc(getString(R.string.news_no_data_now));
+                item.setTypeId(mTypeId.get(i));
+                item.setTitle(getString(mTitleId.get(i)));
+                item.setResId(mImageId.get(i));
+                mCacheData.add(item);
+            }
         }
-        mAdapter.setData(data);
-        mCache.putListEntity(data);
+        mAdapter.setData(mCacheData);
+        mCache.putListEntity(mCacheData);
     }
 
     private void loadData() {
         Log.e(TAG, "loadData: ");
-        Http.getApiService(ApiNewsService.class).newsUnread(Session.getUserId()).enqueue(new BaseCallback<ResponseData<HashMap<String, String>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful() && response.body().isSuccessful()) {
-                    HashMap<String, String> data = response.body().getData();
-                    parsesData(data);
-                    initDotView();
-                }
-            }
-        });
         Http.getApiService(ApiNewsService.class).newsOverview(Session.getUserId()).enqueue(new BaseCallback<ResponseData<HashMap<String, NewsBean>>>() {
             @Override
             public void onResponse(Call<ResponseData<HashMap<String, NewsBean>>> call, Response<ResponseData<HashMap<String, NewsBean>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful() && response.body().isSuccessful()) {
                     initMessageOverview(response.body().getData());
+                    initDotView();
                 }
             }
         });
     }
 
-    private void parsesData(HashMap<String, String> data) {
-        List<NewsUnreadBean> unreadBeanList = new ArrayList<>();
-        for (String key : data.keySet()) {
-            int num = Integer.parseInt(data.get(key));
-            String[] types = key.split("\\|");
-            int type = 0;
-            int label = 0;
-            if (types.length > 1) {
-                type = Integer.parseInt(types[0]);
-                label = Integer.parseInt(types[1]);
-            } else {
-                type = Integer.parseInt(types[0]);
-            }
-            unreadBeanList.add(new NewsUnreadBean(type, label, num));
-        }
-
-        Map<Integer, Integer> map = new HashMap<>();
-        for (NewsUnreadBean item : unreadBeanList) {
-            if (item.getType() == NewsTypeConstants.NEWS_INTERACTIVE) {
-                Integer val = map.get(item.getLabel());
-                if (val == null) {
-                    map.put(item.getLabel(), item.getNum());
-                } else {
-                    map.put(item.getLabel(), val + item.getNum());
-                }
-            } else {
-                Integer val = map.get(item.getType());
-                if (val == null) {
-                    map.put(item.getType(), item.getNum());
-                } else {
-                    map.put(item.getType(), val + item.getNum());
+    private void initMessageOverview(HashMap<String, NewsBean> data) {
+        Log.e(TAG, "initMessageOverview: ");
+        List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
+        for (NewsOverviewBean cache : mCacheData) {
+            Integer id = cache.getTypeId();
+            if (data.containsKey(String.valueOf(id))) {
+                NewsBean item = data.get(String.valueOf(id));
+                for (NewsOverviewBean bean : mAdapter.getData()) {
+                    if (bean.getTypeId() == id) {
+                        bean.setDesc(item.getTitle());
+                        bean.setTime(item.getCreateTime());
+                        cache.setDesc(item.getTitle());
+                        cache.setTime(item.getCreateTime());
+                    }
                 }
             }
         }
-
-        Session.setNewsAnnouncementNum(map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != null && map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != 0 ? Session.getNewsAnnouncementNum() + map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) : Session.getNewsAnnouncementNum());
-        Session.setNewsSystemInformationNum(map.get(NewsTypeConstants.NEWS_SYSTEM) != null && map.get(NewsTypeConstants.NEWS_SYSTEM) != 0 ? Session.getNewsSystemInformationNum() + map.get(NewsTypeConstants.NEWS_SYSTEM) : Session.getNewsSystemInformationNum());
-        Session.setNewsAccountInformationNum(map.get(NewsTypeConstants.NEWS_ACCOUNT) != null && map.get(NewsTypeConstants.NEWS_ACCOUNT) != 0 ? Session.getNewsAccountInformationNum() + map.get(NewsTypeConstants.NEWS_ACCOUNT) : Session.getNewsAccountInformationNum());
-        Session.setNewsRecommendNum(map.get(NewsTypeConstants.NEWS_RECOMMEND) != null && map.get(NewsTypeConstants.NEWS_RECOMMEND) != 0 ? Session.getNewsRecommendNum() + map.get(NewsTypeConstants.NEWS_RECOMMEND) : Session.getNewsRecommendNum());
-        Session.setNewsCommentNum(map.get(NewsTypeConstants.NEWS_COMMENT) != null && map.get(NewsTypeConstants.NEWS_COMMENT) != 0 ? Session.getNewsCommentNum() + map.get(NewsTypeConstants.NEWS_COMMENT) : Session.getNewsCommentNum());
-        Session.setNewsQaNum(map.get(NewsTypeConstants.NEWS_ANSWER) != null && map.get(NewsTypeConstants.NEWS_ANSWER) != 0 ? Session.getNewsQaNum() + map.get(NewsTypeConstants.NEWS_ANSWER) : Session.getNewsQaNum());
-        Session.setNewsGroupNum(map.get(NewsTypeConstants.NEWS_GROUP) != null && map.get(NewsTypeConstants.NEWS_GROUP) != 0 ? Session.getNewsGroupNum() + map.get(NewsTypeConstants.NEWS_GROUP) : Session.getNewsGroupNum());
-        Session.setNewsActivityNum(map.get(NewsTypeConstants.NEWS_ACTIVITY) != null && map.get(NewsTypeConstants.NEWS_ACTIVITY) != 0 ? Session.getNewsActivityNum() + map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
+        mCache.putListEntity(mCacheData);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initDotView() {
@@ -262,27 +227,6 @@ public class NewsActivity extends BaseActivity {
                     break;
             }
         }
-        mAdapter.notifyDataSetChanged();
-    }
-
-    private void initMessageOverview(HashMap<String, NewsBean> data) {
-        Log.e(TAG, "initMessageOverview: ");
-        List<NewsOverviewBean> mCacheData = mCache.getListEntity(NewsOverviewBean.class);
-        for (NewsOverviewBean cache : mCacheData) {
-            Integer id = cache.getTypeId();
-            if (data.containsKey(String.valueOf(id))) {
-                NewsBean item = data.get(String.valueOf(id));
-                for (NewsOverviewBean bean : mAdapter.getData()) {
-                    if (bean.getTypeId() == id) {
-                        bean.setDesc(item.getTitle());
-                        bean.setTime(item.getCreateTime());
-                        cache.setDesc(item.getTitle());
-                        cache.setTime(item.getCreateTime());
-                    }
-                }
-            }
-        }
-        mCache.putListEntity(mCacheData);
         mAdapter.notifyDataSetChanged();
     }
 

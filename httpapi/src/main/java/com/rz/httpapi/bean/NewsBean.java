@@ -28,6 +28,11 @@ public class NewsBean {
     private Integer label;
 
     /**
+     *  消息唯一分类
+     */
+    private String msgEnumType;
+
+    /**
      * 目标用户ID
      */
     private String toCust;
@@ -239,5 +244,13 @@ public class NewsBean {
 
     public void setCircleId(String circleId) {
         this.circleId = circleId;
+    }
+
+    public String getMsgEnumType() {
+        return msgEnumType;
+    }
+
+    public void setMsgEnumType(String msgEnumType) {
+        this.msgEnumType = msgEnumType;
     }
 }

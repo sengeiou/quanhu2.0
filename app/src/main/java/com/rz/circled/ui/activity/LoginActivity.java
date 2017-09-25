@@ -176,12 +176,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(codeType == 1){
+        if (codeType == 1) {
             Intent intent = new Intent();
             intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
             setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
             finish();
-        }else{
+        } else {
             setData();
         }
 
@@ -208,7 +208,7 @@ public class LoginActivity extends BaseActivity {
 
 
         //动态设置top图片
-        Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+        Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
         layoutLoginPhone.setText("密码登录");
@@ -264,9 +264,9 @@ public class LoginActivity extends BaseActivity {
                     mImgClearPass.setVisibility(View.GONE);
                 }
 
-                if(codeType == 1){
+                if (codeType == 1) {
                     mImgWatchPw.setVisibility(View.GONE);
-                }else{
+                } else {
                     if (mEditPass.getText().length() > 0) {
                         mImgWatchPw.setVisibility(View.VISIBLE);
                     } else {
@@ -350,8 +350,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-
-    private void setData(){
+    private void setData() {
 
         if (codeType == 1) {
             //动态设置top图片
@@ -364,6 +363,7 @@ public class LoginActivity extends BaseActivity {
             mEditPass.setHint("请输入密码");
             mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             mImgWatchPw.setVisibility(View.VISIBLE);
+            typePwd.setImageResource(R.mipmap.ic_login_pw);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
             mIvBack.setVisibility(View.VISIBLE);
@@ -375,7 +375,7 @@ public class LoginActivity extends BaseActivity {
         } else {
 
             //动态设置top图片
-            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
             layoutLoginPhone.setText("密码登录");
@@ -432,10 +432,10 @@ public class LoginActivity extends BaseActivity {
         int length = TextUtils.isEmpty(mEditPass.getText()) ? 0 : mEditPass.getText().length();
         if (mEditPass.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
             mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
         } else {
             mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
         }
         mEditPass.setSelection(length);
 
@@ -457,7 +457,7 @@ public class LoginActivity extends BaseActivity {
             if (codeType == 1) { //验证码登录
 
                 if (mPassword.length() == 4) {
-                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, mPassword);
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
@@ -532,14 +532,6 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 saveLoginData(loginModel);
-
-                Set<String> sset = new HashSet<String>();
-                sset.add(Constants.Lottery_Tag);
-
-                // 调用 Handler 来异步设置别名
-                mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
-
-//                loadRewardGiftList();//加载转发打赏礼物列表
 
                 if (getIntent().getBooleanExtra("isFromSplash", false)) {
                     skipActivity(aty, MainActivity.class);
@@ -620,6 +612,9 @@ public class LoginActivity extends BaseActivity {
         } else {
             Session.setUserLoginPw(false);
         }
+
+        // 调用 Handler 来异步设置别名
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
 
         if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
             EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);

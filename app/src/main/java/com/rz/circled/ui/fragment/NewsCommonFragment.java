@@ -74,6 +74,8 @@ public class NewsCommonFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
         clearUnreadByType(type);
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -135,8 +137,6 @@ public class NewsCommonFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         loadData(false);
     }
 
@@ -274,49 +274,49 @@ public class NewsCommonFragment extends BaseFragment {
             case NEWS_ANNOUNCEMENT:
                 if (Session.getNewsAnnouncementNum() != 0) {
                     Session.setNewsAnnouncementNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_ANNOUNCEMENT_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_SYSTEM_INFORMATION:
                 if (Session.getNewsSystemInformationNum() != 0) {
                     Session.setNewsSystemInformationNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_SYSTEM_INFORMATION_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_RECOMMEND:
                 if (Session.getNewsRecommendNum() != 0) {
                     Session.setNewsRecommendNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_RECOMMEND_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_ACCOUNT:
                 if (Session.getNewsAccountInformationNum() != 0) {
                     Session.setNewsAccountInformationNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_ACCOUNT_INFORMATION_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_COMMENT:
                 if (Session.getNewsCommentNum() != 0) {
                     Session.setNewsCommentNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COMMENT_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_QA:
                 if (Session.getNewsQaNum() != 0) {
                     Session.setNewsQaNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_QA_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_PRIVATE_GROUP:
                 if (Session.getNewsGroupNum() != 0) {
                     Session.setNewsGroupNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_GROUP_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
             case NEWS_ACTIVITY:
                 if (Session.getNewsActivityNum() != 0) {
                     Session.setNewsActivityNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_ACTIVITY_UNREAD_CHANGE));
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 }
                 break;
         }
@@ -324,6 +324,6 @@ public class NewsCommonFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        initData();
     }
 }

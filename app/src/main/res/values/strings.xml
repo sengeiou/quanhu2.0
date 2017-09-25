@@ -153,7 +153,6 @@
     <string name="cost_detail_v3">消费明细</string>
     <string name="account_remain">账户余额</string>
     <string name="youranbi">悠然币</string>
-    <string name="quanbi">圈币</string>
     <string name="recharge">充值</string>
     <string name="all_point">奖励值</string>
     <string name="duihuan_yrb">您暂无可兑换悠然币</string>
@@ -207,8 +206,10 @@
     <string name="private_group">私圈</string>
     <string name="private_group_all">全部私圈</string>
     <string name="private_group_no_more">没有更多了</string>
+    <string name="private_group_about">关于私圈</string>
+    <string name="private_group_essence_no_more">加入私圈，可浏览更多私圈精华</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
-    <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
+    <string name="private_group_create_tip">私圈是提供个性化服务和功能的场所,您可以在私圈内发布各类型资源、活动和话题等,用以吸引汇集其他用户成为私圈成员,形成深度互动,进一步快速实现资源变现。</string>
     <string name="private_group_create_submit">提交中···</string>
     <string name="private_group_joined_user">%1$d人加入</string>
     <string name="private_group_status_0">待审核</string>
@@ -217,7 +218,10 @@
     <string name="private_group_status_3">上架</string>
     <string name="private_group_status_4">下架</string>
     <string name="private_group_login_tip">登录才能创建私圈</string>
-    <string name="private_group_no_create">还没有创建私圈哦！</string>
+    <string name="private_group_no_create">还没有创建私圈哦~</string>
+    <string name="private_group_no_join">还没有加入私圈哦~</string>
+    <string name="private_group_show_all">查看全部私圈</string>
+    <string name="private_group_apply_for">申请创建私圈</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
     <string name="private_group_from">来自 %1$s</string>
@@ -228,6 +232,8 @@
     <string name="private_group_join_way_change">修改加入私圈方式</string>
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
+    <string name="private_group_my_level">当前等级为Lv.%1$s</string>
+    <string name="private_group_level_tip">抱歉，您的会员等级达到Lv.5才可以创建私圈，如有疑问请联系客服</string>
 
     <!--消息-->
     <string name="announcement">通知公告</string>
@@ -251,10 +257,11 @@
     <string name="clear_confirmation">确定清空聊天记录</string>
     <string name="chat_setting">聊天设置</string>
     <string name="share_youran_chat">分享到悠然聊天</string>
+    <string name="share_chat">分享到聊天</string>
 
     <!--分享-->
     <string name="share_object">选择分享对象</string>
-    <string name="share_to_friend">选择分享好友</string>
+    <string name="share_to_friend">分享给好友</string>
     <string name="good_friend">好友</string>
     <string name="recent_contacts">最近联系的人</string>
     <string name="share_to_other">分享给</string>
@@ -318,6 +325,7 @@
     <string name="v3_login_to_register">现在注册&#160;></string>
     <string name="v3_my_reward">我的打赏</string>
     <string name="v3_customer_service">联系客服</string>
+    <string name="i_know">我知道了</string>
     <string name="login_third_other">第三方登录</string>
     <string name="other_login">其他登录方式</string>
     <string name="phone_code">验证码登录</string>

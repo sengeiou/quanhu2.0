@@ -12,11 +12,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px126"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/px44"
-            android:paddingRight="@dimen/px44">
+            android:padding="@dimen/px44">
 
             <ImageView
                 android:layout_width="@dimen/px38"

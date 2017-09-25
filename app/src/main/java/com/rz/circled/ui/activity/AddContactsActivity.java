@@ -4,17 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rz.circled.R;
-import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.modle.ShareModel;
-
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.permission.AfterPermissionGranted;
 import com.rz.common.permission.AppSettingsDialog;
@@ -95,7 +92,7 @@ public class AddContactsActivity extends BaseActivity implements View.OnClickLis
                 ShareNewsAty.startShareNews(aty, new ShareModel(
                                 getString(R.string.app_name),
                                 getString(R.string.app_name),
-                                AgreementConstants.SHARE_APP_AGREEMENT),
+                                H5Address.APP_DOWNLOAD),
                         IntentCode.PAGE_ADDFRIEND);
                 break;
             default:

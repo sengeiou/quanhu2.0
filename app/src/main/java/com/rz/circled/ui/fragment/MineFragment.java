@@ -1,15 +1,11 @@
 package com.rz.circled.ui.fragment;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,15 +15,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.StatusCode;
-import com.netease.nimlib.sdk.msg.SystemMessageService;
-import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
-import com.rz.circled.constants.AgreementConstants;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
@@ -77,6 +72,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -115,9 +112,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     RelativeLayout signLayout;
     TextView titlebarSignTxt;
     ImageView scoreImg;
+    private ImageView mUnread;
 
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
-    public static String MINEFRGFOCUS = "mine_focus_push";
 
     List<MineFragItemModel> mModelList;
     CommonAdapter adapter;
@@ -126,8 +123,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     TextView tvcircletCount;        //私圈
     TextView tvactivityCount;       //活动
 
-    //    private SplashPresenter mSplashPresenter;
     protected IPresenter presenter;
+    protected IPresenter userPresenter;
     private MessageReceiver receiver;
     private CustormServiceModel mCustormServiceModel;
     private SharedPreferences mSp;
@@ -137,11 +134,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private TextView custPointsTxt;
     private TextView famousTxt;
     private LinearLayout famousLayout;
-
-    private TextView articleCount;
-    private TextView rewardCount;
-    private TextView circleCount;
-    private TextView activityCount;
 
     View header;
     View newTitilbar;
@@ -162,16 +154,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         presenter = new V3CirclePresenter();
         presenter.attachView(this);
 
+        userPresenter = new FriendPresenter1();
+        userPresenter.attachView(this);
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mActivity.unregisterReceiver(receiver);
     }
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
 
         mSp = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
         initUserNews();
@@ -181,6 +177,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         newTitilbar.getBackground().setAlpha(0);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
+        mUnread = (ImageView) newTitilbar.findViewById(R.id.unread_msg_number);
         signLayout = (RelativeLayout) newTitilbar.findViewById(R.id.sign_layout);
         signLayout.setVisibility(View.VISIBLE);
         titlebarSignTxt = (TextView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
@@ -213,7 +210,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     private void getData() {
 
-
         if (presenter != null) {
             //获取签到状态
             ((V3CirclePresenter) presenter).getSignStatus(Session.getUserId(), "15");
@@ -226,16 +222,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             //获取达人信息
             ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
-        }
-//        if(Session.getCustRole().equals("0")){
-//            famousTxt.setText("去认证");
-//            famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
-//        }else{
-        //获取达人信息
-//            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
-//        }
-    }
 
+            //更新用户详情
+            ((FriendPresenter1) userPresenter).getFriendInfoDetail(Session.getUserId());
+        }
+    }
 
     //初始化用户信息
     public void initUserNews() {
@@ -403,33 +394,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onVisible() {
         super.onVisible();
-        if (NIMClient.getStatus() == StatusCode.LOGINED) {
-            List<SystemMessageType> types = new ArrayList<>();
-            types.add(SystemMessageType.ApplyJoinTeam);
-            types.add(SystemMessageType.DeclineTeamInvite);
-            types.add(SystemMessageType.RejectTeamApply);
-            types.add(SystemMessageType.TeamInvite);
-            types.add(SystemMessageType.undefined);
-            int unreadNum = NIMClient.getService(SystemMessageService.class).querySystemMessageUnreadCountByType(types) +
-                    (TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum()));
-            if (Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
-                mModelList.get(0).setContacts(true);
-                mModelList.get(0).setmFocusNum(String.valueOf(unreadNum));
-                adapter.notifyDataSetChanged();
-            } else {
-                if (mModelList.isEmpty())
-                    return;
-                mModelList.get(0).setContacts(false);
-                mModelList.get(0).setmFocusNum("");
-                adapter.notifyDataSetChanged();
-            }
-        } else {
-            if (mModelList == null)
-                return;
-            mModelList.get(0).setContacts(false);
-            mModelList.get(0).setmFocusNum("");
-            adapter.notifyDataSetChanged();
-        }
+        requestUnreadMsg();
         // TODO: 2017/9/18 判断是否有申请达人,未申请则不去请求
         getUserProveStatus();
         setData();
@@ -439,11 +404,21 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onResume() {
         super.onResume();
+        requestUnreadMsg();
         if (null != mTxtPersonName && null != mImgPersonHead) {
             initUserNews();
         }
         if (!TextUtils.isEmpty(Session.getUserId())) {
 //            ((V3CirclePresenter) presenter).getCircleStats("");
+        }
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case EventConstant.NEWS_UNREAD_CHANGE:
+                requestUnreadMsg();
+                break;
         }
     }
 
@@ -535,11 +510,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         });
         mListView.setOnItemClickListener(this);
 
-        receiver = new MessageReceiver();
-        IntentFilter filter_dynamic = new IntentFilter();
-        filter_dynamic.addAction(MINEFRGFOCUS);
-        mActivity.registerReceiver(receiver, filter_dynamic);
-
 //        checkUpdate();
 
         if (Session.getUserIsLogin()) {
@@ -581,6 +551,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvacticlesCount.setText(data.getArticleNum() + "");
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
+            custPointsTxt.setText(data.getScore()+"");
+
 //            tvactivityCount.setText(data.getArticleNum()+"");
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
@@ -596,9 +568,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setText("认证失败");
             }
         } else if (t instanceof ResponseData) {
-            tvactivityCount.setText(((ResponseData) t).getData() + "");
-        } else {
+            if(((ResponseData) t).getData() != null){
 
+                NumberFormat nf = new DecimalFormat("#");
+                double num = (double) ((ResponseData) t).getData();
+
+                tvactivityCount.setText(nf.format(num)+"");
+            }
+        } else  if(t instanceof FriendInformationBean){
+            if(t != null){
+                FriendInformationBean bean = (FriendInformationBean) t;
+
+                Glide.with(mActivity).load(bean.getCustImg()).transform(new GlideCircleImage(mActivity)).
+                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
+            }
         }
     }
 
@@ -630,7 +613,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             famousLayout.setVisibility(View.GONE);
         }
 
-        if (flag == V3CirclePresenter.TAG_SIGN ){
+        if (flag == V3CirclePresenter.TAG_SIGN) {
 
             //签到成功
             scoreImg.setVisibility(View.GONE);
@@ -641,21 +624,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             titlebarSignTxt.setLayoutParams(lp);
 
         }
-    }
-
-    private void checkUpdate() {
-        /***** 获取升级信息 *****/
-//        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-//
-//        if (upgradeInfo != null) {
-//            BaseEvent event = new BaseEvent();
-//            event.info = "versionUpdate";
-//            EventBus.getDefault().post(event);
-//        } else {
-//            BaseEvent event = new BaseEvent();
-//            event.info = "noVersionUpdate";
-//            EventBus.getDefault().post(event);
-//        }
     }
 
     //    @OnClick()
@@ -758,7 +726,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     ShareNewsAty.startShareNews(getContext(), new ShareModel(
                                     getString(R.string.app_name),
                                     getString(R.string.app_name),
-                                    AgreementConstants.SHARE_APP_AGREEMENT),
+                                    H5Address.APP_DOWNLOAD),
                             IntentCode.Setting.SETTING_RESULT_CODE);
                 }
                 break;
@@ -836,9 +804,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                             placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
                 }
 
-                Intent focus = new Intent(MineFragment.MINEFRGFOCUS);
-                mActivity.sendBroadcast(focus);
-
 //                BaseEvent event = new BaseEvent();
 //                event.key = LOGIN_OUT_SUCCESS;
 //                EventBus.getDefault().post(event);
@@ -882,26 +847,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        return rootView;
-    }
-
-    @Override
     public void refreshPage() {
 
     }
-
-    public class MessageReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (TextUtils.equals(MINEFRGFOCUS, intent.getAction())) {
-                onVisible();
-            }
-        }
-    }
-
 
     /**
      * 获得个人认证状态
@@ -934,6 +882,39 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         getData();
 
+    }
+
+    private void requestUnreadMsg() {
+        if (isNotity()) {
+            mUnread.setVisibility(View.VISIBLE);
+        } else {
+            mUnread.setVisibility(View.GONE);
+        }
+        int unreadNum = (TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum()));
+        if (NIMClient.getStatus() == StatusCode.LOGINED && Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
+            mModelList.get(0).setContacts(true);
+            mModelList.get(0).setmFocusNum(String.valueOf(unreadNum));
+            adapter.notifyDataSetChanged();
+        } else {
+            if (mModelList == null)
+                return;
+            mModelList.get(0).setContacts(false);
+            mModelList.get(0).setmFocusNum("");
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private boolean isNotity() {
+        if (Session.getNewsAnnouncementNum() != 0 ||
+                Session.getNewsSystemInformationNum() != 0 ||
+                Session.getNewsAccountInformationNum() != 0 ||
+                Session.getNewsRecommendNum() != 0 ||
+                Session.getNewsCommentNum() != 0 ||
+                Session.getNewsQaNum() != 0 ||
+                Session.getNewsGroupNum() != 0 ||
+                Session.getNewsActivityNum() != 0)
+            return true;
+        return false;
     }
 
 

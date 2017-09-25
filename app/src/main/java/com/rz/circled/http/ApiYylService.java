@@ -47,7 +47,12 @@ public interface ApiYylService {
             @Query("type") int type
     );
 
-    @GET(BuildConfig.BaseOpusUrl + APIUser.GET_COUPONS_LIST)
+    /**
+     * 获取我的活动数量
+     * @param paramId
+     * @return
+     */
+    @GET(BuildConfig.BaseOpusUrl + APIUser.GET_LIST_COUNT)
     Call<ResponseData> mylistCount(
             @Query("paramId") String paramId
 

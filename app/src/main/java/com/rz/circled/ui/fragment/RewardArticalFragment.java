@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -77,6 +78,13 @@ public class RewardArticalFragment extends BaseFragment {
         rewardAdapter = new MineRewardAdapter(getActivity(), R.layout.item_reward_mine);
         rewardAdapter.setData(rewardBeanList);
         lvReward.setAdapter(rewardAdapter);
+
+        lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     @Override
@@ -164,6 +172,6 @@ public class RewardArticalFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,null);
     }
 }

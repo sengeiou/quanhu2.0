@@ -256,6 +256,16 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         mLoadView.setFunctionText(string);
     }
 
+    /**
+     * 设置功能按钮点击事件
+     *
+     * @param clickListener
+     */
+    public void setFunctionClickListener( View.OnClickListener clickListener) {
+        if (mActivity == null || mActivity.isFinishing() || mLoadView == null) return;
+        mLoadView.setFunctionClickListener(clickListener);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

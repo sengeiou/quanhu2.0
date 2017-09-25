@@ -65,6 +65,7 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
     public void initView() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+        tv.setText(R.string.private_group_essence_no_more);
         lv.setAdapter(mAdapter = new PrivateGroupEssenceAdapter(getContext(), R.layout.item_private_group_essence));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -139,7 +139,7 @@ public class MyCircleFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    PrivateGroupBean item = mAdapter.getItem(position);
+                    PrivateGroupBean item = mAdapter.getItem(position-1);
                     CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
                 }
             }
@@ -309,6 +309,10 @@ public class MyCircleFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        if(typeCreateJoin == 1){
+            loadDataCreate(false);
+        }else{
+            loadDataJoin(false);
+        }
     }
 }

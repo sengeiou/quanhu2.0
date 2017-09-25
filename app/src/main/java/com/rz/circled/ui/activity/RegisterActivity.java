@@ -442,10 +442,10 @@ public class RegisterActivity extends BaseActivity {
                 int length = TextUtils.isEmpty(mEditPassw.getText()) ? 0 : mEditPassw.getText().length();
                 if (mEditPassw.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
                     mEditPassw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
                 } else {
                     mEditPassw.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+                    mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
                 }
                 mEditPassw.setSelection(length);
                 break;

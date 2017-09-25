@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:background="@color/white"
-              android:paddingTop="@dimen/title_bar_padding_top"
-              android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/title_bar_padding_top">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
@@ -16,12 +17,13 @@
             android:layout_alignParentLeft="true"
             android:paddingLeft="@dimen/app_base_padding"
             android:paddingRight="@dimen/px40"
-            android:src="@drawable/homefrag_logo"/>
+            android:src="@drawable/homefrag_logo" />
+
         <LinearLayout
-            android:layout_toRightOf="@+id/all_circle__title_left"
             android:layout_width="@dimen/px654"
             android:layout_height="@dimen/px100"
             android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/all_circle__title_left"
             android:background="@drawable/shape_search_bg_gray"
             android:orientation="horizontal">
 
@@ -39,15 +41,16 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:background="@color/transparent"
-                android:hint="@string/search_keyword_hint"
-                android:maxLines="1"
-                android:imeOptions="actionSearch"
                 android:focusable="false"
+                android:gravity="center"
+                android:hint="@string/search_keyword_hint"
+                android:imeOptions="actionSearch"
                 android:inputType="textImeMultiLine"
+                android:maxLines="1"
                 android:paddingRight="@dimen/px10"
                 android:textColor="@color/font_gray_m"
                 android:textColorHint="@color/font_gray_a"
-                android:textSize="@dimen/font_40"/>
+                android:textSize="@dimen/font_40" />
 
             <ImageView
                 android:id="@+id/iv_search_clear_keyword"
@@ -56,25 +59,39 @@
                 android:paddingLeft="@dimen/px20"
                 android:paddingRight="@dimen/px30"
                 android:src="@mipmap/icon_close_gray"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
 
         </LinearLayout>
-        <ImageView
-            android:id="@+id/iv_mess"
+
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_marginRight="@dimen/app_base_padding"
-            android:src="@drawable/homefrag_mess"
-            />
+            android:layout_marginRight="@dimen/px30">
+
+            <ImageView
+                android:id="@+id/iv_mess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/px13"
+                android:src="@drawable/homefrag_mess" />
+
+            <ImageView
+                android:id="@+id/unread_msg_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/red"
+                android:visibility="gone" />
+        </FrameLayout>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/line_gray_s"/>
+        android:background="@color/line_gray_s" />
 
 </LinearLayout>

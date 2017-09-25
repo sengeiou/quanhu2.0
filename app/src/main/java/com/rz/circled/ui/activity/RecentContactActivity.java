@@ -57,8 +57,6 @@ public class RecentContactActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         setTitleText(R.string.chat);
         setTitleRightImageView(R.mipmap.ic_recent_contact_more, new View.OnClickListener() {
             @Override
@@ -89,8 +87,6 @@ public class RecentContactActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

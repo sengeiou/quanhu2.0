@@ -5,16 +5,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchRewardAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.RewardModel;
 import com.rz.httpapi.bean.UserInfoBean;
 
@@ -66,12 +69,18 @@ public class SearchRewardFragment extends BaseFragment {
         rewardAdapter = new SearchRewardAdapter(getActivity(), R.layout.item_search_reward);
         rewardAdapter.setData(rewardBeanList);
         lvReward.setAdapter(rewardAdapter);
+
+        lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getOrderId()+"");
+            }
+        });
+
     }
 
     @Override
     public void initData() {
-        Log.e(TAG,"-----SearchRewardFragment------");
-
         initRefresh();
     }
 

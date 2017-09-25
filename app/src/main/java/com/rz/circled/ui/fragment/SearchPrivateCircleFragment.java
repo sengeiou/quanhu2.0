@@ -13,10 +13,14 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.impl.SearchPresenter;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -40,7 +44,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
     @BindView(R.id.lv_search_content)
     ListView lvContent;
     private DefaultPricePrivateGroupAdapter mAdapter;
-    private SearchDataBean searchDataBean = new SearchDataBean();
+//    private SearchDataBean searchDataBean = new SearchDataBean();
     private List<PrivateGroupBean> coterieInfosData = new ArrayList<>();
     private SearchPresenter searchPresenter;
     private String keyWord = "";
@@ -66,7 +70,10 @@ public class SearchPrivateCircleFragment extends BaseFragment {
         lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                PrivateGroupBean item = mAdapter.getItem(position);
+                if (item.getStatus() == 3) {
+                    CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                }
             }
         });
     }
@@ -116,30 +123,6 @@ public class SearchPrivateCircleFragment extends BaseFragment {
                 ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
             }
 
-        }
-    }
-
-    @Override
-    public <T> void updateView(T t) {
-        super.updateView(t);
-        if (null != t) {
-            if (t instanceof UserInfoBean) {
-                UserInfoBean model = (UserInfoBean) t;
-                if (null != model) {
-
-//                    NotifyEvent notifyEvent = new NotifyEvent("register", model, true);
-//                    EventBus.getDefault().post(notifyEvent);
-
-                    /**
-                     * 更新界面，更新adapter数据
-                     */
-
-                }
-            } else {
-                BaseEvent event = new BaseEvent();
-                event.info = "1";
-                EventBus.getDefault().post(event);
-            }
         }
     }
 

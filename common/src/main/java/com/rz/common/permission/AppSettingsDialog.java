@@ -45,18 +45,18 @@ public class AppSettingsDialog {
                               int requestCode) {
         final int settingsRequestCode = requestCode > 0 ? requestCode : DEFAULT_SETTINGS_REQ_CODE;
         View view = ((LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.dialog_permission, null, false);
-        TextView tv = (TextView) view.findViewById(R.id.tv_permission_dialog_title);
+        TextView tv = (TextView) view.findViewById(R.id.id_tv_title);
         tv.setText(rationale);
         if (!TextUtils.isEmpty(rationale)) {
             rationale.replaceAll("否则app可能无法正常运行", "");
         }
-        view.findViewById(R.id.tv_permission_dialog_confirm).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        view.findViewById(R.id.tv_permission_dialog_cancel).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

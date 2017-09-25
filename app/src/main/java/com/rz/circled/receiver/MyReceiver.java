@@ -4,13 +4,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.rz.circled.constants.JPushTypeConstants;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
+import com.rz.httpapi.bean.MyPushInfo;
 import com.rz.httpapi.bean.NewsBean;
+import com.rz.httpapi.bean.UserPushInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -75,9 +82,28 @@ public class MyReceiver extends BroadcastReceiver {
                 try {
                     Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
                     String str = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-                    NewsBean mInfo = new Gson().fromJson(str, NewsBean.class);
-                    if (mInfo != null) {
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mInfo.getType() + "-" + mInfo.getLabel()));
+                    Gson gson = new Gson();
+                    NewsBean mNews = gson.fromJson(str, NewsBean.class);
+                    MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
+                    if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
+                        if (TextUtils.equals(mNews.getMsgEnumType(), "20040001"))
+                            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_AVATAR_REFUSE));
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mNews.getType() + "-" + mNews.getLabel()));
+                    } else if (mInfo != null && !TextUtils.isEmpty(mInfo.getMsgId())) {
+                        switch (mInfo.getColType()) {
+                            case JPushTypeConstants.COLTYPE_MY_DYNAMIC:
+                                MyPushInfo<UserPushInfo> myInfo = gson.fromJson(str, new TypeToken<MyPushInfo<UserPushInfo>>() {
+                                }.getType());
+                                if (myInfo == null || myInfo.getData() == null) return;
+                                switch (mInfo.getMsgType()) {
+                                    case JPushTypeConstants.APPLY_FOR_ADD_FRIEND:
+                                        int num = TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum());
+                                        Session.setUserFocusNum((num + 1) + "");
+                                        EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
+                                        break;
+                                }
+                                break;
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
