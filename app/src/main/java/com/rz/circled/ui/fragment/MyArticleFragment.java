@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
@@ -10,9 +11,12 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.CircleDynamic;
 
 import java.util.ArrayList;
@@ -75,6 +79,19 @@ public class MyArticleFragment extends BaseFragment {
     public void initView() {
         dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (StringUtils.isEmpty(circleDynamicList.get(position).coterieId)||StringUtils.isEmpty(circleDynamicList.get(position).coterieName)) {
+                    String circleUrl = CommomUtils.getCircleUrl(circleDynamicList.get(position).circleRoute,circleDynamicList.get(position).moduleEnum, circleDynamicList.get(position).resourceId);
+                    WebContainerActivity.startActivity(mActivity, circleUrl);
+                } else {
+                    String url = CommomUtils.getDymanicUrl(circleDynamicList.get(position).circleRoute,circleDynamicList.get(position).moduleEnum, circleDynamicList.get(position).coterieId, circleDynamicList.get(position).resourceId);
+                    WebContainerActivity.startActivity(mActivity, url);
+                }
+            }
+        });
     }
 
     @Override
@@ -112,6 +129,6 @@ public class MyArticleFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        ((PersonInfoPresenter) presenter).getPersionArticle(false, Session.getUserId() ,"1000");
     }
 }

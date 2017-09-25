@@ -208,7 +208,7 @@ public class LoginActivity extends BaseActivity {
 
 
         //动态设置top图片
-        Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+        Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
         layoutLoginPhone.setText("密码登录");
@@ -364,6 +364,7 @@ public class LoginActivity extends BaseActivity {
             mEditPass.setHint("请输入密码");
             mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             mImgWatchPw.setVisibility(View.VISIBLE);
+            typePwd.setImageResource(R.mipmap.ic_login_pw);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
             mIvBack.setVisibility(View.VISIBLE);
@@ -375,7 +376,7 @@ public class LoginActivity extends BaseActivity {
         } else {
 
             //动态设置top图片
-            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
             layoutLoginPhone.setText("密码登录");
@@ -432,10 +433,10 @@ public class LoginActivity extends BaseActivity {
         int length = TextUtils.isEmpty(mEditPass.getText()) ? 0 : mEditPass.getText().length();
         if (mEditPass.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
             mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
         } else {
             mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+            mImgWatchPw.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
         }
         mEditPass.setSelection(length);
 

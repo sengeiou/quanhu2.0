@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,11 +11,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
@@ -87,23 +91,33 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             }
         };
         mLv.setAdapter(mEntitiesBeanCommonAdapter);
+
+        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     @Override
     public void initData() {
-
+        initPresenter();
     }
+
     @Override
     protected boolean hasDataInPage() {
         return mEntitiesBeanCommonAdapter.getCount() != 0;
     }
     @Override
+
     protected boolean needLoadingView() {
         return true;
     }
+
     @Override
     public void refreshPage() {
-
+        initPresenter();
     }
 
     @Override
@@ -111,4 +125,6 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         initPresenter();
         mActivityRefresh.setRefreshing(false);
     }
+
+
 }

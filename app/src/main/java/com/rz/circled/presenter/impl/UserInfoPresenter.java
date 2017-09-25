@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.widget.toasty.Toasty;
@@ -21,6 +23,8 @@ import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.constans.ReturnCode;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.List;
@@ -532,6 +536,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.BOUND_PHONE_FAIL, res.getMsg()));
                         Toasty.info(mContext, res.getMsg()).show();
                     }
                 } else {

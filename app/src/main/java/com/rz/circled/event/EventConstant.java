@@ -25,4 +25,8 @@ public class EventConstant {
     public static final int NEWS_ACTIVITY_UNREAD_CHANGE = 200015;
 
 
+
+    public static final int BOUND_PHONE_FAIL = 200036;
+
+
 }

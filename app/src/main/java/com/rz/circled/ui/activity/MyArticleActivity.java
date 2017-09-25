@@ -106,6 +106,7 @@ public class MyArticleActivity extends BaseActivity {
 
     @Override
     public void refreshPage() {
+        ((PersonInfoPresenter) presenter).getArticle(false, Session.getUserId() ,"1000");
 
     }
 }

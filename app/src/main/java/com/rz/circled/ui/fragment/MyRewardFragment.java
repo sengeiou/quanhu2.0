@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.RewardAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
@@ -99,6 +101,14 @@ public class MyRewardFragment extends BaseFragment {
         rewardAdapter = new RewardAdapter(getActivity(), R.layout.item_search_reward);
         rewardAdapter.setData(rewardBeanList);
         lvReward.setAdapter(rewardAdapter);
+
+        lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getId()+"");
+            }
+        });
+
     }
 
     @Override
@@ -161,6 +171,6 @@ public class MyRewardFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),0);
     }
 }
