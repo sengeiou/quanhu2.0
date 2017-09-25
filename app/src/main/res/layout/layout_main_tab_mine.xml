@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,12 +10,24 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/tab_bottom_img_size"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/tab_bottom_img_margin_tv"
-            android:background="@drawable/tab_mine_sel"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/tab_bottom_img_size"
+                android:layout_marginBottom="@dimen/tab_bottom_img_margin_tv"
+                android:background="@drawable/tab_mine_sel" />
+
+            <ImageView
+                android:id="@+id/unread_msg_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/red"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/activity_main_nav_msg"
@@ -23,7 +35,7 @@
             android:includeFontPadding="false"
             android:text="@string/tab_mine"
             android:textColor="@drawable/tab_tv_color_sel"
-            android:textSize="@dimen/font_34"/>
+            android:textSize="@dimen/font_34" />
 
 
     </LinearLayout>
@@ -32,6 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="2px"
         android:layout_alignParentTop="true"
-        android:background="@color/line_gray_s"/>
+        android:background="@color/line_gray_s" />
 
 </RelativeLayout>

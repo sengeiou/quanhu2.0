@@ -5,12 +5,22 @@ package com.rz.httpapi.bean;
  */
 
 public class NewsInteractiveTabBean {
+    private int id;
     private String name;
     private int unReadNum;
 
-    public NewsInteractiveTabBean(String name, int unReadNum) {
+    public NewsInteractiveTabBean(int id, String name, int unReadNum) {
+        this.id = id;
         this.name = name;
         this.unReadNum = unReadNum;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUnReadNum() {

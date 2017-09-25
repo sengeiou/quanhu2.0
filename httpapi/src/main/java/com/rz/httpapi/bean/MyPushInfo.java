@@ -1,4 +1,4 @@
-package com.rz.circled.modle;
+package com.rz.httpapi.bean;
 
 import java.io.Serializable;
 
@@ -77,19 +77,5 @@ public class MyPushInfo<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "MyPushInfo{" +
-                "msgId='" + msgId + '\'' +
-                ", title='" + title + '\'' +
-                ", colType=" + colType +
-                ", msgType=" + msgType +
-                ", from='" + from + '\'' +
-                ", to='" + to + '\'' +
-                ", sendTime='" + sendTime + '\'' +
-                ", data=" + data +
-                '}';
     }
 }

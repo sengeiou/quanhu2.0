@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/layout_content"
@@ -16,19 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <com.rz.circled.widget.SwipyRefreshLayoutBanner
             android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:direction="top">
 
             <ListView
                 android:id="@+id/id_homefrg_listview"
                 style="@style/DefaultLvStyle"
                 android:background="@color/color_F6F8F8"
                 android:clipToPadding="false"
-                android:divider="@color/color_F4F4F4"
-                />
-        </android.support.v4.widget.SwipeRefreshLayout>
+                android:divider="@color/color_F4F4F4" />
+        </com.rz.circled.widget.SwipyRefreshLayoutBanner>
 
         <ImageView
             android:id="@+id/home_publish"
@@ -37,8 +38,7 @@
             android:layout_gravity="right|bottom"
             android:layout_marginBottom="@dimen/px50"
             android:layout_marginRight="@dimen/px50"
-            android:src="@drawable/home_publish"
-            />
+            android:src="@drawable/home_publish" />
     </FrameLayout>
 
 

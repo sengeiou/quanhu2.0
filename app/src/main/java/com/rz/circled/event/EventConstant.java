@@ -15,16 +15,13 @@ public class EventConstant {
     public static final int PRIVATE_GROUP_JOIN_WAY = 200016;
 
     public static final int NEWS_COME_UNREAD = 200004;
-    public static final int NEWS_ANNOUNCEMENT_UNREAD_CHANGE = 200008;
-    public static final int NEWS_ACCOUNT_INFORMATION_UNREAD_CHANGE = 200009;
-    public static final int NEWS_SYSTEM_INFORMATION_UNREAD_CHANGE = 200010;
-    public static final int NEWS_RECOMMEND_UNREAD_CHANGE = 200011;
-    public static final int NEWS_COMMENT_UNREAD_CHANGE = 200012;
-    public static final int NEWS_GROUP_UNREAD_CHANGE = 200013;
-    public static final int NEWS_QA_UNREAD_CHANGE = 200014;
-    public static final int NEWS_ACTIVITY_UNREAD_CHANGE = 200015;
+    public static final int NEWS_OVERVIEW_CHANGE = 200009;
+    public static final int NEWS_UNREAD_CHANGE = 200008;
 
+    public static final int APP_NO_UPDATE = 200010;
+    public static final int APP_HAS_UPDATE = 200011;
 
+    public static final int USER_AVATAR_REFUSE = 200013;
 
     public static final int BOUND_PHONE_FAIL = 200036;
 

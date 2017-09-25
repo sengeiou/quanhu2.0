@@ -155,7 +155,7 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
                 } else {
                     Session.setUserMoneyState(false);
                 }
-                tvAccount.setText(Currency.returnDollar(Currency.RMB, model.getAccountSum() + "", 0));
+                tvAccount.setText(Currency.returnDollar(Currency.RMB, model.getAccountSum() + "", 1));
             }
         }
     }

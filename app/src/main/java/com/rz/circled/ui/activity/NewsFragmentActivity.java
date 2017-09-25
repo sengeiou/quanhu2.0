@@ -16,6 +16,7 @@ import com.rz.common.ui.activity.BaseActivity;
  */
 
 public class NewsFragmentActivity extends BaseActivity {
+    private NewsCommonFragment fragment;
 
     public static void startNewsFragment(Context context, int index) {
         Intent i = new Intent(context, NewsFragmentActivity.class);
@@ -30,18 +31,30 @@ public class NewsFragmentActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
+        switch (getIntent().getIntExtra(IntentKey.KEY_TYPE, 0)) {
+            case NewsCommonFragment.NEWS_ANNOUNCEMENT:
+                setTitleText(R.string.announcement);
+                break;
+            case NewsCommonFragment.NEWS_SYSTEM_INFORMATION:
+                setTitleText(R.string.system_information);
+                break;
+            case NewsCommonFragment.NEWS_RECOMMEND:
+                setTitleText(R.string.recommend_information);
+                break;
+            case NewsCommonFragment.NEWS_ACCOUNT:
+                setTitleText(R.string.account_information);
+                break;
+        }
     }
 
     @Override
     public void initData() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.layout_frame, NewsCommonFragment.newInstance(getIntent().getIntExtra(IntentKey.KEY_TYPE, 0)));
+        transaction.replace(R.id.layout_frame, fragment = NewsCommonFragment.newInstance(getIntent().getIntExtra(IntentKey.KEY_TYPE, 0)));
         transaction.commit();
     }
 
     @Override
     public void refreshPage() {
-
     }
 }
