@@ -195,13 +195,13 @@ public class SettingActivity extends BaseActivity {
                             return;
                         }
                         dialog.dismiss();
-//                        ((UpdateOrExitPresenter) presenter).ExitApp();
+                        ((UpdateOrExitPresenter) presenter).ExitApp();
                         exitApp();
                         Session.clearShareP();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
-//                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
+                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
                     }
                 });
@@ -258,8 +258,8 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public <T> void updateView(T t) {
-        mMessFreeBean= (MessFreeBean) t;
-        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
+//        mMessFreeBean= (MessFreeBean) t;
+//        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
 
     }
 

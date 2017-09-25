@@ -291,6 +291,7 @@ public class BoundPhoneActivity extends BaseActivity {
                     if(loginModel!= null) {
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SAVE,loginModel));
                     }
+                    this.finish();
                 }
             }
         }
@@ -412,7 +413,7 @@ public class BoundPhoneActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == EventConstant.BOUND_PHONE_FAIL ) {
-            if (baseEvent.getData() == null){
+            if (baseEvent.getData() != null){
                 mc.cancel();
                 mc.onFinish();
             }
