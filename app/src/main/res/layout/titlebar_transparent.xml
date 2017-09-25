@@ -30,18 +30,18 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/px44"
-                android:paddingRight="@dimen/px15"
-                android:src="@mipmap/icon_search" />
+                android:paddingLeft="@dimen/px150"
+                android:paddingRight="@dimen/px28"
+                android:src="@mipmap/icon_search"/>
 
             <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
                 android:id="@+id/et_search_keyword"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:background="@color/transparent"
                 android:focusable="false"
-                android:gravity="center"
                 android:hint="@string/search_keyword_hint"
                 android:imeOptions="actionSearch"
                 android:inputType="textImeMultiLine"

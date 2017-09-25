@@ -753,6 +753,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 trackUser("我的", "入口名称", "设置");
                 Intent intent = new Intent(mActivity, SettingActivity.class);
                 startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
+
                 break;
         }
     }
@@ -799,7 +800,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //                if (((MsgFragment) getActivity().getSupportFragmentManager().findFragmentByTag("聊天") != null))
 //                    ((MsgFragment) getActivity().getSupportFragmentManager().findFragmentByTag("聊天")).clearFrg();
 
-                Session.clearShareP();
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
                 if (Protect.checkLoadImageStatus(mActivity)) {
                     Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideRoundImage(mActivity)).

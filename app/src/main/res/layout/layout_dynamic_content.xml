@@ -190,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/px559"
         android:layout_marginTop="@dimen/px30"
-        android:background="@color/color_F5F5F5"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:visibility="visible">
 
@@ -202,7 +202,6 @@
             android:layout_toEndOf="@+id/tv_video_title"
             android:layout_toRightOf="@+id/tv_video_title"
             android:adjustViewBounds="true"
-            android:background="@color/color_cccccc"
             android:maxHeight="@dimen/px559"
             android:scaleType="centerCrop" />
 

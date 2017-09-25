@@ -14,6 +14,7 @@ import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.api.Http;
@@ -59,10 +60,16 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
                     @Override
                     public void call(ResponseData<ActivityBean> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
-                            pageNo++;
                             List<EntitiesBean> entities = res.getData().entities;
-                            bean.addAll(entities);
-                            mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+                            if (!entities.isEmpty()) {
+                                pageNo++;
+                                bean.addAll(entities);
+                                mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+                            } else {
+                                onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                            }
+                        } else {
+                            onLoadingStatus(CommonCode.General.ERROR_DATA);
                         }
                     }
                 });
@@ -104,14 +111,17 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
         initPresenter();
         mActivityRefresh.setRefreshing(false);
     }
+
     @Override
     protected boolean hasDataInPage() {
         return mEntitiesBeanCommonAdapter.getCount() != 0;
     }
+
     @Override
     protected boolean needLoadingView() {
         return true;
     }
+
     @Override
     public void refreshPage() {
 

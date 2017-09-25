@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.ImageAdaptationUtils;
@@ -105,7 +107,9 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                     iv_circle_1img.setVisibility(View.VISIBLE);
                     ll_circle_3imgs.setVisibility(View.GONE);
                     String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.pics,R.dimen.px994,R.dimen.px558);
-                    helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
+//                    helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
+                    Glide.with(mContext).load(url).transform(new GlideCenterRoundImage(mContext,10)).
+                            placeholder(R.drawable.ic_circle_img1).error(R.drawable.ic_circle_img1).into(iv_circle_1img);
                 } else {
                     iv_circle_1img.setVisibility(View.GONE);
                     ll_circle_3imgs.setVisibility(View.VISIBLE);
@@ -128,7 +132,8 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                             iv = iv_circle_img03;
                         }
                         String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i],R.dimen.px320,R.dimen.px320);
-                        helper.setImageByUrlTransger(iv, url, R.drawable.ic_circle_img3);
+                        Glide.with(mContext).load(url).transform(new GlideCenterRoundImage(mContext,10)).
+                                placeholder(R.drawable.ic_circle_img3).error(R.drawable.ic_circle_img3).crossFade().into(iv);
                     }
                 }
             }
@@ -136,7 +141,9 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             if (!TextUtils.isEmpty(item.videoPic)) {
                 rl_circle_video_content.setVisibility(View.VISIBLE);
                 ll_circle_3imgs.setVisibility(View.GONE);
-                helper.setImageByUrlTransger(iv_video_preview, item.videoPic, R.color.black);
+//                helper.setImageByUrlTransger(iv_video_preview, item.videoPic, R.color.black);
+                Glide.with(mContext).load(item.videoPic).transform(new GlideCenterRoundImage(mContext,10)).
+                        placeholder(R.color.black).error(R.color.black).into(iv_video_preview);
             } else {
                 rl_circle_video_content.setVisibility(View.GONE);
             }
