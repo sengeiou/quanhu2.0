@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsActivityExtra;
-import com.rz.circled.modle.MyPushInfo;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;

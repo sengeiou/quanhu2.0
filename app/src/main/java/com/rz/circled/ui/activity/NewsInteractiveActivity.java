@@ -27,10 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.rz.circled.event.EventConstant.NEWS_ACTIVITY_UNREAD_CHANGE;
-import static com.rz.circled.event.EventConstant.NEWS_COMMENT_UNREAD_CHANGE;
-import static com.rz.circled.event.EventConstant.NEWS_GROUP_UNREAD_CHANGE;
-import static com.rz.circled.event.EventConstant.NEWS_QA_UNREAD_CHANGE;
+import static com.rz.circled.event.EventConstant.NEWS_UNREAD_CHANGE;
 
 /**
  * Created by rzw2 on 2017/9/7.
@@ -60,6 +57,7 @@ public class NewsInteractiveActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.interactive_information);
         initTabTitle();
         initViewpagerGroup();
         initIndicatorGroup();
@@ -77,20 +75,24 @@ public class NewsInteractiveActivity extends BaseActivity {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
-            case NEWS_COMMENT_UNREAD_CHANGE:
-                mDataList.get(0).setUnReadNum(Session.getNewsCommentNum());
-                newsInteractiveNavigatorAdapter.notifyDataSetChanged();
-                break;
-            case NEWS_QA_UNREAD_CHANGE:
-                mDataList.get(1).setUnReadNum(Session.getNewsQaNum());
-                newsInteractiveNavigatorAdapter.notifyDataSetChanged();
-                break;
-            case NEWS_GROUP_UNREAD_CHANGE:
-                mDataList.get(2).setUnReadNum(Session.getNewsGroupNum());
-                newsInteractiveNavigatorAdapter.notifyDataSetChanged();
-                break;
-            case NEWS_ACTIVITY_UNREAD_CHANGE:
-                mDataList.get(3).setUnReadNum(Session.getNewsActivityNum());
+            case NEWS_UNREAD_CHANGE:
+                for (NewsInteractiveTabBean item :
+                        mDataList) {
+                    switch (item.getId()) {
+                        case NewsCommonFragment.NEWS_COMMENT:
+                            item.setUnReadNum(Session.getNewsCommentNum());
+                            break;
+                        case NewsCommonFragment.NEWS_QA:
+                            item.setUnReadNum(Session.getNewsQaNum());
+                            break;
+                        case NewsCommonFragment.NEWS_PRIVATE_GROUP:
+                            item.setUnReadNum(Session.getNewsGroupNum());
+                            break;
+                        case NewsCommonFragment.NEWS_ACTIVITY:
+                            item.setUnReadNum(Session.getNewsActivityNum());
+                            break;
+                    }
+                }
                 newsInteractiveNavigatorAdapter.notifyDataSetChanged();
                 break;
         }
@@ -98,10 +100,22 @@ public class NewsInteractiveActivity extends BaseActivity {
 
     private void initTabTitle() {
         mDataList = new ArrayList<>();
-        mDataList.add(new NewsInteractiveTabBean(getString(R.string.news_interactive_tab_comment), Session.getNewsCommentNum()));
-        mDataList.add(new NewsInteractiveTabBean(getString(R.string.news_interactive_tab_qa), Session.getNewsQaNum()));
-        mDataList.add(new NewsInteractiveTabBean(getString(R.string.news_interactive_tab_group), Session.getNewsGroupNum()));
-        mDataList.add(new NewsInteractiveTabBean(getString(R.string.news_interactive_tab_activity), Session.getNewsActivityNum()));
+        for (int type : mTypes) {
+            switch (type) {
+                case NewsCommonFragment.NEWS_COMMENT:
+                    mDataList.add(new NewsInteractiveTabBean(type, getString(R.string.news_interactive_tab_comment), Session.getNewsCommentNum()));
+                    break;
+                case NewsCommonFragment.NEWS_QA:
+                    mDataList.add(new NewsInteractiveTabBean(type, getString(R.string.news_interactive_tab_qa), Session.getNewsQaNum()));
+                    break;
+                case NewsCommonFragment.NEWS_PRIVATE_GROUP:
+                    mDataList.add(new NewsInteractiveTabBean(type, getString(R.string.news_interactive_tab_group), Session.getNewsGroupNum()));
+                    break;
+                case NewsCommonFragment.NEWS_ACTIVITY:
+                    mDataList.add(new NewsInteractiveTabBean(type, getString(R.string.news_interactive_tab_activity), Session.getNewsActivityNum()));
+                    break;
+            }
+        }
     }
 
     private void initViewpagerGroup() {

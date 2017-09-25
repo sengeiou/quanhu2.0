@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,14 +14,19 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
+import com.rz.circled.constants.AgreementConstants;
+import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.widget.SwipyRefreshLayoutBanner;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -56,7 +62,7 @@ public class PrivateCircledFragment extends BaseFragment {
     @BindView(R.id.scroll)
     ScrollView scrollView;
     @BindView(R.id.layout_refresh)
-    SwipyRefreshLayout refreshLayout;
+    SwipyRefreshLayoutBanner refreshLayout;
     @BindView(R.id.viewpager)
     AutoScrollViewPager viewpager;
     @BindView(R.id.indicator_banner)
@@ -77,6 +83,8 @@ public class PrivateCircledFragment extends BaseFragment {
     TextView tvJoin;
     @BindView(R.id.btn_join_more)
     TextView btnJoinMore;
+    @BindView(R.id.btn_about)
+    TextView btnAbout;
     @BindView(R.id.frame_join)
     FrameLayout frameJoin;
     @BindView(R.id.layout_my_join)
@@ -170,7 +178,6 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void initRefresh() {
-        refreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -215,17 +222,20 @@ public class PrivateCircledFragment extends BaseFragment {
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                indicatorBanner.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                if (indicatorBanner != null)
+                    indicatorBanner.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(int position) {
-                indicatorBanner.onPageSelected(position);
+                if (indicatorBanner != null)
+                    indicatorBanner.onPageSelected(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                indicatorBanner.onPageScrollStateChanged(state);
+                if (indicatorBanner != null)
+                    indicatorBanner.onPageScrollStateChanged(state);
             }
         });
     }
@@ -257,12 +267,16 @@ public class PrivateCircledFragment extends BaseFragment {
         transaction.commit();
     }
 
-    @OnClick({R.id.btn_apply_for, R.id.btn_create_more, R.id.btn_join_more, R.id.btn_refresh})
+    @OnClick({R.id.btn_apply_for, R.id.btn_create_more, R.id.btn_join_more, R.id.btn_refresh, R.id.btn_about})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_for:
-                trackUser("入口","创建私圈","");
-                startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+                trackUser("入口", "创建私圈", "");
+                String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                if (Integer.parseInt(level) < 5)
+                    GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+                else
+                    startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);
@@ -271,6 +285,9 @@ public class PrivateCircledFragment extends BaseFragment {
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 1);
                 break;
             case R.id.btn_refresh:
+                break;
+            case R.id.btn_about:
+                CommonH5Activity.startCommonH5(getContext(), getString(R.string.private_group_about), BuildConfig.WebHomeBaseUrl + AgreementConstants.PRIVATE_GROUP_ABOUT_AGREEMENT);
                 break;
         }
     }

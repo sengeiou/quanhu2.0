@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -19,10 +20,9 @@ import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.msg.MsgService;
-import com.netease.nimlib.sdk.msg.SystemMessageObserver;
-import com.netease.nimlib.sdk.msg.SystemMessageService;
-import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
+import com.rz.circled.constants.NewsTypeConstants;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
 import com.rz.circled.ui.fragment.MineFragment;
@@ -30,13 +30,20 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.BadgeUtil;
 import com.rz.common.utils.ClickCounter;
+import com.rz.httpapi.api.ApiNewsService;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.NewsUnreadBean;
+import com.tencent.bugly.beta.Beta;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
-import com.yryz.yunxinim.main.helper.SystemMessageUnreadManager;
 import com.yryz.yunxinim.main.reminder.ReminderItem;
 import com.yryz.yunxinim.main.reminder.ReminderManager;
 import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
@@ -44,19 +51,27 @@ import com.yryz.yunxinim.uikit.cache.DataCacheManager;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
 import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
 
 
-public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged, ReminderManager.UnreadNumChangedCallback {
+public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, CustomFragmentTabHost.InterceptTagChanged {
 
     @BindView(android.R.id.tabhost)
     CustomFragmentTabHost tabHost;
 
+    private ImageView mUnread;
     private ClickCounter mCounter;
     private Toast mToast;
 
@@ -91,6 +106,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         tabHost.addTab(tabHost.newTabSpec(tabTags[3]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_private_circle, null)), PrivateCircledFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[4]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_mine, null)), MineFragment.class, null);
 
+        mUnread = (ImageView) tabHost.findViewById(R.id.unread_msg_number);
+
         initCounter();
     }
 
@@ -98,25 +115,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void initData() {
         if (Session.getUserIsLogin()) {
             initYX(Session.getUserId(), Session.getUserId());
+            loadUnreadMessage();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e(TAG, "onSaveInstanceState: ");
-    }
-
-    @Override
-    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.e(TAG, "onRestoreInstanceState: ");
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.e(TAG, "onNewIntent: ");
     }
 
     private void initCounter() {
@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onTabChanged(String s) {
-        trackUser("入口","导航栏",s);
+        trackUser("入口", "导航栏", s);
 
 
     }
@@ -169,11 +169,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             });
 
             LogUtil.i(TAG, "sync completed = " + syncCompleted);
-
             registerObservers(true);
-            registerMsgUnreadInfoObserver(true);
-            registerSystemMessageObservers(true);
-            requestSystemMessageUnreadCount();
 
         } else {
             loginYunXin(Session.getUserId(), Session.getUserId());
@@ -226,102 +222,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         });
     }
 
-    /**
-     * 注册未读消息数量观察者
-     */
-    private void registerMsgUnreadInfoObserver(boolean register) {
-        if (register) {
-            ReminderManager.getInstance().registerUnreadNumChangedCallback(this);
-        } else {
-            ReminderManager.getInstance().unregisterUnreadNumChangedCallback(this);
-        }
-    }
-
-    /**
-     * 未读消息数量观察者实现
-     */
-    @Override
-    public void onUnreadNumChanged(ReminderItem item) {
-        requestMsgUnRead();
-    }
-
-    private void requestMsgUnRead() {
-//        if (null == mUnread || null == versionUpdate)
-//            return;
-
-        if (Session.getUserIsLogin()) {
-            int unreadNum1 = NIMClient.getService(MsgService.class).getTotalUnreadCount();
-            List<SystemMessageType> types = new ArrayList<>();
-            types.add(SystemMessageType.ApplyJoinTeam);
-            types.add(SystemMessageType.DeclineTeamInvite);
-            types.add(SystemMessageType.RejectTeamApply);
-            types.add(SystemMessageType.TeamInvite);
-            types.add(SystemMessageType.undefined);
-            int unreadNum2 = NIMClient.getService(SystemMessageService.class).querySystemMessageUnreadCountByType(types);
-
-            int unreadNum3;
-            if (!TextUtils.isEmpty(Session.getUserFocusNum()))
-                unreadNum3 = unreadNum2 + Integer.parseInt(Session.getUserFocusNum());
-            else
-                unreadNum3 = unreadNum2;
-
-            int unreadNum;
-            if (!TextUtils.isEmpty(Session.getUserFocusNum()))
-                unreadNum = unreadNum1 + unreadNum2 + Integer.parseInt(Session.getUserFocusNum());
-            else
-                unreadNum = unreadNum1 + unreadNum2;
-
-//            if (unreadNum1 == 0) {
-//                mUnread.setVisibility(View.GONE);
-//            } else {
-//                mUnread.setVisibility(View.VISIBLE);
-//            }
-//
-//            if (unreadNum3 == 0 && upgradeInfo == null) {
-//                versionUpdate.setVisibility(View.GONE);
-//            } else {
-//                versionUpdate.setVisibility(View.VISIBLE);
-//            }
-//
-//            if (unreadNum != 0) {
-//                BadgeUtil.setBadgeCount(getApplicationContext(), unreadNum);
-//            } else {
-//                BadgeUtil.resetBadgeCount(getApplicationContext());
-//            }
-        } else {
-//            mUnread.setVisibility(View.GONE);
-//            versionUpdate.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * 注册/注销系统消息未读数变化
-     *
-     * @param register
-     */
-    private void registerSystemMessageObservers(boolean register) {
-        NIMClient.getService(SystemMessageObserver.class).observeUnreadCountChange(sysMsgUnreadCountChangedObserver,
-                register);
-    }
-
-    private Observer<Integer> sysMsgUnreadCountChangedObserver = new Observer<Integer>() {
-        @Override
-        public void onEvent(Integer unreadCount) {
-            SystemMessageUnreadManager.getInstance().setSysMsgUnreadCount(unreadCount);
-            ReminderManager.getInstance().updateContactUnreadNum(unreadCount);
-        }
-    };
-
-
-    /**
-     * 查询系统消息未读数
-     */
-    private void requestSystemMessageUnreadCount() {
-        int unread = NIMClient.getService(SystemMessageService.class).querySystemMessageUnreadCountBlock();
-        SystemMessageUnreadManager.getInstance().setSysMsgUnreadCount(unread);
-        ReminderManager.getInstance().updateContactUnreadNum(unread);
-    }
-
     private void registerObservers(boolean register) {
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(userStatusObserver, register);
     }
@@ -367,6 +267,115 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     }
 
+    private void loadUnreadMessage() {
+        Http.getApiService(ApiNewsService.class).newsUnread(Session.getUserId()).enqueue(new BaseCallback<ResponseData<HashMap<String, String>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful() && response.body().isSuccessful()) {
+                    HashMap<String, String> data = response.body().getData();
+                    parsesData(data);
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
+                }
+            }
+        });
+    }
+
+    private void parsesData(HashMap<String, String> data) {
+        List<NewsUnreadBean> unreadBeanList = new ArrayList<>();
+        for (String key : data.keySet()) {
+            int num = Integer.parseInt(data.get(key));
+            String[] types = key.split("\\|");
+            int type = 0;
+            int label = 0;
+            if (types.length > 1) {
+                type = Integer.parseInt(types[0]);
+                label = Integer.parseInt(types[1]);
+            } else {
+                type = Integer.parseInt(types[0]);
+            }
+            unreadBeanList.add(new NewsUnreadBean(type, label, num));
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (NewsUnreadBean item : unreadBeanList) {
+            if (item.getType() == NewsTypeConstants.NEWS_INTERACTIVE) {
+                Integer val = map.get(item.getLabel());
+                if (val == null) {
+                    map.put(item.getLabel(), item.getNum());
+                } else {
+                    map.put(item.getLabel(), val + item.getNum());
+                }
+            } else {
+                Integer val = map.get(item.getType());
+                if (val == null) {
+                    map.put(item.getType(), item.getNum());
+                } else {
+                    map.put(item.getType(), val + item.getNum());
+                }
+            }
+        }
+
+        Session.setNewsAnnouncementNum(map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != null && map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != 0 ? Session.getNewsAnnouncementNum() + map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) : Session.getNewsAnnouncementNum());
+        Session.setNewsSystemInformationNum(map.get(NewsTypeConstants.NEWS_SYSTEM) != null && map.get(NewsTypeConstants.NEWS_SYSTEM) != 0 ? Session.getNewsSystemInformationNum() + map.get(NewsTypeConstants.NEWS_SYSTEM) : Session.getNewsSystemInformationNum());
+        Session.setNewsAccountInformationNum(map.get(NewsTypeConstants.NEWS_ACCOUNT) != null && map.get(NewsTypeConstants.NEWS_ACCOUNT) != 0 ? Session.getNewsAccountInformationNum() + map.get(NewsTypeConstants.NEWS_ACCOUNT) : Session.getNewsAccountInformationNum());
+        Session.setNewsRecommendNum(map.get(NewsTypeConstants.NEWS_RECOMMEND) != null && map.get(NewsTypeConstants.NEWS_RECOMMEND) != 0 ? Session.getNewsRecommendNum() + map.get(NewsTypeConstants.NEWS_RECOMMEND) : Session.getNewsRecommendNum());
+        Session.setNewsCommentNum(map.get(NewsTypeConstants.NEWS_COMMENT) != null && map.get(NewsTypeConstants.NEWS_COMMENT) != 0 ? Session.getNewsCommentNum() + map.get(NewsTypeConstants.NEWS_COMMENT) : Session.getNewsCommentNum());
+        Session.setNewsQaNum(map.get(NewsTypeConstants.NEWS_ANSWER) != null && map.get(NewsTypeConstants.NEWS_ANSWER) != 0 ? Session.getNewsQaNum() + map.get(NewsTypeConstants.NEWS_ANSWER) : Session.getNewsQaNum());
+        Session.setNewsGroupNum(map.get(NewsTypeConstants.NEWS_GROUP) != null && map.get(NewsTypeConstants.NEWS_GROUP) != 0 ? Session.getNewsGroupNum() + map.get(NewsTypeConstants.NEWS_GROUP) : Session.getNewsGroupNum());
+        Session.setNewsActivityNum(map.get(NewsTypeConstants.NEWS_ACTIVITY) != null && map.get(NewsTypeConstants.NEWS_ACTIVITY) != 0 ? Session.getNewsActivityNum() + map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case EventConstant.NEWS_COME_UNREAD:
+                loadUnreadMessage();
+                EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_OVERVIEW_CHANGE));
+                break;
+            case EventConstant.NEWS_UNREAD_CHANGE:
+                requestMsgUnRead();
+                break;
+        }
+    }
+
+    private void requestMsgUnRead() {
+        if (null == mUnread)
+            return;
+
+        if (Session.getUserIsLogin()) {
+            int unreadNum2 = Session.getNewsAnnouncementNum() +
+                    Session.getNewsSystemInformationNum() +
+                    Session.getNewsAccountInformationNum() +
+                    Session.getNewsRecommendNum() +
+                    Session.getNewsCommentNum() +
+                    Session.getNewsQaNum() +
+                    Session.getNewsGroupNum() +
+                    Session.getNewsActivityNum();
+
+            int unreadNum3 = 0;
+            if (!TextUtils.isEmpty(Session.getUserFocusNum()))
+                unreadNum3 = Integer.parseInt(Session.getUserFocusNum());
+
+            int unreadNum = unreadNum2 + unreadNum3;
+
+            if (unreadNum == 0 && Beta.getUpgradeInfo() == null) {
+                mUnread.setVisibility(View.GONE);
+            } else {
+                mUnread.setVisibility(View.VISIBLE);
+            }
+
+            if (unreadNum != 0) {
+                BadgeUtil.setBadgeCount(getApplicationContext(), unreadNum);
+            } else {
+                BadgeUtil.resetBadgeCount(getApplicationContext());
+            }
+
+        } else {
+            mUnread.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -377,6 +386,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy: ");
+        registerObservers(false);
     }
 
     @Override
@@ -413,6 +423,24 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onRestoreInstanceState(savedInstanceState, persistentState);
         Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState: ");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e(TAG, "onNewIntent: ");
     }
 
     @Override

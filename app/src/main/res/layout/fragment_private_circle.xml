@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.rz.circled.widget.SwipyRefreshLayoutBanner xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:direction="both">
 
     <ScrollView
         android:id="@+id/scroll"
@@ -203,6 +205,17 @@
                             android:text="您还没有创建和加入私圈"
                             android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_44" />
+
+                        <TextView
+                            android:id="@+id/btn_about"
+                            android:layout_width="@dimen/px400"
+                            android:layout_height="@dimen/px110"
+                            android:background="@drawable/shape_stork_main"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@string/private_group_about"
+                            android:textColor="@color/font_color_blue"
+                            android:textSize="@dimen/font_46" />
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -323,4 +336,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+</com.rz.circled.widget.SwipyRefreshLayoutBanner>

@@ -26,6 +26,7 @@ import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.MyListView;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.cache.TeamDataCache;
@@ -45,7 +46,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.rz.circled.widget.CommomUtils.trackUser;
 import static com.rz.common.constant.Constants.SWITCH_SHARE_SUCCESS;
 
 /**
@@ -83,7 +83,7 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     @Override
     public void initView() {
 
-        setTitleText(R.string.share_youran_chat);
+        setTitleText(R.string.share_chat);
 
         if (Session.isNeedTeam()) {
             tvShareTitle.setText(R.string.share_object);
@@ -173,15 +173,15 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_group_chat_rela1:
-                CommomUtils.trackUser("分享", "悠友圈分享", "群聊");
+                SystemUtils.trackUser("分享", "悠友圈分享", "群聊");
                 ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.ADVANCED_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
                 break;
             case R.id.id_group_discuss1:
-                CommomUtils.trackUser("分享", "悠友圈分享", "讨论组");
+                SystemUtils.trackUser("分享", "悠友圈分享", "讨论组");
                 ShareTeamListActivity.start(getApplicationContext(), ItemTypes.TEAMS.NORMAL_TEAM, (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
                 break;
             case R.id.id_group_friend1:
-                CommomUtils.trackUser("分享", "悠友圈分享", "好友");
+                SystemUtils.trackUser("分享", "悠友圈分享", "好友");
                 ShareFriendsListActivity.start(getApplicationContext(), (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA));
                 break;
         }

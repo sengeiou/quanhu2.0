@@ -24,6 +24,7 @@ import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
 import com.rz.circled.constants.AgreementConstants;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
@@ -117,6 +118,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     RelativeLayout signLayout;
     TextView titlebarSignTxt;
     ImageView scoreImg;
+    private ImageView mUnread;
 
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
     public static String MINEFRGFOCUS = "mine_focus_push";
@@ -174,6 +176,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
 
         mSp = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
         initUserNews();
@@ -183,6 +187,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         newTitilbar.getBackground().setAlpha(0);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
+        mUnread = (ImageView) newTitilbar.findViewById(R.id.unread_msg_number);
         signLayout = (RelativeLayout) newTitilbar.findViewById(R.id.sign_layout);
         signLayout.setVisibility(View.VISIBLE);
         titlebarSignTxt = (TextView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
@@ -406,33 +411,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onVisible() {
         super.onVisible();
-        if (NIMClient.getStatus() == StatusCode.LOGINED) {
-            List<SystemMessageType> types = new ArrayList<>();
-            types.add(SystemMessageType.ApplyJoinTeam);
-            types.add(SystemMessageType.DeclineTeamInvite);
-            types.add(SystemMessageType.RejectTeamApply);
-            types.add(SystemMessageType.TeamInvite);
-            types.add(SystemMessageType.undefined);
-            int unreadNum = NIMClient.getService(SystemMessageService.class).querySystemMessageUnreadCountByType(types) +
-                    (TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum()));
-            if (Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
-                mModelList.get(0).setContacts(true);
-                mModelList.get(0).setmFocusNum(String.valueOf(unreadNum));
-                adapter.notifyDataSetChanged();
-            } else {
-                if (mModelList.isEmpty())
-                    return;
-                mModelList.get(0).setContacts(false);
-                mModelList.get(0).setmFocusNum("");
-                adapter.notifyDataSetChanged();
-            }
-        } else {
-            if (mModelList == null)
-                return;
-            mModelList.get(0).setContacts(false);
-            mModelList.get(0).setmFocusNum("");
-            adapter.notifyDataSetChanged();
-        }
+        requestUnreadMsg();
         // TODO: 2017/9/18 判断是否有申请达人,未申请则不去请求
         getUserProveStatus();
         setData();
@@ -447,6 +426,15 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         if (!TextUtils.isEmpty(Session.getUserId())) {
 //            ((V3CirclePresenter) presenter).getCircleStats("");
+        }
+    }
+
+    @Subscribe
+    public void eventBus(BaseEvent event) {
+        switch (event.getType()) {
+            case EventConstant.NEWS_UNREAD_CHANGE:
+                requestUnreadMsg();
+                break;
         }
     }
 
@@ -646,21 +634,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_ERROR) {
             famousLayout.setVisibility(View.GONE);
         }
-    }
-
-    private void checkUpdate() {
-        /***** 获取升级信息 *****/
-//        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-//
-//        if (upgradeInfo != null) {
-//            BaseEvent event = new BaseEvent();
-//            event.info = "versionUpdate";
-//            EventBus.getDefault().post(event);
-//        } else {
-//            BaseEvent event = new BaseEvent();
-//            event.info = "noVersionUpdate";
-//            EventBus.getDefault().post(event);
-//        }
     }
 
     //    @OnClick()
@@ -942,6 +915,39 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         getData();
 
+    }
+
+    private void requestUnreadMsg() {
+        if (isNotity()) {
+            mUnread.setVisibility(View.VISIBLE);
+        } else {
+            mUnread.setVisibility(View.GONE);
+        }
+        int unreadNum = (TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum()));
+        if (NIMClient.getStatus() == StatusCode.LOGINED && Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
+            mModelList.get(0).setContacts(true);
+            mModelList.get(0).setmFocusNum(String.valueOf(unreadNum));
+            adapter.notifyDataSetChanged();
+        } else {
+            if (mModelList == null)
+                return;
+            mModelList.get(0).setContacts(false);
+            mModelList.get(0).setmFocusNum("");
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    private boolean isNotity() {
+        if (Session.getNewsAnnouncementNum() != 0 ||
+                Session.getNewsSystemInformationNum() != 0 ||
+                Session.getNewsAccountInformationNum() != 0 ||
+                Session.getNewsRecommendNum() != 0 ||
+                Session.getNewsCommentNum() != 0 ||
+                Session.getNewsQaNum() != 0 ||
+                Session.getNewsGroupNum() != 0 ||
+                Session.getNewsActivityNum() != 0)
+            return true;
+        return false;
     }
 
 

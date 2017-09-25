@@ -10,4 +10,6 @@ public class AgreementConstants {
 
     //一键邀请好友链接
     public static final String SHARE_APP_AGREEMENT = "https://www.baidu.com";
+
+    public static final String PRIVATE_GROUP_ABOUT_AGREEMENT = "https://www.baidu.com";
 }
