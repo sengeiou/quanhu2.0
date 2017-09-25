@@ -17,13 +17,13 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
-import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.H5Address;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
@@ -287,7 +287,7 @@ public class PrivateCircledFragment extends BaseFragment {
             case R.id.btn_refresh:
                 break;
             case R.id.btn_about:
-                CommonH5Activity.startCommonH5(getContext(), getString(R.string.private_group_about), BuildConfig.WebHomeBaseUrl + AgreementConstants.PRIVATE_GROUP_ABOUT_AGREEMENT);
+                CommonH5Activity.startCommonH5(getContext(), getString(R.string.private_group_about), BuildConfig.WebHomeBaseUrl + H5Address.PRIVATE_GROUP_ABOUT_AGREEMENT);
                 break;
         }
     }

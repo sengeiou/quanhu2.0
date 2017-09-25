@@ -661,7 +661,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      * @param
      */
     Integer cid = null;
-
+    boolean loadMore=false;
     public void getCircleCollection() {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
@@ -682,10 +682,18 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     @Override
                     public void onNext(ResponseData<List<CollectionBean>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
+                            loadMore=true;
                             List<CollectionBean> data = res.getData();
+                            if (data!=null&& !data.isEmpty()){
                             cid = data.get(data.size() - 1).cid;
                             mView.updateView(data);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            }else {
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,loadMore?"没有更多的数据":"您还没有收藏过作品哦");
 
+                            }
+                        }else {
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                         }
 
                     }

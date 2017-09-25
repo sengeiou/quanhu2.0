@@ -153,7 +153,6 @@
     <string name="cost_detail_v3">消费明细</string>
     <string name="account_remain">账户余额</string>
     <string name="youranbi">悠然币</string>
-    <string name="quanbi">圈币</string>
     <string name="recharge">充值</string>
     <string name="all_point">奖励值</string>
     <string name="duihuan_yrb">您暂无可兑换悠然币</string>
@@ -210,7 +209,7 @@
     <string name="private_group_about">关于私圈</string>
     <string name="private_group_essence_no_more">加入私圈，可浏览更多私圈精华</string>
     <string name="private_group_total">共%1$d个，查看全部私圈</string>
-    <string name="private_group_create_tip">私圈是什么？申请创建私圈需要具备哪些条件？</string>
+    <string name="private_group_create_tip">私圈是提供个性化服务和功能的场所,您可以在私圈内发布各类型资源、活动和话题等,用以吸引汇集其他用户成为私圈成员,形成深度互动,进一步快速实现资源变现。</string>
     <string name="private_group_create_submit">提交中···</string>
     <string name="private_group_joined_user">%1$d人加入</string>
     <string name="private_group_status_0">待审核</string>
@@ -219,7 +218,10 @@
     <string name="private_group_status_3">上架</string>
     <string name="private_group_status_4">下架</string>
     <string name="private_group_login_tip">登录才能创建私圈</string>
-    <string name="private_group_no_create">还没有创建私圈哦！</string>
+    <string name="private_group_no_create">还没有创建私圈哦~</string>
+    <string name="private_group_no_join">还没有加入私圈哦~</string>
+    <string name="private_group_show_all">查看全部私圈</string>
+    <string name="private_group_apply_for">申请创建私圈</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
     <string name="private_group_from">来自 %1$s</string>

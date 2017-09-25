@@ -13,12 +13,10 @@ import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShareModel;
-import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.circled.widget.SwitchButton;
 import com.rz.common.cache.CachePath;
-import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.H5Address;
@@ -31,12 +29,12 @@ import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.MessFreeBean;
+import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.login.LogoutHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -193,12 +191,11 @@ public class SettingActivity extends BaseActivity {
                             return;
                         }
                         dialog.dismiss();
-//                        ((UpdateOrExitPresenter) presenter).ExitApp();
-//                        exitApp();
+                        ((UpdateOrExitPresenter) presenter).ExitApp();
+                        exitApp();
                         Session.clearShareP();
-//                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-//                        startActivity(intent);
-                        finish();
+                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
                     }
@@ -215,23 +212,22 @@ public class SettingActivity extends BaseActivity {
 
     public void exitApp() {
 
-//        EntityCache<CircleStatsModel> entityCache = new EntityCache<CircleStatsModel>(this, CircleStatsModel.class);
         int loginWay = Session.getLoginWay();
         if (loginWay != Type.LOGIN_PHONE) {
             String openId = Session.getOpenId();
             snsPresenter = new SnsAuthPresenter();
             snsPresenter.attachView(this);
-//            switch (loginWay) {
-//                case Type.LOGIN_QQ:
-//                    snsPresenter.delQQAuth(openId);
-//                    break;
-//                case Type.LOGIN_SINA:
-//                    snsPresenter.delWBAuth(openId);
-//                    break;
-//                case Type.LOGIN_WX:
-//                    snsPresenter.delWXAuth(openId);
-//                    break;
-//            }
+            switch (loginWay) {
+                case Type.LOGIN_QQ:
+                    snsPresenter.delQQAuth(openId);
+                    break;
+                case Type.LOGIN_SINA:
+                    snsPresenter.delWBAuth(openId);
+                    break;
+                case Type.LOGIN_WX:
+                    snsPresenter.delWXAuth(openId);
+                    break;
+            }
         }
 
         removeLoginState();
@@ -243,17 +239,8 @@ public class SettingActivity extends BaseActivity {
 
 //        MobclickAgent.onProfileSignOff();
 
-        EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
-        List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
-
-//        ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
-
-        entityCache.putListEntity(showCaches);
-
         setResult(IntentCode.Setting.SETTING_RESULT_CODE);
 
-//        Intent intent = new Intent(MyTrendsFragment.MESSAGE_CLEAR);
-//        sendBroadcast(intent);
         finish();
     }
 
@@ -261,7 +248,7 @@ public class SettingActivity extends BaseActivity {
      * 清除登陆状态
      */
     private void removeLoginState() {
-//        Preferences.saveUserToken("");
+        Preferences.saveUserToken("");
     }
 
     @Override

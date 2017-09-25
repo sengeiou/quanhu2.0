@@ -153,28 +153,13 @@ public class EasyPermissions {
 
 
             View view = LayoutInflater.from(activity).inflate(R.layout.dialog_permission, null, false);
-            TextView tv = (TextView) view.findViewById(R.id.tv_permission_dialog_title);
+            TextView tv = (TextView) view.findViewById(R.id.id_tv_title);
             tv.setText(rationale);
-//            int padding = (int) activity.getResources().getDimension(R.dimen.px70);
-//            tv.setPadding(padding, padding, padding, padding);
+            int padding = (int) activity.getResources().getDimension(R.dimen.px70);
+            tv.setPadding(padding, padding, padding, padding);
             final Dialog dialog = DialogUtils.selfDialog(activity, view, true);
-//            view.findViewById(R.id.id_tv_message).setVisibility(View.GONE);
-//            view.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    dialog.dismiss();
-//                    if (object instanceof ShareNewsAty) {
-//                        ((PermissionCallbacks) object).onPermissionsDenied(requestCode, Arrays.asList(perms));
-//                    } else if (object instanceof TestAty) {
-//                        ((PermissionCallbacks) object).onPermissionsDenied(requestCode, Arrays.asList(perms));
-//                    } else if (object instanceof SplashAty) {
-//                        ((PermissionCallbacks) object).onPermissionsDenied(requestCode, Arrays.asList(perms));
-//                    } else if (object instanceof LocationAty) {
-//                        ((PermissionCallbacks) object).onPermissionsDenied(requestCode, Arrays.asList(perms));
-//                    }
-//                }
-//            });
-            TextView tv_can = (TextView) view.findViewById(R.id.tv_permission_dialog_confirm);
+            view.findViewById(R.id.id_tv_message).setVisibility(View.GONE);
+            TextView tv_can = (TextView) view.findViewById(R.id.id_tv_confirm);
             tv_can.setText(R.string.define);
             tv_can.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -184,7 +169,7 @@ public class EasyPermissions {
 
                 }
             });
-            view.findViewById(R.id.tv_permission_dialog_cancel).setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();

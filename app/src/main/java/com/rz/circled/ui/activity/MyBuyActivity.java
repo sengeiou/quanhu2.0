@@ -49,6 +49,8 @@ public class MyBuyActivity extends BaseActivity {
     @Override
     public void initData() {
         initRefresh();
+
+        ((PersonInfoPresenter) presenter).getMybuy(false, Session.getUserId());
     }
 
     @Override
@@ -56,8 +58,6 @@ public class MyBuyActivity extends BaseActivity {
         super.initPresenter();
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
-
-        ((PersonInfoPresenter) presenter).getMybuy(false, Session.getUserId());
 
     }
 
@@ -106,10 +106,10 @@ public class MyBuyActivity extends BaseActivity {
 
     @Override
     protected boolean needSupportRefresh() {
-        return false;
+        return true;
     }
     @Override
     public void refreshPage() {
-
+        ((PersonInfoPresenter) presenter).getMybuy(false, Session.getUserId());
     }
 }

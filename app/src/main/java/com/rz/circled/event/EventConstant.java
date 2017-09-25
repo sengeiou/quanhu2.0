@@ -20,4 +20,10 @@ public class EventConstant {
 
     public static final int APP_NO_UPDATE = 200010;
     public static final int APP_HAS_UPDATE = 200011;
+
+    public static final int USER_AVATAR_REFUSE = 200013;
+
+    public static final int BOUND_PHONE_FAIL = 200036;
+
+
 }

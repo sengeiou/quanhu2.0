@@ -18,10 +18,10 @@ import com.kyleduo.switchbutton.SwitchButton;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.dialog.ApplyForGroupSuccessDialog;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.H5Address;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
@@ -190,7 +190,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 PrivateGroupJoinWayChangeActivity.startJoinWay(mContext, price);
                 break;
             case R.id.btn_protocol:
-                CommonH5Activity.startCommonH5(mContext, "", BuildConfig.WebHomeBaseUrl + AgreementConstants.PRIVATE_GROUP_CREATE_AGREEMENT);
+                CommonH5Activity.startCommonH5(mContext, "", BuildConfig.WebHomeBaseUrl + H5Address.PRIVATE_GROUP_CREATE_AGREEMENT);
                 break;
         }
     }

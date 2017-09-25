@@ -22,6 +22,14 @@ public interface H5Address {
     //积分获取攻略
     String INTEGRAL_STATEGY = H5_HEAD + "common/integral-strategy/index.html";
 
+    //创建私圈协议
+    String PRIVATE_GROUP_CREATE_AGREEMENT =H5_HEAD+ "assets/static/service-agreement.html";
+
+    //私圈关于
+    String PRIVATE_GROUP_ABOUT_AGREEMENT =H5_HEAD+ "quanhu/doc/private_circle_rule/index.html";
+
+    //圈乎下载链接
+    String APP_DOWNLOAD = H5_HEAD+"quanhu/download/index.html";
 
     //帮助
     //用户服务协议
