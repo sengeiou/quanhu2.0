@@ -176,12 +176,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(codeType == 1){
+        if (codeType == 1) {
             Intent intent = new Intent();
             intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
             setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
             finish();
-        }else{
+        } else {
             setData();
         }
 
@@ -264,9 +264,9 @@ public class LoginActivity extends BaseActivity {
                     mImgClearPass.setVisibility(View.GONE);
                 }
 
-                if(codeType == 1){
+                if (codeType == 1) {
                     mImgWatchPw.setVisibility(View.GONE);
-                }else{
+                } else {
                     if (mEditPass.getText().length() > 0) {
                         mImgWatchPw.setVisibility(View.VISIBLE);
                     } else {
@@ -350,8 +350,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
-
-    private void setData(){
+    private void setData() {
 
         if (codeType == 1) {
             //动态设置top图片
@@ -533,14 +532,6 @@ public class LoginActivity extends BaseActivity {
 
                 saveLoginData(loginModel);
 
-                Set<String> sset = new HashSet<String>();
-                sset.add(Constants.Lottery_Tag);
-
-                // 调用 Handler 来异步设置别名
-                mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
-
-//                loadRewardGiftList();//加载转发打赏礼物列表
-
                 if (getIntent().getBooleanExtra("isFromSplash", false)) {
                     skipActivity(aty, MainActivity.class);
                 } else if (loginType == Type.TYPE_LOGIN_WEB) {
@@ -620,6 +611,9 @@ public class LoginActivity extends BaseActivity {
         } else {
             Session.setUserLoginPw(false);
         }
+
+        // 调用 Handler 来异步设置别名
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
 
         if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
             EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);

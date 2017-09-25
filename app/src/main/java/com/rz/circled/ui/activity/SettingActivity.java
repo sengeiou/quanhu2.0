@@ -31,6 +31,7 @@ import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.MessFreeBean;
+import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.login.LogoutHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -194,10 +195,8 @@ public class SettingActivity extends BaseActivity {
                         }
                         dialog.dismiss();
 //                        ((UpdateOrExitPresenter) presenter).ExitApp();
-//                        exitApp();
+                        exitApp();
                         Session.clearShareP();
-//                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-//                        startActivity(intent);
                         finish();
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
@@ -215,7 +214,6 @@ public class SettingActivity extends BaseActivity {
 
     public void exitApp() {
 
-//        EntityCache<CircleStatsModel> entityCache = new EntityCache<CircleStatsModel>(this, CircleStatsModel.class);
         int loginWay = Session.getLoginWay();
         if (loginWay != Type.LOGIN_PHONE) {
             String openId = Session.getOpenId();
@@ -243,17 +241,8 @@ public class SettingActivity extends BaseActivity {
 
 //        MobclickAgent.onProfileSignOff();
 
-        EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
-        List<ShowListModel> showCaches = entityCache.getListEntity(ShowListModel.class);
-
-//        ClearCacheUtil.clearCache(aty, 1, Session.getUserId());
-
-        entityCache.putListEntity(showCaches);
-
         setResult(IntentCode.Setting.SETTING_RESULT_CODE);
 
-//        Intent intent = new Intent(MyTrendsFragment.MESSAGE_CLEAR);
-//        sendBroadcast(intent);
         finish();
     }
 
@@ -261,7 +250,7 @@ public class SettingActivity extends BaseActivity {
      * 清除登陆状态
      */
     private void removeLoginState() {
-//        Preferences.saveUserToken("");
+        Preferences.saveUserToken("");
     }
 
     @Override

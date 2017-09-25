@@ -1,29 +1,21 @@
 package com.rz.circled.ui.fragment;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.StatusCode;
-import com.netease.nimlib.sdk.msg.SystemMessageService;
-import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
-import com.rz.circled.constants.AgreementConstants;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.modle.CustormServiceModel;
@@ -120,7 +112,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private ImageView mUnread;
 
     public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
-    public static String MINEFRGFOCUS = "mine_focus_push";
 
     List<MineFragItemModel> mModelList;
     CommonAdapter adapter;
@@ -131,7 +122,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     //    private SplashPresenter mSplashPresenter;
     protected IPresenter presenter;
-    private MessageReceiver receiver;
     private CustormServiceModel mCustormServiceModel;
     private SharedPreferences mSp;
 
@@ -170,7 +160,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onDetach() {
         super.onDetach();
-        mActivity.unregisterReceiver(receiver);
     }
 
     @Override
@@ -419,6 +408,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onResume() {
         super.onResume();
+        requestUnreadMsg();
         if (null != mTxtPersonName && null != mImgPersonHead) {
             initUserNews();
         }
@@ -524,11 +514,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         });
         mListView.setOnItemClickListener(this);
 
-        receiver = new MessageReceiver();
-        IntentFilter filter_dynamic = new IntentFilter();
-        filter_dynamic.addAction(MINEFRGFOCUS);
-        mActivity.registerReceiver(receiver, filter_dynamic);
-
 //        checkUpdate();
 
         if (Session.getUserIsLogin()) {
@@ -619,7 +604,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             famousLayout.setVisibility(View.GONE);
         }
 
-        if (flag == V3CirclePresenter.TAG_SIGN ){
+        if (flag == V3CirclePresenter.TAG_SIGN) {
 
             //签到成功
             scoreImg.setVisibility(View.GONE);
@@ -732,7 +717,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     ShareNewsAty.startShareNews(getContext(), new ShareModel(
                                     getString(R.string.app_name),
                                     getString(R.string.app_name),
-                                    AgreementConstants.SHARE_APP_AGREEMENT),
+                                    H5Address.APP_DOWNLOAD),
                             IntentCode.Setting.SETTING_RESULT_CODE);
                 }
                 break;
@@ -810,9 +795,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                             placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
                 }
 
-                Intent focus = new Intent(MineFragment.MINEFRGFOCUS);
-                mActivity.sendBroadcast(focus);
-
 //                BaseEvent event = new BaseEvent();
 //                event.key = LOGIN_OUT_SUCCESS;
 //                EventBus.getDefault().post(event);
@@ -856,26 +838,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        return rootView;
-    }
-
-    @Override
     public void refreshPage() {
 
     }
-
-    public class MessageReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (TextUtils.equals(MINEFRGFOCUS, intent.getAction())) {
-                onVisible();
-            }
-        }
-    }
-
 
     /**
      * 获得个人认证状态

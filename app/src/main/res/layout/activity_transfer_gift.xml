@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/px4"
                     android:layout_marginLeft="@dimen/px10"
-                    android:text="@string/quanbi"
+                    android:text="@string/youranbi"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/font_34" />
 

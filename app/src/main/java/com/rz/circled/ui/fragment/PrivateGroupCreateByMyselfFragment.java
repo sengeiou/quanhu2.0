@@ -1,7 +1,9 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,8 +13,10 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -86,6 +90,17 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
             refreshLayout.setEnabled(false);
         }
+        setFunctionText(R.string.private_group_apply_for);
+        setFunctionClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                if (Integer.parseInt(level) < 5)
+                    GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+                else
+                    startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+            }
+        });
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,6 +131,11 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
         return true;
     }
 
@@ -165,7 +185,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                 pageNo++;
                             }
                             if (mAdapter.getCount() == 0) {
-                                onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.private_group_no_create));
                             }
                         }
                         EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, data.size()));

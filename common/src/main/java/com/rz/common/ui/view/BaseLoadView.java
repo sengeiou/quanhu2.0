@@ -238,6 +238,14 @@ public class BaseLoadView implements View.OnClickListener {
         tvFunction.setText(string);
     }
 
+    /**
+     * 设置功能按钮点击事件
+     * @param clickListener
+     */
+    public void setFunctionClickListener(View.OnClickListener clickListener) {
+        tvFunction.setOnClickListener(clickListener);
+    }
+
     public void SVProgressHUDDismiss() {
         if (SVProgressHUD.isShowing(mContext)) {
             ((Activity) mContext).runOnUiThread(new Runnable() {

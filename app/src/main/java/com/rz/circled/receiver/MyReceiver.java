@@ -86,6 +86,8 @@ public class MyReceiver extends BroadcastReceiver {
                     NewsBean mNews = gson.fromJson(str, NewsBean.class);
                     MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
                     if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
+                        if (TextUtils.equals(mNews.getMsgEnumType(), "20040001"))
+                            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_AVATAR_REFUSE));
                         EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mNews.getType() + "-" + mNews.getLabel()));
                     } else if (mInfo != null && !TextUtils.isEmpty(mInfo.getMsgId())) {
                         switch (mInfo.getColType()) {
