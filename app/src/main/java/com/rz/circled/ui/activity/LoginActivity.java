@@ -457,7 +457,7 @@ public class LoginActivity extends BaseActivity {
             if (codeType == 1) { //验证码登录
 
                 if (mPassword.length() == 4) {
-                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, mPassword);
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }

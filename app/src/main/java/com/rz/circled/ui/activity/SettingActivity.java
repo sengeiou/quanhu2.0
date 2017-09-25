@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
+import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
@@ -193,11 +194,11 @@ public class SettingActivity extends BaseActivity {
                             return;
                         }
                         dialog.dismiss();
-//                        ((UpdateOrExitPresenter) presenter).ExitApp();
-//                        exitApp();
+                        ((UpdateOrExitPresenter) presenter).ExitApp();
+                        exitApp();
                         Session.clearShareP();
-//                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-//                        startActivity(intent);
+                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         finish();
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
@@ -221,17 +222,17 @@ public class SettingActivity extends BaseActivity {
             String openId = Session.getOpenId();
             snsPresenter = new SnsAuthPresenter();
             snsPresenter.attachView(this);
-//            switch (loginWay) {
-//                case Type.LOGIN_QQ:
-//                    snsPresenter.delQQAuth(openId);
-//                    break;
-//                case Type.LOGIN_SINA:
-//                    snsPresenter.delWBAuth(openId);
-//                    break;
-//                case Type.LOGIN_WX:
-//                    snsPresenter.delWXAuth(openId);
-//                    break;
-//            }
+            switch (loginWay) {
+                case Type.LOGIN_QQ:
+                    snsPresenter.delQQAuth(openId);
+                    break;
+                case Type.LOGIN_SINA:
+                    snsPresenter.delWBAuth(openId);
+                    break;
+                case Type.LOGIN_WX:
+                    snsPresenter.delWXAuth(openId);
+                    break;
+            }
         }
 
         removeLoginState();

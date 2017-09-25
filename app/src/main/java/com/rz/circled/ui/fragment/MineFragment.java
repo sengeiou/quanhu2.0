@@ -597,7 +597,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setText("认证失败");
             }
         } else if (t instanceof ResponseData) {
-            tvactivityCount.setText(((ResponseData) t).getData() + "");
+//            tvactivityCount.setText(((ResponseData) t).getData() + "");
         } else {
 
         }
