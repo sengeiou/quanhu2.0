@@ -17,6 +17,7 @@ import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.widget.svp.SVProgressHUD;
 
 import java.util.HashMap;
 
@@ -59,6 +60,10 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                     CheckBox checkBox = boxMaps.get(typeRead);
                     if (!checkBox.isChecked())
                         authorityRootBean.setContentPrice(0);
+                }
+                if (authorityRootBean.getAllowGeneralizeFlag() == 1 && authorityRootBean.getContentPrice() != 0) {
+                    SVProgressHUD.showInfoWithStatus(mContext, getString(R.string.editor_un_share_read));
+                    return;
                 }
                 Intent intent = new Intent();
                 intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, authorityRootBean);
@@ -141,8 +146,10 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                 if (authorityRootBean.getContentPrice() != price)
                     tvPrice.setSelected(false);
                 else tvPrice.setSelected(true);
-                if (authorityRootBean.getContentPrice() == 0 && position == 0)
+                if (authorityRootBean.getContentPrice() == 0 && position == 0) {
                     tvPrice.setSelected(true);
+                    authorityRootBean.setContentPrice(price);
+                }
 
                 tvPrice.setOnClickListener(new View.OnClickListener() {
                     @Override

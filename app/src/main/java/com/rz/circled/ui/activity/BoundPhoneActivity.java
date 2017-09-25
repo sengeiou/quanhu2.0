@@ -28,6 +28,7 @@ import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -100,10 +101,11 @@ public class BoundPhoneActivity extends BaseActivity {
     @Override
     public void initView() {
         boundTitleTxt.setText("绑定手机号");
+        secondTxt.setVisibility(View.VISIBLE);
         secondTxt.setText(R.string.bound_waring_txt);
         finishBtn.setText("完成");
 
-        loginModel = getIntent().getExtras().getParcelable("loginmodel");
+        loginModel = (UserInfoBean) getIntent().getExtras().getSerializable("loginmodel");
 
         mEditPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -248,7 +250,7 @@ public class BoundPhoneActivity extends BaseActivity {
 
             mPhone = mEditPhone.getText().toString();
             if (StringUtils.isMobile(mPhone)) {
-                ((UserInfoPresenter) presenter).getVeriCode(mPhone, Type.FUNCTION_CODE_5);
+                ((UserInfoPresenter) presenter).getVeriCode2(mPhone, Type.FUNCTION_CODE_5);
             }else{
                 SVProgressHUD.showInfoWithStatus(aty, getString(R.string.input_right_phone));
             }
@@ -264,13 +266,23 @@ public class BoundPhoneActivity extends BaseActivity {
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        if (null != t) {
-            if(t.equals("1")){
-                skipActivity(aty, MainActivity.class);
+        if( t instanceof  RegisterBean){
+            RegisterBean model = (RegisterBean) t;
+            if (null != model) {
+                pWType = model.code;
+                mRecordPhone = model.phone;
+//                SVProgressHUD.showSuccessWithStatus(aty, model.veriCode);
+            }
 
-                //发送存储对象存储用户信息
-                if(loginModel!= null) {
-                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SAVE,loginModel));
+        }else{
+            if (null != t) {
+                if(t.equals("1")){
+                    skipActivity(aty, MainActivity.class);
+
+                    //发送存储对象存储用户信息
+                    if(loginModel!= null) {
+                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SAVE,loginModel));
+                    }
                 }
             }
         }
@@ -286,10 +298,10 @@ public class BoundPhoneActivity extends BaseActivity {
         if (StringUtils.isMobile(mPhone)) {
             if (!StringUtils.isEmpty(mCode)) {
                 if (TextUtils.equals(mPhone, mRecordPhone)) {
-                    if (TextUtils.equals(pWType, Type.FUNCTION_CODE_1)) {
+                    if (TextUtils.equals(pWType, Type.FUNCTION_CODE_5)) {
                         //注册手机号
 //                        handleSuccess(1);
-                        ((UserInfoPresenter) presenter).bindPhone(mPhone, null,mCode);
+                        ((UserInfoPresenter) presenter).boundPhone(mPhone, null,mCode,loginModel.getCustId());
 
                     }
                 } else {
@@ -380,8 +392,12 @@ public class BoundPhoneActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         showDialog();
 
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 }

@@ -254,10 +254,10 @@ public class FindPwdActivity2 extends BaseActivity {
         int length = TextUtils.isEmpty(mEditPassWEdit.getText()) ? 0 : mEditPassWEdit.getText().length();
         if (mEditPassWEdit.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
             mEditPassWEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
+            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
         } else {
             mEditPassWEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_see));
+            mImgWatchPass.setImageDrawable(getResources().getDrawable(R.mipmap.pwd_unsee));
         }
         mEditPassWEdit.setSelection(length);
     }
@@ -412,5 +412,10 @@ public class FindPwdActivity2 extends BaseActivity {
     @Override
     public void refreshPage() {
 
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 }

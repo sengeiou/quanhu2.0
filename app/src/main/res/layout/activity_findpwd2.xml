@@ -110,8 +110,7 @@
                                 android:layout_toLeftOf="@+id/id_watch_pass"
                                 android:src="@drawable/ic_clear"
                                 android:visibility="gone"
-                                android:layout_marginTop="@dimen/px58"
-                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/px108"
                                 />
 
                             <ImageView
@@ -122,10 +121,9 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="@dimen/px50"
                                 android:padding="@dimen/px10"
-                                android:src="@mipmap/pwd_see"
+                                android:src="@mipmap/pwd_unsee"
                                 android:visibility="gone"
-                                android:layout_marginTop="@dimen/px58"
-                                android:layout_centerVertical="true"
+                                android:layout_marginTop="@dimen/px108"
                                 />
 
                             <View
@@ -165,7 +163,7 @@
                                 android:textColor="@color/color_999"
                                 android:textSize="@dimen/font_38"
                                 android:layout_marginTop="@dimen/px72"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:layout_below="@id/id_find_2_finish_btn"
                                 android:layout_marginBottom="@dimen/px100"
                                 android:layout_centerHorizontal="true"

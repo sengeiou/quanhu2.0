@@ -26,7 +26,7 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <ScrollView
+                <com.rz.circled.widget.MyScrollView
                     android:id="@+id/id_comm_refresh_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                         style="@style/DefaultLvStyle"
                         android:dividerHeight="0dp"
                         android:footerDividersEnabled="false" />
-                </ScrollView>
+                </com.rz.circled.widget.MyScrollView>
 
             </FrameLayout>
 

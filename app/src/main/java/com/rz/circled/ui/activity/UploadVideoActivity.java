@@ -127,7 +127,7 @@ public class UploadVideoActivity extends BaseActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent, SYSTEM_SHOOT_VIDEO);
             } catch (IOException e) {
-                Toasty.error(mContext, getString(R.string.get_audio_fail_two));
+//                Toasty.error(mContext, getString(R.string.get_audio_fail_two));
                 e.printStackTrace();
             }
         } else {
@@ -163,18 +163,18 @@ public class UploadVideoActivity extends BaseActivity {
      */
     private boolean checkVideoFile(String videoPath) {
         if (TextUtils.isEmpty(videoPath)) {
-            Toasty.error(mContext, getString(R.string.get_video_fail));
+//            Toasty.error(mContext, getString(R.string.get_video_fail));
             return false;
         }
 
         File file = new File(videoPath);
         if (file.exists()) {
             if (maxSize < file.length()) {
-                Toasty.error(mContext, getString(R.string.file_too_big));
+//                Toasty.error(mContext, getString(R.string.file_too_big));
                 return false;
             }
         } else {
-            Toasty.error(mContext, getString(R.string.get_video_fail));
+//            Toasty.error(mContext, getString(R.string.get_video_fail));
             return false;
         }
         return true;
@@ -366,7 +366,7 @@ public class UploadVideoActivity extends BaseActivity {
                 checkVideoFile(filePath);
             } catch (Exception e) {
                 e.printStackTrace();
-                Toasty.error(mContext, getString(R.string.get_video_fail));
+//                Toasty.error(mContext, getString(R.string.get_video_fail));
                 return;
             }
             mVideoFilePath = filePath;

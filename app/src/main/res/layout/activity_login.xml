@@ -208,7 +208,7 @@
                         android:layout_below="@id/et_layout"
                         android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/px100"
+                        android:layout_marginTop="@dimen/px80"
                         android:background="@mipmap/submit_login_btn_bg"
                         android:gravity="center"
                         android:padding="@dimen/px12"
@@ -279,7 +279,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px124"
+                android:layout_marginTop="@dimen/px104"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 >

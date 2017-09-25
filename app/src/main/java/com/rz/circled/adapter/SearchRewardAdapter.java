@@ -63,11 +63,13 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         try {
             myJsonArray = new JSONArray(model.getContentSource());
 
-            JSONObject nameObject = myJsonArray.getJSONObject(0);
-            JSONObject avatarObject = myJsonArray.getJSONObject(1);
+            if(myJsonArray.length()>2){
+                JSONObject nameObject = myJsonArray.getJSONObject(0);
+                JSONObject avatarObject = myJsonArray.getJSONObject(1);
 
-            tvName.setText(nameObject.getString("text"));
-            Glide.with(mContext).load(avatarObject.getString("image")).transform(new GlideCircleImage(mContext)).into(avatarImg);
+                tvName.setText(nameObject.getString("text"));
+                Glide.with(mContext).load(avatarObject.getString("image")).transform(new GlideCircleImage(mContext)).into(avatarImg);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -105,7 +107,7 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             tvTime.setVisibility(View.VISIBLE);
 
             String time = TimeUtil.getTime(dateNowStr,model.getTerminalTime());
-            String timeArray[] = time.split(",-");
+            String timeArray[] = time.replace("-","").split(",");
             String time1 = timeArray[0];
             String time2 = timeArray[1];
             String time3 = timeArray[2];

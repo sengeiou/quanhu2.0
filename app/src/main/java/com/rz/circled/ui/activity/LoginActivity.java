@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -79,7 +80,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.reg_layout)
     LinearLayout regLayout;
     @BindView(R.id.layout_phone_code)
-    TextView layoutLoginQq;
+    TextView layoutLoginPhone;
     @BindView(R.id.layout_login_weixin)
     TextView layoutLoginWeixin;
     @BindView(R.id.layout_login_webo)
@@ -88,6 +89,9 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.id_watch_pass)
     ImageView mImgWatchPw;
+
+    @BindView(R.id.titlebar_main_left_btn)
+    ImageView mIvBack;
 
     /**
      * 手机号
@@ -172,17 +176,21 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
-        setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
-        finish();
+        if(codeType == 1){
+            Intent intent = new Intent();
+            intent.putExtra(IntentKey.EXTRA_BOOLEAN, true);
+            setResult(IntentCode.Login.LOGIN_RESULT_CODE, intent);
+            finish();
+        }else{
+            setData();
+        }
+
     }
 
     @Override
     public void initView() {
 
-////        mTvTitle.setText(R.string.login);
-//        mIvBack.setVisibility(View.VISIBLE);
+//        mIvBack.setVisibility(View.GONE);
 ////        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
 //        mIvBack.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -190,25 +198,33 @@ public class LoginActivity extends BaseActivity {
 //                finish();
 //            }
 //        });
-//        mRlTitleRoot.setBackgroundColor(ContextCompat.getColor(this, R.color.color_5ACBD4));
-//        setTitleText(getString(R.string.login_title));
+
+        mBtnSendCode.setVisibility(View.VISIBLE);
+        mEditPass.setHint("请输入验证码");
+        typePwd.setImageResource(R.mipmap.icon_code);
+        mImgWatchPw.setVisibility(View.GONE);
+        mEditPass.setText("");
+        mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+
+        //动态设置top图片
+        Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+        layoutLoginPhone.setText("密码登录");
+
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
             mImgClearPhone.setVisibility(View.VISIBLE);
         }
-//        setTitlebackIntercept(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
+
         mLoginBtn.setEnabled(true);
 
-        if (mEditPass.getText().length() > 0) {
-            mImgWatchPw.setVisibility(View.VISIBLE);
-        } else {
-            mImgWatchPw.setVisibility(View.GONE);
-        }
+//        if (mEditPass.getText().length() > 0) {
+//            mImgWatchPw.setVisibility(View.VISIBLE);
+//        } else {
+//            mImgWatchPw.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -248,10 +264,14 @@ public class LoginActivity extends BaseActivity {
                     mImgClearPass.setVisibility(View.GONE);
                 }
 
-                if (mEditPass.getText().length() > 0) {
-                    mImgWatchPw.setVisibility(View.VISIBLE);
-                } else {
+                if(codeType == 1){
                     mImgWatchPw.setVisibility(View.GONE);
+                }else{
+                    if (mEditPass.getText().length() > 0) {
+                        mImgWatchPw.setVisibility(View.VISIBLE);
+                    } else {
+                        mImgWatchPw.setVisibility(View.GONE);
+                    }
                 }
 
             }
@@ -281,6 +301,13 @@ public class LoginActivity extends BaseActivity {
 //        }
 //    }
 //
+
+    @OnClick(R.id.titlebar_main_left_btn)
+    public void onClick() {
+
+        setData();
+    }
+
 
     /**
      * 微信登录
@@ -319,24 +346,52 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.layout_phone_code)
     public void codeLogin() {
+        setData();
+    }
+
+
+
+    private void setData(){
+
         if (codeType == 1) {
+            //动态设置top图片
+            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+            layoutLoginPhone.setText("验证码登录");
+
+            mBtnSendCode.setVisibility(View.GONE);
+            mEditPass.setHint("请输入密码");
+            mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            mImgWatchPw.setVisibility(View.VISIBLE);
+            mEditPass.setText("");
+            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            mIvBack.setVisibility(View.VISIBLE);
+            //// TODO: 2017/9/23 0023
+//            typePwd.setBackgroundResource(R.mipmap.);   图片
+
+            codeType = 2;
+
+        } else {
+
+            //动态设置top图片
+            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+            layoutLoginPhone.setText("密码登录");
+            mEditPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
             mBtnSendCode.setVisibility(View.VISIBLE);
             mEditPass.setHint("请输入验证码");
             typePwd.setImageResource(R.mipmap.icon_code);
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-            codeType = 2;
-        } else {
-            mBtnSendCode.setVisibility(View.GONE);
-            mEditPass.setHint("请输入密码");
-            mImgWatchPw.setVisibility(View.VISIBLE);
-            mEditPass.setText("");
-            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-
+            mIvBack.setVisibility(View.GONE);
             codeType = 1;
         }
+
+
     }
 
     @OnClick(R.id.id_regist_send_sms_btn)
@@ -399,19 +454,20 @@ public class LoginActivity extends BaseActivity {
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
 
-            if (codeType == 1) {  //密码登陆
-                if (mPassword.length() >= 6 && mPassword.length() <= 18) {
-                    ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
-                } else {
-                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
-                }
-            } else {            //验证码登录
+            if (codeType == 1) { //验证码登录
+
                 if (mPassword.length() == 4) {
                     ((SnsAuthPresenter) presenter).codeLogin(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
 
+            } else {        //密码登陆
+                if (mPassword.length() >= 6 && mPassword.length() <= 18) {
+                    ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
+                } else {
+                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
+                }
             }
         } else {
             SVProgressHUD.showErrorWithStatus(aty, getString(R.string.phone_error));
@@ -452,7 +508,6 @@ public class LoginActivity extends BaseActivity {
      */
     @Override
     public <T> void updateView(T t) {
-        super.updateView(t);
         if (null != t) {
             loginModel = (UserInfoBean) t;
             if (null != loginModel) {
@@ -460,11 +515,6 @@ public class LoginActivity extends BaseActivity {
                 Session.setSessionKey(loginModel.getToken());
 //                saveLoginData(loginModel);
                 switch (Session.getLoginWay()) {
-//                    case Type.LOGIN_QQ:
-////                        MobclickAgent.onProfileSignIn("qq", model.getCustId());
-//                        zhugeTrack("qq");
-//                        ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
-//                        return;
                     case Type.LOGIN_WX:
 //                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
                         zhugeTrack("wx");
@@ -588,6 +638,7 @@ public class LoginActivity extends BaseActivity {
                 //已经绑定过手机直接登录
                 if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
                     skipActivity(aty, MainActivity.class);
+                    saveLoginData(loginModel);
                 } else {
                     //传递登录时返回的对象
                     if (loginModel != null) {
@@ -874,11 +925,6 @@ public class LoginActivity extends BaseActivity {
         ZhugeSDK.getInstance().track(getApplicationContext(), "注册登录", eventObject);
     }
 
-//    @OnClick(R.id.titlebar_main_left_btn)
-//    public void onClick() {
-//        finish();
-//    }
-
     @Subscribe
     public void onEvent(NotifyEvent notifyEvent) {
         if (notifyEvent != null && notifyEvent.tag.equals("register")) {
@@ -942,4 +988,6 @@ public class LoginActivity extends BaseActivity {
     public void refreshPage() {
 
     }
+
+
 }

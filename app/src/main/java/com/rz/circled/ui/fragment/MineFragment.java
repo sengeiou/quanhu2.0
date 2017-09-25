@@ -32,7 +32,6 @@ import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.AwesomeTabsAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
@@ -43,18 +42,19 @@ import com.rz.circled.ui.activity.MyAccountAty;
 import com.rz.circled.ui.activity.MyArticleActivity;
 import com.rz.circled.ui.activity.MyBuyActivity;
 import com.rz.circled.ui.activity.MyCollectionActivity;
+import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
-import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
+import com.rz.circled.widget.MyScrollView;
 import com.rz.circled.widget.ObservableListView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
@@ -65,7 +65,6 @@ import com.rz.common.constant.Constants;
 import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
@@ -113,7 +112,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     ObservableListView mListView;
 
     @BindView(R.id.id_comm_refresh_ll)
-    ScrollView swipeRefreshLayout;
+    MyScrollView scrollViewLayout;
 
     RelativeLayout signLayout;
     TextView titlebarSignTxt;
@@ -243,25 +242,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //        }
     }
 
-//    private void initTitleBar() {
-//        View v = View.inflate(getActivity(), R.layout.titlebar_transparent, null);
-//        mLayoutContent.addView(v);
-//        RxView.clicks(v.findViewById(R.id.et_search_keyword)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-//            @Override
-//            public void call(Void aVoid) {
-//                //跳搜索界面
-//                startActivity(new Intent(mActivity, SearchActivity.class));
-//            }
-//        });
-//        RxView.clicks(v.findViewById(R.id.iv_mess)).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
-//            @Override
-//            public void call(Void aVoid) {
-//                //跳消息界面
-//            }
-//        });
-//
-//    }
-
 
     //初始化用户信息
     public void initUserNews() {
@@ -374,25 +354,43 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                swipeRefreshLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                    @Override
-                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                        if (scrollY <= 0) {
-                            newTitilbar.getBackground().mutate().setAlpha(0);
-                            signLayout.setVisibility(View.VISIBLE);
-                        } else if (scrollY > 0 && scrollY <= headHight) {
-                            float scale = (float) scrollY / headHight;
-                            float alpha = (255 * scale);
-                            // 只是layout背景透明(仿知乎滑动效果)
-                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-                        } else {
-                            newTitilbar.getBackground().mutate().setAlpha(255);
-                            signLayout.setVisibility(View.GONE);
-                        }
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//                scrollViewLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                    @Override
+//                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                        if (scrollY <= 0) {
+//                            newTitilbar.getBackground().mutate().setAlpha(0);
+//                            signLayout.setVisibility(View.VISIBLE);
+//                        } else if (scrollY > 0 && scrollY <= headHight) {
+//                            float scale = (float) scrollY / headHight;
+//                            float alpha = (255 * scale);
+//                            // 只是layout背景透明(仿知乎滑动效果)
+//                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+//                        } else {
+//                            newTitilbar.getBackground().mutate().setAlpha(255);
+//                            signLayout.setVisibility(View.GONE);
+//                        }
+//                    }
+//                });
+//            }
+
+            scrollViewLayout.setOnScrollChanged(new MyScrollView.OnScrollChanged() {
+                @Override
+                public void onScroll(int scrollX, int scrollY, int oldX, int oldY) {
+                    if (scrollY <= 0) {
+                        newTitilbar.getBackground().mutate().setAlpha(0);
+                        signLayout.setVisibility(View.VISIBLE);
+                    } else if (scrollY > 0 && scrollY <= headHight) {
+                        float scale = (float) scrollY / headHight;
+                        float alpha = (255 * scale);
+                        // 只是layout背景透明(仿知乎滑动效果)
+                        newTitilbar.getBackground().mutate().setAlpha((int) alpha);
+                    } else {
+                        newTitilbar.getBackground().mutate().setAlpha(255);
+                        signLayout.setVisibility(View.GONE);
                     }
-                });
-            }
+                }
+            });
 
         }
 
@@ -566,15 +564,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 titlebarSignTxt.setText("签到");
                 scoreImg.setVisibility(View.VISIBLE);
             }
-        } else if (t instanceof ResponseData) {
-            //签到成功
-            scoreImg.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
-            titlebarSignTxt.setText("已签到");
-            titlebarSignTxt.setLayoutParams(lp);
-
         } else if (t instanceof DataStatisticsBean) {
             DataStatisticsBean data = (DataStatisticsBean) t;
 
@@ -598,12 +587,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         } else if (t instanceof ResponseData) {
             tvactivityCount.setText(((ResponseData) t).getData() + "");
         } else {
-//            if (null != t) {
-//                CircleStatsModel data = (CircleStatsModel) t;
-//                tvCircleCount.setText(data.getCircleNum() + "");
-//                tvCollectCount.setText(data.getCollectionNum() + "");
-//                tvTransferCount.setText(data.getTransferNum() + "");
-//            }
+
         }
     }
 
@@ -633,6 +617,18 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
         if (flag == ProveInfoPresenter.FLAG_PROVE_STATUS_ERROR) {
             famousLayout.setVisibility(View.GONE);
+        }
+
+        if (flag == V3CirclePresenter.TAG_SIGN ){
+
+            //签到成功
+            scoreImg.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            lp.addRule(RelativeLayout.CENTER_IN_PARENT);
+            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
+            titlebarSignTxt.setText("已签到");
+            titlebarSignTxt.setLayoutParams(lp);
+
         }
     }
 
@@ -710,9 +706,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 6:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的卡卷");
-                    Intent intent = new Intent(getActivity(), AwesomeTabsAty.class);
-                    intent.putExtra(IntentKey.KEY_TYPE, Type.TYPE_TICKET);
-                    startActivity(intent);
+                    jump(MyCouponsActivity.class);
 
                 }
                 break;
@@ -750,11 +744,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     starCustormService();
                 } else {
 //                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
-//                    CommH5Aty.startCommonH5(frg, customer_url);
-//                }
-                    break;
+                    CommonH5Activity.startCommonH5(mActivity, "客服", H5Address.CONECT_US);
                 }
-                //设置
+                break;
+            //设置
 
             case 11:
                 trackUser("我的", "帮助", "设置");
@@ -776,10 +769,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         boolean isWrokDate = isCurrentInTimeScope(startHour, startMinute, endHour, endMinute);
         if (mCustormServiceModel.getStatus() == 1 && isWrokDate == true) {
 
-//            CommH5Aty.startCommonH5(frg, mCustormServiceModel.getCustomUrl());
+            CommonH5Activity.startCommonH5(mActivity, "客服", mCustormServiceModel.getCustomUrl());
         } else {
 
-//            CommH5Aty.startCommonH5(frg, mCustormServiceModel.getMessageUrl());
+            CommonH5Activity.startCommonH5(mActivity, "客服", mCustormServiceModel.getMessageUrl());
         }
     }
 

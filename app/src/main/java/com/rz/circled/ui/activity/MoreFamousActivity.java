@@ -1,8 +1,10 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -50,6 +52,13 @@ public class MoreFamousActivity extends BaseActivity {
         mAdapter = new SearchPersonAdapter(this, R.layout.item_search_person);
         mAdapter.setTalentPage(true);
         mLvMFamous.setAdapter(mAdapter);
+        mLvMFamous.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String custId = moreFamousList.get(position).custInfo.getCustId();
+                UserInfoActivity.newFrindInfo(mContext,custId);
+            }
+        });
 
     }
 

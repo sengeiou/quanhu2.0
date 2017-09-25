@@ -168,7 +168,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                 final CollectionBean.ResourceInfoBean resourceInfo = collectionBean.resourceInfo;
                 String extjson = resourceInfo.extjson;
                 ExjsonCollection exjson = gson.fromJson(extjson, ExjsonCollection.class);
-                ExjsonCollection.AnswerBean answer = exjson.answer;
+                final ExjsonCollection.AnswerBean answer = exjson.answer;
                 final ExjsonCollection.QuestionBean question = exjson.question;
                 Log.i(TAG, "getView: " + extjson.toString());
                 String resourceType = resourceInfo.getResourceType();
@@ -225,7 +225,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                     }); vh.answer_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, question.targetId);
+                            UserInfoActivity.newFrindInfo(mContext, answer.createUserId);
                         }
                     });
 
