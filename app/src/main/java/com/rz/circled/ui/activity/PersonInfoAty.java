@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.common.cache.preference.Session;
@@ -107,6 +108,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         if (Protect.checkLoadImageStatus(aty)) {
             Glide.with(aty).load(Session.getUserPicUrl()).transform(new GlideRoundImage(aty)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
+
         }
     }
 
@@ -131,7 +133,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         desc.setText(Session.getUser_desc());
         setTitleText(getString(R.string.mine_person_info));
         if (Protect.checkLoadImageStatus(aty)) {
-            Glide.with(aty).load(Session.getUserPicUrl()).transform(new GlideRoundImage(aty)).
+            Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
         }
     }

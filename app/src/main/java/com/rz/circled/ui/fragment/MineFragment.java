@@ -551,7 +551,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvacticlesCount.setText(data.getArticleNum() + "");
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
-            custPointsTxt.setText(data.getScore()+"");
+            custPointsTxt.setText("积分" + data.getScore()+"");
 
 //            tvactivityCount.setText(data.getArticleNum()+"");
         } else if (t instanceof ProveStatusBean) {
@@ -581,6 +581,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 Glide.with(mActivity).load(bean.getCustImg()).transform(new GlideCircleImage(mActivity)).
                         placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
+
+                Session.setUserPicUrl(bean.getCustImg());
             }
         }
     }

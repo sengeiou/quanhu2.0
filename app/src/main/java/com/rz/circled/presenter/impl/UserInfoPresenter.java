@@ -531,6 +531,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         if (model != null) {
                             if (function == null || function.length() == 0 || Type.FUNCTION_CODE_5.equals(function)) {
                                 mView.updateView(model);
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             }

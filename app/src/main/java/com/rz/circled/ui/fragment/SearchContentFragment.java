@@ -167,4 +167,10 @@ public class SearchContentFragment extends BaseFragment{
     public void refreshPage() {
         ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_CONTENT);
     }
+
+    @Override
+    public void setFunctionText(String string) {
+
+
+    }
 }
