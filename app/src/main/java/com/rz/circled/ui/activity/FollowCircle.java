@@ -26,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.rz.common.constant.Constants.FIRST_BLOOD;
+import static com.rz.common.constant.IntentKey.JUMP_FIND_FIRST;
+
 /**
  * Created by Administrator on 2017/9/6/006.
  */
@@ -125,8 +128,6 @@ public class FollowCircle extends BaseActivity {
         Session.setUserIsFirstDownload(false);
         switch (view.getId()) {
             case R.id.btn_jump:
-                finish();
-                skipActivity(aty, MainActivity.class);
                 break;
             case R.id.btn_press:
                 if (list.size()==0){
@@ -137,10 +138,12 @@ public class FollowCircle extends BaseActivity {
                     sb.append(s+",");
                 }
                 mPresenter.addLoveCircle(sb.toString(), 1);
-                finish();
-                skipActivity(aty, MainActivity.class);
                 break;
         }
+        Bundle intent =new Bundle();
+        intent.putString(JUMP_FIND_FIRST,FIRST_BLOOD);
+        skipActivity(aty, MainActivity.class,intent);
+        finish();
     }
 
     @Override

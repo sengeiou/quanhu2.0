@@ -376,7 +376,7 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<BillDetailModel>>> call = mUserService
-                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
+                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
             @Override
@@ -410,6 +410,7 @@ public class PayPresenter extends AbsPresenter {
             @Override
             public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
                 super.onFailure(call, t);
+                Log.i(TAG, "onFailure: "+t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                 isDataError = true;
             }
@@ -611,7 +612,7 @@ public class PayPresenter extends AbsPresenter {
         showPayDialog(mPayMoney, desc, "", flag);
     }
 
-    public void showPayDialog(final double mPayMoney, String desc, final String orderId, int flag) {
+    public void showPayDialog(final double mPayMoney, String desc, final String orderId, final int flag) {
         View payViwe = LayoutInflater.from(activity).inflate(R.layout.dialog_pay, null);
         if (Session.getUserSafetyproblem()) {
             payViwe.findViewById(R.id.id_is_set_user_txt).setVisibility(View.GONE);
@@ -658,7 +659,11 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
+                if (flag==3){
+                    mView.updateView(psw);
+                }else{
                 payOrder(orderId, psw);
+                }
             }
         });
     }

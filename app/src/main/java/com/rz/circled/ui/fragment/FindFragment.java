@@ -23,6 +23,7 @@ import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.MListView;
@@ -35,6 +36,7 @@ import com.rz.httpapi.bean.CircleEntrModle;
 import com.rz.httpapi.bean.EntitiesBean;
 import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +49,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
 
@@ -229,11 +232,29 @@ public class FindFragment extends BaseFragment {
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                HotSubjectModel hotSubjectModel = subjectList.get(position);
+                final HotSubjectModel hotSubjectModel = subjectList.get(position);
+                final String coterieId = hotSubjectModel.getCoterieId();
+                final String coterieName = hotSubjectModel.getCoterieName();
                 SubjectVH vh = (SubjectVH) holder;
-                Glide.with(mActivity).load(hotSubjectModel.getThumbnail()).placeholder(R.drawable.default_subject_bg).transform(new GlideCenterRoundImage(mActivity)).into(vh.topicIcon);
+                Glide.with(mActivity)
+                        .load(hotSubjectModel.getThumbnail())
+                        .placeholder(R.drawable.default_subject_bg)
+                        .bitmapTransform(new RoundedCornersTransformation(mActivity,25,0,RoundedCornersTransformation.CornerType.LEFT))
+                        .into(vh.topicIcon);
                 vh.topicName.setText(hotSubjectModel.getTitle());
                 vh.topicCount.setText(hotSubjectModel.getReadNum() + "人参与");
+                vh.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (StringUtil.isEmpty(coterieId)||StringUtil.isEmpty(coterieName)){
+                            String circleUrl = CommomUtils.getCircleUrl(hotSubjectModel.circleRoute, hotSubjectModel.moduleEnum, hotSubjectModel.resourceId);
+                            WebContainerActivity.startActivity(mActivity, circleUrl);
+                        }else{
+                            String url = CommomUtils.getDymanicUrl(hotSubjectModel.circleRoute, hotSubjectModel.moduleEnum, hotSubjectModel.getCoterieId(), hotSubjectModel.resourceId);
+                            WebContainerActivity.startActivity(mActivity, url);
+                        }
+                    }
+                });
 
             }
 
@@ -273,7 +294,7 @@ public class FindFragment extends BaseFragment {
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 FamousViewHolder fvh = (FamousViewHolder) holder;
                 FamousModel famousModel = famousList.get(position);
-                Glide.with(mActivity).load(famousModel.custInfo.getCustImg()).transform(new GlideCircleImage(mActivity)).into(fvh.famous_iv);
+                Glide.with(mActivity).load(famousModel.custInfo.getCustImg()).placeholder(R.drawable.iv_famous_defaule).transform(new GlideCircleImage(mActivity)).into(fvh.famous_iv);
                 fvh.famous_name.setText(famousModel.custInfo.getCustNname());
                 fvh.famous_mark.setText(famousModel.starInfo.getTradeField());
                 fvh.famous_level.setText("Lv" + String.valueOf(famousModel.custInfo.getCustLevel()));

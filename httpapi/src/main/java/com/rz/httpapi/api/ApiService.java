@@ -908,7 +908,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(ApiPay.GET_BILL_ORDER)
     Call<ResponseData<List<BillDetailModel>>> getBillList(
-            @Field("productType") int productType,
+//            @Field("productType") int productType,
             @Field("custId") String custId,
             @Field("date") String date,
             @Field("type") int type,
