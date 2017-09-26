@@ -13,7 +13,7 @@ public class DataStatisticsBean implements Serializable {
     private int coterieNum;   //私圈数量
     private int offerNum;       //悬赏数量
     private int score;          //积分
-    private String custLevel;
+    private String custLevel;   //等级
 
     public String getCustId() {
         return custId;

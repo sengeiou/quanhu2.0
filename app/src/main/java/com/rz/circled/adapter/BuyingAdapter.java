@@ -38,10 +38,10 @@ public class BuyingAdapter extends BuyingContentAdapter {
 
 
         bindCircleContent(helper, item);
-        ImageView mCivHead = helper.getView(R.id.civ_head);//用户头像
-        CircleImageView mCivSuperV = helper.getView(R.id.civ_superV);//头像加V
-        TextView mTvName = helper.getView(R.id.tv_name);//用户名字
-        TextView mTvTime = helper.getView(R.id.tv_time);//时间
+//        ImageView mCivHead = helper.getView(R.id.civ_head);//用户头像
+//        CircleImageView mCivSuperV = helper.getView(R.id.civ_superV);//头像加V
+//        TextView mTvName = helper.getView(R.id.tv_name);//用户名字
+//        TextView mTvTime = helper.getView(R.id.tv_time);//时间
         TextView mTvCircleName = helper.getView(R.id.tv_circle_name);//圈子来自
 
 //        ImageView iv_other_left = (ImageView) helper.getViewById(R.id.iv_other_left);
@@ -55,23 +55,23 @@ public class BuyingAdapter extends BuyingContentAdapter {
         TextView fromWhere = (TextView) helper.getViewById(R.id.ll_other_right_type1_tv2);
 //        ViewGroup rl_other_left_content = helper.getView(R.id.rl_other_left_content);//rl 左边的other信息 content
 
-        if (Protect.checkLoadImageStatus(mContext) && item.getResource().getCust()!= null) {
-            Glide.with(mContext).load(item.getResource().getCust().getCustImg()).transform(new GlideCircleImage(mContext)).
-                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(mCivHead);
-        }
+//        if (Protect.checkLoadImageStatus(mContext) && item.getResource().getCust()!= null) {
+//            Glide.with(mContext).load(item.getResource().getCust().getCustImg()).transform(new GlideCircleImage(mContext)).
+//                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(mCivHead);
+//        }
 
 //        mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
 
-        if (item.getResource().getCust() != null) {
-            mTvName.setText(item.getResource().getCustNname()== null ? "" : item.getResource().getCust().getCustNname());
-        }
-//        tv_other_left.setText(item.readNum+"阅读");
+//        if (item.getResource().getCust() != null) {
+//            mTvName.setText(item.getResource().getCustNname()== null ? "" : item.getResource().getCust().getCustNname());
+//        }
+        tv_other_left.setText(item.getAmount()+"悠然币");
         if (item.getResource().getCoterieId()==null||item.getResource().getCoterieName()==null){
             fromWhere.setText("来自圈子"+item.getResource().getCircleName());
         }else {
             fromWhere.setText("来自私圈"+item.getResource().getCoterieName());
         }
-        mTvTime.setText(StringUtils.stampToDate(item.getResource().getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+//        mTvTime.setText(StringUtils.stampToDate(item.getResource().getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
         fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,26 +82,26 @@ public class BuyingAdapter extends BuyingContentAdapter {
                 }
             }
         });
-        mCivHead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isLogin()) {
-                    if (item.getResource().getCust() != null) {
-                        UserInfoActivity.newFrindInfo(mContext, item.getResource().getCust().getCustId());
-                    }
-                }
-            }
-        });
-        mTvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isLogin()) {
-                    if (item.getResource().getCust() != null) {
-                        UserInfoActivity.newFrindInfo(mContext, item.getCustId());
-                    }
-                }
-            }
-        });
+//        mCivHead.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (isLogin()) {
+//                    if (item.getResource().getCust() != null) {
+//                        UserInfoActivity.newFrindInfo(mContext, item.getResource().getCust().getCustId());
+//                    }
+//                }
+//            }
+//        });
+//        mTvName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (isLogin()) {
+//                    if (item.getResource().getCust() != null) {
+//                        UserInfoActivity.newFrindInfo(mContext, item.getCustId());
+//                    }
+//                }
+//            }
+//        });
 
     }
 

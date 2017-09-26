@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +10,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.circled.widget.CommomUtils;
+import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.Constants;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
+import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.EntitiesBean;
 import com.rz.httpapi.constans.ReturnCode;
 
@@ -40,16 +43,26 @@ import rx.schedulers.Schedulers;
 public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     List<EntitiesBean> bean = new ArrayList<>();
-    @BindView(R.id.lv)
-    ListView mLv;
+    @BindView(R.id.my_listview)
+    MListView mLv;
     int pageNo = 1;
-    @BindView(R.id.activity_refresh)
-    SwipeRefreshLayout mActivityRefresh;
+    @BindView(R.id.swipyrefreshlayout)
+    SwipyRefreshLayout mActivityRefresh;
     private CommonAdapter<EntitiesBean> mEntitiesBeanCommonAdapter;
+
+    //每页分页标记
+    private int start = 0;
+
+    //记录每页分页标记
+    private int record_start = 0;
+
+    //是否没有数据
+    private boolean isNoData;
+
 
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.mine_activity, null);
+        return inflater.inflate(R.layout.activity_article, null);
     }
 
 
@@ -60,6 +73,12 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void initPresenter() {
+
+        getData(false);
+    }
+
+    private void getData(final boolean loadMore){
+
         Http.getApiService(ApiYylService.class)
                 .getMineActivityList(pageNo, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
@@ -77,21 +96,76 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onNext(ResponseData<ActivityBean> res) {
+//                        if (res.getRet() == ReturnCode.SUCCESS) {
+//                            pageNo++;
+//                            List<EntitiesBean> entities = res.getData().entities;
+//                            if(entities.size() == 0 || entities == null){
+//                                onLoadingStatus(CommonCode.General.DATA_SUCCESS,"没有你您要的内容");
+//                            }else{
+//
+//                            }
+//
+//                            bean.addAll(entities);
+//                            mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+//
+//                        }
+
+                        List<EntitiesBean> entities = res.getData().entities;
                         if (res.getRet() == ReturnCode.SUCCESS) {
-                            pageNo++;
-                            List<EntitiesBean> entities = res.getData().entities;
-                            bean.addAll(entities);
-                            mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+                            List<CircleDynamic> modelList = (List<CircleDynamic>) res.getData();
+
+                            if (null != modelList && !modelList.isEmpty()) {
+                                isNoData = false;
+                                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+
+                                bean.addAll(entities);
+                                mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+
+                                pageNo++;
+                            } else {
+                                if(loadMore == false){
+                                    onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                }else{
+                                    onLoadingStatus(CommonCode.General.DATA_LACK);
+                                }
+                                isNoData = true;
+                            }
+                            return;
+                        } else {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    onLoadingStatus(CommonCode.General.ERROR_DATA);
+                                }
+                            }, 2000);
+                            isNoData = true;
+                            return;
                         }
+
                     }
                 });
 
+
     }
+
 
     @Override
     public void initView() {
-        mActivityRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
-        mActivityRefresh.setOnRefreshListener(this);
+
+        mActivityRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        mActivityRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    getData(false);
+                } else {
+                    getData(true);
+                }
+                mActivityRefresh.setRefreshing(false);
+            }
+        });
+
+
         mEntitiesBeanCommonAdapter = new CommonAdapter<EntitiesBean>(mActivity, bean, R.layout.activity_item) {
             @Override
             public void convert(ViewHolder helper, EntitiesBean item) {
@@ -113,6 +187,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     @Override
     public void initData() {
         initPresenter();
+
     }
 
     @Override
@@ -135,6 +210,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         initPresenter();
         mActivityRefresh.setRefreshing(false);
     }
+
 
 
 }
