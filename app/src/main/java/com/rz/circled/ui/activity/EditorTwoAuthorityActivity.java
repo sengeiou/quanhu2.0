@@ -112,6 +112,9 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (isChecked) {
                             myGridView.setVisibility(View.VISIBLE);
+                            if (boxMaps.containsKey(typePopularize)) {
+                                boxMaps.get(typePopularize).setChecked(false);
+                            }
                         } else {
                             myGridView.setVisibility(View.GONE);
                         }
@@ -125,6 +128,14 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
                 tvName.setText(R.string.authority_popularize);
                 boxMaps.put(typePopularize, checkBox);
                 checkBox.setChecked(authorityRootBean.getAllowGeneralizeFlag() == 1);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked && boxMaps.containsKey(typeRead)) {
+                            boxMaps.get(typeRead).setChecked(false);
+                        }
+                    }
+                });
                 break;
         }
         llRoot.addView(rootView);

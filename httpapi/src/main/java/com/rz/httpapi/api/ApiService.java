@@ -160,7 +160,7 @@ public interface ApiService {
      * 登录接口，POST请求，表单登录
      *
      * @param act
-     * @param phone    手机号
+     * @param phone 手机号
      * @return
      */
     @FormUrlEncoded
@@ -870,7 +870,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(ApiPay.PAY)
+    @POST(ApiPay.YEHAO_HOST + ApiPay.PAY)
     Call<ResponseData<PaySignModel>> payProvingSign(
             @Field("act") int act,
             @Field("custId") String custId,
@@ -1214,7 +1214,6 @@ public interface ApiService {
 //    };
 
 
-
     /**
      * 获取银行卡列表
      */
@@ -1306,6 +1305,7 @@ public interface ApiService {
     Call<ResponseData<List<CashModel>>> getServiceCharge(
             @Field("act") int act
     );
+
     /**
      * 消息免打扰
      *
@@ -1318,6 +1318,7 @@ public interface ApiService {
             @Field("pushStatus") int pushStatus
 
     );
+
     /**
      * 查询消息免打扰
      *

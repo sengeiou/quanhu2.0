@@ -775,4 +775,6 @@
     <string name="authorization_fail">授权失败！</string>
     <string name="pay_fail">支付失败</string>
     <string name="editor_un_share_read">不可同时选择付费阅读与免费推广</string>
+
+    <string name="voice_cancel_hint">&#160;&#160;&#160;&#160;&#160;&#160;确定要取消录制吗？&#160;&#160;&#160;&#160;&#160;&#160;</string>
 </resources>

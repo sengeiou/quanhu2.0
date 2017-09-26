@@ -297,6 +297,7 @@ public class BankPresenter extends AbsPresenter {
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, activity.getString(R.string.submit_news_loading));
+        Session.setNowAct("1055");
         Call<ResponseData> call = mApiService.getCash(1055, password, Session.getUserId(), cost, cust2BankId);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData>() {

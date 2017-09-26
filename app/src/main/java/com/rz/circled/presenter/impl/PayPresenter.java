@@ -123,7 +123,9 @@ public class PayPresenter extends AbsPresenter {
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
-        Call<ResponseData<PaySignModel>> call = mUserService.payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
+        Session.setNowAct("1052");
+//        Call<ResponseData<PaySignModel>> call = mUserService.payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
+        Call<ResponseData<PaySignModel>> call = mUserService.payProvingSign(1052, custId, payWay, "2", "1", currency);
 //        Call<ResponseData<PaySignModel>> call = Http.getAddSignService(activity).payProvingSign(1052, custId, payWay, "2", orderAmount.replace(".0", ""), currency);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<PaySignModel>>() {
