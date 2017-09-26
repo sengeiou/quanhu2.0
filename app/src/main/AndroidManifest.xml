@@ -90,12 +90,12 @@
 
         <!-- 支付宝 -->
         <!-- alipay sdk begin -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!--<activity-->
+            <!--android:name="com.alipay.sdk.app.H5PayActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|navigation|screenSize"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="behind"-->
+            <!--android:windowSoftInputMode="adjustResize|stateHidden" />-->
 
         <!-- 微信支付 -->
         <receiver android:name=".wxapi.AppRegister">
