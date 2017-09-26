@@ -648,10 +648,10 @@ public class PayPresenter extends AbsPresenter {
                         mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-//                                mSetDialog.dismiss();
-//                                Intent intent = new Intent(activity, SetPayPassAty.class);
-//                                intent.putExtra(IntentKey.General.KEY_TYPE, Type.HAD_NO_SET_PW);
-//                                activity.startActivity(intent);
+                                mSetDialog.dismiss();
+                                Intent intent = new Intent(activity, SetPayPassAty.class);
+                                intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
+                                activity.startActivity(intent);
                             }
                         });
                         mSetDialog.show();
