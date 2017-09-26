@@ -136,7 +136,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     protected boolean hasDataInPage() {
-        return true;
+        return mAdapter != null && mAdapter.getCount() != 0;
     }
 
     @Override
@@ -185,7 +185,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                 pageNo++;
                             }
                             if (mAdapter.getCount() == 0) {
-                                onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.private_group_no_create));
+                                onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.private_group_no_create));
                             }
                         }
                         EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, data.size()));
@@ -208,6 +208,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        loadData(false);
     }
 }

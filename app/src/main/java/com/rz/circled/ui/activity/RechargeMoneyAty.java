@@ -103,17 +103,18 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
             public void convert(ViewHolder helper, String item, int position) {
                 TextView mTxt = (TextView) helper.getViewById(R.id.id_recharge_money_txt_other);
                 TextView mTxt1 = (TextView) helper.getViewById(R.id.id_recharge_money_txt);
+                View view = helper.getView(R.id.layout);
                 mTxt.setText(item + getString(R.string.rmb_yuan));
                 mTxt1.setText(item + "元");
                 if (checkMap.get(helper.getPosition(), false)) {
                     mTxt.setSelected(true);
-                    helper.getConvertView().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_stork_main));
+                    view.setSelected(true);
 //                    mTxt.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_stork_main));
 //                    mTxt.setSelected(true);
 //                    mTxt.setTextColor(Color.parseColor("#ffffff"));
                 } else {
                     mTxt.setSelected(false);
-                    helper.getConvertView().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_stork_prim));
+                    view.setSelected(false);
 //                    mTxt.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_stork_prim));
 //                    mTxt.setSelected(false);
 //                    mTxt.setTextColor(Color.parseColor("#999999"));

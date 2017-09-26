@@ -253,8 +253,8 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public <T> void updateView(T t) {
-        mMessFreeBean= (MessFreeBean) t;
-        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
+//        mMessFreeBean= (MessFreeBean) t;
+//        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
 
     }
 

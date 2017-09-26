@@ -47,8 +47,6 @@ public class MyLevelActivity extends BaseActivity {
     LinearLayout gourpLl;
     @BindView(R.id.rangebar)
     RangeBar rangeBar;
-    @BindView(R.id.lv_ten)
-    TextView lvTen;
     @BindView(R.id.divider_one)
     View dividerOne;
     @BindView(R.id.detail)

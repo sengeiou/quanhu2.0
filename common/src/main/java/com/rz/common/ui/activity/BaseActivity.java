@@ -24,7 +24,10 @@ import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
+import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
@@ -63,8 +66,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public Activity aty;
 
     private InputMethodManager mImm;
-
-    private boolean isForeground = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -644,13 +645,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     @Override
     protected void onResume() {
         super.onResume();
-        isForeground = true;
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        isForeground = false;
     }
 
 
@@ -683,7 +682,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
-        if (isForeground) {
+        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
             //弹窗重新登录
             Session.clearShareP();
             final KickDialog kickDialog = new KickDialog(this) {
@@ -691,18 +690,16 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                 @Override
                 public void onClick(View v) {
                     if (v.getId() == R.id.tv_kick_dialog_left) {
-                        try {
-                            String className = "com.rz.circled.ui.activity.LoginActivity";
-                            Class<?> aClass = Class.forName(className);
-                            startActivity(new Intent(mContext, aClass));
-                            finish();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
+                        closeDialog();
+                        String className = "com.rz.circled.ui.activity.LoginActivity";
+                        Intent intent = new Intent();
+                        intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
+                        intent.setClassName(mContext, className);
+                        startActivity(intent);
+                        finish();
                     } else {
                         System.exit(0);
                     }
-                    closeDialog();
                 }
             };
             kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -719,5 +716,4 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             kickDialog.showDialog();
         }
     }
-
 }

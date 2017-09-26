@@ -113,7 +113,7 @@
                 android:id="@+id/etv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px44"
+                android:layout_marginTop="@dimen/px36"
                 android:background="@null"
                 android:gravity="top"
                 android:hint="介绍个人身份、擅长领域、特长等。"
@@ -121,7 +121,7 @@
                 android:lineSpacingExtra="4dp"
                 android:maxLength="30"
                 android:textColor="@color/font_gray_m"
-                android:textColorHint="@color/font_gray_s"
+                android:textColorHint="@color/font_gray_a"
                 android:textSize="@dimen/px44" />
 
             <LinearLayout
@@ -216,8 +216,9 @@
                         android:layout_marginTop="@dimen/px28"
                         android:gravity="center"
                         android:paddingLeft="@dimen/px10"
+                        android:lineSpacingExtra="2dp"
                         android:paddingRight="@dimen/px10"
-                        android:text="上传私圈封面图"
+                        android:text="@string/private_group_update_icon"
                         android:textColor="@color/font_gray_s"
                         android:textSize="@dimen/font_38" />
                 </LinearLayout>
@@ -303,7 +304,7 @@
                 android:id="@+id/etv_group_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px44"
+                android:layout_marginTop="@dimen/px36"
                 android:background="@null"
                 android:gravity="top"
                 android:hint="介绍私圈、私圈提供资源、帮助用户解决什么问题等"
@@ -311,7 +312,7 @@
                 android:lineSpacingExtra="4dp"
                 android:maxLength="200"
                 android:textColor="@color/font_gray_m"
-                android:textColorHint="@color/font_gray_s"
+                android:textColorHint="@color/font_gray_a"
                 android:textSize="@dimen/font_44" />
 
             <LinearLayout

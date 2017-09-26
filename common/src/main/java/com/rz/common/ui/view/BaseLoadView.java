@@ -28,6 +28,7 @@ public class BaseLoadView implements View.OnClickListener {
     private TextView tvStatus;
     private ImageView ivStatus;
     private TextView tvFunction;
+    private TextView tvAction;
     private SimpleDraweeView ivLoading;
     private RefreshListener refreshListener;
     private FrameLayout llError;
@@ -47,7 +48,9 @@ public class BaseLoadView implements View.OnClickListener {
         tvStatus = (TextView) statusView.findViewById(R.id.tv_base_load_status);
         ivStatus = (ImageView) statusView.findViewById(R.id.iv_base_load_status);
         tvFunction = (TextView) statusView.findViewById(R.id.tv_base_load_function);
+        tvAction = (TextView) statusView.findViewById(R.id.tv_base_load_action);
         tvFunction.setOnClickListener(this);
+        tvAction.setOnClickListener(this);
         statusView.setOnClickListener(this);
         statusView.setVisibility(View.GONE);
     }
@@ -161,7 +164,10 @@ public class BaseLoadView implements View.OnClickListener {
             statusView.setVisibility(View.VISIBLE);
             ivStatus.setImageResource(R.mipmap.icon_data_empty);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg);
-            tvFunction.setVisibility(View.GONE);
+            if (tvFunction.getVisibility() != View.VISIBLE) {
+                tvAction.setText(R.string.status_network_retry);
+                tvAction.setVisibility(View.VISIBLE);
+            }
             llError.setVisibility(View.VISIBLE);
         }
     }
@@ -178,7 +184,9 @@ public class BaseLoadView implements View.OnClickListener {
             statusView.setVisibility(View.VISIBLE);
             ivStatus.setImageResource(R.mipmap.icon_load_error);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg);
-            tvFunction.setVisibility(View.VISIBLE);
+            tvFunction.setVisibility(View.GONE);
+            tvAction.setText(R.string.status_network_retry);
+            tvAction.setVisibility(View.VISIBLE);
             llError.setVisibility(View.VISIBLE);
         }
     }
@@ -216,6 +224,8 @@ public class BaseLoadView implements View.OnClickListener {
             ivStatus.setImageResource(R.mipmap.icon_load_error);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg);
             tvFunction.setVisibility(View.GONE);
+            tvAction.setText(R.string.status_network_retry);
+            tvAction.setVisibility(View.VISIBLE);
             llError.setVisibility(View.VISIBLE);
         }
     }
@@ -235,11 +245,14 @@ public class BaseLoadView implements View.OnClickListener {
      * @param string
      */
     public void setFunctionText(String string) {
+        if (tvFunction.getVisibility() != View.VISIBLE)
+            tvFunction.setVisibility(View.VISIBLE);
         tvFunction.setText(string);
     }
 
     /**
      * 设置功能按钮点击事件
+     *
      * @param clickListener
      */
     public void setFunctionClickListener(View.OnClickListener clickListener) {

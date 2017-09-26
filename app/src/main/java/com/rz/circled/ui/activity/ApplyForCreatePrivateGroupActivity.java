@@ -96,7 +96,8 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     @Override
     public void initView() {
-        setTitleRightText(R.string.submit);
+        setTitleText(R.string.private_group_apply_for);
+        setTitleRightText(R.string.mine_person_save);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,38 +128,9 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 updateCoverPic();
             }
         });
-        etvDesc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                tvDescNum.setText(String.valueOf(s.length()));
-            }
-        });
-        etvGroupDesc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                tvDescGroupNum.setText(String.valueOf(s.length()));
-            }
-        });
+        etvName.addTextChangedListener(new MyTextWatcher(tvNameNum));
+        etvDesc.addTextChangedListener(new MyTextWatcher(tvDescNum));
+        etvGroupDesc.addTextChangedListener(new MyTextWatcher(tvDescGroupNum));
     }
 
     @Override
@@ -301,5 +273,28 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     @Override
     public void refreshPage() {
 
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+        private TextView tv;
+
+        public MyTextWatcher(TextView tv) {
+            this.tv = tv;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            tv.setText(String.valueOf(s.length()));
+        }
     }
 }

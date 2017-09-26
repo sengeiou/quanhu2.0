@@ -102,6 +102,7 @@ public class UserInfoActivity extends BaseActivity{
     private IPresenter presenter;
     private IPresenter friendPresenter;
 
+
     private String userId = "";
 
     @Override
@@ -239,9 +240,10 @@ public class UserInfoActivity extends BaseActivity{
             addFriendLayout.setVisibility(View.GONE);
         }
 
-//        if(baseEvent.info == EventConstant.){
-//
-//        }
+        if(baseEvent.type == EventConstant.USER_AVATAR_REFUSE){
+            //更新用户详情
+            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+        }
 
     }
 
@@ -269,7 +271,6 @@ public class UserInfoActivity extends BaseActivity{
         public CharSequence getPageTitle(int position) {
             return getString(itemName[position]);
         }
-
 
 
         @Override

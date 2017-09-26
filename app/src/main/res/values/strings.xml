@@ -233,6 +233,7 @@
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
+    <string name="private_group_update_icon">上传私圈\n封面图</string>
     <string name="private_group_level_tip">抱歉，您的会员等级达到Lv.5才可以创建私圈，如有疑问请联系客服</string>
 
     <!--消息-->
@@ -625,6 +626,7 @@
     <string name="reward_artical">打赏的作品</string>
     <string name="rewarded_artical">被打赏的作品</string>
     <string name="waring_login">返回登录页，选择其他登录方式？</string>
+    <string name="account_lock">您的账户已被锁定，请联系客服</string>
 
     <!-- 个人信息 -->
 
@@ -775,4 +777,6 @@
     <string name="authorization_fail">授权失败！</string>
     <string name="pay_fail">支付失败</string>
     <string name="editor_un_share_read">不可同时选择付费阅读与免费推广</string>
+
+    <string name="voice_cancel_hint">&#160;&#160;&#160;&#160;&#160;&#160;确定要取消录制吗？&#160;&#160;&#160;&#160;&#160;&#160;</string>
 </resources>

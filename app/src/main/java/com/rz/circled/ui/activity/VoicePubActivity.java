@@ -27,6 +27,7 @@ import com.rz.common.permission.AfterPermissionGranted;
 import com.rz.common.permission.AppSettingsDialog;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.DialogUtils;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.NetUtils;
@@ -88,6 +89,11 @@ public class VoicePubActivity extends BaseActivity {
     private String uploadUrl;//上传url
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_voice_pub, null);
     }
@@ -128,6 +134,22 @@ public class VoicePubActivity extends BaseActivity {
                 } else {
                     initAudioDuration();
                     oss();
+                }
+            }
+        });
+        setTitleLeftListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(audioPath)) finish();
+                else {
+                    final CommonDialog commonDialog = new CommonDialog(mContext);
+                    commonDialog.showDialog(R.string.voice_cancel_hint, new CommonDialog.OnCommonDialogConfirmListener() {
+                        @Override
+                        public void onConfirmListener() {
+                            commonDialog.closeDialog();
+                            finish();
+                        }
+                    });
                 }
             }
         });
@@ -448,6 +470,8 @@ public class VoicePubActivity extends BaseActivity {
     }
 
     public void callResult(boolean result) {
+        if (audioDuration > CommonCode.Constant.MAX_INTERVAL_TIME * 100) ;
+        audioDuration = CommonCode.Constant.MAX_INTERVAL_TIME * 100;
         HashMap<String, Object> map = new HashMap<>();
         map.put("url", uploadedUrl);
         map.put("audioTime", audioDuration);
@@ -457,7 +481,6 @@ public class VoicePubActivity extends BaseActivity {
     }
 
     private void uploadAudioFile() {
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
         Log.d("test", "uploadVideoFile uoloadId is " + currentUploadId);
         if (mOssManager == null)
             mOssManager = new OssManager();
@@ -476,7 +499,7 @@ public class VoicePubActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(uploadId)) {
                     currentUploadId = uploadId;
                 }
-                onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 showRetryPublishVideoDialog();
                 Log.d("multipartUpload", "OssCallBack onFailure uploadId " + uploadId);
             }

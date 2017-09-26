@@ -128,7 +128,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @Override
     protected boolean hasDataInPage() {
-        return true;
+        return mAdapter != null && mAdapter.getCount() != 0;
     }
 
     @Override
@@ -200,6 +200,6 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        loadData(false);
     }
 }
