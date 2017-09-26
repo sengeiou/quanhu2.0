@@ -329,7 +329,7 @@ public class PayPresenter extends AbsPresenter {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                     return;
                                 }
                             }, 2000);
@@ -337,9 +337,9 @@ public class PayPresenter extends AbsPresenter {
                     }
                 }
                 if (flag) {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, activity.getString(R.string.check_fail));
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.check_fail));
                 } else {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                 }
             }
 
@@ -915,7 +915,7 @@ public class PayPresenter extends AbsPresenter {
                                 mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.auth_remind_content));
+                                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                         Intent intent = new Intent(activity, SetPayPassAty.class);
                                         intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
                                         activity.startActivity(intent);
