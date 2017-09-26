@@ -13,12 +13,10 @@ import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShareModel;
-import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.circled.widget.SwitchButton;
 import com.rz.common.cache.CachePath;
-import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.H5Address;
@@ -37,7 +35,6 @@ import com.yryz.yunxinim.login.LogoutHelper;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -197,7 +194,8 @@ public class SettingActivity extends BaseActivity {
                         ((UpdateOrExitPresenter) presenter).ExitApp();
                         exitApp();
                         Session.clearShareP();
-                        finish();
+                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
                     }
@@ -255,8 +253,8 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public <T> void updateView(T t) {
-        mMessFreeBean= (MessFreeBean) t;
-        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
+//        mMessFreeBean= (MessFreeBean) t;
+//        mIdSbMess.setChecked(mMessFreeBean.pushStatus==pushState?true:false);
 
     }
 

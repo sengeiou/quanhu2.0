@@ -182,7 +182,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CircleDynamic circleDynamic = circleDynamicList.get(position - 1);
+        CircleDynamic circleDynamic = circleDynamicList.get(position-1);
 //        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535243033497698304")
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())

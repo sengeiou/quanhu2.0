@@ -1,10 +1,12 @@
 package com.rz.circled.ui.fragment;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -12,6 +14,8 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchCircleAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
+import com.rz.circled.ui.activity.AllCirclesAty;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -62,12 +66,24 @@ public class SearchCircleFragment extends BaseFragment {
         circleAdapter.setData(circleBeanList);
         gvCircle.setAdapter(circleAdapter);
 
+        gvCircle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CircleEntrModle circleEntrModle = circleBeanList.get(position);
+                if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
+                    Intent intent = new Intent(mActivity, AllCirclesAty.class);
+                    getActivity().startActivity(intent);
+                } else {
+                    circleEntrModle.click+=1;
+                    WebContainerActivity.startActivity(mActivity, circleBeanList.get(position).circleUrl);
+                }
+            }
+        });
+
     }
 
     @Override
     public void initData() {
-        Log.e(TAG,"-----SearchCircleFragment------");
-
         initRefresh();
     }
 

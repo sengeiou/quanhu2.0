@@ -91,6 +91,7 @@ android {
             buildConfigField "String", "BaseOpusUrl", "\"http://opusapi.quanhu365.com/\""
             buildConfigField "String", "HomeUrl", "\"https://www.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m.quanhu365.com\""
+            buildConfigField "String", "OpusBaseUrl", "\"https://opus.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
@@ -112,6 +113,7 @@ android {
             buildConfigField "String", "BaseOpusUrl", "\"http://opusapi-mo.quanhu365.com/\""
             buildConfigField "String", "HomeUrl", "\"https://www-mo.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m-mo.quanhu365.com\""
+            buildConfigField "String", "OpusBaseUrl", "\"https://opus-mo.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
@@ -133,6 +135,7 @@ android {
             buildConfigField "String", "BaseOpusUrl", "\"http://opusapi-dev.quanhu365.com/\""
             buildConfigField "String", "HomeUrl", "\"http://www-dev.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
+            buildConfigField "String", "OpusBaseUrl", "\"https://opus-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",

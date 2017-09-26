@@ -23,7 +23,7 @@ import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.CommomUtils;
-import com.rz.circled.widget.GlideCircleImage;
+import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.ImageAdaptationUtils;
 import com.rz.common.utils.StringUtils;
@@ -37,7 +37,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 /**
  * Created by Administrator on 2017/9/12 0012.
  */
@@ -234,7 +233,6 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                     if (convertView == null) {
                         convertView = View.inflate(mContext, R.layout.v3_item_circle_collect, null);
                     }
-                    ImageView iv_head = (ImageView) convertView.findViewById(R.id.civ_head);
                     ImageView only_iv = (ImageView) convertView.findViewById(R.id.iv_circle_1img);
                     LinearLayout iv_layout = (LinearLayout) convertView.findViewById(R.id.ll_circle_3imgs);
                     ImageView iv_1 = (ImageView) convertView.findViewById(R.id.iv_circle_img01);
@@ -244,23 +242,20 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                     RelativeLayout rl_circle_video_content = (RelativeLayout) convertView.findViewById(R.id.rl_circle_video_content);
                     mIv_edit = (ImageView) convertView.findViewById(R.id.iv_edit);
                     editCollection(mIv_edit, collectionBean);
-                    TextView tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+                    TextView tv_name = (TextView) convertView.findViewById(R.id.tv_nick_name);
                     TextView fromWhere = (TextView) convertView.findViewById(R.id.tv_from_where);
                     TextView title = (TextView) convertView.findViewById(R.id.tv_title);
-                    LinearLayout ll_head = (LinearLayout) convertView.findViewById(R.id.ll_head);
                     TextView content = (TextView) convertView.findViewById(R.id.tv_des);
                     ViewGroup mImageLayout = (ViewGroup) convertView.findViewById(R.id.layout_image);
                     fromWhere.setTextColor(getResources().getColor(R.color.color_999999));
                     if ("1005".equals(resourceType)) {
                         //如果是活动隐藏头部信息和脚部信息
-                        ll_head.setVisibility(View.GONE);
                         fromWhere.setVisibility(View.GONE);
                     } else {
-                        ll_head.setVisibility(View.VISIBLE);
                         fromWhere.setVisibility(View.VISIBLE);
                     }
                     //title是null说明是帖子
-                    if (resourceInfo.getTitle() == null) {
+                    if (TextUtils.isEmpty(resourceInfo.getTitle())) {
                         content.setMaxLines(4);
                         title.setVisibility(View.GONE);
                     } else {
@@ -268,7 +263,6 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         title.setVisibility(View.VISIBLE);
                     }
                     content.setText(resourceInfo.getContent());
-                    Glide.with(mContext).load(user.getCustImg()).transform(new GlideCircleImage(mContext)).into(iv_head);
                     tv_name.setText(user.getCustNname());
                     //多图区域
                     String pics1 = resourceInfo.getPics();
@@ -281,7 +275,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                             only_iv.setVisibility(View.VISIBLE);
                             iv_layout.setVisibility(View.GONE);
                             String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics1, R.dimen.px994, R.dimen.px558);
-                            Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).into(only_iv);
+                            Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext,10)).into(only_iv);
                         } else {
                             only_iv.setVisibility(View.GONE);
                             iv_layout.setVisibility(View.VISIBLE);
@@ -304,22 +298,28 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                                     iv = iv_3;
                                 }
                                 String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i], R.dimen.px320, R.dimen.px320);
-                                Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img3).into(iv);
+                                Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img3).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
                             }
                         }
                     }
                     if (!TextUtils.isEmpty(resourceInfo.getVideoPic())) {
                         rl_circle_video_content.setVisibility(View.VISIBLE);
                         iv_layout.setVisibility(View.GONE);
-                        Glide.with(mContext).load(resourceInfo.getVideoPic()).placeholder(R.color.black).into(mVideo_Preview);
+                        Glide.with(mContext).load(resourceInfo.getVideoPic()).placeholder(R.color.black).transform(new GlideCenterRoundImage(mContext,10)).into(mVideo_Preview);
                     } else {
                         rl_circle_video_content.setVisibility(View.GONE);
                     }
                     if (StringUtils.isEmpty(coterieInfo.getCoterieId())||StringUtils.isEmpty(coterieInfo.getName())) {
-                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName());
+                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName()+" >");
                     } else {
-                        fromWhere.setText("来自私圈 " + coterieInfo.getName());
+                        fromWhere.setText("来自私圈 " + coterieInfo.getName()+" >");
                     }
+                    tv_name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UserInfoActivity.newFrindInfo(mContext,user.getCustId());
+                        }
+                    });
                     fromWhere.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -379,5 +379,14 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
     public void onRefresh() {
         mPresenter.getCircleCollection();
         mRefresh.setRefreshing(false);
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return mCollectionAdapter != null &&mCollectionAdapter.getCount() != 0;
+    }
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 }

@@ -23,6 +23,7 @@ import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.XGridView;
@@ -209,7 +210,7 @@ public class FindFragment extends BaseFragment {
                 TextView title = (TextView) convertView.findViewById(R.id.activity_title);
                 ImageView iv = (ImageView) convertView.findViewById(R.id.iv_activity_icon);
                 title.setText(entitiesBean.getTitle());
-                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).into(iv);
+                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).transform(new GlideCenterRoundImage(mActivity,10)).into(iv);
                 return convertView;
             }
         };
@@ -230,7 +231,7 @@ public class FindFragment extends BaseFragment {
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 HotSubjectModel hotSubjectModel = subjectList.get(position);
                 SubjectVH vh = (SubjectVH) holder;
-                Glide.with(mActivity).load(hotSubjectModel.getThumbnail()).placeholder(R.drawable.default_subject_bg).into(vh.topicIcon);
+                Glide.with(mActivity).load(hotSubjectModel.getThumbnail()).placeholder(R.drawable.default_subject_bg).transform(new GlideCenterRoundImage(mActivity)).into(vh.topicIcon);
                 vh.topicName.setText(hotSubjectModel.getTitle());
                 vh.topicCount.setText(hotSubjectModel.getReadNum() + "人参与");
 
@@ -397,7 +398,7 @@ public class FindFragment extends BaseFragment {
                 WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/zgzyq/");
                 break;
             case R.id.btn_quanle:
-                WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/qql");
+                WebContainerActivity.startActivity(mActivity,BuildConfig.OpusBaseUrl+"/activity/qql");
                 break;
         }
     }

@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,11 +11,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
@@ -25,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -60,9 +64,19 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                 .getMineActivityList(pageNo, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResponseData<ActivityBean>>() {
+                .subscribe(new Observer<ResponseData<ActivityBean>>() {
                     @Override
-                    public void call(ResponseData<ActivityBean> res) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<ActivityBean> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             pageNo++;
                             List<EntitiesBean> entities = res.getData().entities;
@@ -87,23 +101,33 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             }
         };
         mLv.setAdapter(mEntitiesBeanCommonAdapter);
+
+        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     @Override
     public void initData() {
-
+        initPresenter();
     }
+
     @Override
     protected boolean hasDataInPage() {
         return mEntitiesBeanCommonAdapter.getCount() != 0;
     }
     @Override
+
     protected boolean needLoadingView() {
         return true;
     }
+
     @Override
     public void refreshPage() {
-
+        initPresenter();
     }
 
     @Override
@@ -111,4 +135,6 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         initPresenter();
         mActivityRefresh.setRefreshing(false);
     }
+
+
 }

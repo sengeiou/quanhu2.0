@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.HotSubjectModel;
@@ -59,7 +60,7 @@ public class MoreSubjectActivity extends BaseActivity {
                 helper.getView(R.id.acitvity_des).setVisibility(View.VISIBLE);
                 ImageView civ_head = helper.getView(R.id.civ_head);
                 ImageView civ_thumbnail = helper.getView(R.id.iv_activity_icon);
-                Glide.with(mContext).load(item.getThumbnail()).into(civ_thumbnail);
+                Glide.with(mContext).load(item.getThumbnail()).transform(new GlideCenterRoundImage(mContext,10)).into(civ_thumbnail);
                 TextView tv_name = helper.getView(R.id.tv_name);
                 tv_name.setText(item.getCustNname());
                 TextView tv_title = helper.getView(R.id.activity_title);
@@ -69,7 +70,7 @@ public class MoreSubjectActivity extends BaseActivity {
                 TextView tv_talk_count = helper.getView(R.id.tv_talk_count);
                 tv_talk_count.setText(item.getPartNum() + "讨论");
                 TextView tv_where = helper.getView(R.id.tv_where);
-                tv_where.setText("来自私圈" + item.getCoterieName());
+                tv_where.setText("来自私圈" + item.getCoterieName()+" >");
 
             }
         };

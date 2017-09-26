@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * 轮播图的目的是展示一些图片和文字
- * <p>
+ * <p/>
  * 方法设计
  * 1 传入数据
  * // public void setItems(String[] picUrls ,String[] titles)
@@ -40,7 +40,7 @@ import java.util.List;
  * String title;
  * }
  * public void setItems(List<RollItem> items);
- * <p>
+ * <p/>
  * 2 开始或停止轮播
  * public void setAutoRoll(boolean allow)
  */
@@ -71,20 +71,21 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
     }
 
 
-    public void notifyData(){
-    mPagerAdapter.notifyDataSetChanged();
-}
+    public void notifyData() {
+        mPagerAdapter.notifyDataSetChanged();
+    }
+
     public void setItems(List<BannerAddSubjectModel> items) {
         mItems = items;
         // ViewPager
 
         // dots , 添加点  点变色  点被点击
         mDotContainer.removeAllViews();
-        if(mItems == null || mItems.isEmpty()){
+        if (mItems == null || mItems.isEmpty()) {
             return;
         }
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(scrollble?100:0);
+        mViewPager.setCurrentItem(scrollble ? 100 : 0);
         // TextView
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);
         addDots();
@@ -95,7 +96,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
     private void addDots() {
 
         int size = mItems.size();
-        if (size==1){
+        if (size == 1) {
             return;
         }
         int pxFor10dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
@@ -116,25 +117,27 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
     }
 
     ;
-    static Handler sHandler =new Handler();
-    boolean mAllowAutoRoll ;
+    static Handler sHandler = new Handler();
+    boolean mAllowAutoRoll;
+
     public void setAutoRoll(boolean allow) {
-        if(mAllowAutoRoll ==allow){
+        if (mAllowAutoRoll == allow) {
             return;
         }
-        if(allow){
+        if (allow) {
             sHandler.postDelayed(mGoNextPageRunnable, 1000);
-        }else{
+        } else {
             sHandler.removeCallbacks(mGoNextPageRunnable);
         }
         mAllowAutoRoll = allow;
 
     }
+
     Runnable mGoNextPageRunnable = new Runnable() {
         @Override
         public void run() {
             goNextPage();
-            sHandler.postDelayed(this,3000);
+            sHandler.postDelayed(this, 3000);
         }
     };
 
@@ -142,17 +145,17 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
 
     private void goNextPage() {
         int currentIndex = mViewPager.getCurrentItem();
-        if(currentIndex ==0){
+        if (currentIndex == 0) {
             mIsGoRight = true;
         }
-        if(currentIndex == mPagerAdapter.getCount() -1){
+        if (currentIndex == mPagerAdapter.getCount() - 1) {
             mIsGoRight = false;
         }
         int nextIndex = 0;
-        if(mIsGoRight){
-            nextIndex = currentIndex +1 ;
-        }else{
-            nextIndex = currentIndex  -1 ;
+        if (mIsGoRight) {
+            nextIndex = currentIndex + 1;
+        } else {
+            nextIndex = currentIndex - 1;
         }
         // 当只有一个页面，而且在自动滚动的时候，nextIndex是-1 ，但代码没有崩，因为 ViewPager的setCurrentItem 有容错处理，小于0为0，大于最大为最大
         mViewPager.setCurrentItem(nextIndex);
@@ -163,7 +166,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
 
         @Override
         public int getCount() {
-            return scrollble?200:mItems.size();
+            return scrollble ? 200 : mItems.size();
         }
 
         @Override
@@ -181,20 +184,20 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
                 @Override
                 public void onClick(View v) {
                     String url = mItems.get(i).getUrl();
-                trackUser("推广","Banner图",url);
-                        if (url.contains("opus")) {
-                            if (url.contains("opus-h")){
-                                VideoH5Aty.startCommonH5((Activity) v.getContext(),url,context.getString(R.string.app_name));
-                            }else{
-                                WebContainerActivity.startActivity(v.getContext(), url);
-                            }
+                    trackUser("推广", "Banner图", url);
+                    if (url.contains("opus")) {
+                        if (url.contains("opus-h")) {
+                            VideoH5Aty.startCommonH5((Activity) v.getContext(), url, context.getString(R.string.app_name));
                         } else {
-                            if (Session.getUserIsLogin()){
-                                WebContainerActivity.startActivity(v.getContext(), url);
-                            }else{
-                            getContext().startActivity(new Intent(v.getContext(), LoginActivity.class));
-                            }
+                            WebContainerActivity.startActivity(v.getContext(), url, true);
                         }
+                    } else {
+                        if (Session.getUserIsLogin()) {
+                            WebContainerActivity.startActivity(v.getContext(), url, true);
+                        } else {
+                            getContext().startActivity(new Intent(v.getContext(), LoginActivity.class));
+                        }
+                    }
                 }
             });
             container.addView(imageView);
@@ -208,11 +211,12 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
         }
 
     };
-    private void trackUser(String text,String name,String value){
+
+    private void trackUser(String text, String name, String value) {
         //定义与事件相关的属性信息
         JSONObject eventObject = new JSONObject();
         try {
-            eventObject.put(name,value);
+            eventObject.put(name, value);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -239,9 +243,11 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
         int index = mDotContainer.indexOfChild(v);
         mViewPager.setCurrentItem(index);
     }
-    boolean scrollble=true;
+
+    boolean scrollble = true;
+
     public void setScrollble(boolean scrollble) {
-        this.scrollble=scrollble;
+        this.scrollble = scrollble;
     }
 
 //    @Override

@@ -14,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.UserInfoPresenter;
 import com.rz.circled.service.BackGroundService;
 import com.rz.common.cache.preference.Session;
@@ -32,6 +34,8 @@ import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.UserInfoBean;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -100,9 +104,13 @@ public class BoundPhoneActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
         boundTitleTxt.setText("绑定手机号");
         secondTxt.setVisibility(View.VISIBLE);
         secondTxt.setText(R.string.bound_waring_txt);
+        secondTxt.setVisibility(View.VISIBLE);
         finishBtn.setText("完成");
 
         loginModel = (UserInfoBean) getIntent().getExtras().getSerializable("loginmodel");
@@ -283,6 +291,7 @@ public class BoundPhoneActivity extends BaseActivity {
                     if(loginModel!= null) {
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SAVE,loginModel));
                     }
+                    this.finish();
                 }
             }
         }
@@ -400,4 +409,23 @@ public class BoundPhoneActivity extends BaseActivity {
     protected boolean needLoadingView() {
         return true;
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == EventConstant.BOUND_PHONE_FAIL ) {
+            if (baseEvent.getData() != null){
+                mc.cancel();
+                mc.onFinish();
+            }
+            return;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
 }

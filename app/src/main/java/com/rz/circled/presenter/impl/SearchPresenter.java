@@ -130,10 +130,10 @@ public class SearchPresenter extends GeneralPresenter {
                 null,
                 null,
                 keyWord,
-                5,
+                Constants.PAGESIZE,
                 null,
                 searchType,
-                0);
+                start);
 
 
         CallManager.add(call);

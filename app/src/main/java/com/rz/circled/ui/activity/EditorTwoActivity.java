@@ -727,7 +727,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (dataSource != null && dataSource.getContentSource() != null)
             processContentData();
 
-        //音频
+        //权限
         EditorConfigTwoModel authModel = null;
         if (configMap.containsKey("auth")) {
             authModel = configMap.get("auth");
@@ -1058,6 +1058,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (authModel != null && authModel.getEnabled()) {
             tvAuthority.setVisibility(View.VISIBLE);
             tvAuthority.setTag(authModel.getData());
+            dataSource.setAllowGeneralizeFlag(authModel.getData().getAllowGeneralizeFlag() == 1 ? 1 : 0);
+            dataSource.setAllowShareFlag(authModel.getData().getAllowShareFlag() == 1 ? 1 : 0);
+            dataSource.setContentPrice(authModel.getData().getContentPrice());
+            dataSource.setCoterieId(authModel.getData().getCoterieId());
         } else {
             tvAuthority.setVisibility(View.GONE);
         }

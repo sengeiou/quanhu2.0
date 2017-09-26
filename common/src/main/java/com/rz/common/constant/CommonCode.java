@@ -127,6 +127,8 @@ public interface CommonCode {
         int RECORDE_OPUS_VIDEO = 10002;
 
         int PAGE_SIZE = 10;
+
+        int TAB_MAIN_HOME = 1;
     }
 
     /**

@@ -140,7 +140,6 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.exit_success));
-                        mView.updateView("");
                         return;
                     } else {
                         if (HandleRetCode.handler(mContext, res)) {

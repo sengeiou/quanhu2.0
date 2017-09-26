@@ -4,16 +4,19 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
+import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.LoginTypeBean;
@@ -21,6 +24,8 @@ import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.constans.ReturnCode;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.List;
@@ -340,14 +345,14 @@ public class UserInfoPresenter extends GeneralPresenter {
                         mView.updateView("1");
                         return;
                     } else {
-//                        if (HandleRetCode.handler(mContext, res)) {
+                        if (HandleRetCode.handler(mContext, res)) {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                                 }
                             }, 2000);
-//                        }
+                        }
                         return;
                     }
                 }
@@ -526,12 +531,14 @@ public class UserInfoPresenter extends GeneralPresenter {
                         if (model != null) {
                             if (function == null || function.length() == 0 || Type.FUNCTION_CODE_5.equals(function)) {
                                 mView.updateView(model);
+                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             }
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.BOUND_PHONE_FAIL, res.getMsg()));
                         Toasty.info(mContext, res.getMsg()).show();
                     }
                 } else {

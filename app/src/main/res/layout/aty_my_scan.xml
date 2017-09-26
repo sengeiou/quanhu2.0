@@ -35,7 +35,7 @@
                 android:id="@+id/id_scan_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px30"
+                android:layout_marginTop="@dimen/px25"
                 android:text="@string/mine_person_ex2"
                 android:textColor="@color/color_999"
                 android:textSize="@dimen/font_40"/>

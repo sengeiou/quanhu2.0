@@ -23,4 +23,8 @@ public class EventConstant {
 
     public static final int USER_AVATAR_REFUSE = 200013;
     public static final int USER_BE_FROZEN = 200014;
+
+    public static final int BOUND_PHONE_FAIL = 200036;
+
+
 }

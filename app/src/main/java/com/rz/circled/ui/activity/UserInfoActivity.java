@@ -19,8 +19,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
@@ -42,6 +44,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/9/12 0012.
@@ -99,6 +102,7 @@ public class UserInfoActivity extends BaseActivity{
     private IPresenter presenter;
     private IPresenter friendPresenter;
 
+
     private String userId = "";
 
     @Override
@@ -152,7 +156,6 @@ public class UserInfoActivity extends BaseActivity{
 
     @Override
     public void initData() {
-
 
         //个人中心
         if(userId.equals(Session.getUserId())){
@@ -232,6 +235,16 @@ public class UserInfoActivity extends BaseActivity{
         if(baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE){
             setData(null);
         }
+
+        if(baseEvent.info.equals(FriendPresenter1.FRIEND_EVENT)){
+            addFriendLayout.setVisibility(View.GONE);
+        }
+
+        if(baseEvent.type == EventConstant.USER_AVATAR_REFUSE){
+            //更新用户详情
+            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+        }
+
     }
 
     @Override
@@ -258,7 +271,6 @@ public class UserInfoActivity extends BaseActivity{
         public CharSequence getPageTitle(int position) {
             return getString(itemName[position]);
         }
-
 
 
         @Override
@@ -300,6 +312,13 @@ public class UserInfoActivity extends BaseActivity{
                     userRole.getBackground().setAlpha(77);
                 }else if(data.getAuthStatus() == 1){
                     userRole.setText(data.getTradeField());
+                }
+            }else  if(t instanceof FriendInformationBean){
+                if(t != null){
+                    FriendInformationBean bean = (FriendInformationBean) t;
+
+                    Glide.with(this).load(bean.getCustImg()).transform(new GlideCircleImage(this)).
+                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 }
             }else{
                 if(data.getAuthStatus() == 1){
@@ -358,5 +377,13 @@ public class UserInfoActivity extends BaseActivity{
 
         }
     }
+
+    @OnClick(R.id.add_friend_btn)
+    public void addFriendClick(){
+
+        ((FriendPresenter1) friendPresenter).requireFriend(userId,"",1,CommonCode.requireFriend.require_type_agree);
+
+    }
+
 
 }
