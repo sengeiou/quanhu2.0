@@ -21,6 +21,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -195,6 +196,7 @@ public class SettingActivity extends BaseActivity {
                         exitApp();
                         Session.clearShareP();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                        intent.putExtra(IntentKey.EXTRA_TYPE,CommonCode.Constant.TAB_MAIN_HOME);
                         startActivity(intent);
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 

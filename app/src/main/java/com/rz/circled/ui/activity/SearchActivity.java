@@ -210,4 +210,6 @@ public class SearchActivity extends BaseActivity {
             return itemName.length;
         }
     }
+
+
 }

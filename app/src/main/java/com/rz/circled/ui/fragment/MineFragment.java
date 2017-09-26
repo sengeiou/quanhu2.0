@@ -327,9 +327,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
 
                 if (TextUtils.isEmpty(Session.getUser_signatrue())) {
-                    idPersonLoginDays.setText("");
+                    idPersonLoginDays.setText(getString(R.string.mine_sign_default));
                 } else {
-                    idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
+                    idPersonLoginDays.setText(Session.getUser_signatrue());
                 }
             } else {
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
@@ -408,9 +408,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (null != mTxtPersonName && null != mImgPersonHead) {
             initUserNews();
         }
-        if (!TextUtils.isEmpty(Session.getUserId())) {
-//            ((V3CirclePresenter) presenter).getCircleStats("");
-        }
+//        if (!TextUtils.isEmpty(Session.getUserId())) {
+////            ((V3CirclePresenter) presenter).getCircleStats("");
+//            setData();
+//        }
     }
 
     @Subscribe
@@ -552,7 +553,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
             custPointsTxt.setText("积分" + data.getScore()+"");
+            levelTxt.setText("Lv. " + data.getCustLevel());
 
+            Session.setUserLevel(data.getCustLevel());
 //            tvactivityCount.setText(data.getArticleNum()+"");
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
@@ -747,7 +750,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             case 11:
                 trackUser("我的", "帮助", "设置");
-                CommonH5Activity.startCommonH5(mActivity, H5Address.USER_HELP, "帮助");
+                CommonH5Activity.startCommonH5(mActivity, "帮助", H5Address.USER_HELP);
                 break;
             case 12:
                 trackUser("我的", "入口名称", "设置");
@@ -878,7 +881,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
 
         if (TextUtils.isEmpty(Session.getUser_signatrue())) {
-            idPersonLoginDays.setText("");
+            idPersonLoginDays.setText(getString(R.string.mine_sign_default));
         } else {
             idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
         }

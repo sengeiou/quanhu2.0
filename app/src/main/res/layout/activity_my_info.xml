@@ -49,7 +49,9 @@
 
         <RelativeLayout
             android:id="@+id/id_layout_person_nick"
-            style="@style/PersonInfoLineStyle">
+            style="@style/PersonInfoLineStyle"
+            android:layout_height="@dimen/px158"
+            >
 
             <TextView
                 style="@style/PersonInfoTitleTvStyle"
@@ -124,7 +126,8 @@
         <RelativeLayout
             android:id="@+id/id_layout_person_sex"
             style="@style/PersonInfoLineStyle"
-            android:layout_marginTop="@dimen/px44"
+            android:layout_height="@dimen/px158"
+            android:layout_marginTop="@dimen/px30"
             >
 
             <TextView
@@ -155,7 +158,9 @@
 
         <RelativeLayout
             android:id="@+id/id_layout_person_area"
-            style="@style/PersonInfoLineStyle">
+            style="@style/PersonInfoLineStyle"
+            android:layout_height="@dimen/px158"
+            >
 
             <TextView
                 style="@style/PersonInfoTitleTvStyle"
@@ -186,7 +191,8 @@
         <RelativeLayout
             android:id="@+id/id_layout_person_sign"
             style="@style/PersonInfoLineStyle"
-            android:layout_marginTop="@dimen/px44"
+            android:layout_marginTop="@dimen/px30"
+            android:layout_height="@dimen/px158"
             >
 
 

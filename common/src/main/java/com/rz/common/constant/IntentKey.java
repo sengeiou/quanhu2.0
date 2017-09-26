@@ -61,4 +61,6 @@ public interface IntentKey {
     //用户头像
     String KEXTRA_HEAD = "keyHead";
     String EXTRA_IMAGE = "extraImage";
+
+    String EXTRA_TAB = "extraTab";
 }

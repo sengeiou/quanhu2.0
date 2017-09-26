@@ -23,7 +23,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/px594"
+                    android:layout_height="@dimen/px554"
                     android:background="@mipmap/background_lite"
                     android:paddingTop="@dimen/title_bar_padding_top"
                     >
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px22"
                     android:layout_marginRight="@dimen/px22"
-                    android:layout_marginTop="@dimen/px282"
+                    android:layout_marginTop="@dimen/px262"
                     android:background="@drawable/login_rect_background"
                     >
 
@@ -206,12 +206,10 @@
                         android:layout_width="@dimen/px836"
                         android:layout_height="@dimen/px152"
                         android:layout_below="@id/et_layout"
-                        android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
                         android:layout_marginTop="@dimen/px80"
                         android:background="@mipmap/submit_login_btn_bg"
                         android:gravity="center"
-                        android:padding="@dimen/px12"
                         android:text="@string/login_with_space"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/px50"
@@ -224,6 +222,7 @@
                         android:layout_below="@+id/id_login_btn"
                         android:layout_marginTop="@dimen/px86"
                         android:gravity="center_horizontal"
+                        android:layout_marginBottom="@dimen/px20"
                         android:orientation="horizontal">
 
                         <TextView
@@ -269,7 +268,7 @@
                     android:layout_height="@dimen/px242"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/px201"
+                    android:layout_marginTop="@dimen/px181"
                     android:src="@mipmap/logo_login"
                     />
 
