@@ -1,5 +1,8 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +25,6 @@ import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
-import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
 import com.rz.circled.ui.fragment.MineFragment;
@@ -30,8 +32,8 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.Type;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;

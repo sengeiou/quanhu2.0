@@ -20,9 +20,7 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -103,14 +101,14 @@ public class RewardDetailAty extends BaseActivity {
                 int orderType = item.orderType;
                 if (orderType == 0) {
                     mPay.setText("-" + Currency.returnDollar(Currency.RMB, item.cost, 0));
-                    mPay.setTextColor(Color.parseColor("#1BC2B8"));
+                    mPay.setTextColor(Color.parseColor("#FF6060"));
                 } else if (orderType == 1) {
                     mPay.setText("+" + Currency.returnDollar(Currency.RMB, item.cost, 0));
-                    mPay.setTextColor(Color.parseColor("#FF6060"));
+                    mPay.setTextColor(Color.parseColor("#0185ff"));
                 }
-                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
-                String times = sdr.format(new Date(item.createTime * 1000L));
-                helper.setText(R.id.id_tv_date, times);
+//                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
+                String data = item.createTime.substring(0, 10);
+                helper.setText(R.id.id_tv_date, data);
             }
         };
         mListView.setAdapter(mAdapter);

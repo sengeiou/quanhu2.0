@@ -438,7 +438,7 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<BillDetailModel>>> call = mUserService
-                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
+                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
             @Override
