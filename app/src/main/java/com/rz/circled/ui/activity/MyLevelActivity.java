@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.appyvet.rangebar.RangeBar;
@@ -35,6 +36,8 @@ public class MyLevelActivity extends BaseActivity {
 
     @BindView(R.id.iv_my_level_icon)
     ImageView ivMyLevelIcon;
+    @BindView(R.id.scroll)
+    ScrollView scrollView;
     @BindView(R.id.tv_cur_level)
     TextView tvCurLevel;
     @BindView(R.id.tv_my_level_count)
@@ -127,6 +130,7 @@ public class MyLevelActivity extends BaseActivity {
             if (loadMore) {
                 mAdapter.addData(data);
             } else {
+                scrollView.scrollTo(0, 0);
                 mAdapter.setData(data);
             }
             pageNum++;

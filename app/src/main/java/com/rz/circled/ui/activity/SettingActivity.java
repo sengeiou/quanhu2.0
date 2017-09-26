@@ -168,7 +168,7 @@ public class SettingActivity extends BaseActivity {
                 ShareNewsAty.startShareNews(aty, new ShareModel(
                                 "圈乎，一指进入你的圈子",
                                 "圈乎(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
-                                H5Address.ONLINE_REPORT),
+                                H5Address.APP_DOWNLOAD),
                         IntentCode.Setting.SETTING_RESULT_CODE);
                 break;
             //清除缓存

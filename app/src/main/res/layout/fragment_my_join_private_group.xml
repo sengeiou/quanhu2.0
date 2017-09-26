@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/px20"
-        app:direction="both">
+        app:srl_direction="both">
 
         <ListView
             android:id="@+id/lv"
