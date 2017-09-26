@@ -38,7 +38,7 @@ public class SearchPersonAdapter extends SearchCommonAdapter {
         //name  或者 info 包含keyWord 则显示为蓝色字体
         tvName.setText(starListBean.custInfo.getCustNname());
         tvName.append(getSpan(""));//替换文本
-        Glide.with(mContext).load(starListBean.custInfo.getCustImg()).transform(new GlideCircleImage(mContext)).into(ivIcon);
+        Glide.with(mContext).load(starListBean.custInfo.getCustImg()).placeholder(R.drawable.iv_famous_defaule).transform(new GlideCircleImage(mContext)).into(ivIcon);
         tvInfo.setText(starListBean.starInfo.getTradeField());
         tvInfo.append(getSpan(""));//替换文本
 

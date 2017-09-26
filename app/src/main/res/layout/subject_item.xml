@@ -11,7 +11,9 @@
 <ImageView
     android:id="@+id/topic_iv"
     android:layout_width="@dimen/px180"
-    android:layout_height="@dimen/px200"
+    android:layout_height="@dimen/px190"
+    android:layout_centerVertical="true"
+    android:scaleType="fitXY"
     android:src="@drawable/default_subject_bg"/>
     <TextView
         android:id="@+id/topic_name"

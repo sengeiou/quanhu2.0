@@ -2,12 +2,12 @@
 <com.rz.circled.widget.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F5F5F5">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_F5F5F5"
+        android:background="@color/app_bg_gray_common"
         android:orientation="vertical">
 
         <include layout="@layout/com_search_bar" />
@@ -15,20 +15,21 @@
         <RelativeLayout
             android:id="@+id/id_addfriend_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px190"
             android:background="@drawable/comm_item_selector"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/px30"
-            android:paddingLeft="@dimen/px40"
-            android:paddingRight="@dimen/px40"
-            android:paddingTop="@dimen/px30">
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/id_scan_img2"
                 android:layout_marginLeft="@dimen/px28"
+                android:layout_marginTop="-2dp"
                 android:layout_toRightOf="@+id/id_scan_img2"
+                android:gravity="start"
+                android:includeFontPadding="false"
                 android:text="@string/one_key_firend"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_50" />
@@ -37,16 +38,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/id_scan_img2"
+                android:layout_marginBottom="-1.5dp"
                 android:layout_marginLeft="@dimen/px28"
                 android:layout_toRightOf="@+id/id_scan_img2"
+                android:gravity="end"
+                android:includeFontPadding="false"
                 android:text="@string/wechat_qq"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_40" />
 
             <ImageView
                 android:id="@+id/id_scan_img2"
-                android:layout_width="@dimen/px118"
-                android:layout_height="@dimen/px118"
+                android:layout_width="@dimen/px104"
+                android:layout_height="@dimen/px104"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/one_key_firend" />
@@ -62,30 +66,27 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE" />
-
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginLeft="@dimen/px44"
+            android:layout_marginRight="@dimen/px44" />
 
         <RelativeLayout
             android:id="@+id/id_scan_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px190"
             android:background="@drawable/comm_item_selector"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/px30"
-            android:paddingLeft="@dimen/px40"
-            android:paddingRight="@dimen/px40"
-            android:paddingTop="@dimen/px30">
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/id_scan_img"
                 android:layout_marginLeft="@dimen/px28"
+                android:layout_marginTop="-2dp"
                 android:layout_toRightOf="@+id/id_scan_img"
+                android:includeFontPadding="false"
                 android:text="@string/add_friend_sweep"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_50" />
@@ -94,16 +95,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/id_scan_img"
+                android:layout_marginBottom="-1.5dp"
                 android:layout_marginLeft="@dimen/px28"
                 android:layout_toRightOf="@+id/id_scan_img"
+                android:includeFontPadding="false"
                 android:text="@string/sweep_introduce"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_40" />
 
             <ImageView
                 android:id="@+id/id_scan_img"
-                android:layout_width="@dimen/px118"
-                android:layout_height="@dimen/px118"
+                android:layout_width="@dimen/px104"
+                android:layout_height="@dimen/px104"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/ic_contacts_scan" />
@@ -119,30 +122,27 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE" />
-
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginLeft="@dimen/px44"
+            android:layout_marginRight="@dimen/px44" />
 
         <RelativeLayout
             android:id="@+id/id_contacts_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px190"
             android:background="@drawable/comm_item_selector"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/px30"
-            android:paddingLeft="@dimen/px40"
-            android:paddingRight="@dimen/px40"
-            android:paddingTop="@dimen/px30">
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/id_contacts_img"
                 android:layout_marginLeft="@dimen/px28"
+                android:layout_marginTop="-2dp"
                 android:layout_toRightOf="@+id/id_contacts_img"
+                android:includeFontPadding="false"
                 android:text="@string/contacts_phone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_50" />
@@ -151,16 +151,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/id_contacts_img"
+                android:layout_marginBottom="-1.5dp"
                 android:layout_marginLeft="@dimen/px28"
                 android:layout_toRightOf="@+id/id_contacts_img"
+                android:includeFontPadding="false"
                 android:text="@string/phone_introduce"
-                android:textColor="@color/color_666666"
+                android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_40" />
 
             <ImageView
                 android:id="@+id/id_contacts_img"
-                android:layout_width="@dimen/px118"
-                android:layout_height="@dimen/px118"
+                android:layout_width="@dimen/px104"
+                android:layout_height="@dimen/px104"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/r_phone_contacts" />
@@ -174,6 +176,10 @@
                 android:src="@drawable/ic_right_arrow" />
         </RelativeLayout>
 
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginLeft="@dimen/px44"
+            android:layout_marginRight="@dimen/px44" />
     </LinearLayout>
 
 </com.rz.circled.widget.OverScrollView>

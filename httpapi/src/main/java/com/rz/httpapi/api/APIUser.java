@@ -189,7 +189,7 @@ public class APIUser {
     /**
      * 获得成长流水
      */
-    public static final String GET_LEVEL_LIST = "/v3/event/grow/flow";
+    public static final String GET_LEVEL_LIST = "v3/event/grow/flow";
 
     /**
      * 获取打赏统计

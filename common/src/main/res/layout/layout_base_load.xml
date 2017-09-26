@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/ll_base_load_status_root"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:gravity="center">
+    android:id="@+id/ll_base_load_status_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_base_load_loading"
         android:layout_width="@dimen/px300"
         android:layout_height="@dimen/px300"
         android:layout_centerInParent="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
 
     <FrameLayout
         android:id="@+id/ll_base_load_status"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@color/white"
@@ -35,31 +35,44 @@
                 android:layout_width="@dimen/px450"
                 android:layout_height="@dimen/px450"
                 android:layout_marginTop="@dimen/px240"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/tv_base_load_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/px30"
                 android:layout_marginTop="@dimen/px60"
+                android:gravity="center"
                 android:textColor="@color/font_gray_s"
-                android:textSize="@dimen/font_44"/>
+                android:textSize="@dimen/font_44" />
+
+            <TextView
+                android:id="@+id/tv_base_load_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px160"
+                android:layout_marginRight="@dimen/px160"
+                android:layout_marginTop="@dimen/px144"
+                android:background="@drawable/shape_blue"
+                android:gravity="center"
+                android:padding="@dimen/px32"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_46"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_base_load_function"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px144"
                 android:background="@drawable/shape_ring_blue"
                 android:gravity="center"
                 android:minWidth="@dimen/px405"
                 android:paddingBottom="@dimen/px35"
-                android:paddingLeft="@dimen/px65"
-                android:paddingRight="@dimen/app_base_padding"
-                android:paddingTop="@dimen/px35"
+                android:paddingTop="@dimen/px32"
                 android:textColor="@color/font_color_blue"
                 android:textSize="@dimen/font_46"
-                android:visibility="visible"/>
+                android:visibility="gone" />
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

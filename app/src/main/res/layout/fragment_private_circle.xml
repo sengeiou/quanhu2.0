@@ -4,7 +4,7 @@
     android:id="@+id/layout_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:direction="both">
+    app:srl_direction="both">
 
     <ScrollView
         android:id="@+id/scroll"
@@ -210,6 +210,7 @@
                             android:id="@+id/btn_about"
                             android:layout_width="@dimen/px400"
                             android:layout_height="@dimen/px110"
+                            android:layout_marginTop="@dimen/px58"
                             android:background="@drawable/shape_stork_main"
                             android:gravity="center"
                             android:includeFontPadding="false"

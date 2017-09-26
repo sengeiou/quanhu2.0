@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/px58"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/civ_head"
@@ -95,7 +97,13 @@
 
             <TextView
                 android:id="@+id/tv_other_left"
-                style="@style/DynamicHomeFuncTvStyle" />
+                style="@style/DynamicHomeFuncTvStyle"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_round_yellow"
+                android:paddingLeft="@dimen/px8"
+                android:paddingRight="@dimen/px8"
+                android:text="200"
+                />
 
 
         <!--</LinearLayout>-->

@@ -34,6 +34,7 @@
     android:text="7月25日光谷国际广场B座1129将开展正式湖东,湖东会邀请大名鼎鼎湖畔花园夏雨荷过来演讲如何月入百万"
     android:textColor="@color/color_000000"
     android:textStyle="bold"
+    android:textSize="@dimen/font_54"
     android:maxLines="2"
     />
     <TextView

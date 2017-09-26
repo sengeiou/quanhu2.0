@@ -73,7 +73,7 @@ public class SearchRewardFragment extends BaseFragment {
         lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getOrderId()+"");
+                CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getOfferId()+"");
             }
         });
 

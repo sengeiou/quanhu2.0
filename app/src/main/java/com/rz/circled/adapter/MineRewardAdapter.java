@@ -40,7 +40,7 @@ public class MineRewardAdapter extends CommonAdapter {
 
         tvName.setText(model.getUser().getCustNname());
         tvTime.setText(model.getCreateTime()+"");
-        tvTitle.setText(model.getResourceInfo().getTitle());
+        tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice() +"("+ model.getGiftInfo().getName()+")给");
 
         if(model.getResourceInfo().getPics() != null){
             Glide.with(mContext).load(model.getResourceInfo().getPics()).into(rewardImg);

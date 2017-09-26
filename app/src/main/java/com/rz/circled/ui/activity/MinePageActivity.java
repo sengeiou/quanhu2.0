@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -86,7 +87,7 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
             public void convert(ViewHolder helper, EntitiesBean item) {
                 ((TextView) helper.getView(R.id.activity_title)).setText(item.getTitle());
                 ImageView iv = (ImageView) helper.getView(R.id.iv_activity_icon);
-                Glide.with(mContext).load(item.getCoverPlan()).into(iv);
+                Glide.with(mContext).load(item.getCoverPlan()).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
             }
         };
         mLv.setAdapter(mEntitiesBeanCommonAdapter);

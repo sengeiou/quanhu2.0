@@ -189,8 +189,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         vh.ll_audio = (LinearLayout) convertView.findViewById(R.id.ll_audio);
                     }
                     editCollection(vh.iv_edit, collectionBean);
-                    vh.question_name.setText(question.nickName == null ? question.userName : question.nickName);
-                    vh.answer_name.setText(question.targetNickName == null ? question.targetUserName : question.targetNickName);
+                    vh.question_name.setText(StringUtil.isEmpty(question.nickName)? question.userName : question.nickName);
+                    vh.answer_name.setText(StringUtil.isEmpty(question.targetNickName) ? question.targetUserName : question.targetNickName);
                     vh.answer_title.setText("Q:  " + question.content);
                     if (StringUtils.isEmpty(answer.content)) {
                         vh.answer_content.setVisibility(View.GONE);

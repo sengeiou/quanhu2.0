@@ -24,6 +24,7 @@
                 android:id="@+id/find_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:listSelector="@color/white"
                 android:numColumns="4">
             </com.rz.circled.widget.XGridView>
 
@@ -62,6 +63,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/font_44"
+                android:layout_marginBottom="@dimen/font_40"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -70,6 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/px40"
+                    android:layout_marginRight="@dimen/px14"
                     android:src="@drawable/hot_famous"/>
 
                 <TextView
@@ -77,7 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/circle_theme"
-                    android:padding="@dimen/px44"
                     android:text="@string/circle_hot_famous"
                     android:textColor="@color/color_6b6b6b"
                     android:textSize="@dimen/px48"
@@ -112,12 +115,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/font_44"
+                android:layout_marginBottom="@dimen/font_40"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_subject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/px14"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/px40"
                     android:src="@drawable/hot_subject"/>
@@ -127,7 +133,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_subject"
-                    android:padding="@dimen/px44"
                     android:text="@string/circle_hot_subject"
                     android:textColor="@color/color_6b6b6b"
                     android:textSize="@dimen/px48"
@@ -178,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/px44"
+                    android:layout_marginLeft="@dimen/px14"
                     android:layout_toRightOf="@+id/iv_activity"
                     android:text="@string/circle_new_activity"
                     android:textColor="@color/color_6b6b6b"

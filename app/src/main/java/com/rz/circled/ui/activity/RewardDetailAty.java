@@ -32,7 +32,7 @@ import static com.rz.common.constant.H5Address.INTEGRAL_STATEGY;
  * Created by Administrator on 2016/7/20 0020.
  * 消费明细或者收益明细
  */
-public class AccountDetailAty extends BaseActivity {
+public class RewardDetailAty extends BaseActivity {
 
     @BindView(R.id.lv_detail)
     ListView mListView;
@@ -57,7 +57,7 @@ public class AccountDetailAty extends BaseActivity {
      * @param type     1 表示消费明细  2 表示收益明细
      */
     public static void startAccountDetail(Activity activity, int type) {
-        Intent intent = new Intent(activity, AccountDetailAty.class);
+        Intent intent = new Intent(activity, RewardDetailAty.class);
         intent.putExtra(IntentKey.KEY_TYPE, type);
         activity.startActivity(intent);
     }
@@ -117,7 +117,7 @@ public class AccountDetailAty extends BaseActivity {
 
     @Override
     public void initData() {
-        mPresenter.requestGetBillList(false, type);
+        mPresenter.requestGetRewardList(false, type);
     }
 
     @Override
@@ -129,9 +129,9 @@ public class AccountDetailAty extends BaseActivity {
                     mBillDetails.clear();
                 }
                 for (BillDetailModel model : bills) {
-                    if (Double.parseDouble(model.cost) > 0) {
-                        mBillDetails.add(model);
-                    }
+//                    if (Double.parseDouble(model.cost) > 0) {
+//                        mBillDetails.add(model);
+//                    }
                 }
                 mAdapter.notifyDataSetChanged();
             }

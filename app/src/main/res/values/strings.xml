@@ -233,6 +233,7 @@
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
+    <string name="private_group_update_icon">上传私圈\n封面图</string>
     <string name="private_group_level_tip">抱歉，您的会员等级达到Lv.5才可以创建私圈，如有疑问请联系客服</string>
 
     <!--消息-->
@@ -525,6 +526,7 @@
     <string name="balance_current">当前余额为:</string>
     <string name="recharge_title">充值</string>
     <string name="recharge_problem">充值遇到问题？请戳这里</string>
+    <string name="search_content">没找到您要搜索的内容</string>
 
     <!-- 我的 -->
     <string name="my_circle">我的圈子</string>
@@ -625,6 +627,7 @@
     <string name="reward_artical">打赏的作品</string>
     <string name="rewarded_artical">被打赏的作品</string>
     <string name="waring_login">返回登录页，选择其他登录方式？</string>
+    <string name="account_lock">您的账户已被锁定，请联系客服</string>
 
     <!-- 个人信息 -->
 
@@ -639,6 +642,7 @@
     <string name="mine_person_ex4">世界那么大 我想去看看！</string>
     <string name="mine_person_ex5">个人简介</string>
     <string name="mine_person_ex6">输入昵称</string>
+    <string name="mine_sign_default">这个人太懒了，什么都没留下~</string>
 
     <string name="mine_person_camera">相机</string>
     <string name="mine_person_from_camera">从相机上传</string>

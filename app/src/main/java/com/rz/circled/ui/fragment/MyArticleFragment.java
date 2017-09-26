@@ -56,7 +56,7 @@ public class MyArticleFragment extends BaseFragment {
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
 
-        ((PersonInfoPresenter) presenter).getArticle(false, Session.getUserId() ,"1000");
+        ((PersonInfoPresenter) presenter).getPersionArticle(false, Session.getUserId() ,"1000");
 
     }
     private void initRefresh() {

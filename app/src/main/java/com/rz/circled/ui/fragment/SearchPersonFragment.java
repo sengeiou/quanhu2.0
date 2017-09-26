@@ -75,6 +75,8 @@ public class SearchPersonFragment extends BaseFragment {
             }
         });
 
+        setFunctionText(R.string.search_content);
+
     }
 
     @Override
@@ -200,6 +202,7 @@ public class SearchPersonFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
     }
+
 }

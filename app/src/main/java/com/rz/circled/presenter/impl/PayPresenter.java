@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.alipay.sdk.app.PayTask;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -208,9 +207,9 @@ public class PayPresenter extends AbsPresenter {
             Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
-                    PayTask alipay = new PayTask(activity);
-                    String result = alipay.pay(order, false);
-                    subscriber.onNext(result);
+//                    PayTask alipay = new PayTask(activity);
+//                    String result = alipay.pay(order, false);
+//                    subscriber.onNext(result);
                     subscriber.onCompleted();
                 }
             }).subscribeOn(Schedulers.io())
@@ -329,7 +328,7 @@ public class PayPresenter extends AbsPresenter {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                     return;
                                 }
                             }, 2000);
@@ -337,9 +336,9 @@ public class PayPresenter extends AbsPresenter {
                     }
                 }
                 if (flag) {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, activity.getString(R.string.check_fail));
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.check_fail));
                 } else {
-                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                 }
             }
 
@@ -376,7 +375,69 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<BillDetailModel>>> call = mUserService
-                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
+                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<BillDetailModel>>> call, Response<ResponseData<List<BillDetailModel>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<List<BillDetailModel>> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<BillDetailModel> dataList = res.getData();
+                        if (null != dataList && !dataList.isEmpty()) {
+                            isDataError = false;
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.updateViewWithLoadMore(dataList, loadmore);
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            isDataError = true;
+                        }
+                        return;
+                    } else {
+                        if (HandleRetCode.handler(activity, res)) {
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                            isDataError = true;
+                            return;
+                        }
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                isDataError = true;
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
+                super.onFailure(call, t);
+                Log.i(TAG, "onFailure: "+t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                isDataError = true;
+            }
+        });
+    }
+
+    /**
+     * 获取消费或者收益明细
+     *
+     * @param loadmore true 加载更多 false 刷新
+     */
+    public void requestGetRewardList(final boolean loadmore, int type) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        if (isDataError) {
+            start = record_start;
+        } else {
+            if (!loadmore) {
+                start = 0;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+        Call<ResponseData<List<BillDetailModel>>> call = mUserService
+                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
             @Override
@@ -415,6 +476,7 @@ public class PayPresenter extends AbsPresenter {
             }
         });
     }
+
 
     /**
      * 收益消费到账户
@@ -585,10 +647,10 @@ public class PayPresenter extends AbsPresenter {
                         mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-//                                mSetDialog.dismiss();
-//                                Intent intent = new Intent(activity, SetPayPassAty.class);
-//                                intent.putExtra(IntentKey.General.KEY_TYPE, Type.HAD_NO_SET_PW);
-//                                activity.startActivity(intent);
+                                mSetDialog.dismiss();
+                                Intent intent = new Intent(activity, SetPayPassAty.class);
+                                intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
+                                activity.startActivity(intent);
                             }
                         });
                         mSetDialog.show();
@@ -611,7 +673,7 @@ public class PayPresenter extends AbsPresenter {
         showPayDialog(mPayMoney, desc, "", flag);
     }
 
-    public void showPayDialog(final double mPayMoney, String desc, final String orderId, int flag) {
+    public void showPayDialog(final double mPayMoney, String desc, final String orderId, final int flag) {
         View payViwe = LayoutInflater.from(activity).inflate(R.layout.dialog_pay, null);
         if (Session.getUserSafetyproblem()) {
             payViwe.findViewById(R.id.id_is_set_user_txt).setVisibility(View.GONE);
@@ -658,7 +720,11 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
+                if (flag==3){
+                    mView.updateView(psw);
+                }else{
                 payOrder(orderId, psw);
+                }
             }
         });
     }
@@ -848,7 +914,7 @@ public class PayPresenter extends AbsPresenter {
                                 mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.auth_remind_content));
+                                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                                         Intent intent = new Intent(activity, SetPayPassAty.class);
                                         intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
                                         activity.startActivity(intent);

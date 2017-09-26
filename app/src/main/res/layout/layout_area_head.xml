@@ -22,7 +22,7 @@
         android:id="@+id/tv_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/icon_locate"
+        android:drawableLeft="@mipmap/icon_location"
         android:drawablePadding="@dimen/px30"
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/px40"

@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/id_person_news_rela"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px540"
+        android:layout_height="@dimen/px520"
         android:background="@mipmap/perision_info_head"
         android:clickable="true"
         android:paddingBottom="@dimen/px50"
@@ -24,7 +24,7 @@
             android:layout_width="@dimen/px227"
             android:layout_height="@dimen/px227"
             android:background="@drawable/shape_circle"
-            android:layout_marginTop="@dimen/px166"
+            android:layout_marginTop="@dimen/px176"
             >
 
             <ImageView
@@ -42,7 +42,7 @@
             android:id="@+id/user_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px180"
+            android:layout_marginTop="@dimen/px190"
             android:layout_marginLeft="@dimen/px30"
             android:layout_marginRight="@dimen/px30"
             android:layout_toRightOf="@+id/bg_rl_head"
@@ -116,8 +116,8 @@
                 android:background="@drawable/shape_mine_rect_divider"
                 android:paddingLeft="@dimen/px30"
                 android:paddingRight="@dimen/px30"
-                android:paddingBottom="@dimen/px10"
-                android:paddingTop="@dimen/px10"
+                android:paddingBottom="@dimen/px5"
+                android:paddingTop="@dimen/px5"
                 >
 
                 <ImageView
@@ -167,7 +167,7 @@
                 android:orientation="horizontal"
                 android:background="@drawable/shape_white_bg"
                 android:alpha="77"
-                android:padding="@dimen/px8"
+                android:padding="@dimen/px5"
                 >
 
                 <TextView

@@ -1,5 +1,8 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +21,10 @@ import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
+import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.presenter.impl.SnsAuthPresenter;
+import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
 import com.rz.circled.ui.fragment.MineFragment;
@@ -26,6 +32,8 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
@@ -47,6 +55,7 @@ import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +66,8 @@ import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.common.constant.Constants.FIRST_BLOOD;
+import static com.rz.common.constant.IntentKey.JUMP_FIND_FIRST;
 import static com.rz.common.utils.SystemUtils.trackUser;
 
 
@@ -89,17 +100,23 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
+
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
+        String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
         tabHost.setInterceptTagChanged(this);
         tabHost.getTabWidget().setDividerDrawable(null);
-
         tabHost.addTab(tabHost.newTabSpec(tabTags[0]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_home, null)), HomeFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[1]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_find, null)), FindFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[2]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_reward, null)), RewardFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[3]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_private_circle, null)), PrivateCircledFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[4]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_mine, null)), MineFragment.class, null);
-
+        if (FIRST_BLOOD.equals(type)){
+        tabHost.setCurrentTab(1);
+        }
         mUnread = (ImageView) tabHost.findViewById(R.id.unread_msg_number);
 
         initCounter();
@@ -250,15 +267,39 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
 
         onLogout(code);
+
+        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
     }
 
     // 注销
     private void onLogout(StatusCode code) {
         // 清理缓存&注销监听&清除状态
         LogoutHelper.logout();
-
         NIMClient.getService(AuthService.class).logout();
 
+        UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
+        presenter.attachView(this);
+        presenter.ExitApp();
+
+        int loginWay = Session.getLoginWay();
+        if (loginWay != Type.LOGIN_PHONE) {
+            String openId = Session.getOpenId();
+            SnsAuthPresenter snsPresenter = new SnsAuthPresenter();
+            snsPresenter.attachView(this);
+            switch (loginWay) {
+                case Type.LOGIN_QQ:
+                    snsPresenter.delQQAuth(openId);
+                    break;
+                case Type.LOGIN_SINA:
+                    snsPresenter.delWBAuth(openId);
+                    break;
+                case Type.LOGIN_WX:
+                    snsPresenter.delWXAuth(openId);
+                    break;
+            }
+        }
+
+        Session.clearShareP();
     }
 
     private void loadUnreadMessage() {
@@ -330,6 +371,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case EventConstant.NEWS_UNREAD_CHANGE:
                 requestMsgUnRead();
                 break;
+            case EventConstant.USER_BE_FROZEN:
+                DefaultTipsDialog.newInstance(getString(R.string.account_lock)).show(getSupportFragmentManager(), "");
+                break;
         }
     }
 
@@ -371,7 +415,85 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: ");
+        registerObservers(false);
+
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(TAG, "onRestart: ");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState: ");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.e(TAG, "onNewIntent: ");
+    }
+
+    @Override
     public void refreshPage() {
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_LOGOUT) {
+            this.finish();
+        }
 
     }
 
