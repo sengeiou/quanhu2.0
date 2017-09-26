@@ -145,11 +145,13 @@ public class QHApplication extends BaseApplication {
 
     public static int isFlag = BuildConfig.isFlag;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         init();
+
     }
 
     public static QHApplication getInstance() {

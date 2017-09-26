@@ -35,7 +35,6 @@ import static com.rz.common.utils.SystemUtils.trackUser;
  */
 public class AddContactsActivity extends BaseActivity implements View.OnClickListener {
 
-    public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
     @BindView(R.id.id_search_key)
     TextView mSearchTexdt;
 

@@ -1,8 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +16,12 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
-import com.netease.nimlib.sdk.msg.MsgService;
 import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
+import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.presenter.impl.SnsAuthPresenter;
+import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
@@ -31,6 +30,7 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Type;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -46,8 +46,6 @@ import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
-import com.yryz.yunxinim.main.reminder.ReminderItem;
-import com.yryz.yunxinim.main.reminder.ReminderManager;
 import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.cache.DataCacheManager;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
@@ -263,15 +261,39 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
 
         onLogout(code);
+
+        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
     }
 
     // 注销
     private void onLogout(StatusCode code) {
         // 清理缓存&注销监听&清除状态
         LogoutHelper.logout();
-
         NIMClient.getService(AuthService.class).logout();
 
+        UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
+        presenter.attachView(this);
+        presenter.ExitApp();
+
+        int loginWay = Session.getLoginWay();
+        if (loginWay != Type.LOGIN_PHONE) {
+            String openId = Session.getOpenId();
+            SnsAuthPresenter snsPresenter = new SnsAuthPresenter();
+            snsPresenter.attachView(this);
+            switch (loginWay) {
+                case Type.LOGIN_QQ:
+                    snsPresenter.delQQAuth(openId);
+                    break;
+                case Type.LOGIN_SINA:
+                    snsPresenter.delWBAuth(openId);
+                    break;
+                case Type.LOGIN_WX:
+                    snsPresenter.delWXAuth(openId);
+                    break;
+            }
+        }
+
+        Session.clearShareP();
     }
 
     private void loadUnreadMessage() {
@@ -343,7 +365,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case EventConstant.NEWS_UNREAD_CHANGE:
                 requestMsgUnRead();
                 break;
-
+            case EventConstant.USER_BE_FROZEN:
+                DefaultTipsDialog.newInstance(getString(R.string.account_lock)).show(getSupportFragmentManager(), "");
+                break;
         }
     }
 

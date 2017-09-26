@@ -5,6 +5,9 @@ package com.rz.httpapi.api;
  */
 
 public class ApiPay {
+
+    static final String YEHAO_HOST = "http://192.168.30.98:8080/app-openapi/";
+
     /**
      * 执行支付订单
      */
@@ -126,7 +129,6 @@ public class ApiPay {
      * 获取登录方式
      */
     static final String GET_LOGIN_METHOD = "v3/user/loginMethod";
-
 
 
 }
