@@ -10,7 +10,7 @@
         android:id="@+id/layout_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:direction="both">
+        app:srl_direction="both">
 
         <ListView
             android:id="@+id/lv"

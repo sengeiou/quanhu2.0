@@ -30,15 +30,15 @@
                 android:paddingTop="@dimen/px36"
                 android:text="@string/balance_current"
                 android:textColor="@color/font_gray_s"
-                android:textSize="@dimen/font_40" />
+                android:textSize="@dimen/font_34" />
 
             <TextView
                 android:id="@+id/tv_account"
                 style="@style/DefaultTvStyle"
                 android:layout_marginLeft="@dimen/px20"
                 android:paddingTop="@dimen/px36"
-                android:textColor="@color/font_color_blue"
-                android:textSize="@dimen/font_40" />
+                android:textColor="@color/color_0185FF"
+                android:textSize="@dimen/font_34" />
 
         </LinearLayout>
     </LinearLayout>
@@ -61,8 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/px118"
         android:layout_marginBottom="@dimen/px78"
-        android:layout_marginLeft="@dimen/px160"
-        android:layout_marginRight="@dimen/px160"
+        android:layout_marginLeft="@dimen/px166"
+        android:layout_marginRight="@dimen/px166"
         android:layout_marginTop="@dimen/px138"
         android:background="@drawable/shape_bg_blue_sel"
         android:gravity="center"

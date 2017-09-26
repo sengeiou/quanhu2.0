@@ -7,9 +7,12 @@ import android.util.Log;
 import com.rz.circled.R;
 import com.rz.circled.dialog.InsufficientBalanceDialog;
 import com.rz.circled.presenter.impl.PayPresenter;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.toasty.Toasty;
+import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.sgt.jsbridge.JsEvent;
 
 import org.json.JSONException;
@@ -65,7 +68,8 @@ public class JsPayOrderActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        presenter.pay(orderId, payMoney);
+        //支付密码验证
+        presenter.isSettingPw(false);
     }
 
     @Override
@@ -95,6 +99,22 @@ public class JsPayOrderActivity extends BaseActivity {
                 } else {
                     JsEvent.callJsEvent(data, ((Integer) t).intValue() == 1);
                     finish();
+                }
+            }
+            if (t instanceof UserInfoModel) {
+                UserInfoModel user = (UserInfoModel) t;
+                if (null != user) {
+                    if (Type.HAD_SET_PW == user.getIsPayPassword()) {
+                        Session.setUserSetpaypw(true);
+                    } else {
+                        Session.setUserSetpaypw(false);
+                    }
+                    if (Type.OPEN_EASY_PAY == user.getSmallNopass()) {
+                        Session.setIsOpenGesture(true);
+                    } else {
+                        Session.setIsOpenGesture(false);
+                    }
+                    presenter.pay(orderId, payMoney);
                 }
             }
         }

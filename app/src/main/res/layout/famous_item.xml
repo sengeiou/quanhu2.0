@@ -8,14 +8,13 @@
         android:layout_width="@dimen/px376"
         android:layout_height="@dimen/px402"
         android:layout_marginLeft="@dimen/px10"
-        android:layout_marginTop="@dimen/px42"
         android:background="@drawable/hot_famous_bg"
         >
 
         <RelativeLayout
             android:id="@+id/rl"
-            android:layout_width="@dimen/px145"
-            android:layout_height="@dimen/px145"
+            android:layout_width="@dimen/px172"
+            android:layout_height="@dimen/px172"
             android:layout_marginTop="@dimen/px60"
             android:layout_centerHorizontal="true">
 
@@ -44,7 +43,7 @@
             android:layout_height="@dimen/px125"
             android:layout_below="@+id/rl"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/px40"
+            android:layout_marginTop="@dimen/px30"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -63,7 +62,7 @@
                 android:id="@+id/famous_mark"
                 android:layout_width="@dimen/px370"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px20"
+                android:layout_marginTop="@dimen/px10"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"

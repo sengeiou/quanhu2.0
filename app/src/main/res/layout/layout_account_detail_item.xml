@@ -22,7 +22,6 @@
         android:id="@+id/id_tv_cost"
         style="@style/DefaultTvStyle"
         android:layout_centerInParent="true"
-        android:paddingRight="@dimen/px70"
         android:textColor="@color/color_0185FF"
         android:textSize="@dimen/font_44"/>
 
@@ -38,7 +37,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/px2"
-        android:layout_alignBottom="@+id/id_tv_name"
+        android:layout_marginLeft="@dimen/font_40"
+        android:layout_marginRight="@dimen/font_40"
+        android:layout_alignParentBottom="true"
         android:background="@color/color_EEEEEE"/>
 
 </RelativeLayout>

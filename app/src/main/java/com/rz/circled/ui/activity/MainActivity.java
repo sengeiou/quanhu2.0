@@ -25,7 +25,6 @@ import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
-import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
 import com.rz.circled.ui.fragment.MineFragment;
@@ -33,8 +32,8 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.Type;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
@@ -67,6 +66,8 @@ import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.common.constant.Constants.FIRST_BLOOD;
+import static com.rz.common.constant.IntentKey.JUMP_FIND_FIRST;
 import static com.rz.common.utils.SystemUtils.trackUser;
 
 
@@ -103,17 +104,19 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
+        String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
         tabHost.setInterceptTagChanged(this);
         tabHost.getTabWidget().setDividerDrawable(null);
-
         tabHost.addTab(tabHost.newTabSpec(tabTags[0]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_home, null)), HomeFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[1]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_find, null)), FindFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[2]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_reward, null)), RewardFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[3]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_private_circle, null)), PrivateCircledFragment.class, null);
         tabHost.addTab(tabHost.newTabSpec(tabTags[4]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_mine, null)), MineFragment.class, null);
-
+        if (FIRST_BLOOD.equals(type)){
+        tabHost.setCurrentTab(1);
+        }
         mUnread = (ImageView) tabHost.findViewById(R.id.unread_msg_number);
 
         initCounter();
