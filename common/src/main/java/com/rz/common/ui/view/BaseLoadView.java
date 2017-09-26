@@ -48,7 +48,7 @@ public class BaseLoadView implements View.OnClickListener {
         tvStatus = (TextView) statusView.findViewById(R.id.tv_base_load_status);
         ivStatus = (ImageView) statusView.findViewById(R.id.iv_base_load_status);
         tvFunction = (TextView) statusView.findViewById(R.id.tv_base_load_function);
-        tvAction = (TextView) statusView.findViewById(R.id.tv_base_load_action);
+//        tvAction = (TextView) statusView.findViewById(R.id.tv_base_load_action);
         tvFunction.setOnClickListener(this);
         tvAction.setOnClickListener(this);
         statusView.setOnClickListener(this);

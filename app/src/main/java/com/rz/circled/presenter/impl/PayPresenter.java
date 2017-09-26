@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.alipay.sdk.app.PayTask;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -208,9 +207,9 @@ public class PayPresenter extends AbsPresenter {
             Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
-                    PayTask alipay = new PayTask(activity);
-                    String result = alipay.pay(order, false);
-                    subscriber.onNext(result);
+//                    PayTask alipay = new PayTask(activity);
+//                    String result = alipay.pay(order, false);
+//                    subscriber.onNext(result);
                     subscriber.onCompleted();
                 }
             }).subscribeOn(Schedulers.io())
