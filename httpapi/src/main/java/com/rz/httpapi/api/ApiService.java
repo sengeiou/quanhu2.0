@@ -870,7 +870,7 @@ public interface ApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST(ApiPay.YEHAO_HOST + ApiPay.PAY)
+    @POST(ApiPay.PAY)
     Call<ResponseData<PaySignModel>> payProvingSign(
             @Field("act") int act,
             @Field("custId") String custId,
