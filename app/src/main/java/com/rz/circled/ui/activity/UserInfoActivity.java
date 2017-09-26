@@ -163,7 +163,12 @@ public class UserInfoActivity extends BaseActivity{
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
             levelTxt.setText("Lv." + Session.getUserLevel());
-            signTxt.setText(Session.getUser_signatrue());
+            if(TextUtils.isEmpty(Session.getUser_signatrue())){
+                signTxt.setText(getString(R.string.mine_sign_default));
+            }else{
+                signTxt.setText(Session.getUser_signatrue());
+            }
+
             addFriendLayout.setVisibility(View.GONE);
             //普通用户
             if(Session.getCustRole().equals("0")){
@@ -348,7 +353,12 @@ public class UserInfoActivity extends BaseActivity{
                         placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 nameTxt.setText(Session.getUserName());
                 levelTxt.setText("Lv." + Session.getUserLevel());
-                signTxt.setText(Session.getUser_signatrue());
+                if(TextUtils.isEmpty(Session.getUser_signatrue())){
+                    signTxt.setText(getString(R.string.mine_sign_default));
+                }else {
+                    signTxt.setText(Session.getUser_signatrue());
+                }
+
                 addFriendLayout.setVisibility(View.GONE);
                 //普通用户
                 if(Session.getCustRole().equals("0")){
@@ -366,7 +376,11 @@ public class UserInfoActivity extends BaseActivity{
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(model.getCustNname());
             levelTxt.setText("Lv." + model.getCustLevel());
-            signTxt.setText(model.getCustSignature());
+            if(TextUtils.isEmpty(Session.getUser_signatrue())){
+                signTxt.setText(getString(R.string.mine_sign_default));
+            }else{
+                signTxt.setText(Session.getUser_signatrue());
+            }
             if(model.getRelation() == 0){
                 //陌生人
                 addFriendLayout.setVisibility(View.VISIBLE);

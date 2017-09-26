@@ -166,7 +166,7 @@ public class SearchPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if(loadMore == false){
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,  mContext.getString(R.string.search_content));
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }

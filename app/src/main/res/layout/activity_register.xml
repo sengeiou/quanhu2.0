@@ -24,7 +24,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/px594"
+                    android:layout_height="@dimen/px554"
                     android:background="@mipmap/background_lite"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/title_bar_padding_top"
@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/id_login_btn"
                             android:orientation="vertical"
-                            android:layout_marginTop="@dimen/px296"
+                            android:layout_marginTop="@dimen/px206"
                             >
 
                             <LinearLayout
@@ -252,7 +252,7 @@
                                 android:layout_width="@dimen/px836"
                                 android:layout_height="@dimen/px152"
                                 android:layout_centerInParent="true"
-                                android:layout_marginTop="@dimen/px150"
+                                android:layout_marginTop="@dimen/px120"
                                 android:background="@mipmap/submit_login_btn_bg"
                                 android:gravity="center"
                                 android:minHeight="0dp"
@@ -271,7 +271,7 @@
                                 android:text="@string/protocol"
                                 android:layout_gravity="center_horizontal"
                                 android:textColor="@color/color_999"
-                                android:layout_marginTop="@dimen/px72"
+                                android:layout_marginTop="@dimen/px42"
                                 android:layout_marginLeft="@dimen/px10"
                                 android:layout_marginRight="@dimen/px10"
                                 android:textSize="@dimen/font_38"
@@ -279,7 +279,7 @@
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/px30"></View>
+                                android:layout_height="@dimen/px40"></View>
 
 
                         </LinearLayout>
@@ -293,7 +293,6 @@
                         android:layout_height="@dimen/px242"
                         android:layout_centerHorizontal="true"
                         android:src="@mipmap/logo_login"
-
                         />
 
                     <TextView
@@ -301,7 +300,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/register_btn"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/px44"
+                        android:layout_marginTop="@dimen/px24"
                         android:layout_below="@id/logo_img"
                         android:textColor="@color/black"
                         android:textSize="@dimen/px72"

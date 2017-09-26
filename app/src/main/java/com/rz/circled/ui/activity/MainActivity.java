@@ -23,6 +23,7 @@ import com.netease.nimlib.sdk.msg.MsgService;
 import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
 import com.rz.circled.ui.fragment.HomeFragment;
 import com.rz.circled.ui.fragment.MineFragment;
@@ -30,6 +31,7 @@ import com.rz.circled.ui.fragment.PrivateCircledFragment;
 import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
@@ -53,6 +55,7 @@ import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,6 +98,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
+
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
         tabHost.setInterceptTagChanged(this);
@@ -336,6 +343,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case EventConstant.NEWS_UNREAD_CHANGE:
                 requestMsgUnRead();
                 break;
+
         }
     }
 
@@ -387,6 +395,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         super.onDestroy();
         Log.e(TAG, "onDestroy: ");
         registerObservers(false);
+
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -445,6 +456,14 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void refreshPage() {
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_LOGOUT) {
+            this.finish();
+        }
 
     }
 

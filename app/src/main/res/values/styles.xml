@@ -129,7 +129,7 @@
         <item name="android:layout_marginRight">@dimen/px15</item>
         <item name="android:layout_marginLeft">@dimen/px15</item>
         <item name="android:textColor">@color/color_666666</item>
-        <item name="android:textSize">@dimen/font_50</item>
+        <item name="android:textSize">@dimen/font_40</item>
     </style>
 
     <style name="DefaultArrowRightStyle">

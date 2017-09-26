@@ -77,8 +77,8 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void initView() {
 
-        setTitle(getString(R.string.mine_person_area));
-        setTitleRightText(getString(R.string.mine_person_save));
+        setTitleText(getString(R.string.mine_person_area));
+//        setTitleRightText(getString(R.string.mine_person_save));
 
         isUserInfo = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, true);
 

@@ -140,6 +140,8 @@ public class LoginActivity extends BaseActivity {
     private int mGuideType;
     UserInfoBean loginModel;
 
+    private int tabHome;
+
     private int codeType = 1;
     /**
      * 倒计时类
@@ -220,11 +222,6 @@ public class LoginActivity extends BaseActivity {
 
         mLoginBtn.setEnabled(true);
 
-//        if (mEditPass.getText().length() > 0) {
-//            mImgWatchPw.setVisibility(View.VISIBLE);
-//        } else {
-//            mImgWatchPw.setVisibility(View.GONE);
-//        }
     }
 
     @Override
@@ -280,9 +277,10 @@ public class LoginActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
+//        loginType = getIntent().getIntExtra(IntentKey.KEY_TYPE, -1);
         mGuideType = getIntent().getIntExtra(IntentKey.GUIDE_KEY, -1);
         loginType = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, -1);
+        tabHome = getIntent().getIntExtra(IntentKey.EXTRA_TAB, -1);
     }
 
 //    /**
