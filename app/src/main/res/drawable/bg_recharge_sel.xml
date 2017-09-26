@@ -3,6 +3,5 @@
     <item android:drawable="@drawable/bg_solid_1bc2b8" android:state_checked="true" />
     <item android:drawable="@drawable/bg_solid_1bc2b8" android:state_focused="true" />
     <item android:drawable="@drawable/bg_solid_1bc2b8" android:state_selected="true" />
-    <item android:drawable="@drawable/bg_solid_1bc2b8" android:state_pressed="true" />
     <item android:drawable="@drawable/bg_ffffff_stroke_d2d2d2" />
 </selector>

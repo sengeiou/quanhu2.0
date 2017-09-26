@@ -61,6 +61,7 @@ public class PrivateGroupNavigatorAdapter extends CommonNavigatorAdapter {
     public IPagerIndicator getIndicator(Context context) {
         LinePagerIndicator indicator = new LinePagerIndicator(context);
         indicator.setMode(MODE_WRAP_CONTENT);
+        indicator.setRoundRadius(8.0f);
         indicator.setColors(mContext.getResources().getColor(R.color.color_0185FF));
         return indicator;
     }

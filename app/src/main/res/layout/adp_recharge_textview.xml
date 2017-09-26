@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/px180"
-              android:background="@drawable/bg_recharge_sel"
-              android:gravity="center"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/id_recharge_money_txt"
-        style="@style/DefaultTvStyle"
-        android:layout_width="@dimen/px258"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="@dimen/px52"/>
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px180"
+        android:background="@drawable/bg_recharge_sel"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/id_recharge_money_txt_other"
-        style="@style/DefaultTvStyle"
-        android:layout_width="@dimen/px258"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/font_38"/>
+        <TextView
+            android:id="@+id/id_recharge_money_txt"
+            style="@style/DefaultTvStyle"
+            android:layout_width="@dimen/px258"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/px52" />
 
+        <TextView
+            android:id="@+id/id_recharge_money_txt_other"
+            style="@style/DefaultTvStyle"
+            android:layout_width="@dimen/px258"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px8"
+            android:textColor="@color/font_gray_s"
+            android:textSize="@dimen/font_38" />
+
+    </LinearLayout>
 </LinearLayout>
