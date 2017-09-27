@@ -184,14 +184,14 @@ public class AccountSafeAty extends BaseActivity {
                     //微博 微信
                     if (StringUtils.isEmpty(item.getThirdId())) {
                         //表示未绑定
-                        isBind.setBackgroundResource(R.drawable.shape_bg_blue_sel);
+                        isBind.setBackgroundResource(R.drawable.shape_bg_binglogin_sel);
                         isBind.setText(getString(R.string.bind));
                         isBind.setTextColor(Color.parseColor("#ffffff"));
                         isBind.setEnabled(true);
                     } else {
                         isBind.setBackgroundResource(R.drawable.rolle_f5f5f5_stroke_e5e5e5);
                         isBind.setText(getString(R.string.cancel_bind));
-                        isBind.setTextColor(Color.parseColor("#1BC2B8"));
+                        isBind.setTextColor(Color.parseColor("#666666"));
                         isBind.setEnabled(true);
                     }
                     //手机号
