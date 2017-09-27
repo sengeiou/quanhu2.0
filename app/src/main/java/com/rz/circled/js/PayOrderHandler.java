@@ -42,7 +42,6 @@ public class PayOrderHandler extends ServerHandler {
             @Override
             public void invoke(Object businessParms, BaseParamsObject baseParamsObject) {
                 HashMap<String, Object> hashMap = (HashMap<String, Object>) businessParms;
-                Map<String, Object> map = new HashMap<>();
                 baseParamsObject.data = hashMap;
             }
         };

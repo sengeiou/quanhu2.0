@@ -72,9 +72,8 @@
                     android:id="@+id/btn_less"
                     android:layout_width="@dimen/px72"
                     android:layout_height="@dimen/px72"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:includeFontPadding="false"
-                    android:padding="0dp"
                     android:text="-"
                     android:textColor="@color/color_bfbfbf"
                     android:textSize="@dimen/font_50" />
@@ -106,9 +105,9 @@
                     android:id="@+id/btn_add"
                     android:layout_width="@dimen/px72"
                     android:layout_height="@dimen/px72"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:includeFontPadding="false"
-                    android:padding="0dp"
+                    android:paddingTop="@dimen/px4"
                     android:text="+"
                     android:textColor="@color/font_color_blue"
                     android:textSize="@dimen/font_50" />

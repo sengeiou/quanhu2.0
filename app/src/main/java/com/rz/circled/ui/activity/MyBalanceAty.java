@@ -33,6 +33,7 @@ public class MyBalanceAty extends BaseActivity {
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_my_balance, null);
     }
+
     @Override
     public boolean hasDataInPage() {
         return true;
@@ -49,10 +50,11 @@ public class MyBalanceAty extends BaseActivity {
         setTitleText(getString(R.string.consumer_account));
         //消费明细
         setTitleRightText(getString(R.string.account_detail));
+        setTitleRightTextColor(R.color.font_gray_m);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                                AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
+                AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
             }
         });
         setTitleRightTextColor(R.color.color_main);

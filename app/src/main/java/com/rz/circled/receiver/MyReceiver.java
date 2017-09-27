@@ -117,8 +117,15 @@ public class MyReceiver extends BroadcastReceiver {
 
                 //打开自定义的Activity
                 String str = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-                NewsBean mInfo = new Gson().fromJson(str, NewsBean.class);
-                NewsJumpHelper.startAcceptActivity(context, mInfo);
+                Gson gson = new Gson();
+                NewsBean mNews = gson.fromJson(str, NewsBean.class);
+                MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
+                if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
+                    NewsJumpHelper.startAcceptActivity(context, mNews);
+                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mNews.getType() + "-" + mNews.getLabel()));
+                } else if (mInfo != null && !TextUtils.isEmpty(mInfo.getMsgId())) {
+
+                }
 
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

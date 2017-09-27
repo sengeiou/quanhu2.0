@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
 
@@ -31,6 +32,7 @@ public class NewsAnnouncementViewBinder extends ItemViewBinder<NewsBean, NewsAnn
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.item = item;
         holder.tvTitle.setText(item.getTitle());
         holder.tvTime.setText(item.getCreateTime());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).into(holder.img);
@@ -44,9 +46,17 @@ public class NewsAnnouncementViewBinder extends ItemViewBinder<NewsBean, NewsAnn
         @BindView(R.id.tv_time)
         TextView tvTime;
 
+        NewsBean item;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsJumpHelper.startAcceptActivity(v.getContext(), item);
+                }
+            });
         }
     }
 

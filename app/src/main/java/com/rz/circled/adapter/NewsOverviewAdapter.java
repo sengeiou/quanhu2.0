@@ -1,11 +1,13 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsOverviewBean;
 
 /**
@@ -23,7 +25,7 @@ public class NewsOverviewAdapter extends CommonAdapter<NewsOverviewBean> {
         helper.setImageResource(R.id.img, item.getResId());
         helper.setText(R.id.tv_title, item.getTitle());
         helper.setText(R.id.tv_desc, item.getDesc());
-        helper.setText(R.id.tv_time, item.getTime());
+        helper.setText(R.id.tv_time, StringUtils.formatDisplayTime(TextUtils.isEmpty(item.getTime()) ? "" : item.getTime()));
         if (item.getNum() == 0) {
             helper.getView(R.id.dot).setVisibility(View.GONE);
         } else {

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -30,6 +31,7 @@ public class NewsUserViewBinder extends ItemViewBinder<NewsBean, NewsUserViewBin
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.item = item;
         holder.tvTime.setText(item.getCreateTime());
         holder.tvName.setText(item.getTitle());
         holder.tvIntro.setText(item.getContent());
@@ -46,9 +48,17 @@ public class NewsUserViewBinder extends ItemViewBinder<NewsBean, NewsUserViewBin
         @BindView(R.id.tv_intro)
         TextView tvIntro;
 
+        NewsBean item;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsJumpHelper.startAcceptActivity(v.getContext(), item);
+                }
+            });
         }
     }
 

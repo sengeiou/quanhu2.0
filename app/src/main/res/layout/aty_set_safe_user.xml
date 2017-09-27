@@ -24,8 +24,8 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingBottom="@dimen/px30"
-        android:paddingLeft="@dimen/px30"
-        android:paddingRight="@dimen/px30"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44"
         android:paddingTop="@dimen/px50">
 
         <LinearLayout
@@ -63,8 +63,8 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingBottom="@dimen/px30"
-        android:paddingLeft="@dimen/px30"
-        android:paddingRight="@dimen/px30"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44"
         android:paddingTop="@dimen/px50">
 
         <LinearLayout

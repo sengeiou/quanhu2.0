@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.rz.circled.R;
@@ -11,11 +12,15 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.Currency;
 import com.rz.common.widget.toasty.Toasty;
+import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.sgt.jsbridge.JsEvent;
 
 import org.json.JSONException;
+
+import java.util.HashMap;
 
 /**
  * Created by rzw2 on 2017/9/18.
@@ -29,7 +34,7 @@ public class JsPayOrderActivity extends BaseActivity {
     private PayPresenter presenter;
     private String orderId;
     private double payMoney;
-    private String data;
+    private HashMap<String, String> data;
 
     public static void startJsPay(Context context, String data) {
         Intent intent = new Intent(context, JsPayOrderActivity.class);
@@ -55,11 +60,14 @@ public class JsPayOrderActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        data = getIntent().getStringExtra(EXTRA_DATA);
+        String extra = getIntent().getStringExtra(EXTRA_DATA);
         try {
-            org.json.JSONObject jsonObject = new org.json.JSONObject(data);
+            org.json.JSONObject jsonObject = new org.json.JSONObject(extra);
             orderId = jsonObject.getString(EXTRA_ORDER_ID);
             payMoney = jsonObject.getDouble(EXTRA_PAY_MONEY);
+            data = new HashMap<>();
+            data.put("orderId", String.valueOf(orderId));
+            data.put("payMoney", String.valueOf(payMoney));
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("jsonException = ", e.toString());
@@ -69,7 +77,7 @@ public class JsPayOrderActivity extends BaseActivity {
     @Override
     public void initData() {
         //支付密码验证
-        presenter.isSettingPw(false);
+        presenter.getUserAccount(Session.getUserId(), "");
     }
 
     @Override
@@ -101,21 +109,8 @@ public class JsPayOrderActivity extends BaseActivity {
                     finish();
                 }
             }
-            if (t instanceof UserInfoModel) {
-                UserInfoModel user = (UserInfoModel) t;
-                if (null != user) {
-                    if (Type.HAD_SET_PW == user.getIsPayPassword()) {
-                        Session.setUserSetpaypw(true);
-                    } else {
-                        Session.setUserSetpaypw(false);
-                    }
-                    if (Type.OPEN_EASY_PAY == user.getSmallNopass()) {
-                        Session.setIsOpenGesture(true);
-                    } else {
-                        Session.setIsOpenGesture(false);
-                    }
-                    presenter.pay(orderId, payMoney);
-                }
+            if (t instanceof AccountBean) {
+                presenter.pay(orderId, payMoney);
             }
         }
     }

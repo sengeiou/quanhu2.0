@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -32,6 +33,7 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.item = item;
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
@@ -53,9 +55,17 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         @BindView(R.id.tv_content)
         TextView tvContent;
 
+        NewsBean item;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsJumpHelper.startAcceptActivity(v.getContext(), item);
+                }
+            });
         }
     }
 }

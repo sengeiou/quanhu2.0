@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -118,13 +119,13 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         mListview.setDividerHeight(0);
         mListview.setAdapter(mContactsAdp = new ContactsAdp(aty, mSaveAllFriends, R.layout.adp_contacts));
         mListview.setOnItemClickListener(this);
-        if (Session.isNeedTeam()) {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px540), 0, 0);
+        if (!Session.isNeedTeam()) {
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px410), 0, 0);
             mLayoutNone.setLayoutParams(lp);
         } else {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px1030), 0, 0);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, getResources().getDimensionPixelOffset(R.dimen.px900), 0, 0);
             mLayoutNone.setLayoutParams(lp);
         }
         setFocusNum(Session.getUserFocusNum());

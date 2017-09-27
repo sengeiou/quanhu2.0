@@ -308,12 +308,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             famousLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if("0".equals(Session.getCustRole())){
-                    Intent intent = new Intent(mActivity, ChooseProveIdentityActivity.class);
-                    if (proveStatusBean != null)
-                        intent.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
-                    startActivity(intent);
-//                    }
+                    ChooseProveIdentityActivity.startProveIdentity(mActivity, proveStatusBean);
                 }
             });
 
@@ -552,7 +547,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvacticlesCount.setText(data.getArticleNum() + "");
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
-            custPointsTxt.setText("积分" + data.getScore()+"");
+            custPointsTxt.setText("积分" + data.getScore() + "");
             levelTxt.setText("Lv. " + data.getCustLevel());
 
             Session.setUserLevel(data.getCustLevel());
@@ -571,15 +566,15 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setText("认证失败");
             }
         } else if (t instanceof ResponseData) {
-            if(((ResponseData) t).getData() != null){
+            if (((ResponseData) t).getData() != null) {
 
                 NumberFormat nf = new DecimalFormat("#");
                 double num = (double) ((ResponseData) t).getData();
 
-                tvactivityCount.setText(nf.format(num)+"");
+                tvactivityCount.setText(nf.format(num) + "");
             }
-        } else  if(t instanceof FriendInformationBean){
-            if(t != null){
+        } else if (t instanceof FriendInformationBean) {
+            if (t != null) {
                 FriendInformationBean bean = (FriendInformationBean) t;
 
                 Glide.with(mActivity).load(bean.getCustImg()).transform(new GlideCircleImage(mActivity)).

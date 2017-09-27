@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:includeFontPadding="false"
-            android:lines="1"
+            android:maxLines="2"
             android:textColor="@color/font_gray_xl"
             android:textSize="@dimen/font_50"
             tool:text="这里是标题" />

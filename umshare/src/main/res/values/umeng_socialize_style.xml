@@ -95,7 +95,7 @@
     <!--默认高度为1dp的线-->
     <style name="DefaultHLineStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
+        <item name="android:layout_height">2px</item>
         <item name="android:background">@color/color_E7E7E7</item>
     </style>
 
