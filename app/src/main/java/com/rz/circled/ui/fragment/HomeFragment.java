@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,10 @@ import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.ACache;
 import com.rz.common.utils.StringUtils;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
+import com.rz.httpapi.bean.UserPermissionBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     DynamicAdapter dynamicAdapter;
     private CirclePresenter mPresenter;
-
+    UserPermissionBean mUserPermissionBean;
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -80,7 +83,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getBannerList("2");
-        mPresenter.getCircleDynamicList("", false);
+        mPresenter.getCircleDynamicList(false);
+        mPresenter.getUserPermession();
     }
 
     @Override
@@ -115,7 +119,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 //跳发布
                 trackUser("入口", "首页", "发布按钮");
+                if (!mUserPermissionBean.disTalk)
                 WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
+                else Toasty.info(mActivity,"您当前为禁言状态").show();
             }
         });
 
@@ -138,11 +144,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         updateViewWithFlag(bannerList, 2);
         updateViewWithLoadMore(model, false);
         mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 mPresenter.getBannerList("2");
-                mPresenter.getCircleDynamicList("", false);
+                mPresenter.getCircleDynamicList(direction != SwipyRefreshLayoutDirection.TOP);
                 mRefresh.setRefreshing(false);
             }
         });
@@ -163,6 +170,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 mAuto_viewpager.setAutoRoll(true);
             }
             mAuto_viewpager.notifyData();
+        }
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t!=null){
+            mUserPermissionBean= (UserPermissionBean) t;
+            Log.i(TAG, "updateView: "+mUserPermissionBean.disTalk);
         }
     }
 
@@ -270,7 +286,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void refreshPage() {
-
+        mPresenter.getCircleDynamicList(false);
     }
 
     private void requestMsgUnRead() {

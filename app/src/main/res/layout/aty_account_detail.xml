@@ -33,7 +33,7 @@
             style="@style/DefaultTvStyle"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="@string/mingcheng"
+            android:text="@string/shuoming"
             android:textColor="@color/black"/>
     </RelativeLayout>
 

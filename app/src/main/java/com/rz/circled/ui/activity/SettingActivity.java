@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.rz.circled.R;
 import com.rz.circled.modle.ShareModel;
@@ -31,15 +34,19 @@ import com.rz.common.utils.DialogUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.MessFreeBean;
 import com.yryz.yunxinim.config.preference.Preferences;
+import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
+import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 我的设置
@@ -63,8 +70,7 @@ public class SettingActivity extends BaseActivity {
     Button mExitBtn;
     @BindView(R.id.id_sb_mess)
     SwitchButton mIdSbMess;
-    MessFreeBean mMessFreeBean=new MessFreeBean();
-    private int pushState=1;
+
     /**
      * 缓存大小
      */
@@ -82,10 +88,7 @@ public class SettingActivity extends BaseActivity {
         super.initPresenter();
         presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
-        presenter.queryMessageFree();
     }
-
-    boolean isCheck = false;
 
     @Override
     public void initView() {
@@ -95,16 +98,17 @@ public class SettingActivity extends BaseActivity {
 //            mAccountView.setVisibility(View.GONE);
             mLinearRemind.setVisibility(View.GONE);
         }
-        mIdSbMess.setOnClickListener(new View.OnClickListener() {
+        mIdSbMess.setChecked(!UserPreferences.getNotificationToggle());
+        mIdSbMess.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (isCheck) {
-                    isCheck = false;
-                    presenter.messageFree(0);
-                } else {
-                    isCheck = true;
-                    presenter.messageFree(1);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!NetworkUtil.isNetAvailable(aty)) {
+                    Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.network_is_not_available, Toast.LENGTH_SHORT).show();
+                    mIdSbMess.setChecked(!isChecked);
+                    return;
                 }
+
+                setMessageNotify(isChecked);
             }
         });
     }
@@ -165,10 +169,9 @@ public class SettingActivity extends BaseActivity {
                 break;
             //推荐给朋友
             case R.id.id_layout_send_friend_ll:
-                // TODO: 2017/9/14 等产品出文案,等侯军出下载链接页面后替换信息
                 ShareNewsAty.startShareNews(aty, new ShareModel(
-                                "圈乎，一指进入你的圈子",
-                                "圈乎(www.yryz.com)，国内首创的一站式大型社群资源平台。平台自主创新，自主研发，精心打造并陆续推出300个各具特色的社群资源圈，汇聚了丰富的资源与人脉，展示了用户发布和分享的各类知识、经验、技能、专业服务以及商业资源。",
+                                getString(R.string.share_title),
+                                getString(R.string.share_desc),
                                 H5Address.APP_DOWNLOAD),
                         IntentCode.Setting.SETTING_RESULT_CODE);
                 break;
@@ -196,7 +199,7 @@ public class SettingActivity extends BaseActivity {
                         exitApp();
                         Session.clearShareP();
                         Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-                        intent.putExtra(IntentKey.EXTRA_TYPE,CommonCode.Constant.TAB_MAIN_HOME);
+                        intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
                         startActivity(intent);
                         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
@@ -295,14 +298,35 @@ public class SettingActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-    @Override
     public void refreshPage() {
 
+    }
+
+    private void setMessageNotify(final boolean checkState) {
+        mIdSbMess.setChecked(checkState);
+        setToggleNotification(!checkState);
+        Toast.makeText(aty, com.yryz.yunxinim.R.string.user_info_update_success, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setToggleNotification(boolean checkState) {
+        try {
+            StatusBarNotificationConfig config = UserPreferences.getStatusConfig();
+            UserPreferences.setDownTimeToggle(false);
+            config.downTimeToggle = false;
+            UserPreferences.setStatusConfig(config);
+            NIMClient.updateStatusBarNotificationConfig(config);
+
+            setNotificationToggle(checkState);
+            NIMClient.toggleNotification(checkState);
+
+            //极光推送
+            JPushInterface.setPushTime(mContext, checkState ? null : new HashSet<Integer>(), 0, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setNotificationToggle(boolean on) {
+        UserPreferences.setNotificationToggle(on);
     }
 }

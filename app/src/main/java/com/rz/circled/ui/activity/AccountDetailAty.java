@@ -26,8 +26,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.rz.common.constant.H5Address.INTEGRAL_STATEGY;
-
 /**
  * Created by Administrator on 2016/7/20 0020.
  * 消费明细或者收益明细
@@ -78,19 +76,16 @@ public class AccountDetailAty extends BaseActivity {
         type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
         if (type == Type.TYPE_BALANCE) {
             setTitleText(R.string.cost_detail_v3);
-            mIncome.setText(R.string.income); mProduceType.setText(R.string.mingcheng);
         } else if (type == Type.TYPE_SCORE) {
-            setTitleRightText("积分获取攻略");
-            setTitleRightTextColor(R.color.black);
-            setTitleRightListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CommonH5Activity.startCommonH5(mContext,"",INTEGRAL_STATEGY);
-                }
-            });
-            setTitleText(R.string.jf_details);
-            mIncome.setText(R.string.jifen);
-            mProduceType.setText(R.string.shuoming);
+//            setTitleRightText("积分获取攻略");
+//            setTitleRightTextColor(R.color.black);
+//            setTitleRightListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    CommonH5Activity.startCommonH5(mContext,"",INTEGRAL_STATEGY);
+//                }
+//            });
+            setTitleText(R.string.account_detail);
         }
         mAdapter = new CommonAdapter<BillDetailModel>(aty, mBillDetails, R.layout.layout_account_detail_item) {
             @Override

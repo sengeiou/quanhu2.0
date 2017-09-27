@@ -65,9 +65,9 @@ public class DynamicAdapter extends CircleContentAdapter {
         }
         tv_other_left.setText(item.readNum+" 阅读");
         if (StringUtil.isEmpty(item.coterieId)||StringUtil.isEmpty(item.coterieName)){
-            fromWhere.setText("来自圈子 "+item.circleName+" >");
+            fromWhere.setText("来自圈子 "+item.circleName);
         }else {
-            fromWhere.setText("来自私圈 "+item.coterieName+" >");
+            fromWhere.setText("来自私圈 "+item.coterieName);
         }
         mTvTime.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd HH:mm:ss"));
         fromWhere.setOnClickListener(new View.OnClickListener() {
