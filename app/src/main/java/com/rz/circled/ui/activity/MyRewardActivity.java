@@ -11,6 +11,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentPagerAdapter;
 import com.rz.circled.adapter.PrivateGroupNavigatorAdapter;
 import com.rz.circled.ui.fragment.MyRewardFragment;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -95,8 +96,8 @@ public class MyRewardActivity extends BaseActivity {
 
     private void initViewpagerGroup() {
         List<Fragment> mFragments = new ArrayList<>();
-        BaseFragment privateGroupJoinByMyselfFragment = MyRewardFragment.newInstance("2");
-        BaseFragment privateGroupCreateByMyselfFragment = MyRewardFragment.newInstance("2");
+        BaseFragment privateGroupJoinByMyselfFragment = MyRewardFragment.newInstance("2", Session.getUserId());
+        BaseFragment privateGroupCreateByMyselfFragment = MyRewardFragment.newInstance("2",Session.getUserId());
         mFragments.add(privateGroupCreateByMyselfFragment);
         mFragments.add(privateGroupJoinByMyselfFragment);
         viewpagerGroup.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));

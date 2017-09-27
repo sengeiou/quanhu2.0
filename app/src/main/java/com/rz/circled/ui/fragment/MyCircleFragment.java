@@ -17,6 +17,7 @@ import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
@@ -38,6 +39,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
+import static com.rz.common.constant.IntentKey.EXTRA_ID;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
@@ -62,11 +64,13 @@ public class MyCircleFragment extends BaseFragment {
     private View headView;
     private TextView createTxt;
     private TextView answerTxt;
+    private String userid;
 
-    public static MyCircleFragment newInstance(int type) {
+    public static MyCircleFragment newInstance(int type, String userid) {
         MyCircleFragment fragment = new MyCircleFragment();
         Bundle args = new Bundle();
         args.putInt(EXTRA_TYPE, type);
+        args.putString(EXTRA_ID,userid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,6 +79,7 @@ public class MyCircleFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
+        userid = getArguments().getString(IntentKey.EXTRA_ID);
     }
 
     @Nullable
@@ -193,7 +198,7 @@ public class MyCircleFragment extends BaseFragment {
      * @param loadMore
      */
     private void loadDataJoin(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupMyselfJoin(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
+        Http.getApiService(ApiPGService.class).privateGroupMyselfJoin(userid, pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
@@ -246,7 +251,7 @@ public class MyCircleFragment extends BaseFragment {
      * @param loadMore
      */
     private void loadDataCreate(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
+        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(userid, pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);

@@ -124,6 +124,9 @@ public class UserInfoActivity extends BaseActivity{
         initHead();
 
         userId = getIntent().getExtras().getString(IntentKey.KEY_ID);
+        if(TextUtils.isEmpty(userId)){
+            userId = Session.getUserId();
+        }
 
         avatarLayout.getBackground().setAlpha(77);
 
@@ -170,7 +173,7 @@ public class UserInfoActivity extends BaseActivity{
                 signTxt.setText(Session.getUser_signatrue());
             }
 
-            addFriendBtn.setText("聊天");
+            addFriendLayout.setVisibility(View.GONE);
             //普通用户
             if(Session.getCustRole().equals("0")){
                 userRole.setText("去认证");
@@ -184,6 +187,7 @@ public class UserInfoActivity extends BaseActivity{
         }else{   //他人中心
             //判断他人与自己的关系（是否添加好友）
             editImg.setVisibility(View.GONE);
+            addFriendLayout.setVisibility(View.VISIBLE);
             ((FriendPresenter1) friendPresenter).getFriendInfoDetail(userId);
 
         }
@@ -282,15 +286,15 @@ public class UserInfoActivity extends BaseActivity{
         @Override
         public Fragment getItem(int position) {
             if (position == 0)
-                return MyArticleFragment.newInstance();     //文章
+                return MyArticleFragment.newInstance(userId);     //文章
             if (position == 1)
-                return MyRewardFragment.newInstance("1");      //悬赏
+                return MyRewardFragment.newInstance("1",userId);      //悬赏
             if (position == 2)
-                return MyCircleFragment.newInstance(MyCircleFragment.TYPE_ALL);     //私圈
+                return MyCircleFragment.newInstance(MyCircleFragment.TYPE_ALL,userId);     //私圈
             if (position == 3)
-                return MyActivityFragment.newInstance();   //活动
+                return MyActivityFragment.newInstance(userId);   //活动
 
-            return MyArticleFragment.newInstance();
+            return MyArticleFragment.newInstance(userId);
         }
 
         @Override
@@ -347,7 +351,7 @@ public class UserInfoActivity extends BaseActivity{
     }
 
     private void setData(FriendInformationBean model){
-
+        addFriendLayout.setVisibility(View.VISIBLE);
         if(model == null){
             if(userId.equals(Session.getUserId())){
                 Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
@@ -382,6 +386,7 @@ public class UserInfoActivity extends BaseActivity{
             }else{
                 signTxt.setText(Session.getUser_signatrue());
             }
+
             if(model.getRelation() == 0){
                 //陌生人
                 addFriendBtn.setText("加好友");

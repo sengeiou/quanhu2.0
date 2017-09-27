@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
@@ -36,6 +38,8 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+
+import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
  * Created by Administrator on 2017/9/14 0014.
@@ -60,6 +64,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     //是否没有数据
     private boolean isNoData;
 
+    private String userid = "";
 
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -67,21 +72,24 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
 
-    public static MyActivityFragment newInstance() {
+    public static MyActivityFragment newInstance(String userid) {
         MyActivityFragment frg = new MyActivityFragment();
+        Bundle args = new Bundle();
+        args.putString(EXTRA_TYPE, userid);
+        frg.setArguments(args);
         return frg;
     }
 
     @Override
     public void initPresenter() {
-
+        userid = getArguments().getString(IntentKey.KEY_TYPE);
         getData(false);
     }
 
     private void getData(final boolean loadMore){
 
         Http.getApiService(ApiYylService.class)
-                .getMineActivityList(pageNo, 20, Session.getUserId())
+                .getMineActivityList(pageNo, 20, userid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ResponseData<ActivityBean>>() {

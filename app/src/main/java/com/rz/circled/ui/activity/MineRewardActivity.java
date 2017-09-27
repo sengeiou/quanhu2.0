@@ -146,7 +146,7 @@ public class MineRewardActivity extends BaseActivity {
             if (position == 1)
                 return RewardArticalFragment.newInstance(1);
 
-            return MyArticleFragment.newInstance();
+            return MyArticleFragment.newInstance(Session.getUserId());
         }
 
         @Override
