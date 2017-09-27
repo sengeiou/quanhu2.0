@@ -12,13 +12,18 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MineRewardAdapter;
+import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.ui.activity.MyArticleActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.RewardStatBean;
 
@@ -83,6 +88,23 @@ public class RewardArticalFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
+
+        lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo().getResourceId())||StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo())) {
+
+                  if(position != 0){
+                      String circleUrl = CommomUtils.getCircleUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
+                      WebContainerActivity.startActivity(mActivity, circleUrl);
+                  }
+
+//                } else {
+//                    String url = CommomUtils.getDymanicUrl(rewardBeanList.get(position).getResourceInfo().getCircleRoute(),rewardBeanList.get(position).getResourceInfo().getModuleEnum(), rewardBeanList.get(position).coterieId, rewardBeanList.get(position).getResourceInfo().getResourceId());
+//                    WebContainerActivity.startActivity(mActivity.this, url);
+//                }
             }
         });
     }
@@ -156,7 +178,13 @@ public class RewardArticalFragment extends BaseFragment {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_REWARD_COUNT && baseEvent.data != null) {
             RewardStatBean model = (RewardStatBean) baseEvent.getData();
-            topTxt.setText("共"+model.getTotalRewardAmount()+"条内容");
+
+            if(type == 0){
+                topTxt.setText("共"+model.getTotalRewardCount()+"条内容");
+            }else{
+                topTxt.setText("共"+model.getTotalRewardedCount()+"条内容");
+            }
+
         }else if(baseEvent.type == CommonCode.EventType.TYPE_EMPTY_COUNT){
             topTxt.setText("共0条内容");
         }

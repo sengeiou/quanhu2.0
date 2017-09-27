@@ -75,8 +75,8 @@
 
                             <ImageView
                                 android:id="@+id/icon_pwd"
-                                android:layout_width="@dimen/px42"
-                                android:layout_height="@dimen/px56"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/px58"
                                 android:layout_marginLeft="@dimen/px24"
                                 android:src="@mipmap/ic_login_pw"
                                 android:layout_below="@id/splite_line"
@@ -103,8 +103,8 @@
 
                             <ImageView
                                 android:id="@+id/id_clear_pass"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="@dimen/px40"
+                                android:layout_height="@dimen/px40"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_toLeftOf="@+id/id_watch_pass"

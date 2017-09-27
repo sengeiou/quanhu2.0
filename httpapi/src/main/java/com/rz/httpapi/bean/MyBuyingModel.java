@@ -19,7 +19,7 @@ public class MyBuyingModel implements Serializable {
 
     private String custId;
     private String resourceId;
-    private ResourceBean resource;
+    private CircleDynamic resource;
     private int amount;
     private String createDate;
 
@@ -39,11 +39,11 @@ public class MyBuyingModel implements Serializable {
         this.resourceId = resourceId;
     }
 
-    public ResourceBean getResource() {
+    public CircleDynamic getResource() {
         return resource;
     }
 
-    public void setResource(ResourceBean resource) {
+    public void setResource(CircleDynamic resource) {
         this.resource = resource;
     }
 

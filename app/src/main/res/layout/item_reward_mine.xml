@@ -22,7 +22,8 @@
             android:paddingBottom="@dimen/px58"
             android:paddingLeft="@dimen/px44"
             android:paddingRight="@dimen/px44"
-            android:paddingTop="@dimen/px44">
+            android:paddingTop="@dimen/px44"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +85,6 @@
                     android:id="@+id/reward_img"
                     android:layout_width="@dimen/px172"
                     android:layout_height="@dimen/px172"
-                    android:src="@mipmap/ic_default_bg"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -114,6 +114,8 @@
             android:includeFontPadding="false"
             android:textColor="@color/font_gray_s"
             android:textSize="@dimen/font_34"
-            tool:text="来自 什么圈呢" />
+            tool:text="来自 什么圈呢"
+            android:visibility="gone"
+            />
     </LinearLayout>
 </LinearLayout>

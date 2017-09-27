@@ -592,6 +592,16 @@
             android:name=".ui.activity.BoundPhoneActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent" />
+
+        <activity
+            android:name=".ui.activity.ScoreDetailAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
+
+        <activity
+            android:name=".ui.activity.RewardDetailAty"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent" />
     </application>
 
 </manifest>

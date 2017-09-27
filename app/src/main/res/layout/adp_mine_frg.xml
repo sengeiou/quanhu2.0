@@ -8,8 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/comm_item_selector"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
+        android:paddingTop="@dimen/px15"
+        android:paddingBottom="@dimen/px15"
+        >
+
 
         <ImageView
             android:id="@+id/id_icon_img"
@@ -26,7 +28,7 @@
             android:layout_marginLeft="@dimen/px26"
             android:layout_toRightOf="@+id/id_icon_img"
             android:textColor="@color/black"
-            android:textSize="@dimen/px50"/>
+            android:textSize="@dimen/px48"/>
 
         <TextView
             android:id="@+id/id_contact_num_update"
@@ -70,21 +72,47 @@
             android:scaleType="fitXY"
             android:visibility="gone"
             />
+
+
+
     </RelativeLayout>
 
-    <View
-        android:id="@+id/id_divider_v"
+
+    <LinearLayout
+        android:id="@+id/id_divider_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px30"
-        android:background="#F5F5F5"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <View
+            android:id="@+id/top_line_view"
+            style="@style/line_horizontal_gray_s"
+            android:layout_alignParentTop="true"
+            android:visibility="visible"
+            />
+
+        <View
+            android:id="@+id/id_divider_v"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px30"
+            android:background="#F5F5F5"
+            android:visibility="visible"/>
+
+        <View
+            android:id="@+id/bottom_line_view"
+            style="@style/line_horizontal_gray_s"
+            android:layout_alignParentBottom="true"
+            android:visibility="visible"
+            />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/id_line_v"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px3"
-        android:layout_marginLeft="@dimen/px30"
-        android:layout_marginRight="@dimen/px30"
         android:background="#EEEEEE"
         android:visibility="gone"/>
 </LinearLayout>
