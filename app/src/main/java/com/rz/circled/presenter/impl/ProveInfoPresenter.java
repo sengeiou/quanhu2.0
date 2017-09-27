@@ -1,6 +1,7 @@
 package com.rz.circled.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
@@ -102,7 +103,7 @@ public class ProveInfoPresenter extends GeneralPresenter {
                         Toasty.info(mContext, mContext.getString(R.string.prove_info_success)).show();
                         mView.updateViewWithFlag(null, FLAG_PROVE_INFO_SUCCESS);
                     } else {
-                        Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
+                        Toasty.info(mContext, TextUtils.isEmpty(response.body().getMsg()) ? mContext.getString(R.string.prove_info_fail) : response.body().getMsg()).show();
                     }
                 } else {
                     Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
@@ -145,7 +146,7 @@ public class ProveInfoPresenter extends GeneralPresenter {
                         Toasty.info(mContext, mContext.getString(R.string.prove_info_success)).show();
                         mView.updateViewWithFlag(null, FLAG_PROVE_INFO_SUCCESS);
                     } else {
-                        Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();
+                        Toasty.info(mContext, TextUtils.isEmpty(response.body().getMsg()) ? mContext.getString(R.string.prove_info_fail) : response.body().getMsg()).show();
                     }
                 } else {
                     Toasty.info(mContext, mContext.getString(R.string.prove_info_fail)).show();

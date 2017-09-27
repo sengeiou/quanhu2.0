@@ -80,6 +80,16 @@ android {
 
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
+    dexOptions {
+        dexInProcess true
+        preDexLibraries = true
+        javaMaxHeapSize "4g"
+    }
+
     buildTypes {
 
         release {

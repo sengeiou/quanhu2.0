@@ -2100,10 +2100,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 if (httpRequestModel != null) {
                     processPublishData();
                     toPublish();
-                } else publishFail();
+                } else publishFail("");
             } catch (JSONException e) {
                 e.printStackTrace();
-                publishFail();
+                publishFail("");
             }
         }
 
@@ -2161,15 +2161,15 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         hashMap.remove("data");
                         JsEvent.callJsEvent(hashMap, true);
                         finish();
-                    } else publishFail();
+                    } else publishFail(hashMap.containsKey("msg") ? (String) hashMap.get("msg") : "");
                 } else {
-                    publishFail();
+                    publishFail("");
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                publishFail();
+                publishFail("");
             }
         });
     }
@@ -2177,9 +2177,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     /**
      * 发布失败
      */
-    private void publishFail() {
+    private void publishFail(String msg) {
         onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-        Toasty.info(mContext, getString(R.string.editor_two_publish_fail)).show();
+        Toasty.info(mContext, TextUtils.isEmpty(msg) ? getString(R.string.editor_two_publish_fail) : msg).show();
     }
 
     private Map getMap(String headerStr) throws JSONException {
