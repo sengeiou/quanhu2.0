@@ -22,7 +22,7 @@ public class BillDetailModel {
 
     public int accountSum;
     public String cost;
-    public long createTime;
+    public String createTime;
     public String custId;
     public String orderDesc;
     public String orderId;
@@ -30,5 +30,5 @@ public class BillDetailModel {
     public String productDesc;
     public String productId;
     public int productType;
-    public int remarks;
+    public String remarks;
 }

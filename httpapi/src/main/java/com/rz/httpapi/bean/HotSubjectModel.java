@@ -47,7 +47,7 @@ public class HotSubjectModel {
     private String audio;
     private String circleId;
     private String circleName;
-    private String circleRoute;
+    public String circleRoute;
     private String cityCode;
     private long completeTime;
     private String content;
@@ -61,14 +61,14 @@ public class HotSubjectModel {
     private String extjson;
     private String gps;
     private int heat;
-    private String moduleEnum;
+    public String moduleEnum;
     private int orderby;
     private String ownerIntro;
     private String ownerName;
     private int partNum;
     private String pics;
     private int readNum;
-    private String resourceId;
+    public String resourceId;
     private String resourceTag;
     private String resourceType;
     private String summary;

@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/civ_circleimg"
-            android:layout_width="@dimen/px147"
-            android:layout_height="@dimen/px147"
+            android:layout_width="@dimen/px126"
+            android:layout_height="@dimen/px126"
             android:src="@drawable/ic_default_head"
             android:layout_centerHorizontal="true" />
 

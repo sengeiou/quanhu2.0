@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.alipay.sdk.app.PayTask;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -208,9 +207,9 @@ public class PayPresenter extends AbsPresenter {
             Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
-                    PayTask alipay = new PayTask(activity);
-                    String result = alipay.pay(order, false);
-                    subscriber.onNext(result);
+//                    PayTask alipay = new PayTask(activity);
+//                    String result = alipay.pay(order, false);
+//                    subscriber.onNext(result);
                     subscriber.onCompleted();
                 }
             }).subscribeOn(Schedulers.io())
@@ -376,7 +375,7 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<BillDetailModel>>> call = mUserService
-                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
+                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
             @Override
@@ -410,6 +409,7 @@ public class PayPresenter extends AbsPresenter {
             @Override
             public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
                 super.onFailure(call, t);
+                Log.i(TAG, "onFailure: "+t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                 isDataError = true;
             }
@@ -437,7 +437,7 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<BillDetailModel>>> call = mUserService
-                .getBillList(1049, Session.getUserId(), "", type, start, Constants.PAGESIZE);
+                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
             @Override
@@ -647,10 +647,10 @@ public class PayPresenter extends AbsPresenter {
                         mSetPayPw.findViewById(R.id.id_set_pay_pw_txt).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-//                                mSetDialog.dismiss();
-//                                Intent intent = new Intent(activity, SetPayPassAty.class);
-//                                intent.putExtra(IntentKey.General.KEY_TYPE, Type.HAD_NO_SET_PW);
-//                                activity.startActivity(intent);
+                                mSetDialog.dismiss();
+                                Intent intent = new Intent(activity, SetPayPassAty.class);
+                                intent.putExtra(IntentKey.KEY_TYPE, Type.HAD_NO_SET_PW);
+                                activity.startActivity(intent);
                             }
                         });
                         mSetDialog.show();
@@ -673,7 +673,7 @@ public class PayPresenter extends AbsPresenter {
         showPayDialog(mPayMoney, desc, "", flag);
     }
 
-    public void showPayDialog(final double mPayMoney, String desc, final String orderId, int flag) {
+    public void showPayDialog(final double mPayMoney, String desc, final String orderId, final int flag) {
         View payViwe = LayoutInflater.from(activity).inflate(R.layout.dialog_pay, null);
         if (Session.getUserSafetyproblem()) {
             payViwe.findViewById(R.id.id_is_set_user_txt).setVisibility(View.GONE);
@@ -720,7 +720,11 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
+                if (flag==3){
+                    mView.updateView(psw);
+                }else{
                 payOrder(orderId, psw);
+                }
             }
         });
     }

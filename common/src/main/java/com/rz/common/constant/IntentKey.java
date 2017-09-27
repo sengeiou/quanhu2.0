@@ -17,6 +17,8 @@ public interface IntentKey {
     String EXTRA_POSITION = "extraPosition";
     String KEY_DESC = "key_desc";
     String KEY_URL = "key_url";
+    //第一次进app跳发现
+    String JUMP_FIND_FIRST = "JUMP_FIND_FIRST";
     /**
      * boolean值
      */
