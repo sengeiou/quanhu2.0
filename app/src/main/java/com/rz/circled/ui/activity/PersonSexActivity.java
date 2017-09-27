@@ -49,15 +49,15 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
 
             case R.id.id_layout_person_male:
 
-                idFemaleImg.setImageResource(R.drawable.ic_pay_unchecked);
-                idMaleImg.setImageResource(R.drawable.ic_pay_checked);
+                idFemaleImg.setImageResource(R.mipmap.un_choose_icon);
+                idMaleImg.setImageResource(R.mipmap.choose_icon);
 //                sex = 0;
                 sex = 1;
                 break;
 
             case R.id.id_layout_person_female:
-                idFemaleImg.setImageResource(R.drawable.ic_pay_checked);
-                idMaleImg.setImageResource(R.drawable.ic_pay_unchecked);
+                idFemaleImg.setImageResource(R.mipmap.choose_icon);
+                idMaleImg.setImageResource(R.mipmap.un_choose_icon);
 //                sex = 1;
                 sex = 0;
                 break;
@@ -78,8 +78,8 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
         setTitleRightText(getString(R.string.mine_person_save));
         String sex = Session.getUser_sex();
         if (!TextUtils.isEmpty(sex)) {
-            idFemaleImg.setImageResource(sex.equals("女") ? R.drawable.ic_pay_checked : R.drawable.ic_pay_unchecked);
-            idMaleImg.setImageResource(sex.equals("男") ? R.drawable.ic_pay_checked : R.drawable.ic_pay_unchecked);
+            idFemaleImg.setImageResource(sex.equals("女") ? R.mipmap.choose_icon : R.mipmap.un_choose_icon);
+            idMaleImg.setImageResource(sex.equals("男") ? R.mipmap.choose_icon : R.mipmap.un_choose_icon);
 //            this.sex = sex.equals("女") ? 1 : 0;
             this.sex = sex.equals("女") ? 0 : 1;
         }

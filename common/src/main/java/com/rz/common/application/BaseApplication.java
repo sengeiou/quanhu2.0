@@ -19,9 +19,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        initOSS();
-
-
         this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -71,7 +68,7 @@ public class BaseApplication extends Application {
         return null;
     }
 
-    private void initOSS() {
+    protected void initOSS() {
         new Thread(new Runnable() {
             @Override
             public void run() {

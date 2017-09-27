@@ -30,7 +30,7 @@ public class BuyingAdapter extends BuyingContentAdapter {
 
 
     public BuyingAdapter(Context context, List mDatas) {
-        super(context, mDatas, R.layout.item_dynamic_home);
+        super(context, mDatas, R.layout.item_buy_home);
     }
 
     @Override
@@ -66,19 +66,19 @@ public class BuyingAdapter extends BuyingContentAdapter {
 //            mTvName.setText(item.getResource().getCustNname()== null ? "" : item.getResource().getCust().getCustNname());
 //        }
         tv_other_left.setText(item.getAmount()+"悠然币");
-        if (item.getResource().getCoterieId()==null||item.getResource().getCoterieName()==null){
-            fromWhere.setText("来自圈子"+item.getResource().getCircleName());
+        if (item.getResource().coterieId==null||item.getResource().coterieName==null){
+            fromWhere.setText("来自圈子"+item.getResource().circleName);
         }else {
-            fromWhere.setText("来自私圈"+item.getResource().getCoterieName());
+            fromWhere.setText("来自私圈"+item.getResource().coterieName);
         }
 //        mTvTime.setText(StringUtils.stampToDate(item.getResource().getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
         fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.getResource().getCoterieId()==null||item.getResource().getCoterieName()==null){
-                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.getResource().getCircleRoute()+"/");
+                if (item.getResource().coterieId==null||item.getResource().coterieName==null){
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.getResource().circleRoute+"/");
                 }else {
-                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.getResource().getCircleRoute()+"/coterie/"+item.getResource().getCoterieId());
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.getResource().circleRoute+"/coterie/"+item.getResource().coterieId);
                 }
             }
         });

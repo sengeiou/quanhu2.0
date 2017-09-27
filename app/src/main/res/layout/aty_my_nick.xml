@@ -29,8 +29,8 @@
 
             <ImageView
                 android:id="@+id/id_person_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/px180"
+                android:layout_width="@dimen/px44"
+                android:layout_height="@dimen/px44"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="@dimen/px30"

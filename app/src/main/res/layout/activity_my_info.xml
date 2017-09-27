@@ -40,12 +40,22 @@
 
         </RelativeLayout>
 
-        <View
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px2"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44"
+                android:background="@color/color_EEEEEE"/>
+
+        </LinearLayout>
+
 
         <RelativeLayout
             android:id="@+id/id_layout_person_nick"
@@ -73,14 +83,20 @@
                 android:src="@drawable/ic_right_arrow"/>
 
         </RelativeLayout>
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px2"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44"
+                android:background="@color/color_EEEEEE"/>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/id_layout_person_scan"
@@ -115,14 +131,20 @@
                 android:src="@drawable/ic_right_arrow"/>
 
         </RelativeLayout>
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px2"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44"
+                android:background="@color/color_EEEEEE"/>
+
+        </LinearLayout>
         <RelativeLayout
             android:id="@+id/id_layout_person_sex"
             style="@style/PersonInfoLineStyle"
@@ -149,12 +171,20 @@
 
         </RelativeLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px2"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44"
+                android:background="@color/color_EEEEEE"/>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/id_layout_person_area"
@@ -181,12 +211,20 @@
 
         </RelativeLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px2"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44"
+                android:background="@color/color_EEEEEE"/>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/id_layout_person_sign"
@@ -221,12 +259,20 @@
 
         </RelativeLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px3"
-            android:layout_marginLeft="@dimen/px30"
-            android:layout_marginRight="@dimen/px30"
-            android:background="@color/color_EEEEEE"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px2"
+                android:layout_marginLeft="@dimen/px44"
+                android:layout_marginRight="@dimen/px44"
+                android:background="@color/color_EEEEEE"/>
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/id_layout_person_brief"

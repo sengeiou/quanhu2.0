@@ -454,6 +454,7 @@
     <string name="had_know">知道了</string>
     <string name="backcard_reference">&#160;&#160;&#160;&#160;鉴于银联代付（提现）暂不支持县、乡级的农村信用社等地方性金融机构的储蓄卡进行提现操作，建议用户使用全国性商业银行、股份制银行的储蓄卡提现。\n&#160;&#160;&#160;&#160;
         可使用如下银行储蓄卡提现：中国工商银行/中国农业银行/中国银行/中国建设银行/交通银行/中国邮政储蓄银行/招商银行/浦发银行/中国光大银行/中信银行/平安银行/中国民生银行/华夏银行/广发银行/兴业银行。</string>
+    <string name="rewward_detail">打赏明细</string>
 
     <string name="exit_intr">退出会清除已上传的视频资源</string>
     <string name="look_again">再看看</string>

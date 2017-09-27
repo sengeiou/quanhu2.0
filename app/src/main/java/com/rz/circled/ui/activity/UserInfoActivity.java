@@ -37,6 +37,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
+import com.yryz.yunxinim.session.SessionHelper;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -101,7 +102,7 @@ public class UserInfoActivity extends BaseActivity{
     private int headHight;
     private IPresenter presenter;
     private IPresenter friendPresenter;
-
+    FriendInformationBean model;
 
     private String userId = "";
 
@@ -169,7 +170,7 @@ public class UserInfoActivity extends BaseActivity{
                 signTxt.setText(Session.getUser_signatrue());
             }
 
-            addFriendLayout.setVisibility(View.GONE);
+            addFriendBtn.setText("聊天");
             //普通用户
             if(Session.getCustRole().equals("0")){
                 userRole.setText("去认证");
@@ -335,7 +336,7 @@ public class UserInfoActivity extends BaseActivity{
             }
 
         }else if(t instanceof FriendInformationBean){
-            FriendInformationBean model = (FriendInformationBean) t;
+            model = (FriendInformationBean) t;
             setData(model);
         }
     }
@@ -383,9 +384,9 @@ public class UserInfoActivity extends BaseActivity{
             }
             if(model.getRelation() == 0){
                 //陌生人
-                addFriendLayout.setVisibility(View.VISIBLE);
-            }else{
-                addFriendLayout.setVisibility(View.GONE);
+                addFriendBtn.setText("加好友");
+            }else{  //好友
+                addFriendBtn.setText("聊天");
             }
 //            userRole.setText(model.getCustRole());
 
@@ -394,10 +395,11 @@ public class UserInfoActivity extends BaseActivity{
 
     @OnClick(R.id.add_friend_btn)
     public void addFriendClick(){
-
-        ((FriendPresenter1) friendPresenter).requireFriend(userId,"",1,CommonCode.requireFriend.require_type_agree);
-
+        if(model != null && model.getRelation() == 0){
+            ((FriendPresenter1) friendPresenter).requireFriend(userId,"",1,CommonCode.requireFriend.require_type_agree);
+        }else{
+            SessionHelper.startP2PSession(this, model.getCustId());
+        }
     }
-
 
 }

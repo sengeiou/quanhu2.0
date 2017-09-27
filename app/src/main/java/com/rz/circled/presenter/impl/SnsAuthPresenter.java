@@ -124,18 +124,12 @@ public class SnsAuthPresenter extends GeneralPresenter {
                             return;
                         }
                     } else {
-//                        if (HandleRetCode.handler(mContext, res)) {
-                            //登录失败
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
-                                    Toasty.info(mContext,res.getMsg()).show();
-                                }
-                            }, 2000);
-                            return;
-//                        }
-
+                        if(!TextUtils.isEmpty(res.getMsg())){
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        }else{
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
+                        }
+                        return;
                     }
                 }
                 //登录失败

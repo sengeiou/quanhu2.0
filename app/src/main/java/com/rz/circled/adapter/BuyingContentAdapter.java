@@ -63,25 +63,25 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
             rl_circle_video_content.getLayoutParams().width = newWidth;
             rl_circle_video_content.requestLayout();
                 mIvThumbnail.setVisibility(View.GONE);
-            if (TextUtils.isEmpty(item.getResource().getPics())) {
+            if (TextUtils.isEmpty(item.getResource().pics)) {
             } else {
                 rl_circle_video_content.setVisibility(View.GONE);
                 ll_circle_3imgs.setVisibility(View.GONE);
-                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().getPics(),R.dimen.px288,R.dimen.px260);
+                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().pics,R.dimen.px288,R.dimen.px260);
                 helper.setImageByUrlTransger(mIvThumbnail, url, R.drawable.ic_default_thumbnail);
             }
-            mTitle.setText(item.getResource().getTitle());
-            if (TextUtils.isEmpty(item.getResource().getContent())) {
+            mTitle.setText(item.getResource().title);
+            if (TextUtils.isEmpty(item.getResource().content)) {
                 mdes.setVisibility(View.GONE);
             } else {
-                if (TextUtils.isEmpty(item.getResource().getTitle())) {
+                if (TextUtils.isEmpty(item.getResource().title)) {
                     mdes.setVisibility(View.GONE);
                     mTitle.setVisibility(View.VISIBLE);
                     mTitle.setMaxLines(2);
-                    mTitle.setText(item.getResource().getContent());
+                    mTitle.setText(item.getResource().content);
                 } else {
                     mdes.setVisibility(View.VISIBLE);
-                    String s = item.getResource().getContent().trim().replaceAll("\\t", "");
+                    String s = item.getResource().content.trim().replaceAll("\\t", "");
                     Log.d("yeying", "adapter infoDesc " + s);
 
 //                    StringStaticFormatUtil.fillColor(s, SearchActivity.searchWord,R.color.colorAccent);
@@ -97,15 +97,15 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
             }
 
             //多图区域
-            if (TextUtils.isEmpty(item.getResource().getPics())) {
+            if (TextUtils.isEmpty(item.getResource().pics)) {
                 mImageLayout.setVisibility(View.GONE);
             } else {
                 mImageLayout.setVisibility(View.VISIBLE);
-                String[] pics = item.getResource().getPics().split(",");
+                String[] pics = item.getResource().pics.split(",");
                 if (pics.length == 1) {
                     iv_circle_1img.setVisibility(View.VISIBLE);
                     ll_circle_3imgs.setVisibility(View.GONE);
-                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().getPics(),R.dimen.px994,R.dimen.px558);
+                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().pics,R.dimen.px994,R.dimen.px558);
                     helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
                 } else {
                     iv_circle_1img.setVisibility(View.GONE);
@@ -134,13 +134,14 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
                 }
             }
 
-//            if (!TextUtils.isEmpty(item.videoPic)) {
-//                rl_circle_video_content.setVisibility(View.VISIBLE);
-//                ll_circle_3imgs.setVisibility(View.GONE);
-//                helper.setImageByUrlTransger(iv_video_preview, item.videoPic, R.color.black);
-//            } else {
-//                rl_circle_video_content.setVisibility(View.GONE);
-//            }
+
+            if (!TextUtils.isEmpty(item.getResource().videoPic)) {
+                rl_circle_video_content.setVisibility(View.VISIBLE);
+                ll_circle_3imgs.setVisibility(View.GONE);
+                helper.setImageByUrlTransger(iv_video_preview, item.getResource().videoPic, R.color.black);
+            } else {
+                rl_circle_video_content.setVisibility(View.GONE);
+            }
 
         }
     }

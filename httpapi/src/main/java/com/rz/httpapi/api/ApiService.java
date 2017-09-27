@@ -36,8 +36,10 @@ import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
+import com.rz.httpapi.bean.RewardDetailBean;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.RewardStatBean;
+import com.rz.httpapi.bean.ScoreBean;
 import com.rz.httpapi.bean.SearchDataBean;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
@@ -923,6 +925,36 @@ public interface ApiService {
             @Field("limit") int limit
     );
 
+    /**
+     * 查询积分明细
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_SCPRE_ORDER)
+    Call<ResponseData<List<ScoreBean>>> getScoreList(
+//            @Field("productType") int productType,
+            @Field("custId") String custId,
+            @Field("start") int start,
+            @Field("limit") int limit
+    );
+
+    /**
+     * 查询打赏明细
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(ApiPay.GET_REWARD_ORDER)
+    Call<ResponseData<List<RewardDetailBean>>> getMineRewardList(
+//            @Field("productType") int productType,
+            @Field("custId") String custId,
+            @Field("limit") int limit,
+            @Field("rewardId") String rewardId
+    );
+
     @FormUrlEncoded
     @POST(ApiPay.PAY_ORDER)
     Call<ResponseData<HashMap<String, String>>> payOrder(
@@ -1206,7 +1238,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(APIUser.GET_REWARD_STAT)
     Call<ResponseData<RewardStatBean>> getMyRewardStat(
-            @Field("paramId") String paramId
+            @Field("custId") String paramId
     );
 
 
