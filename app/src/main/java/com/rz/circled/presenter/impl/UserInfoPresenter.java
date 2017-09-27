@@ -98,7 +98,6 @@ public class UserInfoPresenter extends GeneralPresenter {
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                         mView.updateViewWithFlag( "",200);
-                        Toasty.info(mContext, res.getMsg()).show();
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
@@ -539,7 +538,6 @@ public class UserInfoPresenter extends GeneralPresenter {
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                         EventBus.getDefault().post(new BaseEvent(EventConstant.BOUND_PHONE_FAIL, res.getMsg()));
-                        Toasty.info(mContext, res.getMsg()).show();
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));

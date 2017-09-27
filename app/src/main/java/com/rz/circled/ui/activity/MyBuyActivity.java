@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
@@ -9,9 +10,11 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.BuyingAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.MyBuyingModel;
 
 import java.util.ArrayList;
@@ -44,6 +47,19 @@ public class MyBuyActivity extends BaseActivity {
         setTitleText(getString(R.string.my_purchase));
         dynamicAdapter = new BuyingAdapter(this, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (StringUtils.isEmpty(circleDynamicList.get(position).getResource().coterieId)||StringUtils.isEmpty(circleDynamicList.get(position).getResource().coterieName)) {
+                    String circleUrl = CommomUtils.getCircleUrl(circleDynamicList.get(position).getResource().circleRoute,circleDynamicList.get(position).getResource().moduleEnum, circleDynamicList.get(position).getResourceId());
+                    WebContainerActivity.startActivity(MyBuyActivity.this, circleUrl);
+                } else {
+                    String url = CommomUtils.getDymanicUrl(circleDynamicList.get(position).getResource().circleRoute,circleDynamicList.get(position).getResource().moduleEnum, circleDynamicList.get(position).getResource().coterieId, circleDynamicList.get(position).getResourceId());
+                    WebContainerActivity.startActivity(MyBuyActivity.this, url);
+                }
+            }
+        });
     }
 
     @Override

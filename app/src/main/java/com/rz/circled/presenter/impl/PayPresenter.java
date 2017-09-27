@@ -42,6 +42,8 @@ import com.rz.httpapi.bean.AccountBean;
 import com.rz.httpapi.bean.BillDetailModel;
 import com.rz.httpapi.bean.PayOrderInfoBean;
 import com.rz.httpapi.bean.PaySignModel;
+import com.rz.httpapi.bean.RewardDetailBean;
+import com.rz.httpapi.bean.ScoreBean;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
 
@@ -417,11 +419,11 @@ public class PayPresenter extends AbsPresenter {
     }
 
     /**
-     * 获取消费或者收益明细
+     * 获取积分明细
      *
      * @param loadmore true 加载更多 false 刷新
      */
-    public void requestGetRewardList(final boolean loadmore, int type) {
+    public void requestGetScoreList(final boolean loadmore) {
         if (!NetUtils.isNetworkConnected(activity)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
@@ -436,17 +438,17 @@ public class PayPresenter extends AbsPresenter {
             }
             record_start = start;
         }
-        Call<ResponseData<List<BillDetailModel>>> call = mUserService
-                .getBillList(Session.getUserId(), "", type, start, Constants.PAGESIZE);
+        Call<ResponseData<List<ScoreBean>>> call = mUserService
+                .getScoreList(Session.getUserId(), start, Constants.PAGESIZE);
         CallManager.add(call);
-        call.enqueue(new BaseCallback<ResponseData<List<BillDetailModel>>>() {
+        call.enqueue(new BaseCallback<ResponseData<List<ScoreBean>>>() {
             @Override
-            public void onResponse(Call<ResponseData<List<BillDetailModel>>> call, Response<ResponseData<List<BillDetailModel>>> response) {
+            public void onResponse(Call<ResponseData<List<ScoreBean>>> call, Response<ResponseData<List<ScoreBean>>> response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
-                    ResponseData<List<BillDetailModel>> res = response.body();
+                    ResponseData<List<ScoreBean>> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<BillDetailModel> dataList = res.getData();
+                        List<ScoreBean> dataList = res.getData();
                         if (null != dataList && !dataList.isEmpty()) {
                             isDataError = false;
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
@@ -469,13 +471,76 @@ public class PayPresenter extends AbsPresenter {
             }
 
             @Override
-            public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
+            public void onFailure(Call<ResponseData<List<ScoreBean>>> call, Throwable t) {
+                super.onFailure(call, t);
+                Log.i(TAG, "onFailure: "+t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                isDataError = true;
+            }
+        });
+    }
+
+    /**
+     * 获取打赏明细
+     *
+     * @param loadmore true 加载更多 false 刷新
+     */
+    public void requestGetRewardList(final boolean loadmore) {
+        if (!NetUtils.isNetworkConnected(activity)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        if (isDataError) {
+            start = record_start;
+        } else {
+            if (!loadmore) {
+                start = 0;
+            } else {
+                start += Constants.PAGESIZE;
+            }
+            record_start = start;
+        }
+        Call<ResponseData<List<RewardDetailBean>>> call = mUserService
+                .getMineRewardList(Session.getUserId(), Constants.PAGESIZE, "");
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<List<RewardDetailBean>>>() {
+            @Override
+            public void onResponse(Call<ResponseData<List<RewardDetailBean>>> call, Response<ResponseData<List<RewardDetailBean>>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<List<RewardDetailBean>> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        List<RewardDetailBean> dataList = res.getData();
+                        if (null != dataList && !dataList.isEmpty()) {
+                            isDataError = false;
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.updateViewWithLoadMore(dataList, loadmore);
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            isDataError = true;
+                        }
+                        return;
+                    } else {
+                        if (HandleRetCode.handler(activity, res)) {
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                            isDataError = true;
+                            return;
+                        }
+                    }
+                }
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                isDataError = true;
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<RewardDetailBean>>> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                 isDataError = true;
             }
         });
     }
+
 
 
     /**

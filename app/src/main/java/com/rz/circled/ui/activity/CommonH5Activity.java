@@ -12,6 +12,8 @@ import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -33,6 +35,16 @@ public class CommonH5Activity extends BaseActivity {
 
     @BindView(R.id.webview_common_h5)
     ProgressWebView mWebView;
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return false;
+    }
 
     public static void startCommonH5(Context context, String title, String url) {
         Intent intent = new Intent(context, CommonH5Activity.class);
@@ -197,7 +209,8 @@ public class CommonH5Activity extends BaseActivity {
 
     @Override
     public void refreshPage() {
-
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
+        mWebView.reload();
     }
 
     public class WebViewClient extends android.webkit.WebViewClient {
@@ -231,5 +244,13 @@ public class CommonH5Activity extends BaseActivity {
             }
             return true;
         }
+
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            super.onReceivedError(view, request, error);
+            onLoadingStatus(CommonCode.General.WEB_ERROR);
+        }
+
+
     }
 }

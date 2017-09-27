@@ -38,6 +38,7 @@ import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.StarListBean;
 import com.rz.httpapi.bean.Ticket;
 import com.rz.httpapi.bean.TransferResultBean;
+import com.rz.httpapi.bean.UserPermissionBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.io.Serializable;
@@ -152,23 +153,57 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //    }
 //
 //
+    //获取用户是否禁言
+    public  void  getUserPermession(){
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.getUserPermission(Session.getUserId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ResponseData<UserPermissionBean>>() {
+                        @Override
+                        public void onCompleted() {
 
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ResponseData<UserPermissionBean> res) {
+                            if (res.getRet()==ReturnCode.SUCCESS){
+                                UserPermissionBean data = res.getData();
+                                mView.updateView(data);
+                            }
+
+                        }
+                    });
+
+
+    }
     /**
      * 首页动态列表
      *
      * @param loadMore
      */
-    public void getCircleDynamicList(String cityCode, final boolean loadMore) {
+    public void getCircleDynamicList(final boolean loadMore) {
         Call<ResponseData<List<CircleDynamic>>> call = null;
         String userid = Session.getUserId();
         Log.i("lixiang", "onNext: " + dynamicCreateTime);
-        mUserService.getCircleDynamic(cityCode, dynamicCreateTime, userid, dynamicPage)
+        mUserService.getCircleDynamic(Session.getCityCode(),loadMore? dynamicCreateTime:0, userid, loadMore?dynamicPage:1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<List<CircleDynamic>>>() {
                     @Override
                     public void onCompleted() {
+                        if (!loadMore){
+                            dynamicPage=1;
+                        }
                         dynamicPage++;
+
                     }
 
                     @Override
@@ -183,7 +218,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             List<CircleDynamic> model = res.getData();
                             ACache mCache = ACache.get(mContext);
                             mCache.put(Constants.HOME_FRAGMENT_CACHE, (Serializable) model);
-                            dynamicCreateTime = model.get(model.size() - 1).createTime;
+                            dynamicCreateTime = model.get(model.size()-1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功
                                 mView.updateViewWithLoadMore(model, loadMore);
@@ -661,12 +696,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      * @param
      */
     Integer cid = null;
-    boolean loadMore=false;
-    public void getCircleCollection() {
+    public void getCircleCollection(final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.getCircleCollect(cid, Session.getUserId(), Constants.PAGESIZE)
+        mUserService.getCircleCollect(loadMore?cid:null, Session.getUserId(), Constants.PAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
@@ -682,7 +716,6 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     @Override
                     public void onNext(ResponseData<List<CollectionBean>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
-                            loadMore=true;
                             List<CollectionBean> data = res.getData();
                             if (data!=null&& !data.isEmpty()){
                             cid = data.get(data.size() - 1).cid;

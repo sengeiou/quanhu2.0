@@ -57,10 +57,12 @@ public class AccountPresenter extends GeneralPresenter {
         mUserService = Http.getApiService(ApiService.class);
         mLoginWay = new EntityCache<LoginWayModel>(mContext, LoginWayModel.class);
     }
+
     @Override
     public Object getCacheData() {
         return mLoginWay.getListEntityAddTag(LoginWayModel.class, "LoginWayModel");
     }
+
     @Override
     public void detachView() {
 
@@ -72,7 +74,7 @@ public class AccountPresenter extends GeneralPresenter {
     public void getLoginWay() {
         if (!NetUtils.isNetworkConnected(getContext(mView))) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
-            
+
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
@@ -334,12 +336,7 @@ public class AccountPresenter extends GeneralPresenter {
                         return;
                     } else {
                         if (HandleRetCode.handler(mContext, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                                }
-                            }, 2000);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                             return;
                         }
                         mView.updateViewWithLoadMore(-1, false);

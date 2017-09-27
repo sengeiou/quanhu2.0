@@ -7,7 +7,9 @@
     <include layout="@layout/base_search_head"></include>
     <ListView
         android:id="@+id/lv_m_famous"
-       style="@style/DefaultLvStyle">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
     </ListView>
 
 </LinearLayout>

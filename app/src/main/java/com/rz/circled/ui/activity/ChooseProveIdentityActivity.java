@@ -180,6 +180,10 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.change_prove_info_hint);
                 break;
+            case ProveStatusBean.STATUS_NORMAL://未认证
+                llStatus.setVisibility(View.GONE);
+                setTitleText(R.string.choose_prove_identity);
+                break;
         }
     }
 

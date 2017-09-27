@@ -14,8 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/px58"
+        android:orientation="horizontal">
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView
@@ -97,13 +98,7 @@
 
             <TextView
                 android:id="@+id/tv_other_left"
-                style="@style/DynamicHomeFuncTvStyle"
-                android:textColor="@color/white"
-                android:background="@drawable/shape_round_yellow"
-                android:paddingLeft="@dimen/px8"
-                android:paddingRight="@dimen/px8"
-                android:text="200"
-                />
+                style="@style/DynamicHomeFuncTvStyle" />
 
 
         <!--</LinearLayout>-->
@@ -196,13 +191,16 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/ll_other_right_type1_iv1"-->
-                    <!--style="@style/DynamicHomeFuncNumImgStyle" />-->
 
                 <TextView
                     android:id="@+id/ll_other_right_type1_tv2"
                     style="@style/DynamicHomeFuncTvStyle" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_other_right_type1_iv1"
+                    android:src="@drawable/from_circle"
+                    />
             </LinearLayout>
 
             <!--<LinearLayout-->

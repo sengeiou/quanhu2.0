@@ -91,7 +91,7 @@ public class MineRewardActivity extends BaseActivity {
         rewardedLyout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
+                RewardDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
             }
         });
 

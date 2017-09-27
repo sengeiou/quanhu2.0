@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/px45"
-        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginLeft="@dimen/px44"
         android:layout_marginTop="@dimen/px45"
         android:textColor="@color/global_bg"
         android:textSize="@dimen/font_50"
@@ -32,10 +32,10 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px1"
+        android:layout_height="@dimen/px2"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/px30"
-        android:layout_marginRight="@dimen/px30"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44"
         android:background="@color/light_gray"/>
 
 </RelativeLayout>

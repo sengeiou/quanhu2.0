@@ -149,6 +149,9 @@
                     android:textSize="@dimen/font_40"
                     android:textColor="@color/color_999999"
                     android:text="圈子"
+                    android:gravity="center"
+                    android:drawablePadding="@dimen/px14"
+                    android:drawableRight="@drawable/from_circle"
                     />
 
             </RelativeLayout>

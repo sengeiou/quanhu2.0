@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
+import com.rz.httpapi.bean.ScoreBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +27,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.rz.common.constant.H5Address.INTEGRAL_STATEGY;
+
 /**
  * Created by Administrator on 2016/7/20 0020.
  * 消费明细或者收益明细
  */
-public class AccountDetailAty extends BaseActivity {
+public class ScoreDetailAty extends BaseActivity {
 
     @BindView(R.id.lv_detail)
     ListView mListView;
@@ -40,10 +42,10 @@ public class AccountDetailAty extends BaseActivity {
     @BindView(R.id.produce_type)
     TextView mProduceType;
 
-    private CommonAdapter<BillDetailModel> mAdapter;
+    private CommonAdapter<ScoreBean> mAdapter;
 
     //存储消费明细信息
-    List<BillDetailModel> mBillDetails = new ArrayList<BillDetailModel>();
+    List<ScoreBean> mBillDetails = new ArrayList<ScoreBean>();
 
     //类别 1，消费流水；2，收益流水
     private int type;
@@ -52,13 +54,13 @@ public class AccountDetailAty extends BaseActivity {
     /**
      * 消费明细或者收益明细
      *
-     * @param context 上下文
+     * @param activity 上下文
      * @param type     1 表示消费明细  2 表示收益明细
      */
-    public static void startAccountDetail(Context context, int type) {
-        Intent intent = new Intent(context, AccountDetailAty.class);
+    public static void startAccountDetail(Activity activity, int type) {
+        Intent intent = new Intent(activity, ScoreDetailAty.class);
         intent.putExtra(IntentKey.KEY_TYPE, type);
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -76,34 +78,37 @@ public class AccountDetailAty extends BaseActivity {
     public void initView() {
         type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
         if (type == Type.TYPE_BALANCE) {
-            setTitleText(R.string.cost_detail_v3);
+            setTitleText(R.string.jf_details);
+            mIncome.setText(R.string.income); mProduceType.setText(R.string.mingcheng);
         } else if (type == Type.TYPE_SCORE) {
-//            setTitleRightText("积分获取攻略");
-//            setTitleRightTextColor(R.color.black);
-//            setTitleRightListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    CommonH5Activity.startCommonH5(mContext,"",INTEGRAL_STATEGY);
-//                }
-//            });
-            setTitleText(R.string.account_detail);
+            setTitleRightText("积分获取攻略");
+            setTitleRightTextColor(R.color.black);
+            setTitleRightListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonH5Activity.startCommonH5(mContext,"",INTEGRAL_STATEGY);
+                }
+            });
+            setTitleText(R.string.jf_details);
+            mIncome.setText(R.string.jifen);
+            mProduceType.setText(R.string.shuoming);
         }
-        mAdapter = new CommonAdapter<BillDetailModel>(aty, mBillDetails, R.layout.layout_account_detail_item) {
+        mAdapter = new CommonAdapter<ScoreBean>(aty, mBillDetails, R.layout.layout_account_detail_item) {
             @Override
-            public void convert(ViewHolder helper, BillDetailModel item) {
-                helper.setText(R.id.id_tv_name, item.productDesc);
+            public void convert(ViewHolder helper, ScoreBean item) {
+                helper.setText(R.id.id_tv_name, item.getEventName());
                 TextView mPay = (TextView) helper.getViewById(R.id.id_tv_cost);
                 //0，扣费；1，加费
-                int orderType = item.orderType;
-                if (orderType == 0) {
-                    mPay.setText("-" + Currency.returnDollar(Currency.RMB, item.cost, 0));
-                    mPay.setTextColor(Color.parseColor("#FF6060"));
-                } else if (orderType == 1) {
-                    mPay.setText("+" + Currency.returnDollar(Currency.RMB, item.cost, 0));
+//                int orderType = item.orderType;
+//                if (orderType == 0) {
+//                    mPay.setText("-" + Currency.returnDollar(Currency.RMB, item.getAllScore()+"", 0));
+//                    mPay.setTextColor(Color.parseColor("#FF6060"));
+//                } else if (orderType == 1) {
+                    mPay.setText("+" + item.getNewScore()+"");
                     mPay.setTextColor(Color.parseColor("#0185ff"));
-                }
+//                }
 //                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
-                String data = item.createTime.substring(0, 10);
+                String data = item.getCreateTime().substring(0, 10);
                 helper.setText(R.id.id_tv_date, data);
             }
         };
@@ -113,19 +118,19 @@ public class AccountDetailAty extends BaseActivity {
 
     @Override
     public void initData() {
-        mPresenter.requestGetBillList(false, type);
+        mPresenter.requestGetScoreList(false);
     }
 
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         if (null != t) {
-            List<BillDetailModel> bills = (List<BillDetailModel>) t;
+            List<ScoreBean> bills = (List<ScoreBean>) t;
             if (null != bills && !bills.isEmpty()) {
                 if (!loadMore) {
                     mBillDetails.clear();
                 }
-                for (BillDetailModel model : bills) {
-                    if (Double.parseDouble(model.cost) > 0) {
+                for (ScoreBean model : bills) {
+                    if (model.getAllScore() > 0) {
                         mBillDetails.add(model);
                     }
                 }

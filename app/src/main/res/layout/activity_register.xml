@@ -74,7 +74,7 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="@dimen/px42"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="@dimen/px56"
                                     android:layout_marginLeft="@dimen/px24"
                                     android:src="@mipmap/ic_login_phone"/>
@@ -97,8 +97,8 @@
 
                                 <ImageView
                                     android:id="@+id/id_clear_phone"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="@dimen/px40"
+                                    android:layout_height="@dimen/px40"
                                     android:src="@drawable/ic_clear"
                                     android:visibility="gone"
                                     android:layout_marginRight="@dimen/px44"
@@ -130,8 +130,8 @@
                                     android:orientation="horizontal">
 
                                     <ImageView
-                                        android:layout_width="@dimen/px42"
-                                        android:layout_height="@dimen/px56"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/px58"
                                         android:layout_marginLeft="@dimen/px24"
                                         android:src="@mipmap/icon_code"/>
 
@@ -194,8 +194,8 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_width="@dimen/px42"
-                                    android:layout_height="@dimen/px56"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/px58"
                                     android:layout_marginLeft="@dimen/px24"
                                     android:src="@mipmap/ic_login_pw"/>
 

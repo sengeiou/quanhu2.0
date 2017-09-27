@@ -17,13 +17,14 @@
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/font_44"
         android:textColor="@color/white"
-        android:layout_marginTop="@dimen/px30"
+        android:layout_marginTop="@dimen/px40"
         android:gravity="center"
         />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px30"
+        android:layout_marginTop="@dimen/px25"
         android:layout_gravity="center_horizontal"
         >
         <TextView
@@ -57,8 +58,8 @@
         android:textColor="@color/color_ffffff"
         android:text="@string/look_detail_txt"
         android:textSize="@dimen/font_34"
-        android:layout_marginTop="@dimen/px30"
-        android:layout_marginBottom="@dimen/px30"
+        android:layout_marginTop="@dimen/px25"
+        android:layout_marginBottom="@dimen/px40"
         />
 
 </LinearLayout>

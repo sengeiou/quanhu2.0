@@ -446,8 +446,8 @@ public class PersonInfoPresenter extends GeneralPresenter {
 
         Call<ResponseData<BuyingBean>> call = mUserService.getMyBuying(
                 custId,
-                1,
-                10);
+                start,
+                Constants.PAGESIZE);
 
 
         CallManager.add(call);
@@ -593,7 +593,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
                     ResponseData<RewardStatBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         RewardStatBean model = res.getData();
-                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.refunds_success));
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(model);
                     } else {
                         mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);

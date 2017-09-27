@@ -1,8 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,10 +97,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
-
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
-
+        Log.e(TAG, "initView");
         String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
@@ -415,73 +409,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.e(TAG, "onCreate: ");
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy: ");
         registerObservers(false);
-
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e(TAG, "onResume: ");
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e(TAG, "onRestart: ");
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
-        Log.e(TAG, "onRestoreInstanceState: ");
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e(TAG, "onSaveInstanceState: ");
-    }
-
-    @Override
-    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Log.e(TAG, "onRestoreInstanceState: ");
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.e(TAG, "onNewIntent: ");
     }
 
     @Override

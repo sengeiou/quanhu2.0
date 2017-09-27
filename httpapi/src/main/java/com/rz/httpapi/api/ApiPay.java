@@ -111,6 +111,16 @@ public class ApiPay {
     static final String GET_BILL_ORDER = "v3/pay/getOrderList";//--200
 
     /**
+     * 查询积分明细
+     */
+    static final String GET_SCPRE_ORDER = "v3/event/score/flow";//--200
+
+    /**
+     * 查询打赏明细
+     */
+    static final String GET_REWARD_ORDER = "v3/reward/getMyDetail";//--200
+
+    /**
      * 验证安全信息
      */
     static final String CHECK_SECURITY_PROBLEM = "v3/pay/checkSecurityProblem";//--200

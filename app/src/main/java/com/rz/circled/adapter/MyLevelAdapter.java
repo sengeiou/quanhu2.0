@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.TextView;
 
 import com.rz.circled.R;
@@ -21,11 +22,15 @@ public class MyLevelAdapter extends CommonAdapter<MyLevelBean> {
     public void convert(ViewHolder helper, MyLevelBean item, int position) {
         helper.setText(R.id.tv_level_item_resource, item.getEventName());
         helper.setText(R.id.tv_level_item_time, StringUtils.getDateTimeFromMillisecondNo3(StringUtils.toDate(item.getUpdateTime()).getTime()));
-        helper.setText(R.id.tv_level_item_number, item.getNewGrow() > 0 ? "+" + item.getNewGrow() : String.valueOf(item.getNewGrow()));
-        if (item.getNewGrow() > 0)
-            ((TextView) helper.getView(R.id.tv_level_item_number)).setTextColor(mContext.getResources().getColor(R.color.font_color_blue));
-        else
-            ((TextView) helper.getView(R.id.tv_level_item_number)).setTextColor(mContext.getResources().getColor(R.color.color_fb4545));
+        TextView tv_grow = helper.getView(R.id.tv_level_item_number);
+        int newGrow = item.getNewGrow();
+        if (newGrow > 0 ){
+            tv_grow.setText("+" +newGrow);
+            tv_grow.setTextColor(mContext.getResources().getColor(R.color.font_color_blue));
+        }else {
+            tv_grow.setTextColor(mContext.getResources().getColor(R.color.color_fb4545));
+            tv_grow.setText("-" +newGrow);
+        }
         if (position % 2 == 0)
             helper.getConvertView().setBackgroundResource(R.color.white);
         else

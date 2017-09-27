@@ -25,6 +25,7 @@ import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
+import com.rz.circled.ui.activity.AccountDetailAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
@@ -42,6 +43,7 @@ import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.NewsActivity;
 import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
+import com.rz.circled.ui.activity.ScoreDetailAty;
 import com.rz.circled.ui.activity.SettingActivity;
 import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -58,6 +60,7 @@ import com.rz.common.constant.Constants;
 import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
@@ -124,6 +127,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     TextView tvcircletCount;        //私圈
     TextView tvactivityCount;       //活动
 
+    LinearLayout scoresLayout;
+
     protected IPresenter presenter;
     protected IPresenter userPresenter;
     private CustormServiceModel mCustormServiceModel;
@@ -141,6 +146,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private ProveStatusBean proveStatusBean;
     private ProveInfoPresenter proveInfoPresenter;
     ProveStatusBean data;
+    UserSignBean signBean = new UserSignBean();
 
 
     @Override
@@ -198,7 +204,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         signLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
+                if(signBean!= null && !signBean.isSignFlag()){
+                    ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
+                }
             }
         });
 //        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
@@ -234,7 +242,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (mListView.getHeaderViewsCount() == 0) {
             header = View.inflate(getActivity(), R.layout.header_show_frag, null);
             //个人中心
-            header.findViewById(R.id.id_person_news_rela).setOnClickListener(new View.OnClickListener() {
+            header.findViewById(R.id.bg_rl_head).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
@@ -303,6 +311,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             custPointsTxt = (TextView) header.findViewById(R.id.cust_points_txt);
             famousTxt = (TextView) header.findViewById(R.id.famous_txt);
             famousLayout = (LinearLayout) header.findViewById(R.id.famous_layout);
+            scoresLayout = (LinearLayout) header.findViewById(R.id.scores_layout);
             famousLayout.getBackground().setAlpha(77);
 
             famousLayout.setOnClickListener(new View.OnClickListener() {
@@ -311,6 +320,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     ChooseProveIdentityActivity.startProveIdentity(mActivity, proveStatusBean);
                 }
             });
+
+            scoresLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ScoreDetailAty.startAccountDetail(mActivity, Type.TYPE_SCORE);
+                }
+            });
+
 
             if (Session.getUserIsLogin()) {
                 mTxtPersonName.setText(Session.getUserName());
@@ -333,26 +350,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
-
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//                scrollViewLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//                    @Override
-//                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                        if (scrollY <= 0) {
-//                            newTitilbar.getBackground().mutate().setAlpha(0);
-//                            signLayout.setVisibility(View.VISIBLE);
-//                        } else if (scrollY > 0 && scrollY <= headHight) {
-//                            float scale = (float) scrollY / headHight;
-//                            float alpha = (255 * scale);
-//                            // 只是layout背景透明(仿知乎滑动效果)
-//                            newTitilbar.getBackground().mutate().setAlpha((int) alpha);
-//                        } else {
-//                            newTitilbar.getBackground().mutate().setAlpha(255);
-//                            signLayout.setVisibility(View.GONE);
-//                        }
-//                    }
-//                });
-//            }
 
             scrollViewLayout.setOnScrollChanged(new MyScrollView.OnScrollChanged() {
                 @Override
@@ -466,16 +463,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             @Override
             public void convert(ViewHolder helper, MineFragItemModel item, int position) {
 
-                View mDivider = helper.getViewById(R.id.id_divider_v);
+//                View mDivider = helper.getViewById(R.id.id_divider_v);
+                LinearLayout dividerLayout = (LinearLayout) helper.getViewById(R.id.id_divider_layout);
+
                 View mLine = helper.getViewById(R.id.id_line_v);
                 ImageView isUpdate = (ImageView) helper.getViewById(R.id.version_update);
                 TextView mContactNum = (TextView) helper.getViewById(R.id.id_contact_num_update);
 
                 if (item.isDivider()) {
-                    mDivider.setVisibility(View.VISIBLE);
+//                    mDivider.setVisibility(View.VISIBLE);
+                    dividerLayout.setVisibility(View.VISIBLE);
                     mLine.setVisibility(View.GONE);
                 } else {
-                    mDivider.setVisibility(View.GONE);
+//                    mDivider.setVisibility(View.GONE);
+                    dividerLayout.setVisibility(View.GONE);
                     mLine.setVisibility(View.VISIBLE);
                 }
 
@@ -527,7 +528,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 mSp.edit().putString(Constants.CUSTOMER_SERVICE, messageUrl).commit();
             }
         } else if (t instanceof UserSignBean) {
-            UserSignBean signBean = (UserSignBean) t;
+            signBean = (UserSignBean) t;
             if (signBean.isSignFlag()) {
                 scoreImg.setVisibility(View.GONE);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -622,6 +623,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
             titlebarSignTxt.setText("已签到");
             titlebarSignTxt.setLayoutParams(lp);
+            setData();
 
         }
     }
