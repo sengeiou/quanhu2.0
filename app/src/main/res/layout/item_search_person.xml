@@ -4,7 +4,12 @@
               android:layout_height="@dimen/px260"
               android:background="@color/white"
               android:gravity="center_vertical"
-              android:orientation="horizontal">
+              android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="@dimen/px165"
@@ -46,7 +51,7 @@
             android:gravity="center"
             android:text="LV 1"
             android:textColor="@color/white"
-            android:textSize="@dimen/px25"
+            android:textSize="@dimen/px38"
             android:visibility="visible"/>
 
         <TextView
@@ -71,8 +76,16 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/font_gray_m"
-            android:textSize="@dimen/font_40"/>
+            android:textSize="@dimen/px40"/>
 
     </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44"
+        android:layout_gravity="bottom"
+        android:background="@color/color_e7e7e7"
+        android:layout_height="@dimen/px2"></View>
 
 </LinearLayout>

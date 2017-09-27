@@ -1,6 +1,8 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
@@ -20,7 +22,15 @@ public class MyLevelAdapter extends CommonAdapter<MyLevelBean> {
     public void convert(ViewHolder helper, MyLevelBean item, int position) {
         helper.setText(R.id.tv_level_item_resource, item.getEventName());
         helper.setText(R.id.tv_level_item_time, StringUtils.getDateTimeFromMillisecondNo3(StringUtils.toDate(item.getUpdateTime()).getTime()));
-        helper.setText(R.id.tv_level_item_number, item.getNewGrow() > 0 ? "+" + item.getNewGrow() : String.valueOf(item.getNewGrow()));
+        TextView tv_grow = helper.getView(R.id.tv_level_item_number);
+        int newGrow = item.getNewGrow();
+        if (newGrow > 0 ){
+            tv_grow.setText("+" +newGrow);
+            tv_grow.setTextColor(Color.parseColor("#0185ff"));
+        }else {
+            tv_grow.setTextColor(Color.parseColor("#FF6060"));
+            tv_grow.setText("-" +newGrow);
+        }
         if (position % 2 == 0)
             helper.getConvertView().setBackgroundResource(R.color.white);
         else

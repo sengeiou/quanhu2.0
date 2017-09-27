@@ -215,7 +215,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         vh.ll_audio.setVisibility(View.GONE);
                         vh.answer_content.setText("A:  " + answer.content);
                     }
-                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName() + " >");
+                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName());
                     vh.answer_from.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -317,9 +317,9 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         rl_circle_video_content.setVisibility(View.GONE);
                     }
                     if (StringUtils.isEmpty(coterieInfo.getCoterieId()) || StringUtils.isEmpty(coterieInfo.getName())) {
-                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName() + " >");
+                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName());
                     } else {
-                        fromWhere.setText("来自私圈 " + coterieInfo.getName() + " >");
+                        fromWhere.setText("来自私圈 " + coterieInfo.getName());
                     }
                     tv_name.setOnClickListener(new View.OnClickListener() {
                         @Override

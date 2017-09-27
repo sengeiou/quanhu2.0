@@ -15,7 +15,7 @@
             android:id="@+id/civ_head"
             android:layout_width="@dimen/px98"
             android:layout_height="@dimen/px98"
-            android:src="@drawable/ic_default_head_new" />
+            android:src="@drawable/ic_default_head" />
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
@@ -23,7 +23,6 @@
                 android:layout_marginLeft="@dimen/font_34"
                 android:textColor="@color/color_666666"
                 android:layout_gravity="center"
-                android:text="小李"
                 android:textSize="@dimen/font_44" />
         </LinearLayout>
 <TextView
@@ -60,7 +59,7 @@
         android:id="@+id/ll_more_foot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginBottom="@dimen/px34"
         android:orientation="horizontal">
 
@@ -76,10 +75,16 @@
             android:id="@+id/tv_where"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_666666"
+            android:textColor="@color/color_999999"
             android:layout_gravity="center"
             android:text="来自四圈旅游及机器号"
-            android:layout_marginRight="@dimen/font_34"
+            android:layout_marginRight="@dimen/px4"
             android:textSize="@dimen/font_44" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/from_circle"
+            />
     </LinearLayout>
 </LinearLayout>

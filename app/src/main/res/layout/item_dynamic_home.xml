@@ -188,13 +188,16 @@
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/ll_other_right_type1_iv1"-->
-                    <!--style="@style/DynamicHomeFuncNumImgStyle" />-->
 
                 <TextView
                     android:id="@+id/ll_other_right_type1_tv2"
                     style="@style/DynamicHomeFuncTvStyle" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_other_right_type1_iv1"
+                    android:src="@drawable/from_circle"
+                    />
             </LinearLayout>
 
             <!--<LinearLayout-->
