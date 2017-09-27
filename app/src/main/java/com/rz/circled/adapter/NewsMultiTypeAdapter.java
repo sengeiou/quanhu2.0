@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.rz.circled.adapter.viewholder.NewsActivityViewBinder;
 import com.rz.circled.adapter.viewholder.NewsAnnouncementViewBinder;
@@ -21,7 +22,6 @@ import me.drakeet.multitype.MultiTypeAdapter;
  */
 
 public class NewsMultiTypeAdapter extends MultiTypeAdapter {
-
     public NewsMultiTypeAdapter() {
         super();
         register();

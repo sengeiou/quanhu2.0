@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_item_transfer_gift_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/px252"
+    android:layout_height="@dimen/px250"
     android:background="@drawable/shape_reward_gift_divider">
 
     <ImageView

@@ -97,7 +97,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     @Override
     public void initView() {
         setTitleText(R.string.private_group_apply_for);
-        setTitleRightText(R.string.mine_person_save);
+        setTitleRightText(R.string.submit);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +148,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         super.onDestroy();
     }
 
-    @OnClick({R.id.btn_update_pic, R.id.btn_group, R.id.btn_protocol, R.id.btn_way})
+    @OnClick({R.id.btn_update_pic, R.id.btn_group, R.id.btn_protocol, R.id.btn_way, R.id.img_group})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_group:

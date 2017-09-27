@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -28,6 +29,7 @@ public class NewsTextViewBinder extends ItemViewBinder<NewsBean, NewsTextViewBin
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.item = item;
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
@@ -41,9 +43,17 @@ public class NewsTextViewBinder extends ItemViewBinder<NewsBean, NewsTextViewBin
         @BindView(R.id.tv_desc)
         TextView tvDesc;
 
+        NewsBean item;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsJumpHelper.startAcceptActivity(v.getContext(), item);
+                }
+            });
         }
     }
 

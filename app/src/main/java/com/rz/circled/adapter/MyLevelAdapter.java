@@ -26,10 +26,10 @@ public class MyLevelAdapter extends CommonAdapter<MyLevelBean> {
         int newGrow = item.getNewGrow();
         if (newGrow > 0 ){
             tv_grow.setText("+" +newGrow);
-            tv_grow.setTextColor(Color.parseColor("#0185ff"));
+            tv_grow.setTextColor(mContext.getResources().getColor(R.color.font_color_blue));
         }else {
-            tv_grow.setTextColor(Color.parseColor("#FF6060"));
-            tv_grow.setText("-" +newGrow);
+            tv_grow.setTextColor(mContext.getResources().getColor(R.color.color_fb4545));
+            tv_grow.setText(String.valueOf(newGrow));
         }
         if (position % 2 == 0)
             helper.getConvertView().setBackgroundResource(R.color.white);

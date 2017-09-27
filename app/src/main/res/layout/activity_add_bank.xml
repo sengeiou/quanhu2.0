@@ -5,7 +5,6 @@
     android:background="@color/app_bg_gray_common"
     android:orientation="vertical">
 
-
     <TextView
         style="@style/DefaultTvStyle"
         android:layout_height="@dimen/px124"
@@ -14,6 +13,8 @@
         android:text="@string/card_match_name"
         android:textColor="@color/font_gray_s"
         android:textSize="@dimen/px38" />
+
+    <View style="@style/DefaultHLineStyle" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,8 +45,8 @@
 
         <ImageView
             android:id="@+id/id_clear_card_name_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px40"
+            android:layout_height="@dimen/px40"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ic_clear"
             android:visibility="gone" />
@@ -84,29 +85,18 @@
 
         <ImageView
             android:id="@+id/id_clear_card_num_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px40"
+            android:layout_height="@dimen/px40"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ic_clear"
             android:visibility="gone" />
     </LinearLayout>
 
-    <View style="@style/DefaultHLineStyle.Divider" />
+    <View style="@style/DefaultHLineStyle" />
 
     <Button
         android:id="@+id/id_card_submit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="@dimen/px105"
-        android:layout_marginRight="@dimen/px105"
-        android:layout_marginTop="@dimen/px100"
-        android:background="@drawable/shape_bg_blue_sel"
-        android:gravity="center"
-        android:minHeight="0dp"
-        android:padding="@dimen/px32"
         android:text="@string/confirm"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_48" />
+        style="@style/DefaultSubmitBtnStyle" />
 
 </LinearLayout>

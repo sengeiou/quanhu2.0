@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,14 @@ public class ChooseProveIdentityActivity extends BaseActivity {
 
     private ProveStatusBean proveStatusBean;
     private ProveInfoPresenter proveInfoPresenter;
+
+    public static void startProveIdentity(Context context, ProveStatusBean proveStatusBean) {
+        Intent i = new Intent(context, ChooseProveIdentityActivity.class);
+        if (proveStatusBean != null) {
+            i.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
+        }
+        context.startActivity(i);
+    }
 
     @Override
     protected boolean needLoadingView() {

@@ -64,7 +64,7 @@
     <!--通用分割线-->
     <style name="line_horizontal_gray_s">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/px1</item>
+        <item name="android:layout_height">@dimen/px2</item>
         <item name="android:background">@color/line_gray_s</item>
     </style>
     <!--通用分割线-->

@@ -115,7 +115,7 @@ public class AddContactsActivity extends BaseActivity implements View.OnClickLis
                 JSONObject object = new JSONObject(scanResult);
                 Bundle bundle = new Bundle();
                 if (object.has("uid")) {
-//                    FriendInfoAty.newFrindInfo(aty, object.getString("uid"));
+                    UserInfoActivity.newFrindInfo(aty,object.getString("uid"));
                 } else {
                     Toast.makeText(aty, scanResult, Toast.LENGTH_SHORT).show();
                 }

@@ -14,6 +14,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsInteractiveExtra;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -34,6 +35,7 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.item = item;
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
         NewsInteractiveExtra extra = new Gson().fromJson(item.getBody().toString(), NewsInteractiveExtra.class);
@@ -60,9 +62,17 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         @BindView(R.id.tv_from)
         TextView tvFrom;
 
+        NewsBean item;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsJumpHelper.startAcceptActivity(v.getContext(), item);
+                }
+            });
         }
     }
 

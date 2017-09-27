@@ -63,7 +63,7 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
             cbxPay.setChecked(true);
             etvNum.setText(String.valueOf(price));
         }
-        setTitle(R.string.private_group_join_way_change);
+        setTitleText(R.string.private_group_join_way_change);
         setTitleRightText(R.string.submit);
         setTitleRightListener(new View.OnClickListener() {
             @Override

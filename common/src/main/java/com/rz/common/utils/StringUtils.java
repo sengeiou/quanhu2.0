@@ -356,8 +356,8 @@ public class StringUtils {
      * @param time
      * @return time为null，或者时间格式不匹配，输出空字符""
      */
-    public static String formatDisplayTime(long time) {
-        return formatDisplayTime(time + "", "yyyy-MM-dd HH:mm:ss");
+    public static String formatDisplayTime(String time) {
+        return formatDisplayTime(time.replace("\\\"", ""), "yyyy-MM-dd HH:mm:ss");
     }
 
 
@@ -398,29 +398,22 @@ public class StringUtils {
                 SimpleDateFormat todayDf = new SimpleDateFormat("yyyy-MM-dd");
                 Date thisYear = new Date(thisYearDf.parse(
                         thisYearDf.format(today)).getTime());
-                Date yesterday = new Date(todayDf.parse(todayDf.format(today))
-                        .getTime());
+                Date yesterday = new Date(todayDf.parse(todayDf.format(today)).getTime());
                 Date beforeYes = new Date(yesterday.getTime() - tDay);
                 if (tDate != null) {
-                    SimpleDateFormat halfDf = new SimpleDateFormat(
-                            "MM-dd HH:mm");
+                    SimpleDateFormat halfDf = new SimpleDateFormat("MM-dd HH:mm");
                     long dTime = today.getTime() - tDate.getTime();
                     if (tDate.before(thisYear)) {
-                        display = new SimpleDateFormat("yyyy-MM-dd HH:mm")
-                                .format(tDate);
+                        display = new SimpleDateFormat("yyyy-MM-dd").format(tDate);
                     } else {
-
                         if (dTime < tMin) {
                             display = "刚刚";
                         } else if (dTime < tHour) {
                             display = (int) Math.ceil(dTime / tMin) + "分钟前";
                         } else if (dTime < tDay && tDate.after(yesterday)) {
                             display = (int) Math.ceil(dTime / tHour) + "小时前";
-                        } else if (tDate.after(beforeYes)
-                                && tDate.before(yesterday)) {
-                            display = "昨天"
-                                    + new SimpleDateFormat("HH:mm")
-                                    .format(tDate);
+                        } else if (tDate.after(beforeYes) && tDate.before(yesterday)) {
+                            display = "昨天" + new SimpleDateFormat("HH:mm").format(tDate);
                         } else {
                             display = halfDf.format(tDate);
                         }

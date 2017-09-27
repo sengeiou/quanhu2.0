@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:lines="1"
+            android:maxLines="2"
             android:textColor="@color/font_gray_xl"
             android:textSize="@dimen/font_54"
             tool:text="这里的是活动标题" />
@@ -38,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px44"
+            android:maxLines="3"
             android:includeFontPadding="false"
             android:lines="1"
             android:textColor="@color/font_gray_l"

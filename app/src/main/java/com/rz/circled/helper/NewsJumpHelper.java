@@ -1,10 +1,17 @@
 package com.rz.circled.helper;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.rz.circled.constants.NewsTypeConstants;
+import com.rz.circled.ui.activity.AccountDetailAty;
+import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
+import com.rz.circled.ui.activity.MyCouponsActivity;
+import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.common.constant.Type;
 import com.rz.httpapi.bean.NewsBean;
+import com.rz.httpapi.bean.ProveStatusBean;
 
 /**
  * Created by rzw2 on 2017/9/13.
@@ -20,14 +27,19 @@ public class NewsJumpHelper {
             case NewsTypeConstants.NONE:
                 break;
             case NewsTypeConstants.ACCOUNT:
+                AccountDetailAty.startAccountDetail(context, Type.TYPE_BALANCE);
                 break;
             case NewsTypeConstants.INTEGRAL:
+                AccountDetailAty.startAccountDetail(context, Type.TYPE_SCORE);
                 break;
             case NewsTypeConstants.MYCARD:
+                context.startActivity(new Intent(context, MyCouponsActivity.class));
                 break;
             case NewsTypeConstants.MYCOTERIE:
+                MyPrivateGroupActivity.startMyPrivateGroup(context, 0);
                 break;
             case NewsTypeConstants.MYTALENT:
+                ChooseProveIdentityActivity.startProveIdentity(context, new ProveStatusBean());
                 break;
             case NewsTypeConstants.INNER_URL:
                 break;

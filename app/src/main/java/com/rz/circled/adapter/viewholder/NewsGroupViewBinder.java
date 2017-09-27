@@ -13,6 +13,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsGroupExtra;
+import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -33,6 +34,7 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
+        holder.item = item;
         holder.tvTime.setText(item.getCreateTime());
         holder.tvTitle.setText(item.getTitle());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).placeholder(R.mipmap.ic_default_private_group_icon).error(R.mipmap.ic_default_private_group_icon).into(holder.avatar);
@@ -65,9 +67,17 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
         @BindView(R.id.tv_status)
         TextView tvStatus;
 
+        NewsBean item;
+
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NewsJumpHelper.startAcceptActivity(v.getContext(), item);
+                }
+            });
         }
     }
 }

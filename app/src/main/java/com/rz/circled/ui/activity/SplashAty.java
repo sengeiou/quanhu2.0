@@ -192,6 +192,7 @@ public class SplashAty extends BaseActivity {
         }else{
             jumpTo();
         }
+
         mTxtjumpTo = (TextView) findViewById(R.id.id_jump_txt);
         mTxtjumpTo.setVisibility(View.VISIBLE);
         mTxtjumpTo.setOnClickListener(new View.OnClickListener() {
@@ -229,11 +230,12 @@ public class SplashAty extends BaseActivity {
      * 跳转
      */
     private void jumpTo() {
-        if (!isClickAdv && Session.getUserIsLogin()) {
+        if (!isClickAdv){
+        if (Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
         } else {
             skipActivity(aty, LoginActivity.class);
-        }
+        }}
     }
 
     @Override
@@ -258,6 +260,7 @@ public class SplashAty extends BaseActivity {
         @Override
         public void onFinish() {
             isTimeOver = true;
+            Log.i(TAG, "onFinish: "+"lixiang");
             jumpTo();
         }
     }

@@ -33,7 +33,7 @@
     <string name="setting_safe_info">设置安全保护信息</string>
     <string name="unbind_card_fail">解绑失败</string>
     <string name="webo_login">微博登录</string>
-    <string name="weibo">微博</string>
+    <string name="weibo">新浪微博</string>
     <string name="weixin_login">微信登录</string>
     <string name="weixin">微信</string>
     <string name="qq_login">腾讯QQ</string>
@@ -480,7 +480,7 @@
     <string name="match">确认</string>
     <string name="person">人</string>
     <string name="no_friend_to_add">你暂时还没有好友哦，\n快去添加好友吧</string>
-    <string name="search_key3">输入昵称、手机号码或备注名</string>
+    <string name="search_key3">输入昵称或手机号搜索用户</string>
     <string name="remark_fail">备注失败</string>
     <string name="obtain_fail">获取失败</string>
     <string name="inval_sucess">邀请成功</string>

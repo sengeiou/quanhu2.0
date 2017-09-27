@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,13 +52,13 @@ public class AccountDetailAty extends BaseActivity {
     /**
      * 消费明细或者收益明细
      *
-     * @param activity 上下文
+     * @param context 上下文
      * @param type     1 表示消费明细  2 表示收益明细
      */
-    public static void startAccountDetail(Activity activity, int type) {
-        Intent intent = new Intent(activity, AccountDetailAty.class);
+    public static void startAccountDetail(Context context, int type) {
+        Intent intent = new Intent(context, AccountDetailAty.class);
         intent.putExtra(IntentKey.KEY_TYPE, type);
-        activity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
