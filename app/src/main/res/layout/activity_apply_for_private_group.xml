@@ -25,7 +25,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/px14"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/px20"
                 android:text="@string/private_group_create_tip"
                 android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_38" />
@@ -215,8 +217,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/px28"
                         android:gravity="center"
-                        android:paddingLeft="@dimen/px10"
                         android:lineSpacingExtra="2dp"
+                        android:paddingLeft="@dimen/px10"
                         android:paddingRight="@dimen/px10"
                         android:text="@string/private_group_update_icon"
                         android:textColor="@color/font_gray_s"
