@@ -36,7 +36,7 @@ public class RewardGiftAdapter extends CommonAdapter<RewardGiftModel> {
         mTvPrice.setText(Integer.parseInt(item.getPrice()) / 100 + mContext.getString(R.string.youranbi));
         if (checkMap.get(helper.getPosition(), false)) {
             mIvCheck.setVisibility(View.VISIBLE);
-            rlRoot.setBackgroundResource(R.drawable.shape_ring_blue);
+            rlRoot.setBackgroundResource(R.drawable.shape_reward_gift_select);
         } else {
             mIvCheck.setVisibility(View.GONE);
             rlRoot.setBackgroundResource(R.drawable.shape_reward_gift_divider);

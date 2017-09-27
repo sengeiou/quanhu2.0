@@ -26,9 +26,9 @@
     <string name="cancel_bind">解绑</string>
     <string name="auth_phone">手机号</string>
     <string name="safety_info_note">为保障账户安全，请输入您真实的姓名和身份证号码。该信息一经设定，不能修改，请仔细填写。</string>
-    <string name="hint_enter_name">请输入您的姓名</string>
+    <string name="hint_enter_name">请输入姓名</string>
     <string name="id_card">身份证号码</string>
-    <string name="hint_enter_id_card">请输入您的身份证号码</string>
+    <string name="hint_enter_id_card">请输入身份证号码</string>
     <string name="safe_protect_info">安全保护信息</string>
     <string name="setting_safe_info">设置安全保护信息</string>
     <string name="unbind_card_fail">解绑失败</string>
@@ -42,7 +42,7 @@
     <string name="name_length">姓名长度需在2～20位之间</string>
     <string name="id_length">身份证号码长度需为18位</string>
     <string name="setting_sucess">设置成功</string>
-    <string name="reset_desc">为保障您的账户安全，请先完成身份验证。请输入在设置安全保护信息时填写的姓名和身份证号码。</string>
+    <string name="reset_desc">为保障您的账户安全，请先在"安全保护信息"中设置姓名,身份证号等,然后才能重置支付密码。</string>
     <string name="verification_code">验证码</string>
     <string name="rest_pay_pw">重置支付密码</string>
     <string name="input_code">请输入验证码</string>
@@ -269,6 +269,8 @@
     <string name="leave_message_to_friend">给朋友留言</string>
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>
+    <string name="share_title">进圈乎，玩圈子，一切都有了！</string>
+    <string name="share_desc">圈乎，大型资源共享与价值变现O2O平台。“人人找资源、人人即资源、人人有资源。”帮你解决资源难题！</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -457,8 +459,6 @@
     <string name="exit_intr">退出会清除已上传的视频资源</string>
     <string name="look_again">再看看</string>
     <string name="forward_to_make_money">转发去赚钱</string>
-
-    <string name="search_keyword_hint">搜个关键词试试看</string>
     <string name="find">发现</string>
 
     <string name="create_team_add_icon">添加私圈头像</string>
@@ -477,6 +477,7 @@
     <string name="input_keyword">输入关键字</string>
     <string name="select">已选择</string>
     <string name="press">确定</string>
+    <string name="match">确认</string>
     <string name="person">人</string>
     <string name="no_friend_to_add">你暂时还没有好友哦，\n快去添加好友吧</string>
     <string name="search_key3">输入昵称、手机号码或备注名</string>
@@ -612,7 +613,7 @@
     <string name="answer_null">答案不能为空</string>
     <string name="answer_success">验证成功</string>
     <string name="question_success">设置成功</string>
-    <string name="name">名称</string>
+    <string name="name">姓名</string>
     <string name="pwd_space">****&#160;****&#160;****&#160;</string>a
     <string name="easy_pay_intr">开启后50悠然币以下的支付行为,无需输入支付密码</string>
     <string name="shine_rule">“随手晒”使用规则</string>

@@ -89,8 +89,8 @@ public class AddContactsActivity extends BaseActivity implements View.OnClickLis
             case R.id.id_addfriend_layout:
                 trackUser("我的", "添加好友", "一键邀请好友");
                 ShareNewsAty.startShareNews(aty, new ShareModel(
-                                getString(R.string.app_name),
-                                getString(R.string.app_name),
+                                getString(R.string.share_title),
+                                getString(R.string.share_desc),
                                 H5Address.APP_DOWNLOAD),
                         IntentCode.PAGE_ADDFRIEND);
                 break;

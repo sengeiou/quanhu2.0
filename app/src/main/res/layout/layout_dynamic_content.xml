@@ -64,7 +64,7 @@
         <ImageView
             android:id="@+id/iv_circle_1img"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px560"
+            android:layout_height="@dimen/px446"
 
             android:src="@drawable/ic_circle_img1"
             android:visibility="gone" />

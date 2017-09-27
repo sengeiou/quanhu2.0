@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,6 +50,7 @@ public class MoreFamousActivity extends BaseActivity {
         setTitleText("达人");
         mAdapter = new SearchPersonAdapter(this, R.layout.item_search_person);
         mAdapter.setTalentPage(true);
+        mLvMFamous.setDividerHeight(0);
         mLvMFamous.setAdapter(mAdapter);
         mLvMFamous.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

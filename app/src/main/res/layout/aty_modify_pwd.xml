@@ -5,7 +5,7 @@
               android:background="@color/color_f5f5f5"
               android:gravity="center_horizontal"
               android:orientation="vertical"
-              android:paddingTop="@dimen/px10">
+              android:paddingTop="@dimen/px28">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:password="true"
             android:singleLine="true"
             android:textColor="@color/color_333333"
-            android:textColorHint="@color/color_666666"
+            android:textColorHint="@color/color_aaa"
             android:textCursorDrawable="@drawable/shape_et_course"
             android:textSize="@dimen/font_44"/>
 
@@ -87,7 +87,7 @@
             android:password="true"
             android:singleLine="true"
             android:textColor="@color/color_333333"
-            android:textColorHint="@color/color_666666"
+            android:textColorHint="@color/color_aaa"
             android:textCursorDrawable="@drawable/shape_et_course"
             android:textSize="@dimen/font_44"/>
 
@@ -138,7 +138,7 @@
             android:password="true"
             android:singleLine="true"
             android:textColor="@color/color_333333"
-            android:textColorHint="@color/color_666666"
+            android:textColorHint="@color/color_aaa"
             android:textCursorDrawable="@drawable/shape_et_course"
             android:textSize="@dimen/font_44"/>
 

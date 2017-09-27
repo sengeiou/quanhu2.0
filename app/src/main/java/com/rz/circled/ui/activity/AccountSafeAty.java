@@ -307,9 +307,9 @@ public class AccountSafeAty extends BaseActivity {
 
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
-//        if (loadingStatus == CodeStatus.Gegeneral.ERROR_DATA) {
-//            mEasyPayBtn.setCheckedNoEvent(!mRecordCheckEasyPay);
-//        }
+        if (loadingStatus == CommonCode.General.ERROR_DATA) {
+            mEasyPayBtn.setCheckedNoEvent(!mRecordCheckEasyPay);
+        }
         super.onLoadingStatus(loadingStatus, string);
     }
 

@@ -178,7 +178,7 @@ public class SplashAty extends BaseActivity {
                     public void onClick(View view) {
                         isClickAdv = true;
                         if (!TextUtils.isEmpty(Session.getAdv_url())) {
-                            CommonH5Activity.startCommonH5(aty, "", Session.getAdv_url());
+                            CommonH5Activity.startCommonH5(aty, "", Session.getAdv_url(),true);
                         }
                     }
                 });

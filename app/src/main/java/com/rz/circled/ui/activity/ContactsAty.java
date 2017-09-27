@@ -325,7 +325,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
          */
         if (i > 0) {
             if (item != null) {
-//                    FriendInfoAty.newFrindInfo(aty, item.getCustId());
+                UserInfoActivity.newFrindInfo(aty,item.getCustId());
             }
         }
     }

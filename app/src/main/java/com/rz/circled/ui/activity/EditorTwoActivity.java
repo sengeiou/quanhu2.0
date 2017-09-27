@@ -2100,10 +2100,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 if (httpRequestModel != null) {
                     processPublishData();
                     toPublish();
-                } else publishFail();
+                } else publishFail("");
             } catch (JSONException e) {
                 e.printStackTrace();
-                publishFail();
+                publishFail("");
             }
         }
 
@@ -2150,28 +2150,26 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 if (response.isSuccessful()) {
                     onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                     String jsonStr = response.body().toString();
-                    try {
-                        JSONObject jsonObject = new JSONObject(jsonStr);
-                        if (jsonObject.has("code")) {
-                            String code = jsonObject.getString("code");
-                            if (code.equals("200")) {
-                                Toasty.info(EditorTwoActivity.this, getString(R.string.editor_two_publish_success)).show();
-                                JsEvent.callJsEvent(rootBean, true);
-                                finish();
-                            } else publishFail();
-                        } else publishFail();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        publishFail();
-                    }
+                    Gson gson = new Gson();
+                    HashMap hashMap = gson.fromJson(jsonStr, HashMap.class);
+                    if (hashMap.containsKey("code") && hashMap.get("code").equals("200")) {
+                        Toasty.info(mContext, getString(R.string.editor_two_publish_success)).show();
+                        Map data = (Map) hashMap.get("data");
+                        if (data.containsKey("contentSource"))
+                            data.remove("contentSource");
+                        hashMap.put("dataSource", data);
+                        hashMap.remove("data");
+                        JsEvent.callJsEvent(hashMap, true);
+                        finish();
+                    } else publishFail(hashMap.containsKey("msg") ? (String) hashMap.get("msg") : "");
                 } else {
-                    publishFail();
+                    publishFail("");
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                publishFail();
+                publishFail("");
             }
         });
     }
@@ -2179,9 +2177,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     /**
      * 发布失败
      */
-    private void publishFail() {
+    private void publishFail(String msg) {
         onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-        Toasty.info(mContext, getString(R.string.editor_two_publish_fail)).show();
+        Toasty.info(mContext, TextUtils.isEmpty(msg) ? getString(R.string.editor_two_publish_fail) : msg).show();
     }
 
     private Map getMap(String headerStr) throws JSONException {
