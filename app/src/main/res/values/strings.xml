@@ -269,6 +269,8 @@
     <string name="leave_message_to_friend">给朋友留言</string>
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>
+    <string name="share_title">进圈乎，玩圈子，一切都有了！</string>
+    <string name="share_desc">圈乎，大型资源共享与价值变现O2O平台。“人人找资源、人人即资源、人人有资源。”帮你解决资源难题！</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>

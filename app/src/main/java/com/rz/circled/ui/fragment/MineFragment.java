@@ -729,8 +729,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "一键邀请好友");
                     ShareNewsAty.startShareNews(getContext(), new ShareModel(
-                                    getString(R.string.app_name),
-                                    getString(R.string.app_name),
+                                    getString(R.string.share_title),
+                                    getString(R.string.share_desc),
                                     H5Address.APP_DOWNLOAD),
                             IntentCode.Setting.SETTING_RESULT_CODE);
                 }
