@@ -22,6 +22,7 @@ import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.GlideCenterRoundImage;
@@ -52,6 +53,7 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
+import static com.rz.common.utils.SystemUtils.trackUser;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -213,7 +215,7 @@ public class FindFragment extends BaseFragment {
                 TextView title = (TextView) convertView.findViewById(R.id.activity_title);
                 ImageView iv = (ImageView) convertView.findViewById(R.id.iv_activity_icon);
                 title.setText(entitiesBean.getTitle());
-                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).transform(new GlideCenterRoundImage(mActivity,10)).into(iv);
+                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mActivity,10)).into(iv);
                 return convertView;
             }
         };
@@ -242,7 +244,7 @@ public class FindFragment extends BaseFragment {
                         .bitmapTransform(new RoundedCornersTransformation(mActivity,25,0,RoundedCornersTransformation.CornerType.LEFT))
                         .into(vh.topicIcon);
                 vh.topicName.setText(hotSubjectModel.getTitle());
-                vh.topicCount.setText(hotSubjectModel.getReadNum() + "人参与");
+                vh.topicCount.setText(hotSubjectModel.getPartNum() + " 讨论");
                 vh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -293,7 +295,7 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
                 FamousViewHolder fvh = (FamousViewHolder) holder;
-                FamousModel famousModel = famousList.get(position);
+                final FamousModel famousModel = famousList.get(position);
                 Glide.with(mActivity).load(famousModel.custInfo.getCustImg()).placeholder(R.drawable.iv_famous_defaule).transform(new GlideCircleImage(mActivity)).into(fvh.famous_iv);
                 fvh.famous_name.setText(famousModel.custInfo.getCustNname());
                 fvh.famous_mark.setText(famousModel.starInfo.getTradeField());
@@ -302,10 +304,10 @@ public class FindFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (isLogin()) {
-//                            String url = famousList.get(position).getUrl();
-//                            String starName = famousList.get(position).getStarName();
-//                            trackUser("推广", "达人", starName);
-//                            WebContainerActivity.startActivity(v.getContext(), url);
+                            String starName =famousModel.custInfo.getCustNname();
+                            String custId = famousModel.custInfo.getCustId();
+                            trackUser("推广", "达人", starName);
+                            UserInfoActivity.newFrindInfo(mActivity,custId);
                         }
                     }
                 });

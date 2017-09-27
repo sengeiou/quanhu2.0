@@ -45,6 +45,7 @@ import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
+import com.rz.httpapi.bean.UserPermissionBean;
 import com.rz.httpapi.bean.UserSignBean;
 
 import java.util.HashMap;
@@ -665,6 +666,12 @@ public interface ApiService {
     Call<ResponseData<List<OpusTag>>> getOpusTag(
             @Field("act") int actionCode,
             @Field("type") String type
+    );
+    //获取用户权限
+    @FormUrlEncoded
+    @POST(API.GET_PERMISSION)
+    Observable<ResponseData<UserPermissionBean>> getUserPermission(
+            @Field("custId") String custId
     );
 
     /**

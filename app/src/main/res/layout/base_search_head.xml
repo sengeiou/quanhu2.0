@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/transparent"
-                android:hint="英语"
+                android:hint="输入达人昵称搜索"
                 android:maxLines="1"
                 android:focusable="false"
                 android:paddingRight="@dimen/px10"

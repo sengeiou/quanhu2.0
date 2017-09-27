@@ -31,9 +31,9 @@ import butterknife.OnClick;
  */
 public class SettingSafeUserAty extends BaseActivity {
 
-    //是否提醒用户
-    @BindView(R.id.id_remind_user_txt)
-    TextView mTxtRemindSafe;
+//    //是否提醒用户
+//    @BindView(R.id.id_remind_user_txt)
+//    TextView mTxtRemindSafe;
 
     //姓名
     @BindView(R.id.id_your_name_edit)
@@ -68,7 +68,7 @@ public class SettingSafeUserAty extends BaseActivity {
     public void initView() {
         if (Session.getUserSafetyproblem()) {
             setTitleText(getString(R.string.safe_protect_info));
-            mTxtRemindSafe.setVisibility(View.GONE);
+//            mTxtRemindSafe.setVisibility(View.GONE);
             mSaveBtn.setVisibility(View.GONE);
             mEditName.setFocusable(false);
             mEditName.setFocusableInTouchMode(false);
@@ -79,7 +79,7 @@ public class SettingSafeUserAty extends BaseActivity {
 
         } else {
             setTitleText(getString(R.string.setting_safe_info));
-            mTxtRemindSafe.setVisibility(View.VISIBLE);
+//            mTxtRemindSafe.setVisibility(View.VISIBLE);
             mSaveBtn.setVisibility(View.VISIBLE);
             mEditName.setFocusable(true);
             mEditName.setFocusableInTouchMode(true);

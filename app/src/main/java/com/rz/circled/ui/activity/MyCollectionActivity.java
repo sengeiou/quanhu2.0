@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +23,10 @@ import com.rz.circled.application.QHApplication;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.GlideCenterRoundImage;
+import com.rz.circled.widget.SwipyRefreshLayoutBanner;
+import com.rz.common.constant.Constants;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.ImageAdaptationUtils;
 import com.rz.common.utils.StringUtils;
@@ -37,16 +40,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2017/9/12 0012.
  */
 
-public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.lv_collection)
     ListView mLvCollection;
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefresh;
+    SwipyRefreshLayoutBanner mRefresh;
     @BindView(R.id.btn_del)
     Button mBtnDel;
     private CirclePresenter mPresenter;
@@ -67,6 +71,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
         setTitleText("我的收藏");
         setTitleRightText("编辑");
         setTitleRightTextColor(R.color.color_0185FF);
+        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mRefresh.setOnRefreshListener(this);
         mLvCollection.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,14 +88,14 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         collectionBean.isSelect = true;
                     }
                     mCollectionAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     CollectionBean.CoterieInfoBean coterieInfo = collectionBean.coterieInfo;
                     CollectionBean.ResourceInfoBean resourceInfo = collectionBean.resourceInfo;
-                    if (StringUtils.isEmpty(coterieInfo.getCoterieId())||StringUtils.isEmpty(coterieInfo.getName())) {
-                        String circleUrl = CommomUtils.getCircleUrl(resourceInfo.getCircleRoute(),resourceInfo.getModuleEnum(), resourceInfo.getResourceId());
+                    if (StringUtils.isEmpty(coterieInfo.getCoterieId()) || StringUtils.isEmpty(coterieInfo.getName())) {
+                        String circleUrl = CommomUtils.getCircleUrl(resourceInfo.getCircleRoute(), resourceInfo.getModuleEnum(), resourceInfo.getResourceId());
                         WebContainerActivity.startActivity(mContext, circleUrl);
                     } else {
-                        String url = CommomUtils.getDymanicUrl(resourceInfo.getCircleRoute(),resourceInfo.getModuleEnum(), coterieInfo.getCoterieId(), resourceInfo.getResourceId());
+                        String url = CommomUtils.getDymanicUrl(resourceInfo.getCircleRoute(), resourceInfo.getModuleEnum(), coterieInfo.getCoterieId(), resourceInfo.getResourceId());
                         WebContainerActivity.startActivity(mContext, url);
                     }
 
@@ -136,7 +142,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
     public void initPresenter() {
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
-        mPresenter.getCircleCollection();
+        mPresenter.getCircleCollection(false);
     }
 
     Gson gson = new Gson();
@@ -189,7 +195,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         vh.ll_audio = (LinearLayout) convertView.findViewById(R.id.ll_audio);
                     }
                     editCollection(vh.iv_edit, collectionBean);
-                    vh.question_name.setText(StringUtil.isEmpty(question.nickName)? question.userName : question.nickName);
+                    vh.question_name.setText(StringUtil.isEmpty(question.nickName) ? question.userName : question.nickName);
                     vh.answer_name.setText(StringUtil.isEmpty(question.targetNickName) ? question.targetUserName : question.targetNickName);
                     vh.answer_title.setText("Q:  " + question.content);
                     if (StringUtils.isEmpty(answer.content)) {
@@ -209,11 +215,11 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         vh.ll_audio.setVisibility(View.GONE);
                         vh.answer_content.setText("A:  " + answer.content);
                     }
-                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName()+" >");
+                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName() + " >");
                     vh.answer_from.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+resourceInfo.getCircleRoute()+"/coterie/"+coterieInfo.getCoterieId());
+                            WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/" + resourceInfo.getCircleRoute() + "/coterie/" + coterieInfo.getCoterieId());
                         }
                     });
                     vh.question_name.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +227,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                         public void onClick(View v) {
                             UserInfoActivity.newFrindInfo(mContext, question.createUserId);
                         }
-                    }); vh.answer_name.setOnClickListener(new View.OnClickListener() {
+                    });
+                    vh.answer_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             UserInfoActivity.newFrindInfo(mContext, answer.createUserId);
@@ -275,7 +282,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                             only_iv.setVisibility(View.VISIBLE);
                             iv_layout.setVisibility(View.GONE);
                             String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics1, R.dimen.px994, R.dimen.px558);
-                            Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext,10)).into(only_iv);
+                            Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(only_iv);
                         } else {
                             only_iv.setVisibility(View.GONE);
                             iv_layout.setVisibility(View.VISIBLE);
@@ -298,35 +305,35 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
                                     iv = iv_3;
                                 }
                                 String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i], R.dimen.px320, R.dimen.px320);
-                                Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img3).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
+                                Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img3).transform(new GlideCenterRoundImage(mContext, 10)).into(iv);
                             }
                         }
                     }
                     if (!TextUtils.isEmpty(resourceInfo.getVideoPic())) {
                         rl_circle_video_content.setVisibility(View.VISIBLE);
                         iv_layout.setVisibility(View.GONE);
-                        Glide.with(mContext).load(resourceInfo.getVideoPic()).placeholder(R.color.black).transform(new GlideCenterRoundImage(mContext,10)).into(mVideo_Preview);
+                        Glide.with(mContext).load(resourceInfo.getVideoPic()).placeholder(R.color.black).transform(new GlideCenterRoundImage(mContext, 10)).into(mVideo_Preview);
                     } else {
                         rl_circle_video_content.setVisibility(View.GONE);
                     }
-                    if (StringUtils.isEmpty(coterieInfo.getCoterieId())||StringUtils.isEmpty(coterieInfo.getName())) {
-                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName()+" >");
+                    if (StringUtils.isEmpty(coterieInfo.getCoterieId()) || StringUtils.isEmpty(coterieInfo.getName())) {
+                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName() + " >");
                     } else {
-                        fromWhere.setText("来自私圈 " + coterieInfo.getName()+" >");
+                        fromWhere.setText("来自私圈 " + coterieInfo.getName() + " >");
                     }
                     tv_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext,user.getCustId());
+                            UserInfoActivity.newFrindInfo(mContext, user.getCustId());
                         }
                     });
                     fromWhere.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (StringUtil.isEmpty(coterieInfo.getCoterieId())||StringUtil.isEmpty(coterieInfo.getName())){
-                                WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+resourceInfo.getCircleRoute()+"/");
-                            }else {
-                                WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+resourceInfo.getCircleRoute()+"/coterie/"+coterieInfo.getCoterieId());
+                            if (StringUtil.isEmpty(coterieInfo.getCoterieId()) || StringUtil.isEmpty(coterieInfo.getName())) {
+                                WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/" + resourceInfo.getCircleRoute() + "/");
+                            } else {
+                                WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/" + resourceInfo.getCircleRoute() + "/coterie/" + coterieInfo.getCoterieId());
                             }
                         }
                     });
@@ -340,7 +347,13 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
 
     @Override
     public void refreshPage() {
+        mPresenter.getCircleCollection(false);
+    }
 
+    @Override
+    public void onRefresh(SwipyRefreshLayoutDirection direction) {
+        mPresenter.getCircleCollection(direction != SwipyRefreshLayoutDirection.TOP);
+        mRefresh.setRefreshing(false);
     }
 
     class viewHold {
@@ -375,16 +388,12 @@ public class MyCollectionActivity extends BaseActivity implements SwipeRefreshLa
         ButterKnife.bind(this);
     }
 
-    @Override
-    public void onRefresh() {
-        mPresenter.getCircleCollection();
-        mRefresh.setRefreshing(false);
-    }
 
     @Override
     protected boolean hasDataInPage() {
-        return mCollectionAdapter != null &&mCollectionAdapter.getCount() != 0;
+        return mCollectionAdapter != null && mCollectionAdapter.getCount() != 0;
     }
+
     @Override
     protected boolean needLoadingView() {
         return true;

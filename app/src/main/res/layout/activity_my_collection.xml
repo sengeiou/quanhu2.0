@@ -7,7 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.rz.circled.widget.SwipyRefreshLayoutBanner
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +19,7 @@
         android:divider="@color/color_f5f5f5"
         ></ListView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.rz.circled.widget.SwipyRefreshLayoutBanner>
     <Button
         android:id="@+id/btn_del"
         android:layout_gravity="bottom|center"

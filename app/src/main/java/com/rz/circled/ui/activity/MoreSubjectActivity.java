@@ -24,7 +24,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 /**
  * Created by Administrator on 2017/9/4/004.
  */
@@ -60,7 +59,7 @@ public class MoreSubjectActivity extends BaseActivity {
                 helper.getView(R.id.acitvity_des).setVisibility(View.VISIBLE);
                 ImageView civ_head = helper.getView(R.id.civ_head);
                 ImageView civ_thumbnail = helper.getView(R.id.iv_activity_icon);
-                Glide.with(mContext).load(item.getThumbnail()).transform(new GlideCenterRoundImage(mContext,10)).into(civ_thumbnail);
+                Glide.with(mContext).load(item.getThumbnail()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext,10)).into(civ_thumbnail);
                 TextView tv_name = helper.getView(R.id.tv_name);
                 tv_name.setText(item.getCustNname());
                 TextView tv_title = helper.getView(R.id.activity_title);
@@ -68,7 +67,7 @@ public class MoreSubjectActivity extends BaseActivity {
                 TextView tv_des = helper.getView(R.id.acitvity_des);
                 tv_des.setText(item.getContent());
                 TextView tv_talk_count = helper.getView(R.id.tv_talk_count);
-                tv_talk_count.setText(item.getPartNum() + "讨论");
+                tv_talk_count.setText(item.getPartNum() + " 讨论");
                 TextView tv_where = helper.getView(R.id.tv_where);
                 tv_where.setText("来自私圈" + item.getCoterieName()+" >");
 
@@ -88,6 +87,7 @@ public class MoreSubjectActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        mEtSearchKeywordBase.setHint("输入话题名称搜索");
         mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

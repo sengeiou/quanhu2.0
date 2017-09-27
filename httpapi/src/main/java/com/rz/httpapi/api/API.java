@@ -100,7 +100,10 @@ public interface API {
     /**
      * 作品标签列表
      */
-    String OPUS_TAG = "v2/opus/getTags";
+    String OPUS_TAG = "v2/opus/getTags";/**
+     * 作品标签列表
+     */
+    String GET_PERMISSION = "v3/permission/getAllPermission";
 
     /**
      * 作品标签搜索
