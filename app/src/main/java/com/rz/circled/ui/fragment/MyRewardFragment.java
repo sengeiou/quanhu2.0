@@ -87,7 +87,7 @@ public class MyRewardFragment extends BaseFragment {
 
                     answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
                     answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
-                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,0);
+                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
                 }
             });
 
@@ -100,7 +100,7 @@ public class MyRewardFragment extends BaseFragment {
                     answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
                     answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
 
-                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,1);
+                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
                 }
             });
 
@@ -124,7 +124,7 @@ public class MyRewardFragment extends BaseFragment {
     public void initData() {
         initRefresh();
 
-        ((PersonInfoPresenter) presenter).getMyreward(false, userid,0);
+        ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
 
     }
 
@@ -133,7 +133,11 @@ public class MyRewardFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//                ((PersonInfoPresenter) presenter).getMyreward(true, userid,0);
+
+                if(rewardBeanList.size()>0){
+                    ((PersonInfoPresenter) presenter).getMyreward(true, userid,0, rewardBeanList.get(rewardBeanList.size()-1).getId());
+                }
+
                 mRefresh.setRefreshing(false);
             }
         });
@@ -180,6 +184,6 @@ public class MyRewardFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-        ((PersonInfoPresenter) presenter).getMyreward(false, userid,0);
+        ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
     }
 }

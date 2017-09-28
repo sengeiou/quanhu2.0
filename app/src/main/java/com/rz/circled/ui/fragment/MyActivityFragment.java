@@ -104,7 +104,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                                 pageNo++;
                             } else {
                                 if(loadMore == false){
-                                    onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                    onLoadingStatus(CommonCode.General.DATA_EMPTY,mActivity.getString(R.string.mine_activity_txt));
                                 }else{
                                     onLoadingStatus(CommonCode.General.DATA_LACK);
                                 }

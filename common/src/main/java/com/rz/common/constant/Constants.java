@@ -42,6 +42,8 @@ public class Constants {
      */
     public static final int PAGESIZE = 20;
 
+    public static final int PAGESIZE_10 = 10;
+
     public static final int PAGESIZE_MAX = 100;
     /**
      * 倒计时常量 单位秒

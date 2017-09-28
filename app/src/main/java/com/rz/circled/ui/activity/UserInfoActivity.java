@@ -322,15 +322,8 @@ public class UserInfoActivity extends BaseActivity{
                     userRole.setBackgroundResource(R.drawable.shape_white_bg);
                     userRole.getBackground().setAlpha(77);
                 }else if(data.getAuthStatus() == 1){
+                    famousLayout.setVisibility(View.VISIBLE);
                     userRole.setText(data.getTradeField());
-                }
-            }else  if(t instanceof FriendInformationBean){
-                if(t != null){
-                    FriendInformationBean bean = (FriendInformationBean) t;
-
-                    addFriendLayout.setVisibility(View.VISIBLE);
-                    Glide.with(this).load(bean.getCustImg()).transform(new GlideCircleImage(this)).
-                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 }
             }else{
                 if(data.getAuthStatus() == 1){

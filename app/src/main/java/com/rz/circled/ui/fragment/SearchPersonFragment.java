@@ -75,8 +75,6 @@ public class SearchPersonFragment extends BaseFragment {
             }
         });
 
-        setFunctionText(R.string.search_content);
-
     }
 
     @Override
