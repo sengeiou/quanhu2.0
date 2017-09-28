@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
-import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.ui.fragment.MyArticleFragment;
-import com.rz.circled.ui.fragment.MyRewardFragment;
 import com.rz.circled.ui.fragment.RewardArticalFragment;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.cache.preference.Session;
@@ -25,8 +23,6 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.RewardStatBean;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 

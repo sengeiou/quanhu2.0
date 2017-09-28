@@ -6,11 +6,6 @@
               android:orientation="vertical"
     >
 
-
-    <include
-        layout="@layout/mine_top_layout"
-        />
-
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -30,6 +25,4 @@
             android:scrollbars="none"
             />
     </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
-
-
 </LinearLayout>

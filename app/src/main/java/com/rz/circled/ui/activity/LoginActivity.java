@@ -49,6 +49,7 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.UserInfoBean;
+import com.umeng.socialize.UMShareAPI;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.greenrobot.eventbus.EventBus;
@@ -733,7 +734,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentCode.Login.LOGIN_REQUEST_CODE) {
             if (resultCode == IntentCode.Register.REGISTER_RESULT_CODE) {
                 //注册成功(包括从忘记密码中进入)

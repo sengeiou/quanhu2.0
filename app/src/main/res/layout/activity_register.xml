@@ -135,6 +135,16 @@
                                         android:layout_marginLeft="@dimen/px24"
                                         android:src="@mipmap/icon_code"/>
 
+                                    <ImageView
+                                        android:id="@+id/id_clear_code"
+                                        android:layout_width="@dimen/px40"
+                                        android:layout_height="@dimen/px40"
+                                        android:src="@drawable/ic_clear"
+                                        android:visibility="gone"
+                                        android:layout_marginRight="@dimen/px86"
+                                        />
+
+
                                     <EditText
                                         android:id="@+id/id_regist_code_edit"
                                         style="@style/LoginEtStyle"
@@ -150,16 +160,6 @@
                                         android:paddingTop="@dimen/px63"
                                         android:singleLine="true"
                                         android:textColorHint="@color/color_999999"/>
-
-                                    <ImageView
-                                        android:id="@+id/id_clear_code"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_clear"
-                                        android:visibility="gone"
-                                        android:layout_marginRight="@dimen/px86"
-                                        />
-
 
                                     <Button
                                         android:id="@+id/id_regist_send_sms_btn"
@@ -230,8 +230,8 @@
 
                                 <ImageView
                                     android:id="@+id/id_clear_pw"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="@dimen/px40"
+                                    android:layout_height="@dimen/px40"
                                     android:src="@drawable/ic_clear"
                                     android:visibility="gone"
                                     android:layout_marginRight="@dimen/px44"

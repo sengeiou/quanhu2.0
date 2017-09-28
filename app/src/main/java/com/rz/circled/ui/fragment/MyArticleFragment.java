@@ -10,6 +10,7 @@ import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
+import com.rz.circled.adapter.ArticleAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
@@ -40,7 +41,7 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     @BindView(R.id.my_listview)
     MListView mListView;
 
-    private DynamicAdapter dynamicAdapter;
+    private ArticleAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private IPresenter presenter;
     private String userid = "";
@@ -88,8 +89,7 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     public void initView() {
 
 
-
-        dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);
+        dynamicAdapter = new ArticleAdapter(mActivity, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

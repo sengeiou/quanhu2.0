@@ -75,11 +75,19 @@
     <LinearLayout
         android:id="@+id/add_friend_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px164"
+        android:layout_height="@dimen/px174"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:visibility="gone"
+        android:orientation="vertical"
         >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px4"
+            android:background="@mipmap/shadow_line"
+            android:layout_alignParentTop="true"
+            />
 
         <Button
             android:id="@+id/add_friend_btn"
@@ -96,6 +104,7 @@
             android:padding="@dimen/px32"
             android:text="@string/add_friend"
             android:textColor="@android:color/white"
+            android:layout_centerVertical="true"
             android:textSize="@dimen/px52" />
 
     </LinearLayout>
