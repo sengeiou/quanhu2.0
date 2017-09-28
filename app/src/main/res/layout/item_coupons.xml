@@ -23,7 +23,8 @@
             <TextView
                 android:id="@+id/tv_coupons_item_number"
                 style="@style/couponsTvNumber"
-                android:text="10"/>
+                android:text="10"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 style="@style/couponsTvUnit"
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/px65"
+            android:layout_marginTop="@dimen/px58"
             android:text="投票活动中给喜欢的内容投票投票投票"
             android:textColor="@color/black"
             android:textSize="@dimen/font_44"/>

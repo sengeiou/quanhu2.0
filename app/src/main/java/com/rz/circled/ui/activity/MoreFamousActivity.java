@@ -48,6 +48,9 @@ public class MoreFamousActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText("达人");
+        View inflate = View.inflate(mContext, R.layout.item_footer, null);
+        inflate.findViewById(R.id.view_dd).setVisibility(View.GONE);
+        mLvMFamous.addFooterView(inflate);
         mAdapter = new SearchPersonAdapter(this, R.layout.item_search_person);
         mAdapter.setTalentPage(true);
         mLvMFamous.setDividerHeight(0);
