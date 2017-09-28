@@ -2,7 +2,6 @@ package com.rz.circled.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -31,8 +30,6 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
-import com.rz.common.widget.svp.SVProgressHUD;
-import com.rz.httpapi.bean.MessFreeBean;
 import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
@@ -44,7 +41,6 @@ import java.io.File;
 import java.util.HashSet;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
@@ -180,7 +176,8 @@ public class SettingActivity extends BaseActivity {
                 mTxtCacheNum.setText("0M");
                 DataCleanManager.clearAllCache(this);
                 Session.setUserIsFirstDownload(false);
-                SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.clean_cache_complete));
+//                SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.clean_cache_complete));
+                Toast.makeText(mContext,getString(R.string.clean_cache_complete),Toast.LENGTH_LONG).show();
                 break;
             //退出
             case R.id.id_btn_exit:

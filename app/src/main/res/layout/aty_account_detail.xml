@@ -36,10 +36,15 @@
             android:text="@string/shuoming"
             android:textColor="@color/black"/>
     </RelativeLayout>
-
+    <com.rz.circled.widget.SwipyRefreshLayoutBanner
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
   <ListView
       android:id="@+id/lv_detail"
       android:layout_width="match_parent"
       android:layout_height="match_parent"></ListView>
+    ></com.rz.circled.widget.SwipyRefreshLayoutBanner>
 
 </LinearLayout>

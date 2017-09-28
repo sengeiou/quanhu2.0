@@ -28,12 +28,12 @@ import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
+import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.common.utils.ACache;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
@@ -138,8 +138,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void initData() {
-        ACache mCache = ACache.get(mActivity);
-        List<CircleDynamic> model = (List<CircleDynamic>) mCache.getAsObject(Constants.HOME_FRAGMENT_CACHE);
+        EntityCache<CircleDynamic> entityCache = new EntityCache<>(mActivity, CircleDynamic.class);
+        List<CircleDynamic> model = entityCache.getListEntity(CircleDynamic.class);
         List<BannerAddSubjectModel> bannerList = (List<BannerAddSubjectModel>) mACache.getAsObject(Constants.BANNER_CACHE);
         updateViewWithFlag(bannerList, 2);
         updateViewWithLoadMore(model, false);
@@ -148,6 +148,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                mPresenter.getUserPermession();
                 mPresenter.getBannerList("2");
                 mPresenter.getCircleDynamicList(direction != SwipyRefreshLayoutDirection.TOP);
                 mRefresh.setRefreshing(false);
