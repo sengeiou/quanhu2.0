@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -41,7 +42,7 @@ import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ScrollableHelper.ScrollableContainer {
 
     List<EntitiesBean> bean = new ArrayList<>();
     @BindView(R.id.my_listview)
@@ -82,7 +83,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         getData(false);
     }
 
-    private void getData(final boolean loadMore){
+    private void getData(final boolean loadMore) {
 
         Http.getApiService(ApiYylService.class)
                 .getMineActivityList(pageNo, 20, userid)
@@ -103,6 +104,9 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                                 pageNo++;
                             } else {
+                                if (loadMore == false) {
+                                    onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                } else {
                                 if(loadMore == false){
                                     onLoadingStatus(CommonCode.General.DATA_EMPTY,mActivity.getString(R.string.mine_activity_txt));
                                 }else{
@@ -127,8 +131,6 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
 
-
-
     @Override
     public void initView() {
 
@@ -151,7 +153,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             public void convert(ViewHolder helper, EntitiesBean item) {
                 ((TextView) helper.getView(R.id.activity_title)).setText(item.getTitle());
                 ImageView iv = (ImageView) helper.getView(R.id.iv_activity_icon);
-                Glide.with(mContext).load(item.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
+                Glide.with(mContext).load(item.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(iv);
             }
         };
         mLv.setAdapter(mEntitiesBeanCommonAdapter);
@@ -174,6 +176,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     protected boolean hasDataInPage() {
         return mEntitiesBeanCommonAdapter.getCount() != 0;
     }
+
     @Override
 
     protected boolean needLoadingView() {
@@ -192,5 +195,8 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
 
-
+    @Override
+    public View getScrollableView() {
+        return mLv;
+    }
 }

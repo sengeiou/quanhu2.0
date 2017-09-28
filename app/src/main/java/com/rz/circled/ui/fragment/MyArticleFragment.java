@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -33,7 +34,7 @@ import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyArticleFragment extends BaseFragment {
+public class MyArticleFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer {
 
     @BindView(R.id.swipyrefreshlayout)
     SwipyRefreshLayout refreshLayout;
@@ -141,5 +142,10 @@ public class MyArticleFragment extends BaseFragment {
     @Override
     public void refreshPage() {
         ((PersonInfoPresenter) presenter).getPersionArticle(false, userid ,"1000");
+    }
+
+    @Override
+    public View getScrollableView() {
+        return mListView;
     }
 }

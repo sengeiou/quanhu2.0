@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -29,7 +30,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyRewardFragment extends BaseFragment {
+public class MyRewardFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer {
 
     @BindView(R.id.refresh)
     SwipyRefreshLayout mRefresh;
@@ -185,5 +186,10 @@ public class MyRewardFragment extends BaseFragment {
     @Override
     public void refreshPage() {
         ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
+    }
+
+    @Override
+    public View getScrollableView() {
+        return lvReward;
     }
 }

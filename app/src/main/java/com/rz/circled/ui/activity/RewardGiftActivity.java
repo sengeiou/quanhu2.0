@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.circled.adapter.RewardGiftAdapter;
+import com.rz.circled.dialog.InsufficientBalanceDialog;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.circled.presenter.impl.RewardGiftPresenter;
 import com.rz.circled.widget.BounceBackViewPager;
@@ -36,6 +37,7 @@ import com.rz.httpapi.bean.RewardBean;
 import com.rz.httpapi.bean.RewardGiftModel;
 import com.rz.httpapi.bean.RewardInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
+import com.rz.sgt.jsbridge.JsEvent;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -189,14 +191,15 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
                 //去检查
                 mPayPresenter.pay(orderId, Double.parseDouble(mGiftModel.getPrice()), mUserBalance, 0);
             } else if (t instanceof Integer) {
-                mPayPresenter.payOrderDetails(orderId);
+                if (((Integer) t).intValue() == 1000) {
+                    InsufficientBalanceDialog.newInstance().show(getSupportFragmentManager(), "");
+                } else {
+                    mPayPresenter.payRewardDetails(orderId);
+                }
             } else if (t instanceof PayOrderInfoBean) {
                 PayOrderInfoBean data = (PayOrderInfoBean) t;
-                if (data.getOrderState() == 1) {
-                    //打赏成功
-                    Toasty.success(mContext, getString(R.string.reward_success)).show();
-                    finish();
-                }
+                JsEvent.callJsEvent(data.getNotifyStatus(), true);
+                finish();
             }
         }
     }

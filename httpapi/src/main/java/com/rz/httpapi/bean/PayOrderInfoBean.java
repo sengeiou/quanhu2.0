@@ -29,6 +29,15 @@ public class PayOrderInfoBean {
     private String productId;
     private int productType;
     private int type;
+    private String notifyStatus;
+
+    public String getNotifyStatus() {
+        return notifyStatus;
+    }
+
+    public void setNotifyStatus(String notifyStatus) {
+        this.notifyStatus = notifyStatus;
+    }
 
     public String getCallback() {
         return callback;

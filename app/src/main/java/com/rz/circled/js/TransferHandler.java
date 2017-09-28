@@ -14,6 +14,8 @@ import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
 
+import java.util.HashMap;
+
 public class TransferHandler extends ServerHandler {
 
     public TransferHandler(Activity mActivity) {
@@ -38,7 +40,9 @@ public class TransferHandler extends ServerHandler {
         Callback callback = new Callback(webViewProxy, paramsObject.getInvokeId(), paramsObject.getInvokeName()) {
             @Override
             public void invoke(Object businessParms, BaseParamsObject baseParamsObject) {
-
+                HashMap<String, String> data = new HashMap<>();
+                data.put("code", (String) businessParms);
+                baseParamsObject.data = data;
             }
         };
         return callback;

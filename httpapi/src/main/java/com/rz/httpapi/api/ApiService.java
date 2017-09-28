@@ -669,6 +669,7 @@ public interface ApiService {
             @Field("act") int actionCode,
             @Field("type") String type
     );
+
     //获取用户权限
     @FormUrlEncoded
     @POST(API.GET_PERMISSION)
@@ -966,6 +967,12 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(ApiPay.PAY_ORDER_DETAILS)
     Call<ResponseData<PayOrderInfoBean>> payOrderDetails(
+            @Field("orderId") String orderId
+    );
+
+    @FormUrlEncoded
+    @POST(ApiPay.PAY_REWARD_DETAILS)
+    Call<ResponseData<PayOrderInfoBean>> payRewardDetails(
             @Field("orderId") String orderId
     );
 
