@@ -46,9 +46,9 @@
                 android:id="@+id/tv_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/px40"
+                android:layout_marginTop="@dimen/px36"
                 android:includeFontPadding="false"
-                android:lineSpacingExtra="@dimen/px20"
+                android:lineSpacingExtra="@dimen/px14"
                 android:textColor="@color/font_gray_xl"
                 android:textSize="@dimen/font_44"
                 tool:text="充值成功坚实的快乐发接受的激发来看森度吉安咖啡的数据奥卡福是放假爱丽丝" />

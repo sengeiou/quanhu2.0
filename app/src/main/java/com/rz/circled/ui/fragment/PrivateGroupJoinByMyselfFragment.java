@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,6 +41,7 @@ import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
+import static com.rz.common.constant.IntentKey.EXTRA_ID;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
@@ -56,13 +58,19 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     SwipyRefreshLayout refreshLayout;
 
     private int type;
+    private String userId;
     private DefaultPricePrivateGroupAdapter mAdapter;
     private int pageNo = 1;
 
     public static PrivateGroupJoinByMyselfFragment newInstance(int type) {
+        return newInstance(type, Session.getUserId());
+    }
+
+    public static PrivateGroupJoinByMyselfFragment newInstance(int type, String userId) {
         PrivateGroupJoinByMyselfFragment fragment = new PrivateGroupJoinByMyselfFragment();
         Bundle args = new Bundle();
         args.putInt(EXTRA_TYPE, type);
+        args.putString(EXTRA_ID, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,6 +79,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
+        userId = getArguments() != null ? getArguments().getString(EXTRA_ID) : Session.getUserId();
     }
 
     @Nullable
@@ -88,13 +97,15 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
             refreshLayout.setEnabled(false);
         }
-        setFunctionText(R.string.private_group_show_all);
-        setFunctionClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AllPrivateGroupActivity.class));
-            }
-        });
+        if (TextUtils.equals(userId, Session.getUserId())) {
+            setFunctionText(R.string.private_group_show_all);
+            setFunctionClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getContext(), AllPrivateGroupActivity.class));
+                }
+            });
+        }
         lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -148,7 +159,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     }
 
     private void loadData(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupMyselfJoin(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
+        Http.getApiService(ApiPGService.class).privateGroupMyselfJoin(userId, pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
@@ -180,7 +191,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.private_group_no_join));
                             }
                         }
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, data.size()));
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, mAdapter.getCount()));
                     }
                 } else {
                     if (type != TYPE_PART)

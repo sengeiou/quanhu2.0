@@ -20,6 +20,8 @@ import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.ViewHolder;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
@@ -36,7 +38,7 @@ import rx.functions.Action1;
  * Created by Administrator on 2017/9/4/004.
  */
 
-public class MoreSubjectActivity extends BaseActivity {
+public class MoreSubjectActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
     @BindView(R.id.lv_subject)
     ListView mLvSubject;
     @BindView(R.id.et_search_keyword_base)
@@ -59,6 +61,7 @@ public class MoreSubjectActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText("话题");
+        mLvSubject.addFooterView(View.inflate(mContext,R.layout.item_footer,null));
         mAdapter = new CommonAdapter<HotSubjectModel>(mContext, subjectList, R.layout.activity_item) {
             @Override
             public void convert(ViewHolder helper, final HotSubjectModel item) {
@@ -67,6 +70,7 @@ public class MoreSubjectActivity extends BaseActivity {
                 helper.getView(R.id.acitvity_des).setVisibility(View.VISIBLE);
                 ImageView civ_head = helper.getView(R.id.civ_head);
                 ImageView civ_thumbnail = helper.getView(R.id.iv_activity_icon);
+                civ_thumbnail.setVisibility(StringUtil.isEmpty(item.getThumbnail())?View.GONE:View.VISIBLE);
                 Glide.with(mContext).load(item.getThumbnail()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(civ_thumbnail);
                 Glide.with(mContext).load(item.getCustImg()).placeholder(R.drawable.ic_default_head).transform(new GlideCircleImage(mContext)).into(civ_head);
                 TextView tv_name = helper.getView(R.id.tv_name);
@@ -150,6 +154,11 @@ public class MoreSubjectActivity extends BaseActivity {
 
     @Override
     public void refreshPage() {
+
+    }
+
+    @Override
+    public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
     }
 }

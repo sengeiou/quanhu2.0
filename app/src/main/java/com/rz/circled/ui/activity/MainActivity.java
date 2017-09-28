@@ -16,6 +16,7 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.MsgService;
 import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.dialog.DefaultTipsDialog;
@@ -376,6 +377,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             return;
 
         if (Session.getUserIsLogin()) {
+            int unreadNum1 = NIMClient.getService(MsgService.class).getTotalUnreadCount();
+
             int unreadNum2 = Session.getNewsAnnouncementNum() +
                     Session.getNewsSystemInformationNum() +
                     Session.getNewsAccountInformationNum() +
@@ -389,14 +392,13 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             if (!TextUtils.isEmpty(Session.getUserFocusNum()))
                 unreadNum3 = Integer.parseInt(Session.getUserFocusNum());
 
-            int unreadNum = unreadNum2 + unreadNum3;
-
-            if (unreadNum == 0 && Beta.getUpgradeInfo() == null) {
-                mUnread.setVisibility(View.GONE);
-            } else {
+            if (unreadNum2 > 0 || unreadNum3 > 0 || Beta.getUpgradeInfo() != null) {
                 mUnread.setVisibility(View.VISIBLE);
+            } else {
+                mUnread.setVisibility(View.GONE);
             }
 
+            int unreadNum = unreadNum1 + unreadNum2 + unreadNum3;
             if (unreadNum != 0) {
                 BadgeUtil.setBadgeCount(getApplicationContext(), unreadNum);
             } else {

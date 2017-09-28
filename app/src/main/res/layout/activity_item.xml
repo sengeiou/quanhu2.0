@@ -30,6 +30,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/px34"
+    android:paddingBottom="@dimen/px34"
     android:text="7月25日光谷国际广场B座1129将开展正式湖东,湖东会邀请大名鼎鼎湖畔花园夏雨荷过来演讲如何月入百万"
     android:textColor="@color/color_000000"
     android:textStyle="bold"
@@ -40,8 +41,9 @@
         android:id="@+id/acitvity_des"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/font_34"
+        android:paddingBottom="@dimen/px34"
         android:textColor="@color/color_666666"
+        android:ellipsize="end"
         android:visibility="gone"
         android:maxLines="3"
         />
@@ -51,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/px446"
         android:layout_marginBottom="@dimen/px34"
-        android:layout_marginTop="@dimen/px30"
         android:scaleType="fitXY"
         />
 

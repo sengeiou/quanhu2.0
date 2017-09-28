@@ -132,7 +132,7 @@
                 style="@style/DefaultTvStyle"
                 android:layout_marginRight="@dimen/px30"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/font_50" />
+                android:textSize="@dimen/px44" />
 
             <ImageView
                 android:layout_width="@dimen/px28"
@@ -170,7 +170,7 @@
                 style="@style/DefaultTvStyle"
                 android:layout_marginRight="@dimen/px30"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/font_50" />
+                android:textSize="@dimen/px44" />
 
             <ImageView
                 android:layout_width="@dimen/px28"
@@ -236,7 +236,7 @@
                 style="@style/DefaultTvStyle"
                 android:layout_marginRight="@dimen/px30"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/font_50" />
+                android:textSize="@dimen/px44" />
 
             <ImageView
                 android:layout_width="@dimen/px28"

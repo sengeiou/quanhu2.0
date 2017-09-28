@@ -164,10 +164,6 @@ public class BaseLoadView implements View.OnClickListener {
             statusView.setVisibility(View.VISIBLE);
             ivStatus.setImageResource(R.mipmap.icon_data_empty);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_empty_load) : msg);
-            if (tvFunction.getVisibility() != View.VISIBLE) {
-                tvAction.setText(R.string.status_network_retry);
-                tvAction.setVisibility(View.VISIBLE);
-            }
             llError.setVisibility(View.VISIBLE);
         }
     }
@@ -185,8 +181,6 @@ public class BaseLoadView implements View.OnClickListener {
             ivStatus.setImageResource(R.mipmap.icon_load_error);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_load_error) : msg);
             tvFunction.setVisibility(View.GONE);
-            tvAction.setText(R.string.status_network_retry);
-            tvAction.setVisibility(View.VISIBLE);
             llError.setVisibility(View.VISIBLE);
         }
     }
@@ -224,8 +218,6 @@ public class BaseLoadView implements View.OnClickListener {
             ivStatus.setImageResource(R.mipmap.icon_load_error);
             tvStatus.setText(TextUtils.isEmpty(msg) ? mContext.getString(R.string.status_un_network) : msg);
             tvFunction.setVisibility(View.GONE);
-            tvAction.setText(R.string.status_network_retry);
-            tvAction.setVisibility(View.VISIBLE);
             llError.setVisibility(View.VISIBLE);
         }
     }

@@ -1,10 +1,12 @@
 package com.rz.httpapi.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/9/2/002.
  */
 
-public class HotSubjectModel {
+public class HotSubjectModel implements Serializable {
 
 
     /**
