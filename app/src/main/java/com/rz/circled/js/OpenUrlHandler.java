@@ -1,11 +1,9 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
-import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.rz.circled.ui.activity.CommonH5Activity;
-import com.rz.common.constant.IntentKey;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -39,9 +37,7 @@ public class OpenUrlHandler extends ServerHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(mActivity, CommonH5Activity.class);
-        intent.putExtra(IntentKey.EXTRA_URL, url);
-        mActivity.startActivity(intent);
+        CommonH5Activity.startCommonH5(mActivity, "", url);
     }
 
     @Override

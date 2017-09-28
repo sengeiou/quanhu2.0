@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -23,8 +25,10 @@ import com.rz.common.permission.AfterPermissionGranted;
 import com.rz.common.permission.AppSettingsDialog;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
+import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.sgt.jsbridge.JsEvent;
 
@@ -371,16 +375,78 @@ public class UploadVideoActivity extends BaseActivity {
             }
             mVideoFilePath = filePath;
             initVideoDuration();
-            processOss();
+            getRxBytes();
         } else if (requestCode == SYSTEM_SHOOT_VIDEO) {
             mVideoFilePath = this.filePath;
             initVideoDuration();
-            processOss();
+            getRxBytes();
         }
     }
 
     @Override
     public void refreshPage() {
+
+    }
+
+    /**
+     * 获得网速
+     */
+    private void getRxBytes() {
+        final long lastTotalRxBytes = NetWorkSpeedUtils.getTotalRxBytes();
+        final long lastTimeStamp = System.currentTimeMillis();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long nowTotalRxBytes = NetWorkSpeedUtils.getTotalRxBytes();
+                long nowTimeStamp = System.currentTimeMillis();
+                long speed = ((nowTotalRxBytes - lastTotalRxBytes) * 1000 / (nowTimeStamp - lastTimeStamp));//毫秒转换
+                Message msg = speedHandler.obtainMessage();
+                msg.what = 100;
+                msg.obj = speed;
+                speedHandler.sendMessage(msg);
+            }
+        }, 500);//隔2s
+
+    }
+
+    Handler speedHandler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            if (msg.what == 100) {
+                long speed = msg.what;
+                checkSpeed(speed);
+            }
+        }
+    };
+
+    private void checkSpeed(long speed) {
+        Log.d(TAG, "speed = " + speed);
+        CommonDialog commonDialog = new CommonDialog(mContext);
+        if (speed > 0) {
+            long time = (long) (videoSize / speed);//需要多少秒
+            if (time > 60 * 1) {//大于1分钟给出提示
+                commonDialog.showDialog("视频过大,可能需要" + time / 60 + "分钟上传,确定发布吗?", new CommonDialog.OnCommonDialogConfirmListener() {
+                    @Override
+                    public void onConfirmListener() {
+                        processOss();
+                    }
+                });
+            } else {
+                processOss();
+            }
+        } else if (videoSize > 5000) {
+            commonDialog.showDialog("视频过大,可能需要较长时间上传,确定发布吗?", new CommonDialog.OnCommonDialogConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    processOss();
+                }
+            });
+        } else {
+            //发布
+            processOss();
+        }
 
     }
 }

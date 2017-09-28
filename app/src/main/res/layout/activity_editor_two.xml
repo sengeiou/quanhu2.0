@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <ScrollView
@@ -71,9 +72,15 @@
                 </RelativeLayout>
 
                 <View
+                    style="@style/line_horizontal_gray_s"/>
+
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px28"
                     android:background="@color/color_F4F4F4"/>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
             </LinearLayout>
 
             <LinearLayout
@@ -99,8 +106,8 @@
                         android:background="@null"
                         android:hint=""
                         android:maxLines="2"
-                        android:textColor="@color/font_gray_l"
-                        android:textColorHint="@color/font_gray_m"
+                        android:textColor="@color/font_gray_xl"
+                        android:textColorHint="@color/font_gray_a"
                         android:textSize="@dimen/font_52"/>
 
                     <TextView
@@ -109,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="0"
-                        android:textColor="@color/color_main"
+                        android:textColor="@color/font_gray_m"
                         android:textSize="@dimen/font_38"/>
 
                     <TextView
@@ -118,16 +125,22 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="/0"
-                        android:textColor="@color/font_gray_m"
+                        android:textColor="@color/font_gray_a"
                         android:textSize="@dimen/font_38"/>
 
                 </LinearLayout>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
 
                 <View
                     android:id="@+id/view_editor_two"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px28"
                     android:background="@color/color_F4F4F4"/>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
             </LinearLayout>
 
 
@@ -143,8 +156,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/px158"
-                    android:paddingLeft="@dimen/px20"
-                    android:paddingRight="@dimen/px20"
                     android:visibility="gone">
 
                     <TextView
@@ -153,10 +164,10 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:paddingBottom="@dimen/px55"
-                        android:paddingLeft="@dimen/px22"
+                        android:paddingLeft="@dimen/app_base_padding"
                         android:paddingTop="@dimen/px55"
                         android:text="选择分类"
-                        android:textColor="@color/font_gray_l"
+                        android:textColor="@color/font_gray_xl"
                         android:textSize="@dimen/font_50"/>
 
                     <ImageView
@@ -165,7 +176,7 @@
                         android:layout_height="@dimen/px36"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/px24"
+                        android:layout_marginRight="@dimen/app_base_padding"
                         android:src="@mipmap/ic_right_arrow"/>
 
                     <TextView
@@ -173,7 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/px30"
+                        android:layout_marginRight="@dimen/px28"
                         android:layout_toLeftOf="@id/iv_editor_two_sort_arrow"
                         android:textColor="@color/font_gray_m"
                         android:textSize="@dimen/font_44"/>
@@ -188,8 +199,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/px158"
-                    android:paddingLeft="@dimen/px20"
-                    android:paddingRight="@dimen/px20"
                     android:visibility="gone">
 
                     <TextView
@@ -198,10 +207,10 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:paddingBottom="@dimen/px55"
-                        android:paddingLeft="@dimen/px24"
+                        android:paddingLeft="@dimen/app_base_padding"
                         android:paddingTop="@dimen/px55"
                         android:text="选择地点"
-                        android:textColor="@color/font_gray_l"
+                        android:textColor="@color/font_gray_xl"
                         android:textSize="@dimen/font_50"/>
 
                     <ImageView
@@ -210,7 +219,7 @@
                         android:layout_height="@dimen/px36"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/px24"
+                        android:layout_marginRight="@dimen/app_base_padding"
                         android:src="@mipmap/ic_right_arrow"/>
 
                     <TextView
@@ -218,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/px30"
+                        android:layout_marginRight="@dimen/px28"
                         android:layout_toLeftOf="@id/iv_editor_two_location_arrow"
                         android:textColor="@color/font_gray_m"
                         android:textSize="@dimen/font_44"/>
@@ -234,8 +243,6 @@
                     android:id="@+id/rl_editor_two_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/px20"
-                    android:paddingRight="@dimen/px20"
                     android:visibility="gone">
 
                     <TextView
@@ -244,10 +251,10 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:paddingBottom="@dimen/px55"
-                        android:paddingLeft="@dimen/px24"
+                        android:paddingLeft="@dimen/app_base_padding"
                         android:paddingTop="@dimen/px55"
                         android:text="选择日期"
-                        android:textColor="@color/font_gray_l"
+                        android:textColor="@color/font_gray_xl"
                         android:textSize="@dimen/font_50"/>
 
                     <ImageView
@@ -256,7 +263,7 @@
                         android:layout_height="@dimen/px36"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/px24"
+                        android:layout_marginRight="@dimen/app_base_padding"
                         android:src="@mipmap/ic_right_arrow"/>
 
                     <TextView
@@ -264,10 +271,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/px30"
+                        android:layout_marginRight="@dimen/px28"
                         android:layout_toLeftOf="@id/iv_editor_two_time_arrow"
                         android:textColor="@color/font_gray_m"
                         android:textSize="@dimen/font_44"/>
+
+                    <View
+                        style="@style/line_horizontal_gray_s"
+                        android:layout_alignParentBottom="true"/>
 
                 </RelativeLayout>
 
@@ -275,6 +286,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px28"
                     android:background="@color/color_F4F4F4"/>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
             </LinearLayout>
 
             <LinearLayout
@@ -297,7 +311,7 @@
                         android:layout_gravity="center_vertical"
                         android:paddingLeft="@dimen/px44"
                         android:text="#"
-                        android:textColor="@color/font_gray_l"
+                        android:textColor="@color/font_gray_xl"
                         android:textSize="@dimen/font_50"/>
 
                     <EditText
@@ -310,7 +324,7 @@
                         android:paddingBottom="@dimen/px55"
                         android:paddingLeft="@dimen/px10"
                         android:paddingTop="@dimen/px55"
-                        android:textColor="@color/font_gray_l"
+                        android:textColor="@color/font_gray_xl"
                         android:textColorHint="@color/font_gray_m"
                         android:textSize="@dimen/font_50"/>
 
@@ -320,7 +334,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="0"
-                        android:textColor="@color/color_main"
+                        android:textColor="@color/font_gray_m"
                         android:textSize="@dimen/font_38"/>
 
                     <TextView
@@ -329,15 +343,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="/0"
-                        android:textColor="@color/font_gray_m"
+                        android:textColor="@color/font_gray_a"
                         android:textSize="@dimen/font_38"/>
 
                 </LinearLayout>
 
                 <View
+                    style="@style/line_horizontal_gray_s"/>
+
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px30"
                     android:background="@color/color_F4F4F4"/>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
             </LinearLayout>
 
             <LinearLayout
@@ -356,8 +376,8 @@
                     android:hint=""
                     android:lineSpacingExtra="@dimen/px20"
                     android:padding="@dimen/px44"
-                    android:textColor="@color/font_gray_l"
-                    android:textColorHint="@color/font_gray_m"
+                    android:textColor="@color/font_gray_xl"
+                    android:textColorHint="@color/font_gray_a"
                     android:textSize="@dimen/font_50"/>
 
                 <LinearLayout
@@ -374,7 +394,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="0"
-                        android:textColor="@color/color_main"
+                        android:textColor="@color/font_gray_m"
                         android:textSize="@dimen/font_38"/>
 
                     <TextView
@@ -383,15 +403,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="/0"
-                        android:textColor="@color/font_gray_m"
+                        android:textColor="@color/font_gray_a"
                         android:textSize="@dimen/font_38"/>
 
                 </LinearLayout>
 
                 <View
+                    style="@style/line_horizontal_gray_s"/>
+
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px28"
                     android:background="@color/color_F4F4F4"/>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
             </LinearLayout>
 
             <LinearLayout
@@ -431,7 +457,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="文字"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -440,7 +466,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="0"
-                            android:textColor="@color/color_main"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -449,7 +475,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="/0"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_a"
                             android:textSize="@dimen/font_38"/>
 
                     </LinearLayout>
@@ -469,7 +495,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="图片"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -478,7 +504,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="0"
-                            android:textColor="@color/color_main"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -487,7 +513,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="/0"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_a"
                             android:textSize="@dimen/font_38"/>
 
                     </LinearLayout>
@@ -495,9 +521,15 @@
                 </LinearLayout>
 
                 <View
+                    style="@style/line_horizontal_gray_s"/>
+
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px28"
                     android:background="@color/color_F4F4F4"/>
+
+                <View
+                    style="@style/line_horizontal_gray_s"/>
             </LinearLayout>
 
             <LinearLayout
@@ -631,7 +663,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="视频"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -640,7 +672,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="0"
-                            android:textColor="@color/color_main"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -649,7 +681,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="/0"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_a"
                             android:textSize="@dimen/font_38"/>
 
                     </LinearLayout>
@@ -667,7 +699,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="音频"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -676,7 +708,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="0"
-                            android:textColor="@color/color_main"
+                            android:textColor="@color/font_gray_m"
                             android:textSize="@dimen/font_38"/>
 
                         <TextView
@@ -685,7 +717,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="/0"
-                            android:textColor="@color/color_dark_gray"
+                            android:textColor="@color/font_gray_a"
                             android:textSize="@dimen/font_38"/>
 
                     </LinearLayout>
@@ -714,7 +746,7 @@
             android:layout_height="@dimen/px158"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/px30">
+            android:paddingLeft="@dimen/app_base_padding">
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_pic"
@@ -764,7 +796,7 @@
                         android:drawableLeft="@drawable/check_publish_sel"
                         android:drawablePadding="@dimen/px28"
                         android:text="匿名发布"
-                        android:textColor="@color/font_gray_m"
+                        android:textColor="@color/font_gray_xl"
                         android:textSize="@dimen/px44"
                         android:visibility="gone"/>
 
@@ -780,7 +812,7 @@
                         android:drawableLeft="@drawable/check_publish_sel"
                         android:drawablePadding="@dimen/px28"
                         android:text="发起投票"
-                        android:textColor="@color/font_gray_m"
+                        android:textColor="@color/font_gray_xl"
                         android:textSize="@dimen/px44"
                         android:visibility="gone"/>
 
