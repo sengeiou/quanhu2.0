@@ -1,6 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,10 +12,13 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
@@ -39,6 +41,8 @@ public class AccountDetailAty extends BaseActivity {
     TextView mIncome;
     @BindView(R.id.produce_type)
     TextView mProduceType;
+    @BindView(R.id.refresh)
+    SwipyRefreshLayoutBanner mRefresh;
 
     private CommonAdapter<BillDetailModel> mAdapter;
 
@@ -53,7 +57,7 @@ public class AccountDetailAty extends BaseActivity {
      * 消费明细或者收益明细
      *
      * @param context 上下文
-     * @param type     1 表示消费明细  2 表示收益明细
+     * @param type    1 表示消费明细  2 表示收益明细
      */
     public static void startAccountDetail(Context context, int type) {
         Intent intent = new Intent(context, AccountDetailAty.class);
@@ -113,6 +117,15 @@ public class AccountDetailAty extends BaseActivity {
 
     @Override
     public void initData() {
+        mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                mPresenter.requestGetBillList(direction != SwipyRefreshLayoutDirection.TOP, type);
+                mRefresh.setRefreshing(false);
+            }
+        });
         mPresenter.requestGetBillList(false, type);
     }
 
