@@ -93,7 +93,7 @@ public class RewardDetailAty extends BaseActivity {
                 }
             });
             setTitleText(R.string.rewward_detail);
-            mIncome.setText(R.string.jifen);
+            mIncome.setText("金额");
             mProduceType.setText(R.string.shuoming);
         }
         mAdapter = new CommonAdapter<RewardDetailBean>(aty, mBillDetails, R.layout.layout_account_detail_item) {

@@ -206,7 +206,7 @@ public class RegisterActivity extends BaseActivity {
 //                    hashMap.put("region", amapLocation.getDistrict());
 //                    hashMap.put("cityCode", amapLocation.getAdCode());
 
-                    location = amapLocation.getProvince() + amapLocation.getCity();
+                    location = amapLocation.getProvince() +" " + amapLocation.getCity();
                     cityCode = amapLocation.getAdCode();
                     if (cityCode.length() == 6) {
                         cityCode = cityCode.substring(0, 4) + "00";
@@ -572,5 +572,8 @@ public class RegisterActivity extends BaseActivity {
         initLocation();
     }
 
-
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 }

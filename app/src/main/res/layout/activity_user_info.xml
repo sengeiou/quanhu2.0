@@ -78,6 +78,7 @@
         android:layout_height="@dimen/px164"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
+        android:visibility="gone"
         >
 
         <Button

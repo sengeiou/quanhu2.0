@@ -82,7 +82,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void initPresenter() {
-        userid = getArguments().getString(IntentKey.KEY_TYPE);
+        userid = getArguments().getString(IntentKey.EXTRA_TYPE);
         getData(false);
     }
 

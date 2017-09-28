@@ -85,7 +85,9 @@
                     android:id="@+id/reward_img"
                     android:layout_width="@dimen/px172"
                     android:layout_height="@dimen/px172"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    />
 
                 <TextView
                     android:id="@+id/tv_content"
