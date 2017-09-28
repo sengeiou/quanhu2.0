@@ -41,6 +41,7 @@ import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
+import static com.rz.common.constant.IntentKey.EXTRA_ID;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
@@ -58,13 +59,19 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     SwipyRefreshLayout refreshLayout;
 
     private int type;
+    private String userId;
     private DefaultPrivateGroupAdapter mAdapter;
     private int pageNo = 1;
 
     public static PrivateGroupCreateByMyselfFragment newInstance(int type) {
+        return newInstance(type, Session.getUserId());
+    }
+
+    public static PrivateGroupCreateByMyselfFragment newInstance(int type, String userId) {
         PrivateGroupCreateByMyselfFragment fragment = new PrivateGroupCreateByMyselfFragment();
         Bundle args = new Bundle();
         args.putInt(EXTRA_TYPE, type);
+        args.putString(EXTRA_ID, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,6 +80,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
+        userId = getArguments() != null ? getArguments().getString(EXTRA_ID) : Session.getUserId();
     }
 
     @Nullable
@@ -90,17 +98,19 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
             refreshLayout.setEnabled(false);
         }
-        setFunctionText(R.string.private_group_apply_for);
-        setFunctionClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
-                if (Integer.parseInt(level) < 5)
-                    GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
-                else
-                    startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
-            }
-        });
+        if (TextUtils.equals(userId, Session.getUserId())) {
+            setFunctionText(R.string.private_group_apply_for);
+            setFunctionClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                    if (Integer.parseInt(level) < 5)
+                        GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+                    else
+                        startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+                }
+            });
+        }
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -156,7 +166,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     private void loadData(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(Session.getUserId(), pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
+        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(userId, pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
                 super.onResponse(call, response);
