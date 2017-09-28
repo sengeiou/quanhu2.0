@@ -1,9 +1,13 @@
 package com.rz.circled.ui.activity;
 
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -85,7 +89,12 @@ public class MyCouponsActivity extends BaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return getString(itemName[position]);
+            // 转换字符串的类型
+            SpannableStringBuilder ssb = new SpannableStringBuilder(getString(itemName[position]));
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+            ssb.setSpan(styleSpan,0,2, Spannable. SPAN_INCLUSIVE_INCLUSIVE);
+            setTitleRightText(ssb.toString());
+            return ssb.toString();
         }
 
 

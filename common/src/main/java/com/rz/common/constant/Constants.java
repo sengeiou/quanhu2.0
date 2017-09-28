@@ -15,6 +15,9 @@ public class Constants {
     public static final String UPDATE_LOVE_CIRCLE = "UPDATE_LOVE_CIRCLE";
     public static final String HOME_FRAGMENT_CACHE = "HOME_FRAGMENT_CACHE";
     public static final String BANNER_CACHE = "BANNER_CACHE";
+    public static final String FIND_LOVE_CACHE = "FIND_LOVE_CACHE";
+    public static final String FIND_FAMOUS_CACHE = "FIND_FAMOUS_CACHE";
+    public static final String FIND_SUBJECT_CACHE = "FIND_SUBJECT_CACHE";
     //首次进app跳发现页
     public static final String FIRST_BLOOD = "first_blood";
 

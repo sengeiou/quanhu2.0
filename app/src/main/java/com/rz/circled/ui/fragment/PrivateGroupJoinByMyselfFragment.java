@@ -191,7 +191,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.private_group_no_join));
                             }
                         }
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, data.size()));
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, mAdapter.getCount()));
                     }
                 } else {
                     if (type != TYPE_PART)

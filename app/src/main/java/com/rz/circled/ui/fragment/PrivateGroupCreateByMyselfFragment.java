@@ -198,7 +198,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                                 onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.private_group_no_create));
                             }
                         }
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, data.size()));
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, mAdapter.getCount()));
                     }
                 } else {
                     if (type != TYPE_PART)

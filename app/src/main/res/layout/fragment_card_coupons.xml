@@ -45,6 +45,7 @@
                 android:id="@+id/tv_card_coupons_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/px38"
                 android:layout_marginLeft="@dimen/px15"
                 android:paddingRight="@dimen/px15"
                 android:text="@string/used_coupons_hint"/>

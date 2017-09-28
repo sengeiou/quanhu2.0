@@ -68,10 +68,9 @@
 
         <ImageView
             android:id="@+id/id_clear_recharge_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px40"
+            android:layout_height="@dimen/px40"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/px30"
             android:src="@drawable/ic_clear"
             android:visibility="gone" />
     </LinearLayout>

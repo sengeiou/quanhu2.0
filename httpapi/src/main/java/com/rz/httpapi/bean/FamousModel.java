@@ -1,10 +1,12 @@
 package com.rz.httpapi.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017/6/8/008.
  */
 
-public class FamousModel {
+public class FamousModel implements Serializable{
 
     /**
      * custInfo : {"custId":"","custImg":"","custLevel":1,"custNname":"","nameNotes":""}

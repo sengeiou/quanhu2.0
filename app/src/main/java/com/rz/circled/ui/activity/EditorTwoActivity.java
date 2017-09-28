@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -35,9 +37,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -72,9 +71,9 @@ import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.CountDownTimer;
-import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
+import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.Record;
 import com.rz.common.utils.SystemUtils;
@@ -1219,6 +1218,12 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             return;
         }
         jsResult = new ArrayList<>();
+        if (TextUtils.isEmpty(mVideoFilePath))
+            publicUpload();
+        else getRxBytes();
+    }
+
+    private void publicUpload() {
         onLoadingStatus(CommonCode.General.DATA_LOADING, getString(R.string.editor_two_publish_ing));
         if (llPage.getVisibility() == View.VISIBLE)
             uploadPage();
@@ -1317,6 +1322,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     private void initContentEditText() {
         final EditText et = (EditText) getLayoutInflater().inflate(R.layout.layout_et_article_item, llContentText, false);
+        et.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_xl));
+        et.setHintTextColor(ContextCompat.getColor(mContext, R.color.font_gray_a));
         et.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_50));
         EditorConfigTwoModel model = (EditorConfigTwoModel) llContentText.getTag();
         et.addTextChangedListener(new TextWatcher() {
@@ -1345,7 +1352,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             et.setHint(R.string.add_text_pic_here);
             isFirstInput = false;
         }
-        et.requestFocus();
+//        et.requestFocus();
         if (model.getUpperLimit() == 0) {
             et.setEnabled(false);
         }
@@ -1354,6 +1361,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     private EditText initContentEditText(int position) {
         final EditText et = (EditText) getLayoutInflater().inflate(R.layout.layout_et_article_item, llContentText, false);
+        et.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_xl));
+        et.setHintTextColor(ContextCompat.getColor(mContext, R.color.font_gray_a));
         et.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_50));
         EditorConfigTwoModel model = (EditorConfigTwoModel) llContentText.getTag();
         et.addTextChangedListener(new TextWatcher() {
@@ -1426,14 +1435,15 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
         iv.setTag(R.id.id_iv, imgPath);
         if (Protect.checkLoadImageStatus(this)) {
-            Glide.with(this).load(imgPath).into(new ViewTarget<ImageView, GlideDrawable>(iv) {
-                @Override
-                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                    iv.getLayoutParams().height = resource.getIntrinsicHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / resource.getIntrinsicWidth();
-                    iv.requestLayout();
-                    iv.setImageDrawable(resource.getCurrent());
-                }
-            });
+//            Glide.with(this).load(imgPath).into(new ViewTarget<ImageView, GlideDrawable>(iv) {
+//                @Override
+//                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+//                    iv.getLayoutParams().height = resource.getIntrinsicHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / resource.getIntrinsicWidth();
+//                    iv.requestLayout();
+//                    iv.setImageDrawable(resource.getCurrent());
+//                }
+//            });
+            Glide.with(this).load(imgPath).into(iv);
         }
         initImageCount();
     }
@@ -2279,5 +2289,67 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (!isPicText) {
             initPic();
         }
+    }
+
+    /**
+     * 获得网速
+     */
+    private void getRxBytes() {
+        final long lastTotalRxBytes = NetWorkSpeedUtils.getTotalRxBytes();
+        final long lastTimeStamp = System.currentTimeMillis();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long nowTotalRxBytes = NetWorkSpeedUtils.getTotalRxBytes();
+                long nowTimeStamp = System.currentTimeMillis();
+                long speed = ((nowTotalRxBytes - lastTotalRxBytes) * 1000 / (nowTimeStamp - lastTimeStamp));//毫秒转换
+                Message msg = speedHandler.obtainMessage();
+                msg.what = 100;
+                msg.obj = speed;
+                speedHandler.sendMessage(msg);
+            }
+        }, 500);//隔2s
+
+    }
+
+    Handler speedHandler = new Handler() {
+        @Override
+        public void dispatchMessage(Message msg) {
+            super.dispatchMessage(msg);
+            if (msg.what == 100) {
+                long speed = msg.what;
+                checkSpeed(speed);
+            }
+        }
+    };
+
+    private void checkSpeed(long speed) {
+        Log.d(TAG, "speed = " + speed);
+        CommonDialog commonDialog = new CommonDialog(mContext);
+        if (speed > 0) {
+            long time = videoSize / speed;//需要多少秒
+            if (time > 60 * 1) {//大于1分钟给出提示
+                commonDialog.showDialog("视频过大,可能需要" + time / 60 + "分钟上传,确定发布吗?", new CommonDialog.OnCommonDialogConfirmListener() {
+                    @Override
+                    public void onConfirmListener() {
+                        publicUpload();
+                    }
+                });
+            } else {
+                publicUpload();
+            }
+        } else if (videoSize > 5000) {
+            commonDialog.showDialog("视频过大,可能需要较长时间上传,确定发布吗?", new CommonDialog.OnCommonDialogConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    publicUpload();
+                }
+            });
+        } else {
+            //发布
+            publicUpload();
+        }
+
     }
 }

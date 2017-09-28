@@ -37,7 +37,7 @@
             android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px44"
+            android:layout_marginTop="@dimen/px36"
             android:maxLines="3"
             android:includeFontPadding="false"
             android:lines="1"

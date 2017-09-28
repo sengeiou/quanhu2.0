@@ -29,6 +29,7 @@ import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.XGridView;
+import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
@@ -43,6 +44,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -52,6 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+import static com.rz.common.constant.Constants.FIND_LOVE_CACHE;
 import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
 import static com.rz.common.utils.SystemUtils.trackUser;
 
@@ -88,6 +91,7 @@ public class FindFragment extends BaseFragment {
     private RecyclerView.Adapter mFamousAdapter;
     private RecyclerView.Adapter mSubjectAdapter;
     private BaseAdapter mActivityAdapter1;
+
 
     @Nullable
     @Override
@@ -339,6 +343,17 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        EntityCache<HotSubjectModel> entityCache = new EntityCache<>(mActivity, HotSubjectModel.class);
+        EntityCache<FamousModel> FamousModelCache = new EntityCache<>(mActivity, FamousModel.class);
+        EntityCache<EntitiesBean> EntitiesBeanCache = new EntityCache<>(mActivity, EntitiesBean.class);
+        List<CircleEntrModle> circleEntrModleList= (List<CircleEntrModle>) mACache.getAsObject(FIND_LOVE_CACHE);
+        List<HotSubjectModel> subjectList=entityCache.getListEntity(HotSubjectModel.class);
+        List<FamousModel> FamousModel= FamousModelCache.getListEntity(FamousModel.class);;
+        List<EntitiesBean> EntitiesBean= EntitiesBeanCache.getListEntity(EntitiesBean.class);;
+        updateView(circleEntrModleList);
+        updateViewWithFlag(subjectList,2);
+        updateViewWithFlag(FamousModel,7);
+        updateViewWithFlag(EntitiesBean,3);
         mFindRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mFindRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -363,38 +378,43 @@ public class FindFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (flag == 2) {
-            subjectList.clear();
-            subjectList.addAll((Collection<? extends HotSubjectModel>) t);
-            mSubjectAdapter.notifyDataSetChanged();
-            return;
-        }
-        if (flag == 7) {
-            famousList.clear();
-            famousList.addAll((List<FamousModel>) t);
-            mFamousAdapter.notifyDataSetChanged();
-            return;
-        }
-        if (flag == 3){
-            activityList.clear();
-            activityList= (List<EntitiesBean>) t;
-            mActivityAdapter1.notifyDataSetChanged();
-            return;
+        if (t!=null) {
+            if (flag == 2) {
+                subjectList.clear();
+                subjectList.addAll((Collection<? extends HotSubjectModel>) t);
+                mSubjectAdapter.notifyDataSetChanged();
+                return;
+            }
+            if (flag == 7) {
+                famousList.clear();
+                famousList.addAll((List<FamousModel>) t);
+                mFamousAdapter.notifyDataSetChanged();
+                return;
+            }
+            if (flag == 3) {
+                activityList.clear();
+                activityList = (List<EntitiesBean>) t;
+                mActivityAdapter1.notifyDataSetChanged();
+                return;
+            }
         }
     }
 
     @Override
     public <T> void updateView(T t) {
-        circleEntrModleList.clear();
-        circleEntrModleList = (List<CircleEntrModle>) t;
-        CircleEntrModle c = new CircleEntrModle();
-        c.appId = getString(R.string.FIND_MORE);
-        if (circleEntrModleList.size() >= 8) {
-            circleEntrModleList.add(7, c);
-        } else {
-            circleEntrModleList.add(c);
+        if (t!=null) {
+            circleEntrModleList.clear();
+            circleEntrModleList = (List<CircleEntrModle>) t;
+            mACache.put(FIND_LOVE_CACHE, (Serializable) circleEntrModleList);
+            CircleEntrModle c = new CircleEntrModle();
+            c.appId = getString(R.string.FIND_MORE);
+            if (circleEntrModleList.size() >= 8) {
+                circleEntrModleList.add(7, c);
+            } else {
+                circleEntrModleList.add(c);
+            }
+            findAdapter.notifyDataSetChanged();
         }
-        findAdapter.notifyDataSetChanged();
     }
 
     @Override
