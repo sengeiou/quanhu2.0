@@ -144,10 +144,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/px30"
+            android:paddingTop="@dimen/px44"
+            android:paddingBottom="@dimen/px44"
             android:paddingLeft="@dimen/px44"
             android:paddingRight="@dimen/px44"
-            android:paddingTop="@dimen/px30">
+            >
 
 
             <ImageView
@@ -162,10 +163,11 @@
                 android:layout_gravity="top"
                 android:layout_marginLeft="@dimen/px15"
                 android:gravity="left|top"
+                android:lineSpacingExtra="@dimen/px10"
                 android:singleLine="false"
                 android:text="@string/withdraw_note"
                 android:textColor="@color/color_F5BB1E"
-                android:textSize="@dimen/font_40" />
+                android:textSize="@dimen/px38" />
         </LinearLayout>
 
         <LinearLayout
@@ -284,15 +286,18 @@
                     android:textSize="@dimen/px40" />
             </LinearLayout>
         </LinearLayout>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
         <Button
             android:id="@+id/id_recharge_submit_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px30"
-            android:layout_marginLeft="@dimen/px120"
-            android:layout_marginRight="@dimen/px120"
-            android:layout_marginTop="@dimen/px130"
+            android:layout_marginLeft="@dimen/px180"
+            android:layout_marginRight="@dimen/px180"
+            android:layout_marginTop="@dimen/px160"
             android:background="@drawable/shape_bg_blue_sel"
             android:gravity="center"
             android:minHeight="0dp"
@@ -300,5 +305,6 @@
             android:text="@string/confirm_recharge"
             android:textColor="@color/white"
             android:textSize="@dimen/font_46" />
+</RelativeLayout>
     </LinearLayout>
 </ScrollView>

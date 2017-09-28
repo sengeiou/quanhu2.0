@@ -119,6 +119,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 //跳发布
                 trackUser("入口", "首页", "发布按钮");
+                if (mUserPermissionBean==null)
+                    return;
                 if (!mUserPermissionBean.disTalk)
                 WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
                 else Toasty.info(mActivity,"您当前为禁言状态").show();

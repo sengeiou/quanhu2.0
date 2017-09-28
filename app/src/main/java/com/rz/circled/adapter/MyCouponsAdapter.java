@@ -34,6 +34,7 @@ public class MyCouponsAdapter extends CommonAdapter<CouponsBean> {
         helper.setText(R.id.tv_coupons_item_type, item.getPrizesName());
         helper.setText(R.id.tv_coupons_item_title, item.getRemark());
         helper.setText(R.id.tv_coupons_item_time, formatTime(item.getBeginTime()) + " - " + formatTime(item.getEndTime()));
+        TextView tv_coupons_title = helper.getView(R.id.tv_coupons_item_title);
         TextView tvStatus = (TextView) helper.getViewById(R.id.tv_coupons_item_status);
         RelativeLayout rlLeft = (RelativeLayout) helper.getViewById(R.id.rl_coupons_item_left);
         if (canUse) {
@@ -44,6 +45,7 @@ public class MyCouponsAdapter extends CommonAdapter<CouponsBean> {
             if (item.getStatus() == 2)
                 tvStatus.setText(R.string.used);
             else tvStatus.setText(R.string.expired);
+            tv_coupons_title.setTextColor(ContextCompat.getColor(mContext, R.color.color_666666));
             tvStatus.setBackgroundResource(R.drawable.shape_coupons_gray);
             tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_s));
             rlLeft.setBackgroundResource(R.mipmap.bg_coupons_expired_item);
