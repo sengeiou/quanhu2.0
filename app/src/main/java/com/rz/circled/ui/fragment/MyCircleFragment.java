@@ -118,9 +118,21 @@ public class MyCircleFragment extends BaseFragment implements ScrollableHelper.S
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.my_create_txt:
+                myCreateTxt.setTextColor(getResources().getColor(R.color.tab_blue));
+                myCreateTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
+
+                answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
+                answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
+
                 switchPages(0);
                 break;
             case R.id.answer_txt:
+
+                myCreateTxt.setTextColor(getResources().getColor(R.color.color_999999));
+                myCreateTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
+
+                answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
+                answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
                 switchPages(1);
                 break;
         }

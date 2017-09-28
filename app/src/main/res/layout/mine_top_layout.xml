@@ -4,6 +4,7 @@
     android:layout_height="@dimen/px100"
     android:background="@color/white"
     android:orientation="horizontal"
+    android:id="@+id/reward_top_layout"
     >
 
     <RelativeLayout
@@ -18,7 +19,7 @@
             android:id="@+id/my_create_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_answer_reward_txt"
+            android:text="@string/my_create_reward_txt"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:layout_alignParentLeft="true"

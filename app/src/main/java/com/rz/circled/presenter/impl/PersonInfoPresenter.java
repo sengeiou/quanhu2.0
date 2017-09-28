@@ -374,15 +374,15 @@ public class PersonInfoPresenter extends GeneralPresenter {
         }
         Call<ResponseData<List<MyRewardBean>>> call = null;
         if(offerId == -100){
+            call = mUserService.getRewardNoList(
+                    custId,
+                    Constants.PAGESIZE_10,
+                    type);
+        }else{
             call = mUserService.getRewardList(
                     custId,
                     Constants.PAGESIZE_10,
                     offerId,
-                    type);
-        }else{
-            call = mUserService.getRewardNoList(
-                    custId,
-                    Constants.PAGESIZE_10,
                     type);
         }
 

@@ -187,7 +187,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position > 0) {
-            if (areaList.get(position - 1).children != null && areaList.get(position - 1).children.size() > 0) {
+            if (areaList.get(position - 1).children != null && areaList.get(position - 1).children.size() > 0 &&!areaList.get(position - 1).name.equals(areaList.get(position - 1).children.get(0).name)) {
                 Intent intent = new Intent(this, PersonSecondAreaAty.class);
                 Bundle data = new Bundle();
                 data.putSerializable("areaModel", areaList.get(position - 1));
@@ -226,7 +226,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                     String[] array = area.split(" ");
                     String[] index = new String[array.length - 1];
                     for (int i = 0; i < index.length; i++) {
-                        index[i] = array[i + 1].substring(0, array[i + 1].length() - 1);
+                        index[i] = array[i + 1].substring(0, array[i + 1].length());
                         paramas = paramas + " " + index[i];
                     }
                     paramas = paramas.trim();

@@ -621,8 +621,8 @@
     <string name="article_info">文章</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
-    <string name="my_create_reward">我发起的悬赏 (%1$d)</string>
-    <string name="my_answer_reward">我回答的悬赏 (%1$d)</string>
+    <string name="my_create_reward">我发起的悬赏</string>
+    <string name="my_answer_reward">我回答的悬赏</string>
     <string name="add_friend">加好友</string>
     <string name="my_create_reward_txt">我发起的悬赏</string>
     <string name="my_answer_reward_txt">我回答的悬赏</string>
@@ -788,6 +788,7 @@
     <string name="authorization_fail">授权失败！</string>
     <string name="pay_fail">支付失败</string>
     <string name="editor_un_share_read">不可同时选择付费阅读与免费推广</string>
+
 
     <string name="voice_cancel_hint">&#160;&#160;&#160;&#160;&#160;&#160;确定要取消录制吗？&#160;&#160;&#160;&#160;&#160;&#160;</string>
 </resources>

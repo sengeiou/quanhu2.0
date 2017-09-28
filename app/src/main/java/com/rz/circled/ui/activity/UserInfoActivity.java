@@ -31,6 +31,7 @@ import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
 import com.rz.circled.ui.fragment.MyCircleFragment;
 import com.rz.circled.ui.fragment.MyRewardFragment;
+import com.rz.circled.ui.fragment.UserRewardFragment;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.cache.preference.Session;
@@ -221,7 +222,7 @@ public class UserInfoActivity extends BaseActivity {
 
     private void initFragment() {
         BaseFragment fragment = MyArticleFragment.newInstance(userId);
-        BaseFragment fragment1 = MyRewardFragment.newInstance("1", userId);
+        BaseFragment fragment1 = UserRewardFragment.newInstance("0",userId);
         BaseFragment fragment2 = MyCircleFragment.newInstance(userId);
         BaseFragment fragment3 = MyActivityFragment.newInstance(userId);
 
@@ -253,7 +254,7 @@ public class UserInfoActivity extends BaseActivity {
                         container = (MyArticleFragment) fragmentList.get(position);
                         break;
                     case 1:
-                        container = (MyRewardFragment) fragmentList.get(position);
+                        container = (UserRewardFragment) fragmentList.get(position);
                         break;
                     case 2:
                         container = (MyCircleFragment) fragmentList.get(position);
@@ -310,8 +311,8 @@ public class UserInfoActivity extends BaseActivity {
                     userRole.setPadding(20, 0, 20, 0);
                     userRole.setBackgroundResource(R.drawable.shape_white_bg);
                     userRole.getBackground().setAlpha(77);
-                } else if (data.getAuthStatus() == 1) {
                 }else if(data.getAuthStatus() == 1){
+
                     famousLayout.setVisibility(View.VISIBLE);
                     userRole.setText(data.getTradeField());
                 }
@@ -394,7 +395,7 @@ public class UserInfoActivity extends BaseActivity {
     @OnClick(R.id.add_friend_btn)
     public void addFriendClick() {
         if (model != null && model.getRelation() == 0) {
-            ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_agree);
+            ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
         } else {
             SessionHelper.startP2PSession(this, model.getCustId());
         }
