@@ -113,7 +113,7 @@ public class BoundPhoneActivity extends BaseActivity {
         secondTxt.setVisibility(View.VISIBLE);
         finishBtn.setText("完成");
 
-//        loginModel = (UserInfoBean) getIntent().getExtras().getSerializable("loginmodel");
+        loginModel = (UserInfoBean) getIntent().getExtras().getSerializable("loginmodel");
 
         mEditPhone.addTextChangedListener(new TextWatcher() {
             @Override

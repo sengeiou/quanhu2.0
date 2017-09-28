@@ -163,6 +163,7 @@ public class UserInfoActivity extends BaseActivity{
 
         //个人中心
         if(userId.equals(Session.getUserId())){
+
             Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
@@ -218,7 +219,7 @@ public class UserInfoActivity extends BaseActivity{
         ib.setVisibility(View.VISIBLE);
         ib.setImageResource(R.mipmap.arrow_left);
 
-        tv.setText("个人中心");
+        tv.setText("个人主页");
         mTitleContent.addView(newTitilbar);
 
         ib.setOnClickListener(new View.OnClickListener() {
@@ -327,6 +328,7 @@ public class UserInfoActivity extends BaseActivity{
                 if(t != null){
                     FriendInformationBean bean = (FriendInformationBean) t;
 
+                    addFriendLayout.setVisibility(View.VISIBLE);
                     Glide.with(this).load(bean.getCustImg()).transform(new GlideCircleImage(this)).
                             placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 }
