@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -41,7 +42,7 @@ import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ScrollableHelper.ScrollableContainer{
 
     List<EntitiesBean> bean = new ArrayList<>();
     @BindView(R.id.my_listview)
@@ -192,5 +193,8 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     }
 
 
-
+    @Override
+    public View getScrollableView() {
+        return mLv;
+    }
 }
