@@ -36,19 +36,27 @@ public class MyRewardFragment extends BaseFragment {
     @BindView(R.id.lv_search_content)
     ListView lvReward;
 
+    @BindView(R.id.my_create_txt)
+    TextView createTxt;
+
+    @BindView(R.id.answer_txt)
+    TextView answerTxt;
+
     private RewardAdapter rewardAdapter;
     private List<MyRewardBean> rewardBeanList = new ArrayList<>();
     protected IPresenter presenter;
 
-    private View headView;
-    private TextView createTxt;
-    private TextView answerTxt;
+//    private View headView;
+//    private TextView createTxt;
+//    private TextView answerTxt;
     private String type;
+    private String userid = "";
 
-    public static MyRewardFragment newInstance(String type) {
+    public static MyRewardFragment newInstance(String type,String userid) {
         MyRewardFragment frg = new MyRewardFragment();
         Bundle args = new Bundle();
         args.putString(IntentKey.KEY_ID,type);
+        args.putString(IntentKey.KEY_TYPE,userid);
         frg.setArguments(args);
 
         return frg;
@@ -58,17 +66,18 @@ public class MyRewardFragment extends BaseFragment {
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.fragment_search_reward, null);
+        return inflater.inflate(R.layout.fragment_user_reward, null);
     }
 
     @Override
     public void initView() {
         type = getArguments().getString(IntentKey.KEY_ID);
+        userid = getArguments().getString(IntentKey.KEY_TYPE);
 
         if("1".equals(type)){
-            headView = View.inflate(mActivity,R.layout.mine_top_layout,null);
-            createTxt = (TextView) headView.findViewById(R.id.my_create_txt);
-            answerTxt = (TextView) headView.findViewById(R.id.answer_txt);
+//            headView = View.inflate(mActivity,R.layout.mine_top_layout,null);
+//            createTxt = (TextView) headView.findViewById(R.id.my_create_txt);
+//            answerTxt = (TextView) headView.findViewById(R.id.answer_txt);
 
             createTxt.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,7 +87,7 @@ public class MyRewardFragment extends BaseFragment {
 
                     answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
                     answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
-                    ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),0);
+                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,0);
                 }
             });
 
@@ -91,11 +100,11 @@ public class MyRewardFragment extends BaseFragment {
                     answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
                     answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
 
-                    ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),1);
+                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,1);
                 }
             });
 
-            lvReward.addHeaderView(headView);
+//            lvReward.addHeaderView(headView);
         }
 
         rewardAdapter = new RewardAdapter(getActivity(), R.layout.item_search_reward);
@@ -115,7 +124,7 @@ public class MyRewardFragment extends BaseFragment {
     public void initData() {
         initRefresh();
 
-        ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),0);
+        ((PersonInfoPresenter) presenter).getMyreward(false, userid,0);
 
     }
 
@@ -124,7 +133,7 @@ public class MyRewardFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//                ((PersonInfoPresenter) presenter).getMyreward(true, Session.getUserId(),0);
+//                ((PersonInfoPresenter) presenter).getMyreward(true, userid,0);
                 mRefresh.setRefreshing(false);
             }
         });
@@ -171,6 +180,6 @@ public class MyRewardFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-        ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),0);
+        ((PersonInfoPresenter) presenter).getMyreward(false, userid,0);
     }
 }

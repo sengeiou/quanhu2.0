@@ -87,7 +87,7 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
             public void convert(ViewHolder helper, EntitiesBean item) {
                 ((TextView) helper.getView(R.id.activity_title)).setText(item.getTitle());
                 ImageView iv = (ImageView) helper.getView(R.id.iv_activity_icon);
-                Glide.with(mContext).load(item.getCoverPlan()).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
+                Glide.with(mContext).load(item.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
             }
         };
         mLv.setAdapter(mEntitiesBeanCommonAdapter);

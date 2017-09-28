@@ -1,6 +1,8 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -69,8 +71,11 @@ public class MineRewardAdapter extends CommonAdapter {
 //        tvTime.setText(model.getCreateTime()+"");
         tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice() +"("+ model.getGiftInfo().getName()+")给");
 
-        if(model.getResourceInfo().getPics() != null){
+        if( !TextUtils.isEmpty(model.getResourceInfo().getPics())){
+            rewardImg.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(model.getResourceInfo().getPics()).into(rewardImg);
+        }else{
+            rewardImg.setVisibility(View.GONE);
         }
         tvContent.setText(model.getResourceInfo().getContent());
 

@@ -1,5 +1,6 @@
 package com.rz.circled.ui.fragment;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -23,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
 /**
  * Created by Administrator on 2017/9/14 0014.
@@ -38,9 +42,13 @@ public class MyArticleFragment extends BaseFragment {
     private DynamicAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private IPresenter presenter;
+    private String userid = "";
 
-    public static MyArticleFragment newInstance() {
+    public static MyArticleFragment newInstance(String userid) {
         MyArticleFragment frg = new MyArticleFragment();
+        Bundle args = new Bundle();
+        args.putString(EXTRA_TYPE, userid);
+        frg.setArguments(args);
         return frg;
     }
 
@@ -55,8 +63,8 @@ public class MyArticleFragment extends BaseFragment {
         super.initPresenter();
         presenter = new PersonInfoPresenter();
         presenter.attachView(this);
-
-        ((PersonInfoPresenter) presenter).getPersionArticle(false, Session.getUserId() ,"1000");
+        userid = getArguments().getString(IntentKey.EXTRA_TYPE);
+        ((PersonInfoPresenter) presenter).getPersionArticle(false, userid ,"1000");
 
     }
     private void initRefresh() {
@@ -65,9 +73,9 @@ public class MyArticleFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    ((PersonInfoPresenter) presenter).getPersionArticle(false, Session.getUserId() ,"1000");
+                    ((PersonInfoPresenter) presenter).getPersionArticle(false, userid ,"1000");
                 } else {
-                    ((PersonInfoPresenter) presenter).getPersionArticle(true, Session.getUserId() ,"1000");
+                    ((PersonInfoPresenter) presenter).getPersionArticle(true, userid ,"1000");
                 }
                 refreshLayout.setRefreshing(false);
             }
@@ -77,6 +85,9 @@ public class MyArticleFragment extends BaseFragment {
 
     @Override
     public void initView() {
+
+
+
         dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
 
@@ -129,6 +140,6 @@ public class MyArticleFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-        ((PersonInfoPresenter) presenter).getPersionArticle(false, Session.getUserId() ,"1000");
+        ((PersonInfoPresenter) presenter).getPersionArticle(false, userid ,"1000");
     }
 }

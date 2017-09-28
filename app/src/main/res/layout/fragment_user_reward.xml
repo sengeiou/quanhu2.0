@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/px20"
+        >
+
+        <include
+            layout="@layout/mine_top_layout"
+            />
+
+        <ListView
+            android:id="@+id/lv_search_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@color/white"
+            android:dividerHeight="@dimen/px20"
+            android:listSelector="@color/transparent"
+            android:scrollbars="none"
+            />
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
+</LinearLayout>
