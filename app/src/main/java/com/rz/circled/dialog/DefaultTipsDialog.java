@@ -1,6 +1,7 @@
 package com.rz.circled.dialog;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
@@ -12,6 +13,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.MainActivity;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.utils.DensityUtils;
 
@@ -75,8 +78,11 @@ public class DefaultTipsDialog extends DialogFragment {
     @Override
     public void dismiss() {
         super.dismiss();
+
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         getActivity().finish();
-        //// TODO: 2017/9/26  跳转到登录
     }
 
     @OnClick(R.id.btn_submit)

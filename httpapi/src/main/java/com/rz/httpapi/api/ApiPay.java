@@ -18,6 +18,10 @@ public class ApiPay {
      */
     static final String PAY_ORDER_DETAILS = "v3/pay/getOrderInfo";
 
+    /**
+     * 查询打赏详情
+     */
+    static final String PAY_REWARD_DETAILS = "v3/reward/checkRewardNotify";
 
     /**
      * 设置支付密码-修改支付密码
