@@ -323,9 +323,7 @@ public class UserInfoActivity extends BaseActivity {
                     Glide.with(this).load(bean.getCustImg()).transform(new GlideCircleImage(this)).
                             placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 }
-            } else {
-                if (data.getAuthStatus() == 1) {
-            }else{
+            } else{
                 if(data.getAuthStatus() == 1){
                     famousLayout.setVisibility(View.VISIBLE);
                     userRole.setText(data.getTradeField());
