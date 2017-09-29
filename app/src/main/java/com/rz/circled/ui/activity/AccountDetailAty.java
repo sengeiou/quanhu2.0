@@ -80,7 +80,7 @@ public class AccountDetailAty extends BaseActivity {
     public void initView() {
         type = getIntent().getIntExtra(IntentKey.KEY_TYPE, Constants.DEFAULTVALUE);
         if (type == Type.TYPE_BALANCE) {
-            setTitleText(R.string.cost_detail_v3);
+            setTitleText(R.string.account_detail);
         } else if (type == Type.TYPE_SCORE) {
 //            setTitleRightText("积分获取攻略");
 //            setTitleRightTextColor(R.color.black);

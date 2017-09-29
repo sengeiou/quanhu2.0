@@ -137,12 +137,16 @@ public class RewardDetailAty extends BaseActivity {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                mPresenter.requestGetRewardList(direction != SwipyRefreshLayoutDirection.TOP);
+
+                if(mBillDetails.size()>0 && mBillDetails.get(mBillDetails.size()-1).getRewardId()!= null){
+                    mPresenter.requestGetRewardList(direction != SwipyRefreshLayoutDirection.TOP,mBillDetails.get(mBillDetails.size()-1).getRewardId());
+                }
+
                 mRefresh.setRefreshing(false);
             }
         });
 
-        mPresenter.requestGetRewardList(false);
+        mPresenter.requestGetRewardList(false,null);
     }
 
     @Override
@@ -169,6 +173,6 @@ public class RewardDetailAty extends BaseActivity {
 
     @Override
     public void refreshPage() {
-        mPresenter.requestGetRewardList(false);
+        mPresenter.requestGetRewardList(false,null);
     }
 }

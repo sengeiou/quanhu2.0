@@ -96,6 +96,7 @@
                     android:maxLines="2"
                     android:paddingLeft="@dimen/px44"
                     android:paddingRight="@dimen/px44"
+                    android:lineSpacingExtra="@dimen/px12"
                     android:textColor="@color/font_gray_m"
                     android:textSize="@dimen/font_40"
                     tool:text="这里的是内容" />

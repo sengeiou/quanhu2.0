@@ -69,6 +69,7 @@
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="wrap_content"
+          android:textSize="@dimen/px38"
           android:textColor="@color/color_999999"
           android:text="129讨论"
           />
@@ -80,7 +81,7 @@
             android:layout_gravity="center"
             android:text="来自四圈旅游及机器号"
             android:layout_marginRight="@dimen/px4"
-            android:textSize="@dimen/font_44" />
+            android:textSize="@dimen/px38" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
