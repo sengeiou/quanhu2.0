@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.cpoopc.scrollablelayoutlib.ScrollableLayout;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.StatusCode;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentStatePagerAdapter;
 import com.rz.circled.event.EventConstant;
@@ -40,9 +42,11 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.yryz.yunxinim.session.SessionHelper;
+import com.yryz.yunxinim.uikit.NimUIKit;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -222,7 +226,7 @@ public class UserInfoActivity extends BaseActivity {
 
     private void initFragment() {
         BaseFragment fragment = MyArticleFragment.newInstance(userId);
-        BaseFragment fragment1 = UserRewardFragment.newInstance("0",userId);
+        BaseFragment fragment1 = UserRewardFragment.newInstance("0", userId);
         BaseFragment fragment2 = MyCircleFragment.newInstance(userId);
         BaseFragment fragment3 = MyActivityFragment.newInstance(userId);
 
@@ -311,7 +315,7 @@ public class UserInfoActivity extends BaseActivity {
                     userRole.setPadding(20, 0, 20, 0);
                     userRole.setBackgroundResource(R.drawable.shape_white_bg);
                     userRole.getBackground().setAlpha(77);
-                }else if(data.getAuthStatus() == 1){
+                } else if (data.getAuthStatus() == 1) {
 
                     famousLayout.setVisibility(View.VISIBLE);
                     userRole.setText(data.getTradeField());
@@ -324,8 +328,8 @@ public class UserInfoActivity extends BaseActivity {
                     Glide.with(this).load(bean.getCustImg()).transform(new GlideCircleImage(this)).
                             placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 }
-            } else{
-                if(data.getAuthStatus() == 1){
+            } else {
+                if (data.getAuthStatus() == 1) {
                     famousLayout.setVisibility(View.VISIBLE);
                     userRole.setText(data.getTradeField());
                 } else {
@@ -397,8 +401,17 @@ public class UserInfoActivity extends BaseActivity {
         if (model != null && model.getRelation() == 0) {
             ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
         } else {
-            SessionHelper.startP2PSession(this, model.getCustId());
+            if (checkLogin())
+                SessionHelper.startP2PSession(this, model.getCustId());
         }
     }
 
+    private boolean checkLogin() {
+        if (Session.getUserIsLogin() && NIMClient.getStatus() == StatusCode.LOGINED) {
+            return true;
+        } else {
+            Toasty.info(mContext, getString(R.string.im_link_error_hint)).show();
+            return false;
+        }
+    }
 }
