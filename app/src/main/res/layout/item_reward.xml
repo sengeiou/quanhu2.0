@@ -49,7 +49,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="赏金 99圈币"
+            android:text=""
             android:textColor="@color/color_yellow_reward"
             android:layout_marginRight="@dimen/px38"
             android:layout_alignParentTop="true"

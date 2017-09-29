@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.R;
@@ -46,6 +47,9 @@ import com.rz.httpapi.bean.RewardDetailBean;
 import com.rz.httpapi.bean.ScoreBean;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.rz.httpapi.constans.ReturnCode;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -180,23 +184,20 @@ public class PayPresenter extends AbsPresenter {
      * 微信支付
      */
     public void wxPay(PaySignModel.Sign sign) {
-        //TODO 微信支付
-//        if (activity != null) {
-//            IWXAPI iwxapi = WXAPIFactory.createWXAPI(activity, Constants.WeiXin.APP_ID);
-//
-//            iwxapi = WXAPIFactory.createWXAPI(activity, null);
-//            iwxapi.registerApp(Constants.WeiXin.APP_ID);
-//
-//            PayReq req = new PayReq();
-//            req.appId = sign.appid;
-//            req.partnerId = sign.partnerid;
-//            req.prepayId = sign.prepayid;
-//            req.nonceStr = sign.noncestr;
-//            req.timeStamp = sign.timestamp;
-//            req.packageValue = "Sign=WXPay";
-//            req.sign = sign.sign;
-//            iwxapi.sendReq(req);
-//        }
+        if (activity != null) {
+            IWXAPI iwxapi = WXAPIFactory.createWXAPI(activity, null);
+            iwxapi.registerApp(Constants.WeiXin.APP_ID);
+
+            PayReq req = new PayReq();
+            req.appId = sign.appid;
+            req.partnerId = sign.partnerid;
+            req.prepayId = sign.prepayid;
+            req.nonceStr = sign.noncestr;
+            req.timeStamp = sign.timestamp;
+            req.packageValue = "Sign=WXPay";
+            req.sign = sign.sign;
+            iwxapi.sendReq(req);
+        }
     }
 
     /**
@@ -209,9 +210,9 @@ public class PayPresenter extends AbsPresenter {
             Observable.create(new Observable.OnSubscribe<String>() {
                 @Override
                 public void call(Subscriber<? super String> subscriber) {
-//                    PayTask alipay = new PayTask(activity);
-//                    String result = alipay.pay(order, false);
-//                    subscriber.onNext(result);
+                    PayTask alipay = new PayTask(activity);
+                    String result = alipay.pay(order, false);
+                    subscriber.onNext(result);
                     subscriber.onCompleted();
                 }
             }).subscribeOn(Schedulers.io())
@@ -411,7 +412,7 @@ public class PayPresenter extends AbsPresenter {
             @Override
             public void onFailure(Call<ResponseData<List<BillDetailModel>>> call, Throwable t) {
                 super.onFailure(call, t);
-                Log.i(TAG, "onFailure: "+t);
+                Log.i(TAG, "onFailure: " + t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                 isDataError = true;
             }
@@ -473,7 +474,7 @@ public class PayPresenter extends AbsPresenter {
             @Override
             public void onFailure(Call<ResponseData<List<ScoreBean>>> call, Throwable t) {
                 super.onFailure(call, t);
-                Log.i(TAG, "onFailure: "+t);
+                Log.i(TAG, "onFailure: " + t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                 isDataError = true;
             }
@@ -540,7 +541,6 @@ public class PayPresenter extends AbsPresenter {
             }
         });
     }
-
 
 
     /**
@@ -818,10 +818,10 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
-                if (flag==3){
+                if (flag == 3) {
                     mView.updateView(psw);
-                }else{
-                payOrder(orderId, psw);
+                } else {
+                    payOrder(orderId, psw);
                 }
             }
         });

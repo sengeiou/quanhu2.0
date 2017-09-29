@@ -22,6 +22,8 @@ import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.Currency;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 //import com.umeng.socialize.UMShareAPI;
 //import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -169,14 +171,14 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
             //充值
             case R.id.id_pay_btn:
                 if (PAY_ALI_TYPE == Type.TYPE_WX_PAY) {
-//                    SHARE_MEDIA platform = SHARE_MEDIA.WEIXIN;
-//                    UMShareAPI mShareAPI = UMShareAPI.get(aty);
-//                    boolean install = mShareAPI.isInstall(aty, platform);
-//                    if (install) {
-//                        rechargeMoney();
-//                    } else {
-//                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.no_install_wx));
-//                    }
+                    SHARE_MEDIA platform = SHARE_MEDIA.WEIXIN;
+                    UMShareAPI mShareAPI = UMShareAPI.get(aty);
+                    boolean install = mShareAPI.isInstall(aty, platform);
+                    if (install) {
+                        rechargeMoney();
+                    } else {
+                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.no_install_wx));
+                    }
                 } else {
                     rechargeMoney();
                 }
@@ -190,6 +192,7 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
         }
         if (!StringUtils.isEmpty(mRechargeMoney)) {
             ((PayPresenter) presenter).pay(Session.getUserId(), PAY_ALI_TYPE, (Double.parseDouble(mRechargeMoney) * 100 + ""), Currency.RMB);
+//            ((PayPresenter) presenter).pay(Session.getUserId(), PAY_ALI_TYPE, (1 + ""), Currency.RMB);
         } else {
             SVProgressHUD.showInfoWithStatus(aty, "充值金额有误");
         }

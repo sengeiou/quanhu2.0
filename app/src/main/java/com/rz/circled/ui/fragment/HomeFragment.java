@@ -72,6 +72,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     DynamicAdapter dynamicAdapter;
     private CirclePresenter mPresenter;
     UserPermissionBean mUserPermissionBean;
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -225,6 +226,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onDestroyView() {
         super.onDestroyView();
         registerMsgUnreadInfoObserver(false);
+    }
+
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+        requestMsgUnRead();
     }
 
     /**

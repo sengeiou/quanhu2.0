@@ -164,7 +164,9 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
             View view = View.inflate(mActivity, R.layout.foot_view, null);
-            mListView.addFooterView(view);
+            if(mListView.getFooterViewsCount()<=0){
+                mListView.addFooterView(view);
+            }
         }
     }
 
