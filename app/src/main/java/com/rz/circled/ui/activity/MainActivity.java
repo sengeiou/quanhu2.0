@@ -36,6 +36,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
 import com.rz.common.utils.ClickCounter;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.httpapi.api.ApiNewsService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
@@ -149,9 +150,19 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     @Override
-    public void onTabChanged(String s) {
-        trackUser("入口", "导航栏", s);
-
+    public void onTabChanged(String tabId) {
+        trackUser("入口", "导航栏", tabId);
+        if (tabTags[0].equals(tabId)) {
+            StatusBarUtils.setDarkStatusIcon(this, true);
+        } else if (tabTags[1].equals(tabId)) {
+            StatusBarUtils.setDarkStatusIcon(this, true);
+        } else if (tabTags[2].equals(tabId)) {
+            StatusBarUtils.setDarkStatusIcon(this, true);
+        } else if (tabTags[3].equals(tabId)) {
+            StatusBarUtils.setDarkStatusIcon(this, true);
+        } else if (tabTags[4].equals(tabId)) {
+            StatusBarUtils.setDarkStatusIcon(this, false);
+        }
 
     }
 
