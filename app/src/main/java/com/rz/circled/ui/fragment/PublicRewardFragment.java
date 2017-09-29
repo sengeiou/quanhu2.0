@@ -96,13 +96,18 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
     }
 
     private void initRefresh() {
-        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
-                if(rewardBeanList.size()>0){
-                    ((PersonInfoPresenter) presenter).getMyreward(true, userid,Integer.valueOf(type), rewardBeanList.get(rewardBeanList.size()-1).getId());
+                if(direction == SwipyRefreshLayoutDirection.TOP){
+                    ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.valueOf(type) ,-100);
+                }else{
+                    if(rewardBeanList.size()>0){
+                        ((PersonInfoPresenter) presenter).getMyreward(true, userid,Integer.valueOf(type), rewardBeanList.get(rewardBeanList.size()-1).getId());
+                    }
+
                 }
 
                 mRefresh.setRefreshing(false);
