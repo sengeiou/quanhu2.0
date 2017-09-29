@@ -451,16 +451,16 @@ public class PayPresenter extends AbsPresenter {
                         List<ScoreBean> dataList = res.getData();
                         if (null != dataList && !dataList.isEmpty()) {
                             isDataError = false;
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mView.updateViewWithLoadMore(dataList, loadmore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             isDataError = true;
                         }
                         return;
                     } else {
                         if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                             isDataError = true;
                             return;
                         }
@@ -485,7 +485,7 @@ public class PayPresenter extends AbsPresenter {
      *
      * @param loadmore true 加载更多 false 刷新
      */
-    public void requestGetRewardList(final boolean loadmore) {
+    public void requestGetRewardList(final boolean loadmore,String rewardId) {
         if (!NetUtils.isNetworkConnected(activity)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
@@ -501,7 +501,7 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<RewardDetailBean>>> call = mUserService
-                .getMineRewardList(Session.getUserId(), Constants.PAGESIZE, "");
+                .getMineRewardList(Session.getUserId(), Constants.PAGESIZE, rewardId);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<RewardDetailBean>>>() {
             @Override
@@ -516,7 +516,7 @@ public class PayPresenter extends AbsPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mView.updateViewWithLoadMore(dataList, loadmore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             isDataError = true;
                         }
                         return;

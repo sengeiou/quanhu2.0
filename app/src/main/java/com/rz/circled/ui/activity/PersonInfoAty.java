@@ -20,12 +20,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
+import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.PersonInfoPresenter;
+import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.PopupView;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
 import com.rz.common.permission.AppSettingsDialog;
@@ -38,6 +44,9 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -82,6 +91,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
 
     public static final int REQUEST_CODE = 1;
     public static final int RESULT_CODE1 = 102;
+    protected IPresenter presenter;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -90,8 +100,10 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 case 1:
                     /**
                      * 保存图片
+                     * ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "sex", sex + "", "");
+                     * (String id, final String paramasType, final String paramas, String cityCode)
                      */
-//                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "headImg", (String) msg.obj);
+                    ((PersonInfoPresenter) presenter).savePersonInfo(Session.getUserId(), "headImg", (String) msg.obj,"");
                     break;
                 case 2:
                     break;
@@ -106,9 +118,10 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
 
         Session.setUserPicUrl(t.toString());
         if (Protect.checkLoadImageStatus(aty)) {
-            Glide.with(aty).load(Session.getUserPicUrl()).transform(new GlideRoundImage(aty)).
+            Glide.with(aty).load(Session.getUserPicUrl()).transform(new GlideCircleImage(aty)).
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
 
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
         }
     }
 
@@ -120,7 +133,8 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
     @Override
     public void initPresenter() {
         super.initPresenter();
-//        presenter = new PersonInfoPresenter();
+        presenter = new PersonInfoPresenter();
+        presenter.attachView(this);
     }
 
     @Override
@@ -434,11 +448,10 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 singatrue.setText(Session.getUser_signatrue());
                 desc.setText(Session.getUser_desc());
                 zhugeIdentify(Session.getUserId(), Session.getUser_sex(), Session.getUser_area());
+            } else if (resultCode == PictureManagerActivity.PUBLISH_RESULT_CAMERA) {
+                String path = data.getStringExtra("picture");
+                setHeadImage(path);
             }
-//            } else if (resultCode == PublishAty.PUBLISH_RESULT_CAMERA) {
-//                String path = data.getStringExtra("picture");
-//                setHeadImage(path);
-//            }
         }
     }
 
@@ -539,4 +552,14 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
     public void refreshPage() {
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
+            Glide.with(this).load("").transform(new GlideCircleImage(this)).
+                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(idPersonHeadImg);
+            return;
+        }
+    }
+
 }

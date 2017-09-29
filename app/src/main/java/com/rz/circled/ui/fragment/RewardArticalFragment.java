@@ -120,7 +120,7 @@ public class RewardArticalFragment extends BaseFragment {
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
                 if(rewardBeanList.size() > 0){
-                    ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,rewardBeanList.get(rewardBeanList.size() -1).getRewardId());
+                    ((PersonInfoPresenter) presenter).getMyReward(true, Session.getUserId(),type,rewardBeanList.get(rewardBeanList.size() -1).getRewardId());
                 }else{
                     ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,null);
                 }

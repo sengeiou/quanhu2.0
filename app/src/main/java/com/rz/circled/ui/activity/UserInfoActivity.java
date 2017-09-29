@@ -286,6 +286,7 @@ public class UserInfoActivity extends BaseActivity {
 
         if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
             addFriendLayout.setVisibility(View.GONE);
+            Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
         }
 
         if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
@@ -350,7 +351,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void setData(FriendInformationBean model) {
-        addFriendLayout.setVisibility(View.VISIBLE);
+
         if (model == null) {
             if (userId.equals(Session.getUserId())) {
                 Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
@@ -387,11 +388,14 @@ public class UserInfoActivity extends BaseActivity {
             }
 
             if (model.getRelation() == 0) {
+                addFriendLayout.setVisibility(View.VISIBLE);
                 //陌生人
                 addFriendBtn.setText("加好友");
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 
-            } else {  //好友
+            } else {
+                addFriendLayout.setVisibility(View.VISIBLE);
+                //好友
                 addFriendBtn.setText("聊天");
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 
