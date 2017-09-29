@@ -72,6 +72,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     DynamicAdapter dynamicAdapter;
     private CirclePresenter mPresenter;
     UserPermissionBean mUserPermissionBean;
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -119,11 +120,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 //跳发布
                 trackUser("入口", "首页", "发布按钮");
-                if (mUserPermissionBean==null)
+                if (mUserPermissionBean == null)
                     return;
                 if (!mUserPermissionBean.disTalk)
-                WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
-                else Toasty.info(mActivity,"您当前为禁言状态").show();
+                    WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
+                else Toasty.info(mActivity, "您当前为禁言状态").show();
             }
         });
 
@@ -179,9 +180,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        if (t!=null){
-            mUserPermissionBean= (UserPermissionBean) t;
-            Log.i(TAG, "updateView: "+mUserPermissionBean.disTalk);
+        if (t != null) {
+            mUserPermissionBean = (UserPermissionBean) t;
+            Log.i(TAG, "updateView: " + mUserPermissionBean.disTalk);
         }
     }
 
@@ -201,7 +202,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CircleDynamic circleDynamic = circleDynamicList.get(position-1);
+        CircleDynamic circleDynamic = circleDynamicList.get(position - 1);
 //        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535243033497698304")
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
@@ -254,6 +255,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onDestroyView() {
         super.onDestroyView();
         registerMsgUnreadInfoObserver(false);
+    }
+
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+        requestMsgUnRead();
     }
 
     /**

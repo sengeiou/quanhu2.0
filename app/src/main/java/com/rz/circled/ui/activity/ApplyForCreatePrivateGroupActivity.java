@@ -162,7 +162,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 PrivateGroupJoinWayChangeActivity.startJoinWay(mContext, price);
                 break;
             case R.id.btn_protocol:
-                CommonH5Activity.startCommonH5(mContext, "", BuildConfig.WebHomeBaseUrl + H5Address.PRIVATE_GROUP_CREATE_AGREEMENT);
+                CommonH5Activity.startCommonH5(mContext, "", H5Address.PRIVATE_GROUP_CREATE_AGREEMENT);
                 break;
         }
     }
