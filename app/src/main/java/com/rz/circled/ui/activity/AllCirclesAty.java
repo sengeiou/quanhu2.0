@@ -31,6 +31,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.rz.common.constant.Constants.LOVE_CIRCLE;
+
 /**
  * Created by Administrator on 2017/3/30/030.
  */
@@ -67,12 +69,14 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void initView() {
+        loveAllList= (List<CircleEntrModle>) getIntent().getSerializableExtra(LOVE_CIRCLE);
         initShowCircle();
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(QHApplication.getContext(), 4);
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(QHApplication.getContext(), 4);
         mRvAllcirclesPublished.setLayoutManager(gridLayoutManager1);
         mRvAllcirclesComingpublish.setLayoutManager(gridLayoutManager2);
         publishedAdapter = new PublishedAdapter(QHApplication.getContext());
+        delLove();
         //喜欢圈子列表点击
         publishedAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -128,6 +132,16 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         mRvAllcirclesComingpublish.setNestedScrollingEnabled(false);
     }
 
+    private void delLove() {
+        for (int i = 0; i < loveAllList.size(); i++) {
+            if (loveAllList.get(i).type==1){
+                loveList.add(loveAllList.get(i));
+            }
+        }
+        initShowCircle();
+        publishedAdapter.notifyDataSetChanged();
+    }
+
     private void initShowCircle() {
         if (loveList.size()==0){
             mTvNodata.setVisibility(View.VISIBLE);
@@ -149,7 +163,6 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         mPresenter.getCircleEntranceList(0);
-        mPresenter.getUserLoveCircle(Session.getUserId());
 
     }
 
@@ -186,13 +199,13 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                 for (int i = 0; i < onLines.size(); i++) {
                     boolean isfind = false;
                     for (int j = 0; j < loveList.size(); j++) {
-                    if (onLines.get(i).appId.equals(loveList.get(j).appId)){
-                        isfind = true;
-                        break;
-                    }
+                        if (onLines.get(i).appId.equals(loveList.get(j).appId)){
+                            isfind = true;
+                            break;
+                        }
                     }
                     if (!isfind) {
-                        noFollow.add(circleEntrModleList.get(i));
+                        noFollow.add(onLines.get(i));
                     }
                 }
                 onLines.clear();
@@ -203,20 +216,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    @Override
-    public <T> void updateView(T t) {
-        if (t != null) {
-            loveAllList = (List<CircleEntrModle>) t;
-            for (int i = 0; i < loveAllList.size(); i++) {
-                if (loveAllList.get(i).type==1){
-                    loveList.add(loveAllList.get(i));
-                }
-            }
-            initShowCircle();
-            publishedAdapter.notifyDataSetChanged();
-        }
 
-    }
 
     @Override
     protected void onDestroy() {

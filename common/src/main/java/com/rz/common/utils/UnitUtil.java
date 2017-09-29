@@ -134,9 +134,7 @@ public class UnitUtil {
 
 
     public static int checkBankLogo(String bankCode) {
-
         int logo = R.drawable.ic_height_bg;
-
         if (StringUtils.isEmpty(bankCode)) {
             return logo;
         }

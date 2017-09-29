@@ -24,6 +24,7 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.ProgressWebView;
 import com.rz.sgt.jsbridge.core.ParamsObject;
+import com.rz.sgt.jsbridge.core.ServerProxy;
 
 import java.util.Locale;
 
@@ -85,6 +86,7 @@ public class CommonH5Activity extends BaseActivity {
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setHorizontalScrollbarOverlay(false);
         mWebView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        mWebView.addJavascriptInterface(this, ServerProxy.JAVA_BRIDGE);
 
         mWebView.setDownloadListener(new DownloadListener() {
             @Override

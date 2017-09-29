@@ -71,7 +71,7 @@
                         android:textColor="@color/color_999999"
                         android:drawablePadding="@dimen/px14"
                         android:drawableRight="@drawable/from_circle"
-                        android:textSize="@dimen/font_40"/>
+                        android:textSize="@dimen/px38"/>
 
                     <TextView
                         android:id="@+id/tv_nick_name"
@@ -80,7 +80,7 @@
                         android:layout_alignParentLeft="true"
                         android:text="我是一只鸟"
                         android:textColor="@color/color_5db1ff"
-                        android:textSize="@dimen/font_44"/>
+                        android:textSize="@dimen/px38"/>
 
                 </RelativeLayout>
             </LinearLayout>
