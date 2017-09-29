@@ -31,30 +31,34 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyRewardFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer {
+public class UserRewardFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer {
 
     @BindView(R.id.refresh)
     SwipyRefreshLayout mRefresh;
     @BindView(R.id.lv_search_content)
     ListView lvReward;
 
-//    @BindView(R.id.reward_top_layout)
-//    LinearLayout rewardTopLayout;
+    @BindView(R.id.my_create_txt)
+    TextView createTxt;
+
+    @BindView(R.id.answer_txt)
+    TextView answerTxt;
+
+    @BindView(R.id.reward_top_layout)
+    LinearLayout rewardTopLayout;
 
     private RewardAdapter rewardAdapter;
     private List<MyRewardBean> rewardBeanList = new ArrayList<>();
     protected IPresenter presenter;
 
-//    private View headView;
-//    private TextView createTxt;
-//    private TextView answerTxt;
     private String type;
     private String userid = "";
 
-    public static MyRewardFragment newInstance(String type) {
-        MyRewardFragment frg = new MyRewardFragment();
+    public static UserRewardFragment newInstance(String type, String userid) {
+        UserRewardFragment frg = new UserRewardFragment();
         Bundle args = new Bundle();
         args.putString(IntentKey.KEY_ID,type);
+        args.putString(IntentKey.KEY_TYPE,userid);
         frg.setArguments(args);
 
         return frg;
@@ -64,12 +68,52 @@ public class MyRewardFragment extends BaseFragment implements ScrollableHelper.S
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.fragment_my_reward, null);
+        return inflater.inflate(R.layout.fragment_user_reward, null);
     }
 
     @Override
     public void initView() {
         type = getArguments().getString(IntentKey.KEY_ID);
+        userid = getArguments().getString(IntentKey.KEY_TYPE);
+
+        rewardTopLayout.setVisibility(View.VISIBLE);
+        createTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createTxt.setTextColor(getResources().getColor(R.color.tab_blue));
+                createTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
+
+                answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
+                answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
+                ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
+
+                type = "0" ;
+            }
+        });
+
+        answerTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createTxt.setTextColor(getResources().getColor(R.color.color_999999));
+                createTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
+
+                answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
+                answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
+
+                ((PersonInfoPresenter) presenter).getMyreward(false, userid,1 ,-100);
+
+                type = "1" ;
+            }
+        });
+
+
+        if(!Session.getUserId().equals(userid)){
+            createTxt.setText("他发起的悬赏");
+            answerTxt.setText("他回答的悬赏");
+        }else{
+            createTxt.setText("我发起的悬赏");
+            answerTxt.setText("我回答的悬赏");
+        }
 
         rewardAdapter = new RewardAdapter(getActivity(), R.layout.item_reward);
         rewardAdapter.setData(rewardBeanList);
@@ -88,7 +132,7 @@ public class MyRewardFragment extends BaseFragment implements ScrollableHelper.S
     public void initData() {
         initRefresh();
 
-        ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),Integer.parseInt(type) ,-100);
+        ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.valueOf(type) ,-100);
 
     }
 
@@ -99,7 +143,7 @@ public class MyRewardFragment extends BaseFragment implements ScrollableHelper.S
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
                 if(rewardBeanList.size()>0){
-                    ((PersonInfoPresenter) presenter).getMyreward(true, Session.getUserId(),Integer.parseInt(type), rewardBeanList.get(rewardBeanList.size()-1).getId());
+                    ((PersonInfoPresenter) presenter).getMyreward(true, userid,Integer.valueOf(type), rewardBeanList.get(rewardBeanList.size()-1).getId());
                 }
 
                 mRefresh.setRefreshing(false);
@@ -148,7 +192,7 @@ public class MyRewardFragment extends BaseFragment implements ScrollableHelper.S
 
     @Override
     public void refreshPage() {
-        ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.parseInt(type) ,-100);
+        ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.valueOf(type) ,-100);
     }
 
     @Override

@@ -1161,7 +1161,7 @@ public interface ApiService {
             @Field("custId") String custId,
             @Field("limit") int limit,
             @Field("offerId") int offerId,
-            @Field("type") int type
+            @Field("type") int type         //type == 0 我发布的   type ==1 我回答的
 
 
     );

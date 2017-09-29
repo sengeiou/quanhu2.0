@@ -139,7 +139,7 @@ public class UploadPicActivity extends BaseActivity {
                 Toasty.info(mContext, getString(R.string.upload_pic_fail), Toast.LENGTH_SHORT, true).show();
             }
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.camera_permissions), RC_CAMERA_PERM, Manifest.permission.CAMERA);
+            EasyPermissions.requestPermissions(this, getString(R.string.camera_sd_permissions_run), RC_CAMERA_PERM, perms);
         }
     }
 

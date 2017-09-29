@@ -37,8 +37,12 @@ public class CommonDialog extends Dialog implements View.OnClickListener {
     }
 
     public void showDialog(int stringId, OnCommonDialogConfirmListener confirmListener) {
+        showDialog(mContext.getString(stringId), confirmListener);
+    }
+
+    public void showDialog(String string, OnCommonDialogConfirmListener confirmListener) {
         this.confirmListener = confirmListener;
-        tvMessage.setText(stringId);
+        tvMessage.setText(string);
         closeDialog();
         show();
         setContentView(rootView);

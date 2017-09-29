@@ -14,6 +14,9 @@ public class Constants {
     public static final String FOLLOW_ID = "FOLLOW_ID";
     public static final String HOME_FRAGMENT_CACHE = "HOME_FRAGMENT_CACHE";
     public static final String BANNER_CACHE = "BANNER_CACHE";
+    public static final String FIND_LOVE_CACHE = "FIND_LOVE_CACHE";
+    public static final String FIND_FAMOUS_CACHE = "FIND_FAMOUS_CACHE";
+    public static final String FIND_SUBJECT_CACHE = "FIND_SUBJECT_CACHE";
     //首次进app跳发现页
     public static final String FIRST_BLOOD = "first_blood";
 
@@ -40,6 +43,8 @@ public class Constants {
      * 每页新闻内容的数据是20条
      */
     public static final int PAGESIZE = 20;
+
+    public static final int PAGESIZE_10 = 10;
 
     public static final int PAGESIZE_MAX = 100;
     /**

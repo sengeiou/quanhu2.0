@@ -74,6 +74,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     //处理缓存
     private EntityCache<CircleDynamic> mCirclesCache;
+    private EntityCache<HotSubjectModel> mSubjectCache;
+    private EntityCache<FamousModel> mFamousCache;
+    private EntityCache<EntitiesBean> mEntitiesBeanCache;
     private List<CircleDynamic> currentData = new ArrayList<>();
 
     @Override
@@ -91,6 +94,10 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         this.mView = view;
         mContext = getContext(mView);
         mCirclesCache = new EntityCache<CircleDynamic>(mContext, CircleDynamic.class);
+        mSubjectCache = new EntityCache<HotSubjectModel>(mContext, HotSubjectModel.class);
+        mFamousCache = new EntityCache<FamousModel>(mContext, FamousModel.class);
+        mEntitiesBeanCache = new EntityCache<EntitiesBean>(mContext, EntitiesBean.class);
+
 //        mCircleService = Http.getCircleService(mContext);
         mUserService = Http.getApiService(ApiService.class);
         mYylService = Http.getApiService(ApiYylService.class);
@@ -358,6 +365,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     public void onNext(ResponseData<List<HotSubjectModel>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<HotSubjectModel> data = res.getData();
+                            mSubjectCache.putListEntity(data);
                             mView.updateViewWithFlag(data, stats);
                         } else {
                             HandleRetCode.handler(mContext, res);
@@ -428,6 +436,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     public void onNext(ResponseData<ActivityBean> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<EntitiesBean> entities = res.getData().entities;
+                            mEntitiesBeanCache.putListEntity(entities);
                             mView.updateViewWithFlag(entities, state);
                         } else {
                             HandleRetCode.handler(mContext, res);
@@ -455,6 +464,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     ResponseData res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         List<FamousModel> model = (List<FamousModel>) res.getData();
+                        mFamousCache.putListEntity(model);
                         mView.updateViewWithFlag(model, stats);
 
                     }

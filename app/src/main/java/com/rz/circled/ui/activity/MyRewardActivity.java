@@ -78,11 +78,11 @@ public class MyRewardActivity extends BaseActivity {
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
             case USER_CREATE_PRIVATE_GROUP_NUM:
-                mDataList.set(0, String.format(getString(R.string.my_create_reward), (int) event.getData()));
+                mDataList.set(0, String.format(getString(R.string.my_create_reward)));
                 groupNavigatorAdapter.notifyDataSetChanged();
                 break;
             case USER_JOIN_PRIVATE_GROUP_NUM:
-                mDataList.set(1, String.format(getString(R.string.my_answer_reward), (int) event.getData()));
+                mDataList.set(1, String.format(getString(R.string.my_answer_reward)));
                 groupNavigatorAdapter.notifyDataSetChanged();
                 break;
         }
@@ -90,14 +90,14 @@ public class MyRewardActivity extends BaseActivity {
 
     private void initTabTitle() {
         mDataList = new ArrayList<>();
-        mDataList.add(String.format(getString(R.string.my_create_reward), 0));
-        mDataList.add(String.format(getString(R.string.my_answer_reward), 0));
+        mDataList.add(String.format(getString(R.string.my_create_reward)));
+        mDataList.add(String.format(getString(R.string.my_answer_reward)));
     }
 
     private void initViewpagerGroup() {
         List<Fragment> mFragments = new ArrayList<>();
-        BaseFragment privateGroupJoinByMyselfFragment = MyRewardFragment.newInstance("2", Session.getUserId());
-        BaseFragment privateGroupCreateByMyselfFragment = MyRewardFragment.newInstance("2",Session.getUserId());
+        BaseFragment privateGroupJoinByMyselfFragment = MyRewardFragment.newInstance("1");
+        BaseFragment privateGroupCreateByMyselfFragment = MyRewardFragment.newInstance("0");
         mFragments.add(privateGroupCreateByMyselfFragment);
         mFragments.add(privateGroupJoinByMyselfFragment);
         viewpagerGroup.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));

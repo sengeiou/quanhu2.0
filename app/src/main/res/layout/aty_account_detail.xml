@@ -41,10 +41,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
        >
-  <ListView
-      android:id="@+id/lv_detail"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"></ListView>
-    ></com.rz.circled.widget.SwipyRefreshLayoutBanner>
+      <ListView
+          android:id="@+id/lv_detail"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"></ListView>
+        >
+
+    </com.rz.circled.widget.SwipyRefreshLayoutBanner>
 
 </LinearLayout>

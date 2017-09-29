@@ -3,6 +3,7 @@ package com.rz.circled.presenter.impl;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
@@ -48,8 +49,12 @@ public class PersonInfoPresenter extends GeneralPresenter {
     //每页分页标记
     private int start = 0;
 
+    private int startbuy = 1;
+
     //记录每页分页标记
     private int record_start = 0;
+
+    private int record_start_buy = 1;
 
     //是否没有数据
     private boolean isNoData;
@@ -232,7 +237,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if(loadMore == false){
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_article_txt));
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
@@ -311,7 +316,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if(loadMore == false){
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_article_txt));
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
@@ -349,7 +354,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
      * 获取我的悬赏
      */
 
-    public void getMyreward(final boolean loadMore, String custId, int type) {
+    public void getMyreward(final boolean loadMore, String custId, int type,int offerId) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
@@ -362,15 +367,24 @@ public class PersonInfoPresenter extends GeneralPresenter {
             if (isNoData) {
                 start = record_start;
             } else {
-                start += Constants.PAGESIZE;
+                start += Constants.PAGESIZE_10;
             }
             record_start = start;
-        }
 
-        Call<ResponseData<List<MyRewardBean>>> call = mUserService.getRewardNoList(
-                custId,
-                Constants.PAGESIZE,
-                type);
+        }
+        Call<ResponseData<List<MyRewardBean>>> call = null;
+        if(offerId == -100){
+            call = mUserService.getRewardNoList(
+                    custId,
+                    Constants.PAGESIZE_10,
+                    type);
+        }else{
+            call = mUserService.getRewardList(
+                    custId,
+                    Constants.PAGESIZE_10,
+                    offerId,
+                    type);
+        }
 
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<MyRewardBean>>>() {
@@ -389,7 +403,8 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if (loadMore == false) {
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_reward_txt));
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
@@ -434,20 +449,20 @@ public class PersonInfoPresenter extends GeneralPresenter {
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
-            start = 0;
+            startbuy = 1;
         } else {
             if (isNoData) {
-                start = record_start;
+                startbuy = record_start_buy;
             } else {
-                start += Constants.PAGESIZE;
+                startbuy += Constants.PAGESIZE_10;
             }
-            record_start = start;
+            record_start_buy = startbuy;
         }
 
         Call<ResponseData<BuyingBean>> call = mUserService.getMyBuying(
                 custId,
-                start,
-                Constants.PAGESIZE);
+                startbuy,
+                10);
 
 
         CallManager.add(call);
@@ -467,7 +482,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if(loadMore == false){
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.bug_empty_txt));
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
@@ -504,7 +519,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
      * 获取我的打赏作品
      */
 
-    public void getMyReward(final boolean loadMore, String custId,int isReward,String rewardId){
+    public void getMyReward(final boolean loadMore, String custId, final int isReward, String rewardId){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
@@ -517,7 +532,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
             if (isNoData) {
                 start = record_start;
             } else {
-                start += Constants.PAGESIZE;
+                start += Constants.PAGESIZE_10;
             }
             record_start = start;
         }
@@ -546,7 +561,11 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if(loadMore == false){
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                if(isReward == 0){
+                                    mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.raward_empty_txt));
+                                }else{
+                                    mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.rewarded_empty_txt));
+                                }
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
@@ -573,7 +592,6 @@ public class PersonInfoPresenter extends GeneralPresenter {
             @Override
             public void onFailure(Call<ResponseData<List<MineRewardBean>>> call, Throwable t) {
                 super.onFailure(call, t);
-                //发送验证码失败
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
             }
         });
