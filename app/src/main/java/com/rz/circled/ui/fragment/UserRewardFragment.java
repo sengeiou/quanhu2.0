@@ -2,9 +2,13 @@ package com.rz.circled.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,14 +22,21 @@ import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.MyRewardBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/9/14 0014.
@@ -33,31 +44,20 @@ import butterknife.BindView;
 
 public class UserRewardFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer {
 
-    @BindView(R.id.refresh)
-    SwipyRefreshLayout mRefresh;
-    @BindView(R.id.lv_search_content)
-    ListView lvReward;
-
     @BindView(R.id.my_create_txt)
-    TextView createTxt;
-
+    TextView myCreateTxt;
+    @BindView(R.id.fragment1)
+    FrameLayout fragment;
     @BindView(R.id.answer_txt)
     TextView answerTxt;
 
-    @BindView(R.id.reward_top_layout)
-    LinearLayout rewardTopLayout;
+    private List<Fragment> mFragments = new ArrayList<>();
 
-    private RewardAdapter rewardAdapter;
-    private List<MyRewardBean> rewardBeanList = new ArrayList<>();
-    protected IPresenter presenter;
+    private String userId = "";
 
-    private String type;
-    private String userid = "";
-
-    public static UserRewardFragment newInstance(String type, String userid) {
+    public static UserRewardFragment newInstance(String userid) {
         UserRewardFragment frg = new UserRewardFragment();
         Bundle args = new Bundle();
-        args.putString(IntentKey.KEY_ID,type);
         args.putString(IntentKey.KEY_TYPE,userid);
         frg.setArguments(args);
 
@@ -65,138 +65,108 @@ public class UserRewardFragment extends BaseFragment implements ScrollableHelper
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        userId = getArguments().getString(IntentKey.KEY_TYPE);
+    }
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.fragment_user_reward, null);
+        return inflater.inflate(R.layout.fragment_my_user_reward, null);
     }
 
     @Override
     public void initView() {
-        type = getArguments().getString(IntentKey.KEY_ID);
-        userid = getArguments().getString(IntentKey.KEY_TYPE);
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
 
-        rewardTopLayout.setVisibility(View.VISIBLE);
-        createTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createTxt.setTextColor(getResources().getColor(R.color.tab_blue));
-                createTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
-
-                answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
-                answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
-                ((PersonInfoPresenter) presenter).getMyreward(false, userid,0 ,-100);
-
-                type = "0" ;
-            }
-        });
-
-        answerTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createTxt.setTextColor(getResources().getColor(R.color.color_999999));
-                createTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
-
-                answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
-                answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
-
-                ((PersonInfoPresenter) presenter).getMyreward(false, userid,1 ,-100);
-
-                type = "1" ;
-            }
-        });
-
-
-        if(!Session.getUserId().equals(userid)){
-            createTxt.setText("他发起的悬赏");
+        if(!Session.getUserId().equals(userId)){
+            myCreateTxt.setText("他发起的悬赏");
             answerTxt.setText("他回答的悬赏");
         }else{
-            createTxt.setText("我发起的悬赏");
+            myCreateTxt.setText("我发起的悬赏");
             answerTxt.setText("我回答的悬赏");
         }
-
-        rewardAdapter = new RewardAdapter(getActivity(), R.layout.item_reward);
-        rewardAdapter.setData(rewardBeanList);
-        lvReward.setAdapter(rewardAdapter);
-
-        lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getId()+"");
-            }
-        });
-
+        initFragments();
     }
 
     @Override
     public void initData() {
-        initRefresh();
-
-        ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.valueOf(type) ,-100);
-
-    }
-
-    private void initRefresh() {
-        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
-        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh(SwipyRefreshLayoutDirection direction) {
-
-                if(rewardBeanList.size()>0){
-                    ((PersonInfoPresenter) presenter).getMyreward(true, userid,Integer.valueOf(type), rewardBeanList.get(rewardBeanList.size()-1).getId());
-                }
-
-                mRefresh.setRefreshing(false);
-            }
-        });
+        switchPages(0);
     }
 
     @Override
-    public void initPresenter() {
-        super.initPresenter();
-        presenter = new PersonInfoPresenter();
-        presenter.attachView(this);
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
-        super.updateViewWithLoadMore(t, loadMore);
-        if (t != null) {
-            List<MyRewardBean> mDatas = (List<MyRewardBean>) t;
-            if (null != mDatas && !mDatas.isEmpty()) {
-                if (!loadMore) {
-                    rewardBeanList.clear();
-                }
-                rewardBeanList.addAll(mDatas);
-                rewardAdapter.setData(rewardBeanList);
-                rewardAdapter.notifyDataSetChanged();
-            } else {
-                if (!loadMore) {
-                    rewardBeanList.clear();
-                }
-                rewardAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
-    protected boolean needLoadingView() {
-        return true;
-    }
-
-    @Override
-    protected boolean hasDataInPage() {
-        return rewardAdapter != null && rewardAdapter.getCount() != 0;
+    @Subscribe
+    public void eventBus(BaseEvent event) {
     }
 
     @Override
     public void refreshPage() {
-        ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.valueOf(type) ,-100);
+    }
+
+    @OnClick({R.id.my_create_txt, R.id.answer_txt})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.my_create_txt:
+                myCreateTxt.setTextColor(getResources().getColor(R.color.tab_blue));
+                myCreateTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
+
+                answerTxt.setTextColor(getResources().getColor(R.color.color_999999));
+                answerTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
+
+                switchPages(0);
+                break;
+            case R.id.answer_txt:
+
+                myCreateTxt.setTextColor(getResources().getColor(R.color.color_999999));
+                myCreateTxt.setBackgroundResource(R.drawable.shape_white_bg_stroke);
+
+                answerTxt.setTextColor(getResources().getColor(R.color.tab_blue));
+                answerTxt.setBackgroundResource(R.drawable.shape_blue_bg_stroke);
+                switchPages(1);
+                break;
+        }
+    }
+
+    private void initFragments() {
+        BaseFragment publicRewardFragment = PublicRewardFragment.newInstance("0", userId);
+        BaseFragment answerRewardFragment = PublicRewardFragment.newInstance("1", userId);
+        mFragments.add(publicRewardFragment);
+        mFragments.add(answerRewardFragment);
+    }
+
+    private void switchPages(int index) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment;
+        for (int i = 0, j = mFragments.size(); i < j; i++) {
+            if (i == index) {
+                continue;
+            }
+            fragment = mFragments.get(i);
+            if (fragment.isAdded()) {
+                fragmentTransaction.hide(fragment);
+            }
+        }
+        fragment = mFragments.get(index);
+        if (fragment.isAdded()) {
+            fragmentTransaction.show(fragment);
+        } else {
+            fragmentTransaction.add(R.id.fragment1, fragment);
+        }
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
     public View getScrollableView() {
-        return lvReward;
+        return null;
     }
 }

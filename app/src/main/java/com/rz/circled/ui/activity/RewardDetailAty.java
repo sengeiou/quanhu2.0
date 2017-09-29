@@ -133,7 +133,7 @@ public class RewardDetailAty extends BaseActivity {
     @Override
     public void initData() {
 
-        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -169,6 +169,6 @@ public class RewardDetailAty extends BaseActivity {
 
     @Override
     public void refreshPage() {
-
+        mPresenter.requestGetRewardList(false);
     }
 }
