@@ -274,7 +274,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
      * 获取个人中心的文章
      */
 
-    public void getPersionArticle(final boolean loadMore, String custId, String resourceType){
+    public void getPersionArticle(final boolean loadMore, final String custId, String resourceType){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
@@ -316,7 +316,12 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if(loadMore == false){
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_article_txt));
+                                if(Session.getUserId().equals(custId)){
+                                    mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_article_txt));
+                                }else{
+                                    mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.ta_article_txt));
+                                }
+
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }

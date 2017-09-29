@@ -514,10 +514,10 @@ public class PayPresenter extends AbsPresenter {
                         List<RewardDetailBean> dataList = res.getData();
                         if (null != dataList && !dataList.isEmpty()) {
                             isDataError = false;
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mView.updateViewWithLoadMore(dataList, loadmore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             isDataError = true;
                         }
                         return;

@@ -168,6 +168,6 @@ public class SearchPrivateCircleFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION_CIRCLE);
     }
 }

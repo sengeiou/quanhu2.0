@@ -184,6 +184,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             if (res.getRet()==ReturnCode.SUCCESS){
                                 UserPermissionBean data = res.getData();
                                 mView.updateView(data);
+                            }else{
+                                HandleRetCode.handler(mContext, res);
                             }
 
                         }
@@ -249,6 +251,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                                 Log.d("test", "cacheData failed " + e.getMessage());
                             }
                             return;
+                        }else {
+                            HandleRetCode.handler(mContext, res);
                         }
 
                     }

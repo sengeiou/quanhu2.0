@@ -1,6 +1,7 @@
 package com.rz.circled.ui.fragment;
 
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -135,6 +136,7 @@ public class SearchRewardFragment extends BaseFragment {
                 rewardAdapter.setKeyWord(keyWord);
                 rewardAdapter.setData(rewardBeanList);
                 rewardAdapter.notifyDataSetChanged();
+
             } else {
                 if (!loadMore) {
                     rewardBeanList.clear();
@@ -185,6 +187,6 @@ public class SearchRewardFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
     }
 }

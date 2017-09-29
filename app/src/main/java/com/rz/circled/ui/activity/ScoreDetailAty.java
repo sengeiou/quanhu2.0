@@ -12,10 +12,13 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.circled.widget.CommonAdapter;
+import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
@@ -41,6 +44,8 @@ public class ScoreDetailAty extends BaseActivity {
     TextView mIncome;
     @BindView(R.id.produce_type)
     TextView mProduceType;
+    @BindView(R.id.refresh)
+    SwipyRefreshLayoutBanner mRefresh;
 
     private CommonAdapter<ScoreBean> mAdapter;
 
@@ -119,6 +124,15 @@ public class ScoreDetailAty extends BaseActivity {
     @Override
     public void initData() {
         mPresenter.requestGetScoreList(false);
+
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
+                mPresenter.requestGetRewardList(direction != SwipyRefreshLayoutDirection.TOP);
+                mRefresh.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -148,6 +162,6 @@ public class ScoreDetailAty extends BaseActivity {
 
     @Override
     public void refreshPage() {
-
+        mPresenter.requestGetScoreList(false);
     }
 }

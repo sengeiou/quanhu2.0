@@ -6,18 +6,12 @@
               android:orientation="vertical"
     >
 
-
-    <include
-        layout="@layout/mine_top_layout"
-        />
-
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/px20"
         >
-
 
         <ListView
             android:id="@+id/lv_search_content"
