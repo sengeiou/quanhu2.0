@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.circled.widget.MyGridView;
 import com.rz.common.adapter.CommonAdapter;
@@ -165,7 +166,7 @@ public class RechargeMoneyAty extends BaseActivity implements AdapterView.OnItem
     //记录返回界面的状态
     @Subscribe
     public void onRefreshPageStatus(BaseEvent event) {
-        if (TextUtils.equals("0", event.info)) {
+        if (EventConstant.PAY_RECHARGE_SUCCESS == event.getType()) {
             //支付成功
             setResult(IntentCode.RechargeMoney.RECHARGE_RESULT_CODE);
             callResult(true);

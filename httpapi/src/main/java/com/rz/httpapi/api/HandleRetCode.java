@@ -14,7 +14,7 @@ import com.rz.httpapi.constans.ReturnCode;
 public class HandleRetCode {
 
     public static boolean handler(final Context context, ResponseData responseData) {
-        if (responseData.getRet() == ReturnCode.FAIL_REMIND_1) {
+        if (responseData.getRet() == ReturnCode.FAIL_REMIND_1||responseData.getRet() == ReturnCode.FAIL_REMIND_2) {
             if (context instanceof Activity) {
                 if (TextUtils.isEmpty(responseData.getMsg())) return false;
                 Toast.makeText(context, responseData.getMsg(), Toast.LENGTH_SHORT).show();

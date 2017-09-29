@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.pay.WXPayResult;
 import com.rz.circled.presenter.impl.PayPresenter;
 import com.rz.common.cache.preference.Session;
@@ -101,9 +102,7 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        BaseEvent event = new BaseEvent();
-                        event.info = "0";
-                        EventBus.getDefault().post(event);
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.PAY_RECHARGE_SUCCESS));
                         finish();
                     }
                 }, 2000);
@@ -133,9 +132,7 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        BaseEvent event = new BaseEvent();
-                        event.info = "0";
-                        EventBus.getDefault().post(event);
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.PAY_RECHARGE_SUCCESS));
                         finish();
                     }
                 }, 2000);

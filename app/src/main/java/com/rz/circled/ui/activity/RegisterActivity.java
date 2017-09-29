@@ -206,7 +206,7 @@ public class RegisterActivity extends BaseActivity {
 //                    hashMap.put("region", amapLocation.getDistrict());
 //                    hashMap.put("cityCode", amapLocation.getAdCode());
 
-                    location = amapLocation.getProvince() +" " + amapLocation.getCity();
+                    location = amapLocation.getProvince() + " " + amapLocation.getCity();
                     cityCode = amapLocation.getAdCode();
                     if (cityCode.length() == 6) {
                         cityCode = cityCode.substring(0, 4) + "00";
@@ -481,7 +481,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
-        if(flag == 200){
+        if (flag == 200) {
             if (null != mc) {
                 mc.cancel();
                 mc.onFinish();
@@ -528,16 +528,11 @@ public class RegisterActivity extends BaseActivity {
 //                    intent.putExtra(IntentKey.General.KEY_MODEL, model);
 //                    setResult(IntentCode.Register.REGISTER_RESULT_ONLY_CODE, intent);
                     NotifyEvent notifyEvent = new NotifyEvent("register", model, true);
-                    trackUser("注册登录","注册成功","");
+                    trackUser("注册登录", "注册成功", "");
                     EventBus.getDefault().post(notifyEvent);
                     Session.setCityCode(cityCode);
                     finish();
                 }
-            } else {
-                BaseEvent event = new BaseEvent();
-                event.info = "1";
-                EventBus.getDefault().post(event);
-                finish();
             }
         }
     }

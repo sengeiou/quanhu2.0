@@ -108,7 +108,7 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(final BaseEvent event) {
-        if (FriendPresenter1.FRIEND_INVITE_EVENT.equals(event.info)) {
+        if (FriendPresenter1.FRIEND_INVITE_EVENT == event.getType()) {
             if (dialog != null && dialog.isShowing())
                 return;
 
@@ -139,9 +139,9 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
                     dialog.dismiss();
                 }
             });
-        } else if (FriendPresenter1.FRIEND_CONTACTS_EVENT.equals(event.info)) {
+        } else if (FriendPresenter1.FRIEND_CONTACTS_EVENT == event.getType()) {
             ((FriendPresenter1) presenter).getCacheFriends(true);
-        } else if (FriendPresenter1.FRIEND_BACKBROUND_EVENT.equals(event.info)) {
+        } else if (FriendPresenter1.FRIEND_BACKBROUND_EVENT == event.getType()) {
             Log.e("tag", "通讯录刷新");
             new Handler().postDelayed(new Runnable() {
                 @Override
