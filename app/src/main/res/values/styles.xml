@@ -146,7 +146,7 @@
         <item name="android:layout_width">10dp</item>
     </style>
 
-    <style name="GridPasswordView" />
+    <style name="GridPasswordView"/>
 
     <style name="GridPasswordView.TextView">
         <item name="android:layout_width">0dp</item>
