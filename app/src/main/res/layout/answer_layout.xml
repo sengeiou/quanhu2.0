@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="@dimen/font_34"
-                    android:textSize="@dimen/font_40"
+                    android:textSize="@dimen/px38"
                     android:textColor="@color/color_999999"
                     android:text="圈子"
                     android:gravity="center"
