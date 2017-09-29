@@ -77,6 +77,7 @@ public interface CommonCode {
         int TYPE_USER_UPDATE = 300005;
         int TYPE_EMPTY_COUNT = 300006;
         int TYPE_SAVE = 300007;
+        int TYPE_ADD_LAYOUT = 300008;
     }
 
     /**

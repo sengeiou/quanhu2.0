@@ -19,6 +19,8 @@ import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.utils.ACache;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -59,6 +61,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         setRefreshListener(this);
         initView();
         initData();
+
         return rootView;
     }
 
@@ -271,6 +274,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         super.onDestroyView();
         mLoadView = null;
         unbinder.unbind();
+
     }
 
 

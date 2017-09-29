@@ -44,6 +44,7 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.yryz.yunxinim.session.SessionHelper;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -168,7 +169,7 @@ public class UserInfoActivity extends BaseActivity {
         } else {   //他人中心
             //判断他人与自己的关系（是否添加好友）
             editImg.setVisibility(View.GONE);
-            addFriendLayout.setVisibility(View.VISIBLE);
+//            addFriendLayout.setVisibility(View.VISIBLE);
             ((FriendPresenter1) friendPresenter).getFriendInfoDetail(userId);
 
         }
@@ -222,7 +223,7 @@ public class UserInfoActivity extends BaseActivity {
 
     private void initFragment() {
         BaseFragment fragment = MyArticleFragment.newInstance(userId);
-        BaseFragment fragment1 = UserRewardFragment.newInstance("0",userId);
+        BaseFragment fragment1 = UserRewardFragment.newInstance(userId);
         BaseFragment fragment2 = MyCircleFragment.newInstance(userId);
         BaseFragment fragment3 = MyActivityFragment.newInstance(userId);
 
@@ -384,8 +385,12 @@ public class UserInfoActivity extends BaseActivity {
             if (model.getRelation() == 0) {
                 //陌生人
                 addFriendBtn.setText("加好友");
+                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
+
             } else {  //好友
                 addFriendBtn.setText("聊天");
+                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
+
             }
 //            userRole.setText(model.getCustRole());
 
