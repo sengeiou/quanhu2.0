@@ -163,7 +163,9 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
             View view = View.inflate(mActivity, R.layout.foot_view, null);
-            lvReward.addFooterView(view);
+            if(lvReward.getFooterViewsCount()<=0){
+                lvReward.addFooterView(view);
+            }
         }
     }
 
