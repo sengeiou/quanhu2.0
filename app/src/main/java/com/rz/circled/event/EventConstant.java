@@ -23,8 +23,11 @@ public class EventConstant {
 
     public static final int USER_AVATAR_REFUSE = 200013;
     public static final int USER_BE_FROZEN = 200014;
+    public static final int PAY_RECHARGE_SUCCESS = 200015;
+    public static final int SWITCH_SHARE_SUCCESS = 200017;
 
     public static final int BOUND_PHONE_FAIL = 200036;
 
+    public static final int UPDATE_LOVE_CIRCLE = 200101;
 
 }

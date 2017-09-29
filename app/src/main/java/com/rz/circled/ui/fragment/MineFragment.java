@@ -204,7 +204,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         signLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(signBean!= null && !signBean.isSignFlag()){
+                if (signBean != null && !signBean.isSignFlag()) {
                     ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
                 }
             }
@@ -893,15 +893,15 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             mUnread.setVisibility(View.GONE);
         }
         int unreadNum = (TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum()));
-        if (NIMClient.getStatus() == StatusCode.LOGINED && Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
-            mModelList.get(0).setContacts(true);
-            mModelList.get(0).setmFocusNum(String.valueOf(unreadNum));
+        if (Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
+            mModelList.get(6).setContacts(true);
+            mModelList.get(6).setmFocusNum(String.valueOf(unreadNum));
             adapter.notifyDataSetChanged();
         } else {
             if (mModelList == null)
                 return;
-            mModelList.get(0).setContacts(false);
-            mModelList.get(0).setmFocusNum("");
+            mModelList.get(6).setContacts(false);
+            mModelList.get(6).setmFocusNum("");
             adapter.notifyDataSetChanged();
         }
     }

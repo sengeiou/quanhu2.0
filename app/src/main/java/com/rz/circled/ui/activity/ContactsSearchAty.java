@@ -262,9 +262,9 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(final BaseEvent event) {
-        if (FriendPresenter1.FRIEND_INVITE_EVENT.equals(event.info)) {
+        if (FriendPresenter1.FRIEND_INVITE_EVENT == event.getType()) {
             finish();
-        } else if (FriendPresenter1.FRIEND_CONTACTS_EVENT.equals(event.info)) {
+        } else if (FriendPresenter1.FRIEND_CONTACTS_EVENT == event.getType()) {
 //            FriendInfoAty.newFrindInfo(aty, ((FriendRelationModel) event.data).getCustId());
             finish();
         }

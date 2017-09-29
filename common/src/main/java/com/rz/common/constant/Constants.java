@@ -12,7 +12,6 @@ public class Constants {
      */
     public static final String FOLLOW = "FOLLOW";
     public static final String FOLLOW_ID = "FOLLOW_ID";
-    public static final String UPDATE_LOVE_CIRCLE = "UPDATE_LOVE_CIRCLE";
     public static final String HOME_FRAGMENT_CACHE = "HOME_FRAGMENT_CACHE";
     public static final String BANNER_CACHE = "BANNER_CACHE";
     public static final String FIND_LOVE_CACHE = "FIND_LOVE_CACHE";
@@ -294,8 +293,5 @@ public class Constants {
     public static final String LOGIN_IN_SUCCESS = "login_in_success";
 
     public static final String LOGIN_OUT_SUCCESS = "login_out_success";
-
-    public static final String SWITCH_SHARE_SUCCESS = "switch_share_success";
-
 
 }

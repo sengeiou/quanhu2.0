@@ -64,37 +64,37 @@ public class FriendPresenter1 extends GeneralPresenter {
     /**
      *  通知好友页面刷新
      */
-    public static final String FRIEND_EVENT = "5";
+    public static final int FRIEND_EVENT = 5;
     /**
      *  通知好友申请页面刷新
      */
-    public static final String FRIEND_APPLY_EVENT = "4";
+    public static final int FRIEND_APPLY_EVENT = 4;
     /**
      * 详情页面关注成功及取消关注
      */
-    public static final String CANCEL_FRIEND_EVENT = "7";
+    public static final int CANCEL_FRIEND_EVENT = 7;
     /**
      * 举报
      */
-    public static final String REPORT_EVENT = "11";
+    public static final int REPORT_EVENT = 11;
     /**
      * 手机通讯录邀请
      */
-    public static final String FRIEND_INVITE_EVENT = "12";
+    public static final int FRIEND_INVITE_EVENT = 12;
     /**
      * 后台插入数据标示
      */
-    public static final String FRIEND_BACKBROUND_EVENT = "13";
+    public static final int FRIEND_BACKBROUND_EVENT = 13;
     /**
      * 通讯录里面的好友
      */
-    public static final String FRIEND_CONTACTS_EVENT = "14";
+    public static final int FRIEND_CONTACTS_EVENT = 14;
     /**
      * 通讯录里面修改备注
      *
      * @param view
      */
-    public static final String FRIEND_REMARK_EVENT = "15";
+    public static final int FRIEND_REMARK_EVENT = 15;
     /**
      * 粉丝列表分页
      */
@@ -209,9 +209,7 @@ public class FriendPresenter1 extends GeneralPresenter {
 
                             } else {
 
-                                BaseEvent event7 = new BaseEvent();
-                                event7.info = FRIEND_BACKBROUND_EVENT;
-                                EventBus.getDefault().post(event7);
+                                EventBus.getDefault().post(new BaseEvent(FRIEND_BACKBROUND_EVENT));
 
                             }
 
@@ -434,11 +432,11 @@ public class FriendPresenter1 extends GeneralPresenter {
                         BaseEvent event = new BaseEvent();
                         switch (type) {
                             case CommonCode.requireFriend.require_type_add:
-                                event.info = FRIEND_EVENT;
+                                event.setType(FRIEND_EVENT);
                                 break;
                             case CommonCode.requireFriend.require_type_agree:
                             case CommonCode.requireFriend.require_type_refuse:
-                                event.info = FRIEND_APPLY_EVENT;
+                                event.setType(FRIEND_APPLY_EVENT);
                                 break;
                             default:
                                 break;
@@ -627,9 +625,7 @@ public class FriendPresenter1 extends GeneralPresenter {
                         /**
                          * 取消好友通知好友详情更新
                          */
-                        BaseEvent event1 = new BaseEvent();
-                        event1.info = CANCEL_FRIEND_EVENT;
-                        EventBus.getDefault().post(event1);
+                        EventBus.getDefault().post(new BaseEvent(CANCEL_FRIEND_EVENT));
 
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
@@ -684,17 +680,12 @@ public class FriendPresenter1 extends GeneralPresenter {
                             /**
                              * 关注跟平台不相关的人，比如手机本地联系人，关注不成功返回－1
                              */
-                            BaseEvent event7 = new BaseEvent();
-                            event7.info = FRIEND_INVITE_EVENT;
-                            event7.data = info;
-                            EventBus.getDefault().post(event7);
+                            EventBus.getDefault().post(new BaseEvent(FRIEND_INVITE_EVENT, info));
 
                         } else {
 
                             Toasty.info(mContext, mContext.getString(R.string.inval_sucess)).show();
-                            BaseEvent event = new BaseEvent();
-                            event.info = FRIEND_EVENT;
-                            EventBus.getDefault().post(event);
+                            EventBus.getDefault().post(new BaseEvent(FRIEND_EVENT));
 
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {

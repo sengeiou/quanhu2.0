@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
@@ -29,9 +30,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
-
 
 /**
  * Created by Administrator on 2017/3/30/030.
@@ -238,7 +236,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                 if (isEdit) {
                     isEdit = false;
                     mTvBaseTitleRight.setText("编辑");
-                 EventBus.getDefault().post(new BaseEvent(UPDATE_LOVE_CIRCLE));
+                 EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
                 } else {
                     isEdit = true;
                     mTvBaseTitleRight.setText("完成");

@@ -44,7 +44,7 @@ public class SearchCircleFragment extends BaseFragment {
     private SearchCircleAdapter circleAdapter;
     private List<CircleEntrModle> circleBeanList = new ArrayList<>();
     private SearchPresenter searchPresenter;
-    private  String keyWord = "";
+    private String keyWord = "";
 
     public static SearchCircleFragment newInstance() {
         SearchCircleFragment frg = new SearchCircleFragment();
@@ -74,7 +74,7 @@ public class SearchCircleFragment extends BaseFragment {
                     Intent intent = new Intent(mActivity, AllCirclesAty.class);
                     getActivity().startActivity(intent);
                 } else {
-                    circleEntrModle.click+=1;
+                    circleEntrModle.click += 1;
                     WebContainerActivity.startActivity(mActivity, circleBeanList.get(position).circleUrl);
                 }
             }
@@ -93,8 +93,8 @@ public class SearchCircleFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
-                if(!TextUtils.isEmpty(keyWord)){
-                    ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_CIRCLE);
+                if (!TextUtils.isEmpty(keyWord)) {
+                    ((SearchPresenter) searchPresenter).searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
                 }
 
                 mRefresh.setRefreshing(false);
@@ -119,8 +119,8 @@ public class SearchCircleFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
             keyWord = (String) baseEvent.getData();
-            if(!TextUtils.isEmpty(keyWord)){
-                ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_CIRCLE);
+            if (!TextUtils.isEmpty(keyWord)) {
+                ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
             }
 
         }
@@ -165,10 +165,6 @@ public class SearchCircleFragment extends BaseFragment {
                      */
 
                 }
-            } else {
-                BaseEvent event = new BaseEvent();
-                event.info = "1";
-                EventBus.getDefault().post(event);
             }
         }
     }

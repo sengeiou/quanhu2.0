@@ -7,7 +7,6 @@ public class BaseEvent {
     public String key;
     public int type;
     public boolean flag;
-    public String info;
     public Object data;
 
     public BaseEvent(int type) {
@@ -16,10 +15,6 @@ public class BaseEvent {
 
     public BaseEvent(boolean flag) {
         this.flag = flag;
-    }
-
-    public BaseEvent(String info) {
-        this.info = info;
     }
 
     public BaseEvent(Object data) {
@@ -31,17 +26,15 @@ public class BaseEvent {
         this.data = data;
     }
 
-    public BaseEvent(){
+    public BaseEvent() {
 
     }
-
 
     @Override
     public String toString() {
         return "BaseEvent{" +
                 "type=" + type +
                 ", flag=" + flag +
-                ", info='" + info + '\'' +
                 ", data=" + data +
                 '}';
     }
@@ -60,14 +53,6 @@ public class BaseEvent {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public Object getData() {
