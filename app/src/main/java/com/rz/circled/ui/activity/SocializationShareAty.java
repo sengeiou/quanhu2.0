@@ -128,6 +128,7 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
                 switch (platform) {
                     case "WeChat":
                         if (UMShareAPI.get(aty).isInstall(aty, SHARE_MEDIA.WEIXIN)) {
+                            Log.d("JsBridge", "wexin");
                             shareAction.setPlatform(SHARE_MEDIA.WEIXIN).share();
                         } else {
                             SVProgressHUD.showInfoWithStatus(aty, "沒有安装微信客户端");
