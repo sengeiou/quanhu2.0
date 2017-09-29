@@ -216,7 +216,9 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
             View view = View.inflate(mActivity, R.layout.foot_view, null);
-            mLv.addFooterView(view);
+            if(mLv.getFooterViewsCount()<=0){
+                mLv.addFooterView(view);
+            }
         }
     }
 

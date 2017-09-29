@@ -58,7 +58,7 @@ public class RewardAdapter extends CommonAdapter {
         }
 
         if(!TextUtils.isEmpty(model.getPics())){
-            rewardTxt.setText("悬赏金额 "+model.getPrice());
+            rewardTxt.setText("悬赏金额 "+model.getPrice()+"圈币");
         }
 
         if(!TextUtils.isEmpty(model.getContent())){

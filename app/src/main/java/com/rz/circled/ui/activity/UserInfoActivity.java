@@ -228,7 +228,6 @@ public class UserInfoActivity extends BaseActivity {
     private void initFragment() {
         BaseFragment fragment = MyArticleFragment.newInstance(userId);
         BaseFragment fragment1 = UserRewardFragment.newInstance(userId);
-        BaseFragment fragment1 = UserRewardFragment.newInstance("0", userId);
         BaseFragment fragment2 = MyCircleFragment.newInstance(userId);
         BaseFragment fragment3 = MyActivityFragment.newInstance(userId);
 

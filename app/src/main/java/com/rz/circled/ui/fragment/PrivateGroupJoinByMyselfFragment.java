@@ -219,7 +219,9 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
             View view = View.inflate(mActivity, R.layout.foot_view, null);
-            lv.addFooterView(view);
+            if(lv.getFooterViewsCount()<=0){
+                lv.addFooterView(view);
+            }
         }
     }
 

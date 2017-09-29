@@ -247,7 +247,7 @@ public class FindFragment extends BaseFragment {
                         .placeholder(R.drawable.default_subject_bg)
                         .bitmapTransform(new RoundedCornersTransformation(mActivity, 25, 0, RoundedCornersTransformation.CornerType.LEFT))
                         .into(vh.topicIcon);
-                vh.topicName.setText(hotSubjectModel.getTitle());
+                vh.topicName.setText("#"+hotSubjectModel.getTitle()+"#");
                 vh.topicCount.setText(hotSubjectModel.getPartNum() + " 讨论");
                 vh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
