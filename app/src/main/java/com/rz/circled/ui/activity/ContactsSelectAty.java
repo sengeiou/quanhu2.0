@@ -188,7 +188,7 @@ public class ContactsSelectAty extends BaseActivity implements View.OnClickListe
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
-        if (FriendPresenter1.FRIEND_EVENT.equals(event.info)) {
+        if (FriendPresenter1.FRIEND_EVENT==event.getType()) {
             Log.e("tag", "好友列表更新并缓存");
             presenter.getCacheFriends(false);
         }

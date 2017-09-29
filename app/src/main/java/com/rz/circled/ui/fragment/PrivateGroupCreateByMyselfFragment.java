@@ -32,6 +32,7 @@ import com.rz.httpapi.bean.PrivateGroupListBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -219,5 +220,15 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @Override
     public void refreshPage() {
         loadData(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+            View view = View.inflate(mActivity, R.layout.foot_view, null);
+            if(lv.getFooterViewsCount()<=0){
+                lv.addFooterView(view);
+            }
+        }
     }
 }

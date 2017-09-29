@@ -82,7 +82,7 @@ public class CircleDynamic implements Serializable {
     public String videoPic;
     public int click;
 
-    public static class CustBean {
+    public static class CustBean implements Serializable{
         /**
          * custDesc : 1
          * custId : 测试内容ommi

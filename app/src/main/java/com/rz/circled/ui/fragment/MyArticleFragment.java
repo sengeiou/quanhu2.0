@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -12,16 +13,24 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import com.rz.circled.R;
 import com.rz.circled.adapter.ArticleAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.MListView;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.CircleDynamic;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +97,8 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     @Override
     public void initView() {
 
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
 
         dynamicAdapter = new ArticleAdapter(mActivity, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
@@ -147,5 +158,23 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     @Override
     public View getScrollableView() {
         return mListView;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+            View view = View.inflate(mActivity, R.layout.foot_view, null);
+            if(mListView.getFooterViewsCount()<=0){
+                mListView.addFooterView(view);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

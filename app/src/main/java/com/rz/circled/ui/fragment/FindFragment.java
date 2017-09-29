@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
 import com.rz.circled.ui.activity.MoreFamousActivity;
@@ -55,7 +56,6 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.rz.common.constant.Constants.FIND_LOVE_CACHE;
-import static com.rz.common.constant.Constants.UPDATE_LOVE_CIRCLE;
 import static com.rz.common.utils.SystemUtils.trackUser;
 
 /**
@@ -168,7 +168,7 @@ public class FindFragment extends BaseFragment {
                     Intent intent = new Intent(mActivity, AllCirclesAty.class);
                     getActivity().startActivity(intent);
                 } else {
-                    circleEntrModle.click+=1;
+                    circleEntrModle.click += 1;
                     WebContainerActivity.startActivity(mActivity, circleEntrModleList.get(position).circleUrl);
                 }
             }
@@ -186,10 +186,10 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EntitiesBean entitiesBean = activityList.get(position);
-                if (entitiesBean.getActivityType()==1){
-                    WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/platform-activity/signup/"+entitiesBean.getId());
-                }else{
-                    WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/platform-activity/vote/"+entitiesBean.getId());
+                if (entitiesBean.getActivityType() == 1) {
+                    WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/signup/" + entitiesBean.getId());
+                } else {
+                    WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/vote/" + entitiesBean.getId());
 
                 }
             }
@@ -219,7 +219,7 @@ public class FindFragment extends BaseFragment {
                 TextView title = (TextView) convertView.findViewById(R.id.activity_title);
                 ImageView iv = (ImageView) convertView.findViewById(R.id.iv_activity_icon);
                 title.setText(entitiesBean.getTitle());
-                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mActivity,10)).into(iv);
+                Glide.with(mActivity).load(entitiesBean.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mActivity, 10)).into(iv);
                 return convertView;
             }
         };
@@ -245,17 +245,17 @@ public class FindFragment extends BaseFragment {
                 Glide.with(mActivity)
                         .load(hotSubjectModel.getThumbnail())
                         .placeholder(R.drawable.default_subject_bg)
-                        .bitmapTransform(new RoundedCornersTransformation(mActivity,25,0,RoundedCornersTransformation.CornerType.LEFT))
+                        .bitmapTransform(new RoundedCornersTransformation(mActivity, 25, 0, RoundedCornersTransformation.CornerType.LEFT))
                         .into(vh.topicIcon);
-                vh.topicName.setText(hotSubjectModel.getTitle());
+                vh.topicName.setText("#"+hotSubjectModel.getTitle()+"#");
                 vh.topicCount.setText(hotSubjectModel.getPartNum() + " 讨论");
                 vh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (StringUtil.isEmpty(coterieId)||StringUtil.isEmpty(coterieName)){
+                        if (StringUtil.isEmpty(coterieId) || StringUtil.isEmpty(coterieName)) {
                             String circleUrl = CommomUtils.getCircleUrl(hotSubjectModel.circleRoute, hotSubjectModel.moduleEnum, hotSubjectModel.resourceId);
                             WebContainerActivity.startActivity(mActivity, circleUrl);
-                        }else{
+                        } else {
                             String url = CommomUtils.getDymanicUrl(hotSubjectModel.circleRoute, hotSubjectModel.moduleEnum, hotSubjectModel.getCoterieId(), hotSubjectModel.resourceId);
                             WebContainerActivity.startActivity(mActivity, url);
                         }
@@ -308,10 +308,10 @@ public class FindFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (isLogin()) {
-                            String starName =famousModel.custInfo.getCustNname();
+                            String starName = famousModel.custInfo.getCustNname();
                             String custId = famousModel.custInfo.getCustId();
                             trackUser("推广", "达人", starName);
-                            UserInfoActivity.newFrindInfo(mActivity,custId);
+                            UserInfoActivity.newFrindInfo(mActivity, custId);
                         }
                     }
                 });
@@ -346,14 +346,16 @@ public class FindFragment extends BaseFragment {
         EntityCache<HotSubjectModel> entityCache = new EntityCache<>(mActivity, HotSubjectModel.class);
         EntityCache<FamousModel> FamousModelCache = new EntityCache<>(mActivity, FamousModel.class);
         EntityCache<EntitiesBean> EntitiesBeanCache = new EntityCache<>(mActivity, EntitiesBean.class);
-        List<CircleEntrModle> circleEntrModleList= (List<CircleEntrModle>) mACache.getAsObject(FIND_LOVE_CACHE);
-        List<HotSubjectModel> subjectList=entityCache.getListEntity(HotSubjectModel.class);
-        List<FamousModel> FamousModel= FamousModelCache.getListEntity(FamousModel.class);;
-        List<EntitiesBean> EntitiesBean= EntitiesBeanCache.getListEntity(EntitiesBean.class);;
+        List<CircleEntrModle> circleEntrModleList = (List<CircleEntrModle>) mACache.getAsObject(FIND_LOVE_CACHE);
+        List<HotSubjectModel> subjectList = entityCache.getListEntity(HotSubjectModel.class);
+        List<FamousModel> FamousModel = FamousModelCache.getListEntity(FamousModel.class);
+        ;
+        List<EntitiesBean> EntitiesBean = EntitiesBeanCache.getListEntity(EntitiesBean.class);
+        ;
         updateView(circleEntrModleList);
-        updateViewWithFlag(subjectList,2);
-        updateViewWithFlag(FamousModel,7);
-        updateViewWithFlag(EntitiesBean,3);
+        updateViewWithFlag(subjectList, 2);
+        updateViewWithFlag(FamousModel, 7);
+        updateViewWithFlag(EntitiesBean, 3);
         mFindRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mFindRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -367,18 +369,21 @@ public class FindFragment extends BaseFragment {
         });
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
-        if (UPDATE_LOVE_CIRCLE.equals(event.getInfo())) {
+        if (EventConstant.UPDATE_LOVE_CIRCLE == event.getType()) {
             mPresenter.getUserLoveCircle(Session.getUserId());
         }
-    };
+    }
+
+    ;
 
 
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (t!=null) {
+        if (t != null) {
             if (flag == 2) {
                 subjectList.clear();
                 subjectList.addAll((Collection<? extends HotSubjectModel>) t);
@@ -402,7 +407,7 @@ public class FindFragment extends BaseFragment {
 
     @Override
     public <T> void updateView(T t) {
-        if (t!=null) {
+        if (t != null) {
             circleEntrModleList.clear();
             circleEntrModleList = (List<CircleEntrModle>) t;
             mACache.put(FIND_LOVE_CACHE, (Serializable) circleEntrModleList);
@@ -435,13 +440,13 @@ public class FindFragment extends BaseFragment {
                 jump(MoreSubjectActivity.class);
                 break;
             case R.id.tv_activity_more:
-                WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/activity/platform-activity");
+                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity");
                 break;
             case R.id.btn_resource:
-                WebContainerActivity.startActivity(mActivity,BuildConfig.WebHomeBaseUrl+"/zgzyq/");
+                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/zgzyq/");
                 break;
             case R.id.btn_quanle:
-                WebContainerActivity.startActivity(mActivity,BuildConfig.OpusBaseUrl+"/activity/qql");
+                WebContainerActivity.startActivity(mActivity, BuildConfig.OpusBaseUrl + "/activity/qql");
                 break;
         }
     }

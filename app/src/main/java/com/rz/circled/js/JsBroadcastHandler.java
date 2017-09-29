@@ -54,10 +54,4 @@ public class JsBroadcastHandler extends ServerHandler {
         return false;
     }
 
-    private void sendEvent(int type, Object data, String requestName) {
-        BaseEvent webEvent = new BaseEvent(type);
-        webEvent.data = data;
-        webEvent.info = requestName;
-        EventBus.getDefault().post(webEvent);
-    }
 }

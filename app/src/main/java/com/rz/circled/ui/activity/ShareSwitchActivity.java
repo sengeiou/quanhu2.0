@@ -20,6 +20,7 @@ import com.netease.nimlib.sdk.team.constant.TeamTypeEnum;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.ui.view.WorkImShareDialog;
 import com.rz.circled.widget.CommomUtils;
@@ -45,8 +46,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.rz.common.constant.Constants.SWITCH_SHARE_SUCCESS;
 
 /**
  * Created by rzw2 on 2017/1/5.
@@ -195,7 +194,7 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
-        if (TextUtils.equals(SWITCH_SHARE_SUCCESS, event.key)) {
+        if (EventConstant.SWITCH_SHARE_SUCCESS==event.getType()) {
             finish();
         }
     }

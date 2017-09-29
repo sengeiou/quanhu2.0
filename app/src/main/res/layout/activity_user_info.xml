@@ -33,7 +33,7 @@
             <RelativeLayout
                 android:id="@+id/rl_head"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px516"
+                android:layout_height="@dimen/px446"
                 android:background="@color/white">
 
                 <include

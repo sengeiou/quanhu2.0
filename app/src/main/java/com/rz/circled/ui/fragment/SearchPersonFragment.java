@@ -41,7 +41,7 @@ public class SearchPersonFragment extends BaseFragment {
     ListView lvPerson;
     private SearchUserAdapter personAdapter;
     private SearchPresenter searchPresenter;
-    private  String keyWord = "";
+    private String keyWord = "";
     private List<StarListBean.CustInfoBean> dataCustInfos = new ArrayList<>();
 
 
@@ -89,7 +89,7 @@ public class SearchPersonFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                if(!TextUtils.isEmpty(keyWord)) {
+                if (!TextUtils.isEmpty(keyWord)) {
                     ((SearchPresenter) searchPresenter).searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
                 }
                 mRefresh.setRefreshing(false);
@@ -128,7 +128,7 @@ public class SearchPersonFragment extends BaseFragment {
 //            (final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType)
             keyWord = (String) baseEvent.getData();
 
-            ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_PERSION);
+            ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
         }
     }
 
@@ -149,10 +149,6 @@ public class SearchPersonFragment extends BaseFragment {
                      * 更新界面，更新adapter数据
                      */
                 }
-            } else {
-                BaseEvent event = new BaseEvent();
-                event.info = "1";
-                EventBus.getDefault().post(event);
             }
         }
     }

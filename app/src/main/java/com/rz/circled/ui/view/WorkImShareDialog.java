@@ -20,6 +20,7 @@ import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.model.CustomMessageConfig;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.rz.circled.R;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.ShareModel;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
@@ -184,9 +185,7 @@ public class WorkImShareDialog extends Dialog {
 
                 JsEvent.callJsEvent(null, true);
 
-                BaseEvent event = new BaseEvent();
-                event.info = Constants.SWITCH_SHARE_SUCCESS;
-                EventBus.getDefault().post(event);
+                EventBus.getDefault().post(new BaseEvent(EventConstant.SWITCH_SHARE_SUCCESS));
 
                 dismiss();
                 context.finish();

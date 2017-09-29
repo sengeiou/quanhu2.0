@@ -76,7 +76,7 @@ public class MoreSubjectActivity extends BaseActivity implements SwipyRefreshLay
                 TextView tv_name = helper.getView(R.id.tv_name);
                 tv_name.setText(item.getCustNname());
                 TextView tv_title = helper.getView(R.id.activity_title);
-                tv_title.setText(item.getTitle());
+                tv_title.setText("#"+item.getTitle()+"#");
                 TextView tv_des = helper.getView(R.id.acitvity_des);
                 tv_des.setText(item.getContent());
                 TextView tv_talk_count = helper.getView(R.id.tv_talk_count);

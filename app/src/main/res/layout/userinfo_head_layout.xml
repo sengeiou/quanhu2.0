@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/px28"
+            android:layout_marginTop="@dimen/px18"
             >
 
             <TextView
@@ -87,7 +87,7 @@
             android:textSize="@dimen/font_34"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/px20"
+            android:layout_marginTop="@dimen/px10"
             />
 
         <LinearLayout
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/px30"
+            android:layout_marginTop="@dimen/px20"
             android:visibility="gone"
             >
             <ImageView
@@ -110,7 +110,7 @@
                 android:id="@+id/user_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="gggggg"
                 android:textSize="@dimen/font_38"
                 android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/px18"

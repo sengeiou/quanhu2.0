@@ -19,14 +19,20 @@ import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
 import com.rz.httpapi.bean.EntitiesBean;
 import com.rz.httpapi.constans.ReturnCode;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +111,12 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                                 pageNo++;
                             } else {
                                 if(loadMore == false){
-                                    onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
+                                    if(Session.getUserId().equals(userid)){
+                                        onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
+                                    }else{
+                                        onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
+                                    }
+
                                 }else{
                                     onLoadingStatus(CommonCode.General.DATA_LACK);
                                 }
@@ -132,6 +143,9 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void initView() {
+
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
 
         mActivityRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mActivityRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
@@ -196,5 +210,23 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     @Override
     public View getScrollableView() {
         return mLv;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+            View view = View.inflate(mActivity, R.layout.foot_view, null);
+            if(mLv.getFooterViewsCount()<=0){
+                mLv.addFooterView(view);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

@@ -111,16 +111,16 @@ public class MyLevelActivity extends BaseActivity {
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (flag == presenter.FLAG_LEVEL_ACOUNT) {
-            MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
-            if (acountBean == null) return;
-            tvMyLevelCount.setText(acountBean.getGrowLevel());
-            tvMyLevelGrowCount.setText(String.valueOf(acountBean.getGrow()));
-            rangeBar.setSeekPinByIndex(Integer.parseInt(acountBean.getGrowLevel()));
-        }
-        if (flag == presenter.FLAG_LEVEL_LIST) {
-            layoutRefresh.setRefreshing(false);
-        }
+            if (flag == presenter.FLAG_LEVEL_ACOUNT) {
+                MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
+                if (acountBean == null) return;
+                tvMyLevelCount.setText(acountBean.getGrowLevel());
+                tvMyLevelGrowCount.setText(String.valueOf(acountBean.getGrow()));
+                rangeBar.setSeekPinByIndex(Integer.parseInt(acountBean.getGrowLevel()));
+            }
+            if (flag == presenter.FLAG_LEVEL_LIST) {
+                layoutRefresh.setRefreshing(false);
+            }
     }
 
     @Override
