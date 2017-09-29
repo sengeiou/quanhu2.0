@@ -73,7 +73,7 @@ public class SearchRewardFragment extends BaseFragment {
         lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getOfferId()+"");
+                CommonH5JumpHelper.startRewardDetail(mActivity, rewardBeanList.get(position).getOfferId() + "");
             }
         });
 
@@ -89,8 +89,8 @@ public class SearchRewardFragment extends BaseFragment {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                if(!TextUtils.isEmpty(keyWord)){
-                    ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
+                if (!TextUtils.isEmpty(keyWord)) {
+                    ((SearchPresenter) searchPresenter).searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_REWARD);
                 }
                 mRefresh.setRefreshing(false);
             }
@@ -115,8 +115,8 @@ public class SearchRewardFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
             keyWord = (String) baseEvent.getData();
-            if(!TextUtils.isEmpty(keyWord)){
-                ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
+            if (!TextUtils.isEmpty(keyWord)) {
+                ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_REWARD);
             }
 
         }
@@ -161,10 +161,6 @@ public class SearchRewardFragment extends BaseFragment {
                      */
 
                 }
-            } else {
-                BaseEvent event = new BaseEvent();
-                event.info = "1";
-                EventBus.getDefault().post(event);
             }
         }
     }

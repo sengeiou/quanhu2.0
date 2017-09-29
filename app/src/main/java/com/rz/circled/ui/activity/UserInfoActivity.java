@@ -278,7 +278,7 @@ public class UserInfoActivity extends BaseActivity {
             setData(null);
         }
 
-        if (baseEvent.info.equals(FriendPresenter1.FRIEND_EVENT)) {
+        if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
             addFriendLayout.setVisibility(View.GONE);
         }
 
@@ -392,7 +392,7 @@ public class UserInfoActivity extends BaseActivity {
     @OnClick(R.id.add_friend_btn)
     public void addFriendClick() {
         if (model != null && model.getRelation() == 0) {
-            ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_agree);
+            ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
         } else {
             SessionHelper.startP2PSession(this, model.getCustId());
         }

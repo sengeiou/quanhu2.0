@@ -147,7 +147,7 @@ android {
             buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
             buildConfigField "String", "OpusBaseUrl", "\"https://opus-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
-            manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
+            manifestPlaceholders = [NIM_KEY      : "d9931ed7b96cdd89d475c993520f7b8e",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
                                     JPUSH_PKGNAME: defaultConfig.applicationId,
                                     //JPush上注册的包名对应的appkey.

@@ -133,8 +133,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
-        if (FriendPresenter1.FRIEND_APPLY_EVENT.equals(event.info)
-                || FriendPresenter1.CANCEL_FRIEND_EVENT.equals(event.info)) {
+        if (FriendPresenter1.FRIEND_APPLY_EVENT == event.getType() || FriendPresenter1.CANCEL_FRIEND_EVENT == event.getType()) {
             Log.e("tag", "好友列表更新并缓存");
             presenter.getCacheFriends(false);
         }
@@ -326,7 +325,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
          */
         if (i > 0) {
             if (item != null) {
-                UserInfoActivity.newFrindInfo(aty,item.getCustId());
+                UserInfoActivity.newFrindInfo(aty, item.getCustId());
             }
         }
     }
