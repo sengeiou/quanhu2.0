@@ -266,7 +266,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         content.setMaxLines(4);
                         title.setVisibility(View.GONE);
                     } else {
-                        title.setText(resourceInfo.getTitle());
+                        title.setText("1001".equals(resourceType)?"#"+resourceInfo.getTitle()+"#":resourceInfo.getTitle());
                         title.setVisibility(View.VISIBLE);
                     }
                     content.setText(resourceInfo.getContent());
