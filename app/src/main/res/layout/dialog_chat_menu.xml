@@ -63,7 +63,7 @@
         android:id="@+id/btn_cancel"
         style="@style/MsgFragMenuBtnStyle"
         android:layout_marginBottom="@dimen/px30"
-        android:layout_marginTop="@dimen/px30"
+        android:layout_marginTop="@dimen/px14"
         android:background="@drawable/rolle_white_bg"
         android:text="@string/cancel"
         android:textColor="@color/color_333333" />
