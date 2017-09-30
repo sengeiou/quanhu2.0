@@ -70,7 +70,6 @@ public class SideBar extends View {
         int singleHeight = height / b.length;// 获取每一个字母的高度
         for (int i = 0; i < b.length; i++) {
             paint.setColor(getResources().getColor(R.color.color_999999));
-            paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             paint.setFakeBoldText(false);
             paint.setTextSize(DensityUtils.dip2px(getContext(), 12));
@@ -102,7 +101,7 @@ public class SideBar extends View {
             float xPos = width / 2 - paint.measureText(b[i]) / 2;
             float yPos = singleHeight * i + singleHeight;
             float x = width;
-            float y = 3;
+            float y = 4;
             canvas.drawCircle(x / 2, yPos - y / 2, 15, p_c);
             canvas.drawText(b[i], xPos, yPos - y / 2, paint);
             paint.reset();// 重置画笔
