@@ -30,9 +30,9 @@
                     style="@style/ProveItemTvBlack"
                     android:text="@string/true_name"/>
 
-                <TextView
-                    style="@style/ProveItemTvGray"
-                    android:text="@string/required"/>
+                <!--<TextView-->
+                    <!--style="@style/ProveItemTvGray"-->
+                    <!--android:text="@string/required"/>-->
 
                 <EditText
                     android:id="@+id/et_prove_true_name"
@@ -52,9 +52,9 @@
                     style="@style/ProveItemTvBlack"
                     android:text="@string/auth_phone"/>
 
-                <TextView
-                    style="@style/ProveItemTvGray"
-                    android:text="@string/required"/>
+                <!--<TextView-->
+                    <!--style="@style/ProveItemTvGray"-->
+                    <!--android:text="@string/required"/>-->
 
                 <EditText
                     android:id="@+id/et_prove_phone"
@@ -73,9 +73,9 @@
                     style="@style/ProveItemTvBlack"
                     android:text="@string/id_number"/>
 
-                <TextView
-                    style="@style/ProveItemTvGray"
-                    android:text="@string/required"/>
+                <!--<TextView-->
+                    <!--style="@style/ProveItemTvGray"-->
+                    <!--android:text="@string/required"/>-->
 
                 <EditText
                     android:id="@+id/et_prove_id_number"
@@ -94,9 +94,9 @@
                     style="@style/ProveItemTvBlack"
                     android:text="@string/area_where"/>
 
-                <TextView
-                    style="@style/ProveItemTvGray"
-                    android:text="@string/required"/>
+                <!--<TextView-->
+                    <!--style="@style/ProveItemTvGray"-->
+                    <!--android:text="@string/required"/>-->
 
                 <TextView
                     android:id="@+id/tv_prove_area"
@@ -116,9 +116,9 @@
                     style="@style/ProveItemTvBlack"
                     android:text="@string/industry_sector"/>
 
-                <TextView
-                    style="@style/ProveItemTvGray"
-                    android:text="@string/required"/>
+                <!--<TextView-->
+                    <!--style="@style/ProveItemTvGray"-->
+                    <!--android:text="@string/required"/>-->
 
                 <EditText
                     android:id="@+id/et_prove_industry"

@@ -57,7 +57,6 @@ public class MyBalanceAty extends BaseActivity {
                 AccountDetailAty.startAccountDetail(aty, Type.TYPE_BALANCE);
             }
         });
-        setTitleRightTextColor(R.color.color_main);
     }
 
     @Override

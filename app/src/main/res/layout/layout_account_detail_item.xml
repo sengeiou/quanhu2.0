@@ -31,6 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:paddingRight="@dimen/px30"
+        android:maxLength="8"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/font_44"/>
 

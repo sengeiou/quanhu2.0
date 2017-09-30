@@ -393,7 +393,7 @@ public class PayPresenter extends AbsPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(dataList, loadmore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
                             isDataError = true;
                         }
                         return;
