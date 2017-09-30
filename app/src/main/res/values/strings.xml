@@ -243,6 +243,7 @@
 
     <!--消息-->
     <string name="announcement">通知公告</string>
+    <string name="announcement_details">公告详情</string>
     <string name="news">消息</string>
     <string name="system_information">系统消息</string>
     <string name="account_information">账户消息</string>
@@ -276,6 +277,8 @@
     <string name="input_nick">输入昵称和手机号搜索</string>
     <string name="share_title">进圈乎，玩圈子，一切都有了！</string>
     <string name="share_desc">圈乎，大型资源共享与价值变现O2O平台。“人人找资源、人人即资源、人人有资源。”帮你解决资源难题！</string>
+    <string name="share_title1">圈子有了，一切都有了！</string>
+    <string name="share_desc1">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
@@ -748,7 +751,7 @@
     <string name="agency_name">机构名称</string>
     <string name="operator_name">运营者姓名</string>
     <string name="contact_phone">联系电话</string>
-    <string name="prove_resources_hint">请描述您可提供的资源或者拥有的资源&#160;(必填)</string>
+    <string name="prove_resources_hint">请描述您可提供的资源或者拥有的资源&#160;</string>
     <string name="complete_info">完善信息</string>
 
     <string name="true_name_error_hint">姓名为2~10以内的汉字</string>

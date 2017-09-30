@@ -23,7 +23,7 @@ public interface H5Address {
     String INTEGRAL_STATEGY = H5_HEAD + "common/integral-strategy/index.html";
 
     //创建私圈协议
-    String PRIVATE_GROUP_CREATE_AGREEMENT =H5_HEAD+ "assets/static/service-agreement.html";
+    String PRIVATE_GROUP_CREATE_AGREEMENT =H5_HEAD+ "quanhu/doc/private_circle_rule/index.html";
 
     //私圈关于
     String PRIVATE_GROUP_ABOUT_AGREEMENT =H5_HEAD+ "quanhu/doc/private_circle_rule/index.html";

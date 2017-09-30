@@ -248,6 +248,7 @@
                     android:textSize="@dimen/font_38" />
 
                 <TextView
+                    android:id="@+id/tv_to_bankcard_reference"
                     style="@style/DefaultTvStyle"
                     android:layout_marginLeft="@dimen/px30"
                     android:gravity="left"
@@ -276,7 +277,6 @@
                     android:textSize="@dimen/font_38" />
 
                 <TextView
-                    android:id="@+id/tv_to_bankcard_reference"
                     style="@style/DefaultTvStyle"
                     android:layout_marginLeft="@dimen/px30"
                     android:gravity="left"

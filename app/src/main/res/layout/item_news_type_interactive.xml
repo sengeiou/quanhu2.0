@@ -79,16 +79,16 @@
                     android:id="@+id/img"
                     android:layout_width="@dimen/px172"
                     android:layout_height="@dimen/px172"
-                    android:src="@mipmap/ic_default_bg"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_default_bg" />
 
                 <TextView
                     android:id="@+id/tv_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingExtra="@dimen/px12"
                     android:maxLines="2"
                     android:paddingLeft="@dimen/px44"
-                    android:paddingRight="@dimen/px44"
                     android:textColor="@color/font_gray_m"
                     android:textSize="@dimen/font_40"
                     tool:text="这里的是内容" />

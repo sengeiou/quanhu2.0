@@ -98,4 +98,14 @@ public class MoreFamousActivity extends BaseActivity {
     public void refreshPage() {
 
     }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return mAdapter!=null&&mAdapter.getCount()!=0;
+    }
 }

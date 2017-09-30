@@ -22,10 +22,15 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.StatusCode;
 import com.rz.circled.R;
+import com.rz.circled.modle.ShareModel;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.svp.SVProgressHUD;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.umeng.socialize.ShareAction;
@@ -128,6 +133,7 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
                 switch (platform) {
                     case "WeChat":
                         if (UMShareAPI.get(aty).isInstall(aty, SHARE_MEDIA.WEIXIN)) {
+                            Log.d("JsBridge", "wexin");
                             shareAction.setPlatform(SHARE_MEDIA.WEIXIN).share();
                         } else {
                             SVProgressHUD.showInfoWithStatus(aty, "沒有安装微信客户端");
@@ -218,6 +224,16 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
                                                  }
                                              },
                                 CallerThreadExecutor.getInstance());
+                        break;
+                    case "YRIM":
+                        if (!Session.getUserIsLogin() || NIMClient.getStatus() != StatusCode.LOGINED) {
+                            Toasty.info(mContext, getString(R.string.im_link_error_hint)).show();
+                            finish();
+                            return;
+                        }
+                        if (Session.getUserIsLogin()) {
+                            ShareSwitchActivity.start(aty, new ShareModel(appId, title, desc, url, imageUrl));
+                        }
                         break;
                     default:
                         break;

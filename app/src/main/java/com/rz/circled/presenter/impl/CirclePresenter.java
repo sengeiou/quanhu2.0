@@ -405,7 +405,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     public void onNext(ResponseData<List<HotSubjectModel>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<HotSubjectModel> data = res.getData();
+                            if (!data.isEmpty())
                             mView.updateView(data);
+                            else mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,"");
                         } else {
                             HandleRetCode.handler(mContext, res);
                         }
@@ -507,7 +509,11 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     public void onNext(ResponseData<MoreFamousModel<List<StarListBean>>> res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<StarListBean> data = res.getData().starList;
-                            mView.updateView(data);
+                            if (!data.isEmpty()) {
+                                mView.updateView(data);
+                            }else {
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,"");
+                            }
                         } else {
                             HandleRetCode.handler(mContext, res);
                         }

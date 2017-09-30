@@ -14,4 +14,6 @@ public class Constants {
     public static String QUIT_ADVANCE_TEAM = "com.rz.yryz.QUIT_ADVANCE_TEAM";
 
     public static final String CONTACTS_SELECT_ACTION = "com.rz.yryz.FRIEND_SELECT_ACTION";
+
+    public static final String WEBCONTAINER_ACTION = "com.rz.circled.ui.activity.WebContainerActivity";
 }

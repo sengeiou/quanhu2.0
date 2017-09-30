@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/px44"
         android:layout_weight="1"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_44" />
 
     <TextView
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/px44"
         android:layout_weight="1"
+        android:textColor="@color/black"
         android:gravity="right"
         android:textSize="@dimen/font_44" />
 </LinearLayout>

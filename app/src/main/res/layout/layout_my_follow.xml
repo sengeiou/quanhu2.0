@@ -15,6 +15,11 @@
 
         <View style="@style/DefaultHLineStyle" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px30"
+            android:background="@color/white" />
+
         <include layout="@layout/view_letter_guide" />
 
     </LinearLayout>

@@ -64,7 +64,7 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
             etvNum.setText(String.valueOf(price));
         }
         setTitleText(R.string.private_group_join_way_change);
-        setTitleRightText(R.string.submit);
+        setTitleRightText(R.string.mine_person_save);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

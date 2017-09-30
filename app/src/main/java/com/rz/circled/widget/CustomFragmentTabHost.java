@@ -229,7 +229,7 @@ public class CustomFragmentTabHost extends TabHost implements TabHost.OnTabChang
             if (info.fragment != null && !info.fragment.isDetached()) {
                 FragmentTransaction ft = mFragmentManager.beginTransaction();
                 ft.detach(info.fragment);
-                ft.commit();
+                ft.commitAllowingStateLoss();
             }
         }
 

@@ -62,7 +62,7 @@ public class RewardScoreAty extends BaseActivity {
                 AccountDetailAty.startAccountDetail(aty, Type.TYPE_SCORE);
             }
         });
-        setTitleRightTextColor(R.color.color_main);
+        setTitleRightTextColor(R.color.font_gray_m);
     }
 
     @Override
