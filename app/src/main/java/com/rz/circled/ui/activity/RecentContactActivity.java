@@ -151,7 +151,7 @@ public class RecentContactActivity extends BaseActivity {
                     LuckyAttachment a = (LuckyAttachment) attachment;
                     return "[红包] " + a.getUserName() + ":" + a.getTitle();
                 } else if (attachment instanceof ArticleAttachment) {
-                    return "[分享作品]";
+                    return "[资源分享]";
                 } else if (attachment instanceof ShowAttachment) {
                     return "[资源分享]";
                 } else if (attachment instanceof LuckyTipAttachment) {

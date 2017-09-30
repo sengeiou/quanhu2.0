@@ -74,6 +74,6 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:textColor="@color/font_gray_s"
-        android:textSize="@dimen/font_40"
+        android:textSize="@dimen/font_38"
         tool:text="这里是阅读人数" />
 </LinearLayout>

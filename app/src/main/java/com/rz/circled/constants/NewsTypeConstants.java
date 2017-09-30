@@ -83,6 +83,11 @@ public class NewsTypeConstants {
     public static final String EXTERNAL_URL = "8";
 
     /**
+     * 公告链接
+     */
+    public static final String ANNOUNCEMENT_URL = "9";
+
+    /**
      * 私圈首页
      */
     public static final String COTERIE_HOME = "8001";
