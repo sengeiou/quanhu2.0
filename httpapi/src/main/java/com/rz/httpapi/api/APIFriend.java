@@ -16,6 +16,10 @@ public class APIFriend {
     public static final String REQUIRE_FRIEND_BY_PHONE = "v3/friend/requireByPhone";
 
     /**
+     * 查询对方是否同意加好友
+     */
+    public static final String REQUIRE_FRIEND_STATUS = "v3/friend/getRequire";
+    /**
      * 申请加好友列表
      */
     public static final String REQUIRE_LIST = "v3/friend/listRequire";

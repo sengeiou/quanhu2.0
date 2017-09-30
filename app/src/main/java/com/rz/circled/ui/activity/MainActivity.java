@@ -302,6 +302,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 case Type.LOGIN_WX:
                     snsPresenter.delWXAuth(openId);
                     break;
+
             }
         }
 
@@ -380,6 +381,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case EventConstant.USER_BE_FROZEN:
                 DefaultTipsDialog.newInstance(getString(R.string.account_lock)).show(getSupportFragmentManager(), "");
                 break;
+            case CommonCode.EventType.TYPE_LOGOUT:
+                finish();
+                break;
         }
     }
 
@@ -432,13 +436,4 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void refreshPage() {
 
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_LOGOUT) {
-            this.finish();
-        }
-
-    }
-
 }

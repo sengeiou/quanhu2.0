@@ -10,8 +10,10 @@
         android:id="@+id/id_friends_img"
         android:layout_width="@dimen/px98"
         android:layout_height="@dimen/px98"
-        android:layout_margin="10dp"
-        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginBottom="@dimen/px50"
+        android:layout_marginLeft="@dimen/px44"
+        android:layout_marginRight="@dimen/px44"
+        android:layout_marginTop="@dimen/px50"
         android:scaleType="fitXY"
         android:src="@drawable/ic_default_head" />
 

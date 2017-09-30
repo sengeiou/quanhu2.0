@@ -129,7 +129,7 @@ public class ScoreDetailAty extends BaseActivity {
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
-                mPresenter.requestGetRewardList(direction != SwipyRefreshLayoutDirection.TOP);
+                mPresenter.requestGetScoreList(direction != SwipyRefreshLayoutDirection.TOP);
                 mRefresh.setRefreshing(false);
             }
         });

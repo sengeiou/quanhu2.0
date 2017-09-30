@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.rz.circled.R;
 import com.rz.circled.ui.activity.SocializationShareAty;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
@@ -44,8 +45,8 @@ public class SocializationShareHandler extends ServerHandler {
             SocializationShareAty.start(mActivity,
                     "",
                     socializationShareModel.getCircleKey(),
-                    !TextUtils.isEmpty(socializationShareModel.getTitle()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getTitle(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : "",
-                    !TextUtils.isEmpty(socializationShareModel.getContent()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getContent(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : "",
+                    !TextUtils.isEmpty(socializationShareModel.getTitle()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getTitle(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : mActivity.getResources().getString(R.string.share_title1),
+                    !TextUtils.isEmpty(socializationShareModel.getContent()) ? URLDecoder.decode(URLEncoder.encode(socializationShareModel.getContent(), "utf-8").replaceAll("%ef%bf%bc", "").replaceAll("%EF%BF%BC", ""), "utf-8") : mActivity.getResources().getString(R.string.share_desc1),
                     socializationShareModel.getPic(),
                     socializationShareModel.getUrl(),
                     socializationShareModel.getPlat());

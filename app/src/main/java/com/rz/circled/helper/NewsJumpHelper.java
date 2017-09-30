@@ -3,12 +3,14 @@ package com.rz.circled.helper;
 import android.content.Context;
 import android.content.Intent;
 
+import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.ui.activity.AccountDetailAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.activity.NewsAnnounceDetailsActivity;
 import com.rz.common.constant.Type;
 import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.ProveStatusBean;
@@ -45,6 +47,9 @@ public class NewsJumpHelper {
                 break;
             case NewsTypeConstants.EXTERNAL_URL:
                 CommonH5Activity.startCommonH5(context, "", data.getLink());
+                break;
+            case NewsTypeConstants.ANNOUNCEMENT_URL:
+                CommonH5Activity.startCommonH5(context, context.getString(R.string.announcement_details), data.getLink());
                 break;
             case NewsTypeConstants.COTERIE_HOME:
                 CommonH5JumpHelper.startGroupHome(context, data.getCircleRoute(), data.getCoterieId());

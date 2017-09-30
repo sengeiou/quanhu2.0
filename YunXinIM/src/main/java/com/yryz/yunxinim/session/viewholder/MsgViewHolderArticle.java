@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rz.common.constant.IntentKey;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.session.extension.ArticleAttachment;
 import com.yryz.yunxinim.uikit.common.util.sys.ScreenUtil;
@@ -20,6 +21,8 @@ import com.yryz.yunxinim.uikit.session.viewholder.MsgViewHolderBase;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.yryz.yunxinim.uikit.Constants.WEBCONTAINER_ACTION;
 
 /**
  * Created by zhoujianghua on 2015/8/4.
@@ -93,7 +96,13 @@ public class MsgViewHolderArticle extends MsgViewHolderBase {
         Log.d("yeying", "MsgViewHolderDefCustom  onItemClick " + attachment.toString());
         attachment.checkData();
         if (TextUtils.isEmpty(attachment.getId())) {
-//            WebC.startAty(context, attachment.getUrl());
+            Intent intent = new Intent();
+            intent.setClassName(context, WEBCONTAINER_ACTION);
+            Bundle bundle = new Bundle();
+            bundle.putString(IntentKey.EXTRA_URL, attachment.getUrl());
+            bundle.putBoolean(IntentKey.EXTRA_BOOLEAN, true);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         } else {
             Pattern pattern = Pattern.compile("[0-9]*");
             Matcher isNum = pattern.matcher(attachment.getId());
