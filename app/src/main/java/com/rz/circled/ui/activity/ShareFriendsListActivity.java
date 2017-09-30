@@ -97,6 +97,7 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
     @Override
     public void initPresenter() {
         presenter = new FriendPresenter1();
+        presenter.attachView(this);
     }
 
     @Override

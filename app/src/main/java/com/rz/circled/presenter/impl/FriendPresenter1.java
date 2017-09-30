@@ -142,7 +142,9 @@ public class FriendPresenter1 extends GeneralPresenter {
          * 初次加载的策略是通过缓存判断出来的
          */
         List<FriendInformationBean> mLocalAllFriends = new ArrayList<>();
-        mLocalAllFriends.addAll(friendInformationDao.queryForAll());
+        List<FriendInformationBean> friendInformationBeen = friendInformationDao.queryForAll();
+        if (friendInformationBeen != null)
+            mLocalAllFriends.addAll(friendInformationBeen);
         Log.e("tag", "查询当前缓存数据 size=" + mLocalAllFriends.size());
         if (!mLocalAllFriends.isEmpty()) {
             mSaveAllFriends.clear();
