@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -78,7 +79,18 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 //        tvName.setText(model.getContent());
 //        Glide.with(mContext).load(model.getImgUrl()).transform(new GlideCircleImage(mContext)).into(avatarImg);
 
+        Glide.with(mContext).load(model.getImgUrl()).transform(new GlideCircleImage(mContext)).
+                placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+
         rewardTxt.setText("悬赏金额 "+model.getPrice());
+
+
+        float price = Float.valueOf(model.getPrice());
+        DecimalFormat fnum = new DecimalFormat("##0.00");
+        String  dd = fnum.format(price/100);
+        rewardTxt.setText("悬赏金额 "+dd);
+
+
         tvContent.setText(model.getContent());
 
         if(!TextUtils.isEmpty(model.getLocation())){
@@ -90,6 +102,12 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         if( TextUtils.isEmpty(model.getImgUrl())){
             picImg.setVisibility(View.GONE);
+
+//            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            lp.setMargins(2, 0, 0, 0);
+//
+//            tvTime.setLayoutParams(lp);
+
         }else{
             picImg.setVisibility(View.VISIBLE);
         }

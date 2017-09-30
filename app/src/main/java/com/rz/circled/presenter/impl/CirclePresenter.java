@@ -736,7 +736,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             mView.updateView(data);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             }else {
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,loadMore?"没有更多的数据":"您还没有收藏过作品哦");
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,loadMore?"没有更多的数据":"您还没有收藏过内容哦~");
 
                             }
                         }else {

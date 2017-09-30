@@ -49,7 +49,7 @@ public class MyRewardFragment extends BaseFragment implements ScrollableHelper.S
 //    private TextView createTxt;
 //    private TextView answerTxt;
     private String type;
-    private String userid = "";
+//    private String userid = "";
 
     public static MyRewardFragment newInstance(String type) {
         MyRewardFragment frg = new MyRewardFragment();
@@ -148,7 +148,7 @@ public class MyRewardFragment extends BaseFragment implements ScrollableHelper.S
 
     @Override
     public void refreshPage() {
-        ((PersonInfoPresenter) presenter).getMyreward(false, userid,Integer.parseInt(type) ,-100);
+        ((PersonInfoPresenter) presenter).getMyreward(false, Session.getUserId(),Integer.parseInt(type) ,-100);
     }
 
     @Override

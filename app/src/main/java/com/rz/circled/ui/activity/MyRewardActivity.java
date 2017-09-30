@@ -53,7 +53,7 @@ public class MyRewardActivity extends BaseActivity {
 
     @Override
     protected View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.activity_my_private_group, null, false);
+        return inflater.inflate(R.layout.activity_my_reward, null, false);
     }
 
     @Override
@@ -107,6 +107,7 @@ public class MyRewardActivity extends BaseActivity {
         CommonNavigator commonNavigator = new CommonNavigator(mContext);
         commonNavigator.setAdapter(groupNavigatorAdapter = new PrivateGroupNavigatorAdapter(mContext, viewpagerGroup, mDataList));
         commonNavigator.setAdjustMode(true);
+        commonNavigator.setIndicatorOnTop(true);
         indicatorTab.setNavigator(commonNavigator);
         ViewPagerHelper.bind(indicatorTab, viewpagerGroup);
     }
