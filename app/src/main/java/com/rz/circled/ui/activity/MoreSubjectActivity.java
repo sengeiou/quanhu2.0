@@ -20,8 +20,6 @@ import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.ViewHolder;
-import com.rz.common.swiperefresh.SwipyRefreshLayout;
-import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
@@ -38,7 +36,7 @@ import rx.functions.Action1;
  * Created by Administrator on 2017/9/4/004.
  */
 
-public class MoreSubjectActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
+public class MoreSubjectActivity extends BaseActivity {
     @BindView(R.id.lv_subject)
     ListView mLvSubject;
     @BindView(R.id.et_search_keyword_base)
@@ -158,7 +156,12 @@ public class MoreSubjectActivity extends BaseActivity implements SwipyRefreshLay
     }
 
     @Override
-    public void onRefresh(SwipyRefreshLayoutDirection direction) {
+    protected boolean needLoadingView() {
+        return true;
+    }
 
+    @Override
+    protected boolean hasDataInPage() {
+        return mAdapter!=null&&mAdapter.getCount()!=0;
     }
 }
