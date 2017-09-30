@@ -158,4 +158,14 @@ public class AccountDetailAty extends BaseActivity {
     public void refreshPage() {
 
     }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return mAdapter!=null&&mAdapter.getCount()!=0;
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 }

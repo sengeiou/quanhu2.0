@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="@dimen/px376"
+        android:layout_width="@dimen/px316"
         android:layout_height="@dimen/px402"
         android:layout_marginLeft="@dimen/px10"
         android:background="@drawable/hot_famous_bg"

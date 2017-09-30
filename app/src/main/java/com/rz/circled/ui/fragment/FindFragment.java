@@ -247,7 +247,7 @@ public class FindFragment extends BaseFragment {
                 Glide.with(mActivity)
                         .load(hotSubjectModel.getThumbnail())
                         .placeholder(R.drawable.default_subject_bg)
-                        .bitmapTransform(new RoundedCornersTransformation(mActivity, 25, 0, RoundedCornersTransformation.CornerType.LEFT))
+                        .bitmapTransform(new RoundedCornersTransformation(mActivity, 20, 0, RoundedCornersTransformation.CornerType.LEFT))
                         .into(vh.topicIcon);
                 vh.topicName.setText("#"+hotSubjectModel.getTitle()+"#");
                 vh.topicCount.setText(hotSubjectModel.getPartNum() + " 讨论");

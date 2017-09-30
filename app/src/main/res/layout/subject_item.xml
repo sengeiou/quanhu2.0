@@ -13,6 +13,7 @@
     android:layout_width="@dimen/px180"
     android:layout_height="@dimen/px180"
     android:layout_centerVertical="true"
+    android:layout_marginLeft="@dimen/px4"
     android:scaleType="fitXY"
     android:src="@drawable/default_subject_bg"/>
     <TextView

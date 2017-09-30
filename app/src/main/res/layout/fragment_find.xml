@@ -85,7 +85,7 @@
                     android:layout_toRightOf="@+id/circle_theme"
                     android:text="@string/circle_hot_famous"
                     android:textColor="@color/color_6b6b6b"
-                    android:textSize="@dimen/px48"
+                    android:textSize="@dimen/px40"
                     />
 
                 <TextView
@@ -137,7 +137,7 @@
                     android:layout_toRightOf="@+id/iv_subject"
                     android:text="@string/circle_hot_subject"
                     android:textColor="@color/color_6b6b6b"
-                    android:textSize="@dimen/px48"
+                    android:textSize="@dimen/px40"
                     />
 
                 <TextView
@@ -189,7 +189,7 @@
                     android:layout_toRightOf="@+id/iv_activity"
                     android:text="@string/circle_new_activity"
                     android:textColor="@color/color_6b6b6b"
-                    android:textSize="@dimen/px48"
+                    android:textSize="@dimen/px40"
                     />
 
                 <TextView
