@@ -118,7 +118,7 @@
         <item name="android:includeFontPadding">false</item>
         <item name="android:layout_marginRight">@dimen/px14</item>
         <item name="android:textColor">@color/color_999</item>
-        <item name="android:textSize">@dimen/font_40</item>
+        <item name="android:textSize">@dimen/px38</item>
         <item name="android:text">2 阅读</item>
     </style>
 

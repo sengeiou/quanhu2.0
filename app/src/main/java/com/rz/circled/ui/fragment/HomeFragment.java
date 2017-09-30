@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.netease.nimlib.jsbridge.util.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgService;
@@ -201,33 +202,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CircleDynamic circleDynamic = circleDynamicList.get(position-1);
-//        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535243033497698304")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<ResponseData>() {
-//                    @Override
-//                    public void call(ResponseData responseData) {
-//
-//                    }
-//                });
-//        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535319157498134528")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<ResponseData>() {
-//                    @Override
-//                    public void call(ResponseData responseData) {
-//
-//                    }
-//                });
-//        Http.getApiService(ApiService.class).addCollect(Session.getUserId(),"535319157498134528")
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<ResponseData>() {
-//                    @Override
-//                    public void call(ResponseData responseData) {
-//
-//                    }
-//                });
         circleDynamic.click += 1;
         if (circleDynamic.click >= 3) {
             mPresenter.addLoveCircle(circleDynamic.circleId, 2);

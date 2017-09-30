@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,12 +25,10 @@ import com.rz.circled.adapter.MyFragmentStatePagerAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
-import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
 import com.rz.circled.ui.fragment.MyActivityFragment;
 import com.rz.circled.ui.fragment.MyArticleFragment;
 import com.rz.circled.ui.fragment.MyCircleFragment;
-import com.rz.circled.ui.fragment.MyRewardFragment;
 import com.rz.circled.ui.fragment.UserRewardFragment;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
@@ -46,14 +42,12 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.yryz.yunxinim.session.SessionHelper;
-import com.yryz.yunxinim.uikit.NimUIKit;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -286,6 +280,7 @@ public class UserInfoActivity extends BaseActivity {
 
         if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
             addFriendLayout.setVisibility(View.GONE);
+            Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
         }
 
         if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
@@ -350,7 +345,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void setData(FriendInformationBean model) {
-        addFriendLayout.setVisibility(View.VISIBLE);
+
         if (model == null) {
             if (userId.equals(Session.getUserId())) {
                 Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
@@ -387,11 +382,14 @@ public class UserInfoActivity extends BaseActivity {
             }
 
             if (model.getRelation() == 0) {
+                addFriendLayout.setVisibility(View.VISIBLE);
                 //陌生人
                 addFriendBtn.setText("加好友");
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 
-            } else {  //好友
+            } else {
+                addFriendLayout.setVisibility(View.VISIBLE);
+                //好友
                 addFriendBtn.setText("聊天");
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 

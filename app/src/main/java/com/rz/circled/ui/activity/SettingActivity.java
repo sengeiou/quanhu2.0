@@ -153,6 +153,8 @@ public class SettingActivity extends BaseActivity {
 
     @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit})
     public void onClick(View view) {
+        View dialogView = LayoutInflater.from(aty).inflate(R.layout.comm_dialog, null);
+        final Dialog dialog = DialogUtils.selfDialog(aty, dialogView, false);
         switch (view.getId()) {
             //账户与安全
             case R.id.id_layout_account_and_safe:
@@ -173,16 +175,29 @@ public class SettingActivity extends BaseActivity {
                 break;
             //清除缓存
             case R.id.id_layout_clean_cache:
-                mTxtCacheNum.setText("0M");
-                DataCleanManager.clearAllCache(this);
-                Session.setUserIsFirstDownload(false);
-//                SVProgressHUD.showSuccessWithStatus(aty, getString(R.string.clean_cache_complete));
-                Toast.makeText(mContext,getString(R.string.clean_cache_complete),Toast.LENGTH_LONG).show();
+                dialog.show();
+                ((TextView) dialogView.findViewById(R.id.id_tv_message)).setText(getString(R.string.clear_cache));
+                dialogView.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        mTxtCacheNum.setText("0M");
+                        DataCleanManager.clearAllCache(mContext);
+                        Session.setUserIsFirstDownload(false);
+                        Toast.makeText(mContext,getString(R.string.clean_cache_complete),Toast.LENGTH_LONG).show();
+
+                    }
+                });
+                dialogView.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
                 break;
             //退出
             case R.id.id_btn_exit:
-                View dialogView = LayoutInflater.from(aty).inflate(R.layout.comm_dialog, null);
-                final Dialog dialog = DialogUtils.selfDialog(aty, dialogView, false);
                 dialog.show();
                 ((TextView) dialogView.findViewById(R.id.id_tv_message)).setText(getString(R.string.quit_confirm));
                 dialogView.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {

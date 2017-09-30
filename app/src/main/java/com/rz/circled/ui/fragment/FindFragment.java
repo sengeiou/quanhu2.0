@@ -56,6 +56,7 @@ import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.rz.common.constant.Constants.FIND_LOVE_CACHE;
+import static com.rz.common.constant.Constants.LOVE_CIRCLE;
 import static com.rz.common.utils.SystemUtils.trackUser;
 
 /**
@@ -166,6 +167,7 @@ public class FindFragment extends BaseFragment {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
                 if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
                     Intent intent = new Intent(mActivity, AllCirclesAty.class);
+                    intent.putExtra(LOVE_CIRCLE, (Serializable) circleEntrModleList);
                     getActivity().startActivity(intent);
                 } else {
                     circleEntrModle.click += 1;

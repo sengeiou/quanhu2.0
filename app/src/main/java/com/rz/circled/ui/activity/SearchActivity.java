@@ -185,6 +185,19 @@ public class SearchActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
+
+//            if(position == TYPE_CONTENT){
+//                etKeyword.setHint(R.string.tab_content);
+//            }else if(position == TYPE_PRIVATE){
+//
+//            }else if(position == TYPE_PRIVATE){
+//
+//            }else if(position == TYPE_CIRCLE){
+//
+//            }else if(position == TYPE_REWARD){
+//
+//            }
+
             if (position == TYPE_CONTENT)
                 return SearchContentFragment.newInstance();     //搜索内容
             if (position == TYPE_PERSON)
@@ -195,7 +208,6 @@ public class SearchActivity extends BaseActivity {
                 return SearchCircleFragment.newInstance();            //搜索圈子
             if (position == TYPE_REWARD)
                 return SearchRewardFragment.newInstance();      //搜索悬赏
-
 
             return SearchContentFragment.newInstance();
         }

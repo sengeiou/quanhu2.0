@@ -88,6 +88,7 @@
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/px10"
+            android:singleLine="true"
             />
 
         <LinearLayout
@@ -110,7 +111,7 @@
                 android:id="@+id/user_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="gggggg"
+                android:text=""
                 android:textSize="@dimen/font_38"
                 android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/px18"

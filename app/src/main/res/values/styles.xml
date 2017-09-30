@@ -146,7 +146,7 @@
         <item name="android:layout_width">10dp</item>
     </style>
 
-    <style name="GridPasswordView" />
+    <style name="GridPasswordView"/>
 
     <style name="GridPasswordView.TextView">
         <item name="android:layout_width">0dp</item>
@@ -337,6 +337,7 @@
         <item name="android:textSize">@dimen/font_44</item>
         <item name="android:textColor">@color/font_gray_a</item>
         <item name="android:layout_marginLeft">@dimen/px25</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="ProveItemTvBlack.s">

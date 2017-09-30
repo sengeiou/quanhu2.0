@@ -103,7 +103,7 @@ public class RewardScoreAty extends BaseActivity {
                 break;
             //平台奖励规则
             case R.id.tv_reward_score_to_rule:
-                CommonH5Activity.startCommonH5(aty, "", H5Address.REWARD_RULE);
+                CommonH5Activity.startCommonH5(aty, "圈乎", H5Address.REWARD_RULE);
                 break;
         }
     }

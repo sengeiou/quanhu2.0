@@ -623,7 +623,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
             titlebarSignTxt.setText("已签到");
             titlebarSignTxt.setLayoutParams(lp);
-            setData();
+
+            //签到成功，重新拉取积分
+            //获取数据统计
+            ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
+//            setData();
 
         }
     }
@@ -843,6 +847,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             setData();
         }
         if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
+            setData();
+            return;
+        }
+
+        if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
             setData();
             return;
         }

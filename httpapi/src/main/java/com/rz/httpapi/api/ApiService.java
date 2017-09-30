@@ -761,6 +761,20 @@ public interface ApiService {
 
 
     /**
+     * 加好友通过手机号（申请、同意、拒绝）
+     *
+     * @param aCustId 加好友发起者custId（是）
+     * @param phone   手机号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIFriend.REQUIRE_FRIEND_STATUS)
+    Call<ResponseData<RequireFriendByPhoneModel>> getRequireFriend(
+            @Field("custId") String aCustId,
+            @Field("fid") String phone
+    );
+
+    /**
      * 好友删除
      *
      * @param custId 加好友发起者custId

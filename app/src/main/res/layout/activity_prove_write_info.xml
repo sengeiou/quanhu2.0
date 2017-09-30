@@ -140,7 +140,8 @@
 
                 <TextView
                     style="@style/ProveItemTvGray"
-                    android:text="@string/un_required"/>
+                    android:text="@string/un_required"
+                    android:visibility="visible"/>
 
                 <EditText
                     android:id="@+id/et_prove_media_account"

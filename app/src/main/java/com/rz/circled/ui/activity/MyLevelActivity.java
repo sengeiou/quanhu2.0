@@ -116,7 +116,7 @@ public class MyLevelActivity extends BaseActivity {
                 if (acountBean == null) return;
                 tvMyLevelCount.setText(acountBean.getGrowLevel());
                 tvMyLevelGrowCount.setText(String.valueOf(acountBean.getGrow()));
-                rangeBar.setSeekPinByIndex(Integer.parseInt(acountBean.getGrowLevel()));
+                rangeBar.setSeekPinByIndex(acountBean.getGrowLevel()==null?0:Integer.parseInt(acountBean.getGrowLevel()));
             }
             if (flag == presenter.FLAG_LEVEL_LIST) {
                 layoutRefresh.setRefreshing(false);
