@@ -234,13 +234,13 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     vh.question_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, question.createUserId);
+                            UserInfoActivity.newFrindInfo(mContext, question.custId);
                         }
                     });
                     vh.answer_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, answer.createUserId);
+                            UserInfoActivity.newFrindInfo(mContext, answer.custId);
                         }
                     });
 
