@@ -72,7 +72,7 @@
     <!--<string name="search_content_hint"></string>-->
     
     <!--最多选择多少张图片-->
-    <string name="max_size_choose_pic_hint">做多选择%1$d张</string>
+    <string name="max_size_choose_pic_hint">最多选择%1$d张</string>
     <string name="comment">评论</string>
     <string name="send">发送</string>
     <string name="upload_pic">上传图片</string>
