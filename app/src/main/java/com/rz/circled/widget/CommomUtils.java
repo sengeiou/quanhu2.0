@@ -226,6 +226,11 @@ public class CommomUtils {
         String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/" + moduleId + "/" + resourceId;
         return url;
     }
+    //活动作品url
+    public static String getProductUrl(String activityId,String id) {
+        String url = BuildConfig.WebHomeBaseUrl +"/activity/platform-activity/vote/"+ activityId+ "/detail/" + id;
+        return url;
+    }
 
     /**
      * 转发详情页内嵌Webview网址
