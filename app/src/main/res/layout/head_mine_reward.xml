@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/px280"
     android:background="@mipmap/receive_reward_bg"
     android:layout_marginTop="@dimen/px44"
     android:padding="@dimen/px10"
@@ -17,14 +17,13 @@
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/font_44"
         android:textColor="@color/white"
-        android:layout_marginTop="@dimen/px40"
+        android:layout_marginTop="@dimen/px20"
         android:gravity="center"
         />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/px25"
         android:layout_gravity="center_horizontal"
         >
         <TextView
@@ -58,8 +57,6 @@
         android:textColor="@color/color_ffffff"
         android:text="@string/look_detail_txt"
         android:textSize="@dimen/font_34"
-        android:layout_marginTop="@dimen/px25"
-        android:layout_marginBottom="@dimen/px40"
         />
 
 </LinearLayout>

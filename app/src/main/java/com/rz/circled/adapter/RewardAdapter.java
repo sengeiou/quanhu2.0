@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +18,8 @@ import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.MyRewardBean;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,12 +56,16 @@ public class RewardAdapter extends CommonAdapter {
             tvName.setText(model.getUser().getCustNname());
         }
 
-        if(!TextUtils.isEmpty(model.getUser().getCustImg())){
-            Glide.with(mContext).load(model.getUser().getCustImg()).transform(new GlideCircleImage(mContext)).into(avatarImg);
-        }
+        Glide.with(mContext).load(model.getUser().getCustImg()).transform(new GlideCircleImage(mContext)).
+                placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
 
-        if(!TextUtils.isEmpty(model.getPics())){
-            rewardTxt.setText("悬赏金额 "+model.getPrice()+"圈币");
+        if(!TextUtils.isEmpty(model.getPrice())){
+            float price = Float.valueOf(model.getPrice());
+            DecimalFormat fnum = new DecimalFormat("##0.00");
+            String  dd = fnum.format(price/100);
+            rewardTxt.setText("悬赏金额 "+dd);
+        }else{
+            rewardTxt.setText("悬赏金额 0.00");
         }
 
         if(!TextUtils.isEmpty(model.getContent())){
@@ -74,6 +81,12 @@ public class RewardAdapter extends CommonAdapter {
 
         if( TextUtils.isEmpty(model.getPics())){
             picImg.setVisibility(View.GONE);
+
+//            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            lp.setMargins(2, 0, 0, 0);
+//
+//            tvTime.setLayoutParams(lp);
+
         }else{
             picImg.setVisibility(View.VISIBLE);
         }
@@ -105,7 +118,6 @@ public class RewardAdapter extends CommonAdapter {
                     tvTime.setText("还剩" + time3 + "分");
                 }
             }
-//            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
         }else if(model.getComplete() == 2){
             tvStatus.setTextColor(ContextCompat.getColor(mContext,R.color.font_gray_m));
             tvStatus.setText("已完成");
@@ -120,7 +132,7 @@ public class RewardAdapter extends CommonAdapter {
             tvPerNum.setVisibility(View.GONE);
         }else{
             tvPerNum.setVisibility(View.VISIBLE);
-            tvPerNum.setText(model.getReplyNum()+"人参加");
+            tvPerNum.setText("该悬赏有"+model.getReplyNum()+"个回答");
         }
     }
 

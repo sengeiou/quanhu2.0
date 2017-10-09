@@ -66,6 +66,11 @@
     <string name="tab_person">用户</string>
     <string name="tab_circle">圈子</string>
 
+    <!--<string name="search_content_hint">搜索感兴趣的圈子、达人、私圈、资源...</string>-->
+    <!--<string name="search__hint">输入昵称搜索</string>-->
+    <!--<string name="search_content_hint"></string>-->
+    <!--<string name="search_content_hint"></string>-->
+    
     <!--最多选择多少张图片-->
     <string name="max_size_choose_pic_hint">做多选择%1$d张</string>
     <string name="comment">评论</string>
@@ -634,7 +639,7 @@
     <string name="rewarded_artical">被打赏的作品</string>
     <string name="waring_login">返回登录页，选择其他登录方式？</string>
     <string name="account_lock">您的账户已被锁定，请联系客服</string>
-    <string name="bug_empty_txt">您还没有购买没任何内容哦~</string>
+    <string name="bug_empty_txt">您还没有购买过内容哦~</string>
     <string name="raward_empty_txt">您还没有打赏过作品哦~</string>
     <string name="rewarded_empty_txt">您还没有被打赏过任何作品哦~</string>
 

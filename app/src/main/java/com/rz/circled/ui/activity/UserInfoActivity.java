@@ -281,6 +281,7 @@ public class UserInfoActivity extends BaseActivity {
         if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
             addFriendLayout.setVisibility(View.GONE);
             Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
+//            addFriendBtn.setText("");
         }
 
         if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
