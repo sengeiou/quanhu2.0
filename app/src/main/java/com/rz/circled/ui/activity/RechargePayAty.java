@@ -191,8 +191,8 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
             return;
         }
         if (!StringUtils.isEmpty(mRechargeMoney)) {
-            ((PayPresenter) presenter).pay(Session.getUserId(), PAY_ALI_TYPE, (Double.parseDouble(mRechargeMoney) * 100 + ""), Currency.RMB);
-//            ((PayPresenter) presenter).pay(Session.getUserId(), PAY_ALI_TYPE, (1 + ""), Currency.RMB);
+            presenter.pay(Session.getUserId(), PAY_ALI_TYPE, (Double.parseDouble(mRechargeMoney) * 100 + ""), Currency.RMB);
+//            presenter.pay(Session.getUserId(), PAY_ALI_TYPE, (1 + ""), Currency.RMB);
         } else {
             SVProgressHUD.showInfoWithStatus(aty, "充值金额有误");
         }
