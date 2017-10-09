@@ -18,6 +18,7 @@ public class ExjsonCollection {
         public long lastUpdateDate;
         public String appName;
         public String tenantId;
+        public String custId;
         public String coterieId;
         public int id;
         public Object title;
@@ -81,6 +82,7 @@ public class ExjsonCollection {
         public String appName;
         public String tenantId;
         public String coterieId;
+        public String custId;
         public int id;
         public int questionId;
         public String content;

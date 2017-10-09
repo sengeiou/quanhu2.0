@@ -41,8 +41,8 @@ public class PayOrderHandler extends ServerHandler {
         Callback callback = new Callback(webViewProxy, paramsObject.getInvokeId(), paramsObject.getInvokeName()) {
             @Override
             public void invoke(Object businessParms, BaseParamsObject baseParamsObject) {
-                HashMap<String, Object> hashMap = (HashMap<String, Object>) businessParms;
-                baseParamsObject.data = hashMap;
+//                HashMap<String, Object> hashMap = (HashMap<String, Object>) businessParms;
+//                baseParamsObject.data = hashMap;
             }
         };
         return callback;
