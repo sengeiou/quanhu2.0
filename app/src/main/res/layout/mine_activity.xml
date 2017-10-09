@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/color_f5f5f5"
-        android:paddingLeft="@dimen/font_34"
-        android:paddingRight="@dimen/font_34"
+        android:paddingLeft="@dimen/px34"
+        android:paddingRight="@dimen/px34"
         android:visibility="visible"
         >
     </ListView>

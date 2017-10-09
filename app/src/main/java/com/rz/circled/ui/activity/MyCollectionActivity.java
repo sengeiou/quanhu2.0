@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.modle.ExjsonCollectionActivityProduct;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.GlideCenterRoundImage;
@@ -91,6 +92,14 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                 } else {
                     CollectionBean.CoterieInfoBean coterieInfo = collectionBean.coterieInfo;
                     CollectionBean.ResourceInfoBean resourceInfo = collectionBean.resourceInfo;
+                    String resourceType = resourceInfo.getResourceType();
+                    if ("1007".equals(resourceType)) {
+                        String extjson = resourceInfo.extjson;
+                        ExjsonCollectionActivityProduct product = gson.fromJson(extjson, ExjsonCollectionActivityProduct.class);
+                        String productUrl = CommomUtils.getProductUrl(product.activityInfoId, product.id);
+                        WebContainerActivity.startActivity(mContext, productUrl);
+                        return;
+                    }
                     if (StringUtils.isEmpty(coterieInfo.getCoterieId()) || StringUtils.isEmpty(coterieInfo.getName())) {
                         String circleUrl = CommomUtils.getCircleUrl(resourceInfo.getCircleRoute(), resourceInfo.getModuleEnum(), resourceInfo.getResourceId());
                         WebContainerActivity.startActivity(mContext, circleUrl);
@@ -177,7 +186,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                 final ExjsonCollection.QuestionBean question = exjson.question;
                 Log.i(TAG, "getView: " + extjson.toString());
                 String resourceType = resourceInfo.getResourceType();
-                //文章(1000)、话题(1001)、帖子(1002)、问题(1003)、答案(1004)、活动(1005)、悬赏(1006)
+                //文章(1000)、话题(1001)、帖子(1002)、问题(1003)、答案(1004)、活动(1005)、悬赏(1006)活动作品(1007)
                 //1.0版本收藏只有文章,帖子,活动,和问答
                 if ("1003".equals(resourceType) || "1004".equals(resourceType)) {
                     viewHold vh = new viewHold();
@@ -207,7 +216,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     } else {
                         if (!StringUtils.isEmpty(answer.imgUrl)) {
                             vh.iv_answer.setVisibility(View.VISIBLE);
-                            Glide.with(mContext).load(answer.imgUrl).transform(new GlideCenterRoundImage(mContext,10)).into(vh.iv_answer);
+                            Glide.with(mContext).load(answer.imgUrl).transform(new GlideCenterRoundImage(mContext, 10)).into(vh.iv_answer);
                         } else {
                             vh.iv_answer.setVisibility(View.GONE);
                         }
@@ -255,57 +264,61 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     TextView content = (TextView) convertView.findViewById(R.id.tv_des);
                     ViewGroup mImageLayout = (ViewGroup) convertView.findViewById(R.id.layout_image);
                     fromWhere.setTextColor(getResources().getColor(R.color.color_999999));
-                    if ("1005".equals(resourceType)) {
-                        //如果是活动隐藏头部信息和脚部信息
-                        fromWhere.setVisibility(View.GONE);
-                    } else {
-                        fromWhere.setVisibility(View.VISIBLE);
-                    }
                     //title是null说明是帖子
                     if (TextUtils.isEmpty(resourceInfo.getTitle())) {
                         content.setMaxLines(4);
                         title.setVisibility(View.GONE);
                     } else {
-                        title.setText("1001".equals(resourceType)?"#"+resourceInfo.getTitle()+"#":resourceInfo.getTitle());
+                        title.setText("1001".equals(resourceType) ? "#" + resourceInfo.getTitle() + "#" : resourceInfo.getTitle());
                         title.setVisibility(View.VISIBLE);
                     }
                     content.setText(resourceInfo.getContent());
                     tv_name.setText(user.getCustNname());
-                    //多图区域
-                    String pics1 = resourceInfo.getPics();
-                    if (TextUtils.isEmpty(pics1)) {
-                        mImageLayout.setVisibility(View.GONE);
+                    if ("1005".equals(resourceType) || "1007".equals(resourceType)) {
+                        //如果是活动隐藏头部信息和脚部信息
+                        fromWhere.setVisibility(View.GONE);
+                        only_iv.setVisibility(View.VISIBLE);
+                        iv_layout.setVisibility(View.GONE);
+                        String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), resourceInfo.getThumnail(), R.dimen.px994, R.dimen.px558);
+                        Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(only_iv);
                     } else {
-                        mImageLayout.setVisibility(View.VISIBLE);
-                        String[] pics = pics1.split(",");
-                        if (pics.length == 1) {
-                            only_iv.setVisibility(View.VISIBLE);
-                            iv_layout.setVisibility(View.GONE);
-                            String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics1, R.dimen.px994, R.dimen.px558);
-                            Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(only_iv);
+                        fromWhere.setVisibility(View.VISIBLE);
+                        //多图区域
+                        String pics1 = resourceInfo.getPics();
+                        if (TextUtils.isEmpty(pics1)) {
+                            mImageLayout.setVisibility(View.GONE);
                         } else {
-                            only_iv.setVisibility(View.GONE);
-                            iv_layout.setVisibility(View.VISIBLE);
-                            iv_1.setVisibility(View.INVISIBLE);
-                            iv_2.setVisibility(View.INVISIBLE);
-                            iv_3.setVisibility(View.INVISIBLE);
-                            ImageView iv = null;
-                            for (int i = 0; i < pics.length; i++) {
-                                if (i >= 3) {
-                                    break;
+                            mImageLayout.setVisibility(View.VISIBLE);
+                            String[] pics = pics1.split(",");
+                            if (pics.length == 1) {
+                                only_iv.setVisibility(View.VISIBLE);
+                                iv_layout.setVisibility(View.GONE);
+                                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics1, R.dimen.px994, R.dimen.px558);
+                                Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(only_iv);
+                            } else {
+                                only_iv.setVisibility(View.GONE);
+                                iv_layout.setVisibility(View.VISIBLE);
+                                iv_1.setVisibility(View.INVISIBLE);
+                                iv_2.setVisibility(View.INVISIBLE);
+                                iv_3.setVisibility(View.INVISIBLE);
+                                ImageView iv = null;
+                                for (int i = 0; i < pics.length; i++) {
+                                    if (i >= 3) {
+                                        break;
+                                    }
+                                    if (i == 0) {
+                                        iv_1.setVisibility(View.VISIBLE);
+                                        iv = iv_1;
+                                    } else if (i == 1) {
+                                        iv_2.setVisibility(View.VISIBLE);
+                                        iv = iv_2;
+                                    } else if (i == 2) {
+                                        iv_3.setVisibility(View.VISIBLE);
+                                        iv = iv_3;
+                                    }
+                                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i], R.dimen.px320, R.dimen.px320);
+                                    Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img3).transform(new GlideCenterRoundImage(mContext, 10)).into(iv);
                                 }
-                                if (i == 0) {
-                                    iv_1.setVisibility(View.VISIBLE);
-                                    iv = iv_1;
-                                } else if (i == 1) {
-                                    iv_2.setVisibility(View.VISIBLE);
-                                    iv = iv_2;
-                                } else if (i == 2) {
-                                    iv_3.setVisibility(View.VISIBLE);
-                                    iv = iv_3;
-                                }
-                                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i], R.dimen.px320, R.dimen.px320);
-                                Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img3).transform(new GlideCenterRoundImage(mContext, 10)).into(iv);
                             }
                         }
                     }

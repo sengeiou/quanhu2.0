@@ -135,7 +135,7 @@ public class CollectionBean {
         private String resourceTag;
         private String resourceType;
         private String summary;
-        private String thumnail;
+        private String thumbnail;
         private String title;
         private String video;
         private String videoPic;
@@ -261,11 +261,11 @@ public class CollectionBean {
         }
 
         public String getThumnail() {
-            return thumnail;
+            return thumbnail;
         }
 
         public void setThumnail(String thumnail) {
-            this.thumnail = thumnail;
+            this.thumbnail = thumnail;
         }
 
         public String getTitle() {
