@@ -170,6 +170,9 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
             View view = View.inflate(mActivity, R.layout.foot_view, null);
             if(lvReward.getFooterViewsCount()<=0){
                 lvReward.addFooterView(view);
+
+                rewardAdapter.notifyDataSetChanged();
+                lvReward.setAdapter(rewardAdapter);
             }
         }
     }

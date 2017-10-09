@@ -175,12 +175,7 @@ public class SearchPresenter extends GeneralPresenter {
                         }
                         return;
                     } else {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            }
-                        }, 2000);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                         isNoData = true;
                         return;
                     }

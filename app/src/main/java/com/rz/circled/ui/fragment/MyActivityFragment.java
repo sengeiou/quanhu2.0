@@ -71,7 +71,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.activity_article, null);
+        return inflater.inflate(R.layout.activity_mineactivity, null);
     }
 
 
@@ -218,6 +218,9 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             View view = View.inflate(mActivity, R.layout.foot_view, null);
             if(mLv.getFooterViewsCount()<=0){
                 mLv.addFooterView(view);
+
+                mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+                mLv.setAdapter(mEntitiesBeanCommonAdapter);
             }
         }
     }

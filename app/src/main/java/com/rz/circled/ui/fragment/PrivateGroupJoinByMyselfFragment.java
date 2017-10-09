@@ -221,6 +221,9 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             View view = View.inflate(mActivity, R.layout.foot_view, null);
             if(lv.getFooterViewsCount()<=0){
                 lv.addFooterView(view);
+
+                mAdapter.notifyDataSetChanged();
+                lv.setAdapter(mAdapter);
             }
         }
     }

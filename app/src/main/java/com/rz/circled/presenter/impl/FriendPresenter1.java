@@ -34,6 +34,7 @@ import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRelationModel;
 import com.rz.httpapi.bean.FriendRequireModel;
+import com.rz.httpapi.bean.RequestFriendStatusBean;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.constans.ReturnCode;
 
@@ -441,8 +442,8 @@ public class FriendPresenter1 extends GeneralPresenter {
                             default:
                                 break;
                         }
-//                        event.infoId = fid;
-//                        EventBus.getDefault().post(event);
+                        event.data = fid;
+                        EventBus.getDefault().post(event);
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
@@ -753,6 +754,56 @@ public class FriendPresenter1 extends GeneralPresenter {
             }
         });
     }
+
+
+
+    /**
+     * 根据好友id获取好友详情
+     *
+     * @param fid
+     */
+    public void getFriendRequire(String fid) {
+
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
+        Call<ResponseData<RequestFriendStatusBean>> call = service
+                .getRequireFriend(Session.getUserId(), fid);
+
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<RequestFriendStatusBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<RequestFriendStatusBean>> call, Response<ResponseData<RequestFriendStatusBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<RequestFriendStatusBean> res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                        RequestFriendStatusBean model = res.getData();
+                        mView.updateView(model);
+                    } else if (HandleRetCode.handler(mContext, res)) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                            }
+                        }, 2000);
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<RequestFriendStatusBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+            }
+        });
+    }
+
 
     /**
      * 根据好友id获取好友圈子图片

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.StringFormatUtil;
 import com.rz.httpapi.bean.StarListBean;
 
@@ -49,7 +50,9 @@ public class SearchUserAdapter extends SearchCommonAdapter {
                 //name  或者 info 包含keyWord 则显示为蓝色字体
         tvName.setText(stringFormatUtil.getResult());
 //        tvName.append(getSpan(""));//替换文本
-        Glide.with(mContext).load(starListBean.getCustImg()).transform(new GlideCircleImage(mContext)).into(ivIcon);
+        Glide.with(mContext).load(starListBean.getCustImg()).transform(new GlideCircleImage(mContext)).
+                placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(ivIcon);
+
 
         if(TextUtils.isEmpty(starListBean.getCustSignature())){
             tvInfo.setText(starListBean.getCustSignature());
