@@ -65,6 +65,7 @@
     <string name="account_recharge">充值</string>
     <string name="recharge_money">充值金额</string>
     <string name="backstage_configuration_error">后台配置错误</string>
+    <string name="clear_chach">确定要清空吗？</string>
 
     <string name="user_kick_hint">您已在其他地方登录,请重新登录</string>
 

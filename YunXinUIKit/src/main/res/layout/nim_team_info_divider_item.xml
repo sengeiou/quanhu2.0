@@ -46,12 +46,12 @@
 
         <ImageView
             android:id="@+id/item_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px27"
+            android:layout_height="@dimen/px45"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/nim_arrow_right"
+            android:src="@mipmap/ic_right_arrow"
             android:visibility="invisible" />
     </RelativeLayout>
 

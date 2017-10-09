@@ -341,7 +341,7 @@ public class QHApplication extends BaseApplication {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         setLoggingInterceptor(builder);
         setCookieJar(builder);
-        setHeaderInterceptor(this, builder, DesUtils.encrypt(Session.getNowAct() + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", ""));
+        setHeaderInterceptor(this, builder);
         setCacheDirectory(builder);
         setCacheInterceptor(builder);
         setTimeout(builder);
@@ -396,17 +396,18 @@ public class QHApplication extends BaseApplication {
      *
      * @param builder
      */
-    private static void setHeaderInterceptor(final Context mContent, OkHttpClient.Builder builder, final String sign) {
+    private static void setHeaderInterceptor(final Context mContent, OkHttpClient.Builder builder) {
         Log.d("token", "setHeaderInterceptor");
         if (builder != null) {
             Interceptor headerInterceptor = new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
+                    String sign = DesUtils.encrypt(Session.getNowAct() + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", "");
                     Request originalRequest = chain.request();
                     Request.Builder requestBuilder = originalRequest.newBuilder()
                             .header("devType", "2")
                             .header("sign", sign);
-                    Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey());
+                    Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey() + "   ==sign== " + sign);
                     if (!TextUtils.isEmpty(Session.getSessionKey())) {
                         requestBuilder.header("token", Session.getSessionKey());
                     }

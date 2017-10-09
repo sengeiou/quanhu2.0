@@ -58,7 +58,12 @@ public class MineRewardAdapter extends CommonAdapter {
         String time3 = timeArray[2];
 
         if(Integer.parseInt(time1)>0){
-            tvTime.setText(time1+"天" + time2 + "时" + time3 + "分前" );
+            if(Integer.valueOf(time1)>=2){
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                tvTime.setText(sdf2.format(res));
+            }else{
+                tvTime.setText(time1+"天" + time2 + "时" + time3 + "分前" );
+            }
         }else{
             if(Integer.parseInt(time2)>0){
                 tvTime.setText(time2 + "时" + time3 + "分前");
@@ -69,7 +74,7 @@ public class MineRewardAdapter extends CommonAdapter {
 
         tvName.setText(model.getUser().getCustNname());
 //        tvTime.setText(model.getCreateTime()+"");
-        tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice() +"("+ model.getGiftInfo().getName()+")给");
+        tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice() +"悠然币("+ model.getGiftInfo().getName()+")给");
 
         if( !TextUtils.isEmpty(model.getResourceInfo().getPics())){
             rewardImg.setVisibility(View.VISIBLE);

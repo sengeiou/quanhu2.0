@@ -106,12 +106,15 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (StringUtils.isEmpty(circleDynamicList.get(position).coterieId)||StringUtils.isEmpty(circleDynamicList.get(position).coterieName)) {
-                    String circleUrl = CommomUtils.getCircleUrl(circleDynamicList.get(position).circleRoute,circleDynamicList.get(position).moduleEnum, circleDynamicList.get(position).resourceId);
-                    WebContainerActivity.startActivity(mActivity, circleUrl);
-                } else {
-                    String url = CommomUtils.getDymanicUrl(circleDynamicList.get(position).circleRoute,circleDynamicList.get(position).moduleEnum, circleDynamicList.get(position).coterieId, circleDynamicList.get(position).resourceId);
-                    WebContainerActivity.startActivity(mActivity, url);
+
+                if(position != circleDynamicList.size()){
+                    if (StringUtils.isEmpty(circleDynamicList.get(position).coterieId)||StringUtils.isEmpty(circleDynamicList.get(position).coterieName)) {
+                        String circleUrl = CommomUtils.getCircleUrl(circleDynamicList.get(position).circleRoute,circleDynamicList.get(position).moduleEnum, circleDynamicList.get(position).resourceId);
+                        WebContainerActivity.startActivity(mActivity, circleUrl);
+                    } else {
+                        String url = CommomUtils.getDymanicUrl(circleDynamicList.get(position).circleRoute,circleDynamicList.get(position).moduleEnum, circleDynamicList.get(position).coterieId, circleDynamicList.get(position).resourceId);
+                        WebContainerActivity.startActivity(mActivity, url);
+                    }
                 }
             }
         });
@@ -163,9 +166,15 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            View view = View.inflate(mActivity, R.layout.foot_view, null);
             if(mListView.getFooterViewsCount()<=0){
+
+                LayoutInflater inflater = LayoutInflater.from(mActivity);
+                View view = inflater.inflate(R.layout.foot_view, null);
+
+//                View view = LayoutInflater.inflate()inflate(R.layout.foot_view, null);
                 mListView.addFooterView(view);
+//                dynamicAdapter.notifyDataSetChanged();
+//                mListView.setAdapter(dynamicAdapter);
             }
         }
     }
