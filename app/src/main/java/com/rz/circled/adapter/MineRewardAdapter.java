@@ -60,7 +60,7 @@ public class MineRewardAdapter extends CommonAdapter {
         if(Integer.parseInt(time1)>0){
             if(Integer.valueOf(time1)>=2){
                 SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                tvTime.setText(sdf2.format(res));
+                tvTime.setText(sdf2.format(model.getCreateTime()));
             }else{
                 tvTime.setText(time1+"天" + time2 + "时" + time3 + "分前" );
             }
