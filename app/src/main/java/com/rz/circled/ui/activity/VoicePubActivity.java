@@ -470,8 +470,8 @@ public class VoicePubActivity extends BaseActivity {
     }
 
     public void callResult(boolean result) {
-        if (audioDuration > CommonCode.Constant.MAX_INTERVAL_TIME * 100)
-            audioDuration = CommonCode.Constant.MAX_INTERVAL_TIME * 100;
+        if (audioDuration > CommonCode.Constant.MAX_INTERVAL_TIME * 1000)//180000
+            audioDuration = CommonCode.Constant.MAX_INTERVAL_TIME * 1000;
         HashMap<String, Object> map = new HashMap<>();
         map.put("url", uploadedUrl);
         map.put("audioTime", audioDuration);
