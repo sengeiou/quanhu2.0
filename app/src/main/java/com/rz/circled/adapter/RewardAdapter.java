@@ -99,7 +99,8 @@ public class RewardAdapter extends CommonAdapter {
 
         //判断悬赏是否在进行中
         if(model.getComplete() == 1){
-            tvStatus.setTextColor(mContext.getColor(R.color.colorAccent));
+
+            tvStatus.setTextColor(ContextCompat.getColor(mContext,R.color.colorAccent));
             tvStatus.setText("进行中");
             tvTime.setVisibility(View.VISIBLE);
 

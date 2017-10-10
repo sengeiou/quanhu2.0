@@ -201,7 +201,7 @@ public class PersonAreaAty extends BaseActivity implements View.OnClickListener,
                     //其他页面过来
                     Intent mIntent = new Intent();
                     mIntent.putExtra(IntentKey.EXTRA_POSITION, paramas);
-                    mIntent.putExtra(IntentKey.EXTRA_ID, areaModel.children.get(position - 1).code);
+//                    mIntent.putExtra(IntentKey.EXTRA_ID, areaModel.children.get(position - 1).code);
                     setResult(RESULT_CODE1, mIntent);
                     finish();
                 } else {

@@ -167,6 +167,6 @@ public class UserRewardFragment extends BaseFragment implements ScrollableHelper
 
     @Override
     public View getScrollableView() {
-        return null;
+        return mFragments.get(0).getView().findViewById(R.id.lv_search_content);
     }
 }

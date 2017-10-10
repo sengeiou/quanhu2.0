@@ -237,7 +237,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
                 openId,
                 accessToken,
                 type,
-               "s"
+                ""
 //                BuildConfig.serverChannel
         );
         CallManager.add(call);

@@ -90,7 +90,7 @@ public class SearchPersonFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (!TextUtils.isEmpty(keyWord)) {
-                    ((SearchPresenter) searchPresenter).searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
+                    searchPresenter.searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
                 }
                 mRefresh.setRefreshing(false);
             }
@@ -107,17 +107,6 @@ public class SearchPersonFragment extends BaseFragment {
     }
 
 
-//    @Override
-//    public void onVisible(){
-//
-//        Log.e(TAG,"请求数据");
-//
-////        if(!keyWord.isEmpty()){
-//            ((SearchPresenter) searchPresenter).searchQH(false,"ti","","","",2);
-////        }
-//    }
-
-
     /**
      * @param baseEvent
      */
@@ -125,10 +114,9 @@ public class SearchPersonFragment extends BaseFragment {
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
-//            (final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, int searchType)
             keyWord = (String) baseEvent.getData();
 
-            ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
+            searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
         }
     }
 
@@ -196,7 +184,7 @@ public class SearchPersonFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-        ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
+        searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
     }
 
 }
