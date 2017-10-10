@@ -112,6 +112,16 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                 }
             });
         }
+
+        if(!userId.equals(Session.getUserId())){
+
+            if(lv.getFooterViewsCount()<=0){
+                LayoutInflater inflater = LayoutInflater.from(mActivity);
+                View view = inflater.inflate(R.layout.foot_view, null);
+                lv.addFooterView(view);
+            }
+        }
+
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -222,16 +232,16 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         loadData(false);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            View view = View.inflate(mActivity, R.layout.foot_view, null);
-            if(lv.getFooterViewsCount()<=0){
-                lv.addFooterView(view);
-
-                mAdapter.notifyDataSetChanged();
-                lv.setAdapter(mAdapter);
-            }
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEvent(BaseEvent baseEvent) {
+//        if (baseEvent.type == CommonCode.EventType.TYPE_SECOND_LAYOUT) {
+//            View view = View.inflate(mActivity, R.layout.foot_view, null);
+//            if(lv.getFooterViewsCount()<=0){
+//                lv.addFooterView(view);
+//
+////                mAdapter.notifyDataSetChanged();
+////                lv.setAdapter(mAdapter);
+//            }
+//        }
+//    }
 }

@@ -953,7 +953,8 @@ public interface ApiService {
 //            @Field("productType") int productType,
             @Field("custId") String custId,
             @Field("start") int start,
-            @Field("limit") int limit
+            @Field("limit") int limit,
+            @Field("flowType") int flowType
     );
 
     /**

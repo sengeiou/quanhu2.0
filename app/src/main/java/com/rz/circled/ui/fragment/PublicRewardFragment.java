@@ -77,6 +77,18 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
 
         rewardAdapter = new RewardAdapter(getActivity(), R.layout.item_reward);
         rewardAdapter.setData(rewardBeanList);
+
+        //他人中心的时候需要添加底部间距
+        if(!Session.getUserId().equals(userid)){
+            if(lvReward.getFooterViewsCount()<=0){
+
+                LayoutInflater inflater = LayoutInflater.from(mActivity);
+                View view = inflater.inflate(R.layout.foot_view, null);
+                lvReward.addFooterView(view);
+
+            }
+        }
+
         lvReward.setAdapter(rewardAdapter);
 
         lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -166,13 +178,17 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            View view = View.inflate(mActivity, R.layout.foot_view, null);
-            if(lvReward.getFooterViewsCount()<=0){
-                lvReward.addFooterView(view);
 
-                rewardAdapter.notifyDataSetChanged();
-                lvReward.setAdapter(rewardAdapter);
+        if (baseEvent.type == CommonCode.EventType.TYPE_SECOND_LAYOUT) {
+            if(lvReward.getFooterViewsCount()<=0){
+
+                LayoutInflater inflater = LayoutInflater.from(mActivity);
+                View view = inflater.inflate(R.layout.foot_view, null);
+
+//                View view = LayoutInflater.inflate()inflate(R.layout.foot_view, null);
+                lvReward.addFooterView(view);
+//                dynamicAdapter.notifyDataSetChanged();
+//                mListView.setAdapter(dynamicAdapter);
             }
         }
     }

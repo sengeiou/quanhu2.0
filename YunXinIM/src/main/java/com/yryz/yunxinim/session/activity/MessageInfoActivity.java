@@ -1,45 +1,41 @@
 package com.yryz.yunxinim.session.activity;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.team.constant.TeamFieldEnum;
+import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.IntentKey;
-import com.rz.common.event.BaseEvent;
-import com.rz.common.utils.CountDownTimer;
-import com.rz.common.utils.DialogUtils;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.contact.activity.UserProfileActivity;
 import com.yryz.yunxinim.team.TeamCreateHelper;
 import com.yryz.yunxinim.uikit.Constants;
+import com.yryz.yunxinim.uikit.NimUIKit;
+import com.yryz.yunxinim.uikit.cache.FriendDataCache;
 import com.yryz.yunxinim.uikit.cache.NimUserInfoCache;
 import com.yryz.yunxinim.uikit.common.activity.UI;
 import com.yryz.yunxinim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.yryz.yunxinim.uikit.common.ui.imageview.HeadImageView;
-import com.yryz.yunxinim.uikit.common.ui.widget.CircleSwitchButton;
 import com.yryz.yunxinim.uikit.common.ui.widget.SwitchButton;
 import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 import com.yryz.yunxinim.uikit.contact_selector.activity.ContactSelectActivity;
 import com.yryz.yunxinim.uikit.model.ToolBarOptions;
 import com.yryz.yunxinim.uikit.session.helper.MessageListPanelHelper;
+import com.yryz.yunxinim.uikit.team.activity.NormalTeamInfoActivity;
+import com.yryz.yunxinim.uikit.team.activity.TeamPropertySettingActivity;
+import com.yryz.yunxinim.uikit.team.helper.TeamHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.friend.FriendService;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -52,7 +48,7 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
     // data
     private String account;
     // view
-    private CircleSwitchButton switchButton;
+    private SwitchButton switchButton;
 
     public static void startActivity(Context context, String account) {
         Intent intent = new Intent();
@@ -109,8 +105,8 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
         });
 
         ((TextView) findViewById(R.id.toggle_layout).findViewById(R.id.user_profile_title)).setText(R.string.msg_notice);
-        switchButton = (CircleSwitchButton) findViewById(R.id.toggle_layout).findViewById(R.id.user_profile_toggle);
-        switchButton.setOnCheckedChangeListener(onChangedListener);
+        switchButton = (SwitchButton) findViewById(R.id.toggle_layout).findViewById(R.id.user_profile_toggle);
+        switchButton.setOnChangedListener(onChangedListener);
 
         View chatRecordView = findViewById(R.id.settings_chat_record_search);
         chatRecordView.setVisibility(View.GONE);
@@ -128,15 +124,15 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
 
     private void updateSwitchBtn() {
         boolean notice = NIMClient.getService(FriendService.class).isNeedMessageNotify(account);
-        switchButton.setChecked(notice);
+        switchButton.setCheck(notice);
     }
 
-    private CompoundButton.OnCheckedChangeListener onChangedListener = new CompoundButton.OnCheckedChangeListener() {
+    private SwitchButton.OnChangedListener onChangedListener = new SwitchButton.OnChangedListener() {
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, final boolean checkState) {
+        public void OnChanged(View v, final boolean checkState) {
             if (!NetworkUtil.isNetAvailable(MessageInfoActivity.this)) {
                 Toast.makeText(MessageInfoActivity.this, R.string.network_is_not_available, Toast.LENGTH_SHORT).show();
-                switchButton.setChecked(!checkState);
+                switchButton.setCheck(!checkState);
                 return;
             }
 
@@ -157,7 +153,7 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
                     } else {
                         Toast.makeText(MessageInfoActivity.this, "on failed:" + code, Toast.LENGTH_SHORT).show();
                     }
-                    switchButton.setChecked(!checkState);
+                    switchButton.setCheck(!checkState);
                 }
 
                 @Override
@@ -166,42 +162,6 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
                 }
             });
         }
-
-
-//        @Override
-//        public void OnChanged(View v, final boolean checkState) {
-//            if (!NetworkUtil.isNetAvailable(MessageInfoActivity.this)) {
-//                Toast.makeText(MessageInfoActivity.this, R.string.network_is_not_available, Toast.LENGTH_SHORT).show();
-//                switchButton.setChecked(!checkState);
-//                return;
-//            }
-//
-//            NIMClient.getService(FriendService.class).setMessageNotify(account, checkState).setCallback(new RequestCallback<Void>() {
-//                @Override
-//                public void onSuccess(Void param) {
-//                    if (checkState) {
-//                        Toast.makeText(MessageInfoActivity.this, "开启消息提醒成功", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(MessageInfoActivity.this, "关闭消息提醒成功", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailed(int code) {
-//                    if (code == 408) {
-//                        Toast.makeText(MessageInfoActivity.this, R.string.network_is_not_available, Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(MessageInfoActivity.this, "on failed:" + code, Toast.LENGTH_SHORT).show();
-//                    }
-//                    switchButton.setChecked(!checkState);
-//                }
-//
-//                @Override
-//                public void onException(Throwable exception) {
-//
-//                }
-//            });
-//        }
     };
 
     private void openUserProfile() {
@@ -277,40 +237,19 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
     }
 
     private void clearMessage() {
-//        EasyAlertDialogHelper.createOkCancelDiolag(this, null, "确定要清空吗？", true, new EasyAlertDialogHelper.OnDialogActionListener() {
-//            @Override
-//            public void doCancelAction() {
-//
-//            }
-//
-//            @Override
-//            public void doOkAction() {
-//
-//
-//            }
-//        }).show();
-
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.comm_dialog, null);
-        final Dialog dialog = DialogUtils.selfDialog(this, dialogView, false);
-
-        dialog.show();
-        ((TextView) dialogView.findViewById(R.id.id_tv_message)).setText(getString(R.string.clear_chach));
-        dialogView.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
+        EasyAlertDialogHelper.createOkCancelDiolag(this, null, "确定要清空吗？", true, new EasyAlertDialogHelper.OnDialogActionListener() {
             @Override
-            public void onClick(View view) {
+            public void doCancelAction() {
 
+            }
+
+            @Override
+            public void doOkAction() {
                 NIMClient.getService(MsgService.class).clearChattingHistory(account, SessionTypeEnum.P2P);
                 MessageListPanelHelper.getInstance().notifyClearMessages(account);
                 Toast.makeText(MessageInfoActivity.this, "清空成功！", Toast.LENGTH_SHORT).show();
 
             }
-        });
-        dialogView.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
+        }).show();
     }
 }

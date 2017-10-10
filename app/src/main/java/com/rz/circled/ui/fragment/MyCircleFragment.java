@@ -35,6 +35,7 @@ import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,6 +171,18 @@ public class MyCircleFragment extends BaseFragment implements ScrollableHelper.S
     @Override
     public View getScrollableView() {
 
+        if(mFragments.get(0).isVisible()){
+            return mFragments.get(0).getView().findViewById(R.id.lv);
+        }else if(mFragments.get(1).isVisible()){
+            return mFragments.get(1).getView().findViewById(R.id.lv);
+        }
         return mFragments.get(0).getView().findViewById(R.id.lv);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SECOND_LAYOUT));
+        }
     }
 }

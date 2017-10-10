@@ -126,16 +126,6 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.id_login_btn)
     Button mLoginBtn;
 
-    //    /**
-//     * 3.0版本title
-//     */
-//    @BindView(R.id.titlebar_main_tv)
-//    TextView mTvTitle;
-//    @BindView(R.id.titlebar_main_left_btn)
-//    ImageView mIvBack;
-//        @BindView(R.id.titlebar_root)
-//    RelativeLayout mRlTitleRoot;
-
     @BindView(R.id.id_regist_send_sms_btn)
     Button mBtnSendCode;
 
@@ -199,14 +189,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView() {
 
-//        mIvBack.setVisibility(View.GONE);
-////        mIvBack.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selector_titlebar_back));
-//        mIvBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
 
         mBtnSendCode.setVisibility(View.VISIBLE);
         mEditPass.setHint("请输入验证码");
@@ -290,22 +272,6 @@ public class LoginActivity extends BaseActivity {
         tabHome = getIntent().getIntExtra(IntentKey.EXTRA_TAB, -1);
     }
 
-//    /**
-//     * qq登录
-//     */
-//    @OnClick(R.id.layout_login_qq)
-//    public void qqLogin() {
-//        if (isFastClick(7000)) {
-//            return;
-//        }
-//        if (presenter != null) {
-////            mEditPhone.setText("");
-////            mEditPass.setText("");
-//            ((SnsAuthPresenter) presenter).setActionBind(-1);
-//            ((SnsAuthPresenter) presenter).qqAuth(true);
-//        }
-//    }
-//
 
     @OnClick(R.id.titlebar_main_left_btn)
     public void onClick() {
@@ -323,8 +289,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         if (presenter != null) {
-//            mEditPhone.setText("");
-//            mEditPass.setText("");
+
             ((SnsAuthPresenter) presenter).setActionBind(-1);
             ((SnsAuthPresenter) presenter).wxAuth(true);
         }
@@ -339,8 +304,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         if (presenter != null) {
-//            mEditPhone.setText("");
-//            mEditPass.setText("");
+
             ((SnsAuthPresenter) presenter).setActionBind(-1);
             ((SnsAuthPresenter) presenter).wbAuth(true);
         }
@@ -486,8 +450,8 @@ public class LoginActivity extends BaseActivity {
     public void registerBtn() {
         Intent intent = new Intent(aty, RegisterActivity.class);
         intent.putExtra(IntentKey.EXTRA_TYPE, loginType);
-//        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
-        startActivity(intent);
+        startActivityForResult(intent, IntentCode.Login.LOGIN_REQUEST_CODE);
+//        startActivity(intent);
     }
 
     /**
@@ -674,63 +638,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    //    /**
-//     * web跳转登录返回数据
-//     */
-//    private HeaderModel getLoginWebResultData() {
-//        HeaderModel headerModel = new HeaderModel();
-//        headerModel.sign = "sign";
-//        headerModel.token = Session.getSessionKey();
-//        headerModel.devType = "2";
-////        String sign = DesUtils.encrypt(act + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", "");
-////        headerModel.apiVersion ="V3.0.0";
-//        try {
-//            headerModel.devName = URLEncoder.encode(Build.MODEL, "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//        headerModel.appVersion = BuildConfig.VERSION_NAME;
-//        headerModel.devId = SystemUtils.getIMEI(App.getContext());
-//        headerModel.ip = SystemUtils.getIp(App.getContext());
-//        headerModel.net = IntentUtil.getNetType(App.getContext());
-//        headerModel.custId = Session.getUserId();
-//        return headerModel;
-//    }
-//
-//    public void loadRewardGiftList() {
-//        Call<ResponseData<List<RewardGiftModel>>> call = Http.getNewService(this).v3CircleGetTransferPrice(
-//                Session.getUserId());
-//        CallManager.add(call);
-//        call.enqueue(new BaseCallback<ResponseData<List<RewardGiftModel>>>() {
-//            @Override
-//            public void onResponse(Call<ResponseData<List<RewardGiftModel>>> call, Response<ResponseData<List<RewardGiftModel>>> response) {
-//                super.onResponse(call, response);
-//                if (response.isSuccessful()) {
-//                    ResponseData<List<RewardGiftModel>> res = response.body();
-//                    if (res.getRet() == ReturnCode.SUCCESS) {
-//                        List<RewardGiftModel> mGifts = res.getData();
-//                        if (mGifts != null && !mGifts.isEmpty()) {
-//                            try {
-//                                EntityCache<RewardGiftModel> entityCache = new EntityCache<RewardGiftModel>(LoginAty.this, RewardGiftModel.class);
-//                                entityCache.putListEntityAddTag(mGifts, "transfer");
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                            return;
-//                        } else {
-//                            return;
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseData<List<RewardGiftModel>>> call, Throwable t) {
-//                super.onFailure(call, t);
-//            }
-//        });
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -753,87 +660,6 @@ public class LoginActivity extends BaseActivity {
 //            }
         }
     }
-
-//    private void loginYunXin(final String account, final String token) {
-//        AbortableFuture<LoginInfo> loginRequest;
-//        // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
-//        // 在这里直接使用同步到云信服务器的帐号和token登录。
-//        // 这里为了简便起见，demo就直接使用了密码的md5作为token。
-//        // 如果开发者直接使用这个demo，只更改appkey，然后就登入自己的账户体系的话，需要传入同步到云信服务器的token，而不是用户密码。
-//        // final String account = "wh5120051".toLowerCase();
-//        // final String token = MD5.getStringMD5("111111");
-//        // 登录
-//        loginRequest = NIMClient.getService(AuthService.class).login(new LoginInfo(account, token));
-//        loginRequest.setCallback(new RequestCallback<LoginInfo>() {
-//            @Override
-//            public void onSuccess(LoginInfo param) {
-//                LogUtil.i(TAG, "login success");
-//
-//                DemoCache.setAccount(account);
-//                Preferences.saveUserAccount(account);
-//                Preferences.saveUserToken(token);
-//
-//                // 初始化消息提醒
-//                NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
-//
-////                // 初始化免打扰
-////                if (UserPreferences.getStatusConfig() == null) {
-////                    initStatusBarNotificationConfig();
-////                }
-//                NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
-//
-//                // 构建缓存
-//                DataCacheManager.buildDataCacheAsync();
-//
-//
-////                BaseEvent event = new BaseEvent();
-////                event.key = "110";
-////                EventBus.getDefault().post(event);
-////
-////                EventBus.getDefault().post(new NotifyEvent("login", null, false));
-////
-////                setResult(IntentCode.Login.LOGIN_RESULT_CODE);
-////
-////                finish();
-//            }
-//
-//            @Override
-//            public void onFailed(int code) {
-//                if (code == 302 || code == 404) {
-//                    Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.login_failed, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "登录失败: " + code, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onException(Throwable exception) {
-//                Toast.makeText(getApplicationContext(), com.yryz.yunxinim.R.string.login_exception, Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
-
-//    private void initStatusBarNotificationConfig() {
-//        // 如果将新消息通知提醒托管给SDK完成，需要添加以下配置。
-//        StatusBarNotificationConfig config = UserPreferences.getStatusConfig();
-//        if (config == null) {
-//            config = new StatusBarNotificationConfig();
-//        }
-//        // 点击通知需要跳转到的界面
-//        config.notificationEntrance = MainActivity.class;
-//        config.notificationSmallIconId = R.mipmap.icon;
-//
-//        // 通知铃声的uri字符串
-//        config.notificationSound = "android.resource://com.netease.nim.demo/raw/msg";
-//
-//        // 呼吸灯配置
-//        config.ledARGB = Color.GREEN;
-//        config.ledOnMs = 1000;
-//        config.ledOffMs = 1500;
-//
-//        DemoCache.setNotificationConfig(config);
-//        UserPreferences.setStatusConfig(config);
-//    }
 
     public boolean isFastClick(long timeMillis) {
         long time = System.currentTimeMillis();

@@ -167,6 +167,20 @@ public class UserRewardFragment extends BaseFragment implements ScrollableHelper
 
     @Override
     public View getScrollableView() {
+
+        if(mFragments.get(0).isVisible()){
+            return mFragments.get(0).getView().findViewById(R.id.lv_search_content);
+        }else if(mFragments.get(1).isVisible()){
+            return mFragments.get(1).getView().findViewById(R.id.lv_search_content);
+        }
         return mFragments.get(0).getView().findViewById(R.id.lv_search_content);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent baseEvent) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SECOND_LAYOUT));
+        }
+    }
+
 }

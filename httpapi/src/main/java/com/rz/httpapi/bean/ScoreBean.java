@@ -22,7 +22,7 @@ public class ScoreBean implements Serializable {
      */
 
     private int id;
-    private int consumeFlag;
+    private int consumeFlag;           //1-： 0 +    1：表示出账  0 ：进账
     private String custId;
     private String eventCode;
     private String eventName;

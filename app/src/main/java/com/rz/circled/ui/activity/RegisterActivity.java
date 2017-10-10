@@ -1,6 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.InputType;
@@ -340,10 +341,7 @@ public class RegisterActivity extends BaseActivity {
      */
     public boolean checkData() {
         updateEtInfo();
-//        if (fromPage == IntentCode.Register.REGISTER_RESULT_CODE) {
-//            mCheckBox.setChecked(true);
-//        }
-//        if (mCheckBox.isChecked()) {
+
         if (StringUtils.isMobile(mPhone)) {
             if (StringUtils.isEmpty(mCode)) {
                 SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_check_code));
@@ -361,9 +359,7 @@ public class RegisterActivity extends BaseActivity {
         } else {
             SVProgressHUD.showErrorWithStatus(aty, getString(R.string.input_right_phone));
         }
-//        } else {
-//            SVProgressHUD.showErrorWithStatus(aty, getString(R.string.regist_wrong_check));
-//        }
+
         return false;
     }
 
@@ -528,6 +524,7 @@ public class RegisterActivity extends BaseActivity {
 //                    intent.putExtra(IntentKey.General.KEY_MODEL, model);
 //                    setResult(IntentCode.Register.REGISTER_RESULT_ONLY_CODE, intent);
                     NotifyEvent notifyEvent = new NotifyEvent("register", model, true);
+
                     trackUser("注册登录", "注册成功", "");
                     EventBus.getDefault().post(notifyEvent);
                     Session.setCityCode(cityCode);
