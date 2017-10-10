@@ -79,6 +79,8 @@ public interface CommonCode {
         int TYPE_SAVE = 300007;
         int TYPE_ADD_LAYOUT = 300008;
         int TYPE_SECOND_LAYOUT = 300009;
+
+        int TYPE_REWARD_REFRESH = 40001;
     }
 
     /**

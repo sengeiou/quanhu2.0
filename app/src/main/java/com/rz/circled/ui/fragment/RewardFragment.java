@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.js.RequestJsBroadcastHandler;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -115,6 +116,21 @@ public class RewardFragment extends BaseFragment {
                     mWebViewProxy.callbackInvoke(new Gson().toJson(paramsObject));
                 }
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBaseEvent(BaseEvent baseEvent) {
+        if (baseEvent == null) return;
+        switch (baseEvent.type) {
+            case CommonCode.EventType.TYPE_REWARD_REFRESH:
+                //刷新
+                RequestJsBroadcastHandler refreshHandler = new RequestJsBroadcastHandler(mActivity);
+                refreshHandler.setNativeEvent(baseEvent.key);
+                refreshHandler.setRequestData(baseEvent.data);
+                if (mWebViewProxy != null)
+                    mWebViewProxy.requestJsFun(refreshHandler);
+                break;
         }
     }
 
