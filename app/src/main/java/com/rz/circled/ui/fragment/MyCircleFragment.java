@@ -103,8 +103,6 @@ public class MyCircleFragment extends BaseFragment implements ScrollableHelper.S
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe

@@ -69,8 +69,6 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
 
         type = getArguments().getString(IntentKey.KEY_ID);
         userid = getArguments().getString(IntentKey.KEY_TYPE);
@@ -180,7 +178,5 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 }
