@@ -176,11 +176,4 @@ public class UserRewardFragment extends BaseFragment implements ScrollableHelper
         return mFragments.get(0).getView().findViewById(R.id.lv_search_content);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SECOND_LAYOUT));
-        }
-    }
-
 }

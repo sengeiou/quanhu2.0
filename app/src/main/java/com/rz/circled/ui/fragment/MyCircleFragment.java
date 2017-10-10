@@ -179,10 +179,4 @@ public class MyCircleFragment extends BaseFragment implements ScrollableHelper.S
         return mFragments.get(0).getView().findViewById(R.id.lv);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_SECOND_LAYOUT));
-        }
-    }
 }

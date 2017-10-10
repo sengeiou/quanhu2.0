@@ -176,22 +176,6 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
         return lvReward;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-
-        if (baseEvent.type == CommonCode.EventType.TYPE_SECOND_LAYOUT) {
-            if(lvReward.getFooterViewsCount()<=0){
-
-                LayoutInflater inflater = LayoutInflater.from(mActivity);
-                View view = inflater.inflate(R.layout.foot_view, null);
-
-//                View view = LayoutInflater.inflate()inflate(R.layout.foot_view, null);
-                lvReward.addFooterView(view);
-//                dynamicAdapter.notifyDataSetChanged();
-//                mListView.setAdapter(dynamicAdapter);
-            }
-        }
-    }
 
     @Override
     public void onDestroyView() {
