@@ -120,11 +120,8 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                         startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
                 }
             });
-        }
-
-        if(!userId.equals(Session.getUserId())){
-
-            if(lv.getFooterViewsCount()<=0){
+        } else {
+            if (lv.getFooterViewsCount() <= 0) {
                 LayoutInflater inflater = LayoutInflater.from(mActivity);
                 View view = inflater.inflate(R.layout.foot_view, null);
                 lv.addFooterView(view);
