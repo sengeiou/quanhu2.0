@@ -74,6 +74,7 @@ public class AccountDetailAty extends BaseActivity {
     public void initPresenter() {
         mPresenter = new PayPresenter(false);
         mPresenter.attachView(this);
+        mPresenter.requestGetBillList(false, type);
     }
 
     @Override
@@ -126,7 +127,6 @@ public class AccountDetailAty extends BaseActivity {
                 mRefresh.setRefreshing(false);
             }
         });
-        mPresenter.requestGetBillList(false, type);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class AccountDetailAty extends BaseActivity {
 
     @Override
     public void refreshPage() {
-
+        mPresenter.requestGetBillList(false, type);
     }
 
     @Override

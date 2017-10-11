@@ -335,19 +335,6 @@ public class FindPwdActivity2 extends BaseActivity {
         }
     }
 
-//    @Override
-//    public void onLoadingStatus(int loadingStatus, String string) {
-//        if (loadingStatus == CodeStatus.Gegeneral.ERROR_DATA) {
-//            SVProgressHUDDismiss();
-//            if (hasDataInPage()) {
-//                if (!StringUtils.isEmpty(string) && !isFinishing()) {
-//                    SVProgressHUD.showErrorWithStatus(aty, string);
-//                }
-//            }
-//        } else {
-//            super.onLoadingStatus(loadingStatus, string);
-//        }
-//    }
 
     //声明定位回调监听器
     private AMapLocationListener mLocationListener = new AMapLocationListener() {
@@ -364,9 +351,11 @@ public class FindPwdActivity2 extends BaseActivity {
 //                    hashMap.put("region", amapLocation.getDistrict());
 //                    hashMap.put("cityCode", amapLocation.getAdCode());
 
-                    location = amapLocation.getLocationDetail();
+                    location = amapLocation.getProvince() + " " + amapLocation.getCity();
                     cityCode = amapLocation.getAdCode();
-
+                    if (cityCode.length() == 6) {
+                        cityCode = cityCode.substring(0, 4) + "00";
+                    }
 //                    Session.setCityCode(amapLocation.getAdCode());
 //                    JsEvent.callJsEvent(hashMap, true);
                 } else {
