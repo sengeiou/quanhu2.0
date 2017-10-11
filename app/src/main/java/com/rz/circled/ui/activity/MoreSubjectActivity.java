@@ -58,7 +58,7 @@ public class MoreSubjectActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitleText("话题");
+        setTitleText(getString(R.string.subject));
         mLvSubject.addFooterView(View.inflate(mContext,R.layout.item_footer,null));
         mAdapter = new CommonAdapter<HotSubjectModel>(mContext, subjectList, R.layout.activity_item) {
             @Override
@@ -78,9 +78,9 @@ public class MoreSubjectActivity extends BaseActivity {
                 TextView tv_des = helper.getView(R.id.acitvity_des);
                 tv_des.setText(item.getContent());
                 TextView tv_talk_count = helper.getView(R.id.tv_talk_count);
-                tv_talk_count.setText(item.getPartNum() + " 讨论");
+                tv_talk_count.setText(item.getPartNum() + getString(R.string.discuss));
                 TextView tv_where = helper.getView(R.id.tv_where);
-                tv_where.setText("来自私圈" + item.getCoterieName());
+                tv_where.setText(getString(R.string.from_coterie) + item.getCoterieName());
                 RxView.clicks(civ_head).subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
@@ -116,7 +116,7 @@ public class MoreSubjectActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        mEtSearchKeywordBase.setHint("输入话题名称搜索");
+        mEtSearchKeywordBase.setHint(R.string.input_subject_search);
         mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
