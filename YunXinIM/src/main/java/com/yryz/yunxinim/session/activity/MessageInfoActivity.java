@@ -267,7 +267,7 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
                 NIMClient.getService(MsgService.class).clearChattingHistory(account, SessionTypeEnum.P2P);
                 MessageListPanelHelper.getInstance().notifyClearMessages(account);
                 Toast.makeText(MessageInfoActivity.this, "清空成功！", Toast.LENGTH_SHORT).show();
-
+                dialog.dismiss();
             }
         });
         dialogView.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {

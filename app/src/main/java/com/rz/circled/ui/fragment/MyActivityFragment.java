@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -108,7 +109,10 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onNext(ResponseData<ActivityBean> res) {
-                        List<EntitiesBean> entities = res.getData().entities;
+                        List<EntitiesBean> entities = null;
+                        if(res.getData() != null && res.getData().entities != null){
+                            entities = res.getData().entities;
+                        }
                         if (res.getRet() == ReturnCode.SUCCESS) {
 
                             if (null != entities && !entities.isEmpty()) {
