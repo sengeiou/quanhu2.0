@@ -33,6 +33,7 @@ public class MyCouponsAdapter extends CommonAdapter<CouponsBean> {
     public void convert(ViewHolder helper, CouponsBean item, int position) {
         helper.setText(R.id.tv_coupons_item_type, item.getPrizesName());
         helper.setText(R.id.tv_coupons_item_title, item.getRemark());
+        helper.setText(R.id.tv_coupons_item_number, item.getCanNum());
         helper.setText(R.id.tv_coupons_item_time, formatTime(item.getBeginTime()) + " - " + formatTime(item.getEndTime()));
         TextView tv_coupons_title = helper.getView(R.id.tv_coupons_item_title);
         TextView tvStatus = (TextView) helper.getViewById(R.id.tv_coupons_item_status);
