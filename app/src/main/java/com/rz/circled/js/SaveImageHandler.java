@@ -6,14 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.common.constant.IntentKey;
+import com.rz.circled.R;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.ServerHandler;
@@ -25,7 +23,6 @@ import org.json.JSONException;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -59,9 +56,11 @@ public class SaveImageHandler extends ServerHandler {
             }
             byte[] bytes = Base64.decode(data, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            saveFile(bitmap, TextUtils.isEmpty(name) ? System.currentTimeMillis() + ".jpg" : name, "");
+            saveFile(bitmap, System.currentTimeMillis() + ".jpg", "");
+            Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
             JsEvent.callJsEvent(null, true);
         } catch (JSONException | IOException e) {
+            Toasty.info(mActivity, mActivity.getString(R.string.save_fail)).show();
             e.printStackTrace();
             Log.e("zxw", e.getMessage(), e);
             JsEvent.callJsEvent(null, false);

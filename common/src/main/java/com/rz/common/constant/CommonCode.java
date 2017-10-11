@@ -80,6 +80,8 @@ public interface CommonCode {
         int TYPE_ADD_LAYOUT = 300008;
 
         int TYPE_REWARD_REFRESH = 40001;
+
+        int TYPE_LOGIN_WEB = 50001;
     }
 
     /**

@@ -337,6 +337,11 @@ public class VideoChooseActivity extends BaseActivity implements AdapterView.OnI
 //                                        .getColumnIndex(MediaStore.Video.Thumbnails.DATA));
 //                            }
 //                            //查询已有的视频缩略图 end
+                            Log.d(TAG, "localMediaInfo.size =" + localMediaInfo.size);
+                            //不可选择大于500M的视频
+                            if (localMediaInfo.size > 500 * 1024 * 1024) {
+                                continue;
+                            }
 
                             localMediaInfo.title = mCursor.getString(mCursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
 

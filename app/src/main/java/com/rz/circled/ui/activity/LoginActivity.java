@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -24,8 +25,11 @@ import android.widget.TextView;
 import com.j256.ormlite.table.TableUtils;
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.application.QHApplication;
 import com.rz.circled.db.DBHelper;
+import com.rz.circled.js.model.HeaderModel;
 import com.rz.circled.modle.ShowListModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
@@ -41,8 +45,10 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.StringUtils;
+import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.FriendInformationBean;
@@ -57,6 +63,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -560,6 +568,11 @@ public class LoginActivity extends BaseActivity {
                     skipActivity(aty, MainActivity.class);
                     finish();
                 }
+                //webCon
+                BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
+                baseEvent.type = CommonCode.EventType.TYPE_LOGIN_WEB;
+                baseEvent.key = "nativeLogin";
+                EventBus.getDefault().post(baseEvent);
 
             }
         }
@@ -633,6 +646,30 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * web重新登录返回数据
+     */
+    private HeaderModel getLoginWebResultData() {
+        HeaderModel headerModel = new HeaderModel();
+        headerModel.sign = "sign";
+        headerModel.token = Session.getSessionKey();
+        headerModel.devType = "2";
+        try {
+            headerModel.devName = URLEncoder.encode(Build.MODEL, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        headerModel.appVersion = BuildConfig.VERSION_NAME;
+        headerModel.devId = SystemUtils.getIMEI(QHApplication.getContext());
+        headerModel.ip = SystemUtils.getIp(QHApplication.getContext());
+        headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
+        headerModel.custId = Session.getUserId();
+        headerModel.userId = Session.getJsUserId();
+        headerModel.phone = Session.getUserPhone();
+        headerModel.cityCode = Session.getCityCode();
+        return headerModel;
     }
 
     @Override
