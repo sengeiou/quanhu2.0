@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.jakewharton.rxbinding.view.RxView;
-import com.netease.nimlib.jsbridge.util.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MsgService;
@@ -180,7 +179,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             mUserPermissionBean= (UserPermissionBean) t;
             if (!mUserPermissionBean.disTalk)
                 WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
-            else Toasty.info(mActivity,"您当前为禁言状态").show();
+            else Toasty.info(mActivity,getString(R.string.NO_TALK_STATE)).show();
             Log.i(TAG, "updateView: "+mUserPermissionBean.disTalk);
         }
     }
