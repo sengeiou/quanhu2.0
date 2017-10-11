@@ -33,9 +33,7 @@ public class MyCouponsActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
         setTitleText(R.string.my_coupons);
-
         fragments = new MyCardCouponsFragment[]{MyCardCouponsFragment.newInstance(0), MyCardCouponsFragment.newInstance(1)};
 
         tabPagerCoupons.setCustomLayoutParams(2);
