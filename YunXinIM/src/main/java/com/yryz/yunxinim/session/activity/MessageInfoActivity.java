@@ -1,10 +1,12 @@
 package com.yryz.yunxinim.session.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.team.constant.TeamFieldEnum;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.utils.DialogUtils;
 import com.yryz.yunxinim.DemoCache;
 import com.yryz.yunxinim.R;
 import com.yryz.yunxinim.contact.activity.UserProfileActivity;
@@ -64,7 +67,7 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
 
         ToolBarOptions options = new ToolBarOptions();
         options.titleId = R.string.message_info;
-//        options.navigateId = R.drawable.actionbar_dark_back_icon;
+        options.navigateId = R.mipmap.icon_arrow_back_black;
         setToolBar(R.id.toolbar, options);
 
         account = getIntent().getStringExtra(EXTRA_ACCOUNT);
@@ -237,19 +240,41 @@ public class MessageInfoActivity extends UI implements View.OnClickListener {
     }
 
     private void clearMessage() {
-        EasyAlertDialogHelper.createOkCancelDiolag(this, null, "确定要清空吗？", true, new EasyAlertDialogHelper.OnDialogActionListener() {
-            @Override
-            public void doCancelAction() {
+//        EasyAlertDialogHelper.createOkCancelDiolag(this, null, "确定要清空吗？", true, new EasyAlertDialogHelper.OnDialogActionListener() {
+//            @Override
+//            public void doCancelAction() {
+//
+//            }
+//
+//            @Override
+//            public void doOkAction() {
+//                NIMClient.getService(MsgService.class).clearChattingHistory(account, SessionTypeEnum.P2P);
+//                MessageListPanelHelper.getInstance().notifyClearMessages(account);
+//                Toast.makeText(MessageInfoActivity.this, "清空成功！", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }).show();
 
-            }
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.comm_dialog, null);
+        final Dialog dialog = DialogUtils.selfDialog(this, dialogView, false);
 
+        dialog.show();
+        ((TextView) dialogView.findViewById(R.id.id_tv_message)).setText(getString(R.string.clear_chach));
+        dialogView.findViewById(R.id.id_tv_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void doOkAction() {
+            public void onClick(View view) {
+
                 NIMClient.getService(MsgService.class).clearChattingHistory(account, SessionTypeEnum.P2P);
                 MessageListPanelHelper.getInstance().notifyClearMessages(account);
                 Toast.makeText(MessageInfoActivity.this, "清空成功！", Toast.LENGTH_SHORT).show();
-
+                dialog.dismiss();
             }
-        }).show();
+        });
+        dialogView.findViewById(R.id.id_tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 }

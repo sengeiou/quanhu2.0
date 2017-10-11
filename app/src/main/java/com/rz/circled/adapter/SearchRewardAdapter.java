@@ -3,6 +3,7 @@ package com.rz.circled.adapter;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -120,7 +121,8 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         //判断悬赏是否在进行中
         if(model.getComplete() == 1){
-            tvStatus.setTextColor(mContext.getColor(R.color.colorAccent));
+
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
             tvStatus.setText("进行中");
             tvTime.setVisibility(View.VISIBLE);
 
@@ -141,11 +143,12 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             }
 //            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
         }else if(model.getComplete() == 2){
-            tvStatus.setTextColor(mContext.getColor(R.color.font_gray_m));
+
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
             tvStatus.setText("已完成");
             tvTime.setVisibility(View.GONE);
         }else if(model.getComplete() == 3){
-            tvStatus.setTextColor(mContext.getColor(R.color.font_gray_m));
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
             tvTime.setVisibility(View.GONE);
             tvStatus.setText("已过期");
         }

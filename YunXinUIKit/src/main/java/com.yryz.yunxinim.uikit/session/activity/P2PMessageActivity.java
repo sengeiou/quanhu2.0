@@ -243,6 +243,7 @@ public class P2PMessageActivity extends BaseMessageActivity {
     @Override
     protected void initToolBar() {
         ToolBarOptions options = new ToolBarOptions();
+        options.navigateId = R.mipmap.icon_arrow_back_black;
         setToolBar(R.id.toolbar, options);
     }
 }

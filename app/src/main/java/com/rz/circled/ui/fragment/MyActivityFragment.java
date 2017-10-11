@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,8 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
@@ -71,7 +72,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.activity_article, null);
+        return inflater.inflate(R.layout.activity_mineactivity, null);
     }
 
 
@@ -95,10 +96,23 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                 .getMineActivityList(pageNo, 20, userid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<ResponseData<ActivityBean>>() {
+                .subscribe(new Observer<ResponseData<ActivityBean>>() {
                     @Override
-                    public void call(ResponseData<ActivityBean> res) {
-                        List<EntitiesBean> entities = res.getData().entities;
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<ActivityBean> res) {
+                        List<EntitiesBean> entities = null;
+                        if(res.getData() != null && res.getData().entities != null){
+                            entities = res.getData().entities;
+                        }
                         if (res.getRet() == ReturnCode.SUCCESS) {
 
                             if (null != entities && !entities.isEmpty()) {
@@ -133,6 +147,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                             isNoData = true;
                             return;
                         }
+
                     }
                 });
 
@@ -218,6 +233,9 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             View view = View.inflate(mActivity, R.layout.foot_view, null);
             if(mLv.getFooterViewsCount()<=0){
                 mLv.addFooterView(view);
+
+                mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+                mLv.setAdapter(mEntitiesBeanCommonAdapter);
             }
         }
     }

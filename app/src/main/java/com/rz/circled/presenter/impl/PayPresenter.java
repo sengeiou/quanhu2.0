@@ -79,6 +79,18 @@ public class PayPresenter extends AbsPresenter {
     //网络连接出错
     public static final String ALIPAY_STATE_NET_ERROR = "6002";
 
+
+    /**
+     * 流水类型
+     * 0:新增
+     * 1：消费
+     * -1：全部
+     */
+
+    public static final int FOLLOW_ADD_TYPE = 0;
+    public static final int FOLLOW_COST_TYPE = 1;
+    public static final int FOLLOW_ALL_TYPE = -1;
+
     private int start = 0;
 
     //是否加载出错
@@ -440,7 +452,7 @@ public class PayPresenter extends AbsPresenter {
             record_start = start;
         }
         Call<ResponseData<List<ScoreBean>>> call = mUserService
-                .getScoreList(Session.getUserId(), start, Constants.PAGESIZE);
+                .getScoreList(Session.getUserId(), start, Constants.PAGESIZE, FOLLOW_ALL_TYPE);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<List<ScoreBean>>>() {
             @Override

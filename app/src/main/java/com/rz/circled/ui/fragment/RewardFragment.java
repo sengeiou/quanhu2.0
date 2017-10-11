@@ -8,6 +8,7 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.js.RequestJsBroadcastHandler;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -35,6 +36,10 @@ public class RewardFragment extends BaseFragment {
 
     private WebViewProxy mWebViewProxy;
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 
     @Nullable
     @Override
@@ -49,6 +54,7 @@ public class RewardFragment extends BaseFragment {
         mWebViewProxy.registerAll(RegisterList.getAllRegisterHandler(getActivity()));
 
 //        mWebView.setVisibility(View.INVISIBLE);
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
         mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + "/activity/reward");
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
     }
@@ -81,6 +87,22 @@ public class RewardFragment extends BaseFragment {
                 if (mWebView != null)
                     mWebView.setVisibility(View.VISIBLE);
                 onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                break;
+            case CommonCode.EventType.TYPE_REWARD_REFRESH:
+                //刷新
+                RequestJsBroadcastHandler refreshHandler = new RequestJsBroadcastHandler(mActivity);
+                refreshHandler.setNativeEvent(baseEvent.key);
+                refreshHandler.setRequestData(baseEvent.data);
+                if (mWebViewProxy != null)
+                    mWebViewProxy.requestJsFun(refreshHandler);
+                break;
+            case CommonCode.EventType.TYPE_LOGIN_WEB:
+                //登录
+                RequestJsBroadcastHandler loginHandler = new RequestJsBroadcastHandler(mActivity);
+                loginHandler.setNativeEvent(baseEvent.key);
+                loginHandler.setRequestData(baseEvent.data);
+                if (mWebViewProxy != null)
+                    mWebViewProxy.requestJsFun(loginHandler);
                 break;
         }
     }

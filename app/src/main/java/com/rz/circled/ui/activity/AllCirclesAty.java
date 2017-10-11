@@ -235,11 +235,11 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             case R.id.all_circle_title_right:
                 if (isEdit) {
                     isEdit = false;
-                    mTvBaseTitleRight.setText("编辑");
+                    mTvBaseTitleRight.setText(R.string.edit);
                  EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
                 } else {
                     isEdit = true;
-                    mTvBaseTitleRight.setText("完成");
+                    mTvBaseTitleRight.setText(R.string.finish);
                 }
                 publishedAdapter.notifyDataSetChanged();
                 break;

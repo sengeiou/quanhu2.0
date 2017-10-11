@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/px100"
+    android:layout_height="@dimen/px120"
     android:background="@color/white"
     android:orientation="horizontal"
     android:id="@+id/reward_top_layout"
@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/px10"
+        android:layout_marginTop="@dimen/px30"
         >
 
         <TextView
@@ -30,6 +30,8 @@
             android:paddingTop="@dimen/px10"
             android:paddingBottom="@dimen/px10"
             android:textColor="@color/tab_blue"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px10"
             />
 
         <TextView
@@ -46,6 +48,8 @@
             android:paddingRight="@dimen/px20"
             android:paddingTop="@dimen/px10"
             android:paddingBottom="@dimen/px10"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px10"
             />
 
     </RelativeLayout>

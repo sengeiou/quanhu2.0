@@ -44,6 +44,7 @@ public class MyAwardAdapter extends CommonAdapter<CouponsBean> {
         helper.setText(R.id.tv_award_item_time, formatTime(item.getBeginTime()) + " - " + formatTime(item.getEndTime()));
         helper.setText(R.id.tv_award_item_detail, item.getRemark());
         helper.setText(R.id.tv_award_item_unit, item.getPrizesUnit());
+        helper.setText(R.id.tv_award_item_number, item.getPrizesNum());
         TextView tvStatus = (TextView) helper.getViewById(R.id.tv_award_item_status);
         RelativeLayout rlLeft = (RelativeLayout) helper.getViewById(R.id.rl_award_item_left);
         final TextView tvDetail = (TextView) helper.getViewById(R.id.tv_award_item_detail);

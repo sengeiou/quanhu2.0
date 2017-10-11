@@ -69,8 +69,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
 
     @Override
     public void initView() {
-        setTitleText("我的收藏");
-        setTitleRightText("编辑");
+        setTitleText(getString(R.string.my_collection));
+        setTitleRightText(getString(R.string.edit));
         setTitleRightTextColor(R.color.color_0185FF);
         mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
@@ -117,13 +117,13 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                 if (isEdit) {
                     //完成
                     isEdit = false;
-                    setTitleRightText("编辑");
+                    setTitleRightText(getString(R.string.edit));
                     mBtnDel.setVisibility(View.GONE);
                 } else {
                     //编辑
                     isEdit = true;
                     mBtnDel.setVisibility(View.VISIBLE);
-                    setTitleRightText("完成");
+                    setTitleRightText(getString(R.string.finish));
                 }
                 mCollectionAdapter.notifyDataSetChanged();
 
@@ -224,7 +224,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         vh.ll_audio.setVisibility(View.GONE);
                         vh.answer_content.setText("A:  " + answer.content);
                     }
-                    vh.answer_from.setText("来自私圈 " + coterieInfo.getName());
+                    vh.answer_from.setText(getString(R.string.from_coterie) + coterieInfo.getName());
                     vh.answer_from.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -234,13 +234,13 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     vh.question_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, question.createUserId);
+                            UserInfoActivity.newFrindInfo(mContext, question.custId);
                         }
                     });
                     vh.answer_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UserInfoActivity.newFrindInfo(mContext, answer.createUserId);
+                            UserInfoActivity.newFrindInfo(mContext, answer.custId);
                         }
                     });
 
@@ -330,9 +330,9 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         rl_circle_video_content.setVisibility(View.GONE);
                     }
                     if (StringUtils.isEmpty(coterieInfo.getCoterieId()) || StringUtils.isEmpty(coterieInfo.getName())) {
-                        fromWhere.setText("来自圈子 " + collectionBean.circleInfo.getCircleName());
+                        fromWhere.setText(getString(R.string.from_circle) + collectionBean.circleInfo.getCircleName());
                     } else {
-                        fromWhere.setText("来自私圈 " + coterieInfo.getName());
+                        fromWhere.setText(getString(R.string.from_coterie) + coterieInfo.getName());
                     }
                     tv_name.setOnClickListener(new View.OnClickListener() {
                         @Override

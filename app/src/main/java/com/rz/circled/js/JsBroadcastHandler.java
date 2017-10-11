@@ -1,8 +1,12 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.rz.circled.js.model.BroadcastModel;
+import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
@@ -31,12 +35,10 @@ public class JsBroadcastHandler extends ServerHandler {
         //收到消息发送给所有webView 去请求js方法 , js方法名为type 内容
         Gson gson = new Gson();
         String dataJson = gson.toJson(paramObj.getData());
-//        BroadcastModel broadcastModel = gson.fromJson(dataJson, BroadcastModel.class);
-//        if (!TextUtils.isEmpty(broadcastModel.getData().getUserId()))
-//            Session.setJsUserId(broadcastModel.getData().getUserId());
-//        sendEvent(CommonCode.EventType.LOGIN_WEB_CONTAINER, paramObj.data, broadcastModel.getType());
-//        sendEvent(CommonCode.EventType.LOGIN_HOME, paramObj.data, broadcastModel.getType());
-//        sendEvent(CommonCode.EventType.LOGIN_MINE, paramObj.data, broadcastModel.getType());
+        BroadcastModel broadcastModel = gson.fromJson(dataJson, BroadcastModel.class);
+        if (!TextUtils.isEmpty(broadcastModel.getData().getUserId()))
+            Session.setJsUserId(broadcastModel.getData().getUserId());
+        sendEvent(CommonCode.EventType.TYPE_REWARD_REFRESH, paramObj.data, broadcastModel.getType());
         JsEvent.callJsEvent(null, true);
     }
 
@@ -54,4 +56,10 @@ public class JsBroadcastHandler extends ServerHandler {
         return false;
     }
 
+    private void sendEvent(int type, Object data, String requestName) {
+        BaseEvent webEvent = new BaseEvent(type);
+        webEvent.data = data;
+        webEvent.key = requestName;
+        EventBus.getDefault().post(webEvent);
+    }
 }

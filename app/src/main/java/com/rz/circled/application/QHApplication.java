@@ -63,7 +63,9 @@ import com.rz.circled.js.FriendInfoHandler;
 import com.rz.circled.js.HttpHeaderHandler;
 import com.rz.circled.js.HttpRequestHandler;
 import com.rz.circled.js.JoinTeamHandler;
+import com.rz.circled.js.JsBroadcastHandler;
 import com.rz.circled.js.JumpUrlHandler;
+import com.rz.circled.js.KickOutHandler;
 import com.rz.circled.js.LocationHandler;
 import com.rz.circled.js.LoginHandler;
 import com.rz.circled.js.NavigateHandler;
@@ -285,6 +287,10 @@ public class QHApplication extends BaseApplication {
         RegisterList.registerServerHandlerClass(JumpUrlHandler.class);
         //支付
         RegisterList.registerServerHandlerClass(PayOrderHandler.class);
+        //接收js广播
+        RegisterList.registerServerHandlerClass(JsBroadcastHandler.class);
+        //被踢下线
+        RegisterList.registerServerHandlerClass(KickOutHandler.class);
 
     }
 

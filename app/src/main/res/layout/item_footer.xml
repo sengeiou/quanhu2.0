@@ -15,7 +15,7 @@
         android:paddingBottom="@dimen/px20"
         android:layout_gravity="center"
         android:textColor="@color/color_666666"
-        android:text="没有更多了..."
+        android:text="@string/no_more"
         />
 
 </LinearLayout>

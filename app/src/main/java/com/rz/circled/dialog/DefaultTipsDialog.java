@@ -15,8 +15,12 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MainActivity;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.utils.DensityUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,9 +84,10 @@ public class DefaultTipsDialog extends DialogFragment {
         super.dismiss();
 
         Intent intent = new Intent(getContext(), LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        getActivity().finish();
+        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
     }
 
     @OnClick(R.id.btn_submit)

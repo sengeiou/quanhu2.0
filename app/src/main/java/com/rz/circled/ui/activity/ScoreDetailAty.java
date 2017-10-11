@@ -104,14 +104,14 @@ public class ScoreDetailAty extends BaseActivity {
                 helper.setText(R.id.id_tv_name, item.getEventName());
                 TextView mPay = (TextView) helper.getViewById(R.id.id_tv_cost);
                 //0，扣费；1，加费
-//                int orderType = item.orderType;
-//                if (orderType == 0) {
-//                    mPay.setText("-" + Currency.returnDollar(Currency.RMB, item.getAllScore()+"", 0));
-//                    mPay.setTextColor(Color.parseColor("#FF6060"));
-//                } else if (orderType == 1) {
+                int custom = item.getConsumeFlag();
+                if (custom == 0) {
                     mPay.setText("+" + item.getNewScore()+"");
                     mPay.setTextColor(Color.parseColor("#0185ff"));
-//                }
+                } else if (custom == 1) {
+                    mPay.setText("-" + item.getNewScore()+"");
+                    mPay.setTextColor(Color.parseColor("#FF6060"));
+                }
 //                SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
                 String data = item.getCreateTime().substring(0, 10);
                 helper.setText(R.id.id_tv_date, data);

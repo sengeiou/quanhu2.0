@@ -65,7 +65,7 @@ public class BuyingAdapter extends BuyingContentAdapter {
 //        if (item.getResource().getCust() != null) {
 //            mTvName.setText(item.getResource().getCustNname()== null ? "" : item.getResource().getCust().getCustNname());
 //        }
-        tv_other_left.setText(item.getAmount()+"悠然币");
+        tv_other_left.setText(item.getAmount()/100+"悠然币");
         if (item.getResource().coterieId==null||item.getResource().coterieName==null){
             fromWhere.setText("来自圈子"+item.getResource().circleName);
         }else {

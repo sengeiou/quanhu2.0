@@ -392,6 +392,11 @@ public class UploadVideoActivity extends BaseActivity {
      * 获得网速
      */
     private void getRxBytes() {
+        if (videoSize > 500 * 1024) {
+            Toasty.info(mContext, getString(R.string.upload_video_500)).show();
+            return;
+        }
+
         final long lastTotalRxBytes = NetWorkSpeedUtils.getTotalRxBytes();
         final long lastTimeStamp = System.currentTimeMillis();
 

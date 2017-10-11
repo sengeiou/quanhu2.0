@@ -41,6 +41,7 @@ import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
+import com.rz.httpapi.bean.RequestFriendStatusBean;
 import com.yryz.yunxinim.session.SessionHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -132,6 +133,9 @@ public class UserInfoActivity extends BaseActivity {
         if (TextUtils.isEmpty(userId)) {
             userId = Session.getUserId();
         }
+
+
+
         initHead();
         initFragment();
         initIndicator();
@@ -229,6 +233,8 @@ public class UserInfoActivity extends BaseActivity {
         fragmentList.add(fragment1);
         fragmentList.add(fragment2);
         fragmentList.add(fragment3);
+
+        scrollableLayout.getHelper().setCurrentScrollableContainer((ScrollableHelper.ScrollableContainer) fragment);
     }
 
     private void initIndicator() {
@@ -279,9 +285,9 @@ public class UserInfoActivity extends BaseActivity {
         }
 
         if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
-            addFriendLayout.setVisibility(View.GONE);
+//            addFriendLayout.setVisibility(View.GONE);
             Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
-//            addFriendBtn.setText("");
+            ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
         }
 
         if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
@@ -312,31 +318,38 @@ public class UserInfoActivity extends BaseActivity {
                     userRole.setPadding(20, 0, 20, 0);
                     userRole.setBackgroundResource(R.drawable.shape_white_bg);
                     userRole.getBackground().setAlpha(77);
-                } else if (data.getAuthStatus() == 1) {
-
-                    famousLayout.setVisibility(View.VISIBLE);
-                    userRole.setText(data.getTradeField());
                 }
-            } else if (t instanceof FriendInformationBean) {
-                if (t != null) {
-                    FriendInformationBean bean = (FriendInformationBean) t;
-
-                    addFriendLayout.setVisibility(View.VISIBLE);
-                    Glide.with(this).load(bean.getCustImg()).transform(new GlideCircleImage(this)).
-                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
-                }
-            } else {
+            }else {
                 if (data.getAuthStatus() == 1) {
-                    famousLayout.setVisibility(View.VISIBLE);
+                    famousLayout.setVisibility(View.VISIBLE);           //认证成功
                     userRole.setText(data.getTradeField());
                 } else {
-                    famousLayout.setVisibility(View.GONE);
+                    famousLayout.setVisibility(View.GONE);              //达人认证失败
                 }
             }
 
         } else if (t instanceof FriendInformationBean) {
             model = (FriendInformationBean) t;
+
+            //陌生人状态需要查询用户是否已经发送申请好友请求
+            if(model.getRelation() == 0){
+                ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
+            }
+
             setData(model);
+        } else if(t instanceof RequestFriendStatusBean){
+            if(t != null){
+                RequestFriendStatusBean requestBean = (RequestFriendStatusBean) t;
+                if(requestBean.getStatus() == 0){
+                    addFriendBtn.setText("等待对方同意");
+                }else if(requestBean.getStatus() == 1){
+                    addFriendBtn.setText("聊天");
+                }else if(requestBean.getStatus() == 2){
+                    addFriendBtn.setText("加好友");
+                }else if(requestBean.getStatus() == 3){
+                    addFriendBtn.setText("加好友");
+                }
+            }
         }
     }
 
@@ -395,8 +408,6 @@ public class UserInfoActivity extends BaseActivity {
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 
             }
-//            userRole.setText(model.getCustRole());
-
         }
     }
 

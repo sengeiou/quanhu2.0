@@ -35,6 +35,7 @@ import com.rz.httpapi.bean.PaySignModel;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RegisterBean;
 import com.rz.httpapi.bean.RegisterModel;
+import com.rz.httpapi.bean.RequestFriendStatusBean;
 import com.rz.httpapi.bean.RequireFriendByPhoneModel;
 import com.rz.httpapi.bean.RewardDetailBean;
 import com.rz.httpapi.bean.RewardGiftModel;
@@ -769,7 +770,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST(APIFriend.REQUIRE_FRIEND_STATUS)
-    Call<ResponseData<RequireFriendByPhoneModel>> getRequireFriend(
+    Call<ResponseData<RequestFriendStatusBean>> getRequireFriend(
             @Field("custId") String aCustId,
             @Field("fid") String phone
     );
@@ -952,7 +953,8 @@ public interface ApiService {
 //            @Field("productType") int productType,
             @Field("custId") String custId,
             @Field("start") int start,
-            @Field("limit") int limit
+            @Field("limit") int limit,
+            @Field("flowType") int flowType
     );
 
     /**
