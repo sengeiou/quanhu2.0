@@ -55,7 +55,7 @@ public class StatusBarUtils {
      */
     public static int StatusBarLightMode(Activity activity) {
         int result = 0;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
                 result = 1;
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
@@ -78,7 +78,7 @@ public class StatusBarUtils {
      */
     public static int StatusBarWhiteMode(Activity activity) {
         int result = 0;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (MIUISetStatusBarLightMode(activity.getWindow(), false)) {
                 result = 1;
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), false)) {
