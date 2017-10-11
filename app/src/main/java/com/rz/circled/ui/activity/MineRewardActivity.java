@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
+import com.cpoopc.scrollablelayoutlib.ScrollableLayout;
 import com.rz.circled.R;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
@@ -31,6 +33,10 @@ import butterknife.BindView;
  */
 
 public class MineRewardActivity extends BaseActivity {
+
+
+    @BindView(R.id.scrollableLayout)
+    ScrollableLayout scrollableLayout;
 
     @BindView(R.id.tab_pager_search)
     PagerSlidingTabStripHome tabPagerSearch;
@@ -64,7 +70,7 @@ public class MineRewardActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
 
 //        tabPagerSearch.setTempPosition(type);
-
+        scrollableLayout.getHelper().setCurrentScrollableContainer((ScrollableHelper.ScrollableContainer) infoAdapter.getItem(0));
         tabPagerSearch.setViewPager(viewPager);
         tabPagerSearch.notifyDataSetChanged();
         tabPagerSearch.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -75,7 +81,7 @@ public class MineRewardActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-//                scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(i));
+                scrollableLayout.getHelper().setCurrentScrollableContainer((ScrollableHelper.ScrollableContainer) infoAdapter.getItem(position));
             }
 
             @Override
@@ -142,7 +148,7 @@ public class MineRewardActivity extends BaseActivity {
             if (position == 1)
                 return RewardArticalFragment.newInstance(1);
 
-            return MyArticleFragment.newInstance(Session.getUserId());
+            return RewardArticalFragment.newInstance(0);
         }
 
         @Override

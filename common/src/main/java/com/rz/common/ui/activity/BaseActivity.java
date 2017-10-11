@@ -694,6 +694,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                         String className = "com.rz.circled.ui.activity.LoginActivity";
                         Intent intent = new Intent();
                         intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.setClassName(mContext, className);
                         startActivity(intent);
                         finish();
