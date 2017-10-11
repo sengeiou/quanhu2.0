@@ -27,7 +27,7 @@ public class CouponsBean {
 
     private int activityInfoId;
     private String beginTime;
-    private int canNum;
+    private String canNum;
     private String createDate;
     private String createUserId;
     private String endTime;
@@ -37,7 +37,7 @@ public class CouponsBean {
     private String onlyCode;
     private String phone;
     private String prizesName;
-    private int prizesNum;
+    private String prizesNum;
     private int prizesType;
     private String prizesUnit;
     private String remark;
@@ -60,11 +60,11 @@ public class CouponsBean {
         this.beginTime = beginTime;
     }
 
-    public int getCanNum() {
+    public String getCanNum() {
         return canNum;
     }
 
-    public void setCanNum(int canNum) {
+    public void setCanNum(String canNum) {
         this.canNum = canNum;
     }
 
@@ -140,11 +140,11 @@ public class CouponsBean {
         this.prizesName = prizesName;
     }
 
-    public int getPrizesNum() {
+    public String getPrizesNum() {
         return prizesNum;
     }
 
-    public void setPrizesNum(int prizesNum) {
+    public void setPrizesNum(String prizesNum) {
         this.prizesNum = prizesNum;
     }
 

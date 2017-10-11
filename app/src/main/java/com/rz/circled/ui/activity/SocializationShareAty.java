@@ -264,7 +264,7 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 Toast.makeText(aty, "收藏成功~", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(aty, "分享成功~", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(aty, "分享成功~", Toast.LENGTH_SHORT).show();
             }
             if (platform.equals(SHARE_MEDIA.WEIXIN_CIRCLE)) {
                 zhugeTrack();
@@ -276,17 +276,18 @@ public class SocializationShareAty extends BaseActivity implements EasyPermissio
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
             Log.d("zxw", "onError: ");
-            Toast.makeText(aty, "分享失败~", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(aty, "分享失败~", Toast.LENGTH_SHORT).show();
             if (t != null) {
                 Log.d("throw", "throw:" + t.getMessage());
             }
-            JsEvent.callJsEvent(null, false);
+            JsEvent.callJsEvent(null, BaseParamsObject.RESULT_CODE_FAILED);
             finish();
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
             Log.d("zxw", "cancel:" + platform.toString());
+//            Toast.makeText(aty, "取消分享~", Toast.LENGTH_SHORT).show();
             JsEvent.callJsEvent(null, BaseParamsObject.RESULT_CODE_CANCEL);
             finish();
         }

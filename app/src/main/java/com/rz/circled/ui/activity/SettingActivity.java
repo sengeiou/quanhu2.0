@@ -88,7 +88,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitleText("设置");
+        setTitleText(R.string.setting);
         if (!Session.getUserIsLogin()) {
             mExitBtn.setVisibility(View.GONE);
 //            mAccountView.setVisibility(View.GONE);

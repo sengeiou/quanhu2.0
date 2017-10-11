@@ -47,7 +47,7 @@ public class MoreFamousActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitleText("达人");
+        setTitleText(getString(R.string.famous));
         View inflate = View.inflate(mContext, R.layout.item_footer, null);
         inflate.findViewById(R.id.view_dd).setVisibility(View.GONE);
         mLvMFamous.addFooterView(inflate);
