@@ -234,6 +234,7 @@ public class NewsCommonFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ResponseData<List<NewsBean>>> call, Response<ResponseData<List<NewsBean>>> response) {
                 super.onResponse(call, response);
+                if (layoutRefresh == null) return;
                 layoutRefresh.setRefreshing(false);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
@@ -261,6 +262,7 @@ public class NewsCommonFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ResponseData<List<NewsBean>>> call, Throwable t) {
                 super.onFailure(call, t);
+                if (layoutRefresh == null) return;
                 layoutRefresh.setRefreshing(false);
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }

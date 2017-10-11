@@ -381,8 +381,7 @@ public class StringUtils {
             try {
                 String mTime;
                 if (isNumRic(time)) {
-                    SimpleDateFormat format = new SimpleDateFormat(
-                            "yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     mTime = format.format(Long.parseLong(time));
                 } else {
                     if (!TextUtils.isEmpty(time) && time.contains(".")) {

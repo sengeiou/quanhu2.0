@@ -14,10 +14,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
 import com.rz.circled.dialog.GroupLevelLessDialog;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
@@ -100,6 +100,9 @@ public class PrivateCircledFragment extends BaseFragment {
     @BindView(R.id.frame_essence)
     FrameLayout frameEssence;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
+
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
@@ -119,21 +122,26 @@ public class PrivateCircledFragment extends BaseFragment {
     public void initData() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+        mPresenter.privateGroupBanner("3");
+    }
 
-        Http.getApiService(ApiPGService.class).privateGroupBanner("3").enqueue(new BaseCallback<ResponseData<List<GroupBannerBean>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<GroupBannerBean>>> call, Response<ResponseData<List<GroupBannerBean>>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful() && response.body().isSuccessful()) {
-                    List<GroupBannerBean> data = response.body().getData();
-                    if (data.size() > 0) {
-                        initViewpagerBanner(data);
-                        initIndicatorBanner(data);
-                    }
-                }
+    @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t instanceof List) {
+            List _data = (List) t;
+            if (_data.get(0) instanceof GroupBannerBean) {
+                List<GroupBannerBean> data = (List<GroupBannerBean>) t;
+                initViewpagerBanner(data);
+                initIndicatorBanner(data);
             }
-        });
-
+        }
     }
 
     @Override
@@ -204,7 +212,6 @@ public class PrivateCircledFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
-//                    startActivity(new Intent(mActivity, RecentContactActivity.class));
                 }
             });
         }

@@ -19,6 +19,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.dialog.ApplyForGroupSuccessDialog;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.H5Address;
@@ -84,6 +85,8 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     @BindView(R.id.btn_protocol)
     TextView btnProtocol;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
     private String coverPath;
     private String circleId;
     private int price;
@@ -139,6 +142,12 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     }
 
     @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
+    }
+
+    @Override
     protected boolean needLoadingView() {
         return true;
     }
@@ -146,6 +155,24 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t instanceof Integer) {
+            int data = (int) t;
+            if (data == CommonCode.General.DATA_SUCCESS) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ApplyForGroupSuccessDialog.newInstance().show(ft, "");
+            }
+        }
+    }
+
+    @Override
+    public void onLoadingStatus(int loadingStatus, String string) {
+        super.onLoadingStatus(loadingStatus, string);
+        getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
     }
 
     @OnClick({R.id.btn_update_pic, R.id.btn_group, R.id.btn_protocol, R.id.btn_way, R.id.img_group})
@@ -212,36 +239,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     }
 
     private void createPrivateGroupSubmit(String url, String groupName, String groupDesc, String ownDesc) {
-        Http.getApiService(ApiPGService.class).privateGroupCreate(
-                circleId,
-                url,
-                groupDesc,
-                price == 0 ? (cbx.isChecked() ? 1 : 0) : 0,
-                price,
-                groupName,
-                Session.getUserId(),
-                ownDesc,
-                Session.getUserName()).enqueue(new BaseCallback<ResponseData>() {
-            @Override
-            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                super.onResponse(call, response);
-                getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
-                if (response.isSuccessful() && response.body().isSuccessful()) {
-                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ApplyForGroupSuccessDialog.newInstance().show(ft, "");
-                } else {
-                    onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
-                super.onFailure(call, t);
-                getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
-                onLoadingStatus(CommonCode.General.ERROR_DATA);
-            }
-        });
+        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price, groupName, Session.getUserId(), ownDesc, Session.getUserName());
     }
 
     private void updateCoverPic() {

@@ -43,7 +43,10 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
                 switch (Integer.parseInt(data.getViewCode())) {
                     case NewsTypeConstants.TYPE_ANNOUNCEMENT:
                         return NewsAnnouncementViewBinder.class;
-                    case NewsTypeConstants.TYPE_SAFE:
+                    case NewsTypeConstants.TYPE_SAFE_1:
+                        return NewsTextViewBinder.class;
+                    case NewsTypeConstants.TYPE_SAFE_2:
+                        return NewsArticleViewBinder.class;
                     case NewsTypeConstants.TYPE_SYSTEM_1:
                         return NewsTextViewBinder.class;
                     case NewsTypeConstants.TYPE_SYSTEM_2:

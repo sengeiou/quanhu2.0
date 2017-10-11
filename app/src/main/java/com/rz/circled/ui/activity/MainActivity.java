@@ -33,6 +33,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
+import com.rz.common.event.KickEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
 import com.rz.common.utils.ClickCounter;
@@ -250,14 +251,17 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         @Override
         public void onEvent(StatusCode code) {
             Log.e(TAG, "onEvent: " + code.getValue());
-            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
+            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT) {
                 kickOut(code);
             } else {
                 if (code == StatusCode.NET_BROKEN) {
                 } else if (code == StatusCode.UNLOGIN) {
                 } else if (code == StatusCode.CONNECTING) {
                 } else if (code == StatusCode.LOGINING) {
+                } else if (code == StatusCode.KICKOUT) {
+                    EventBus.getDefault().post(new KickEvent(5));
                 } else {
+
                 }
             }
         }

@@ -34,7 +34,6 @@ public class AllPrivateGroupActivity extends BaseActivity {
     @Override
     public void initData() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.layout_frame, NewsCommonFragment.newInstance(NEWS_ANNOUNCEMENT));
         transaction.replace(R.id.layout_frame, PrivateGroupAllFragment.newInstance());
         transaction.commit();
     }

@@ -12,6 +12,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.AllPrivateGroupActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -49,6 +50,8 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     @BindView(R.id.tv)
     TextView tv;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
     private DefaultPricePrivateGroupAdapter mAdapter;
 
     public static PrivateGroupRecommendFragment newInstance() {
@@ -60,6 +63,12 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     @Override
     public View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_recommend_private_group, null);
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -78,35 +87,20 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        Http.getApiService(ApiPGService.class).privateGroupRecommend(Session.getUserId()).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
-            @Override
-            public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    if (!response.body().isSuccessful()) {
-                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                    } else {
-                        List<PrivateGroupBean> data = response.body().getData().getList();
-                        if (data != null && data.size() > 0) {
-                            mAdapter.setData(data.size() > 3 ? data.subList(0, 3) : data);
-                            tv.setText(String.format(getString(R.string.private_group_total), response.body().getData().getCount()));
-                            tv.setTextColor(getResources().getColor(R.color.color_0185FF));
-                            Utility.setListViewHeightBasedOnChildren(lv);
-                        } else {
-                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                    }
-                } else {
-//                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-                }
-            }
+        mPresenter.privateGroupRecommend(Session.getUserId());
+    }
 
-            @Override
-            public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
-                super.onFailure(call, t);
-//                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-            }
-        });
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t instanceof PrivateGroupListBean) {
+            PrivateGroupListBean _data = (PrivateGroupListBean) t;
+            List<PrivateGroupBean> data = _data.getList();
+            mAdapter.setData(data.size() > 3 ? data.subList(0, 3) : data);
+            tv.setText(String.format(getString(R.string.private_group_total), _data.getCount()));
+            tv.setTextColor(getResources().getColor(R.color.color_0185FF));
+            Utility.setListViewHeightBasedOnChildren(lv);
+        }
     }
 
     @Override
