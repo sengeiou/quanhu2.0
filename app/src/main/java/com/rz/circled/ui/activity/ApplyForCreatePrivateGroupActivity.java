@@ -154,7 +154,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t instanceof Integer) {
-            int data = (Integer) t;
+            Integer data = (Integer) t;
             if (data == CommonCode.General.DATA_SUCCESS) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ApplyForGroupSuccessDialog.newInstance().show(ft, "");

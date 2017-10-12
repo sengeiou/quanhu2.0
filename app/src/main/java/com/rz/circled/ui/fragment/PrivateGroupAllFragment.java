@@ -140,7 +140,8 @@ public class PrivateGroupAllFragment extends BaseFragment {
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
         super.onLoadingStatus(loadingStatus, string);
-        layoutRefresh.setRefreshing(false);
+        if (layoutRefresh != null)
+            layoutRefresh.setRefreshing(false);
     }
 
     @Override

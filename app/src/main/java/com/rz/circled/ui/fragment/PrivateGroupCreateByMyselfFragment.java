@@ -195,7 +195,8 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     public void onLoadingStatus(int loadingStatus, String string) {
         if (type != TYPE_PART) {
             super.onLoadingStatus(loadingStatus, string);
-            refreshLayout.setRefreshing(false);
+            if (refreshLayout != null)
+                refreshLayout.setRefreshing(false);
         } else {
             if (loadingStatus == CommonCode.General.DATA_EMPTY)
                 EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, mAdapter.getCount()));

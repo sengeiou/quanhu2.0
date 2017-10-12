@@ -39,6 +39,8 @@ public class StatusBarHandler extends ServerHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        if (android.os.Build.BRAND.equalsIgnoreCase("xiaomi") || android.os.Build.BRAND.equalsIgnoreCase("meizu"))
+            return;
         StatusBarUtils.setDarkStatusIcon(mActivity, !dark);
     }
 

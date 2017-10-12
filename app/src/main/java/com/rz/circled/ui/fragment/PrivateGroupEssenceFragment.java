@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
@@ -48,6 +50,8 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
     ListView lv;
     @BindView(R.id.tv)
     TextView tv;
+    @BindView(R.id.line)
+    View line;
 
     //私圈相关
     private PrivateGroupPresenter mPresenter;
@@ -106,8 +110,20 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
                 }
                 tv.setVisibility(View.GONE);
                 Utility.setListViewHeightBasedOnChildren(lv);
-            } else {
+            }
+        }
+    }
+
+    @Override
+    public void onLoadingStatus(int loadingStatus, String string) {
+        super.onLoadingStatus(loadingStatus, string);
+        if (tv != null) {
+            if (loadingStatus == CommonCode.General.DATA_EMPTY) {
                 tv.setVisibility(View.VISIBLE);
+                line.setVisibility(View.GONE);
+            } else if (loadingStatus == CommonCode.General.DATA_LACK) {
+                tv.setVisibility(View.VISIBLE);
+                line.setVisibility(View.VISIBLE);
             }
         }
     }
