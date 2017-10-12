@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -40,7 +41,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class RewardArticalFragment extends BaseFragment {
+public class RewardArticalFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer{
 
     protected IPresenter presenter;
     @BindView(R.id.refresh)
@@ -49,9 +50,7 @@ public class RewardArticalFragment extends BaseFragment {
     ListView lvReward;
     private MineRewardAdapter rewardAdapter;
     private List<MineRewardBean> rewardBeanList = new ArrayList<>();
-    private View headView;
-    private TextView createTxt;
-    private TextView answerTxt;
+
     private int type;
 
     private TextView topTxt;
@@ -200,5 +199,10 @@ public class RewardArticalFragment extends BaseFragment {
     @Override
     public void refreshPage() {
         ((PersonInfoPresenter) presenter).getMyReward(false, Session.getUserId(),type,null);
+    }
+
+    @Override
+    public View getScrollableView() {
+        return lvReward;
     }
 }

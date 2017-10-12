@@ -37,7 +37,8 @@ public class NewsTypeConstants {
     public static final int TYPE_RECOMMEND_2 = 4002;
     public static final int TYPE_RECOMMEND_3 = 4003;
 
-    public static final int TYPE_SAFE = 5000;
+    public static final int TYPE_SAFE_1 = 5000;
+    public static final int TYPE_SAFE_2 = 5001;
 
     /**
      * 跳转类型分类

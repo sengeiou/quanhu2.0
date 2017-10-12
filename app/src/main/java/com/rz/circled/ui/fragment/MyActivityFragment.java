@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -108,7 +109,10 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onNext(ResponseData<ActivityBean> res) {
-                        List<EntitiesBean> entities = res.getData().entities;
+                        List<EntitiesBean> entities = null;
+                        if(res.getData() != null && res.getData().entities != null){
+                            entities = res.getData().entities;
+                        }
                         if (res.getRet() == ReturnCode.SUCCESS) {
 
                             if (null != entities && !entities.isEmpty()) {

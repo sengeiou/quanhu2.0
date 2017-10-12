@@ -84,6 +84,7 @@
         <View style="@style/line_horizontal_gray_s" />
 
         <TextView
+            android:id="@+id/tv_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px26"

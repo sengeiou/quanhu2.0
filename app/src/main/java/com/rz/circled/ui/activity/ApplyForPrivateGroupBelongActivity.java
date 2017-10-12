@@ -11,11 +11,14 @@ import android.widget.GridView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.PrivateGroupBelongAdapter;
+import com.rz.circled.event.EventConstant;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.Utility;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -23,10 +26,13 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleBelongBean;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.PrivateGroupBean;
+import com.rz.httpapi.bean.PrivateGroupListBean;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -42,6 +48,8 @@ public class ApplyForPrivateGroupBelongActivity extends BaseActivity {
     @BindView(R.id.gv)
     GridView gv;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
     private PrivateGroupBelongAdapter mAdapter;
     private String selectId;
 
@@ -55,6 +63,12 @@ public class ApplyForPrivateGroupBelongActivity extends BaseActivity {
     @Override
     public View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_apply_for_private_group_belong, null);
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -73,47 +87,26 @@ public class ApplyForPrivateGroupBelongActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        Http.getApiService(ApiPGService.class).privateGroupBelong(Session.getUserId()).enqueue(new BaseCallback<ResponseData<CircleBelongBean>>() {
-            @Override
-            public void onResponse(Call<ResponseData<CircleBelongBean>> call, Response<ResponseData<CircleBelongBean>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    if (!response.body().isSuccessful()) {
-                        SVProgressHUD.showErrorWithStatus(mContext, response.body().getMsg());
-                    } else {
-                        CircleBelongBean circleBelongBean = response.body().getData();
-                        for (String circleId :
-                                circleBelongBean.getCircleIdList()) {
-                            Iterator<CircleEntrModle> sListIterator = circleBelongBean.getCircleList().iterator();
-                            while (sListIterator.hasNext()) {
-                                if (TextUtils.equals(circleId, sListIterator.next().appId)) {
-                                    sListIterator.remove();
-                                    break;
-                                }
-                            }
-                        }
-                        if (circleBelongBean.getCircleList().size() > 0) {
-                            mAdapter.setCircleId(selectId);
-                            mAdapter.setData(circleBelongBean.getCircleList());
-                        } else {
-                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                    }
-                } else {
-                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.request_failed));
-                }
-            }
+        mPresenter.privateGroupBelong(Session.getUserId());
+    }
 
-            @Override
-            public void onFailure(Call<ResponseData<CircleBelongBean>> call, Throwable t) {
-                super.onFailure(call, t);
-                SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.request_failed));
-            }
-        });
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t instanceof CircleBelongBean) {
+            CircleBelongBean data = (CircleBelongBean) t;
+            mAdapter.setCircleId(selectId);
+            mAdapter.setData(data.getCircleList());
+        }
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 
     @Override
     public void refreshPage() {
-
+        initData();
     }
 }

@@ -2,6 +2,7 @@ package com.rz.circled.adapter.viewholder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +41,11 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         holder.tvTitle.setText(item.getContent());
         NewsInteractiveExtra extra = new Gson().fromJson(item.getBody().toString(), NewsInteractiveExtra.class);
         holder.tvName.setText(extra.getCustName());
-        Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).placeholder(R.mipmap.ic_default_avatar_small).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
+        Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
         holder.tvContent.setText(extra.getBodyTitle());
-        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).into(holder.img);
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), extra.getCircleName()));
+        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
+        String from = TextUtils.isEmpty(extra.getCoterieId()) ? extra.getCircleName() : extra.getCoterieName();
+        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

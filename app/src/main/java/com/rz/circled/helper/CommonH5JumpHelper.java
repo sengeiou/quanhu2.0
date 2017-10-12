@@ -1,6 +1,7 @@
 package com.rz.circled.helper;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.rz.circled.BuildConfig;
 import com.rz.circled.ui.activity.WebContainerActivity;
@@ -19,8 +20,10 @@ public class CommonH5JumpHelper {
     private static final String TOPIC_HOME = "/%s/topic/home/%s";
     //悬赏详情页 	/activity/reward/detail/:id
     private static final String REWARD_DETAIL = "/activity/reward/detail/%s";
+    //私圈详情页 /:sjmwq/redirect/coterie/:coterieId/:moduleEnum/:id
+    private static final String PRIVATE_RESOURCE_DETAIL = "/%s/redirect/coterie/%s/%s/%s";
     //详情页 /:sjmwq/redirect/coterie/:coterieId/:moduleEnum/:id
-    private static final String RESOURCE_DETAIL = "/%s/redirect/coterie/%s/%s/%s";
+    private static final String RESOURCE_DETAIL = "/%s/redirect/%s/%s";
     //成员审核页 /:sjmwq/coterie/:coterieId/edit/applyList
     private static final String MEMBER_AUDIT = "/%s/coterie/%s/edit/applyList";
     //活动详情页：报名类 	/activity/platform-activity/signup/:activityId
@@ -50,7 +53,12 @@ public class CommonH5JumpHelper {
 
     public static void startResourceDetail(Context context, String circleRoute, String coterieId, String moduleEnum, String resourceId) {
         Formatter formatter = new Formatter();
-        String url = formatter.format(RESOURCE_DETAIL, circleRoute, coterieId, moduleEnum, resourceId).toString();
+        String url;
+        if (!TextUtils.isEmpty(coterieId) && !TextUtils.equals(coterieId, "0")) {
+            url = formatter.format(PRIVATE_RESOURCE_DETAIL, circleRoute, coterieId, moduleEnum, resourceId).toString();
+        } else {
+            url = formatter.format(RESOURCE_DETAIL, circleRoute, moduleEnum, resourceId).toString();
+        }
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 

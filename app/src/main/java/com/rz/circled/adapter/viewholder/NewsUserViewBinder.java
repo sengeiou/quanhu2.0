@@ -35,7 +35,7 @@ public class NewsUserViewBinder extends ItemViewBinder<NewsBean, NewsUserViewBin
         holder.tvTime.setText(item.getCreateTime());
         holder.tvName.setText(item.getTitle());
         holder.tvIntro.setText(item.getContent());
-        Glide.with(holder.itemView.getContext()).load(item.getImg()).placeholder(R.mipmap.ic_default_avatar_big).error(R.mipmap.ic_default_avatar_big).into(holder.avatar);
+        Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_avatar_big).into(holder.avatar);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

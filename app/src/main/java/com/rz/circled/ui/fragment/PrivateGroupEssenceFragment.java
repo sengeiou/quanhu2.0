@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.PrivateGroupEssenceAdapter;
 import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
@@ -19,6 +21,7 @@ import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.GroupBannerBean;
 import com.rz.httpapi.bean.PrivateGroupResourceBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,6 +49,8 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
     @BindView(R.id.tv)
     TextView tv;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
     private PrivateGroupEssenceAdapter mAdapter;
 
     public static PrivateGroupEssenceFragment newInstance() {
@@ -82,6 +87,32 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
     }
 
     @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
+    }
+
+    @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t instanceof List) {
+            List _data = (List) t;
+            if (_data.get(0) instanceof PrivateGroupResourceBean) {
+                List<PrivateGroupResourceBean> data = (List<PrivateGroupResourceBean>) t;
+                if (loadMore) {
+                    mAdapter.addData(data);
+                } else {
+                    mAdapter.setData(data);
+                }
+                tv.setVisibility(View.GONE);
+                Utility.setListViewHeightBasedOnChildren(lv);
+            } else {
+                tv.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
@@ -105,32 +136,7 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
     }
 
     private void loadData(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupEssence(loadMore ? mAdapter.getCount() : 0, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<PrivateGroupResourceBean>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<PrivateGroupResourceBean>>> call, Response<ResponseData<List<PrivateGroupResourceBean>>> response) {
-                super.onResponse(call, response);
-                if (response.isSuccessful()) {
-                    if (!response.body().isSuccessful()) {
-                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                    } else {
-                        List<PrivateGroupResourceBean> data = response.body().getData();
-                        if (data != null && data.size() > 0) {
-                            if (loadMore) {
-                                mAdapter.addData(data);
-                            } else {
-                                mAdapter.setData(data);
-                            }
-                            tv.setVisibility(View.GONE);
-                            Utility.setListViewHeightBasedOnChildren(lv);
-                        } else {
-                            tv.setVisibility(View.VISIBLE);
-                        }
-                    }
-                } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-                }
-            }
-        });
+        mPresenter.privateGroupEssence(loadMore ? mAdapter.getCount() : 0, loadMore);
     }
 
     @Override

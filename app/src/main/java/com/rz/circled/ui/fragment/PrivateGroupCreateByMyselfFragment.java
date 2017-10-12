@@ -16,6 +16,7 @@ import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -59,6 +60,8 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout refreshLayout;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
     private int type;
     private String userId;
     private DefaultPrivateGroupAdapter mAdapter;
@@ -91,6 +94,12 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
+    }
+
+    @Override
     public void initView() {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
@@ -111,11 +120,8 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                         startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
                 }
             });
-        }
-
-        if(!userId.equals(Session.getUserId())){
-
-            if(lv.getFooterViewsCount()<=0){
+        } else {
+            if (lv.getFooterViewsCount() <= 0) {
                 LayoutInflater inflater = LayoutInflater.from(mActivity);
                 View view = inflater.inflate(R.layout.foot_view, null);
                 lv.addFooterView(view);
@@ -136,7 +142,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    pageNo = 1;
                     loadData(false);
                 } else {
                     loadData(true);
@@ -161,6 +166,43 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t instanceof PrivateGroupListBean) {
+            refreshLayout.setRefreshing(false);
+            PrivateGroupListBean _data = (PrivateGroupListBean) t;
+            List<PrivateGroupBean> data = _data.getList();
+            if (type == TYPE_PART) {
+                if (data.size() > 2) {
+                    mAdapter.setData(data.subList(0, 2));
+                } else {
+                    mAdapter.setData(data);
+                }
+                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
+            } else {
+                if (loadMore) {
+                    mAdapter.addData(data);
+                } else {
+                    mAdapter.setData(data);
+                }
+                pageNo++;
+            }
+            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, _data.getCount()));
+        }
+    }
+
+    @Override
+    public void onLoadingStatus(int loadingStatus, String string) {
+        if (type != TYPE_PART) {
+            super.onLoadingStatus(loadingStatus, string);
+            refreshLayout.setRefreshing(false);
+        } else {
+            if (loadingStatus == CommonCode.General.DATA_EMPTY)
+                EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, mAdapter.getCount()));
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (EventBus.getDefault().isRegistered(this))
@@ -176,55 +218,9 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         }
     }
 
-    private void loadData(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupMyselfCreate(userId, pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
-            @Override
-            public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
-                super.onResponse(call, response);
-                refreshLayout.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    if (!response.body().isSuccessful()) {
-                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                    } else {
-                        List<PrivateGroupBean> data = response.body().getData().getList();
-                        if (type == TYPE_PART) {
-                            if (data != null && data.size() > 0) {
-                                if (data.size() > 2) {
-                                    mAdapter.setData(data.subList(0, 2));
-                                } else {
-                                    mAdapter.setData(data);
-                                }
-                                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
-                            }
-                        } else {
-                            if (data != null && data.size() > 0) {
-                                if (loadMore) {
-                                    mAdapter.addData(data);
-                                } else {
-                                    mAdapter.setData(data);
-                                }
-                                pageNo++;
-                            }
-                            if (mAdapter.getCount() == 0) {
-                                onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.private_group_no_create));
-                            }
-                        }
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, mAdapter.getCount()));
-                    }
-                } else {
-                    if (type != TYPE_PART)
-                        SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
-                super.onFailure(call, t);
-                refreshLayout.setRefreshing(false);
-                if (type != TYPE_PART)
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-            }
-        });
+    private void loadData(boolean loadMore) {
+        if (!loadMore) pageNo = 1;
+        mPresenter.privateGroupMyselfCreate(userId, pageNo, loadMore);
     }
 
     @Override

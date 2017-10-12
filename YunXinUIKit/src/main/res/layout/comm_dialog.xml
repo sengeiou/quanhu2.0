@@ -8,13 +8,16 @@
                 android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_pop_white_btn"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/px88"
+        android:layout_marginRight="@dimen/px88"
+        >
 
         <TextView
             android:id="@+id/id_tv_message"
@@ -40,14 +43,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/id_tv_confirm"
+                android:id="@+id/id_tv_cancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/left_bottom_roller_f5_bg"
                 android:gravity="center"
                 android:padding="@dimen/px30"
-                android:text="@string/confirm"
+                android:text="@string/cancel"
                 android:textColor="@color/font_color_blue"
                 android:textSize="@dimen/px50"/>
 
@@ -57,16 +60,18 @@
                 android:background="@color/color_DDDDDD"/>
 
             <TextView
-                android:id="@+id/id_tv_cancel"
+                android:id="@+id/id_tv_confirm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/right_bottom_roller_f5_bg"
                 android:gravity="center"
                 android:padding="@dimen/px30"
-                android:text="@string/cancel"
+                android:text="@string/confirm"
                 android:textColor="@color/font_color_blue"
                 android:textSize="@dimen/px50"/>
+
+
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
