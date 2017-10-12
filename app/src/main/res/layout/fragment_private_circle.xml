@@ -301,6 +301,8 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
+                <View style="@style/line_horizontal_gray_s" />
+
                 <View
                     style="@style/line_horizontal_gray_s"
                     android:layout_height="10dp"

@@ -49,6 +49,8 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     ListView lv;
     @BindView(R.id.tv)
     TextView tv;
+    @BindView(R.id.line)
+    View line;
 
     //私圈相关
     private PrivateGroupPresenter mPresenter;
@@ -100,6 +102,7 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
             tv.setText(String.format(getString(R.string.private_group_total), _data.getCount()));
             tv.setTextColor(getResources().getColor(R.color.color_0185FF));
             Utility.setListViewHeightBasedOnChildren(lv);
+            line.setVisibility(View.VISIBLE);
         }
     }
 
