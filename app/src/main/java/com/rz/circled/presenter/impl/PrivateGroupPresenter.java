@@ -182,7 +182,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param start
      * @param loadMore
      */
-    public void privateGroupEssence(int start, final boolean loadMore) {
+    public void privateGroupEssence(final int start, final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
@@ -201,7 +201,10 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(data, loadMore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
+                            if (start == 0)
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
+                            else
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
                         }
                     }
                 } else {
@@ -264,7 +267,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param pageNo
      * @param loadMore
      */
-    public void privateGroupMyselfJoin(String custId, int pageNo, final boolean loadMore) {
+    public void privateGroupMyselfJoin(String custId, final int pageNo, final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
@@ -282,7 +285,10 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(data, loadMore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_join));
+                            if (pageNo != 1)
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
+                            else
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_join));
                         }
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
@@ -307,7 +313,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param pageNo
      * @param loadMore
      */
-    public void privateGroupMyselfCreate(String custId, int pageNo, final boolean loadMore) {
+    public void privateGroupMyselfCreate(String custId, final int pageNo, final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
@@ -325,7 +331,10 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(data, loadMore);
                         } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_create));
+                            if (pageNo != 1)
+                                mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
+                            else
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_create));
                         }
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());

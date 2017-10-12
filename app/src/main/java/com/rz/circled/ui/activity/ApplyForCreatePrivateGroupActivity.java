@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.dialog.ApplyForGroupSuccessDialog;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
@@ -27,6 +28,10 @@ import com.rz.common.oss.OssManager;
 import com.rz.common.oss.UploadPicManager;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
+import com.rz.httpapi.api.ApiPGService;
+import com.rz.httpapi.api.BaseCallback;
+import com.rz.httpapi.api.Http;
+import com.rz.httpapi.api.ResponseData.ResponseData;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -35,6 +40,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_BELONG_ID;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
@@ -154,7 +161,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t instanceof Integer) {
-            int data = (Integer) t;
+            Integer data = (Integer) t;
             if (data == CommonCode.General.DATA_SUCCESS) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ApplyForGroupSuccessDialog.newInstance().show(ft, "");
