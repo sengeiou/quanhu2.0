@@ -459,7 +459,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
             if (isNoData) {
                 startbuy = record_start_buy;
             } else {
-                startbuy += Constants.PAGESIZE_10;
+                startbuy ++;
             }
             record_start_buy = startbuy;
         }
