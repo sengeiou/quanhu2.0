@@ -118,7 +118,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                     @Override
                     public void onError(Throwable e) {
                         if (!NetUtils.isNetworkConnected(mActivity)) {
-                            onLoadingStatus(CommonCode.General.WEB_ERROR, mActivity.getString(R.string.no_net_work));
+                            onLoadingStatus(CommonCode.General.UN_NETWORK, mActivity.getString(R.string.no_net_work));
                             return;
                         }
                     }
