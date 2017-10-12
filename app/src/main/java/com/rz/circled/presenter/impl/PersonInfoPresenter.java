@@ -198,10 +198,9 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getArticle(final boolean loadMore, String custId, String resourceType){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -277,10 +276,9 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getPersionArticle(final boolean loadMore, final String custId, String resourceType){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -362,10 +360,9 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getMyreward(final boolean loadMore, String custId, int type,int offerId) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -449,17 +446,16 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getMybuy(final boolean loadMore, String custId){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             startbuy = 1;
         } else {
             if (isNoData) {
                 startbuy = record_start_buy;
             } else {
-                startbuy += Constants.PAGESIZE_10;
+                startbuy ++;
             }
             record_start_buy = startbuy;
         }
@@ -527,10 +523,9 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getMyReward(final boolean loadMore, String custId, final int isReward, String rewardId){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {

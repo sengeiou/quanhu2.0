@@ -22,9 +22,11 @@ import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
@@ -92,6 +94,17 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     private void getData(final boolean loadMore){
 
+        if (!loadMore) {
+            pageNo = 1;
+        } else {
+            if (isNoData) {
+                pageNo = record_start;
+            } else {
+                pageNo ++;
+            }
+            record_start = pageNo;
+        }
+
         Http.getApiService(ApiYylService.class)
                 .getMineActivityList(pageNo, 20, userid)
                 .subscribeOn(Schedulers.io())
@@ -104,7 +117,10 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (!NetUtils.isNetworkConnected(mActivity)) {
+                            onLoadingStatus(CommonCode.General.UN_NETWORK, mActivity.getString(R.string.no_net_work));
+                            return;
+                        }
                     }
 
                     @Override
@@ -118,13 +134,14 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                             if (null != entities && !entities.isEmpty()) {
                                 isNoData = false;
                                 onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                                bean.clear();
 
                                 bean.addAll(entities);
                                 mEntitiesBeanCommonAdapter.notifyDataSetChanged();
 
-                                pageNo++;
                             } else {
                                 if(loadMore == false){
+
                                     if(Session.getUserId().equals(userid)){
                                         onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
                                     }else{
@@ -196,7 +213,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     public void initData() {
-        initPresenter();
+//        initPresenter();
 
     }
 
@@ -247,4 +264,6 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             EventBus.getDefault().unregister(this);
         }
     }
+
+
 }

@@ -111,7 +111,7 @@ public class SearchPresenter extends GeneralPresenter {
 
     public void searchQH(final boolean loadMore, String keyWord, String circleId, String coterieId, String resourceType, final int searchType){
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);

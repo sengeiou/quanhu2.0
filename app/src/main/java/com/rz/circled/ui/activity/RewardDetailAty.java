@@ -24,7 +24,9 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
 import com.rz.httpapi.bean.RewardDetailBean;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -98,7 +100,7 @@ public class RewardDetailAty extends BaseActivity {
                 }
             });
             setTitleText(R.string.rewward_detail);
-            mIncome.setText("金额");
+            mIncome.setText("收支");
             mProduceType.setText(R.string.shuoming);
         }
         mAdapter = new CommonAdapter<RewardDetailBean>(aty, mBillDetails, R.layout.layout_account_detail_item) {
@@ -106,15 +108,19 @@ public class RewardDetailAty extends BaseActivity {
             public void convert(ViewHolder helper, RewardDetailBean item) {
                 helper.setText(R.id.id_tv_name, item.getRewardDesc());
                 TextView mPay = (TextView) helper.getViewById(R.id.id_tv_cost);
-                //0，扣费；1，加费
-//                int orderType = item.orderType;
-//                if (orderType == 0) {
-                    mPay.setText( item.getAmount() +"");
+
+
+                if(item.getAmount()<0){
+                    mPay.setTextColor(Color.parseColor("#0185ff"));
+                }else{
                     mPay.setTextColor(Color.parseColor("#FF6060"));
-//                } else if (orderType == 1) {
-//                    mPay.setText("+" + Currency.returnDollar(Currency.RMB, item.cost, 0));
-//                    mPay.setTextColor(Color.parseColor("#0185ff"));
-//                }
+                }
+
+                float price = Float.valueOf(item.getAmount());
+                DecimalFormat fnum = new DecimalFormat("##0.00");
+                String  dd = fnum.format(price/100);
+                mPay.setText(dd);
+
                 if(!TextUtils.isEmpty(item.getCreateTime())){
                     SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
                     long lt = new Long(item.getCreateTime());

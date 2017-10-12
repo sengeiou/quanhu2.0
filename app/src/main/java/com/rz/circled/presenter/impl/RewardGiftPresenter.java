@@ -63,7 +63,7 @@ public class RewardGiftPresenter extends GeneralPresenter {
 
     public void rewardGiftList(int start, int limit) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
@@ -96,7 +96,7 @@ public class RewardGiftPresenter extends GeneralPresenter {
 
     public void rewardDo(String custId, String giftId, int giftNum, String resourceId, String toCustId, String type) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         Call<ResponseData<RewardBean>> call = mApiService.rewardDo(custId, giftId, giftNum, resourceId, toCustId, type);

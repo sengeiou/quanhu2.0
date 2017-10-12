@@ -134,8 +134,6 @@ public class UserInfoActivity extends BaseActivity {
             userId = Session.getUserId();
         }
 
-
-
         initHead();
         initFragment();
         initIndicator();
