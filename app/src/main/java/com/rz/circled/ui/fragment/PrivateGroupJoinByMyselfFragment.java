@@ -163,24 +163,39 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
         super.updateViewWithLoadMore(t, loadMore);
         if (t instanceof PrivateGroupListBean) {
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
-            List<PrivateGroupBean> data = _data.getList();
-            if (type == TYPE_PART) {
-                if (data.size() > 2) {
-                    mAdapter.setData(data.subList(0, 2));
-                } else {
-                    mAdapter.setData(data);
-                }
-                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
-            } else {
-                if (loadMore) {
-                    mAdapter.addData(data);
-                } else {
-                    mAdapter.setData(data);
-                }
-                pageNo++;
-            }
-            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data.getCount()));
+            processData(_data, loadMore);
         }
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t instanceof PrivateGroupListBean) {
+            PrivateGroupListBean _data = (PrivateGroupListBean) t;
+            if (!hasDataInPage()) {
+                processData(_data, false);
+            }
+        }
+    }
+
+    private void processData(PrivateGroupListBean _data, boolean loadMore) {
+        List<PrivateGroupBean> data = _data.getList();
+        if (type == TYPE_PART) {
+            if (data.size() > 2) {
+                mAdapter.setData(data.subList(0, 2));
+            } else {
+                mAdapter.setData(data);
+            }
+            Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
+        } else {
+            if (loadMore) {
+                mAdapter.addData(data);
+            } else {
+                mAdapter.setData(data);
+            }
+            pageNo++;
+        }
+        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data.getCount()));
     }
 
     @Override

@@ -62,7 +62,7 @@ public class StatusBarUtils {
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
                 result = 2;
             } else {
-//                normalStatusBarLightMode(activity, true);
+                normalStatusBarLightMode(activity, true);
                 result = 3;
             }
         }
@@ -85,7 +85,7 @@ public class StatusBarUtils {
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), false)) {
                 result = 2;
             } else {
-//                normalStatusBarLightMode(activity, false);
+                normalStatusBarLightMode(activity, false);
                 result = 3;
             }
         }

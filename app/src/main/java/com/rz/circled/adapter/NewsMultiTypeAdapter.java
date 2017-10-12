@@ -8,6 +8,7 @@ import com.rz.circled.adapter.viewholder.NewsAnnouncementViewBinder;
 import com.rz.circled.adapter.viewholder.NewsArticleViewBinder;
 import com.rz.circled.adapter.viewholder.NewsGroupViewBinder;
 import com.rz.circled.adapter.viewholder.NewsInteractiveViewBinder;
+import com.rz.circled.adapter.viewholder.NewsRewardViewBinder;
 import com.rz.circled.adapter.viewholder.NewsTextViewBinder;
 import com.rz.circled.adapter.viewholder.NewsUserViewBinder;
 import com.rz.circled.constants.NewsTypeConstants;
@@ -51,6 +52,8 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
                         return NewsTextViewBinder.class;
                     case NewsTypeConstants.TYPE_SYSTEM_2:
                         return NewsArticleViewBinder.class;
+                    case NewsTypeConstants.TYPE_SYSTEM_3:
+                        return NewsRewardViewBinder.class;
                     case NewsTypeConstants.TYPE_RECOMMEND_1:
                         return NewsActivityViewBinder.class;
                     case NewsTypeConstants.TYPE_RECOMMEND_2:

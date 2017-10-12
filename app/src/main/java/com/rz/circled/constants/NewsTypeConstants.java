@@ -30,6 +30,7 @@ public class NewsTypeConstants {
 
     public static final int TYPE_SYSTEM_1 = 2001;
     public static final int TYPE_SYSTEM_2 = 2002;
+    public static final int TYPE_SYSTEM_3 = 2003;
 
     public static final int TYPE_INTERACTIVE = 3000;
 
