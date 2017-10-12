@@ -2,6 +2,7 @@ package com.rz.circled.adapter.viewholder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,10 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
         NewsArticleExtra extra = new Gson().fromJson(item.getBody().toString(), NewsArticleExtra.class);
-        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).into(holder.img);
+        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
         holder.tvContent.setText(extra.getBodyTitle());
+        String from = TextUtils.isEmpty(extra.getCoterieId()) ? extra.getCircleName() : extra.getCoterieName();
+        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,6 +57,8 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         ImageView img;
         @BindView(R.id.tv_content)
         TextView tvContent;
+        @BindView(R.id.tv_from)
+        TextView tvFrom;
 
         NewsBean item;
 

@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -23,10 +24,11 @@ public class PrivateGroupEssenceAdapter extends CommonAdapter<PrivateGroupResour
 
     @Override
     public void convert(ViewHolder helper, PrivateGroupResourceBean item, int position) {
-        helper.setText(R.id.tv_title, item.getCust().getCustNname() + "  " + item.getCust().getCustDesc());
+        PrivateGroupResourceBean.Cust cust = item.getCust();
+        helper.setText(R.id.tv_title, cust.getCustNname() + "  " + (TextUtils.isEmpty(cust.getCustDesc()) ? "" : cust.getCustDesc()));
         helper.setText(R.id.tv_desc, item.getTitle());
         helper.setText(R.id.tv_scan, String.format(mContext.getString(R.string.private_group_essence_scan), item.getReadNum()));
         if (Protect.checkLoadImageStatus(mContext))
-            Glide.with(mContext).load(item.getCust().getCustImg()).placeholder(R.mipmap.ic_default_avatar_small).error(R.mipmap.ic_default_avatar_small).into((ImageView) helper.getView(R.id.avatar));
+            Glide.with(mContext).load(cust.getCustImg()).error(R.mipmap.ic_default_avatar_small).into((ImageView) helper.getView(R.id.avatar));
     }
 }

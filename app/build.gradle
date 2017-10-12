@@ -227,18 +227,15 @@ dependencies {
     })
     compile project(':common')
     compile project(':YunXinIM')
-    compile project(':httpapi')
     compile project(':jsbridge')
     compile project(':TimePickerDialog')
     compile project(':audio')
     compile project(':umshare')
     compile project(':zbarsdk')
     compile project(':rangebar')
-
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
-
     compile 'com.android.support:multidex:1.0.1'
     compile('me.drakeet.multitype:multitype:3.0.0', {
         exclude group: 'com.android.support'
@@ -276,8 +273,6 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.12.0'
     compile 'com.facebook.fresco:animated-gif:0.12.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
-
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
     compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
-
 }

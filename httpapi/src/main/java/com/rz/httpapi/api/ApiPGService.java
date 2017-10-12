@@ -14,7 +14,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -80,9 +82,8 @@ public interface ApiPGService {
     @POST(ApiPG.PRIVATE_GROUP_BANNER)
     Call<ResponseData<List<GroupBannerBean>>> privateGroupBanner(@Field("bannerType") String bannerType);
 
-    @FormUrlEncoded
-    @POST(ApiPG.PRIVATE_GROUP_ESSENCE)
-    Call<ResponseData<List<PrivateGroupResourceBean>>> privateGroupEssence(@Field("start") int start, @Field("limit") int limit);
+    @GET(ApiPG.PRIVATE_GROUP_ESSENCE)
+    Call<ResponseData<List<PrivateGroupResourceBean>>> privateGroupEssence(@Query("start") int start, @Query("limit") int limit);
 
     @FormUrlEncoded
     @POST(ApiPG.PRIVATE_GROUP_RECOMMEND)

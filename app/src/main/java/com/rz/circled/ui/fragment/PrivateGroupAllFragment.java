@@ -13,15 +13,18 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.helper.CommonH5JumpHelper;
+import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Utility;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
+import com.rz.httpapi.bean.PrivateGroupResourceBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +50,8 @@ public class PrivateGroupAllFragment extends BaseFragment {
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout layoutRefresh;
 
+    //私圈相关
+    private PrivateGroupPresenter mPresenter;
     private int pageNo = 1;
     private DefaultPricePrivateGroupAdapter mAdapter;
 
@@ -85,7 +90,6 @@ public class PrivateGroupAllFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    pageNo = 1;
                     loadData(false);
                 } else {
                     loadData(true);
@@ -98,6 +102,46 @@ public class PrivateGroupAllFragment extends BaseFragment {
     public void initData() {
         if (getArguments().getBoolean(EXTRA_BOOLEAN))
             loadData(false);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return mAdapter != null && mAdapter.getCount() != 0;
+    }
+
+    @Override
+    public void initPresenter() {
+        mPresenter = new PrivateGroupPresenter();
+        mPresenter.attachView(this);
+    }
+
+    @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t instanceof List) {
+            List _data = (List) t;
+            if (_data.get(0) instanceof PrivateGroupBean) {
+                List<PrivateGroupBean> data = (List<PrivateGroupBean>) t;
+                if (loadMore) {
+                    mAdapter.addData(data);
+                } else {
+                    mAdapter.setData(data);
+                }
+                pageNo++;
+            }
+        }
+    }
+
+    @Override
+    public void onLoadingStatus(int loadingStatus, String string) {
+        super.onLoadingStatus(loadingStatus, string);
+        if (layoutRefresh != null)
+            layoutRefresh.setRefreshing(false);
     }
 
     @Override
@@ -117,41 +161,9 @@ public class PrivateGroupAllFragment extends BaseFragment {
         }
     }
 
-    private void loadData(final boolean loadMore) {
-        Http.getApiService(ApiPGService.class).privateGroupList(pageNo, PAGE_SIZE).enqueue(new BaseCallback<ResponseData<List<PrivateGroupBean>>>() {
-            @Override
-            public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
-                super.onResponse(call, response);
-                layoutRefresh.setRefreshing(false);
-                if (response.isSuccessful()) {
-                    if (!response.body().isSuccessful()) {
-                        SVProgressHUD.showErrorWithStatus(getContext(), response.body().getMsg());
-                    } else {
-                        List<PrivateGroupBean> data = response.body().getData();
-                        if (data != null && data.size() > 0) {
-                            if (loadMore) {
-                                mAdapter.addData(data);
-                            } else {
-                                mAdapter.setData(data);
-                            }
-                            pageNo++;
-                        }
-                        if (mAdapter.getCount() == 0) {
-                            onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                        }
-                    }
-                } else {
-                    SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData<List<PrivateGroupBean>>> call, Throwable t) {
-                super.onFailure(call, t);
-                layoutRefresh.setRefreshing(false);
-                SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
-            }
-        });
+    private void loadData(boolean loadMore) {
+        if (!loadMore) pageNo = 1;
+        mPresenter.privateGroupList(pageNo, loadMore);
     }
 
     @Override
