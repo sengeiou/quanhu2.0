@@ -1,7 +1,7 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,10 +13,13 @@ import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.GlideCenterRoundImage;
+import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
@@ -37,13 +40,14 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/9/16/016.
  */
 
-public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class MinePageActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
     List<EntitiesBean> bean = new ArrayList<>();
     @BindView(R.id.lv)
     ListView mLv;
     int pageNo = 1;
     @BindView(R.id.activity_refresh)
-    SwipeRefreshLayout mActivityRefresh;
+    SwipyRefreshLayoutBanner mActivityRefresh;
+    private boolean loadMore=false;
     private CommonAdapter<EntitiesBean> mEntitiesBeanCommonAdapter;
 
     @Override
@@ -54,13 +58,13 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void initPresenter() {
         Http.getApiService(ApiYylService.class)
-                .getMineActivityList(pageNo, 20, Session.getUserId())
+                .getMineActivityList(loadMore?pageNo:1, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<ActivityBean>>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i(TAG, "onCompleted: "+"xiasjsjsj");
                     }
 
                     @Override
@@ -73,11 +77,15 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<EntitiesBean> entities = res.getData().entities;
                             if (!entities.isEmpty()) {
+                                if (!loadMore){
+                                    pageNo=1;
+                                    bean.clear();
+                                }
                                 pageNo++;
                                 bean.addAll(entities);
                                 mEntitiesBeanCommonAdapter.notifyDataSetChanged();
                             } else {
-                                onLoadingStatus(CommonCode.General.DATA_EMPTY);
+                                onLoadingStatus(CommonCode.General.DATA_EMPTY,loadMore?"没有更多的活动":"");
                             }
                         } else {
                             onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -91,6 +99,7 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void initView() {
         mActivityRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mActivityRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mActivityRefresh.setOnRefreshListener(this);
         setTitleText("活动");
         mEntitiesBeanCommonAdapter = new CommonAdapter<EntitiesBean>(mContext, bean, R.layout.activity_item) {
@@ -119,12 +128,6 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
     }
 
     @Override
-    public void onRefresh() {
-        initPresenter();
-        mActivityRefresh.setRefreshing(false);
-    }
-
-    @Override
     protected boolean hasDataInPage() {
         return mEntitiesBeanCommonAdapter.getCount() != 0;
     }
@@ -137,5 +140,12 @@ public class MinePageActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void refreshPage() {
         initPresenter();
+    }
+
+    @Override
+    public void onRefresh(SwipyRefreshLayoutDirection direction) {
+        loadMore=direction==SwipyRefreshLayoutDirection.TOP?false:true;
+        initPresenter();
+        mActivityRefresh.setRefreshing(false);
     }
 }
