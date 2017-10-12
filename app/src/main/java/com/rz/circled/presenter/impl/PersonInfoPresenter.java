@@ -201,7 +201,6 @@ public class PersonInfoPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -280,7 +279,6 @@ public class PersonInfoPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -365,7 +363,6 @@ public class PersonInfoPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -452,14 +449,13 @@ public class PersonInfoPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             startbuy = 1;
         } else {
             if (isNoData) {
                 startbuy = record_start_buy;
             } else {
-                startbuy += Constants.PAGESIZE_10;
+                startbuy ++;
             }
             record_start_buy = startbuy;
         }
@@ -530,7 +526,6 @@ public class PersonInfoPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {

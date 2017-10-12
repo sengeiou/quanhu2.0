@@ -1512,7 +1512,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private void changeChooseImageStatus() {
         if (TextUtils.isEmpty(mVideoFilePath) && TextUtils.isEmpty(mVideoUrl)) {
             ivChoosePic.setImageResource(R.mipmap.icon_editor_pic);
-            ivChoosePic.setEnabled(false);
+            ivChoosePic.setEnabled(true);
         } else {
             ivChoosePic.setImageResource(R.mipmap.icon_editor_pic_gray);
             ivChoosePic.setEnabled(false);

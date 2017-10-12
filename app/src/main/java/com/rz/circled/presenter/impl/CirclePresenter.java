@@ -3,6 +3,7 @@ package com.rz.circled.presenter.impl;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.litesuits.common.utils.HexUtil;
 import com.litesuits.common.utils.MD5Util;
@@ -163,6 +164,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     //获取用户是否禁言
     public  void  getUserPermession(){
         if (!NetUtils.isNetworkConnected(mContext)) {
+            Toast.makeText(mContext,mContext.getString(R.string.no_net_work),Toast.LENGTH_LONG).show();
             return;
         }
         mUserService.getUserPermission(Session.getUserId())
@@ -199,6 +201,10 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      * @param loadMore
      */
     public void getCircleDynamicList(final boolean loadMore) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            Toast.makeText(mContext,mContext.getString(R.string.no_net_work),Toast.LENGTH_LONG).show();
+            return;
+        }
         Call<ResponseData<List<CircleDynamic>>> call = null;
         String userid = Session.getUserId();
         Log.i("lixiang", "onNext: " + dynamicCreateTime);
@@ -594,6 +600,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      */
     public void getUserLoveCircle(String custId) {
         if (!NetUtils.isNetworkConnected(mContext)) {
+            Toast.makeText(mContext,mContext.getString(R.string.no_net_work),Toast.LENGTH_LONG).show();
             return;
         }
         mUserService.getLoveCircleList(custId)
@@ -718,6 +725,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     Integer cid = null;
     public void getCircleCollection(final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
         mUserService.getCircleCollect(loadMore?cid:null, Session.getUserId(), Constants.PAGESIZE)

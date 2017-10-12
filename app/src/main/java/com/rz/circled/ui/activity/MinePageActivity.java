@@ -1,7 +1,6 @@
 package com.rz.circled.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +20,7 @@ import com.rz.common.constant.Constants;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
@@ -57,6 +57,10 @@ public class MinePageActivity extends BaseActivity implements SwipyRefreshLayout
 
     @Override
     public void initPresenter() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            onLoadingStatus(CommonCode.General.UN_NETWORK);
+            return;
+        }
         Http.getApiService(ApiYylService.class)
                 .getMineActivityList(loadMore?pageNo:1, 20, Session.getUserId())
                 .subscribeOn(Schedulers.io())
@@ -64,7 +68,6 @@ public class MinePageActivity extends BaseActivity implements SwipyRefreshLayout
                 .subscribe(new Observer<ResponseData<ActivityBean>>() {
                     @Override
                     public void onCompleted() {
-                        Log.i(TAG, "onCompleted: "+"xiasjsjsj");
                     }
 
                     @Override
@@ -129,7 +132,7 @@ public class MinePageActivity extends BaseActivity implements SwipyRefreshLayout
 
     @Override
     protected boolean hasDataInPage() {
-        return mEntitiesBeanCommonAdapter.getCount() != 0;
+        return mEntitiesBeanCommonAdapter!=null&&mEntitiesBeanCommonAdapter.getCount() != 0;
     }
 
     @Override

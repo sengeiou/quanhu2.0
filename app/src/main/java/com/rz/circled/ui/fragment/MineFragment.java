@@ -209,8 +209,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
             }
         });
-//        idPersonNewsRela.setBackgroundColor(getResources().getColor(R.color.color_main));
-//        swipeRefreshLayout.setRefreshing(false);
 
         getUserProveStatus();
     }
@@ -400,10 +398,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (null != mTxtPersonName && null != mImgPersonHead) {
             initUserNews();
         }
-//        if (!TextUtils.isEmpty(Session.getUserId())) {
-////            ((V3CirclePresenter) presenter).getCircleStats("");
-//            setData();
-//        }
+
     }
 
     @Subscribe
@@ -632,29 +627,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
     }
 
-    //    @OnClick()
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.id_person_head_img:
-                if (isLogin()) {
-                    trackUser("我的", "入口名称", "我的头像");
-//                    V3FriendInfoActivity.newFrindInfo(frg, Session.getUserId());
-                }
-                break;
-            //查看个人详情信息
-            case R.id.id_person_news_rela:
-                if (Session.getUserIsLogin()) {
-                    trackUser("我的", "入口名称", "个人详情");
-                    jump(PersonInfoAty.class);
-
-                } else {
-                    Intent login = new Intent(mActivity, LoginActivity.class);
-                    startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
-                }
-                break;
-        }
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
