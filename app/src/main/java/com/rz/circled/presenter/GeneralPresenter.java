@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/13 0013.
  */
-public abstract class GeneralPresenter<T> implements IPresenter {
+public abstract class GeneralPresenter<T> extends AbsPresenter {
 
 
     public List<Call> calls = new ArrayList<>();
