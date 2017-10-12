@@ -119,7 +119,7 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void registerUser(String phone, String password, String veriCode,String location, String cityCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.register_loading));
@@ -174,7 +174,7 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void changePw(String phone, String password, String veriCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
@@ -218,7 +218,7 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void modifyPw(String password, String newPassword) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
         Call<ResponseData> call = mUserService.modifyPw(
@@ -266,7 +266,7 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void bindPhone(final String phone, String password, String veriCode) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
         Call<ResponseData> call = mUserService.bindPhone(
@@ -458,7 +458,7 @@ public class UserInfoPresenter extends GeneralPresenter {
      */
     public void boundPhone(final String phone, String password, String veriCode,String custId) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.check_loading));
         Call<ResponseData> call = mUserService.bindPhone(

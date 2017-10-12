@@ -198,7 +198,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getArticle(final boolean loadMore, String custId, String resourceType){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
@@ -277,7 +277,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getPersionArticle(final boolean loadMore, final String custId, String resourceType){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
@@ -362,7 +362,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getMyreward(final boolean loadMore, String custId, int type,int offerId) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
@@ -449,7 +449,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getMybuy(final boolean loadMore, String custId){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
@@ -527,7 +527,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
     public void getMyReward(final boolean loadMore, String custId, final int isReward, String rewardId){
 
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING);

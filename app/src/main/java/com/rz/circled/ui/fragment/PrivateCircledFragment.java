@@ -172,6 +172,9 @@ public class PrivateCircledFragment extends BaseFragment {
                 }
                 checkGroupNull();
                 break;
+            case PRIVATE_GROUP_TAB_REFRESH:
+                initData();
+                break;
         }
     }
 
