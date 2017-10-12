@@ -76,7 +76,7 @@ public class MineRewardAdapter extends CommonAdapter {
 
         tvName.setText(model.getUser().getCustNname());
 //        tvTime.setText(model.getCreateTime()+"");
-        tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice() +"悠然币"+ model.getGiftInfo().getName()+"给");
+        tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice()/100 +"悠然币"+ model.getGiftInfo().getName()+"给");
 
         if( !TextUtils.isEmpty(model.getResourceInfo().getPics())){
             rewardImg.setVisibility(View.VISIBLE);

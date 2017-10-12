@@ -55,7 +55,7 @@ public class LevelPersenter extends GeneralPresenter {
      */
     public void getLevelAcount() {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         Call<ResponseData<MyLevelAcountBean>> call = mApiService.getLevelAcount(Session.getUserId());
@@ -83,7 +83,7 @@ public class LevelPersenter extends GeneralPresenter {
      */
     public void getLevelList(int limit, int start, final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            mView.onLoadingStatus(CommonCode.General.WEB_ERROR, mContext.getString(R.string.no_net_work));
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
         Call<ResponseData<List<MyLevelBean>>> call = mApiService.getLevelList(Session.getUserId(), limit, start);

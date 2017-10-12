@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="bottom"
             android:textSize="@dimen/px86"
-            android:text="1444.25"
+            android:text=""
             android:textColor="@color/color_ffefB7"
             />
 
