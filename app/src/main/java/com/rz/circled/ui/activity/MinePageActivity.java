@@ -90,7 +90,11 @@ public class MinePageActivity extends BaseActivity implements SwipyRefreshLayout
                                 bean.addAll(entities);
                                 mEntitiesBeanCommonAdapter.notifyDataSetChanged();
                             } else {
-                                onLoadingStatus(CommonCode.General.DATA_EMPTY,loadMore?"没有更多的活动":"");
+                                if (loadMore){
+                                onLoadingStatus(CommonCode.General.DATA_LACK);
+                                }else {
+                                    onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
+                                }
                             }
                         } else {
                             onLoadingStatus(CommonCode.General.ERROR_DATA);
