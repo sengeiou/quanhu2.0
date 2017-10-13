@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/px44"
+    android:paddingRight="@dimen/px44">
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/NewsTimeTipTvStyle"
+        tool:text="09:23" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_news_content_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/px10"
+        android:paddingLeft="@dimen/px8"
+        android:paddingRight="@dimen/px8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/px58"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44"
+            android:paddingTop="@dimen/px44">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:padding="0dp"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/font_52"
+                tool:text="充值成功" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px36"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/px14"
+                android:maxLines="2"
+                android:textColor="@color/font_gray_xl"
+                android:textSize="@dimen/font_44"
+                tool:text="充值成功坚实的快乐发接受的激发来看森度吉安咖啡的数据奥卡福是放假爱丽丝" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px28"
+                android:background="@color/color_F4F4F4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/px44"
+                android:paddingTop="@dimen/px44">
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="@dimen/px12"
+                    android:maxLines="2"
+                    android:paddingLeft="@dimen/px44"
+                    android:paddingRight="@dimen/px44"
+                    android:textColor="@color/font_gray_m"
+                    android:textSize="@dimen/font_40"
+                    tool:text="这里的是内容" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

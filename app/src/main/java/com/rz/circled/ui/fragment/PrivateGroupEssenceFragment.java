@@ -24,6 +24,8 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.GroupBannerBean;
+import com.rz.httpapi.bean.PrivateGroupBean;
+import com.rz.httpapi.bean.PrivateGroupListBean;
 import com.rz.httpapi.bean.PrivateGroupResourceBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -103,16 +105,35 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             List _data = (List) t;
             if (_data.get(0) instanceof PrivateGroupResourceBean) {
                 List<PrivateGroupResourceBean> data = (List<PrivateGroupResourceBean>) t;
-                if (loadMore) {
-                    mAdapter.addData(data);
-                } else {
-                    mAdapter.setData(data);
-                }
-                tv.setVisibility(View.GONE);
-                Utility.setListViewHeightBasedOnChildren(lv);
+                processData(data, loadMore);
             }
         }
     }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        if (t instanceof List) {
+            List _data = (List) t;
+            if (_data.get(0) instanceof PrivateGroupResourceBean) {
+                List<PrivateGroupResourceBean> data = (List<PrivateGroupResourceBean>) t;
+                if (mAdapter != null && mAdapter.getCount() == 0) {
+                    processData(data, false);
+                }
+            }
+        }
+    }
+
+    private void processData(List<PrivateGroupResourceBean> data, boolean loadMore) {
+        if (loadMore) {
+            mAdapter.addData(data);
+        } else {
+            mAdapter.setData(data);
+        }
+        tv.setVisibility(View.GONE);
+        Utility.setListViewHeightBasedOnChildren(lv);
+    }
+
 
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {

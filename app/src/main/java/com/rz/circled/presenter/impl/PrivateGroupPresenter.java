@@ -9,6 +9,7 @@ import android.view.View;
 import com.rz.circled.R;
 import com.rz.circled.dialog.ApplyForGroupSuccessDialog;
 import com.rz.circled.presenter.GeneralPresenter;
+import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.ui.inter.IViewController;
@@ -22,8 +23,12 @@ import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.CircleBelongBean;
+import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.CircleEntrModle;
+import com.rz.httpapi.bean.EntitiesBean;
+import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.GroupBannerBean;
+import com.rz.httpapi.bean.HotSubjectModel;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MyLevelAcountBean;
 import com.rz.httpapi.bean.MyLevelBean;
@@ -45,7 +50,9 @@ import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
  * Created by Gsm on 2017/9/19.
  */
 public class PrivateGroupPresenter extends GeneralPresenter {
-
+    private static String TAG_JOIN = "tag_join";
+    private static String TAG_CREATE = "tag_create";
+    private static String TAG_RECOMMEND = "tag_recommend";
 
     @Override
     public Object getCacheData() {
@@ -56,11 +63,24 @@ public class PrivateGroupPresenter extends GeneralPresenter {
     private IViewController mView;
     private ApiPGService mApiService;
 
+    //处理缓存
+    private EntityCache<GroupBannerBean> mBannerCache;
+    private EntityCache<PrivateGroupListBean> mCreateCache;
+    private EntityCache<PrivateGroupListBean> mJoinCache;
+    private EntityCache<PrivateGroupListBean> mRecommendCache;
+    private EntityCache<PrivateGroupResourceBean> mEssenceCache;
+
     @Override
     public void attachView(IViewController view) {
         mView = view;
         mContext = getContext(mView);
         mApiService = Http.getApiService(ApiPGService.class);
+
+        mBannerCache = new EntityCache<>(mContext, GroupBannerBean.class);
+        mCreateCache = new EntityCache<>(mContext, PrivateGroupListBean.class);
+        mJoinCache = new EntityCache<>(mContext, PrivateGroupListBean.class);
+        mRecommendCache = new EntityCache<>(mContext, PrivateGroupListBean.class);
+        mEssenceCache = new EntityCache<>(mContext, PrivateGroupResourceBean.class);
     }
 
     @Override
@@ -159,7 +179,9 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param bannerType
      */
     public void privateGroupBanner(String bannerType) {
+        final List<GroupBannerBean> data = mBannerCache.getListEntity(GroupBannerBean.class);
         if (!NetUtils.isNetworkConnected(mContext)) {
+            if (data != null) mView.updateView(data);
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
@@ -170,8 +192,19 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                 super.onResponse(call, response);
                 if (response.isSuccessful() && response.body().isSuccessful()) {
                     List<GroupBannerBean> data = response.body().getData();
-                    if (null != data && !data.isEmpty()) mView.updateView(data);
+                    if (null != data && !data.isEmpty()) {
+                        mView.updateView(data);
+                        mBannerCache.putListEntity(data);
+                    }
+                } else {
+                    if (data != null) mView.updateView(data);
                 }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<List<GroupBannerBean>>> call, Throwable t) {
+                super.onFailure(call, t);
+                if (data != null) mView.updateView(data);
             }
         });
     }
@@ -183,7 +216,9 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param loadMore
      */
     public void privateGroupEssence(final int start, final boolean loadMore) {
+        final List<PrivateGroupResourceBean> data = mEssenceCache.getListEntity(PrivateGroupResourceBean.class);
         if (!NetUtils.isNetworkConnected(mContext)) {
+            if (data != null) mView.updateView(data);
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
@@ -194,12 +229,14 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
+                        if (data != null) mView.updateView(data);
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
                     } else {
                         List<PrivateGroupResourceBean> data = response.body().getData();
                         if (null != data && !data.isEmpty()) {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(data, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            if (!loadMore) mEssenceCache.putListEntity(data);
                         } else {
                             if (start == 0)
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
@@ -208,6 +245,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                         }
                     }
                 } else {
+                    if (data != null) mView.updateView(data);
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
                 }
             }
@@ -215,6 +253,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
             @Override
             public void onFailure(Call<ResponseData<List<PrivateGroupResourceBean>>> call, Throwable t) {
                 super.onFailure(call, t);
+                if (data != null) mView.updateView(data);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
             }
         });
@@ -226,7 +265,9 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param custId
      */
     public void privateGroupRecommend(String custId) {
+        final PrivateGroupListBean data = mRecommendCache.getEntity(PrivateGroupListBean.class, TAG_RECOMMEND);
         if (!NetUtils.isNetworkConnected(mContext)) {
+            if (data != null) mView.updateView(data);
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
@@ -237,17 +278,20 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     if (!response.body().isSuccessful()) {
+                        if (data != null) mView.updateView(data);
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
                     } else {
                         PrivateGroupListBean data = response.body().getData();
                         if (null != data && data.getList() != null && !data.getList().isEmpty()) {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateView(data);
+                            mRecommendCache.putEntity(data, TAG_RECOMMEND);
                         } else {
                             mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
                         }
                     }
                 } else {
+                    if (data != null) mView.updateView(data);
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
                 }
             }
@@ -255,6 +299,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
+                if (data != null) mView.updateView(data);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
             }
         });
@@ -267,8 +312,10 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param pageNo
      * @param loadMore
      */
-    public void privateGroupMyselfJoin(String custId, final int pageNo, final boolean loadMore) {
+    public void privateGroupMyselfJoin(String custId, int pageNo, final boolean loadMore) {
+        final PrivateGroupListBean data = mJoinCache.getEntity(PrivateGroupListBean.class, TAG_JOIN);
         if (!NetUtils.isNetworkConnected(mContext)) {
+            if (data != null) mView.updateView(data);
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
@@ -282,18 +329,21 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                     if (responseData.isSuccessful()) {
                         PrivateGroupListBean data = response.body().getData();
                         if (null != data && data.getList() != null && !data.getList().isEmpty()) {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(data, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            if (!loadMore) mJoinCache.putEntity(data, TAG_JOIN);
                         } else {
-                            if (pageNo != 1)
+                            if (loadMore)
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
                             else
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_join));
                         }
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
+                        if (data != null) mView.updateView(data);
                     }
                 } else {
+                    if (data != null) mView.updateView(data);
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
                 }
             }
@@ -301,6 +351,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
             @Override
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
+                if (data != null) mView.updateView(data);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
             }
         });
@@ -313,8 +364,10 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param pageNo
      * @param loadMore
      */
-    public void privateGroupMyselfCreate(String custId, final int pageNo, final boolean loadMore) {
+    public void privateGroupMyselfCreate(String custId, int pageNo, final boolean loadMore) {
+        final PrivateGroupListBean data = mCreateCache.getEntity(PrivateGroupListBean.class, TAG_CREATE);
         if (!NetUtils.isNetworkConnected(mContext)) {
+            if (data != null) mView.updateView(data);
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
@@ -328,18 +381,21 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                     if (responseData.isSuccessful()) {
                         PrivateGroupListBean data = response.body().getData();
                         if (null != data && data.getList() != null && !data.getList().isEmpty()) {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             mView.updateViewWithLoadMore(data, loadMore);
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            if (!loadMore) mCreateCache.putEntity(data, TAG_CREATE);
                         } else {
-                            if (pageNo != 1)
+                            if (loadMore)
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
                             else
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_create));
                         }
                     } else {
+                        if (data != null) mView.updateView(data);
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
                     }
                 } else {
+                    if (data != null) mView.updateView(data);
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
                 }
             }
@@ -348,6 +404,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
             public void onFailure(Call<ResponseData<PrivateGroupListBean>> call, Throwable t) {
                 super.onFailure(call, t);
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+                if (data != null) mView.updateView(data);
             }
         });
     }

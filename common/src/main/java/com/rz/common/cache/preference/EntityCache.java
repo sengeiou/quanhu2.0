@@ -20,6 +20,7 @@ public class EntityCache<T> {
 
     private static final String ENTITY_CACHE = "entity_cache";
     private static final String LIST_KEY = "list_key";
+    private static final String ENTITY_KEY = "entity_key";
 
     private Gson gson = null;
     private Context context;
@@ -32,21 +33,50 @@ public class EntityCache<T> {
     }
 
     public final void putEntity(T t) {
+        putEntity(t, "");
+    }
+
+    public final void putEntity(T t, String tag) {
+        if (null == context) return;
         try {
-            write(context, gson.toJson(t), t.getClass().getCanonicalName());
+            write(context, gson.toJson(t), ENTITY_KEY + tag + t.getClass().getCanonicalName());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+
     public final T getEntity(Class<T> cls) {
+        return getEntity(cls, "");
+    }
+
+    public final T getEntity(Class<T> cls, String tag) {
+        if (null == context) return null;
         T t = null;
         try {
-            t = read(context, cls);
+            t = read(cls, ENTITY_KEY + tag + cls.getCanonicalName());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return t;
+    }
+
+    public final void putListEntity(List<T> object) {
+        putListEntityAddTag(object, "");
+    }
+
+    public final List<T> getListEntity(Class<T> cls) {
+        return getListEntityAddTag(cls, "");
+    }
+
+    public final void putListEntityAddTag(List<T> object, String type) {
+        if (object == null || object.size() == 0) {
+            if (mClass != null) {
+                write(context, gson.toJson(object), LIST_KEY + type + mClass.getCanonicalName());
+            }
+            return;
+        }
+        write(context, gson.toJson(object), LIST_KEY + type + object.get(0).getClass().getCanonicalName());
     }
 
     public final List<T> getListEntityAddTag(Class<T> cls, String type) {
@@ -73,16 +103,6 @@ public class EntityCache<T> {
     }
 
 
-    public final void putListEntityAddTag(List<T> object, String type) {
-        if (object == null || object.size() == 0) {
-            if (mClass != null) {
-                write(context, gson.toJson(object), LIST_KEY + type + mClass.getCanonicalName());
-            }
-            return;
-        }
-        write(context, gson.toJson(object), LIST_KEY + type + object.get(0).getClass().getCanonicalName());
-    }
-
     private void write(Context context, String cacheStr, String tag) {
         SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
         sp.edit().putString(tag, cacheStr).apply();
@@ -90,25 +110,10 @@ public class EntityCache<T> {
         Log.d("ChannelMode", "sp.getString  is  " + sp.getString(tag, ""));
     }
 
-    private T read(Context context, Class<T> cls) {
+    private T read(Class<T> cls, String tag) {
         SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
-        return gson.fromJson((sp.getString(cls.getCanonicalName(), "")), cls);
+        return gson.fromJson((sp.getString(tag, "")), cls);
     }
-
-    public final void putListEntity(List<T> object) {
-        putListEntityAddTag(object, "");
-    }
-
-    public final List<T> getListEntity(Class<T> cls) {
-        return getListEntityAddTag(cls, "");
-    }
-
-//    private static Object readList(Context context, TypeToken typeToken) {
-//        SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
-//        return gson.toJson((sp.getString(cls.getCanonicalName(), "")), cls);
-//        List<Object> retList = gson.fromJson(sp.getString("list-" + cls, ""), typeToken.getType());
-//
-//    }
 
     public static void clean(Context context) {
         SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
