@@ -12,7 +12,6 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.utils.NetUtils;
-import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
@@ -27,7 +26,6 @@ import com.rz.httpapi.constans.ReturnCode;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -238,7 +236,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         mView.updateView("");
                         return;
                     } else {
-//                        if (HandleRetCode.handler(mContext, res)) {
+                        if (HandleRetCode.handler(mContext, res)) {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -246,7 +244,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                                 }
                             }, 2000);
                             return;
-//                        }
+                        }
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.modify_fail));

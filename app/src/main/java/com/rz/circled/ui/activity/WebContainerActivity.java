@@ -133,12 +133,19 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         super.onResume();
 //        mWebView.resumeTimers();
         mWebViewProxy.autoCancelUiHandler();
+        mWebView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 //        mWebView.pauseTimers();
+        mWebView.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     public String getOssDir() {
@@ -155,6 +162,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mWebView.destroy();
     }
 
     @Override
@@ -302,4 +310,5 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
             }
         }
     }
+
 }

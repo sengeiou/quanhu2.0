@@ -76,6 +76,7 @@ public class ModifyPwdAty extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText("修改登录密码");
         mEtOldPwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int arg1, int arg2,
