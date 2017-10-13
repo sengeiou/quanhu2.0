@@ -339,7 +339,11 @@ public class UserInfoActivity extends BaseActivity {
             if(t != null){
                 RequestFriendStatusBean requestBean = (RequestFriendStatusBean) t;
                 if(requestBean.getStatus() == 0){
-                    addFriendBtn.setText("等待对方同意");
+                    if(requestBean.getIsRequire()==1){
+                        addFriendBtn.setText("等待对方同意");
+                    }else{
+                        addFriendBtn.setText("加好友");
+                    }
                 }else if(requestBean.getStatus() == 1){
                     addFriendBtn.setText("聊天");
                 }else if(requestBean.getStatus() == 2){

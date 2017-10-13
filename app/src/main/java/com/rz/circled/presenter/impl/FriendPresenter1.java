@@ -725,6 +725,7 @@ public class FriendPresenter1 extends GeneralPresenter {
         Call<ResponseData<FriendInformationBean>> call = service
                 .getFriendDetail(1003, Session.getUserId(), fid);
 
+
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<FriendInformationBean>>() {
             @Override

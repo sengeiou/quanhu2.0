@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide;
 import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.CommonAdapter;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.MListView;
@@ -206,7 +208,13 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EntitiesBean entitiesBean = bean.get(position);
+                if (entitiesBean.getActivityType() == 1) {
+                    WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/signup/" + entitiesBean.getId());
+                } else {
+                    WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/vote/" + entitiesBean.getId());
 
+                }
             }
         });
     }

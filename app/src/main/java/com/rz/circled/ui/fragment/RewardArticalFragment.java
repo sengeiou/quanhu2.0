@@ -27,10 +27,13 @@ import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.MineRewardBean;
 import com.rz.httpapi.bean.RewardStatBean;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,17 +92,25 @@ public class RewardArticalFragment extends BaseFragment implements ScrollableHel
 //                if (StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo().getResourceId())||StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo())) {
 
                   if(position != 0){
-                      String circleUrl = CommomUtils.getCircleUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
-                      WebContainerActivity.startActivity(mActivity, circleUrl);
-                  }
+                      try {
+                          JSONObject jsonobject = new JSONObject(rewardBeanList.get(position-1).getResourceInfo().getExtjson());
+                          String coterieId = jsonobject.getString("coterieId");
+                          if(StringUtil.isEmpty(coterieId)){
+                              String circleUrl = CommomUtils.getCircleUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
+                              WebContainerActivity.startActivity(mActivity, circleUrl);
+                          }else{
+                              String circleUrl = CommomUtils.getDymanicUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(),coterieId, rewardBeanList.get(position-1).getResourceInfo().getResourceId());
+                              WebContainerActivity.startActivity(mActivity, circleUrl);
+                          }
 
-//                } else {
-//                    String url = CommomUtils.getDymanicUrl(rewardBeanList.get(position).getResourceInfo().getCircleRoute(),rewardBeanList.get(position).getResourceInfo().getModuleEnum(), rewardBeanList.get(position).coterieId, rewardBeanList.get(position).getResourceInfo().getResourceId());
-//                    WebContainerActivity.startActivity(mActivity.this, url);
-//                }
+                      } catch (JSONException e) {
+                          e.printStackTrace();
+                      }
+                  }
             }
         });
     }
+
 
     @Override
     public void initData() {

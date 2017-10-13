@@ -158,7 +158,7 @@
                                 android:layout_marginRight="@dimen/px86"
                                 android:padding="@dimen/px10"
                                 android:src="@mipmap/pwd_see"
-                                android:visibility="visible"/>
+                                android:visibility="gone"/>
 
                             <ImageView
                                 android:id="@+id/id_login_clear_pw"
