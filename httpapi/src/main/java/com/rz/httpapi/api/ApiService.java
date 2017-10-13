@@ -1290,6 +1290,7 @@ public interface ApiService {
 
 =======
     /**
+
      * 绑定银行卡
      */
     @FormUrlEncoded
