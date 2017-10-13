@@ -3,11 +3,13 @@ package com.rz.circled.ui.activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.http.ApiYylService;
 import com.rz.circled.widget.CommonAdapter;
@@ -119,6 +121,18 @@ public class MinePageActivity extends BaseActivity implements SwipyRefreshLayout
 
     @Override
     public void initData() {
+        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EntitiesBean entitiesBean = bean.get(position);
+                if (entitiesBean.getActivityType() == 1) {
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/signup/" + entitiesBean.getId());
+                } else {
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/vote/" + entitiesBean.getId());
+
+                }
+            }
+        });
 
 
     }
