@@ -133,12 +133,16 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             String time3 = timeArray[2];
 
             if(Integer.parseInt(time1)>0){
-                tvTime.setText("还剩" + time1+"天" + time2 + "时" + time3 + "分");
+                tvTime.setText("还剩" + time1+"天" + time2 + "小时" + time3 + "分钟");
             }else{
                 if(Integer.parseInt(time2)>0){
-                    tvTime.setText("还剩" + time2 + "时" + time3 + "分");
+                    tvTime.setText("还剩" + time2 + "小时" + time3 + "分钟");
                 }else{
-                    tvTime.setText("还剩" + time3 + "分");
+                    if(Integer.parseInt(time3)<1){
+                        tvTime.setText("还剩1分钟");
+                    }else{
+                        tvTime.setText("还剩" + time3 + "分钟");
+                    }
                 }
             }
 //            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
