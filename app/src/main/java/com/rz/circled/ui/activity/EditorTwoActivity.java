@@ -1429,8 +1429,11 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (focusPos != -1 && focusView instanceof EditText) {
             splitEditText((EditText) getCurrentFocus(), focusPos);
             llContentText.addView(view, focusPos + 1);
+//            processImageEdit(focusPos + 1);
         } else {
             llContentText.addView(view);
+//            initContentEditText(llContentText.getChildCount());
+//            processImageEdit(llContentText.getChildCount() - 1);
         }
 
         iv.setTag(R.id.id_iv, imgPath);
@@ -1446,6 +1449,17 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             Glide.with(this).load(imgPath).into(iv);
         }
         initImageCount();
+    }
+
+    private void processImageEdit(int position) {
+        int childCount = llContentText.getChildCount();
+        if (childCount > 4 && position < childCount) {//当有两张图片同时排列的时候处理
+            if (llContentText.getChildAt(position - 1) instanceof EditText) {
+                EditText childAt = (EditText) llContentText.getChildAt(position - 1);
+                if (TextUtils.isEmpty(childAt.getText().toString()))
+                    llContentText.removeView(childAt);
+            }
+        }
     }
 
     private void initContentAudioView() {
@@ -1632,7 +1646,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         }
-        return -1;
+        return 0;
     }
 
     /**
