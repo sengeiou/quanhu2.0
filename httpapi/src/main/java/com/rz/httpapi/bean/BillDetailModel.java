@@ -20,7 +20,7 @@ public class BillDetailModel {
      * remarks : 1
      */
 
-    public int accountSum;
+    public String accountSum;
     public String cost;
     public String createTime;
     public String custId;
