@@ -74,7 +74,6 @@ public class AccountDetailAty extends BaseActivity {
     public void initPresenter() {
         mPresenter = new PayPresenter(false);
         mPresenter.attachView(this);
-        mPresenter.requestGetBillList(false, type);
     }
 
     @Override
@@ -118,6 +117,7 @@ public class AccountDetailAty extends BaseActivity {
 
     @Override
     public void initData() {
+        mPresenter.requestGetBillList(false, type);
         mRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
         mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
@@ -161,7 +161,7 @@ public class AccountDetailAty extends BaseActivity {
 
     @Override
     protected boolean hasDataInPage() {
-        return mAdapter!=null&&mAdapter.getCount()!=0;
+        return mAdapter != null && mAdapter.getCount() != 0;
     }
 
     @Override

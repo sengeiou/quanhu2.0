@@ -3,7 +3,6 @@ package com.rz.circled.adapter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +40,7 @@ public class MineRewardAdapter extends CommonAdapter {
         ImageView rewardImg = (ImageView) helper.getViewById(R.id.reward_img);
         TextView tvContent = (TextView) helper.getViewById(R.id.tv_content);
 
-        if(model.getUser()!= null && model.getUser().getCustImg() != null){
+        if (model.getUser() != null && model.getUser().getCustImg() != null) {
             Glide.with(mContext).load(model.getUser().getCustImg()).placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).transform(new GlideCircleImage(mContext)).into(avatar);
         }
 
@@ -53,41 +52,43 @@ public class MineRewardAdapter extends CommonAdapter {
         long lt = new Long(model.getCreateTime());
         Date date = new Date(lt);
         String res = sdf.format(date);
-        String time = TimeUtil.getTime(res,dateNowStr);
-        String timeArray[] = time.replace("-","").split(",");
+        String time = TimeUtil.getTime(res, dateNowStr);
+        String timeArray[] = time.replace("-", "").split(",");
         String time1 = timeArray[0];
         String time2 = timeArray[1];
         String time3 = timeArray[2];
 
-        if(Integer.parseInt(time1)>0){
-            if(Integer.valueOf(time1)>=2){
+        if (Integer.parseInt(time1) > 0) {
+            if (Integer.valueOf(time1) >= 2) {
                 SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 tvTime.setText(sdf2.format(model.getCreateTime()));
-            }else{
-                tvTime.setText(time1+"天" + time2 + "时" + time3 + "分前" );
+            } else {
+                tvTime.setText(time1 + "天" + time2 + "小时" + time3 + "分钟前");
             }
-        }else{
-            if(Integer.parseInt(time2)>0){
-                tvTime.setText(time2 + "时" + time3 + "分前");
-            }else{
-                tvTime.setText(time3 + "分前");
+        } else {
+            if (Integer.parseInt(time2) > 0) {
+                tvTime.setText(time2 + "小时" + time3 + "分钟前");
+            } else if (Integer.parseInt(time3) > 0) {
+                tvTime.setText(time3 + "分钟前");
+            } else {
+                tvTime.setText("刚刚");
             }
         }
 
         tvName.setText(model.getUser().getCustNname());
 //        tvTime.setText(model.getCreateTime()+"");
-        tvTitle.setText( model.getUser().getCustNname() +"打赏了价值" + model.getRewardPrice()/100 +"悠然币"+ model.getGiftInfo().getName()+"给");
+        tvTitle.setText(model.getUser().getCustNname() + "打赏了价值" + model.getRewardPrice() / 100 + "悠然币的" + model.getGiftInfo().getName() + "给");
 
-        if( !TextUtils.isEmpty(model.getResourceInfo().getPics())){
+        if (!TextUtils.isEmpty(model.getResourceInfo().getPics())) {
             rewardImg.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(model.getResourceInfo().getPics()).into(rewardImg);
-        }else{
+        } else {
             rewardImg.setVisibility(View.GONE);
         }
 
-        if(RESOURCE_TYPE.equals(model.getResourceInfo().getResourceType())){
+        if (RESOURCE_TYPE.equals(model.getResourceInfo().getResourceType())) {
             tvContent.setText(model.getResourceInfo().getTitle());
-        }else{
+        } else {
             tvContent.setText(model.getResourceInfo().getContent());
         }
     }

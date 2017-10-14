@@ -792,7 +792,7 @@
     <string name="mine_article_txt">还没有发布内容哦~赶紧去发布</string>
     <string name="ta_article_txt">ta还没有发布内容哦~</string>
     <string name="mine_reward_txt">还没有悬赏信息哦</string>
-    <string name="mine_activity_txt">还没有参加活动哦</string>
+    <string name="mine_activity_txt">还没有任何已参加活动</string>
 
 
     <string name="call_phone_authorization">请授权拨打电话！</string>

@@ -210,7 +210,7 @@ public class CommomUtils {
     }
 
     /**
-     * 首页和搜索的动态跳转
+     * 来自私圈文章,链接拼接
      *
      * @param
      * @param moduleId
@@ -221,7 +221,7 @@ public class CommomUtils {
         String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/coterie/" + coterieId + "/" + moduleId + "/" + resourceId;
         return url;
     }
-
+//来自圈子文章链接拼接
     public static String getCircleUrl(String circleRoute,String moduleId, String resourceId) {
         String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/" + moduleId + "/" + resourceId;
         return url;

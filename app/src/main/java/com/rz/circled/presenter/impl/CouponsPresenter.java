@@ -52,18 +52,21 @@ public class CouponsPresenter extends GeneralPresenter {
      * @param isOverdue 是否过期 0没有过期 1过期
      * @param status    类型1投票券 2自定义奖品
      */
-    public void getCouponsList(final int isOverdue, int status) {
+    public void getCouponsList(final int isOverdue, final int status) {
         Call<ResponseData<List<CouponsBean>>> call = mApiService.getCouponsList(isOverdue, Session.getUserId(), status);
 //        Call<ResponseData<List<CouponsBean>>> call = mApiService.getCouponsList(isOverdue, "eldrsm2k", status);
         call.enqueue(new BaseCallback<ResponseData<List<CouponsBean>>>() {
             @Override
             public void onResponse(Call<ResponseData<List<CouponsBean>>> call, Response<ResponseData<List<CouponsBean>>> response) {
                 super.onResponse(call, response);
-                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 if (response.isSuccessful()) {
                     ResponseData<List<CouponsBean>> responseData = response.body();
                     if (responseData.isSuccessful()) {
-                        mView.updateViewWithFlag(responseData.getData(), isOverdue == 0 ? FLAG_COUPONS_NORMAL_LIST : FLAG_COUPONS_EXPIRED_LIST);
+                        List<CouponsBean> data = responseData.getData();
+                        mView.updateViewWithFlag(data, isOverdue == 0 ? FLAG_COUPONS_NORMAL_LIST : FLAG_COUPONS_EXPIRED_LIST);
+                        if (data.isEmpty()){
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,status==1?"目前没有卡券信息":"目前没有奖品信息");
+                        }
                     } else {
                         mView.updateViewWithFlag(null, 0);
                     }
