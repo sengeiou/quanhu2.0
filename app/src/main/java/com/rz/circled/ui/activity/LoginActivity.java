@@ -198,19 +198,19 @@ public class LoginActivity extends BaseActivity {
     public void initView() {
 
 
-        mBtnSendCode.setVisibility(View.VISIBLE);
-        mEditPass.setHint("请输入验证码");
-        typePwd.setImageResource(R.mipmap.icon_code);
-        mImgWatchPw.setVisibility(View.GONE);
-        mEditPass.setText("");
-        mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
+//        mBtnSendCode.setVisibility(View.VISIBLE);
+//        mEditPass.setHint("请输入验证码");
+//        typePwd.setImageResource(R.mipmap.icon_code);
+//        mImgWatchPw.setVisibility(View.GONE);
+//        mEditPass.setText("");
+//        mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
 
 
-        //动态设置top图片
-        Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
-        layoutLoginPhone.setText("密码登录");
+//        //动态设置top图片
+//        Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
+//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+//        layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+//        layoutLoginPhone.setText("密码登录");
 
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
@@ -258,14 +258,14 @@ public class LoginActivity extends BaseActivity {
                     mImgClearPass.setVisibility(View.GONE);
                 }
 
-                if (codeType == 1) {
-                    mImgWatchPw.setVisibility(View.GONE);
-                } else {
+                if (codeType == 1) {        //密码登录
                     if (mEditPass.getText().length() > 0) {
                         mImgWatchPw.setVisibility(View.VISIBLE);
                     } else {
                         mImgWatchPw.setVisibility(View.GONE);
                     }
+                } else {                    //验证码登录
+                    mImgWatchPw.setVisibility(View.GONE);
                 }
 
             }
@@ -331,27 +331,6 @@ public class LoginActivity extends BaseActivity {
 
         if (codeType == 1) {
             //动态设置top图片
-            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-            layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
-            layoutLoginPhone.setText("验证码登录");
-
-            mBtnSendCode.setVisibility(View.GONE);
-            mEditPass.setHint("请输入密码");
-            mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            mImgWatchPw.setVisibility(View.VISIBLE);
-            typePwd.setImageResource(R.mipmap.ic_login_pw);
-            mEditPass.setText("");
-            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            mIvBack.setVisibility(View.VISIBLE);
-            //// TODO: 2017/9/23 0023
-//            typePwd.setBackgroundResource(R.mipmap.);   图片
-
-            codeType = 2;
-
-        } else {
-
-            //动态设置top图片
             Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
@@ -364,8 +343,29 @@ public class LoginActivity extends BaseActivity {
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
+            mIvBack.setVisibility(View.VISIBLE);
+
+            codeType = 2;
+
+        } else {
+
+            //动态设置top图片
+            Drawable drawable = getResources().getDrawable(R.mipmap.other_login_icon);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
+            layoutLoginPhone.setText("验证码登录");
+
+            mBtnSendCode.setVisibility(View.GONE);
+            mEditPass.setHint("请输入密码");
+            mEditPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            mImgWatchPw.setVisibility(View.VISIBLE);
+            typePwd.setImageResource(R.mipmap.ic_login_pw);
+            mEditPass.setText("");
+            mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
             mIvBack.setVisibility(View.GONE);
+
             codeType = 1;
+
         }
 
 
@@ -431,19 +431,19 @@ public class LoginActivity extends BaseActivity {
         mPassword = mEditPass.getText().toString().trim();
         if (StringUtils.isMobile(mPhone)) {
 
-            if (codeType == 1) { //验证码登录
+            if (codeType == 1) { //密码登录
 
-                if (mPassword.length() == 4) {
-                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, mPassword);
-                } else {
-                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
-                }
-
-            } else {        //密码登陆
                 if (mPassword.length() >= 6 && mPassword.length() <= 18) {
                     ((SnsAuthPresenter) presenter).loginRequest(mPhone, HexUtil.encodeHexStr(MD5Util.md5(mPassword)));
                 } else {
                     SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.password_error));
+                }
+
+            } else {        //验证码登陆
+                if (mPassword.length() == 4) {
+                    ((SnsAuthPresenter) presenter).codeLogin(mPhone, mPassword);
+                } else {
+                    SVProgressHUD.showErrorWithStatus(mContext, getString(R.string.passcode_error));
                 }
             }
         } else {
