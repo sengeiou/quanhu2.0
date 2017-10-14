@@ -91,9 +91,11 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     public void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        AndroidBug5497Workaround.assistActivity(this);
 
         mWebView = (AdvancedWebView) findViewById(R.id.webview_container);
+
+        AndroidBug5497Workaround.assistActivity(this, mWebView);
+
         mWebView.setListener(this, new MListener());
 
         mWebViewProxy = new WebViewProxy(mWebView);

@@ -16,8 +16,8 @@ public class CommonH5JumpHelper {
 
     //私圈首页 /:sjmwq/coterie/:coterieId
     private static final String PRIVATE_GROUP_HOME = "/%s/coterie/%s";
-    //话题主页 /:sjmwq/topic/home/:id
-    private static final String TOPIC_HOME = "/%s/topic/home/%s";
+    //话题主页 /:sjmwq/coterie/:coterieId/topic/home/:topicId
+    private static final String TOPIC_HOME = "/%s/coterie/%s/topic/home/%s";
     //悬赏详情页 	/activity/reward/detail/:id
     private static final String REWARD_DETAIL = "/activity/reward/detail/%s";
     //私圈详情页 /:sjmwq/redirect/coterie/:coterieId/:moduleEnum/:id
@@ -39,9 +39,9 @@ public class CommonH5JumpHelper {
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 
-    public static void startTopicHome(Context context, String circleRoute, String resourceId) {
+    public static void startTopicHome(Context context, String circleRoute, String coterieId, String resourceId) {
         Formatter formatter = new Formatter();
-        String url = formatter.format(TOPIC_HOME, circleRoute, resourceId).toString();
+        String url = formatter.format(TOPIC_HOME, circleRoute, coterieId, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url));
     }
 

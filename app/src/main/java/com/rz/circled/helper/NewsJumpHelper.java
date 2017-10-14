@@ -55,7 +55,7 @@ public class NewsJumpHelper {
                 CommonH5JumpHelper.startGroupHome(context, data.getCircleRoute(), data.getCoterieId());
                 break;
             case NewsTypeConstants.TOPIC_HOME:
-                CommonH5JumpHelper.startTopicHome(context, data.getCircleRoute(), data.getResourceId());
+                CommonH5JumpHelper.startTopicHome(context, data.getCircleRoute(), data.getCoterieId(), data.getResourceId());
                 break;
             case NewsTypeConstants.REWARD_DETAIL:
                 CommonH5JumpHelper.startRewardDetail(context, data.getResourceId());
