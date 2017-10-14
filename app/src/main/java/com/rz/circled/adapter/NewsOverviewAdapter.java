@@ -25,7 +25,7 @@ public class NewsOverviewAdapter extends CommonAdapter<NewsOverviewBean> {
         helper.setImageResource(R.id.img, item.getResId());
         helper.setText(R.id.tv_title, item.getTitle());
         helper.setText(R.id.tv_desc, item.getDesc());
-        helper.setText(R.id.tv_time, StringUtils.formatDisplayTime(TextUtils.isEmpty(item.getTime()) ? "" : item.getTime()));
+        helper.setText(R.id.tv_time, TextUtils.isEmpty(item.getTime()) ? "" : StringUtils.formatDisplayTime(item.getTime()));
         if (item.getNum() == 0) {
             helper.getView(R.id.dot).setVisibility(View.GONE);
         } else {

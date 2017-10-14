@@ -41,7 +41,7 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         NewsArticleExtra extra = new Gson().fromJson(item.getBody().toString(), NewsArticleExtra.class);
         Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
         holder.tvContent.setText(extra.getBodyTitle());
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? extra.getCircleName() : extra.getCoterieName();
+        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
     }
 

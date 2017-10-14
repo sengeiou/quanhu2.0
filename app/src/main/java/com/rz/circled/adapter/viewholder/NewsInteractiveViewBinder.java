@@ -44,7 +44,7 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
         holder.tvContent.setText(extra.getBodyTitle());
         Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? extra.getCircleName() : extra.getCoterieName();
+        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
     }
 

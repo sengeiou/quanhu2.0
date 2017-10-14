@@ -24,6 +24,7 @@ import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.NewsUnreadBean;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class NewsActivity extends BaseActivity {
     public void initData() {
         loadCacheData();
         loadData();
+        EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
     }
 
     @Override

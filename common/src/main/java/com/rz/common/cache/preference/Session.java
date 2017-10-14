@@ -279,6 +279,7 @@ public class Session {
         Session.user_isfirstdownload = user_isfirstdownload;
         SysSharePres.getInstance().setUserIsfirstDownload(user_isfirstdownload);
     }
+
     public static boolean getUserIsFirstGuide() {
         return SysSharePres.getInstance().getUserIsfirstGuide();
     }
@@ -928,15 +929,15 @@ public class Session {
         SysSharePres.getInstance().setCityCode(cityCode);
     }
 
-    public static String getCustPoints(){
-       return SysSharePres.getInstance().getCustPoint();
+    public static String getCustPoints() {
+        return SysSharePres.getInstance().getCustPoint();
     }
 
     public static void setCustPoints(String custPoints) {
         SysSharePres.getInstance().setCustPoint(custPoints);
     }
 
-    public static String getCustRole(){
+    public static String getCustRole() {
         return SysSharePres.getInstance().getCustRole();
     }
 
@@ -1014,6 +1015,14 @@ public class Session {
         Session.setOpenId("");
         Session.setCityCode("");
 
+        Session.setNewsAnnouncementNum(0);
+        Session.setNewsSystemInformationNum(0);
+        Session.setNewsRecommendNum(0);
+        Session.setNewsAccountInformationNum(0);
+        Session.setNewsCommentNum(0);
+        Session.setNewsQaNum(0);
+        Session.setNewsGroupNum(0);
+        Session.setNewsActivityNum(0);
     }
 
     //版本更新時清理数据

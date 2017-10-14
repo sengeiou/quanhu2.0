@@ -1,7 +1,9 @@
 package com.rz.circled.ui.activity;
 
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,6 +59,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,6 +103,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
+        getVirtuakeyHight();
         Log.e(TAG, "initView");
         String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
@@ -439,5 +443,47 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     public void refreshPage() {
 
+    }
+
+    /**
+     * 获取屏幕尺寸，但是不包括虚拟功能高度
+     *
+     * @return
+     */
+    public int getNoHasVirtualKey() {
+        int height = getWindowManager().getDefaultDisplay().getHeight();
+        return height;
+    }
+
+    /**
+     * 通过反射，获取包含虚拟键的整体屏幕高度
+     *
+     * @return
+     */
+    private int getHasVirtualKey() {
+        int dpi = 0;
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        @SuppressWarnings("rawtypes")
+        Class c;
+        try {
+            c = Class.forName("android.view.Display");
+            @SuppressWarnings("unchecked")
+            Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
+            method.invoke(display, dm);
+            dpi = dm.heightPixels;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dpi;
+    }
+
+    /**
+     * 获取虚拟键的高度
+     */
+    private void getVirtuakeyHight() {
+        Log.d("zxw", "不包含虚拟键的高度=" + getNoHasVirtualKey());
+        Log.d("zxw", "包含虚拟键的高度=" + getHasVirtualKey());
+        Log.d("zxw", "虚拟键的高度=" + (getHasVirtualKey() - getNoHasVirtualKey()));
     }
 }

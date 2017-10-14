@@ -398,7 +398,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (null != mTxtPersonName && null != mImgPersonHead) {
             initUserNews();
         }
-
+        if (!isNotity()) {
+            EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
+        }
     }
 
     @Subscribe
@@ -412,7 +414,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
-        return;
     }
 
 
@@ -888,16 +889,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     private boolean isNotity() {
-        if (Session.getNewsAnnouncementNum() != 0 ||
+        return Session.getNewsAnnouncementNum() != 0 ||
                 Session.getNewsSystemInformationNum() != 0 ||
                 Session.getNewsAccountInformationNum() != 0 ||
                 Session.getNewsRecommendNum() != 0 ||
                 Session.getNewsCommentNum() != 0 ||
                 Session.getNewsQaNum() != 0 ||
                 Session.getNewsGroupNum() != 0 ||
-                Session.getNewsActivityNum() != 0)
-            return true;
-        return false;
+                Session.getNewsActivityNum() != 0;
     }
 
 
