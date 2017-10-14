@@ -341,6 +341,7 @@ public class UserInfoActivity extends BaseActivity {
                 if(requestBean.getStatus() == 0){
                     if(requestBean.getIsRequire()==1){
                         addFriendBtn.setText("等待对方同意");
+                        addFriendBtn.setClickable(false);
                     }else{
                         addFriendBtn.setText("加好友");
                     }
