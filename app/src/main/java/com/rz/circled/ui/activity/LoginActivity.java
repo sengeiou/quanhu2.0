@@ -599,8 +599,7 @@ public class LoginActivity extends BaseActivity {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_ALIAS, Session.getUserId()));
 
         if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
-            EntityCache entityCache = new EntityCache<>(this, NewsOverviewBean.class);
-            entityCache.clean();
+            EntityCache.clean(mContext);
         }
         if (!TextUtils.equals(Session.getUserId(), Session.getBeforeUserId())) {
             try {

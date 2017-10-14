@@ -63,7 +63,6 @@ public class MyLevelActivity extends BaseActivity {
 
     private LevelPersenter presenter;
     private MyLevelAdapter mAdapter;
-    private int pageNum = 1;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -87,7 +86,6 @@ public class MyLevelActivity extends BaseActivity {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
-                    pageNum = 1;
                     loadData(false);
                 } else {
                     loadData(true);
@@ -111,16 +109,16 @@ public class MyLevelActivity extends BaseActivity {
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-            if (flag == presenter.FLAG_LEVEL_ACOUNT) {
-                MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
-                if (acountBean == null) return;
-                tvMyLevelCount.setText(acountBean.getGrowLevel());
-                tvMyLevelGrowCount.setText(String.valueOf(acountBean.getGrow()));
-                rangeBar.setSeekPinByIndex(acountBean.getGrowLevel()==null?0:Integer.parseInt(acountBean.getGrowLevel()));
-            }
-            if (flag == presenter.FLAG_LEVEL_LIST) {
-                layoutRefresh.setRefreshing(false);
-            }
+        if (flag == presenter.FLAG_LEVEL_ACOUNT) {
+            MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
+            if (acountBean == null) return;
+            tvMyLevelCount.setText(acountBean.getGrowLevel());
+            tvMyLevelGrowCount.setText(String.valueOf(acountBean.getGrow()));
+            rangeBar.setSeekPinByIndex(acountBean.getGrowLevel() == null ? 0 : Integer.parseInt(acountBean.getGrowLevel()));
+        }
+        if (flag == presenter.FLAG_LEVEL_LIST) {
+            layoutRefresh.setRefreshing(false);
+        }
     }
 
     @Override
@@ -134,12 +132,11 @@ public class MyLevelActivity extends BaseActivity {
                 scrollView.scrollTo(0, 0);
                 mAdapter.setData(data);
             }
-            pageNum++;
         }
     }
 
     private void loadData(boolean loadMore) {
-        presenter.getLevelList(PAGE_SIZE, pageNum, loadMore);
+        presenter.getLevelList(PAGE_SIZE, loadMore ? mAdapter.getCount() : 0, loadMore);
     }
 
     @Override

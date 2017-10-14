@@ -10,11 +10,13 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rz.circled.constants.JPushTypeConstants;
+import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
+import com.rz.httpapi.bean.JPushExtraBean;
 import com.rz.httpapi.bean.MyPushInfo;
 import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.UserPushInfo;
@@ -86,9 +88,13 @@ public class MyReceiver extends BroadcastReceiver {
                     NewsBean mNews = gson.fromJson(str, NewsBean.class);
                     MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
                     if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
-                        if (TextUtils.equals(mNews.getMsgEnumType(), "20040001")){
+                        if (TextUtils.equals(mNews.getMsgEnumType(), "20040001")) {
                             EventBus.getDefault().post(new BaseEvent(EventConstant.USER_AVATAR_REFUSE));
-                            Log.e(TAG, "onReceive: avatar" );
+                            Log.e(TAG, "onReceive: avatar");
+                        }
+                        if (mNews.getType() == NewsTypeConstants.NEWS_ANNOUNCEMENT) {
+                            Session.setNewsAnnouncementNum(Session.getNewsAnnouncementNum() + 1);
+                            EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                         }
                         EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mNews.getType() + "-" + mNews.getLabel()));
                     } else if (mInfo != null && !TextUtils.isEmpty(mInfo.getMsgId())) {
@@ -118,13 +124,21 @@ public class MyReceiver extends BroadcastReceiver {
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
 
                 //打开自定义的Activity
-                String str = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+                String str = bundle.getString(JPushInterface.EXTRA_EXTRA);
                 Gson gson = new Gson();
-                NewsBean mNews = gson.fromJson(str, NewsBean.class);
-                MyPushInfo mInfo = gson.fromJson(str, MyPushInfo.class);
+                JPushExtraBean jPushExtraModel = gson.fromJson(str, new TypeToken<JPushExtraBean>() {
+                }.getType());
+                assert jPushExtraModel != null;
+                NewsBean mNews = gson.fromJson(jPushExtraModel.getMessage(), NewsBean.class);
+                MyPushInfo mInfo = gson.fromJson(jPushExtraModel.getMessage(), MyPushInfo.class);
                 if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
                     NewsJumpHelper.startAcceptActivity(context, mNews);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD, mNews.getType() + "-" + mNews.getLabel()));
+                    if (mNews.getType() == NewsTypeConstants.NEWS_ANNOUNCEMENT) {
+                        if (Session.getNewsAnnouncementNum() > 0) {
+                            Session.setNewsAnnouncementNum(Session.getNewsAnnouncementNum() - 1);
+                        }
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
+                    }
                 } else if (mInfo != null && !TextUtils.isEmpty(mInfo.getMsgId())) {
 
                 }

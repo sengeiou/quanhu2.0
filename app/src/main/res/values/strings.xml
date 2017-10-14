@@ -332,6 +332,7 @@
     <string name="send_check_code">发送验证码</string>
     <string name="login_loading">正在登录，请稍后</string>
     <string name="no_install_wx">没有安装微信客户端</string>
+    <string name="no_install_ali">没有安装支付宝客户端</string>
     <string name="v3_login_forgot_psw">忘记密码&#160;?</string>
     <string name="v3_login_to_register">现在注册&#160;></string>
     <string name="v3_my_reward">我的打赏</string>

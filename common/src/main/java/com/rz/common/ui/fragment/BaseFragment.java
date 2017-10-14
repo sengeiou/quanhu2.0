@@ -277,6 +277,11 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
 
     @Override
     /**

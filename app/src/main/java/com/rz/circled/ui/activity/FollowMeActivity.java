@@ -105,7 +105,17 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
-
+        switch (event.getType()) {
+            case FriendPresenter1.FRIEND_APPLY_EVENT:
+                String fid = (String) event.getData();
+                for (FriendRequireModel info : mFansAllFriends) {
+                    if (TextUtils.equals(info.getUser().getCustId(), fid)) {
+                        info.setStatus(CommonCode.requireFriendStatus.require_status_agree);
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                break;
+        }
     }
 
     @Override
@@ -253,7 +263,7 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
          */
         FriendRequireModel item = (FriendRequireModel) mAdapter.getItem(i);
         if (item != null) {
-//            FriendInfoAty.newFrindInfo(aty, item.getCustId());
+            UserInfoActivity.newFrindInfo(aty, item.getUser().getCustId());
         }
     }
 

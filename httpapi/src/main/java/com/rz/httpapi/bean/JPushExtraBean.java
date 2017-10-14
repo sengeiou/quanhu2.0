@@ -7,19 +7,6 @@ package com.rz.httpapi.bean;
 public class JPushExtraBean {
     private String message;
 
-    public class JPushExtraMessage<T> {
-
-        private MyPushInfoBean<T> msg_content;
-
-        public MyPushInfoBean<T> getMsg_content() {
-            return msg_content;
-        }
-
-        public void setMsg_content(MyPushInfoBean<T> msg_content) {
-            this.msg_content = msg_content;
-        }
-    }
-
     public String getMessage() {
         return message;
     }

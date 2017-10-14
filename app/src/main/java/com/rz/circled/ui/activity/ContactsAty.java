@@ -16,6 +16,7 @@ import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.constant.SystemMessageType;
 import com.rz.circled.R;
 import com.rz.circled.adapter.ContactsAdp;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.widget.SideBar;
 import com.rz.common.cache.preference.EntityCache;
@@ -32,6 +33,7 @@ import com.yryz.yunxinim.main.activity.SystemMessageActivity;
 import com.yryz.yunxinim.main.activity.TeamListActivity;
 import com.yryz.yunxinim.uikit.contact.core.item.ItemTypes;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -226,7 +228,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
     }
 
     private void updateUnreadNum(int unreadCount) {
-        // 2.*版本viewholder复用问题
         if (unreadCount > 0) {
             mTvVerifyNum.setVisibility(View.VISIBLE);
             mTvVerifyNum.setText("" + unreadCount);
@@ -252,13 +253,10 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
                 break;
             //关注我的
             case R.id.id_follow_me_rela:
-//                if (checkLogin()) {
-//                    return;
-//                }
                 Session.setUserFocusNum("");
-//                Intent focus = new Intent(MineFrg.MINEFRGFOCUS);
-//                sendBroadcast(focus);
+                setFocusNum("");
                 showActivity(aty, FollowMeActivity.class);
+                EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
                 break;
             //我关注的
             case R.id.id_my_follow_txt:
