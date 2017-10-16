@@ -357,7 +357,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
      * 获取我的悬赏
      */
 
-    public void getMyreward(final boolean loadMore, String custId, int type,int offerId) {
+    public void getMyreward(final boolean loadMore, final String custId, final int type, int offerId) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
@@ -406,7 +406,19 @@ public class PersonInfoPresenter extends GeneralPresenter {
                         } else {
                             if (loadMore == false) {
 
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_reward_txt));
+                                if(Session.getUserId().equals(custId)){
+                                    if(type == 0){
+                                        mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_reward_txt));
+                                    }else{
+                                        mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_answer_txt));
+                                    }
+                                }else{
+                                    if(type == 0){
+                                        mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.ta_reward_txt));
+                                    }else{
+                                        mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.ta_answer_txt));
+                                    }
+                                }
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }

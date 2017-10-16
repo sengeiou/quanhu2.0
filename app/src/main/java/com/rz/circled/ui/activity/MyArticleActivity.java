@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
+import com.rz.circled.adapter.ArticleAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.PersonInfoPresenter;
@@ -33,7 +34,7 @@ public class MyArticleActivity extends BaseActivity {
     @BindView(R.id.my_listview)
     MListView mListView;
 
-    private DynamicAdapter dynamicAdapter;
+    private ArticleAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private IPresenter presenter;
 
@@ -45,7 +46,7 @@ public class MyArticleActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText(getString(R.string.article_info));
-        dynamicAdapter = new DynamicAdapter(this, circleDynamicList);
+        dynamicAdapter = new ArticleAdapter(this, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
