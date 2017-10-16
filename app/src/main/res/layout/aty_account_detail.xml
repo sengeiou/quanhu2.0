@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:background="@color/color_F5F5F5"
         android:paddingBottom="@dimen/px20"
-        android:paddingLeft="@dimen/px30"
-        android:paddingRight="@dimen/px30"
+        android:paddingLeft="@dimen/px44"
+        android:paddingRight="@dimen/px44"
         android:paddingTop="@dimen/px20">
 
         <TextView
@@ -44,8 +44,11 @@
       <ListView
           android:id="@+id/lv_detail"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"></ListView>
-        >
+          android:layout_height="match_parent"
+          android:paddingLeft="@dimen/px18"
+          android:paddingRight="@dimen/px18"
+          android:scrollbars="none"
+          ></ListView>
 
     </com.rz.circled.widget.SwipyRefreshLayoutBanner>
 

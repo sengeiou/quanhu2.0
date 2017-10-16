@@ -86,13 +86,16 @@
             <View
                 style="@style/line_horizontal_gray_s"/>
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/rl_prove_area"
                 style="@style/ProveItemRoot">
 
                 <TextView
                     android:id="@+id/tv_prove_area_title"
                     style="@style/ProveItemTvBlack"
-                    android:text="@string/area_where"/>
+                    android:text="@string/area_where"
+                    android:layout_centerVertical="true"
+                    />
 
                 <!--<TextView-->
                     <!--style="@style/ProveItemTvGray"-->
@@ -102,9 +105,24 @@
                     android:id="@+id/tv_prove_area"
                     style="@style/ProveItemTvBlack.s"
                     android:drawablePadding="@dimen/px10"
-                    android:drawableRight="@mipmap/ic_right_arrow"/>
+                    android:layout_width="wrap_content"
+                    android:lines="1"
+                    android:maxEms="15"
+                    android:layout_toLeftOf="@+id/id_right_arrow2"
+                    android:layout_marginRight="@dimen/px15"
+                    android:layout_centerVertical="true"
+                    />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/id_right_arrow2"
+                    android:layout_width="@dimen/px27"
+                    android:layout_height="@dimen/px45"
+                    android:background="@mipmap/ic_right_arrow"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
 
             <View
                 style="@style/line_horizontal_gray_s"/>
