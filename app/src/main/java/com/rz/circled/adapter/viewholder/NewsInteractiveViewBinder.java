@@ -16,6 +16,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsInteractiveExtra;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -37,7 +38,7 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.formatDisplayTime(item.getCreateTime()));
         holder.tvTitle.setText(item.getContent());
         NewsInteractiveExtra extra = new Gson().fromJson(item.getBody().toString(), NewsInteractiveExtra.class);
         holder.tvName.setText(extra.getCustName());

@@ -203,6 +203,7 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void initViewpagerBanner(List<GroupBannerBean> pics) {
+        if (viewpager == null) return;
         List<View> imageViews = new ArrayList<>(); // 滑动的图片集合
         for (int i = 0; i < pics.size(); i++) {
             final GroupBannerBean pic;
