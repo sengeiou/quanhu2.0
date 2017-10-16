@@ -66,6 +66,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import cn.jpush.android.api.JPushInterface;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -294,6 +295,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
         presenter.ExitApp();
+
+        JPushInterface.setAlias(mContext, "", null);
 
         int loginWay = Session.getLoginWay();
         if (loginWay != Type.LOGIN_PHONE) {

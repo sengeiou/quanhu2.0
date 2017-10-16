@@ -247,6 +247,8 @@ public class SettingActivity extends BaseActivity {
             }
         }
 
+        JPushInterface.setAlias(mContext, "", null);
+
         removeLoginState();
 
         // 清理缓存&注销监听

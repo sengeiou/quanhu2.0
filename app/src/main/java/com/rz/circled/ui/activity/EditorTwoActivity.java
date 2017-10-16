@@ -379,8 +379,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         parseIntent();
     }
 
-    @OnClick({R.id.tv_editor_two_page_change, R.id.tv_editor_two_page_add, R.id.rl_editor_two_sort, R.id.rl_editor_two_location, R.id.rl_editor_two_time, R.id.iv_editor_two_choose_pic
-            , R.id.iv_editor_two_choose_audio, R.id.iv_editor_two_choose_video, R.id.iv_editor_two_video_delete, R.id.iv_editor_two_audio_delete
+    @OnClick({R.id.tv_editor_two_page_change, R.id.tv_editor_two_page_add, R.id.rl_editor_two_sort, R.id.rl_editor_two_location, R.id
+            .rl_editor_two_time, R.id.iv_editor_two_choose_pic
+            , R.id.iv_editor_two_choose_audio, R.id.iv_editor_two_choose_video, R.id.iv_editor_two_video_delete, R.id
+            .iv_editor_two_audio_delete
             , R.id.iv_editor_two_video_icon, R.id.iv_editor_two_video_preview, R.id.iv_editor_two_audio_play, R.id.tv_editor_two_authority})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -414,7 +416,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             case R.id.iv_editor_two_choose_pic://选择图片
                 EditorConfigTwoModel imgModel = (EditorConfigTwoModel) view.getTag();
                 if (contentImageCount < imgModel.getUpperLimit())
-                    PictureSelectedActivity.startActivityForResult(EditorTwoActivity.this, PIC_PUBLISH_REQUEST, imgModel.getUpperLimit() - contentImageCount, false);
+                    PictureSelectedActivity.startActivityForResult(EditorTwoActivity.this, PIC_PUBLISH_REQUEST, imgModel.getUpperLimit()
+                            - contentImageCount, false);
                 else
                     Toasty.error(mContext, String.format(getString(R.string.max_size_choose_pic_hint), imgModel.getUpperLimit())).show();
                 break;
@@ -1028,7 +1031,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             mPopupView.setOnItemPopupClick(new PopupView.OnItemPopupClick() {
                 @Override
                 public void OnItemClick(int position, String tag) {
-                    if (position == 0) toVideoRecorder(VIDEO_PUBLISH_REQUEST);
+                    if (position == 0) toVideoRecorder();
                     else startActivityForResult(new Intent(mContext, VideoChooseActivity.class), VIDEO_PUBLISH_REQUEST);
                 }
             });
@@ -1103,7 +1106,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 Toasty.info(this, titleModel.getErrorPrompt()).show();
                 return;
             }
-            if (!TextUtils.isEmpty(titleStr) && (titleStr.length() < titleModel.getLowerLimit() || titleStr.length() > titleModel.getUpperLimit())) {
+            if (!TextUtils.isEmpty(titleStr) && (titleStr.length() < titleModel.getLowerLimit() || titleStr.length() > titleModel
+                    .getUpperLimit())) {
                 Toasty.info(this, titleModel.getErrorPrompt()).show();
                 return;
             }
@@ -1149,7 +1153,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 Toasty.info(this, labelModel.getErrorPrompt()).show();
                 return;
             }
-            if (!TextUtils.isEmpty(labelStr) && (labelStr.length() < labelModel.getLowerLimit() || labelStr.length() > labelModel.getUpperLimit())) {
+            if (!TextUtils.isEmpty(labelStr) && (labelStr.length() < labelModel.getLowerLimit() || labelStr.length() > labelModel
+                    .getUpperLimit())) {
                 Toasty.info(this, labelModel.getErrorPrompt()).show();
                 return;
             }
@@ -1162,7 +1167,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 Toasty.info(this, introductionModel.getErrorPrompt()).show();
                 return;
             }
-            if (!TextUtils.isEmpty(introductionStr) && (introductionStr.length() < introductionModel.getLowerLimit() || introductionStr.length() > introductionModel.getUpperLimit())) {
+            if (!TextUtils.isEmpty(introductionStr) && (introductionStr.length() < introductionModel.getLowerLimit() || introductionStr
+                    .length() > introductionModel.getUpperLimit())) {
                 Toasty.info(this, introductionModel.getErrorPrompt()).show();
                 return;
             }
@@ -1175,7 +1181,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     Toasty.info(this, contentModel.getErrorPrompt()).show();
                     return;
                 }
-                if (contentEditCount != 0 && (contentEditCount < contentModel.getLowerLimit() || contentEditCount > contentModel.getUpperLimit())) {
+                if (contentEditCount != 0 && (contentEditCount < contentModel.getLowerLimit() || contentEditCount > contentModel
+                        .getUpperLimit())) {
                     Toasty.info(this, contentModel.getErrorPrompt()).show();
                     return;
                 }
@@ -1183,11 +1190,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         }
         if (ivChoosePic.getVisibility() == View.VISIBLE) {//图片
             EditorConfigTwoModel picModel = (EditorConfigTwoModel) ivChoosePic.getTag();
-            if (isPicText && (picModel.getRequired() && (contentImageCount < picModel.getLowerLimit() || contentImageCount > picModel.getUpperLimit()))) {
+            if (isPicText && (picModel.getRequired() && (contentImageCount < picModel.getLowerLimit() || contentImageCount > picModel
+                    .getUpperLimit()))) {
                 Toasty.info(this, picModel.getErrorPrompt()).show();
                 return;
             }
-            if (!isPicText && (picModel.getRequired() && (picList.size() < picModel.getLowerLimit() || picList.size() > picModel.getUpperLimit()))) {
+            if (!isPicText && (picModel.getRequired() && (picList.size() < picModel.getLowerLimit() || picList.size() > picModel
+                    .getUpperLimit()))) {
                 Toasty.info(this, picModel.getErrorPrompt()).show();
                 return;
             }
@@ -1213,7 +1222,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         if (cbVote.getVisibility() == View.VISIBLE) {//投票
             dataSource.setFunctionType(cbVote.isChecked() ? 2 : 0);
         }
-        if (contentEditCount <= 0 && contentImageCount <= 0 && picList.size() <= 0 && rlVideo.getVisibility() != View.VISIBLE && rlAudio.getVisibility() != View.VISIBLE) {
+        if (contentEditCount <= 0 && contentImageCount <= 0 && picList.size() <= 0 && rlVideo.getVisibility() != View.VISIBLE && rlAudio
+                .getVisibility() != View.VISIBLE) {
             Toasty.info(this, getString(R.string.editor_content_null)).show();
             return;
         }
@@ -1318,6 +1328,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         contentImageCount = picList.size();
         gvPic.setVisibility(View.VISIBLE);
         llMediaRoot.setVisibility(View.VISIBLE);
+        changeChooseImageStatus();
+        changeChooseVideoStatus();
+        changeChooseAudioStatus();
     }
 
     private void initContentEditText() {
@@ -1441,7 +1454,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 //            Glide.with(this).load(imgPath).into(new ViewTarget<ImageView, GlideDrawable>(iv) {
 //                @Override
 //                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-//                    iv.getLayoutParams().height = resource.getIntrinsicHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) / resource.getIntrinsicWidth();
+//                    iv.getLayoutParams().height = resource.getIntrinsicHeight() * (DensityUtils.getScreenW(EditorTwoActivity.this)) /
+// resource.getIntrinsicWidth();
 //                    iv.requestLayout();
 //                    iv.setImageDrawable(resource.getCurrent());
 //                }
@@ -1485,6 +1499,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             tvAudioNum.setText(0 + "");
             rlAudio.setVisibility(View.INVISIBLE);
         }
+        changeChooseImageStatus();
+        changeChooseVideoStatus();
+        changeChooseAudioStatus();
     }
 
     private void initContentVideoView() {
@@ -1521,29 +1538,73 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             rlVideo.setVisibility(View.GONE);
         }
         changeChooseImageStatus();
+        changeChooseVideoStatus();
+        changeChooseAudioStatus();
+
     }
 
-    private void changeChooseImageStatus() {
-        if (TextUtils.isEmpty(mVideoFilePath) && TextUtils.isEmpty(mVideoUrl)) {
-            ivChoosePic.setImageResource(R.mipmap.icon_editor_pic);
-            ivChoosePic.setEnabled(true);
+    /**
+     * 修改 音频可选状态
+     */
+    private void changeChooseAudioStatus() {
+        if (isEmptyImageVideoAudio()) {
+            ivChooseAudio.setImageResource(R.mipmap.icon_editor_audio);
+            ivChooseAudio.setEnabled(true);
         } else {
+            ivChooseAudio.setImageResource(R.mipmap.icon_editor_audio_gray);
+            ivChooseAudio.setEnabled(false);
+        }
+    }
+
+    /**
+     * 修改 图片可选状态
+     */
+    private void changeChooseImageStatus() {
+        if (!TextUtils.isEmpty(mVideoFilePath) || !TextUtils.isEmpty(mVideoUrl) || !TextUtils.isEmpty(mAudioFilePath) ||
+                !TextUtils.isEmpty(mAudioUrl)) {
             ivChoosePic.setImageResource(R.mipmap.icon_editor_pic_gray);
             ivChoosePic.setEnabled(false);
+        } else {
+            if (ivChoosePic.getTag() == null) return;
+            EditorConfigTwoModel imgModel = (EditorConfigTwoModel) ivChoosePic.getTag();
+            if (contentImageCount >= imgModel.getUpperLimit() || picList.size() >= imgModel.getUpperLimit()) {
+                ivChoosePic.setImageResource(R.mipmap.icon_editor_pic_gray);
+                ivChoosePic.setEnabled(false);
+            } else {
+                ivChoosePic.setImageResource(R.mipmap.icon_editor_pic);
+                ivChoosePic.setEnabled(true);
+            }
+
         }
+
     }
 
     /**
      * 修改视频可选状态
      */
     private void changeChooseVideoStatus() {
-        if (contentImageCount > 0 || picList.size() > 0) {
-            ivChooseVideo.setImageResource(R.mipmap.icon_editor_video_gray);
-            ivChooseVideo.setEnabled(false);
-        } else {
+        //用户选择图片 视频 音频
+        if (isEmptyImageVideoAudio()) {
             ivChooseVideo.setImageResource(R.mipmap.icon_editor_video);
             ivChooseVideo.setEnabled(true);
+        } else {
+            ivChooseVideo.setImageResource(R.mipmap.icon_editor_video_gray);
+            ivChooseVideo.setEnabled(false);
         }
+
+    }
+
+    /**
+     * 判断 图片 视频 银屏 是否全为空
+     *
+     * @return
+     */
+    private boolean isEmptyImageVideoAudio() {
+        if (contentImageCount == 0 && picList.size() == 0 && TextUtils.isEmpty(mVideoFilePath) && TextUtils.isEmpty(mVideoUrl) &&
+                TextUtils.isEmpty(mAudioFilePath) && TextUtils.isEmpty(mAudioUrl)) {
+            return true;
+        }
+        return false;
     }
 
     private void initImageCount() {
@@ -1554,7 +1615,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             }
         }
         tvContentPicNum.setText(contentImageCount + "");
+        changeChooseImageStatus();
         changeChooseVideoStatus();
+        changeChooseAudioStatus();
     }
 
     private void initDurationText() {
@@ -1917,7 +1980,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                             uploadAudio();
                         } else {
                             onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                            Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_video_image_fail), Toast.LENGTH_SHORT, true).show();
+                            Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_video_image_fail), Toast.LENGTH_SHORT,
+                                    true).show();
                         }
                     }
                 });
@@ -1945,27 +2009,31 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      */
     public void uploadVideo() {
         if (!TextUtils.isEmpty(mVideoFilePath)) {
-            OssManager.uploadFile(mVideoFilePath, OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mVideoFileName, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-                @Override
-                public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-                    Log.d(TAG, "this is mVideoFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
-                    if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
-                        if (jsResult == null) jsResult = new ArrayList<>();
-                        mVideoUrl = OssManager.CDN + OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mVideoFileName;
-                        uploadVideoPic();
-                    } else {
-                        onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                        Toasty.error(EditorTwoActivity.this, getString(R.string.video_upload_failed), Toast.LENGTH_SHORT, true).show();
-                    }
+            OssManager.uploadFile(mVideoFilePath, OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) +
+                    mVideoFileName, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir, new
+                    OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                        @Override
+                        public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
+                            Log.d(TAG, "this is mVideoFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
+                            if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
+                                if (jsResult == null) jsResult = new ArrayList<>();
+                                mVideoUrl = OssManager.CDN + OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle :
+                                        ossDir) + mVideoFileName;
+                                uploadVideoPic();
+                            } else {
+                                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                                Toasty.error(EditorTwoActivity.this, getString(R.string.video_upload_failed), Toast.LENGTH_SHORT, true)
+                                        .show();
+                            }
 
-                }
+                        }
 
-                @Override
-                public void onFailure(PutObjectRequest putObjectRequest, ClientException e, ServiceException e1) {
-                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                    Toasty.error(EditorTwoActivity.this, getString(R.string.video_upload_failed), Toast.LENGTH_SHORT, true).show();
-                }
-            });
+                        @Override
+                        public void onFailure(PutObjectRequest putObjectRequest, ClientException e, ServiceException e1) {
+                            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            Toasty.error(EditorTwoActivity.this, getString(R.string.video_upload_failed), Toast.LENGTH_SHORT, true).show();
+                        }
+                    });
         } else {
             if (!TextUtils.isEmpty(mVideoUrl)) {
                 VideoEntity videoEntity = new VideoEntity();
@@ -1986,34 +2054,40 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      */
     public void uploadAudio() {
         if (!TextUtils.isEmpty(mAudioFilePath)) {
-            OssManager.uploadFile(mAudioFilePath, OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mAudioFileName, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-                @Override
-                public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-                    Log.d(TAG, "this is mAudioFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
-                    if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
-                        String OSS_HOST = OssManager.CDN;
-                        if (jsResult == null) {
-                            jsResult = new ArrayList<>();
+            OssManager.uploadFile(mAudioFilePath, OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) +
+                    mAudioFileName, TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir, new
+                    OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+                        @Override
+                        public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
+                            Log.d(TAG, "this is mAudioFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
+                            if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
+                                String OSS_HOST = OssManager.CDN;
+                                if (jsResult == null) {
+                                    jsResult = new ArrayList<>();
+                                }
+                                mAudioUrl = OSS_HOST + OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle :
+                                        ossDir) +
+                                        mAudioFileName;
+                                AudioEntity audioEntity = new AudioEntity();
+                                audioEntity.url = mAudioUrl;
+                                audioEntity.time = audioDuration;
+                                audioEntity.size = audioSize;
+                                addAudioJsContent(audioEntity);
+                                callJs();
+                            } else {
+                                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                                Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_audio_fail), Toast.LENGTH_SHORT, true)
+                                        .show();
+                            }
                         }
-                        mAudioUrl = OSS_HOST + OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle : ossDir) + mAudioFileName;
-                        AudioEntity audioEntity = new AudioEntity();
-                        audioEntity.url = mAudioUrl;
-                        audioEntity.time = audioDuration;
-                        audioEntity.size = audioSize;
-                        addAudioJsContent(audioEntity);
-                        callJs();
-                    } else {
-                        onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                        Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_audio_fail), Toast.LENGTH_SHORT, true).show();
-                    }
-                }
 
-                @Override
-                public void onFailure(PutObjectRequest putObjectRequest, ClientException e, ServiceException e1) {
-                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                    Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_audio_fail), Toast.LENGTH_SHORT, true).show();
-                }
-            });
+                        @Override
+                        public void onFailure(PutObjectRequest putObjectRequest, ClientException e, ServiceException e1) {
+                            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                            Toasty.error(EditorTwoActivity.this, getString(R.string.editor_two_audio_fail), Toast.LENGTH_SHORT, true)
+                                    .show();
+                        }
+                    });
         } else {
             if (!TextUtils.isEmpty(mAudioUrl)) {
                 AudioEntity audioEntity = new AudioEntity();
@@ -2027,11 +2101,12 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     @AfterPermissionGranted(RC_VIDEO_AND_EXTENER)
-    private void toVideoRecorder(int requestCode) {
+    private void toVideoRecorder() {
         if (SystemUtils.isX86()) {
             return;
         }
-        String[] perms = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             try {
                 Intent intent = new Intent();
@@ -2151,19 +2226,24 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=utf-8"), httpRequestModel.getBody());
         Call<JsonObject> call = null;
         if (httpRequestModel.getMethod().equalsIgnoreCase("post")) {
-            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetPost(httpRequestModel.getUrl(), requestBody, headerMap);
+            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetPost(httpRequestModel.getUrl(), requestBody,
+                    headerMap);
         } else if (httpRequestModel.getMethod().equalsIgnoreCase("get")) {
             Map bodyMap = getMap(httpRequestModel.getBody());
             if (bodyMap.isEmpty())
                 call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetGet(httpRequestModel.getUrl(), headerMap);
             else
-                call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetGetMap(httpRequestModel.getUrl(), bodyMap, headerMap);
+                call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetGetMap(httpRequestModel.getUrl(), bodyMap,
+                        headerMap);
         } else if (httpRequestModel.getMethod().equalsIgnoreCase("put")) {
-            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetPut(httpRequestModel.getUrl(), requestBody, headerMap);
+            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetPut(httpRequestModel.getUrl(), requestBody,
+                    headerMap);
         } else if (httpRequestModel.getMethod().equalsIgnoreCase("delete")) {
-            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetDelete(httpRequestModel.getUrl(), requestBody, headerMap);
+            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetDelete(httpRequestModel.getUrl(), requestBody,
+                    headerMap);
         } else if (httpRequestModel.getMethod().equalsIgnoreCase("patch")) {
-            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetPatch(httpRequestModel.getUrl(), requestBody, headerMap);
+            call = WebHttp.getWebService(QHApplication.getContext(), headerMap).reQuestNetPatch(httpRequestModel.getUrl(), requestBody,
+                    headerMap);
         }
 
 

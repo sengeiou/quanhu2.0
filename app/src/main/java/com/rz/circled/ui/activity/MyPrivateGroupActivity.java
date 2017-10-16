@@ -45,9 +45,14 @@ public class MyPrivateGroupActivity extends BaseActivity {
     private PrivateGroupNavigatorAdapter groupNavigatorAdapter;
 
     public static void startMyPrivateGroup(Context context, int index) {
-        Intent i = new Intent(context, MyPrivateGroupActivity.class);
-        i.putExtra(IntentKey.EXTRA_POSITION, index);
-        context.startActivity(i);
+        startMyPrivateGroup(context, index, -1);
+    }
+
+    public static void startMyPrivateGroup(Context context, int index, int flag) {
+        Intent intent = new Intent(context, MyPrivateGroupActivity.class);
+        intent.putExtra(IntentKey.EXTRA_POSITION, index);
+        if (flag != -1) intent.setFlags(flag);
+        context.startActivity(intent);
     }
 
     @Override

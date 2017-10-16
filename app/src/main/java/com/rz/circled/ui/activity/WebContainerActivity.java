@@ -50,8 +50,13 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     public static void startActivity(Context context, String url) {
+        startActivity(context, url, -1);
+    }
+
+    public static void startActivity(Context context, String url, int flag) {
         Intent intent = new Intent(context, WebContainerActivity.class);
         intent.putExtra(IntentKey.EXTRA_URL, url);
+        if (flag != -1) intent.setFlags(flag);
         context.startActivity(intent);
     }
 

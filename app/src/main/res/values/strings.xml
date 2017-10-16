@@ -275,8 +275,8 @@
     <string name="leave_message_to_friend">给朋友留言</string>
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>
-    <string name="share_title">进圈乎，玩圈子，一切都有了！</string>
-    <string name="share_desc">圈乎，大型资源共享与价值变现O2O平台。“人人找资源、人人即资源、人人有资源。”帮你解决资源难题！</string>
+    <string name="share_title">圈子有了，一切都有了！</string>
+    <string name="share_desc">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
     <string name="share_title1">圈子有了，一切都有了！</string>
     <string name="share_desc1">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
 
@@ -311,6 +311,10 @@
     <string name="click_finish_record">点击结束录音</string>
     <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
     <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
+    <string name="search_persion_hint">输入昵称／姓名搜索</string>
+    <string name="search_private_hint">输入私圈名称搜索</string>
+    <string name="search_circle_hint">输入圈子名称搜索</string>
+    <string name="search_reward_hint">输入悬赏名称搜索</string>
     <string name="search">搜索</string>
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
@@ -628,7 +632,7 @@
     <string name="shine_rule">“随手晒”使用规则</string>
     <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
     <string name="clear_cache">您是否要清除缓存？</string>
-    <string name="article_info">文章</string>
+    <string name="article_info">资源</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
     <string name="my_create_reward">我发起的悬赏</string>

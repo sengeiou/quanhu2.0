@@ -100,6 +100,7 @@ public class SearchActivity extends BaseActivity {
 
         vpSearch.setCurrentItem(type);
         tabPagerSearch.setTempPosition(type);
+        initEditHint(type);
 
         tabPagerSearch.setViewPager(vpSearch);
         tabPagerSearch.notifyDataSetChanged();
@@ -111,7 +112,7 @@ public class SearchActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                initEditHint(position);
             }
 
             @Override
@@ -186,18 +187,6 @@ public class SearchActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
 
-//            if(position == TYPE_CONTENT){
-//                etKeyword.setHint(R.string.tab_content);
-//            }else if(position == TYPE_PRIVATE){
-//
-//            }else if(position == TYPE_PRIVATE){
-//
-//            }else if(position == TYPE_CIRCLE){
-//
-//            }else if(position == TYPE_REWARD){
-//
-//            }
-
             if (position == TYPE_CONTENT)
                 return SearchContentFragment.newInstance();     //搜索内容
             if (position == TYPE_PERSON)
@@ -220,6 +209,21 @@ public class SearchActivity extends BaseActivity {
         @Override
         public int getCount() {
             return itemName.length;
+        }
+    }
+
+
+    private void initEditHint(int position){
+        if(position == TYPE_CONTENT){
+            etKeyword.setHint(R.string.search_all_hint);
+        }else if(position == TYPE_PERSON){
+            etKeyword.setHint(R.string.search_persion_hint);
+        }else if(position == TYPE_PRIVATE){
+            etKeyword.setHint(R.string.search_private_hint);
+        }else if(position == TYPE_CIRCLE){
+            etKeyword.setHint(R.string.search_circle_hint);
+        }else if(position == TYPE_REWARD){
+            etKeyword.setHint(R.string.search_reward_hint);
         }
     }
 
