@@ -114,7 +114,6 @@ public class SearchPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {

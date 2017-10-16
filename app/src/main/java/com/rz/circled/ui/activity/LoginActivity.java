@@ -490,20 +490,16 @@ public class LoginActivity extends BaseActivity {
             if (null != loginModel) {
                 zhugeIdentify(loginModel);
                 Session.setSessionKey(loginModel.getToken());
-//                saveLoginData(loginModel);
                 switch (Session.getLoginWay()) {
                     case Type.LOGIN_WX:
-//                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
                         zhugeTrack("wx");
                         ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
                         return;
                     case Type.LOGIN_SINA:
-//                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
                         zhugeTrack("sina");
                         ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
                         return;
                     default:
-//                        MobclickAgent.onProfileSignIn(model.getCustId());
                         zhugeTrack("phonenum");
                         break;
                 }
@@ -515,12 +511,10 @@ public class LoginActivity extends BaseActivity {
                 } else if (loginType == Type.TYPE_LOGIN_WEB) {
                     //从圈子过来跳转登录的
 //                    JsEvent.callJsEvent(getLoginWebResultData(), true);
-                    finish();
                 } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
                     //从向导页面过来
 
                     skipActivity(aty, FollowCircle.class);
-                    finish();
                 } else {
                     BaseEvent event = new BaseEvent();
 //            event.key = LOGIN_IN_SUCCESS;
@@ -530,21 +524,19 @@ public class LoginActivity extends BaseActivity {
 
                     setResult(IntentCode.Login.LOGIN_RESULT_CODE);
                     skipActivity(aty, MainActivity.class);
-                    finish();
+
                 }
                 //webCon
                 BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
                 baseEvent.type = CommonCode.EventType.TYPE_LOGIN_WEB;
                 baseEvent.key = "nativeLogin";
                 EventBus.getDefault().post(baseEvent);
-
             }
         }
     }
 
     //登录成功后保存数据
     private void saveLoginData(UserInfoBean model) {
-//                MobclickAgent.onEvent(aty, "login");
         //单独记录随手晒缓存记录，防止刷新
         if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
             EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);

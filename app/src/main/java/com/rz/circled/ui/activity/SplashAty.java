@@ -117,6 +117,7 @@ public class SplashAty extends BaseActivity {
                     try {
                         initV();
                     } catch (ParseException e) {
+                        Log.i(TAG, "run: ");
                         jumpTo();
                     }
                 } else {
@@ -191,6 +192,7 @@ public class SplashAty extends BaseActivity {
         }
         }else{
             jumpTo();
+            return;
         }
 
         mTxtjumpTo = (TextView) findViewById(R.id.id_jump_txt);
