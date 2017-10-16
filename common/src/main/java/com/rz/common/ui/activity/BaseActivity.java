@@ -700,6 +700,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                         finish();
                     } else {
 //                        System.exit(0);
+//                        closeDialog();
                         finish();
                         int pid = android.os.Process.myPid();	//获取当前应用程序的PID
                         android.os.Process.killProcess(pid);
@@ -721,4 +722,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             kickDialog.showDialog();
         }
     }
+
+    private void exitFinish(){
+        this.finish();
+
+    }
+
 }

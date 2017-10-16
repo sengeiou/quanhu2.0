@@ -138,6 +138,7 @@ public class MineRewardBean implements Serializable {
         private int heat;
         private int readNum;
         private int partNum;
+        private String coterieId;
         private String extjson;
 
         public String getResourceId() {
@@ -234,6 +235,14 @@ public class MineRewardBean implements Serializable {
 
         public void setPartNum(int partNum) {
             this.partNum = partNum;
+        }
+
+        public String getCoterieId() {
+            return coterieId;
+        }
+
+        public void setCoterieId(String coterieId) {
+            this.coterieId = coterieId;
         }
 
         public String getExtjson() {
