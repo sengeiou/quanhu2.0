@@ -60,8 +60,13 @@ public class AccountDetailAty extends BaseActivity {
      * @param type    1 表示消费明细  2 表示收益明细
      */
     public static void startAccountDetail(Context context, int type) {
+        startAccountDetail(context, type, -1);
+    }
+
+    public static void startAccountDetail(Context context, int type, int flag) {
         Intent intent = new Intent(context, AccountDetailAty.class);
         intent.putExtra(IntentKey.KEY_TYPE, type);
+        if (flag != -1) intent.setFlags(flag);
         context.startActivity(intent);
     }
 

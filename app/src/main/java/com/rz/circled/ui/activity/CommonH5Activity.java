@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,9 +49,14 @@ public class CommonH5Activity extends BaseActivity {
     }
 
     public static void startCommonH5(Context context, String title, String url) {
+        startCommonH5(context, title, url, -1);
+    }
+
+    public static void startCommonH5(Context context, String title, String url, int flag) {
         Intent intent = new Intent(context, CommonH5Activity.class);
         intent.putExtra(IntentKey.EXTRA_TITLE, title);
         intent.putExtra(IntentKey.EXTRA_URL, url);
+        if (flag != -1) intent.setFlags(flag);
         context.startActivity(intent);
     }
 

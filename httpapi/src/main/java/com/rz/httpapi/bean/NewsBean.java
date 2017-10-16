@@ -1,6 +1,7 @@
 package com.rz.httpapi.bean;
 
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
 
 import org.json.JSONObject;
 
@@ -100,6 +101,7 @@ public class NewsBean {
     /**
      * 拓展数据：资源信息,请填入Body的实体映射表
      */
+    @Expose
     private JsonObject body;
 
     public String getMessageId() {

@@ -45,10 +45,13 @@ public class ChooseProveIdentityActivity extends BaseActivity {
     private ProveInfoPresenter proveInfoPresenter;
 
     public static void startProveIdentity(Context context, ProveStatusBean proveStatusBean) {
+        startProveIdentity(context, proveStatusBean, -1);
+    }
+
+    public static void startProveIdentity(Context context, ProveStatusBean proveStatusBean, int flag) {
         Intent i = new Intent(context, ChooseProveIdentityActivity.class);
-        if (proveStatusBean != null) {
-            i.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
-        }
+        if (proveStatusBean != null) i.putExtra(IntentKey.EXTRA_SERIALIZABLE, proveStatusBean);
+        if (flag != -1) i.setFlags(flag);
         context.startActivity(i);
     }
 
