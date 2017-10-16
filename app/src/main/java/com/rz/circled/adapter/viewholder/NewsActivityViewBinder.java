@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsActivityExtra;
+import com.rz.circled.adapter.viewholder.extra.NewsInteractiveExtra;
 import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
@@ -40,7 +41,9 @@ public class NewsActivityViewBinder extends ItemViewBinder<NewsBean, NewsActivit
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_holder).into(holder.img);
-        NewsActivityExtra extra = new Gson().fromJson(item.getBody().toString(), NewsActivityExtra.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(item.getBody());
+        NewsActivityExtra extra = gson.fromJson(json, NewsActivityExtra.class);
         String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
     }
