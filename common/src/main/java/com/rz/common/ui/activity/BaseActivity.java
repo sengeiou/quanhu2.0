@@ -70,6 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         StatusBarUtils.transparencyBar(this);
         mContext = this;
         this.aty = this;
@@ -701,7 +702,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                     } else {
 //                        System.exit(0);
                         finish();
-                        int pid = android.os.Process.myPid();	//获取当前应用程序的PID
+                        int pid = android.os.Process.myPid();    //获取当前应用程序的PID
                         android.os.Process.killProcess(pid);
 
                     }
