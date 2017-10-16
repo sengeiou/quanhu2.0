@@ -557,7 +557,8 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             getImages();
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.sd_card_permissions), RC_EXTENER, Manifest.permission.READ_EXTERNAL_STORAGE);
+            EasyPermissions.requestPermissions(this, getString(R.string.sd_card_permissions), RC_EXTENER, Manifest.permission
+                    .READ_EXTERNAL_STORAGE);
         }
     }
 
@@ -701,6 +702,7 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
 
                 Collections.sort(mShowPictures, new FileComparator());
                 initCameraPic();
+                picManagerAdapter.setData(mShowPictures);
                 picManagerAdapter.notifyDataSetChanged();
 
                 mTxtPicNum.setText(imageFloder.getmPicCount()
