@@ -81,13 +81,14 @@ public class DefaultTipsDialog extends DialogFragment {
 
     @Override
     public void dismiss() {
-        super.dismiss();
+//        super.dismiss();
 
         Intent intent = new Intent(getContext(), LoginActivity.class);
         intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
+
     }
 
     @OnClick(R.id.btn_submit)

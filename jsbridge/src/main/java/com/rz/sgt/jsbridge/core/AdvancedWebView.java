@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -145,6 +146,40 @@ public class AdvancedWebView extends WebView {
 //        } else {
         return super.onTouchEvent(event);
 //        }
+
+    }
+
+    private Rect mRectSrc = new Rect();
+    private int[] location = new int[2];
+    private int x, y;
+    @Override
+    protected void onSizeChanged(int w, int h, int ow, int oh) {
+        super.onSizeChanged(w, h, ow, oh);
+        Log.e("yeying", "onSizeChanged: w=" + w + "  h=" + h + "   ow=" + ow + "   oh==" + oh+"  super=");
+
+        Log.d("yeying", "Button.Width--->" + getWidth());
+        Log.d("yeying", "Button.Height--->" + getHeight());
+
+        getLocalVisibleRect(mRectSrc);
+        Log.d("yeying", "LocalVisibleRect--->" + mRectSrc);
+
+        getGlobalVisibleRect(mRectSrc);
+        Log.d("yeying", "GlobalVisibleRect--->" + mRectSrc);
+
+        getLocationOnScreen(location);
+        x = location[0];
+        y = location[1];
+        Log.d("yeying", "Screenx--->" + x + "  " + "Screeny--->" + y);
+
+        getLocationInWindow(location);
+        x = location[0];
+        y = location[1];
+        Log.d("yeying", "Window--->" + x + "  " + "Window--->" + y);
+
+        Log.d("yeying", "left:" + getLeft());
+        Log.d("yeying", "right:" + getRight());
+        Log.d("yeying", "Top:" + getTop());
+        Log.d("yeying", "Bottom:" + getBottom());
 
     }
 
@@ -1497,7 +1532,7 @@ public class AdvancedWebView extends WebView {
 //            }
 //            return null;
 //        } else
-            return null;
+        return null;
     }
 
 }

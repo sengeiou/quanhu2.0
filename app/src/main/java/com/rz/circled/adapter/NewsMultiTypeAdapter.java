@@ -36,6 +36,7 @@ public class NewsMultiTypeAdapter extends MultiTypeAdapter {
                 new NewsAnnouncementViewBinder(),
                 new NewsInteractiveViewBinder(),
                 new NewsGroupViewBinder(),
+                new NewsRewardViewBinder(),
                 new NewsUserViewBinder()
         ).withClassLinker(new ClassLinker<NewsBean>() {
             @NonNull

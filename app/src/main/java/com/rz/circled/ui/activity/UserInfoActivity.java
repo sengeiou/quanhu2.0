@@ -342,6 +342,7 @@ public class UserInfoActivity extends BaseActivity {
                     if(requestBean.getIsRequire()==1){
                         addFriendBtn.setText("等待对方同意");
                         addFriendBtn.setClickable(false);
+                        addFriendBtn.setBackgroundResource(R.drawable.shape_bg_gray_on);
                     }else{
                         addFriendBtn.setText("加好友");
                     }
@@ -398,6 +399,7 @@ public class UserInfoActivity extends BaseActivity {
                 signTxt.setText(Session.getUser_signatrue());
             }
 
+            addFriendLayout.setClickable(true);
             if (model.getRelation() == 0) {
                 addFriendLayout.setVisibility(View.VISIBLE);
                 //陌生人
