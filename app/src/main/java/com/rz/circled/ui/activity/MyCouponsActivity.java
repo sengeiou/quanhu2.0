@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -25,6 +27,16 @@ public class MyCouponsActivity extends BaseActivity {
     ViewPager vpCoupons;
     private CouponsAdapter couponsAdapter;
     private MyCardCouponsFragment[] fragments;
+
+    public static void startMyCoupons(Context context) {
+        startMyCoupons(context, -1);
+    }
+
+    public static void startMyCoupons(Context context, int flag) {
+        Intent intent = new Intent(context, MyCouponsActivity.class);
+        if (flag != -1) intent.setFlags(flag);
+        context.startActivity(intent);
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {

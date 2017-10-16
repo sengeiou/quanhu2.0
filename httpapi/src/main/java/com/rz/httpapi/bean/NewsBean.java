@@ -1,6 +1,8 @@
 package com.rz.httpapi.bean;
 
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.JsonAdapter;
+import com.rz.httpapi.bean.adapter.NewsTypeAdapter;
 
 import org.json.JSONObject;
 
@@ -9,7 +11,6 @@ import java.util.HashMap;
 /**
  * Created by rzw2 on 2017/9/5.
  */
-
 public class NewsBean {
 
     /**
@@ -28,7 +29,7 @@ public class NewsBean {
     private Integer label;
 
     /**
-     *  消息唯一分类
+     * 消息唯一分类
      */
     private String msgEnumType;
 

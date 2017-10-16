@@ -76,7 +76,6 @@ public class MyCardCouponsFragment extends BaseFragment {
     public View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_card_coupons, null);
     }
-
     @Override
     public void initView() {
         Bundle bundle = getArguments();
@@ -124,11 +123,9 @@ public class MyCardCouponsFragment extends BaseFragment {
             onLoadingStatus(CommonCode.General.UN_NETWORK, getString(R.string.no_net_work));
             return;
         }
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
         couponsPresenter.getCouponsList(0, isCoupons ? 1 : 2);
         couponsPresenter.getCouponsList(1, isCoupons ? 1 : 2);
     }
-
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
@@ -158,9 +155,10 @@ public class MyCardCouponsFragment extends BaseFragment {
         if (flag == couponsPresenter.FLAG_COUPONS_EXPIRED_LIST) {//已过期
             List<CouponsBean> couponsList = (List<CouponsBean>) t;
             if (couponsList != null && couponsList.size() > 0 && couponsList.get(0) != null) {//加get(0)!=null,是因为在接口返回时出现了data[null]的情况.
-                if (isCoupons)
-                    couponsExpiredAdapter.addData(couponsList);
-                else awardExpireAdapter.addData(couponsList);
+                if (isCoupons){
+                    couponsExpiredAdapter.addData(couponsList);}
+                else {
+                    awardExpireAdapter.addData(couponsList);}
             }
         }
         if (isCoupons) {
@@ -168,7 +166,7 @@ public class MyCardCouponsFragment extends BaseFragment {
         } else {
             llHint.setVisibility(awardExpireAdapter.getCount() == 0 ? View.GONE : View.VISIBLE);
         }
-        if (!hasDataInPage()) onLoadingStatus(CommonCode.General.DATA_EMPTY);
+        if (!hasDataInPage()) onLoadingStatus(CommonCode.General.DATA_EMPTY,isCoupons?"目前没有卡券信息":"目前没有奖品信息");
         scrollCoupons.smoothScrollTo(0, 0);
     }
 
