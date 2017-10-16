@@ -17,13 +17,13 @@ public class CommonH5JumpHelper {
 
     //私圈首页 /:sjmwq/coterie/:coterieId
     private static final String PRIVATE_GROUP_HOME = "/%s/coterie/%s";
-    //话题主页 /:sjmwq/coterie/:coterieId/topic/home/:topicId
-    private static final String TOPIC_HOME = "/%s/coterie/%s/topic/home/%s";
+    //话题主页 /:circleRoute/redirect/:moduleEnum/:resourceId
+    private static final String TOPIC_HOME = "/%s/redirect/%s/%s";
     //悬赏详情页 	/activity/reward/detail/:id
     private static final String REWARD_DETAIL = "/activity/reward/detail/%s";
     //私圈详情页 /:sjmwq/redirect/coterie/:coterieId/:moduleEnum/:id
     private static final String PRIVATE_RESOURCE_DETAIL = "/%s/redirect/coterie/%s/%s/%s";
-    //详情页 /:sjmwq/redirect/coterie/:coterieId/:moduleEnum/:id
+    //详情页 /:circleRoute/redirect/:moduleEnum/:resourceId
     private static final String RESOURCE_DETAIL = "/%s/redirect/%s/%s";
     //成员审核页 /:sjmwq/coterie/:coterieId/edit/applyList
     private static final String MEMBER_AUDIT = "/%s/coterie/%s/edit/applyList";
@@ -44,13 +44,13 @@ public class CommonH5JumpHelper {
         WebContainerActivity.startActivity(context, getUrl(url), flag);
     }
 
-    public static void startTopicHome(Context context, String circleRoute, String coterieId, String resourceId) {
-        startTopicHome(context, circleRoute, coterieId, resourceId, -1);
+    public static void startTopicHome(Context context, String circleRoute, String moduleEnum, String resourceId) {
+        startTopicHome(context, circleRoute, moduleEnum, resourceId, -1);
     }
 
-    public static void startTopicHome(Context context, String circleRoute, String coterieId, String resourceId, int flag) {
+    public static void startTopicHome(Context context, String circleRoute, String moduleEnum, String resourceId, int flag) {
         Formatter formatter = new Formatter();
-        String url = formatter.format(TOPIC_HOME, circleRoute, coterieId, resourceId).toString();
+        String url = formatter.format(TOPIC_HOME, circleRoute, moduleEnum, resourceId).toString();
         WebContainerActivity.startActivity(context, getUrl(url), flag);
     }
 

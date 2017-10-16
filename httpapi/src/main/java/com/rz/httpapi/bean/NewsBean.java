@@ -101,8 +101,7 @@ public class NewsBean {
     /**
      * 拓展数据：资源信息,请填入Body的实体映射表
      */
-    @Expose
-    private JsonObject body;
+    private Object body;
 
     public String getMessageId() {
         return messageId;
@@ -192,11 +191,11 @@ public class NewsBean {
         this.createTime = createTime;
     }
 
-    public JsonObject getBody() {
+    public Object getBody() {
         return body;
     }
 
-    public void setBody(JsonObject body) {
+    public void setBody(Object body) {
         this.body = body;
     }
 
