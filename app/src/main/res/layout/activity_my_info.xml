@@ -234,7 +234,7 @@
             <TextView
                 android:id="@+id/id_text_sign"
                 style="@style/PersonInfoTitleTvStyle"
-                android:text="@string/mine_person_sign"/>
+                android:text="@string/mine_person_brief"/>
 
             <TextView
                 android:id="@+id/id_signatrue"

@@ -29,51 +29,51 @@ public class NewsJumpHelper {
             case NewsTypeConstants.NONE:
                 break;
             case NewsTypeConstants.ACCOUNT:
-                AccountDetailAty.startAccountDetail(context, Type.TYPE_BALANCE, Intent.FLAG_ACTIVITY_NEW_TASK);
+                AccountDetailAty.startAccountDetail(context, Type.TYPE_BALANCE, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.INTEGRAL:
-                AccountDetailAty.startAccountDetail(context, Type.TYPE_SCORE, Intent.FLAG_ACTIVITY_NEW_TASK);
+                AccountDetailAty.startAccountDetail(context, Type.TYPE_SCORE, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.MYCARD:
-                MyCouponsActivity.startMyCoupons(context, Intent.FLAG_ACTIVITY_NEW_TASK);
+                MyCouponsActivity.startMyCoupons(context, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.MYCOTERIE:
-                MyPrivateGroupActivity.startMyPrivateGroup(context, 0, Intent.FLAG_ACTIVITY_NEW_TASK);
+                MyPrivateGroupActivity.startMyPrivateGroup(context, 0, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.MYTALENT:
-                ChooseProveIdentityActivity.startProveIdentity(context, new ProveStatusBean(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                ChooseProveIdentityActivity.startProveIdentity(context, new ProveStatusBean(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.INNER_URL:
                 break;
             case NewsTypeConstants.EXTERNAL_URL:
-                CommonH5Activity.startCommonH5(context, "", data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5Activity.startCommonH5(context, "", data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.ANNOUNCEMENT_URL:
-                CommonH5Activity.startCommonH5(context, context.getString(R.string.announcement_details), data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5Activity.startCommonH5(context, context.getString(R.string.announcement_details), data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.COTERIE_HOME:
-                CommonH5JumpHelper.startGroupHome(context, data.getCircleRoute(), data.getCoterieId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startGroupHome(context, data.getCircleRoute(), data.getCoterieId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.TOPIC_HOME:
-                CommonH5JumpHelper.startTopicHome(context, data.getCircleRoute(), data.getModuleEnum(), data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startTopicHome(context, data.getCircleRoute(), data.getCoterieId(), data.getModuleEnum(), data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.REWARD_DETAIL:
-                CommonH5JumpHelper.startRewardDetail(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startRewardDetail(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.COMMON_DETAIL:
-                CommonH5JumpHelper.startResourceDetail(context, data.getCircleRoute(), data.getCoterieId(), data.getModuleEnum(), data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startResourceDetail(context, data.getCircleRoute(), data.getCoterieId(), data.getModuleEnum(), data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.APPLY_LIST:
-                CommonH5JumpHelper.startMemberAudit(context, data.getCircleRoute(), data.getCoterieId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startMemberAudit(context, data.getCircleRoute(), data.getCoterieId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.ACTIVITY_SIGNUP:
-                CommonH5JumpHelper.startSignActivity(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startSignActivity(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.ACTIVITY_VOTE:
-                CommonH5JumpHelper.startVoteActivity(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startVoteActivity(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.ACTIVITY_RESULT:
-                CommonH5JumpHelper.startWinningScan(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK);
+                CommonH5JumpHelper.startWinningScan(context, data.getResourceId(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
         }
     }

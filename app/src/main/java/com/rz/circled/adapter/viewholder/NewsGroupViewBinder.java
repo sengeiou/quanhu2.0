@@ -15,6 +15,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsGroupExtra;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -36,7 +37,7 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.formatDisplayTime(item.getCreateTime()));
         holder.tvTitle.setText(item.getTitle());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_private_group_icon).into(holder.avatar);
         NewsGroupExtra extra = new Gson().fromJson(item.getBody().toString(), NewsGroupExtra.class);

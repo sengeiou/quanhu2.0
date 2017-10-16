@@ -96,6 +96,7 @@ public class PrivateGroupRecommendFragment extends BaseFragment {
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t instanceof PrivateGroupListBean) {
+            if (tv == null) return;
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
             List<PrivateGroupBean> data = _data.getList();
             mAdapter.setData(data.size() > 3 ? data.subList(0, 3) : data);

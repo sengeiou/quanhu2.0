@@ -1,7 +1,8 @@
 package com.rz.httpapi.bean;
 
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
+import com.rz.httpapi.bean.adapter.NewsTypeAdapter;
 
 import org.json.JSONObject;
 
@@ -10,7 +11,6 @@ import java.util.HashMap;
 /**
  * Created by rzw2 on 2017/9/5.
  */
-
 public class NewsBean {
 
     /**
@@ -29,7 +29,7 @@ public class NewsBean {
     private Integer label;
 
     /**
-     *  消息唯一分类
+     * 消息唯一分类
      */
     private String msgEnumType;
 
@@ -101,7 +101,7 @@ public class NewsBean {
     /**
      * 拓展数据：资源信息,请填入Body的实体映射表
      */
-    private Object body;
+    private HashMap body;
 
     public String getMessageId() {
         return messageId;
@@ -175,6 +175,14 @@ public class NewsBean {
         this.img = img;
     }
 
+    public HashMap getBody() {
+        return body;
+    }
+
+    public void setBody(HashMap body) {
+        this.body = body;
+    }
+
     public String getLink() {
         return link;
     }
@@ -189,14 +197,6 @@ public class NewsBean {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public Object getBody() {
-        return body;
-    }
-
-    public void setBody(Object body) {
-        this.body = body;
     }
 
     public void setType(Integer type) {

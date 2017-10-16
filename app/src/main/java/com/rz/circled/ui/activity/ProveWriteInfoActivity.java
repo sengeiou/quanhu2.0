@@ -182,7 +182,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
         proveInfoPresenter.attachView(this);
     }
 
-    @OnClick(R.id.tv_prove_area)
+    @OnClick(R.id.rl_prove_area)
     public void onClick() {
         Intent locationIntent = new Intent(this, PersonAreaAty.class);
         locationIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);

@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -66,6 +67,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import cn.jpush.android.api.JPushInterface;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -84,7 +86,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private Toast mToast;
 
     private String[] tabTags = new String[]{"首页", "发现", "悬赏", "私圈", "我的"};
-
+    private static final String TAG_EXIT = "exit";
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -121,6 +123,17 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         mUnread = (ImageView) tabHost.findViewById(R.id.unread_msg_number);
 
         initCounter();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);
+            if (isExit) {
+                this.finish();
+            }
+        }
     }
 
     @Override
@@ -294,6 +307,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
         presenter.ExitApp();
+
+        JPushInterface.setAlias(mContext, "", null);
 
         int loginWay = Session.getLoginWay();
         if (loginWay != Type.LOGIN_PHONE) {

@@ -11,12 +11,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsInteractiveExtra;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
+
+import java.io.StringReader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,9 +41,11 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.formatDisplayTime(item.getCreateTime()));
         holder.tvTitle.setText(item.getContent());
-        NewsInteractiveExtra extra = new Gson().fromJson(item.getBody().toString(), NewsInteractiveExtra.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(item.getBody());
+        NewsInteractiveExtra extra = gson.fromJson(json, NewsInteractiveExtra.class);
         holder.tvName.setText(extra.getCustName());
         Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
         holder.tvContent.setText(extra.getBodyTitle());
