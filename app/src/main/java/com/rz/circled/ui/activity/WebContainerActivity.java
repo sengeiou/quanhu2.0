@@ -95,7 +95,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
     @Override
     public void initView() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mWebView = (AdvancedWebView) findViewById(R.id.webview_container);
 

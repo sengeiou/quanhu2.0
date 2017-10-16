@@ -92,20 +92,20 @@ public class RewardArticalFragment extends BaseFragment implements ScrollableHel
 //                if (StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo().getResourceId())||StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo())) {
 
                   if(position != 0){
-                      try {
-                          JSONObject jsonobject = new JSONObject(rewardBeanList.get(position-1).getResourceInfo().getExtjson());
-                          String coterieId = jsonobject.getString("coterieId");
-                          if(StringUtil.isEmpty(coterieId)){
+//                      try {
+//                          JSONObject jsonobject = new JSONObject(rewardBeanList.get(position-1).getResourceInfo().getExtjson());
+//                          String coterieId = jsonobject.getString("coterieId");
+                          if(StringUtil.isEmpty(rewardBeanList.get(position-1).getResourceInfo().getCoterieId())){
                               String circleUrl = CommomUtils.getCircleUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
                               WebContainerActivity.startActivity(mActivity, circleUrl);
                           }else{
-                              String circleUrl = CommomUtils.getDymanicUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(),coterieId, rewardBeanList.get(position-1).getResourceInfo().getResourceId());
+                              String circleUrl = CommomUtils.getDymanicUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(),rewardBeanList.get(position-1).getResourceInfo().getCoterieId(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
                               WebContainerActivity.startActivity(mActivity, circleUrl);
                           }
 
-                      } catch (JSONException e) {
-                          e.printStackTrace();
-                      }
+//                      } catch (JSONException e) {
+//                          e.printStackTrace();
+//                      }
                   }
             }
         });

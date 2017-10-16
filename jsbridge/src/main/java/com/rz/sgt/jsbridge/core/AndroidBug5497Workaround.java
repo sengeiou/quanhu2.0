@@ -26,8 +26,9 @@ public class AndroidBug5497Workaround {
     private OnUsableHeightChangeListen heightChangeListen;
 
     private AndroidBug5497Workaround(Activity activity, WebView view) {
-        FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
-        mChildOfContent = content.getChildAt(0);
+//        FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
+//        mChildOfContent = content.getChildAt(0);
+        mChildOfContent = view;
         mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
                 possiblyResizeChildOfContent();
@@ -64,8 +65,8 @@ public class AndroidBug5497Workaround {
         mChildOfContent.getWindowVisibleDisplayFrame(r);
         Log.e("zxw", "computeUsableHeight: " + r.top + "  " + r.bottom);
 //        return mWebView.getTop() == 0 ? mWebView.getBottom() : mWebView.getBottom() - mWebView.getTop();// 全屏模式下： return r.bottom
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return r.bottom ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return r.bottom;
         } else {
             return (r.bottom - r.top);
         }

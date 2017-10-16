@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="@dimen/px316"
         android:layout_height="@dimen/px402"
-        android:layout_marginLeft="@dimen/px10"
+        android:layout_marginRight="@dimen/px24"
         android:background="@drawable/hot_famous_bg"
         >
 
@@ -49,11 +49,11 @@
 
             <TextView
                 android:id="@+id/famous_name"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/px260"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:maxLines="1"
+                android:lines="1"
                 android:text="是逻辑封杀了"
                 android:textColor="@color/color_000000"
                 android:textSize="@dimen/px46"/>

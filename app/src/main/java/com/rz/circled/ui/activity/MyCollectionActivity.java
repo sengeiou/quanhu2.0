@@ -54,6 +54,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
     SwipyRefreshLayoutBanner mRefresh;
     @BindView(R.id.btn_del)
     Button mBtnDel;
+    @BindView(R.id.ll_edit)
+    LinearLayout mLlEdit;
     private CirclePresenter mPresenter;
     List<CollectionBean> collectionList = new ArrayList<>();
     private BaseAdapter mCollectionAdapter;
@@ -118,11 +120,13 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     //完成
                     isEdit = false;
                     setTitleRightText(getString(R.string.edit));
-                    mBtnDel.setVisibility(View.GONE);
+                    mLlEdit.setVisibility(View.GONE);
+//                    mBtnDel.setVisibility(View.GONE);
                 } else {
                     //编辑
                     isEdit = true;
-                    mBtnDel.setVisibility(View.VISIBLE);
+                    mLlEdit.setVisibility(View.VISIBLE);
+//                    mBtnDel.setVisibility(View.VISIBLE);
                     setTitleRightText(getString(R.string.finish));
                 }
                 mCollectionAdapter.notifyDataSetChanged();
