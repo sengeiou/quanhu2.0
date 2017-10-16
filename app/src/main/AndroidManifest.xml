@@ -205,7 +205,8 @@
         <activity
             android:name=".ui.activity.WebContainerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"/>
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
             android:name=".ui.activity.AudioChooseActivity"
@@ -330,7 +331,8 @@
         <activity
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".ui.activity.AllPrivateGroupActivity"
             android:screenOrientation="portrait"

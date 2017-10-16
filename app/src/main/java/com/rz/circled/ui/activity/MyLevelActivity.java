@@ -95,7 +95,7 @@ public class MyLevelActivity extends BaseActivity {
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonH5Activity.startCommonH5(mContext, "我的等级", H5Address.UPGRADE_STRATEGY);
+                CommonH5Activity.startCommonH5(mContext, "升级攻略", H5Address.UPGRADE_STRATEGY);
             }
         });
     }
