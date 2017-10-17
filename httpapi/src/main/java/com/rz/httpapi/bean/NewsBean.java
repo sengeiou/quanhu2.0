@@ -101,7 +101,7 @@ public class NewsBean {
     /**
      * 拓展数据：资源信息,请填入Body的实体映射表
      */
-    private JsonObject body;
+    private HashMap body;
 
     public String getMessageId() {
         return messageId;
@@ -175,6 +175,14 @@ public class NewsBean {
         this.img = img;
     }
 
+    public HashMap getBody() {
+        return body;
+    }
+
+    public void setBody(HashMap body) {
+        this.body = body;
+    }
+
     public String getLink() {
         return link;
     }
@@ -189,14 +197,6 @@ public class NewsBean {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public JsonObject getBody() {
-        return body;
-    }
-
-    public void setBody(JsonObject body) {
-        this.body = body;
     }
 
     public void setType(Integer type) {
