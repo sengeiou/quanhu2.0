@@ -105,7 +105,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
-        getVirtuakeyHight();
         Log.e(TAG, "initView");
         String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
@@ -268,40 +267,41 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         @Override
         public void onEvent(StatusCode code) {
             Log.e(TAG, "onEvent: " + code.getValue());
-            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT) {
+            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
                 kickOut(code);
             } else {
                 if (code == StatusCode.NET_BROKEN) {
                 } else if (code == StatusCode.UNLOGIN) {
                 } else if (code == StatusCode.CONNECTING) {
                 } else if (code == StatusCode.LOGINING) {
-                } else if (code == StatusCode.KICKOUT) {
-                    EventBus.getDefault().post(new KickEvent(5));
                 } else {
-
                 }
             }
         }
     };
 
     private void kickOut(StatusCode code) {
-        Preferences.saveUserToken("");
-
         if (code == StatusCode.PWD_ERROR) {
             LogUtil.e("Auth", "user password error");
         } else {
             LogUtil.i("Auth", "Kicked!");
         }
 
-        onLogout(code);
+        onLogout();
 
-        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
+        if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT)
+            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
+        if (code == StatusCode.KICKOUT) {
+            EventBus.getDefault().post(new KickEvent(5));
+        }
     }
 
     // 注销
-    private void onLogout(StatusCode code) {
+    private void onLogout() {
         // 清理缓存&注销监听&清除状态
         LogoutHelper.logout();
+        Preferences.saveUserToken("");
+
         NIMClient.getService(AuthService.class).logout();
 
         UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
@@ -458,47 +458,5 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     public void refreshPage() {
 
-    }
-
-    /**
-     * 获取屏幕尺寸，但是不包括虚拟功能高度
-     *
-     * @return
-     */
-    public int getNoHasVirtualKey() {
-        int height = getWindowManager().getDefaultDisplay().getHeight();
-        return height;
-    }
-
-    /**
-     * 通过反射，获取包含虚拟键的整体屏幕高度
-     *
-     * @return
-     */
-    private int getHasVirtualKey() {
-        int dpi = 0;
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        @SuppressWarnings("rawtypes")
-        Class c;
-        try {
-            c = Class.forName("android.view.Display");
-            @SuppressWarnings("unchecked")
-            Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
-            method.invoke(display, dm);
-            dpi = dm.heightPixels;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dpi;
-    }
-
-    /**
-     * 获取虚拟键的高度
-     */
-    private void getVirtuakeyHight() {
-        Log.d("zxw", "不包含虚拟键的高度=" + getNoHasVirtualKey());
-        Log.d("zxw", "包含虚拟键的高度=" + getHasVirtualKey());
-        Log.d("zxw", "虚拟键的高度=" + (getHasVirtualKey() - getNoHasVirtualKey()));
     }
 }
