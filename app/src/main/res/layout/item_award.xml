@@ -93,18 +93,18 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/view_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px5"
-        android:background="@drawable/shape_line_coupons"
-        android:visibility="gone"/>
+    <!--<View-->
+        <!--android:id="@+id/view_line"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/px5"-->
+        <!--android:background="@drawable/shape_line_coupons"-->
+        <!--android:visibility="gone"/>-->
 
     <TextView
         android:id="@+id/tv_award_item_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/shape_bg_coupons_white"
         android:padding="@dimen/px30"
         android:text="啦啦啦啦啦"
         android:textColor="@color/font_gray_l"

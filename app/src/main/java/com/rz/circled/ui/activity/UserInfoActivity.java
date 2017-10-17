@@ -105,9 +105,7 @@ public class UserInfoActivity extends BaseActivity {
 
     ImageView editImg;
 
-    View header;
     View newTitilbar;
-    private int headHight;
     private IPresenter presenter;
     private IPresenter friendPresenter;
     FriendInformationBean model;
@@ -393,10 +391,10 @@ public class UserInfoActivity extends BaseActivity {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(model.getCustNname());
             levelTxt.setText("Lv." + model.getCustLevel());
-            if (TextUtils.isEmpty(Session.getUser_desc())) {
+            if (TextUtils.isEmpty(model.getCustDesc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(Session.getUser_desc());
+                signTxt.setText(model.getCustDesc());
             }
 
             addFriendLayout.setClickable(true);

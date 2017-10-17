@@ -98,7 +98,7 @@ public class ChatSettingActivity extends BaseActivity {
             tvNick.setText(data.getCustNname());
 
             if (!TextUtils.isEmpty(data.getCustSignature())) {
-                tvSignature.setText(getString(R.string.introduction) + data.getCustSignature());
+                tvSignature.setText(getString(R.string.introduction) + data.getCustDesc());
             } else {
                 tvSignature.setText(R.string.introduction);
             }
