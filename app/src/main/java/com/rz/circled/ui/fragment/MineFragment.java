@@ -716,14 +716,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     starCustormService();
                 } else {
 //                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
-                    CommonH5Activity.startCommonH5(mActivity, "客服", H5Address.CONECT_US);
+                    CommonH5Activity.startCommonH5(mActivity, "", H5Address.CONECT_US);
                 }
                 break;
             //设置
 
             case 11:
                 trackUser("我的", "帮助", "设置");
-                CommonH5Activity.startCommonH5(mActivity, "帮助", H5Address.USER_HELP);
+                CommonH5Activity.startCommonH5(mActivity, "", H5Address.USER_HELP);
                 break;
             case 12:
                 trackUser("我的", "入口名称", "设置");
