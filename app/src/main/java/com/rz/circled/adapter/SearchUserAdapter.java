@@ -54,8 +54,8 @@ public class SearchUserAdapter extends SearchCommonAdapter {
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(ivIcon);
 
 
-        if(TextUtils.isEmpty(starListBean.getCustSignature())){
-            tvInfo.setText(starListBean.getCustSignature());
+        if(!TextUtils.isEmpty(starListBean.getCustDesc())){
+            tvInfo.setText(starListBean.getCustDesc());
         }
 
         if(starListBean.getCustRole() == 0){
