@@ -149,10 +149,10 @@ public class UserInfoActivity extends BaseActivity {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
             levelTxt.setText("Lv." + Session.getUserLevel());
-            if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+            if (TextUtils.isEmpty(Session.getUser_desc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(Session.getUser_signatrue());
+                signTxt.setText(Session.getUser_desc());
             }
 
             addFriendLayout.setVisibility(View.GONE);
@@ -370,10 +370,10 @@ public class UserInfoActivity extends BaseActivity {
                         placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 nameTxt.setText(Session.getUserName());
                 levelTxt.setText("Lv." + Session.getUserLevel());
-                if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+                if (TextUtils.isEmpty(Session.getUser_desc())) {
                     signTxt.setText(getString(R.string.mine_sign_default));
                 } else {
-                    signTxt.setText(Session.getUser_signatrue());
+                    signTxt.setText(Session.getUser_desc());
                 }
 
                 addFriendLayout.setVisibility(View.GONE);
@@ -393,10 +393,10 @@ public class UserInfoActivity extends BaseActivity {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(model.getCustNname());
             levelTxt.setText("Lv." + model.getCustLevel());
-            if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+            if (TextUtils.isEmpty(Session.getUser_desc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(Session.getUser_signatrue());
+                signTxt.setText(Session.getUser_desc());
             }
 
             addFriendLayout.setClickable(true);
