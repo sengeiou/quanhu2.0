@@ -53,7 +53,7 @@
             android:text="LV 1"
             android:textColor="@color/white"
             android:textSize="@dimen/px38"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_search_person_name"
