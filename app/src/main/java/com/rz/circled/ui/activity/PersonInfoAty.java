@@ -77,8 +77,8 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
     TextView sex;
     @BindView(R.id.id_area)
     TextView area;
-    @BindView(R.id.id_signatrue)
-    TextView singatrue;
+//    @BindView(R.id.id_signatrue)
+//    TextView singatrue;
     @BindView(R.id.id_desc)
     TextView desc;
 
@@ -143,7 +143,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
         nickName.setText(Session.getUserName());
         sex.setText(Session.getUser_sex());
         area.setText(Session.getUser_area());
-        singatrue.setText(Session.getUser_signatrue());
+//        singatrue.setText(Session.getUser_signatrue());
         desc.setText(Session.getUser_desc());
         setTitleText(getString(R.string.mine_person_info));
         if (Protect.checkLoadImageStatus(aty)) {
@@ -163,7 +163,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
     }
 
     @OnClick({R.id.id_layout_person_photo, R.id.id_layout_person_nick, R.id.id_layout_person_scan,
-            R.id.id_layout_person_sex, R.id.id_layout_person_area, R.id.id_layout_person_sign,
+            R.id.id_layout_person_sex, R.id.id_layout_person_area,
             R.id.id_layout_person_brief})
     @Override
     public void onClick(View v) {
@@ -195,14 +195,14 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 intent.setClass(this, PersonAreaAty.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
-            case R.id.id_layout_person_sign:
-                trackUser("我的", "个人资料二级界面", "个人签名");
-                data.putString("content", singatrue.getText().toString());
-                data.putString(TYPE, getString(R.string.mine_person_sign));
-                intent.putExtras(data);
-                intent.setClass(this, PersonBriefAty.class);
-                startActivityForResult(intent, REQUEST_CODE);
-                break;
+//            case R.id.id_layout_person_sign:
+//                trackUser("我的", "个人资料二级界面", "个人签名");
+//                data.putString("content", singatrue.getText().toString());
+//                data.putString(TYPE, getString(R.string.mine_person_sign));
+//                intent.putExtras(data);
+//                intent.setClass(this, PersonBriefAty.class);
+//                startActivityForResult(intent, REQUEST_CODE);
+//                break;
             case R.id.id_layout_person_brief:
                 trackUser("我的", "个人资料二级界面", "个人简介");
                 data.putString("content", desc.getText().toString());
@@ -445,7 +445,7 @@ public class PersonInfoAty extends BaseActivity implements View.OnClickListener,
                 nickName.setText(Session.getUserName());
                 sex.setText(Session.getUser_sex());
                 area.setText(Session.getUser_area());
-                singatrue.setText(Session.getUser_signatrue());
+//                singatrue.setText(Session.getUser_signatrue());
                 desc.setText(Session.getUser_desc());
                 zhugeIdentify(Session.getUserId(), Session.getUser_sex(), Session.getUser_area());
             } else if (resultCode == PictureManagerActivity.PUBLISH_RESULT_CAMERA) {
