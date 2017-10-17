@@ -26,7 +26,7 @@ public class PrivateGroupEssenceAdapter extends CommonAdapter<PrivateGroupResour
     public void convert(ViewHolder helper, PrivateGroupResourceBean item, int position) {
         PrivateGroupResourceBean.Cust cust = item.getCust();
         helper.setText(R.id.tv_title, cust.getCustNname() + "  " + (TextUtils.isEmpty(cust.getCustDesc()) ? "" : cust.getCustDesc()));
-        helper.setText(R.id.tv_desc, item.getTitle());
+        helper.setText(R.id.tv_desc, TextUtils.isEmpty(item.getTitle()) ? item.getSummary() : item.getTitle());
         helper.setText(R.id.tv_scan, String.format(mContext.getString(R.string.private_group_essence_scan), item.getReadNum()));
         if (Protect.checkLoadImageStatus(mContext))
             Glide.with(mContext).load(cust.getCustImg()).error(R.mipmap.ic_default_avatar_small).into((ImageView) helper.getView(R.id.avatar));

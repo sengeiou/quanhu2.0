@@ -700,8 +700,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                         startActivity(intent);
                         finish();
                     } else {
+                        closeDialog();
                         System.exit(0);
-
                     }
                 }
             };

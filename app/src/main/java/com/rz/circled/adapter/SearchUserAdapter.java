@@ -70,8 +70,8 @@ public class SearchUserAdapter extends SearchCommonAdapter {
             int basePadding = (int) mContext.getResources().getDimension(R.dimen.px20);
             tvName.setPadding(0, basePadding, 0, basePadding);
             tvInfo.setPadding(0, basePadding, 0, basePadding);
-            tvLv.setVisibility(View.VISIBLE);
-            tvLv.setText("Lv"+starListBean.getCustLevel());
+            tvLv.setVisibility(View.GONE);
+//            tvLv.setText("Lv"+starListBean.getCustLevel());
         }
 
     }

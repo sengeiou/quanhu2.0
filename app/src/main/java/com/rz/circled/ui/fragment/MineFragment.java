@@ -244,7 +244,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
-//                        jump(UserInfoActivity.class);
                         UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
                     }
                 }
@@ -336,10 +335,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     famousTxt.setText("去认证");
                 }
 
-                if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+                if (TextUtils.isEmpty(Session.getUser_desc())) {
                     idPersonLoginDays.setText(getString(R.string.mine_sign_default));
                 } else {
-                    idPersonLoginDays.setText(Session.getUser_signatrue());
+                    idPersonLoginDays.setText(Session.getUser_desc());
                 }
             } else {
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
@@ -859,10 +858,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             famousTxt.setText("去认证");
         }
 
-        if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+        if (TextUtils.isEmpty(Session.getUser_desc())) {
             idPersonLoginDays.setText(getString(R.string.mine_sign_default));
         } else {
-            idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
+            idPersonLoginDays.setText("个性签名：" + Session.getUser_desc());
         }
         getData();
 

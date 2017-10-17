@@ -60,7 +60,7 @@
         android:layout_marginTop="@dimen/px40"
         android:ellipsize="end"
         android:includeFontPadding="false"
-        android:lines="1"
+        android:maxLines="2"
         android:textColor="@color/font_gray_xl"
         android:textSize="@dimen/font_54"
         tool:text="这里是正文" />
