@@ -25,6 +25,7 @@ public class NewsJumpHelper {
      * @param data
      */
     public static void startAcceptActivity(Context context, NewsBean data) {
+        if (data.getActionCode() == null) return;
         switch (data.getActionCode()) {
             case NewsTypeConstants.NONE:
                 break;
