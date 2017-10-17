@@ -11,6 +11,7 @@ import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MyCouponsActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.NewsAnnounceDetailsActivity;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.constant.Type;
 import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.ProveStatusBean;
@@ -44,10 +45,11 @@ public class NewsJumpHelper {
             case NewsTypeConstants.MYTALENT:
                 ChooseProveIdentityActivity.startProveIdentity(context, new ProveStatusBean(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
-            case NewsTypeConstants.INNER_URL:
-                break;
             case NewsTypeConstants.EXTERNAL_URL:
                 CommonH5Activity.startCommonH5(context, "", data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                break;
+            case NewsTypeConstants.INNER_URL:
+                WebContainerActivity.startActivity(context, data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
             case NewsTypeConstants.ANNOUNCEMENT_URL:
                 CommonH5Activity.startCommonH5(context, context.getString(R.string.announcement_details), data.getLink(), Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

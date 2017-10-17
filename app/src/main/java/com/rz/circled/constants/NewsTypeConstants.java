@@ -75,14 +75,14 @@ public class NewsTypeConstants {
     public static final String MYTALENT = "5";
 
     /**
-     * 内部链接
-     */
-    public static final String INNER_URL = "7";
-
-    /**
      * 外部链接
      */
-    public static final String EXTERNAL_URL = "8";
+    public static final String EXTERNAL_URL = "7";
+
+    /**
+     * 内部链接
+     */
+    public static final String INNER_URL = "8";
 
     /**
      * 公告链接
