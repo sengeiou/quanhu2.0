@@ -2,6 +2,7 @@ package com.rz.circled.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -166,7 +167,9 @@ public class MyCardCouponsFragment extends BaseFragment {
         } else {
             llHint.setVisibility(awardExpireAdapter.getCount() == 0 ? View.GONE : View.VISIBLE);
         }
+        Log.i(TAG, "updateViewWithFlag: "+hasDataInPage());
         if (!hasDataInPage()) onLoadingStatus(CommonCode.General.DATA_EMPTY,isCoupons?"目前没有卡券信息":"目前没有奖品信息");
+        else onLoadingStatus(CommonCode.General.DATA_SUCCESS);
         scrollCoupons.smoothScrollTo(0, 0);
     }
 

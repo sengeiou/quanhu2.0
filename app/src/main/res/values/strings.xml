@@ -811,7 +811,7 @@
     <string name="upload_video_500">上传视频不能大于500M!</string>
     <string name="save_fail">保存失败</string>
     <string name="save_success">保存成功</string>
-    <string name="NO_TALK_STATE">您当前为禁言状态</string>
+    <string name="NO_TALK_STATE">您已被禁言!</string>
     <string name="edit">编辑</string>
     <string name="famous">达人</string>
     <string name="input_subject_search">输入话题名称搜索</string>
