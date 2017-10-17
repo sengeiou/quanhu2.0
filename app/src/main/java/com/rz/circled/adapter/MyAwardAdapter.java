@@ -48,9 +48,7 @@ public class MyAwardAdapter extends CommonAdapter<CouponsBean> {
         TextView tvStatus = (TextView) helper.getViewById(R.id.tv_award_item_status);
         RelativeLayout rlLeft = (RelativeLayout) helper.getViewById(R.id.rl_award_item_left);
         final TextView tvDetail = (TextView) helper.getViewById(R.id.tv_award_item_detail);
-        View viewLine = helper.getViewById(R.id.view_line);
         tvDetail.setVisibility(item.showDetail ? View.VISIBLE : View.GONE);
-        viewLine.setVisibility(item.showDetail ? View.VISIBLE : View.GONE);
         if (canUse) {
             tvStatus.setText(R.string.can_use);
             tvStatus.setBackgroundResource(R.drawable.shape_coupons_blue);

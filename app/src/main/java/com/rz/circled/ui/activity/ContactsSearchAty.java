@@ -243,7 +243,7 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
         FriendInformationBean item = mAdapter.getItem(i);
         if (item != null) {
             if (item.getRelation() == Type.relation_friend) {
-//                FriendInfoAty.newFrindInfo(aty, item.getCustId());
+                UserInfoActivity.newFrindInfo(aty, item.getCustId());
             } else {
                 presenter.requestSaveFriendByFriend(item);
             }
