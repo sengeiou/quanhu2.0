@@ -298,7 +298,7 @@ public class PrivateCircledFragment extends BaseFragment {
             case R.id.btn_refresh:
                 break;
             case R.id.btn_about:
-                CommonH5Activity.startCommonH5(getContext(), getString(R.string.private_group_about), H5Address.PRIVATE_GROUP_ABOUT_AGREEMENT);
+                CommonH5Activity.startCommonH5(getContext(), "", H5Address.PRIVATE_GROUP_ABOUT_AGREEMENT);
                 break;
         }
     }

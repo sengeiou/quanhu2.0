@@ -53,6 +53,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
     private static String TAG_JOIN = "tag_join";
     private static String TAG_CREATE = "tag_create";
     private static String TAG_RECOMMEND = "tag_recommend";
+    private static String TAG_ALL = "tag_all";
 
     public static int WAITING_STATUS = 0;      //待审核
     public static int FAIL_STATUS = 2;         //审批未通过
@@ -70,6 +71,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
 
     //处理缓存
     private EntityCache<GroupBannerBean> mBannerCache;
+    private EntityCache<PrivateGroupBean> mCacheAll;
     private EntityCache<PrivateGroupListBean> mCreateCache;
     private EntityCache<PrivateGroupListBean> mJoinCache;
     private EntityCache<PrivateGroupListBean> mRecommendCache;
@@ -85,6 +87,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
         mCreateCache = new EntityCache<>(mContext, PrivateGroupListBean.class);
         mJoinCache = new EntityCache<>(mContext, PrivateGroupListBean.class);
         mRecommendCache = new EntityCache<>(mContext, PrivateGroupListBean.class);
+        mCacheAll = new EntityCache<>(mContext, PrivateGroupBean.class);
         mEssenceCache = new EntityCache<>(mContext, PrivateGroupResourceBean.class);
     }
 
@@ -134,6 +137,70 @@ public class PrivateGroupPresenter extends GeneralPresenter {
             }
         });
     }
+
+//    /**
+//     * 全部私圈列表
+//     *
+//     * @param pageNo
+//     * @param loadMore
+//     */
+//    public void privateGroupList(int pageNo, final boolean loadMore) {
+//        if (!NetUtils.isNetworkConnected(mContext)) {
+//            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+//            return;
+//        }
+//
+//        final List<PrivateGroupBean> cacheData = mCacheAll.getListEntityAddTag(PrivateGroupBean.class, TAG_ALL);
+//        if (cacheData != null) {
+//            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+//            mView.updateViewWithLoadMore(cacheData, loadMore);
+//            pageNo++;
+//        }
+//
+//        final int nextPageNo = pageNo + 1;
+//        final int currentPageNo = pageNo;
+//
+//        Call<ResponseData<List<PrivateGroupBean>>> call = mApiService.privateGroupList(pageNo, PAGE_SIZE);
+//        call.enqueue(new BaseCallback<ResponseData<List<PrivateGroupBean>>>() {
+//            @Override
+//            public void onResponse(Call<ResponseData<List<PrivateGroupBean>>> call, Response<ResponseData<List<PrivateGroupBean>>> response) {
+//                super.onResponse(call, response);
+//                if (response.isSuccessful()) {
+//                    ResponseData<List<PrivateGroupBean>> responseData = response.body();
+//                    if (responseData.isSuccessful()) {
+//                        List<PrivateGroupBean> data = response.body().getData();
+//                        if (null != data && !data.isEmpty()) {
+//                            if (currentPageNo == 1 || cacheData == null) {
+//                                mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+//                                mView.updateViewWithLoadMore(data, loadMore);
+//                                new Handler().postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        privateGroupList(nextPageNo, loadMore);
+//                                    }
+//                                }, 1000 * 10);
+//                            }
+//                            if (currentPageNo != 1) {
+//                                mCacheAll.putListEntityAddTag(data, TAG_ALL);
+//                            }
+//                        } else {
+//                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
+//                        }
+//                    } else {
+//                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
+//                    }
+//                } else {
+//                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseData<List<PrivateGroupBean>>> call, Throwable t) {
+//                super.onFailure(call, t);
+//                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+//            }
+//        });
+//    }
 
     /**
      * 创建私圈

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -51,7 +52,13 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         }
         holder.tvContent.setText(extra.getBodyTitle());
         String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        if (TextUtils.isEmpty(from)) {
+            holder.lineFrom.setVisibility(View.GONE);
+        } else {
+            holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+            holder.lineFrom.setVisibility(View.VISIBLE);
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,6 +75,8 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         TextView tvContent;
         @BindView(R.id.tv_from)
         TextView tvFrom;
+        @BindView(R.id.line_from)
+        LinearLayout lineFrom;
 
         NewsBean item;
 

@@ -494,7 +494,7 @@
     <string name="match">确认</string>
     <string name="person">人</string>
     <string name="no_friend_to_add">你暂时还没有好友哦，\n快去添加好友吧</string>
-    <string name="search_key3">输入昵称或手机号搜索用户</string>
+    <string name="search_key3">输入昵称、手机号搜索</string>
     <string name="remark_fail">备注失败</string>
     <string name="obtain_fail">获取失败</string>
     <string name="inval_sucess">邀请成功</string>
@@ -709,6 +709,7 @@
     <string name="reward_success">打赏成功</string>
 
     <string name="share_to">分享到</string>
+    <string name="share_tip">独乐乐不如众乐乐\n圈子有了，一切都有了！</string>
     <string name="share_note">(无法获得平台圈币)</string>
     <string name="wx_friend">微信好友</string>
     <string name="firend_circle">朋友圈</string>
