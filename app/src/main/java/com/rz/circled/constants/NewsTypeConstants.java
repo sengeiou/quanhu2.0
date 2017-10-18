@@ -90,6 +90,11 @@ public class NewsTypeConstants {
     public static final String ANNOUNCEMENT_URL = "9";
 
     /**
+     * 个人主页链接
+     */
+    public static final String USER_INFO_URL = "10";
+
+    /**
      * 私圈首页
      */
     public static final String COTERIE_HOME = "8001";

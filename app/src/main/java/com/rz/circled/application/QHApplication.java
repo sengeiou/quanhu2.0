@@ -412,8 +412,8 @@ public class QHApplication extends BaseApplication {
                     Request originalRequest = chain.request();
                     Request.Builder requestBuilder = originalRequest.newBuilder()
                             .header("devType", "2")
-                            .header("sign", sign);
-                    Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey() + "   ==sign== " + sign);
+                            .header("sign", sign.replace("\n", "").replace("\r", ""));
+                    Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey() + "   ==sign== " + sign.replace("\n", "").replace("\r", ""));
                     if (!TextUtils.isEmpty(Session.getSessionKey())) {
                         requestBuilder.header("token", Session.getSessionKey());
                     }

@@ -194,9 +194,9 @@ public class NewsActivity extends BaseActivity {
                 NewsBean item = data.get(String.valueOf(id));
                 for (NewsOverviewBean bean : mAdapter.getData()) {
                     if (bean.getTypeId() == id) {
-                        bean.setDesc(item.getTitle());
+                        bean.setDesc(item.getContent());
                         bean.setTime(item.getCreateTime());
-                        cache.setDesc(item.getTitle());
+                        cache.setDesc(item.getContent());
                         cache.setTime(item.getCreateTime());
                     }
                 }

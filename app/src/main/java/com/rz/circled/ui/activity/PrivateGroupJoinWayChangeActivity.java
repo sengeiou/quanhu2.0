@@ -118,13 +118,13 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(s.toString()) || Integer.parseInt(s.toString()) < 1) {
+                    Toasty.warning(mContext, getString(R.string.private_group_join_price_min)).show();
+                    etvNum.setText(String.valueOf(1));
+                }
                 if (Integer.parseInt(s.toString()) > 500) {
                     Toasty.warning(mContext, getString(R.string.private_group_join_price_max)).show();
                     etvNum.setText(String.valueOf(500));
-                }
-                if (Integer.parseInt(s.toString()) < 1) {
-                    Toasty.warning(mContext, getString(R.string.private_group_join_price_min)).show();
-                    etvNum.setText(String.valueOf(1));
                 }
             }
         });
