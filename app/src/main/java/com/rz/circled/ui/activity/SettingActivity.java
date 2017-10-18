@@ -182,7 +182,7 @@ public class SettingActivity extends BaseActivity {
                     public void onClick(View view) {
                         dialog.dismiss();
                         mTxtCacheNum.setText("0M");
-                        DataCleanManager.clearAllCache(mContext);
+                        DataCleanManager.cleanApplicationData(mContext,"");
                         Session.setUserIsFirstDownload(false);
                         Toast.makeText(mContext,getString(R.string.clean_cache_complete),Toast.LENGTH_LONG).show();
 
