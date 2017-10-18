@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/comm_item_selector"
-    android:paddingBottom="@dimen/px44"
-    android:paddingTop="@dimen/px44">
+    android:padding="@dimen/px44">
 
     <ImageView
         android:id="@+id/img_avatar"

@@ -147,8 +147,8 @@ public class FollowMeActivity extends BaseActivity implements View.OnClickListen
                         ((TextView) helper.getViewById(R.id.id_friends_name)).setText(item.getCustPhone());
                     }
 
-                    if (!TextUtils.isEmpty(item.getCustSignature())) {
-                        ((TextView) helper.getViewById(R.id.id_friends_brief)).setText(item.getCustSignature());
+                    if (!TextUtils.isEmpty(item.getCustDesc())) {
+                        ((TextView) helper.getViewById(R.id.id_friends_brief)).setText(item.getCustDesc());
                     } else {
                         ((TextView) helper.getViewById(R.id.id_friends_brief)).setText("");
                     }

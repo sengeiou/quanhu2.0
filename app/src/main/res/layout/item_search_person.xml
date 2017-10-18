@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="电子竞技"
+            android:text=""
             android:layout_marginRight="@dimen/px50"
             android:ellipsize="end"
             android:maxLines="1"
