@@ -229,6 +229,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     private void loadData(final boolean loadMore) {
         if (!loadMore) pageNo = 1;
         mPresenter.privateGroupMyselfJoin(userId, pageNo, loadMore);
+
     }
 
     @Override

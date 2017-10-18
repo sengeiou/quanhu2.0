@@ -24,6 +24,8 @@ import java.util.Date;
 public class MineRewardAdapter extends CommonAdapter {
 
     private String RESOURCE_TYPE = "1000";         //资源类型为文章
+    private String QUESTION_TYPE = "1003";
+    private String ANSWER_TYPE = "1004";
 
     public MineRewardAdapter(Context context, int layoutId) {
         super(context, layoutId);
@@ -81,12 +83,22 @@ public class MineRewardAdapter extends CommonAdapter {
 
         if (!TextUtils.isEmpty(model.getResourceInfo().getPics())) {
             rewardImg.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(model.getResourceInfo().getPics()).into(rewardImg);
+            if(model.getResourceInfo().getPics().contains(",")){
+                String imagePath[] = model.getResourceInfo().getPics().split(",");
+                Glide.with(mContext).load(imagePath[0]).into(rewardImg);
+            }else{
+                Glide.with(mContext).load(model.getResourceInfo().getPics()).into(rewardImg);
+            }
+        }else if(!TextUtils.isEmpty(model.getResourceInfo().getVideoPic())) {
+            rewardImg.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(model.getResourceInfo().getVideoPic()).into(rewardImg);
         } else {
             rewardImg.setVisibility(View.GONE);
         }
 
-        if (RESOURCE_TYPE.equals(model.getResourceInfo().getResourceType())) {
+        if (RESOURCE_TYPE.equals(model.getResourceInfo().getResourceType())
+                || QUESTION_TYPE.equals(model.getResourceInfo().getResourceType())
+                || ANSWER_TYPE.equals(model.getResourceInfo().getResourceType())) {
             tvContent.setText(model.getResourceInfo().getTitle());
         } else {
             tvContent.setText(model.getResourceInfo().getContent());
