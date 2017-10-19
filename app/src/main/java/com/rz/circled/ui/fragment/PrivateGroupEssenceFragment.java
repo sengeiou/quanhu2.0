@@ -125,6 +125,7 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
     }
 
     private void processData(List<PrivateGroupResourceBean> data, boolean loadMore) {
+        if (tv == null) return;
         if (loadMore) {
             mAdapter.addData(data);
         } else {
