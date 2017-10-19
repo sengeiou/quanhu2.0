@@ -56,6 +56,7 @@
     <string name="reast_password">重置支付密码</string>
     <string name="open_small_pay_no_psw">开启小额免密支付功能</string>
     <string name="password_sucess">密码重置成功</string>
+    <string name="edit_user_introduce">请输入个人简介</string>
 
     <string name="tab_home">首页</string>
     <string name="tab_find">发现</string>

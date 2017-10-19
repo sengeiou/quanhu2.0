@@ -95,7 +95,7 @@ public interface ApiPGService {
 
     @FormUrlEncoded
     @POST(ApiPG.PRIVATE_GROUP_MYSELF_CREATE)
-    Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfCreate(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize);
+    Call<ResponseData<PrivateGroupListBean>> privateGroupMyselfCreate(@Field("custId") String custId, @Field("pageNum") int pageNum, @Field("pageSize") int pageSize , @Field("status") Integer status);
 
     @FormUrlEncoded
     @POST(ApiPG.PRIVATE_GROUP_BELONG)
