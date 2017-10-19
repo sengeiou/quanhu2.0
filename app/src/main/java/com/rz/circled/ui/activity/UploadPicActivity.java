@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.rz.circled.R;
@@ -40,15 +41,19 @@ public class UploadPicActivity extends BaseActivity {
     public static final String EXTRA_INDEX = "extraIndex";
     public static final String EXTRA_IS_NEED = "extraIsNeed";
     public static final String EXTRA_IS_SINGLE = "extraIsSingle";
+    public static final String EXTRA_SCALEY = "extraScaleY";
 
     private String mPhotoFileName;
     public int maxPicNum;
     private boolean isCrop;
     private String ossDir;
+    private double scaleY = 1;
 
     List<String> localPaths = new ArrayList<>();
     List<String> netPaths = new ArrayList<>();
     private UploadPicManager uploadPicManager;
+
+    private RelativeLayout rlRoot;
 
     @Override
     protected boolean needLoadingView() {
@@ -71,7 +76,9 @@ public class UploadPicActivity extends BaseActivity {
         isCrop = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, false);
         ossDir = getIntent().getStringExtra(IntentKey.EXTRA_URL);
         maxPicNum = getIntent().getIntExtra(IntentKey.EXTRA_NUM, 30);
+        scaleY = getIntent().getDoubleExtra(EXTRA_SCALEY, 1.0);
         setTitleText(getString(R.string.upload_pic));
+        rlRoot = (RelativeLayout) findViewById(R.id.rl_upload_pic);
     }
 
     @Override
@@ -162,16 +169,23 @@ public class UploadPicActivity extends BaseActivity {
     }
 
     private void doPhoto(Uri uri) {
+        int width = rlRoot.getWidth();
+        int height = rlRoot.getHeight();
+        if (scaleY * width < height) {
+            height = (int) (scaleY * width);
+        } else {
+            scaleY = height / width;
+        }
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
         intent.putExtra("crop", "true");
         // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", 1 * 100);
+        intent.putExtra("aspectY", (int) (scaleY * 100));
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 640);
-        intent.putExtra("outputY", 640);
+        intent.putExtra("outputX", width);
+        intent.putExtra("outputY", height);
 //        intent.putExtra("return-data", true);
         intent.putExtra("return-data", false);
         initHeadPicPath();
