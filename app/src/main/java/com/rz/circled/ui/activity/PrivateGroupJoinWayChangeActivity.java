@@ -73,7 +73,11 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
                 if (cbxFree.isChecked()) {
                     event.setData(0);
                 } else {
-                    int num = TextUtils.isEmpty(etvNum.getText().toString().trim()) ? 1 : Integer.parseInt(etvNum.getText().toString().trim());
+                    if (TextUtils.isEmpty(etvNum.getText().toString().trim())) {
+                        Toasty.warning(mContext, getString(R.string.private_group_join_price_min)).show();
+                        return;
+                    }
+                    int num = Integer.parseInt(etvNum.getText().toString().trim());
                     event.setData(num);
                 }
                 EventBus.getDefault().post(event);
@@ -118,7 +122,10 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s.toString()) || Integer.parseInt(s.toString()) < 1) {
+                if (TextUtils.isEmpty(s.toString())) {
+                    return;
+                }
+                if (Integer.parseInt(s.toString()) < 1) {
                     Toasty.warning(mContext, getString(R.string.private_group_join_price_min)).show();
                     etvNum.setText(String.valueOf(1));
                 }
@@ -137,7 +144,7 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
 
     @OnClick({R.id.btn_less, R.id.btn_add})
     public void onClick(View view) {
-        int num = TextUtils.isEmpty(etvNum.getText().toString().trim()) ? 1 : Integer.parseInt(etvNum.getText().toString().trim());
+        int num = TextUtils.isEmpty(etvNum.getText().toString().trim()) ? 0 : Integer.parseInt(etvNum.getText().toString().trim());
         switch (view.getId()) {
             case R.id.btn_less:
                 num--;
