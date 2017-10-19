@@ -424,7 +424,7 @@ public class UserInfoActivity extends BaseActivity {
         if (model != null && model.getRelation() == 0) {
             ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
         } else {
-            if (checkLogin())
+            if (checkLogin() && model != null)
                 SessionHelper.startP2PSession(this, model.getCustId());
         }
     }

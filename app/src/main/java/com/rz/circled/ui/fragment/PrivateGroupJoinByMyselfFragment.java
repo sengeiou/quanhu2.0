@@ -179,6 +179,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     }
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
+        if (lv == null) return;
         List<PrivateGroupBean> data = _data.getList();
         if (type == TYPE_PART) {
             if (data.size() > 2) {
