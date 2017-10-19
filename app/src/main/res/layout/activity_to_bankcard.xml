@@ -97,7 +97,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingRight="@dimen/px30"
-                android:text="@string/excharge_rate"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/font_38" />
 

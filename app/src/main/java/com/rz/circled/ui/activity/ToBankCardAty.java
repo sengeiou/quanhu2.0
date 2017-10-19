@@ -133,14 +133,14 @@ public class ToBankCardAty extends BaseActivity {
     public void initView() {
         setTitleText(getString(R.string.tixian));
         mIntegralSum = getIntent().getStringExtra(IntentKey.EXTRA_MONEY);
-        mTxtMyIncome.setText(Currency.returnDollar(Currency.RMB, mIntegralSum, 0));
+        mTxtMyIncome.setText(Currency.returnDollar(Currency.RMB, mIntegralSum, 0)+"元");
         if (TextUtils.isEmpty(mIntegralSum)) {
-            idTvScore.setText("0.00");
+            idTvScore.setText("0.00"+"元");
         } else {
             if (Double.parseDouble(mIntegralSum) <= 200) {
-                idTvScore.setText("0.00");
+                idTvScore.setText("0.00"+"元");
             } else {
-                idTvScore.setText(Currency.returnDollar(Currency.RMB, "" + (Long.parseLong(mIntegralSum) - 200), 0));
+                idTvScore.setText(Currency.returnDollar(Currency.RMB, "" + (Long.parseLong(mIntegralSum) - 200), 0)+"元");
             }
         }
         idEtRecharge.addTextChangedListener(new TextWatcher() {

@@ -103,7 +103,7 @@ android {
             buildConfigField "String", "WebHomeBaseUrl", "\"https://m.quanhu365.com\""
             buildConfigField "String", "OpusBaseUrl", "\"https://opus.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
-            manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
+            manifestPlaceholders = [NIM_KEY      : "6206141b1378b670588546f5822cfb51",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
                                     JPUSH_PKGNAME: defaultConfig.applicationId,
                                     //JPush上注册的包名对应的appkey.
@@ -112,6 +112,7 @@ android {
                                     JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
             signingConfig signingConfigs.release
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 

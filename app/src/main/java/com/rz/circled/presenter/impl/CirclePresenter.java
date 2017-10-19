@@ -493,11 +493,12 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     /**
      * 发现更多达人
      */
-    public void getMoreFamousList() {
+    int id=0;
+    public void getMoreFamousList(final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.getMoreFamous(Session.getUserId())
+        mUserService.getMoreFamous(loadMore?id:null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseData<MoreFamousModel<List<StarListBean>>>>() {
@@ -516,7 +517,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<StarListBean> data = res.getData().starList;
                             if (!data.isEmpty()) {
-                                mView.updateView(data);
+                                id=data.get(data.size()-1).starInfo.id;
+                                mView.updateViewWithLoadMore(data,loadMore);
                             }else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,"");
                             }

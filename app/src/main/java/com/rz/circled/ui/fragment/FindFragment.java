@@ -21,6 +21,7 @@ import com.rz.circled.R;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
+import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -33,6 +34,7 @@ import com.rz.circled.widget.XGridView;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.H5Address;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleEntrModle;
@@ -445,7 +447,7 @@ public class FindFragment extends BaseFragment {
                 WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity");
                 break;
             case R.id.btn_resource:
-                WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/zgzyq/");
+                CommonH5Activity.startCommonH5(mActivity,"",H5Address.CHINA_RESOURCE);
                 break;
             case R.id.btn_quanle:
                 WebContainerActivity.startActivity(mActivity, BuildConfig.OpusBaseUrl + "/activity/qql");

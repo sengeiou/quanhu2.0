@@ -20,6 +20,7 @@ import com.rz.circled.adapter.LetterContactsAdapter;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.widget.SideBar;
+import com.rz.common.constant.H5Address;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.permission.AfterPermissionGranted;
@@ -128,7 +129,7 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
 //                                    + "记得也去邀请你的好友来加入“圈乎”哦！\n"
 //                                    + "让我们在娱乐中一起去赚钱吧！");
                     sendIntent.putExtra("sms_body",
-                            getString(R.string.at_add_download));
+                            String.format(mContext.getString(R.string.at_add_download), H5Address.APP_DOWNLOAD));
                     startActivity(sendIntent);
                     dialog.dismiss();
                 }
