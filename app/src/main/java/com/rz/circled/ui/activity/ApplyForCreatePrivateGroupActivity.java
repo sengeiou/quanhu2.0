@@ -106,11 +106,11 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     return;
                 }
                 if (TextUtils.isEmpty(coverPath)) {
-                    Toast.makeText(mContext, "封面图为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请上传私圈封面图", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(etvName.getText().toString().trim())) {
-                    Toast.makeText(mContext, "私圈名称为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请填写私圈名称", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())) {
@@ -118,7 +118,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     return;
                 }
                 if (!cbxProtocol.isChecked()) {
-                    Toast.makeText(mContext, "请同意创建协议", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请阅读并同意私圈使用协议", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 updateCoverPic();
