@@ -160,15 +160,15 @@ public class UserInfoActivity extends BaseActivity {
 
             addFriendLayout.setVisibility(View.GONE);
             //普通用户
-            if (Session.getCustRole().equals("0")) {
-                userRole.setText("去认证");
-                userRole.setBackgroundResource(R.drawable.shape_white_bg);
-                userRole.setPadding(20, 0, 20, 0);
-                userRole.getBackground().setAlpha(77);
-            } else {
+//            if (Session.getCustRole().equals("0")) {
+//                userRole.setText("去认证");
+//                userRole.setBackgroundResource(R.drawable.shape_white_bg);
+//                userRole.setPadding(20, 0, 20, 0);
+//                userRole.getBackground().setAlpha(77);
+//            } else {
                 //达人用户，另外调达人类型接口
                 ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
-            }
+//            }
         } else {   //他人中心
             //判断他人与自己的关系（是否添加好友）
             editImg.setVisibility(View.GONE);
@@ -313,20 +313,22 @@ public class UserInfoActivity extends BaseActivity {
         super.updateView(t);
         if (t instanceof ProveStatusBean) {
             ProveStatusBean data = (ProveStatusBean) t;
-            if (userId.equals(Session.getUserId())) {
-                if (Session.getCustRole().equals("0")) {
-                    userRole.setText("去认证");
-                    userRole.setPadding(20, 0, 20, 0);
-                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
-                    userRole.getBackground().setAlpha(77);
-                }
-            } else {
-                if (data.getAuthStatus() == 1) {
-                    famousLayout.setVisibility(View.VISIBLE);           //认证成功
-                    userRole.setText(data.getTradeField());
-                } else {
-                    famousLayout.setVisibility(View.GONE);              //达人认证失败
-                }
+//            if (userId.equals(Session.getUserId())) {
+//
+//            } else {
+//                if (data.getAuthStatus() == 1) {
+//                    famousLayout.setVisibility(View.VISIBLE);           //他人认证成功
+//                    userRole.setText(data.getTradeField());
+//                } else {
+//                    famousLayout.setVisibility(View.GONE);              //达人认证失败
+//                }
+//            }
+
+            if (data.getAuthStatus() == 1) {
+                famousLayout.setVisibility(View.VISIBLE);
+                userRole.setText(data.getTradeField());
+            }else{
+                famousLayout.setVisibility(View.GONE);
             }
 
         } else if (t instanceof FriendInformationBean) {
@@ -380,16 +382,16 @@ public class UserInfoActivity extends BaseActivity {
                 }
 
                 addFriendLayout.setVisibility(View.GONE);
-                //普通用户
-                if (Session.getCustRole().equals("0")) {
-                    userRole.setText("去认证");
-                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
-                    userRole.setPadding(20, 0, 20, 0);
-                    userRole.getBackground().setAlpha(77);
-                } else {
+//                //普通用户
+//                if (Session.getCustRole().equals("0")) {
+//                    userRole.setText("去认证");
+//                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
+//                    userRole.setPadding(20, 0, 20, 0);
+//                    userRole.getBackground().setAlpha(77);
+//                } else {
                     //达人用户，另外调达人类型接口
-                    ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
-                }
+//                    ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
+//                }
             }
         } else {
             Glide.with(this).load(model.getCustImg()).transform(new GlideCircleImage(this)).
