@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,7 +42,7 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.formatDisplayTime(item.getCreateTime()));
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : item.getCreateTime());
         holder.tvTitle.setText(item.getContent());
         Gson gson = new Gson();
         String json = gson.toJson(item.getBody());
@@ -56,7 +57,12 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
         holder.tvContent.setText(extra.getBodyTitle());
         String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        if (TextUtils.isEmpty(from)) {
+            holder.lineFrom.setVisibility(View.GONE);
+        } else {
+            holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+            holder.lineFrom.setVisibility(View.VISIBLE);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -74,6 +80,8 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         TextView tvContent;
         @BindView(R.id.tv_from)
         TextView tvFrom;
+        @BindView(R.id.line_from)
+        LinearLayout lineFrom;
 
         NewsBean item;
 
