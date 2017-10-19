@@ -44,7 +44,6 @@ public class SearchUserAdapter extends SearchCommonAdapter {
         ImageView ivIcon = (ImageView) helper.getViewById(R.id.iv_search_person);
         ImageView ivTalent = (ImageView) helper.getViewById(R.id.iv_search_person_talent);
 
-
         stringFormatUtil = new StringFormatUtil(mContext, starListBean.getCustNname(), keyWord, R.color.colorAccent).fillColor();
 
                 //name  或者 info 包含keyWord 则显示为蓝色字体

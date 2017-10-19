@@ -140,6 +140,7 @@ public class SearchRewardFragment extends BaseFragment {
             if (!loadMore) {
                 rewardBeanList.clear();
             }
+            rewardAdapter.setData(rewardBeanList);
             rewardAdapter.notifyDataSetChanged();
         }
     }

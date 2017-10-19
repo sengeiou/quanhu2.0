@@ -141,6 +141,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
             if (!loadMore) {
                 coterieInfosData.clear();
             }
+            mAdapter.setData(coterieInfosData);
             mAdapter.notifyDataSetChanged();
         }
     }
