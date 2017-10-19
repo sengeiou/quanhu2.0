@@ -85,13 +85,20 @@ public class MineRewardAdapter extends CommonAdapter {
             rewardImg.setVisibility(View.VISIBLE);
             if(model.getResourceInfo().getPics().contains(",")){
                 String imagePath[] = model.getResourceInfo().getPics().split(",");
-                Glide.with(mContext).load(imagePath[0]).into(rewardImg);
+
+                Glide.with(mContext).load(imagePath[0]).
+                        placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).crossFade().into(rewardImg);
             }else{
-                Glide.with(mContext).load(model.getResourceInfo().getPics()).into(rewardImg);
+
+                Glide.with(mContext).load(model.getResourceInfo().getPics()).
+                        placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).crossFade().into(rewardImg);
             }
         }else if(!TextUtils.isEmpty(model.getResourceInfo().getVideoPic())) {
             rewardImg.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(model.getResourceInfo().getVideoPic()).into(rewardImg);
+
+            Glide.with(mContext).load(model.getResourceInfo().getVideoPic()).
+                    placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).crossFade().into(rewardImg);
+
         } else {
             rewardImg.setVisibility(View.GONE);
         }

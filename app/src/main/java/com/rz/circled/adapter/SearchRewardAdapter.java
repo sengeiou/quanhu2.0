@@ -49,7 +49,6 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         RewardModel model = (RewardModel) item;
 
-//        RelativeLayout bgLayout = (RelativeLayout) helper.getViewById(R.id.reward_bg_layout);
         ImageView avatarImg = (ImageView) helper.getViewById(R.id.iv_search_person);   //头像
         TextView rewardTxt = (TextView) helper.getViewById(R.id.tv_reward);            //悬赏金额
         TextView tvName = (TextView) helper.getViewById(R.id.tv_name);                  //悬赏人
@@ -61,36 +60,17 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         LinearLayout placeLayout = (LinearLayout) helper.getViewById(R.id.place_layout);
         ImageView picImg = (ImageView) helper.getViewById(R.id.pic_logo_img);
 
-        JSONArray myJsonArray = null;
-        try {
-            myJsonArray = new JSONArray(model.getContentSource());
+        tvName.setText(model.getCustSimpleDTO().getCustNname());
 
-            if(myJsonArray.length()>2){
-                JSONObject nameObject = myJsonArray.getJSONObject(0);
-                JSONObject avatarObject = myJsonArray.getJSONObject(1);
-
-                tvName.setText(nameObject.getString("text"));
-                Glide.with(mContext).load(avatarObject.getString("image")).transform(new GlideCircleImage(mContext)).into(avatarImg);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-//        tvName.setText(model.getContent());
-//        Glide.with(mContext).load(model.getImgUrl()).transform(new GlideCircleImage(mContext)).into(avatarImg);
-
-        Glide.with(mContext).load(model.getImgUrl()).transform(new GlideCircleImage(mContext)).
+        Glide.with(mContext).load(model.getCustSimpleDTO().getCustImg()).transform(new GlideCircleImage(mContext)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
 
         rewardTxt.setText("悬赏金额 "+model.getPrice());
-
 
         float price = Float.valueOf(model.getPrice());
         DecimalFormat fnum = new DecimalFormat("##0.00");
         String  dd = fnum.format(price/100);
         rewardTxt.setText("悬赏金额 "+dd);
-
 
         tvContent.setText(model.getContent());
 

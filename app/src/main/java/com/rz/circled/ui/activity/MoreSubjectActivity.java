@@ -121,7 +121,7 @@ public class MoreSubjectActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent itnent = new Intent();
-                itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PERSON);
+                itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PRIVATE);
                 skipActivity(aty, SearchActivity.class);
             }
         });

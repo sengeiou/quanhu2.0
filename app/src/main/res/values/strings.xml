@@ -312,10 +312,10 @@
     <string name="click_finish_record">点击结束录音</string>
     <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
     <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
-    <string name="search_persion_hint">输入昵称／姓名搜索</string>
+    <string name="search_persion_hint">输入昵称搜索</string>
     <string name="search_private_hint">输入私圈名称搜索</string>
     <string name="search_circle_hint">输入圈子名称搜索</string>
-    <string name="search_reward_hint">输入悬赏名称搜索</string>
+    <string name="search_reward_hint">输入悬赏内容搜索</string>
     <string name="search">搜索</string>
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
