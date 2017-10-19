@@ -458,8 +458,8 @@
     <string name="withdraw_money">提现金额</string>
     <string name="excharge_rate">(1悠然币=1元)</string>
     <string name="input_recharge">请输入提现金额</string>
-    <string name="withdraw_note">如因用户输入持卡人姓名、银行卡号错误或持卡人姓名和银行卡号不匹配等造成提现不成功，提现金额将退还到用户悠然账户，手续费照常扣除。</string>
-    <string name="withdraw_tip1">提现金额范围5-1000悠然币；</string>
+    <string name="withdraw_note">如因用户输入持卡人姓名、银行卡号错误或持卡人姓名和银行卡号不匹配等造成提现不成功，提现金额将退还到用户收益账户，银行会照常扣除服务费。</string>
+    <string name="withdraw_tip1">提现金额范围5-1000元,每天最多提现5次；</string>
     <string name="withdraw_tip2">每笔提现银行收取2元服务费</string>
     <string name="withdraw_tip3">平台于每日23：00到次日9：00进行系统维护，此时间段内暂不提供提现服务。</string>
     <string name="withdraw_tip4">可供提现的银行卡参考</string>
@@ -824,4 +824,5 @@
     <string name="upgrade_idea">升级攻略</string>
     <string name="mess_no">消息免打扰</string>
     <string name="no_more">没有更多了...</string>
+    <string name="hava_updata">有更新</string>
 </resources>

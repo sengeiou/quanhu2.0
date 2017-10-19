@@ -225,6 +225,7 @@ public class StarListBean {
          */
 
         private String tradeField;
+        public int id;
 
         public String getTradeField() {
             return tradeField;

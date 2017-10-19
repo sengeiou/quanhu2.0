@@ -128,6 +128,9 @@ public class MoreSubjectActivity extends BaseActivity {
         mLvSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==subjectList.size()){
+                    return;
+                }
                 HotSubjectModel hotSubjectModel = subjectList.get(position);
                 String coterieId = hotSubjectModel.getCoterieId();
                 String coterieName = hotSubjectModel.getCoterieName();
