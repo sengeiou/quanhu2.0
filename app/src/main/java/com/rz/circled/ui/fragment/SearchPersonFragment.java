@@ -115,8 +115,9 @@ public class SearchPersonFragment extends BaseFragment {
         if (baseEvent.type == CommonCode.EventType.SEARCH_KEYWORD && baseEvent.data != null && searchPresenter != null) {
             //去搜索
             keyWord = (String) baseEvent.getData();
-
-            searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
+            if (!TextUtils.isEmpty(keyWord)) {
+                searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION);
+            }
         }
     }
 

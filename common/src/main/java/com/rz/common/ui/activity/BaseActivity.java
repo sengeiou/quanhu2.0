@@ -1,7 +1,6 @@
 package com.rz.common.ui.activity;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -702,9 +701,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                         finish();
                     } else {
                         closeDialog();
-                        ActivityManager activityMgr = (ActivityManager) mContext.getSystemService(ACTIVITY_SERVICE);
-                        activityMgr.killBackgroundProcesses(getPackageName());
-                        android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(0);
                     }
                 }
