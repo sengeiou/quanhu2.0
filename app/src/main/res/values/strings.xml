@@ -232,10 +232,10 @@
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
     <string name="private_group_from">来自 %1$s</string>
     <string name="private_group_free">免费</string>
-    <string name="private_group_price">%1$d圈币</string>
     <string name="private_group_youran_price">%1$d悠然币</string>
     <string name="private_group_essence_scan">%1$d 阅读</string>
     <string name="private_group_join_way_change">修改加入私圈方式</string>
+    <string name="private_group_choose">选择圈子</string>
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
@@ -528,7 +528,7 @@
     <string name="phone_introduce">添加或邀请手机通讯录中的朋友</string>
     <string name="contacts_permissiongs_run">圈乎要使用通讯录权限，否则app可能无法正常运行</string>
     <string name="un_quanhu_user_invite_register">该用户还不是圈乎用户，是否邀请注册？</string>
-    <string name="at_add_download">有人@你，来玩圈乎吧！喜欢什么，就加入什么圈子。内容丰富，玩法多样！点击http://t.cn/RV2a6cS下载，我在圈乎等你哦！</string>
+    <string name="at_add_download">有人喊你来玩圈乎啦！进圈乎，玩圈子，共享资源，价值变现，点击%1$s下载，我在圈乎等你哦~</string>
     <string name="friends">已是好友</string>
     <string name="no_contacts_permissions_hint">由于您的手机未能开启访问通讯录的权限\n此处无法获取您的手机联系人</string>
     <string name="open_contacts_permissions_hint">请通过手机设置中\n开启“圈乎”访问通讯录后重新尝试</string>

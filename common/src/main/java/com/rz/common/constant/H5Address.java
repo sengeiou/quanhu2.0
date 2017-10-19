@@ -23,19 +23,19 @@ public interface H5Address {
     String INTEGRAL_STATEGY = H5_HEAD + "common/integral-strategy/index.html";
 
     //创建私圈协议
-    String PRIVATE_GROUP_CREATE_AGREEMENT =H5_HEAD+ "quanhu/doc/private_circle_rule/index.html";
+    String PRIVATE_GROUP_CREATE_AGREEMENT = H5_HEAD + "quanhu/doc/private_circle_rule/index.html";
 
     //私圈关于
-    String PRIVATE_GROUP_ABOUT_AGREEMENT =H5_HEAD+ "quanhu/doc/private_circle_rule/index.html";
+    String PRIVATE_GROUP_ABOUT_AGREEMENT = H5_HEAD + "quanhu/doc/private_circle_rule/index.html";
 
     //圈乎下载链接
-    String APP_DOWNLOAD = H5_HEAD+"quanhu/download/index.html";
+    String APP_DOWNLOAD = H5_HEAD + "quanhu/download/index.html";
 
     //帮助
     //用户服务协议
     String USER_HELP = H5_HEAD + "quanhu/doc/android_list/index.html";
     //联系我们
-    String CONECT_US = H5_HEAD +"quanhu/doc/contact_customer_service/index.html";
+    String CONECT_US = H5_HEAD + "quanhu/doc/contact_customer_service/index.html";
 
 
 }
