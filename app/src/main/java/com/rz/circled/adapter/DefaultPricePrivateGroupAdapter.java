@@ -38,7 +38,7 @@ public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter 
             tvStatus.setText(R.string.private_group_free);
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.font_color_blue));
         } else {
-            tvStatus.setText(String.format(mContext.getString(R.string.private_group_price), item.getJoinFee()));
+            tvStatus.setText(String.format(mContext.getString(R.string.private_group_youran_price), item.getJoinFee()));
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_F5CD45));
         }
 

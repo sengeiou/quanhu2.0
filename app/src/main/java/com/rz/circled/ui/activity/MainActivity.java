@@ -1,5 +1,6 @@
 package com.rz.circled.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -37,6 +38,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
+import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
 import com.rz.common.utils.ClickCounter;
@@ -55,6 +57,7 @@ import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.cache.DataCacheManager;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
 import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
+import com.zbar.lib.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -137,6 +140,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initData() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.KILL_BACKGROUND_PROCESSES};
+        if (!EasyPermissions.hasPermissions(this, perms)) {
+            EasyPermissions.requestPermissions(this, getString(R.string.carme_sd_permission), RC_VIDEO_AND_EXTENER, perms);
+        }
+
         if (Session.getUserIsLogin()) {
             initYX(Session.getUserId(), Session.getUserId());
             loadUnreadMessage();

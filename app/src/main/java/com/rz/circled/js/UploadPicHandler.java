@@ -40,6 +40,7 @@ public class UploadPicHandler extends ServerHandler {
         final Intent i = new Intent(mActivity, UploadPicActivity.class);
         int pos = 0;
         boolean isCrop = false;
+        double scaleY = 1;
         try {
             JSONObject jsonObject = new JSONObject(String.valueOf(paramObj.data));
             if (jsonObject.has("picNum")) {
@@ -47,6 +48,10 @@ public class UploadPicHandler extends ServerHandler {
             }
             if (jsonObject.has("isCrop")) {
                 isCrop = jsonObject.getBoolean("isCrop");
+            }
+            if (jsonObject.has("scaleY")) {
+                scaleY = jsonObject.getDouble("scaleY");
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -59,6 +64,7 @@ public class UploadPicHandler extends ServerHandler {
             }
             i.putExtra(IntentKey.EXTRA_NUM, pos);
             i.putExtra(IntentKey.EXTRA_BOOLEAN, isCrop);
+            i.putExtra(UploadPicActivity.EXTRA_SCALEY, scaleY);
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

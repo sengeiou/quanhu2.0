@@ -138,51 +138,6 @@ public class AdvancedWebView extends WebView {
         init(context);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-//        if (interceptTouch) {
-//            requestDisallowInterceptTouchEvent(true);
-//            return false;
-//        } else {
-        return super.onTouchEvent(event);
-//        }
-
-    }
-
-    private Rect mRectSrc = new Rect();
-    private int[] location = new int[2];
-    private int x, y;
-    @Override
-    protected void onSizeChanged(int w, int h, int ow, int oh) {
-        super.onSizeChanged(w, h, ow, oh);
-        Log.e("yeying", "onSizeChanged: w=" + w + "  h=" + h + "   ow=" + ow + "   oh==" + oh+"  super=");
-
-        Log.d("yeying", "Button.Width--->" + getWidth());
-        Log.d("yeying", "Button.Height--->" + getHeight());
-
-        getLocalVisibleRect(mRectSrc);
-        Log.d("yeying", "LocalVisibleRect--->" + mRectSrc);
-
-        getGlobalVisibleRect(mRectSrc);
-        Log.d("yeying", "GlobalVisibleRect--->" + mRectSrc);
-
-        getLocationOnScreen(location);
-        x = location[0];
-        y = location[1];
-        Log.d("yeying", "Screenx--->" + x + "  " + "Screeny--->" + y);
-
-        getLocationInWindow(location);
-        x = location[0];
-        y = location[1];
-        Log.d("yeying", "Window--->" + x + "  " + "Window--->" + y);
-
-        Log.d("yeying", "left:" + getLeft());
-        Log.d("yeying", "right:" + getRight());
-        Log.d("yeying", "Top:" + getTop());
-        Log.d("yeying", "Bottom:" + getBottom());
-
-    }
-
     public boolean isInterceptTouch() {
         return interceptTouch;
     }
