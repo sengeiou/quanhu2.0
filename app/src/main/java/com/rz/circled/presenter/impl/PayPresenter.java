@@ -175,7 +175,7 @@ public class PayPresenter extends AbsPresenter {
                         }
                     } else {
                         HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         return;
                     }
                 }
@@ -498,7 +498,7 @@ public class PayPresenter extends AbsPresenter {
      *
      * @param loadmore true 加载更多 false 刷新
      */
-    public void requestGetRewardList(final boolean loadmore,String rewardId) {
+    public void requestGetRewardList(final boolean loadmore, String rewardId) {
         if (!NetUtils.isNetworkConnected(activity)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
@@ -638,8 +638,7 @@ public class PayPresenter extends AbsPresenter {
                             mView.updateView(res.getRet());
                         }
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);

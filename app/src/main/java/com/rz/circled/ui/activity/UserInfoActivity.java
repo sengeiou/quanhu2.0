@@ -113,7 +113,12 @@ public class UserInfoActivity extends BaseActivity {
     private String userId = "";
 
     public static void newFrindInfo(Context context, String id) {
+        newFrindInfo(context, id, -1);
+    }
+
+    public static void newFrindInfo(Context context, String id, int flag) {
         Intent intent = new Intent(context, UserInfoActivity.class);
+        if (flag != -1) intent.setFlags(flag);
         Bundle bundle = new Bundle();
         bundle.putString(IntentKey.KEY_ID, id);
         intent.putExtras(bundle);
@@ -154,21 +159,14 @@ public class UserInfoActivity extends BaseActivity {
             }
 
             addFriendLayout.setVisibility(View.GONE);
-            //普通用户
-            if (Session.getCustRole().equals("0")) {
-                userRole.setText("去认证");
-                userRole.setBackgroundResource(R.drawable.shape_white_bg);
-                userRole.setPadding(20, 0, 20, 0);
-                userRole.getBackground().setAlpha(77);
-            } else {
-                //达人用户，另外调达人类型接口
-                ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
-            }
+
+            //达人用户，另外调达人类型接口
+            ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
         } else {   //他人中心
             //判断他人与自己的关系（是否添加好友）
             editImg.setVisibility(View.GONE);
-//            addFriendLayout.setVisibility(View.VISIBLE);
             ((FriendPresenter1) friendPresenter).getFriendInfoDetail(userId);
+            ((V3CirclePresenter) presenter).getFamousStatus(userId);
 
         }
     }
@@ -281,7 +279,6 @@ public class UserInfoActivity extends BaseActivity {
         }
 
         if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
-//            addFriendLayout.setVisibility(View.GONE);
             Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
             ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
         }
@@ -290,7 +287,6 @@ public class UserInfoActivity extends BaseActivity {
             //更新用户详情
             ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
         }
-
     }
 
     @Override
@@ -308,47 +304,39 @@ public class UserInfoActivity extends BaseActivity {
         super.updateView(t);
         if (t instanceof ProveStatusBean) {
             ProveStatusBean data = (ProveStatusBean) t;
-            if (userId.equals(Session.getUserId())) {
-                if (Session.getCustRole().equals("0")) {
-                    userRole.setText("去认证");
-                    userRole.setPadding(20, 0, 20, 0);
-                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
-                    userRole.getBackground().setAlpha(77);
-                }
-            }else {
-                if (data.getAuthStatus() == 1) {
-                    famousLayout.setVisibility(View.VISIBLE);           //认证成功
-                    userRole.setText(data.getTradeField());
-                } else {
-                    famousLayout.setVisibility(View.GONE);              //达人认证失败
-                }
+
+            if (data.getAuthStatus() == 1) {
+                famousLayout.setVisibility(View.VISIBLE);
+                userRole.setText(data.getTradeField());
+            }else{
+                famousLayout.setVisibility(View.GONE);
             }
 
         } else if (t instanceof FriendInformationBean) {
             model = (FriendInformationBean) t;
 
             //陌生人状态需要查询用户是否已经发送申请好友请求
-            if(model.getRelation() == 0){
+            if (model.getRelation() == 0) {
                 ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
             }
 
             setData(model);
-        } else if(t instanceof RequestFriendStatusBean){
-            if(t != null){
+        } else if (t instanceof RequestFriendStatusBean) {
+            if (t != null) {
                 RequestFriendStatusBean requestBean = (RequestFriendStatusBean) t;
-                if(requestBean.getStatus() == 0){
-                    if(requestBean.getIsRequire()==1){
+                if (requestBean.getStatus() == 0) {
+                    if (requestBean.getIsRequire() == 1) {
                         addFriendBtn.setText("等待对方同意");
                         addFriendBtn.setClickable(false);
                         addFriendBtn.setBackgroundResource(R.drawable.shape_bg_gray_on);
-                    }else{
+                    } else {
                         addFriendBtn.setText("加好友");
                     }
-                }else if(requestBean.getStatus() == 1){
+                } else if (requestBean.getStatus() == 1) {
                     addFriendBtn.setText("聊天");
-                }else if(requestBean.getStatus() == 2){
+                } else if (requestBean.getStatus() == 2) {
                     addFriendBtn.setText("加好友");
-                }else if(requestBean.getStatus() == 3){
+                } else if (requestBean.getStatus() == 3) {
                     addFriendBtn.setText("加好友");
                 }
             }
@@ -375,16 +363,6 @@ public class UserInfoActivity extends BaseActivity {
                 }
 
                 addFriendLayout.setVisibility(View.GONE);
-                //普通用户
-                if (Session.getCustRole().equals("0")) {
-                    userRole.setText("去认证");
-                    userRole.setBackgroundResource(R.drawable.shape_white_bg);
-                    userRole.setPadding(20, 0, 20, 0);
-                    userRole.getBackground().setAlpha(77);
-                } else {
-                    //达人用户，另外调达人类型接口
-                    ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
-                }
             }
         } else {
             Glide.with(this).load(model.getCustImg()).transform(new GlideCircleImage(this)).
@@ -419,7 +397,7 @@ public class UserInfoActivity extends BaseActivity {
         if (model != null && model.getRelation() == 0) {
             ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
         } else {
-            if (checkLogin())
+            if (checkLogin() && model != null)
                 SessionHelper.startP2PSession(this, model.getCustId());
         }
     }

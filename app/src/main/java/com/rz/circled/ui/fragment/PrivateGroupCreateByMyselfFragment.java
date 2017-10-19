@@ -236,7 +236,13 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     private void loadData(boolean loadMore) {
         if (!loadMore) pageNo = 1;
-        mPresenter.privateGroupMyselfCreate(userId, pageNo, loadMore);
+
+        if(Session.getUserId().equals(userId)){
+            mPresenter.privateGroupMyselfCreate(null,userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+        }else{
+            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS,userId, pageNo, loadMore);       //获取他人创建的上架圈子
+        }
+
     }
 
     @Override

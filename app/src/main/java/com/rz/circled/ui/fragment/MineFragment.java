@@ -331,9 +331,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 levelTxt.setText("Lv. " + Session.getUserLevel());
                 custPointsTxt.setText("积分" + Session.getCustPoints());
-                if ("0".equals(Session.getCustRole())) {
-                    famousTxt.setText("去认证");
-                }
+//                if ("0".equals(Session.getCustRole())) {
+//                    famousTxt.setText("去认证");
+//                }
 
                 if (TextUtils.isEmpty(Session.getUser_desc())) {
                     idPersonLoginDays.setText(getString(R.string.mine_sign_default));
@@ -550,9 +550,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //            tvactivityCount.setText(data.getArticleNum()+"");
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
-            if (Session.getCustRole().equals("0")) {
-                famousTxt.setText("去认证");
-            } else if (data.getAuthStatus() == 0) {
+
+            if (data.getAuthStatus() == 0) {
                 famousTxt.setText("认证审核中");
             } else if (data.getAuthStatus() == 1) {
                 famousTxt.setText(data.getTradeField());
@@ -631,7 +630,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
-            //通讯录
             case 1:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的购买");
@@ -639,11 +637,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 }
                 break;
-            //我的账户
             case 2:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的打赏");
-//                    showActivity(frg, MyAccountAty.class);
                     jump(MineRewardActivity.class);
                 }
                 break;
@@ -654,19 +650,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     jump(MyCollectionActivity.class);
                 }
                 break;
-
-            //我的二维码
             case 4:
-//                if (isLogin()) {
-//                    showActivity(frg, MyCollectionAty.class);
-//                }
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的等级");
                     jump(MyLevelActivity.class);
                 }
                 break;
-            //转发券
-
             case 5:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "账户");
@@ -709,18 +698,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 }
                 break;
 
-            //联系客服
             case 10:
                 if (isLogin() && null != mCustormServiceModel) {
                     trackUser("我的", "入口名称", "联系客服");
                     starCustormService();
                 } else {
-//                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
                     CommonH5Activity.startCommonH5(mActivity, "", H5Address.CONECT_US);
                 }
                 break;
-            //设置
-
             case 11:
                 trackUser("我的", "帮助", "设置");
                 CommonH5Activity.startCommonH5(mActivity, "", H5Address.USER_HELP);
@@ -729,7 +714,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 trackUser("我的", "入口名称", "设置");
                 Intent intent = new Intent(mActivity, SettingActivity.class);
                 startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
-
                 break;
         }
     }
@@ -854,14 +838,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
 
-        if ("0".equals(Session.getCustRole())) {
-            famousTxt.setText("去认证");
-        }
+//        if ("0".equals(Session.getCustRole())) {
+//            famousTxt.setText("去认证");
+//        }
 
         if (TextUtils.isEmpty(Session.getUser_desc())) {
             idPersonLoginDays.setText(getString(R.string.mine_sign_default));
         } else {
-            idPersonLoginDays.setText("个性签名：" + Session.getUser_desc());
+            idPersonLoginDays.setText(Session.getUser_desc());
         }
         getData();
 

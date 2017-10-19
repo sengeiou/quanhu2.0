@@ -55,6 +55,11 @@ public class PrivateGroupPresenter extends GeneralPresenter {
     private static String TAG_RECOMMEND = "tag_recommend";
     private static String TAG_ALL = "tag_all";
 
+    public static int WAITING_STATUS = 0;      //待审核
+    public static int FAIL_STATUS = 2;         //审批未通过
+    public static int LOADING_STATUS = 3;      //上架
+    public static int ENDING_STATUS = 4;       //下架
+
     @Override
     public Object getCacheData() {
         return null;
@@ -431,14 +436,14 @@ public class PrivateGroupPresenter extends GeneralPresenter {
      * @param pageNo
      * @param loadMore
      */
-    public void privateGroupMyselfCreate(String custId, int pageNo, final boolean loadMore) {
+    public void privateGroupMyselfCreate(Integer status, String custId, int pageNo, final boolean loadMore) {
         final PrivateGroupListBean data = mCreateCache.getEntity(PrivateGroupListBean.class, TAG_CREATE);
         if (!NetUtils.isNetworkConnected(mContext)) {
             if (data != null) mView.updateView(data);
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        Call<ResponseData<PrivateGroupListBean>> call = mApiService.privateGroupMyselfCreate(custId, pageNo, PAGE_SIZE);
+        Call<ResponseData<PrivateGroupListBean>> call = mApiService.privateGroupMyselfCreate(custId, pageNo, PAGE_SIZE , status);
         call.enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {

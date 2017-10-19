@@ -67,8 +67,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:cacheColorHint">@android:color/transparent</item>
-        <item name="android:divider">@color/color_e7e7e7</item>
-        <item name="android:dividerHeight">@dimen/px1</item>
+        <item name="android:divider">@color/line_gray_s</item>
+        <item name="android:dividerHeight">@dimen/px2</item>
         <item name="android:fadingEdge">none</item>
         <item name="android:footerDividersEnabled">false</item>
         <item name="android:headerDividersEnabled">false</item>
@@ -271,6 +271,7 @@
         <item name="android:gravity">bottom</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:lines">1</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:layout_marginBottom">@dimen/px10</item>
         <item name="android:textColor">@color/font_gray_m</item>
         <item name="android:textSize">@dimen/font_40</item>

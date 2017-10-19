@@ -140,6 +140,15 @@ public class MineRewardBean implements Serializable {
         private int partNum;
         private String coterieId;
         private String extjson;
+        private String videoPic;
+
+        public String getVideoPic() {
+            return videoPic;
+        }
+
+        public void setVideoPic(String videoPic) {
+            this.videoPic = videoPic;
+        }
 
         public String getResourceId() {
             return resourceId;

@@ -69,6 +69,10 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
         return true;
     }
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -180,14 +184,7 @@ public class RechargePayAty extends BaseActivity implements WXPayResult.WXPayCal
                         SVProgressHUD.showInfoWithStatus(aty, getString(R.string.no_install_wx));
                     }
                 } else {
-                    SHARE_MEDIA platform = SHARE_MEDIA.ALIPAY;
-                    UMShareAPI mShareAPI = UMShareAPI.get(aty);
-                    boolean install = mShareAPI.isInstall(aty, platform);
-                    if (install) {
-                        rechargeMoney();
-                    } else {
-                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.no_install_ali));
-                    }
+                    rechargeMoney();
                 }
                 break;
         }

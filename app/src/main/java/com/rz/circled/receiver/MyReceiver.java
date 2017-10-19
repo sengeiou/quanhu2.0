@@ -140,7 +140,7 @@ public class MyReceiver extends BroadcastReceiver {
                 NewsBean mNews = gson.fromJson(jPushExtraModel.getMessage(), NewsBean.class);
                 MyPushInfo mInfo = gson.fromJson(jPushExtraModel.getMessage(), MyPushInfo.class);
                 if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
-                    NewsJumpHelper.startAcceptActivity(context, mNews);
+                    NewsJumpHelper.startAcceptActivity(context, mNews, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     if (mNews.getType() == NewsTypeConstants.NEWS_ANNOUNCEMENT) {
                         if (Session.getNewsAnnouncementNum() > 0) {
                             Session.setNewsAnnouncementNum(Session.getNewsAnnouncementNum() - 1);

@@ -34,7 +34,7 @@ public class NewsUserViewBinder extends ItemViewBinder<NewsBean, NewsUserViewBin
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.formatDisplayTime(item.getCreateTime()));
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : item.getCreateTime());
         holder.tvName.setText(item.getTitle());
         holder.tvIntro.setText(item.getContent());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_avatar_big).into(holder.avatar);

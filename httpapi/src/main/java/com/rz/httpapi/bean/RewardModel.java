@@ -10,22 +10,22 @@ public class RewardModel implements Serializable {
 
 
     /**
-     * offerId : 169
-     * custId : 5dx3jdt8c6
-     * contentSource : [{"text":"龙梅子"},{"image":"https://cdn.yryz.com/pic/activity/83c6a46b-3c3d-4681-a199-2a470b0c3729.jpg"}]
-     * content : 龙梅子测试
-     * imgUrl : https://cdn.yryz.com/pic/activity/83c6a46b-3c3d-4681-a199-2a470b0c3729.jpg
-     * price : 2
+     * offerId : 649
+     * custId : 21b32tixua
+     * contentSource : [{"text":"骨灰级简简单单能看见姐姐的改扩建工程各单位放假咯户还不能横说竖说死不瞑目价目表分涅费多夫不能那么坎坷吃饭的国宝级哦女方等待cdesxcvnmkgeegbnnhvbg 太阳花过氧化苯宝贝美女超高科技推广不改改改发 v 把 vvv 个共和国vbnbvhbbbvbmmmmnnnnxxhiyr的誓师大会经济困难就很美你你你们反复骨灰级简简单单能看见姐姐的改扩建工程各单位放假咯户还不能横说竖说死不瞑目价目表分涅费多夫不能那么坎坷吃饭的国宝级哦女方等待cdesxcvnmkgeegbnnhvbg 太阳花过氧化苯宝贝美女超高科技推广不改改改发 v 把 vvv 个共和国vbnbvhbbbvbmmmmnnnnxxhiyr的誓师大会经济困难就很美你你你们反复 vv 一个 v 宝宝充分俄方 v 吧不健康健康哈哈获得虚拟空间背腹受敌不能叫你姐姐就不能看你就空间骨灰级简简单单能看见姐姐的改扩建工程各单位放假咯户还不能横说竖说死不瞑目价目表分涅费多夫不能那么坎坷吃饭的国宝级哦女方等待cdesxcvnmkgeegbnnhvbg 太阳花过氧化苯宝贝美女超高科技推广不改改改发 v 把 vvv 个共和国vbnbvhbbbv"}]
+     * content : 骨灰级简简单单能看见姐姐的改扩建工程各单位放假咯户还不能横说竖说死不瞑目价目表分涅费多夫不能那么坎坷吃饭的国宝级哦女方等待cdesxcvnmkgeegbnnhvbg 太阳花过氧化苯宝贝美女超高科技推广不改改改发 v 把 vvv 个共和国vbnbvhbbbvbmmmmnnnnxxhiyr的誓师大会经济困难就很美你你你们反复骨灰级简简单单能看见姐姐的改扩建工程各单位放假咯户还不能横说竖说死不瞑目价目表分涅费多夫不能那么坎坷吃饭的国宝级哦女方等待cdesxcvnmkgeegbnnhvbg 太阳花过氧化苯宝贝美女超高科技推广不改改改发 v 把 vvv 个共和国vbnbvhbbbvbmmmmnnnnxxhiyr的誓师大会经济困难就很美你你你们反复 vv 一个 v 宝宝充分俄方 v 吧不健康健康哈哈获得虚拟空间背腹受敌不能叫你姐姐就不能看你就空间骨灰级简简单单能看见姐姐的改扩建工程各单位放假咯户还不能横说竖说死不瞑目价目表分涅费多夫不能那么坎坷吃饭的国宝级哦女方等待cdesxcvnmkgeegbnnhvbg 太阳花过氧化苯宝贝美女超高科技推广不改改改发 v 把 vvv 个共和国vbnbvhbbbv
+     * imgUrl :
+     * price : 100
      * duration : 1
-     * complete : 1
-     * orderId : 2017091410580074
+     * complete : 3
+     * orderId : 2017101311537360
      * payedFlag : 1
-     * terminalTime : 2017-09-16 00:00:00
+     * terminalTime : 2017-10-14 23:59:59
      * location :
-     * replyNum : 3
-     * createTime : 2017-09-14 18:53:55
-     * updateTime : 2017-09-14 20:50:11
-     * isComplete : 0
+     * replyNum : 2
+     * createTime : 2017-10-13 09:21:59
+     * updateTime : 2017-10-17 00:00:00
+     * custSimpleDTO : {"custId":"21b32tixua","custNname":"悠然号1384348","custImg":"https://cdn.yryz.com/pic/opus/31850102-CDB2-49E4-B88C-DC8CDE4F54C4_iOS.jpg","custDesc":"miso","custRole":1}
      */
 
     private int offerId;
@@ -43,7 +43,7 @@ public class RewardModel implements Serializable {
     private int replyNum;
     private String createTime;
     private String updateTime;
-    private int isComplete;
+    private CustSimpleDTOBean custSimpleDTO;
 
     public int getOfferId() {
         return offerId;
@@ -165,11 +165,67 @@ public class RewardModel implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public int getIsComplete() {
-        return isComplete;
+    public CustSimpleDTOBean getCustSimpleDTO() {
+        return custSimpleDTO;
     }
 
-    public void setIsComplete(int isComplete) {
-        this.isComplete = isComplete;
+    public void setCustSimpleDTO(CustSimpleDTOBean custSimpleDTO) {
+        this.custSimpleDTO = custSimpleDTO;
+    }
+
+    public static class CustSimpleDTOBean {
+        /**
+         * custId : 21b32tixua
+         * custNname : 悠然号1384348
+         * custImg : https://cdn.yryz.com/pic/opus/31850102-CDB2-49E4-B88C-DC8CDE4F54C4_iOS.jpg
+         * custDesc : miso
+         * custRole : 1
+         */
+
+        private String custId;
+        private String custNname;
+        private String custImg;
+        private String custDesc;
+        private int custRole;
+
+        public String getCustId() {
+            return custId;
+        }
+
+        public void setCustId(String custId) {
+            this.custId = custId;
+        }
+
+        public String getCustNname() {
+            return custNname;
+        }
+
+        public void setCustNname(String custNname) {
+            this.custNname = custNname;
+        }
+
+        public String getCustImg() {
+            return custImg;
+        }
+
+        public void setCustImg(String custImg) {
+            this.custImg = custImg;
+        }
+
+        public String getCustDesc() {
+            return custDesc;
+        }
+
+        public void setCustDesc(String custDesc) {
+            this.custDesc = custDesc;
+        }
+
+        public int getCustRole() {
+            return custRole;
+        }
+
+        public void setCustRole(int custRole) {
+            this.custRole = custRole;
+        }
     }
 }
