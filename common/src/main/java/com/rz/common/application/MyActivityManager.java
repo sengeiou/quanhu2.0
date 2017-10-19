@@ -25,6 +25,8 @@ public class MyActivityManager {
 
     public static void finishAll() {
         for (BaseActivity activite : activites) {
+            if (activite == null) continue;
+            if (activite.isFinishing()) continue;
             activite.finish();
         }
     }
