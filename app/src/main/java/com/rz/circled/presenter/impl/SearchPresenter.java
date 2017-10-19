@@ -164,13 +164,15 @@ public class SearchPresenter extends GeneralPresenter {
                             mView.updateViewWithLoadMore(dataList, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
+
+                            mView.updateViewWithLoadMore(dataList, loadMore);
+                            isNoData = true;
                             if(loadMore == false){
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,  mContext.getString(R.string.search_content));
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
-                            mView.updateViewWithLoadMore(dataList, loadMore);
-                            isNoData = true;
+
                         }
                         return;
                     } else {
