@@ -14,6 +14,8 @@ public interface H5Address {
     String ONLINE_REPORT = "http://youranyizhi.mikecrm.com/1f4hJQA";
     //充值说明
     String RECHARGE_INTRODUCE = "https://www.yryz.com/web/app/andrioid/help_cz.html";
+    //中国资源
+    String CHINA_RESOURCE = "https://static.yryz.com/quanhu/activity/skating_club/index.html";
 
     //平台奖励规则
     String REWARD_RULE = H5_HEAD + "quanhu/doc/platform_award_rule/index.html";

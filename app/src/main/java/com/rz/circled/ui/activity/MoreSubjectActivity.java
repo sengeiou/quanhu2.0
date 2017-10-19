@@ -121,13 +121,16 @@ public class MoreSubjectActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent itnent = new Intent();
-                itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PERSON);
+                itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PRIVATE);
                 skipActivity(aty, SearchActivity.class);
             }
         });
         mLvSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==subjectList.size()){
+                    return;
+                }
                 HotSubjectModel hotSubjectModel = subjectList.get(position);
                 String coterieId = hotSubjectModel.getCoterieId();
                 String coterieName = hotSubjectModel.getCoterieName();

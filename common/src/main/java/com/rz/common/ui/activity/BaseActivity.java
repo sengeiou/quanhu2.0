@@ -665,7 +665,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        MyActivityManager.removeActivity(this);
     }
 
 

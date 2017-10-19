@@ -2,6 +2,8 @@ package com.rz.circled.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,12 +32,17 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.DataCleanManager;
 import com.rz.common.utils.DialogUtils;
+import com.rz.common.utils.SystemUtils;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 import com.yryz.yunxinim.config.preference.Preferences;
 import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
 import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.HashSet;
@@ -60,6 +67,9 @@ public class SettingActivity extends BaseActivity {
     //缓存大小
     @BindView(R.id.id_close_cache_txt)
     TextView mTxtCacheNum;
+    //版本号
+    @BindView(R.id.tv_version_name)
+    TextView mTvVersionName;
 
     //退出
     @BindView(R.id.id_btn_exit)
@@ -89,6 +99,7 @@ public class SettingActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitleText(R.string.setting);
+        mTvVersionName.setText(SystemUtils.getVersionName(this));
         if (!Session.getUserIsLogin()) {
             mExitBtn.setVisibility(View.GONE);
 //            mAccountView.setVisibility(View.GONE);
@@ -151,7 +162,7 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit})
+    @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit,R.id.id_layout_update})
     public void onClick(View view) {
         View dialogView = LayoutInflater.from(aty).inflate(R.layout.comm_dialog, null);
         final Dialog dialog = DialogUtils.selfDialog(aty, dialogView, false);
@@ -172,6 +183,23 @@ public class SettingActivity extends BaseActivity {
                                 getString(R.string.share_desc),
                                 H5Address.APP_DOWNLOAD),
                         IntentCode.Setting.SETTING_RESULT_CODE);
+                break;
+            case R.id.id_layout_update:
+                /***** 检查更新 *****/
+                Beta.checkUpgrade();
+
+                /***** 获取升级信息 *****/
+                UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+
+                if (upgradeInfo != null) {
+                    BaseEvent event = new BaseEvent();
+                    event.key = "versionUpdate";
+                    EventBus.getDefault().post(event);
+                } else {
+                    BaseEvent event = new BaseEvent();
+                    event.key = "noVersionUpdate";
+                    EventBus.getDefault().post(event);
+                }
                 break;
             //清除缓存
             case R.id.id_layout_clean_cache:
@@ -296,7 +324,17 @@ public class SettingActivity extends BaseActivity {
             snsPresenter.detachView();
         }
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void eventUpdate(BaseEvent event) {
+        if (TextUtils.equals("versionUpdate", event.key)) {
+            mTvVersionName.setText(R.string.hava_updata);
+            mTvVersionName.setTextColor(Color.RED);
 
+        } else if (TextUtils.equals("noVersionUpdate", event.key)) {
+            mTvVersionName.setText(SystemUtils.getVersionName(this));
+            mTvVersionName.setTextColor(getResources().getColor(R.color.color_666666));
+        }
+    }
     /**
      * 用户是否登录
      */

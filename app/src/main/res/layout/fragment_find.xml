@@ -41,7 +41,7 @@
                     android:id="@+id/btn_resource"
                     android:layout_marginLeft="@dimen/px44"
                     android:layout_marginRight="@dimen/px44"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/px476"
                     android:layout_height="wrap_content"
                     android:background="@drawable/find_chainaresour"
                     android:textColor="@color/black"

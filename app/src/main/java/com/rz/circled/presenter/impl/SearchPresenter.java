@@ -144,7 +144,7 @@ public class SearchPresenter extends GeneralPresenter {
 
                     ResponseData<SearchDataBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        SearchDataBean model = (SearchDataBean) res.getData();
+                        SearchDataBean model = res.getData();
 
                         List dataList = null;
                         if(searchType == 1){
