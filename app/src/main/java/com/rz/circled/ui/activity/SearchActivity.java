@@ -236,4 +236,5 @@ public class SearchActivity extends BaseActivity {
     protected boolean needSwipeBack() {
         return false;
     }
+
 }

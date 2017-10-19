@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
+import com.rz.circled.adapter.ArticleAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -42,7 +43,7 @@ public class SearchContentFragment extends BaseFragment{
 
     @BindView(R.id.lv_search_content)
     ListView lvContent;
-    private DynamicAdapter dynamicAdapter;
+    private ArticleAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private SearchPresenter searchPresenter;
     public  String keyWord = "";
@@ -66,7 +67,7 @@ public class SearchContentFragment extends BaseFragment{
         mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
 
         //泛型要改
-        dynamicAdapter = new DynamicAdapter(mActivity, circleDynamicList);
+        dynamicAdapter = new ArticleAdapter(mActivity, circleDynamicList);
         lvContent.setAdapter(dynamicAdapter);
 
         lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
