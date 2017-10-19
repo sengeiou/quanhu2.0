@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.rz.circled.R;
+import com.rz.circled.adapter.viewholder.extra.NewsActivityExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.helper.NewsJumpHelper;
 import com.rz.common.utils.StringUtils;
@@ -39,11 +41,24 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.formatDisplayTime(item.getCreateTime()));
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
-        NewsArticleExtra extra = new Gson().fromJson(item.getBody().toString(), NewsArticleExtra.class);
-        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
+        Gson gson = new Gson();
+        String json = gson.toJson(item.getBody());
+        NewsArticleExtra extra = gson.fromJson(json, NewsArticleExtra.class);
+        if (TextUtils.isEmpty(item.getImg())) {
+            holder.img.setVisibility(View.GONE);
+        } else {
+            Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
+            holder.img.setVisibility(View.VISIBLE);
+        }
         holder.tvContent.setText(extra.getBodyTitle());
         String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        if (TextUtils.isEmpty(from)) {
+            holder.lineFrom.setVisibility(View.GONE);
+        } else {
+            holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+            holder.lineFrom.setVisibility(View.VISIBLE);
+        }
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,6 +75,8 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         TextView tvContent;
         @BindView(R.id.tv_from)
         TextView tvFrom;
+        @BindView(R.id.line_from)
+        LinearLayout lineFrom;
 
         NewsBean item;
 

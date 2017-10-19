@@ -365,8 +365,8 @@ public class FriendPresenter1 extends GeneralPresenter {
                         if (!StringUtils.isEmpty(friend.getCustNname())) {
                             info.setCustNname(name + "(" + friend.getCustNname() + ")");
                         }
-                        if (!StringUtils.isEmpty(friend.getCustSignature())) {
-                            info.setCustSignature(friend.getCustSignature());
+                        if (!StringUtils.isEmpty(friend.getCustDesc())) {
+                            info.setCustSignature(friend.getCustDesc());
                         }
                     }
                 }

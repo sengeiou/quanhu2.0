@@ -186,6 +186,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
+        if (refreshLayout == null) return;
         List<PrivateGroupBean> data = _data.getList();
         if (type == TYPE_PART) {
             if (data.size() > 2) {
@@ -235,7 +236,13 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     private void loadData(boolean loadMore) {
         if (!loadMore) pageNo = 1;
-        mPresenter.privateGroupMyselfCreate(userId, pageNo, loadMore);
+
+        if(Session.getUserId().equals(userId)){
+            mPresenter.privateGroupMyselfCreate(null,userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+        }else{
+            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS,userId, pageNo, loadMore);       //获取他人创建的上架圈子
+        }
+
     }
 
     @Override

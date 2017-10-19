@@ -81,7 +81,7 @@ public class GroupLevelLessDialog extends DialogFragment {
                 dismiss();
                 break;
             case R.id.btn_submit:
-                CommonH5Activity.startCommonH5(getContext(), getString(R.string.v3_customer_service), H5Address.CONECT_US);
+                CommonH5Activity.startCommonH5(getContext(), "", H5Address.CONECT_US);
                 dismiss();
                 break;
         }

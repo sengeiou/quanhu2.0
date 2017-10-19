@@ -244,7 +244,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 @Override
                 public void onClick(View v) {
                     if (isLogin()) {
-//                        jump(UserInfoActivity.class);
                         UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
                     }
                 }
@@ -332,14 +331,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 levelTxt.setText("Lv. " + Session.getUserLevel());
                 custPointsTxt.setText("积分" + Session.getCustPoints());
-                if ("0".equals(Session.getCustRole())) {
-                    famousTxt.setText("去认证");
-                }
+//                if ("0".equals(Session.getCustRole())) {
+//                    famousTxt.setText("去认证");
+//                }
 
-                if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+                if (TextUtils.isEmpty(Session.getUser_desc())) {
                     idPersonLoginDays.setText(getString(R.string.mine_sign_default));
                 } else {
-                    idPersonLoginDays.setText(Session.getUser_signatrue());
+                    idPersonLoginDays.setText(Session.getUser_desc());
                 }
             } else {
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
@@ -551,9 +550,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 //            tvactivityCount.setText(data.getArticleNum()+"");
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
-            if (Session.getCustRole().equals("0")) {
-                famousTxt.setText("去认证");
-            } else if (data.getAuthStatus() == 0) {
+
+            if (data.getAuthStatus() == 0) {
                 famousTxt.setText("认证审核中");
             } else if (data.getAuthStatus() == 1) {
                 famousTxt.setText(data.getTradeField());
@@ -632,7 +630,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
-            //通讯录
             case 1:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的购买");
@@ -640,7 +637,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 }
                 break;
-            //我的账户
             case 2:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "我的打赏");
@@ -717,14 +713,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     starCustormService();
                 } else {
 //                    String customer_url = mSp.getString(Constants.CUSTOMER_SERVICE, "");
-                    CommonH5Activity.startCommonH5(mActivity, "客服", H5Address.CONECT_US);
+                    CommonH5Activity.startCommonH5(mActivity, "", H5Address.CONECT_US);
                 }
                 break;
             //设置
 
             case 11:
                 trackUser("我的", "帮助", "设置");
-                CommonH5Activity.startCommonH5(mActivity, "帮助", H5Address.USER_HELP);
+                CommonH5Activity.startCommonH5(mActivity, "", H5Address.USER_HELP);
                 break;
             case 12:
                 trackUser("我的", "入口名称", "设置");
@@ -855,14 +851,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
 
-        if ("0".equals(Session.getCustRole())) {
-            famousTxt.setText("去认证");
-        }
+//        if ("0".equals(Session.getCustRole())) {
+//            famousTxt.setText("去认证");
+//        }
 
-        if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+        if (TextUtils.isEmpty(Session.getUser_desc())) {
             idPersonLoginDays.setText(getString(R.string.mine_sign_default));
         } else {
-            idPersonLoginDays.setText("个性签名：" + Session.getUser_signatrue());
+            idPersonLoginDays.setText(Session.getUser_desc());
         }
         getData();
 

@@ -223,38 +223,38 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/id_layout_person_sign"
-            style="@style/PersonInfoLineStyle"
-            android:layout_marginTop="@dimen/px30"
-            android:layout_height="@dimen/px158"
-            >
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/id_layout_person_sign"-->
+            <!--style="@style/PersonInfoLineStyle"-->
+            <!--android:layout_marginTop="@dimen/px30"-->
+            <!--android:layout_height="@dimen/px158"-->
+            <!--&gt;-->
 
 
-            <TextView
-                android:id="@+id/id_text_sign"
-                style="@style/PersonInfoTitleTvStyle"
-                android:text="@string/mine_person_brief"/>
+            <!--<TextView-->
+                <!--android:id="@+id/id_text_sign"-->
+                <!--style="@style/PersonInfoTitleTvStyle"-->
+                <!--android:text="@string/mine_person_brief"/>-->
 
-            <TextView
-                android:id="@+id/id_signatrue"
-                style="@style/PersonInfoDescTvStyle"
-                android:layout_marginLeft="@dimen/px70"
-                android:layout_toLeftOf="@+id/id_right_arrow6"
-                android:layout_toRightOf="@+id/id_text_sign"
-                android:gravity="right"
-                android:lines="1"
-                android:maxEms="15"/>
+            <!--<TextView-->
+                <!--android:id="@+id/id_signatrue"-->
+                <!--style="@style/PersonInfoDescTvStyle"-->
+                <!--android:layout_marginLeft="@dimen/px70"-->
+                <!--android:layout_toLeftOf="@+id/id_right_arrow6"-->
+                <!--android:layout_toRightOf="@+id/id_text_sign"-->
+                <!--android:gravity="right"-->
+                <!--android:lines="1"-->
+                <!--android:maxEms="15"/>-->
 
-            <ImageView
-                android:id="@+id/id_right_arrow6"
-                android:layout_width="@dimen/px27"
-                android:layout_height="@dimen/px45"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_right_arrow"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/id_right_arrow6"-->
+                <!--android:layout_width="@dimen/px27"-->
+                <!--android:layout_height="@dimen/px45"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:src="@drawable/ic_right_arrow"/>-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -273,7 +273,7 @@
             android:id="@+id/id_layout_person_brief"
             style="@style/PersonInfoLineStyle"
             android:layout_height="@dimen/px200"
-            android:visibility="gone"
+            android:visibility="visible"
             >
 
             <TextView

@@ -56,6 +56,7 @@
     <string name="reast_password">重置支付密码</string>
     <string name="open_small_pay_no_psw">开启小额免密支付功能</string>
     <string name="password_sucess">密码重置成功</string>
+    <string name="edit_user_introduce">请输入个人简介</string>
 
     <string name="tab_home">首页</string>
     <string name="tab_find">发现</string>
@@ -493,7 +494,7 @@
     <string name="match">确认</string>
     <string name="person">人</string>
     <string name="no_friend_to_add">你暂时还没有好友哦，\n快去添加好友吧</string>
-    <string name="search_key3">输入昵称或手机号搜索用户</string>
+    <string name="search_key3">输入昵称、手机号搜索</string>
     <string name="remark_fail">备注失败</string>
     <string name="obtain_fail">获取失败</string>
     <string name="inval_sucess">邀请成功</string>
@@ -708,6 +709,7 @@
     <string name="reward_success">打赏成功</string>
 
     <string name="share_to">分享到</string>
+    <string name="share_tip">独乐乐不如众乐乐\n圈子有了，一切都有了！</string>
     <string name="share_note">(无法获得平台圈币)</string>
     <string name="wx_friend">微信好友</string>
     <string name="firend_circle">朋友圈</string>
@@ -811,7 +813,7 @@
     <string name="upload_video_500">上传视频不能大于500M!</string>
     <string name="save_fail">保存失败</string>
     <string name="save_success">保存成功</string>
-    <string name="NO_TALK_STATE">您已被禁言!</string>
+    <string name="NO_TALK_STATE">您当前为禁言状态</string>
     <string name="edit">编辑</string>
     <string name="famous">达人</string>
     <string name="input_subject_search">输入话题名称搜索</string>

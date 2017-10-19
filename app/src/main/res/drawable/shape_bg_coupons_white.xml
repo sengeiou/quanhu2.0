@@ -4,5 +4,6 @@
         android:bottomRightRadius="@dimen/px5"
         android:topRightRadius="@dimen/px5"></corners>
     <solid android:color="@color/white"></solid>
+    <stroke android:color="@color/color_E7E7E7" android:width="@dimen/px2"></stroke>
 
 </shape>

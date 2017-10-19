@@ -54,8 +54,8 @@ public class SearchUserAdapter extends SearchCommonAdapter {
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(ivIcon);
 
 
-        if(TextUtils.isEmpty(starListBean.getCustSignature())){
-            tvInfo.setText(starListBean.getCustSignature());
+        if(!TextUtils.isEmpty(starListBean.getCustDesc())){
+            tvInfo.setText(starListBean.getCustDesc());
         }
 
         if(starListBean.getCustRole() == 0){
@@ -70,8 +70,8 @@ public class SearchUserAdapter extends SearchCommonAdapter {
             int basePadding = (int) mContext.getResources().getDimension(R.dimen.px20);
             tvName.setPadding(0, basePadding, 0, basePadding);
             tvInfo.setPadding(0, basePadding, 0, basePadding);
-            tvLv.setVisibility(View.VISIBLE);
-            tvLv.setText("Lv"+starListBean.getCustLevel());
+            tvLv.setVisibility(View.GONE);
+//            tvLv.setText("Lv"+starListBean.getCustLevel());
         }
 
     }

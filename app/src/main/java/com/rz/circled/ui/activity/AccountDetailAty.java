@@ -100,7 +100,7 @@ public class AccountDetailAty extends BaseActivity {
         mAdapter = new CommonAdapter<BillDetailModel>(aty, mBillDetails, R.layout.layout_account_detail_item) {
             @Override
             public void convert(ViewHolder helper, BillDetailModel item) {
-                helper.setText(R.id.id_tv_name, item.productDesc);
+                helper.setText(R.id.id_tv_name, item.orderDesc);
                 TextView mPay = (TextView) helper.getViewById(R.id.id_tv_cost);
                 //0，扣费；1，加费
                 int orderType = item.orderType;

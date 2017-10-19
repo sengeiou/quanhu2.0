@@ -105,9 +105,7 @@ public class UserInfoActivity extends BaseActivity {
 
     ImageView editImg;
 
-    View header;
     View newTitilbar;
-    private int headHight;
     private IPresenter presenter;
     private IPresenter friendPresenter;
     FriendInformationBean model;
@@ -115,7 +113,12 @@ public class UserInfoActivity extends BaseActivity {
     private String userId = "";
 
     public static void newFrindInfo(Context context, String id) {
+        newFrindInfo(context, id, -1);
+    }
+
+    public static void newFrindInfo(Context context, String id, int flag) {
         Intent intent = new Intent(context, UserInfoActivity.class);
+        if (flag != -1) intent.setFlags(flag);
         Bundle bundle = new Bundle();
         bundle.putString(IntentKey.KEY_ID, id);
         intent.putExtras(bundle);
@@ -149,10 +152,10 @@ public class UserInfoActivity extends BaseActivity {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
             levelTxt.setText("Lv." + Session.getUserLevel());
-            if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+            if (TextUtils.isEmpty(Session.getUser_desc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(Session.getUser_signatrue());
+                signTxt.setText(Session.getUser_desc());
             }
 
             addFriendLayout.setVisibility(View.GONE);
@@ -317,7 +320,7 @@ public class UserInfoActivity extends BaseActivity {
                     userRole.setBackgroundResource(R.drawable.shape_white_bg);
                     userRole.getBackground().setAlpha(77);
                 }
-            }else {
+            } else {
                 if (data.getAuthStatus() == 1) {
                     famousLayout.setVisibility(View.VISIBLE);           //认证成功
                     userRole.setText(data.getTradeField());
@@ -330,27 +333,27 @@ public class UserInfoActivity extends BaseActivity {
             model = (FriendInformationBean) t;
 
             //陌生人状态需要查询用户是否已经发送申请好友请求
-            if(model.getRelation() == 0){
+            if (model.getRelation() == 0) {
                 ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
             }
 
             setData(model);
-        } else if(t instanceof RequestFriendStatusBean){
-            if(t != null){
+        } else if (t instanceof RequestFriendStatusBean) {
+            if (t != null) {
                 RequestFriendStatusBean requestBean = (RequestFriendStatusBean) t;
-                if(requestBean.getStatus() == 0){
-                    if(requestBean.getIsRequire()==1){
+                if (requestBean.getStatus() == 0) {
+                    if (requestBean.getIsRequire() == 1) {
                         addFriendBtn.setText("等待对方同意");
                         addFriendBtn.setClickable(false);
                         addFriendBtn.setBackgroundResource(R.drawable.shape_bg_gray_on);
-                    }else{
+                    } else {
                         addFriendBtn.setText("加好友");
                     }
-                }else if(requestBean.getStatus() == 1){
+                } else if (requestBean.getStatus() == 1) {
                     addFriendBtn.setText("聊天");
-                }else if(requestBean.getStatus() == 2){
+                } else if (requestBean.getStatus() == 2) {
                     addFriendBtn.setText("加好友");
-                }else if(requestBean.getStatus() == 3){
+                } else if (requestBean.getStatus() == 3) {
                     addFriendBtn.setText("加好友");
                 }
             }
@@ -370,10 +373,10 @@ public class UserInfoActivity extends BaseActivity {
                         placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
                 nameTxt.setText(Session.getUserName());
                 levelTxt.setText("Lv." + Session.getUserLevel());
-                if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+                if (TextUtils.isEmpty(Session.getUser_desc())) {
                     signTxt.setText(getString(R.string.mine_sign_default));
                 } else {
-                    signTxt.setText(Session.getUser_signatrue());
+                    signTxt.setText(Session.getUser_desc());
                 }
 
                 addFriendLayout.setVisibility(View.GONE);
@@ -393,10 +396,10 @@ public class UserInfoActivity extends BaseActivity {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(model.getCustNname());
             levelTxt.setText("Lv." + model.getCustLevel());
-            if (TextUtils.isEmpty(Session.getUser_signatrue())) {
+            if (TextUtils.isEmpty(model.getCustDesc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(Session.getUser_signatrue());
+                signTxt.setText(model.getCustDesc());
             }
 
             addFriendLayout.setClickable(true);

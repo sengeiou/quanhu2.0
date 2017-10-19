@@ -28,7 +28,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     /**
      * 数据库版本
      */
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static DBHelper instance;
     /**
      * 用来存放Dao的地图

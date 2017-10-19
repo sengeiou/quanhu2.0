@@ -516,9 +516,9 @@ public class LoginActivity extends BaseActivity {
 
                     skipActivity(aty, FollowCircle.class);
                 } else {
-                    BaseEvent event = new BaseEvent();
-//            event.key = LOGIN_IN_SUCCESS;
-                    EventBus.getDefault().post(event);
+//                    BaseEvent event = new BaseEvent();
+////            event.key = LOGIN_IN_SUCCESS;
+//                    EventBus.getDefault().post(event);
 
                     EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
 
