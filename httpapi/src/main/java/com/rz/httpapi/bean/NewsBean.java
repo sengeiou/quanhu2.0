@@ -1,5 +1,7 @@
 package com.rz.httpapi.bean;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.JsonAdapter;
 import com.rz.httpapi.bean.adapter.NewsTypeAdapter;
@@ -21,12 +23,12 @@ public class NewsBean {
     /**
      * 消息类型（一级分类）
      */
-    private Integer type;
+    private int type;
 
     /**
      * 消息标签（二级分类）
      */
-    private Integer label;
+    private int label;
 
     /**
      * 消息唯一分类
