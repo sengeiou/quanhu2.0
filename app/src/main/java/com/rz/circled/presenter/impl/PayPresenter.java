@@ -638,8 +638,7 @@ public class PayPresenter extends AbsPresenter {
                             mView.updateView(res.getRet());
                         }
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
