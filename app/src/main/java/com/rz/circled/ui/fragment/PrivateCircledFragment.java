@@ -302,7 +302,12 @@ public class PrivateCircledFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btn_apply_for:
                 trackUser("入口", "创建私圈", "");
-                presenter.getLevelAcount();
+                String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                if (Integer.parseInt(level) < 5) {
+                    presenter.getLevelAcount();
+                } else
+                    startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);
