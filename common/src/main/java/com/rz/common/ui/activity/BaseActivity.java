@@ -689,6 +689,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void onKickEvent(KickEvent kickEvent) {
         if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
             Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
+            Session.clearShareP();
             //弹窗重新登录
             if (kickDialog == null) {
                 kickDialog = new KickDialog(this) {
