@@ -170,7 +170,6 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusHint.setVisibility(View.VISIBLE);
                 break;
             case ProveStatusBean.STATUS_FAIL:
-            case ProveStatusBean.STATUS_CANCEL:
                 tvStatusTitle.setText(R.string.prove_fail);
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.prove_again);
@@ -184,6 +183,7 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusChange.setText(R.string.change_prove_info_hint);
                 break;
             case ProveStatusBean.STATUS_NORMAL://未认证
+            case ProveStatusBean.STATUS_CANCEL://取消认证同未认证
                 llStatus.setVisibility(View.GONE);
                 setTitleText(R.string.choose_prove_identity);
                 break;
