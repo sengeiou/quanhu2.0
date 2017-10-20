@@ -53,41 +53,44 @@ public class ArticleAdapter extends CircleContentAdapter {
         }else {
             fromWhere.setText("来自私圈 "+item.coterieName);
         }
-        tv_other_left.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd"));
+//        tv_other_left.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd"));
 
 //        long endtime = System.currentTimeMillis();
-//        StringUtils.getSpaceTimeNo1(endtime,item.createTime);
+        tv_other_left.setText(StringUtils.formatDisplayTime(String.valueOf(item.createTime),"yyyy-MM-dd HH:mm:ss"));
 
         //获取当前时间
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateNowStr = sdf.format(d);
-
-        long lt = new Long(item.createTime);
-        Date date = new Date(lt);
-        String res = sdf.format(date);
-        String time = TimeUtil.getTime(res, dateNowStr);
-        String timeArray[] = time.replace("-", "").split(",");
-        String time1 = timeArray[0];
-        String time2 = timeArray[1];
-        String time3 = timeArray[2];
-
-        if (Integer.parseInt(time1) > 0) {
-            if (Integer.valueOf(time1) >= 2) {
-                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                tv_other_left.setText(sdf2.format(item.createTime));
-            } else {
-                tv_other_left.setText(time1 + "天" + time2 + "小时" + time3 + "分钟前");
-            }
-        } else {
-            if (Integer.parseInt(time2) > 0) {
-                tv_other_left.setText(time2 + "小时" + time3 + "分钟前");
-            } else if (Integer.parseInt(time3) > 0) {
-                tv_other_left.setText(time3 + "分钟前");
-            } else {
-                tv_other_left.setText("刚刚");
-            }
-        }
+//        Date d = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateNowStr = sdf.format(d);
+//
+//        long lt = new Long(item.createTime);
+//        Date date = new Date(lt);
+//        String res = sdf.format(date);
+//        String time = TimeUtil.getTime(res, dateNowStr);
+//        String timeArray[] = time.replace("-", "").split(",");
+//        String time1 = timeArray[0];
+//        String time2 = timeArray[1];
+//        String time3 = timeArray[2];
+//
+//        if(Integer.parseInt(time1)>365){
+//            SimpleDateFormat sdf2 = new SimpleDateFormat("yy-MM-dd HH:mm");
+//            tv_other_left.setText(sdf2.format(item.createTime));
+//        }else if (Integer.parseInt(time1) > 0 && Integer.parseInt(time1) < 2) {
+//            if (Integer.valueOf(time1) >= 2) {
+//                SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH:mm");
+//                tv_other_left.setText(sdf2.format(item.createTime));
+//            } else {
+//                tv_other_left.setText(time1 + "天" + time2 + "小时" + time3 + "分钟前");
+//            }
+//        } else {
+//            if (Integer.parseInt(time2) > 0) {
+//                tv_other_left.setText(time2 + "小时" + time3 + "分钟前");
+//            } else if (Integer.parseInt(time3) > 0) {
+//                tv_other_left.setText(time3 + "分钟前");
+//            } else {
+//                tv_other_left.setText("刚刚");
+//            }
+//        }
 
 
         fromWhere.setOnClickListener(new View.OnClickListener() {
