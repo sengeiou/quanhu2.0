@@ -479,7 +479,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.MORE_FAMOUS_LIST)
     Observable<ResponseData<MoreFamousModel<List<StarListBean>>>> getMoreFamous(
-            @Field("id") Integer id
+            @Field("start") int start
     );
 
     /**
