@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/comm_item_selector">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_pic_sel"
         android:layout_width="110dp"
         android:layout_height="110dp"

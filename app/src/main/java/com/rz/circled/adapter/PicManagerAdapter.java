@@ -1,18 +1,20 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.GridView;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.Protect;
 import com.rz.httpapi.bean.PictureModel;
+
+import java.io.File;
 
 /**
  * 图片管理
@@ -34,12 +36,12 @@ public class PicManagerAdapter extends CommonAdapter<PictureModel> {
         CheckBox mCheckBox = (CheckBox) holder.getViewById(R.id.cb_pic_sel);
         if (model == mAddCameraPic) {
             mCheckBox.setVisibility(View.GONE);
-            ((ImageView) holder.getViewById(R.id.iv_pic_sel)).setImageBitmap(model.getmBitmap());
+            ((SimpleDraweeView) holder.getViewById(R.id.iv_pic_sel)).setImageBitmap(model.getmBitmap());
         } else {
             mCheckBox.setVisibility(View.VISIBLE);
             if (model.getmPicPath() != null && Protect.checkLoadImageStatus(mContext)) {
-                ImageView imageView = (ImageView) holder.getViewById(R.id.iv_pic_sel);
-                Glide.with(mContext).load(model.getmPicPath()).into(imageView);
+                SimpleDraweeView draweeView = (SimpleDraweeView) holder.getViewById(R.id.iv_pic_sel);
+                draweeView.setImageURI(Uri.fromFile(new File(model.getmPicPath())));
             }
             mCheckBox.setChecked(model.isSelect());
         }
