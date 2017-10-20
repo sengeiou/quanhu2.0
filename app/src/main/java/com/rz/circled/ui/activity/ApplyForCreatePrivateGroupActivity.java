@@ -228,7 +228,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     ArrayList<String> picList = data.getExtras().getStringArrayList("picList");
                     if (null != picList && !picList.isEmpty())
                         coverPath = picList.get(0);
-                } else if (resultCode == PUBLISH_RESULT_CAMERA) //相机
+                } else if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT_CAMERA) //相机
                     coverPath = data.getStringExtra("picture");
                 if (!TextUtils.isEmpty(coverPath)) {
                     if (Protect.checkLoadImageStatus(mContext))
