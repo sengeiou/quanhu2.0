@@ -177,8 +177,13 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         if(model.getReplyNum() == 0){
             tvPerNum.setVisibility(View.GONE);
         }else{
-            tvPerNum.setVisibility(View.VISIBLE);
-            tvPerNum.setText(model.getReplyNum()+"人参加");
+            if(model.getComplete() == 1 || model.getComplete() == 2){
+                tvPerNum.setVisibility(View.VISIBLE);
+                tvPerNum.setText(model.getReplyNum()+"人参加");
+            }else{
+                tvPerNum.setVisibility(View.VISIBLE);
+                tvPerNum.setText("该悬赏有"+model.getReplyNum()+"个回答");
+            }
         }
     }
 
