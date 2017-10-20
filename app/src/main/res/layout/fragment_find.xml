@@ -49,7 +49,7 @@
 
                 <Button
                     android:id="@+id/btn_quanle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/px476"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/px44"
                     android:background="@drawable/find_quanquanle"
