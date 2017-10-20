@@ -171,5 +171,13 @@ public class SearchContentFragment extends BaseFragment{
     }
 
 
+    @Override
+    public void onLoadingStatus(int loadingStatus,String msg) {
+        super.onLoadingStatus(loadingStatus);
 
+
+
+
+
+    }
 }

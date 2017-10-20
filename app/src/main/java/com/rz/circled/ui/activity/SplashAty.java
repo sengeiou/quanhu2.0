@@ -121,6 +121,10 @@ public class SplashAty extends BaseActivity {
                         jumpTo();
                     }
                 } else {
+                    if (Session.getUserIsLogin()){
+                        skipActivity(aty, MainActivity.class);
+                        return;
+                    }
                     if (!Session.getUserIsFirstGuide()) {
                         Intent intent = new Intent(mContext, LoginActivity.class);
                         intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);

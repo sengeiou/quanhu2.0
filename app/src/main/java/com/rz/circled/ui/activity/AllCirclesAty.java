@@ -275,7 +275,6 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             mPresenter.addLoveCircle(sb.toString(), 1);
             Log.i(TAG, "mapFavCircle: " + sb.toString());
             sb.delete(0, sb.length());
-            EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
         }
         if (delHs.size() != 0) {
             for (String appid : delHs) {
@@ -284,11 +283,16 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
             Log.i(TAG, "mapFavCircle: " + sb.toString() + "llll");
             sb.delete(0, sb.length());
-            EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
         }
         delHs.clear();
         addHs.clear();
         bothHs.clear();
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
     }
 
     @Override

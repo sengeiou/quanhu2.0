@@ -168,7 +168,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px80"
                 android:layout_marginTop="@dimen/px44"
                 android:paddingBottom="@dimen/px10"
                 >
