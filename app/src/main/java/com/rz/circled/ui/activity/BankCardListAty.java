@@ -90,6 +90,11 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public boolean hasDataInPage() {
         return true;
     }

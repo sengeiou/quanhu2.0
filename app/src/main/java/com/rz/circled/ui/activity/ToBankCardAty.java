@@ -106,6 +106,11 @@ public class ToBankCardAty extends BaseActivity {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public boolean hasDataInPage() {
         return true;
     }
