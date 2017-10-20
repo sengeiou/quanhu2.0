@@ -150,10 +150,14 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 //            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
         }else if(model.getComplete() == 2){
 
-            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
-            tvStatus.setText("已完成");
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+            tvStatus.setText("公示期");
             tvTime.setVisibility(View.GONE);
         }else if(model.getComplete() == 3){
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
+            tvTime.setVisibility(View.GONE);
+            tvStatus.setText("已完成");
+        }else if(model.getComplete() == 4){
             tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
             tvTime.setVisibility(View.GONE);
             tvStatus.setText("已过期");
