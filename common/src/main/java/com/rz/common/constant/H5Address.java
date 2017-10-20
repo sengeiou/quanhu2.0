@@ -13,7 +13,7 @@ public interface H5Address {
     //举报
     String ONLINE_REPORT = "http://youranyizhi.mikecrm.com/1f4hJQA";
     //充值说明
-    String RECHARGE_INTRODUCE = "https://www.yryz.com/web/app/andrioid/help_cz.html";
+    String RECHARGE_INTRODUCE = H5_HEAD + "quanhu/doc/recharge_issue/index.html";
     //中国资源
     String CHINA_RESOURCE = "https://static.yryz.com/quanhu/activity/skating_club/index.html";
     //账户规则

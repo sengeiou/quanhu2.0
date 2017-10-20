@@ -39,6 +39,7 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
         holder.item = item;
         holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.stampToDate(StringUtils.toDate(item.getCreateTime()).getTime(), "yyyy年MM月dd日 HH:mm"));
         holder.tvTitle.setText(item.getTitle());
+        holder.tvDesc.setText(item.getContent());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_private_group_icon).into(holder.avatar);
         Gson gson = new Gson();
         String json = gson.toJson(item.getBody());
@@ -47,7 +48,6 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
         holder.lineFrom.setVisibility(TextUtils.isEmpty(from) ? View.GONE : View.VISIBLE);
         holder.tvScan.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_joined_user), extra.getMemberNum()));
-        holder.tvDesc.setText(extra.getOwnerName() + "  " + extra.getOwnerIntro());
         if (extra.getJoinFee() == 0) {
             holder.tvStatus.setText(R.string.private_group_free);
             holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.font_color_blue));
