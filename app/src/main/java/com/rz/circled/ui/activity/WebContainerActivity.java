@@ -79,17 +79,17 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     }
 
     @Override
+    protected boolean hasDataInPage() {
+            return false;
+    }
+
+    @Override
     protected boolean needShowTitle() {
         return false;
     }
 
     @Override
     protected boolean needSwipeBack() {
-        return false;
-    }
-
-    @Override
-    protected boolean hasDataInPage() {
         return false;
     }
 

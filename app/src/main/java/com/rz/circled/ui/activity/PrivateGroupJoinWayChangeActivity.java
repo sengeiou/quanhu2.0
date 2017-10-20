@@ -77,7 +77,7 @@ public class PrivateGroupJoinWayChangeActivity extends BaseActivity {
                         Toasty.warning(mContext, getString(R.string.private_group_join_price_min)).show();
                         return;
                     }
-                    int num = Integer.parseInt(etvNum.getText().toString().trim()) * 100;
+                    int num = Integer.parseInt(etvNum.getText().toString().trim());
                     event.setData(num);
                 }
                 EventBus.getDefault().post(event);
