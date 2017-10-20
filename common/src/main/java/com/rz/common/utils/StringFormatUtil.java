@@ -49,7 +49,7 @@ public class StringFormatUtil {
             //匹配规则
 
 //            Pattern p = Pattern.compile(highlightStr.replace("*",""));
-            Pattern p = Pattern.compile("["+highlightStr+"]");
+            Pattern p = Pattern.compile("["+highlightStr+"]",Pattern.CASE_INSENSITIVE);
             //匹配字段
             Matcher m = p.matcher(spBuilder);
             //上色
