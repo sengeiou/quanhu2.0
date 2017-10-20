@@ -18,6 +18,7 @@ import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.StringFormatUtil;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.RewardModel;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +61,18 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         LinearLayout placeLayout = (LinearLayout) helper.getViewById(R.id.place_layout);
         ImageView picImg = (ImageView) helper.getViewById(R.id.pic_logo_img);
 
-        tvName.setText(model.getCustSimpleDTO().getCustNname());
+
+        if(StringUtil.isEmpty(keyWord)){
+            tvName.setText(model.getCustSimpleDTO().getCustNname());
+        }else{
+            stringFormatUtil = new StringFormatUtil(mContext, model.getCustSimpleDTO().getCustNname(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                tvContent.setText(stringFormatUtil.getResult());
+            }else{
+                tvContent.setText(model.getCustSimpleDTO().getCustNname());
+            }
+
+        }
 
         Glide.with(mContext).load(model.getCustSimpleDTO().getCustImg()).transform(new GlideCircleImage(mContext)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
@@ -137,9 +149,16 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             tvStatus.setText("已过期");
         }
 
-        stringFormatUtil = new StringFormatUtil(mContext, model.getContent(), keyWord, R.color.colorAccent).fillColor();
-        tvContent.setText(stringFormatUtil.getResult());
-//        tvContent.setText(model.getContent());
+        if(StringUtil.isEmpty(keyWord)){
+            tvContent.setText(model.getContent());
+        }else{
+            stringFormatUtil = new StringFormatUtil(mContext, model.getContent(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null) {
+                tvContent.setText(stringFormatUtil.getResult());
+            }else{
+                tvContent.setText(model.getContent());
+            }
+        }
 
         if(model.getReplyNum() == 0){
             tvPerNum.setVisibility(View.GONE);
