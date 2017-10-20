@@ -13,7 +13,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyLevelAdapter;
-import com.rz.circled.presenter.impl.LevelPersenter;
+import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.H5Address;
@@ -61,7 +61,7 @@ public class MyLevelActivity extends BaseActivity {
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout layoutRefresh;
 
-    private LevelPersenter presenter;
+    private LevelPresenter presenter;
     private MyLevelAdapter mAdapter;
 
     @Override
@@ -71,8 +71,18 @@ public class MyLevelActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        presenter = new LevelPersenter();
+        presenter = new LevelPresenter();
         presenter.attachView(this);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
     }
 
     @Override

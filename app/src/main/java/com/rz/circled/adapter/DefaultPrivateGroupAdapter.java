@@ -33,35 +33,35 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
         this.type = type;
     }
 
-    public void setKeyWord(String keyWord){
+    public void setKeyWord(String keyWord) {
         this.keyWord = keyWord;
     }
 
     @Override
     public void convert(ViewHolder helper, PrivateGroupBean item, int position) {
 
-        if(TextUtils.isEmpty(keyWord)){
+        if (TextUtils.isEmpty(keyWord)) {
             helper.setText(R.id.tv_title, item.getName());
-        }else {
+        } else {
             stringFormatUtil = new StringFormatUtil(mContext, item.getName(), keyWord, R.color.colorAccent).fillColor();
-            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+            if (stringFormatUtil != null && stringFormatUtil.getResult() != null) {
                 helper.setText(R.id.tv_title, stringFormatUtil.getResult().toString());
-            }else{
+            } else {
                 helper.setText(R.id.tv_title, item.getName());
             }
         }
 
 //        helper.setText(R.id.tv_title, item.getName());
 
-        if(TextUtils.isEmpty(keyWord)){
+        if (TextUtils.isEmpty(keyWord)) {
             helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
-        }else {
+        } else {
             stringFormatUtil = new StringFormatUtil(mContext, item.getOwnerName() + "  " + item.getOwnerIntro(), keyWord, R.color.colorAccent).fillColor();
-            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+            if (stringFormatUtil != null && stringFormatUtil.getResult() != null) {
 //                helper.setText(R.id.tv_title, stringFormatUtil.getResult().toString());
 
                 helper.setText(R.id.tv_desc, stringFormatUtil.getResult().toString());
-            }else{
+            } else {
                 helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
             }
         }
@@ -70,7 +70,7 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
         if (Protect.checkLoadImageStatus(mContext))
             Glide.with(mContext).load(item.getIcon()).error(R.mipmap.ic_default_private_group_icon).into((ImageView) helper.getView(R.id.avatar));
         helper.setText(R.id.tv_scan, type == TYPE_SCAN ? String.format(mContext.getString(R.string.private_group_joined_user), item.getMemberNum()) : item.getIntro());
-        helper.setText(R.id.tv_from, String.format(mContext.getString(R.string.private_group_from), item.getCircleName()));
+        helper.setText(R.id.tv_from, String.format(mContext.getString(R.string.private_group_from), TextUtils.isEmpty(item.getCircleName()) ? "" : item.getCircleName()));
         TextView tvStatus = helper.getView(R.id.tv_status);
         TextView tvTitle = helper.getView(R.id.tv_title);
         switch (item.getStatus()) {

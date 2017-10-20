@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
 import com.rz.circled.dialog.GroupLevelLessDialog;
+import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
@@ -33,6 +34,7 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.GroupBannerBean;
+import com.rz.httpapi.bean.MyLevelAcountBean;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
@@ -102,6 +104,7 @@ public class PrivateCircledFragment extends BaseFragment {
 
     //私圈相关
     private PrivateGroupPresenter mPresenter;
+    private LevelPresenter presenter;
 
     @Nullable
     @Override
@@ -129,6 +132,8 @@ public class PrivateCircledFragment extends BaseFragment {
     public void initPresenter() {
         mPresenter = new PrivateGroupPresenter();
         mPresenter.attachView(this);
+        presenter = new LevelPresenter();
+        presenter.attachView(this);
     }
 
     @Override
@@ -141,6 +146,20 @@ public class PrivateCircledFragment extends BaseFragment {
                 initViewpagerBanner(data);
                 initIndicatorBanner(data);
             }
+        }
+    }
+
+    @Override
+    public <T> void updateViewWithFlag(T t, int flag) {
+        super.updateViewWithFlag(t, flag);
+        if (flag == presenter.FLAG_LEVEL_ACOUNT) {
+            MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
+            if (acountBean == null) return;
+            String level = TextUtils.isEmpty(acountBean.getGrowLevel()) ? "0" : acountBean.getGrowLevel();
+            if (Integer.parseInt(level) < 5)
+                GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+            else
+                startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
         }
     }
 
@@ -284,10 +303,11 @@ public class PrivateCircledFragment extends BaseFragment {
             case R.id.btn_apply_for:
                 trackUser("入口", "创建私圈", "");
                 String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
-                if (Integer.parseInt(level) < 5)
-                    GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
-                else
+                if (Integer.parseInt(level) < 5) {
+                    presenter.getLevelAcount();
+                } else
                     startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);

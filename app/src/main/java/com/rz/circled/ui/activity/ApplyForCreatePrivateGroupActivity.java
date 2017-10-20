@@ -242,7 +242,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     }
 
     private void createPrivateGroupSubmit(String url, String groupName, String groupDesc, String ownDesc) {
-        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price, groupName, Session.getUserId(), ownDesc, Session.getUserName());
+        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price * 100, groupName, Session.getUserId(), ownDesc, Session.getUserName());
     }
 
     private void updateCoverPic() {
