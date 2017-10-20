@@ -23,7 +23,7 @@ import com.rz.httpapi.bean.PrivateGroupBean;
  */
 
 public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter {
-    private String keyWord;
+
     private StringFormatUtil stringFormatUtil;
 
     public DefaultPricePrivateGroupAdapter(Context context, int layoutId, int type) {
@@ -42,17 +42,18 @@ public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter 
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_F5CD45));
         }
 
-        stringFormatUtil = new StringFormatUtil(mContext, item.getName(), keyWord, R.color.colorAccent).fillColor();
-
         if(keyWord != null){
-            ((TextView) helper.getView(R.id.tv_title)).setText(TextUtils.isEmpty(item.getName()) ? "" : stringFormatUtil.getResult());
+            stringFormatUtil = new StringFormatUtil(mContext, item.getName(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                ((TextView) helper.getView(R.id.tv_title)).setText(TextUtils.isEmpty(item.getName()) ? "" : stringFormatUtil.getResult());
+            }else{
+                ((TextView) helper.getView(R.id.tv_title)).setText(item.getName());
+            }
+
         }else{
             ((TextView) helper.getView(R.id.tv_title)).setText(item.getName());
         }
 
     }
 
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
-    }
 }

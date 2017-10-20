@@ -16,8 +16,10 @@ import com.rz.circled.R;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.MyRewardBean;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -96,6 +98,9 @@ public class RewardAdapter extends CommonAdapter {
         System.out.println(d);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateNowStr = sdf.format(d);
+
+
+//        StringUtils.formatDisplayTime()
 
         //判断悬赏是否在进行中
         if(model.getComplete() == 1){

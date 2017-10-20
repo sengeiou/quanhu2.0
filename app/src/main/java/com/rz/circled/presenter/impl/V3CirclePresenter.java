@@ -1246,7 +1246,6 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         });
     }
 
-
     /**
      * 获取达人状态
      * @param custId

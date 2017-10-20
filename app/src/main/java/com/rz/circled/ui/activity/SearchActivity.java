@@ -153,7 +153,7 @@ public class SearchActivity extends BaseActivity {
      */
     private void toSearch() {
         searchWord = etKeyword.getText().toString();
-        String keyWord = etKeyword.getText().toString();
+        String keyWord = etKeyword.getText().toString().trim();
         if (TextUtils.isEmpty(keyWord)) {
             Toasty.info(mContext,mContext.getString(R.string.search_attention_title)).show();
             return;

@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -71,15 +72,34 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                 String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.thumbnail,R.dimen.px288,R.dimen.px260);
                 helper.setImageByUrlTransger(mIvThumbnail, url, R.drawable.ic_default_thumbnail);
             }
-            mTitle.setText(item.title);
+
+            if(TextUtils.isEmpty(keyWord)){
+                mdes.setText(item.title);
+            }else {
+                stringFormatUtil = new StringFormatUtil(mContext, item.title, keyWord, R.color.colorAccent).fillColor();
+                if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                    mTitle.setText(stringFormatUtil.getResult());
+                }else{
+                    mTitle.setText(item.title);
+                }
+            }
+
             if (TextUtils.isEmpty(item.content)) {
                 mdes.setVisibility(View.GONE);
             } else {
                 if (TextUtils.isEmpty(item.title)) {
                     mdes.setVisibility(View.GONE);
                     mTitle.setVisibility(View.VISIBLE);
+
                     mTitle.setMaxLines(2);
-                    mTitle.setText(item.content);
+
+                    stringFormatUtil = new StringFormatUtil(mContext, item.content, keyWord, R.color.colorAccent).fillColor();
+                    if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                        mTitle.setText(stringFormatUtil.getResult());
+                    }else{
+                        mTitle.setText(item.content);
+                    }
+
                 } else {
                     mdes.setVisibility(View.VISIBLE);
                     String s = item.content.trim().replaceAll("\\t", "");
@@ -90,9 +110,13 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                     if(TextUtils.isEmpty(keyWord)){
                         mdes.setText(s);
                     }else{
-                        stringFormatUtil = new StringFormatUtil(mContext, s, keyWord, R.color.colorAccent).fillColor();
 
-                        mdes.setText(stringFormatUtil.getResult());
+                        stringFormatUtil = new StringFormatUtil(mContext, s, keyWord, R.color.colorAccent).fillColor();
+                        if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                            mdes.setText(stringFormatUtil.getResult());
+                        }else{
+                            mdes.setText(s);
+                        }
                     }
                 }
             }
