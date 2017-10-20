@@ -13,6 +13,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import com.rz.circled.R;
 import com.rz.circled.adapter.ArticleAdapter;
 import com.rz.circled.adapter.DynamicAdapter;
+import com.rz.circled.adapter.SearchContentAdapter;
 import com.rz.circled.presenter.impl.SearchPresenter;
 import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
@@ -43,7 +44,7 @@ public class SearchContentFragment extends BaseFragment{
 
     @BindView(R.id.lv_search_content)
     ListView lvContent;
-    private ArticleAdapter dynamicAdapter;
+    private SearchContentAdapter dynamicAdapter;
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
     private SearchPresenter searchPresenter;
     public  String keyWord = "";
@@ -67,7 +68,7 @@ public class SearchContentFragment extends BaseFragment{
         mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
 
         //泛型要改
-        dynamicAdapter = new ArticleAdapter(mActivity, circleDynamicList);
+        dynamicAdapter = new SearchContentAdapter(mActivity, circleDynamicList);
         lvContent.setAdapter(dynamicAdapter);
 
         lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -170,14 +171,4 @@ public class SearchContentFragment extends BaseFragment{
         searchPresenter.searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_CONTENT);
     }
 
-
-    @Override
-    public void onLoadingStatus(int loadingStatus,String msg) {
-        super.onLoadingStatus(loadingStatus);
-
-
-
-
-
-    }
 }

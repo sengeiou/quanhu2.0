@@ -13,6 +13,7 @@ import com.rz.common.adapter.ViewHolder;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.StringFormatUtil;
 import com.rz.httpapi.bean.StarListBean;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 /**
  * Created by Gsm on 2017/9/2.
@@ -44,17 +45,31 @@ public class SearchUserAdapter extends SearchCommonAdapter {
         ImageView ivIcon = (ImageView) helper.getViewById(R.id.iv_search_person);
         ImageView ivTalent = (ImageView) helper.getViewById(R.id.iv_search_person_talent);
 
-        stringFormatUtil = new StringFormatUtil(mContext, starListBean.getCustNname(), keyWord, R.color.colorAccent).fillColor();
 
-                //name  或者 info 包含keyWord 则显示为蓝色字体
-        tvName.setText(stringFormatUtil.getResult());
+        stringFormatUtil = new StringFormatUtil(mContext, starListBean.getCustNname(), keyWord, R.color.colorAccent).fillColor();
+        if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+            tvName.setText(stringFormatUtil.getResult());
+        }else{
+            tvName.setText(starListBean.getCustDesc());
+        }
+
 //        tvName.append(getSpan(""));//替换文本
         Glide.with(mContext).load(starListBean.getCustImg()).transform(new GlideCircleImage(mContext)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(ivIcon);
 
 
         if(!TextUtils.isEmpty(starListBean.getCustDesc())){
-            tvInfo.setText(starListBean.getCustDesc());
+            if(TextUtils.isEmpty(keyWord)){
+                tvInfo.setText(starListBean.getCustDesc());
+            }else{
+                stringFormatUtil = new StringFormatUtil(mContext, starListBean.getCustDesc(), keyWord, R.color.colorAccent).fillColor();
+                if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                    tvInfo.setText(stringFormatUtil.getResult());
+                }else{
+                    tvInfo.setText(starListBean.getCustDesc());
+                }
+
+            }
         }
 
         if(starListBean.getCustRole() == 0){

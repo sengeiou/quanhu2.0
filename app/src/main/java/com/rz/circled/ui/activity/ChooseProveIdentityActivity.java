@@ -170,11 +170,22 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusHint.setVisibility(View.VISIBLE);
                 break;
             case ProveStatusBean.STATUS_FAIL:
-            case ProveStatusBean.STATUS_CANCEL:
+
                 tvStatusTitle.setText(R.string.prove_fail);
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.prove_again);
                 break;
+
+            case ProveStatusBean.STATUS_CANCEL:
+//                tvStatusTitle.setText(R.string.prove_fail);
+//                tvStatusChange.setVisibility(View.VISIBLE);
+//                tvStatusChange.setText(R.string.prove_again);
+//                break;
+
+                llStatus.setVisibility(View.GONE);
+                setTitleText(R.string.choose_prove_identity);
+                break;
+
             case ProveStatusBean.STATUS_SUCCESS:
                 tvStatusTitle.setText(getString(R.string.prove_identity_hint) +
                         (proveStatusBean.isOneSelf() ? getString(R.string.prove_oneself) : getString(R.string.prove_agency)));

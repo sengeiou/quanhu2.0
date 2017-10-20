@@ -1,6 +1,7 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.Protect;
+import com.rz.common.utils.StringFormatUtil;
 import com.rz.httpapi.bean.PrivateGroupBean;
 
 /**
@@ -17,6 +19,9 @@ import com.rz.httpapi.bean.PrivateGroupBean;
  */
 
 public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> {
+
+    StringFormatUtil stringFormatUtil;
+    public String keyWord = "";
 
     public static final int TYPE_SCAN = 0;
     public static final int TYPE_DESC = 1;
@@ -28,10 +33,40 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
         this.type = type;
     }
 
+    public void setKeyWord(String keyWord){
+        this.keyWord = keyWord;
+    }
+
     @Override
     public void convert(ViewHolder helper, PrivateGroupBean item, int position) {
-        helper.setText(R.id.tv_title, item.getName());
-        helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
+
+        if(TextUtils.isEmpty(keyWord)){
+            helper.setText(R.id.tv_title, item.getName());
+        }else {
+            stringFormatUtil = new StringFormatUtil(mContext, item.getName(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                helper.setText(R.id.tv_title, stringFormatUtil.getResult().toString());
+            }else{
+                helper.setText(R.id.tv_title, item.getName());
+            }
+        }
+
+//        helper.setText(R.id.tv_title, item.getName());
+
+        if(TextUtils.isEmpty(keyWord)){
+            helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
+        }else {
+            stringFormatUtil = new StringFormatUtil(mContext, item.getOwnerName() + "  " + item.getOwnerIntro(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+//                helper.setText(R.id.tv_title, stringFormatUtil.getResult().toString());
+
+                helper.setText(R.id.tv_desc, stringFormatUtil.getResult().toString());
+            }else{
+                helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
+            }
+        }
+//        helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
+
         if (Protect.checkLoadImageStatus(mContext))
             Glide.with(mContext).load(item.getIcon()).error(R.mipmap.ic_default_private_group_icon).into((ImageView) helper.getView(R.id.avatar));
         helper.setText(R.id.tv_scan, type == TYPE_SCAN ? String.format(mContext.getString(R.string.private_group_joined_user), item.getMemberNum()) : item.getIntro());

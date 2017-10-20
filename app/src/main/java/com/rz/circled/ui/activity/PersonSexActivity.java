@@ -82,6 +82,9 @@ public class PersonSexActivity extends BaseActivity implements View.OnClickListe
             idMaleImg.setImageResource(sex.equals("男") ? R.mipmap.choose_icon : R.mipmap.un_choose_icon);
 //            this.sex = sex.equals("女") ? 1 : 0;
             this.sex = sex.equals("女") ? 0 : 1;
+        }else{
+            idFemaleImg.setImageResource(R.mipmap.un_choose_icon);
+            idMaleImg.setImageResource(R.mipmap.un_choose_icon);
         }
     }
 
