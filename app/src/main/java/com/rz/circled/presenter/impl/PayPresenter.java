@@ -829,7 +829,7 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
-                if (flag == 3) {
+                if (flag == 2 || flag == 3) {
                     mView.updateView(psw);
                 } else {
                     payOrder(orderId, psw);

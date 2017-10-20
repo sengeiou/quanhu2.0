@@ -278,7 +278,7 @@ public class RewardGiftActivity extends BaseActivity implements AdapterView.OnIt
                     SVProgressHUD.showInfoWithStatus(aty, getString(R.string.choose_gift));
                 } else {
                     if (null != mUserBalance) {
-                        if (Double.parseDouble(mGiftModel.getPrice()) / 100 > mUserBalance) {
+                        if (Double.parseDouble(mGiftModel.getPrice()) > mUserBalance) {
                             SVProgressHUD.showInfoWithStatus(aty, getString(R.string.no_money));
                         } else {
                             if (CountDownTimer.isFastClick()) {
