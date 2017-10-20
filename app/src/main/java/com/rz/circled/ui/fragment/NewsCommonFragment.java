@@ -73,7 +73,8 @@ public class NewsCommonFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
-        clearUnreadByType(type);
+        if (type == NEWS_COMMENT)
+            clearUnreadByType(type);
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
     }

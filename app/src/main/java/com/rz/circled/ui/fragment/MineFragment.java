@@ -387,6 +387,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         // TODO: 2017/9/18 判断是否有申请达人,未申请则不去请求
         getUserProveStatus();
         setData();
+        if (!isNotity()) {
+            EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
+        }
     }
 
 
@@ -543,23 +546,38 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvacticlesCount.setText(data.getArticleNum() + "");
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
-            custPointsTxt.setText("积分" + data.getScore() + "");
+
+            Double score = Double.valueOf(data.getScore());
+            NumberFormat nf = new DecimalFormat("#");
+            custPointsTxt.setText("积分" + nf.format(score) + "");
             levelTxt.setText("Lv. " + data.getCustLevel());
 
             Session.setUserLevel(data.getCustLevel());
-//            tvactivityCount.setText(data.getArticleNum()+"");
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
 
-            if (data.getAuthStatus() == 0) {
+//            if (data.getAuthStatus() == 0) {
+//                famousTxt.setText("认证审核中");
+//            } else if (data.getAuthStatus() == 1) {
+//                famousTxt.setText(data.getTradeField());
+//            } else if (data.getAuthStatus() == 2) {
+//                famousTxt.setText("认证失败");
+//            } else if (data.getAuthStatus() == 3) {
+//                famousTxt.setText("认证失败");
+//            }
+
+            if (data.getAuthStatus() == ProveStatusBean.STATUS_ING) {
                 famousTxt.setText("认证审核中");
-            } else if (data.getAuthStatus() == 1) {
+            } else if (data.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
                 famousTxt.setText(data.getTradeField());
-            } else if (data.getAuthStatus() == 2) {
+            } else if (data.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
                 famousTxt.setText("认证失败");
-            } else if (data.getAuthStatus() == 3) {
-                famousTxt.setText("认证失败");
+            } else if (data.getAuthStatus() == ProveStatusBean.STATUS_CANCEL) {
+                famousTxt.setText("去认证");
+            } else if (data.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
+                famousTxt.setText("去认证");
             }
+
         } else if (t instanceof ResponseData) {
             if (((ResponseData) t).getData() != null) {
 
@@ -598,7 +616,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL) {
-                famousTxt.setText("认证失败");
+                famousTxt.setText("去认证");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
                 famousTxt.setText("去认证");
             }
@@ -752,9 +770,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentCode.MineFrg.MINE_REQUEST_CODE) {
             if (resultCode == IntentCode.Setting.SETTING_RESULT_CODE) {
-                tvacticlesCount.setText("0");
-                tvrewardCount.setText("0");
-                tvcircletCount.setText("0");
+//                tvacticlesCount.setText("0");
+//                tvrewardCount.setText("0");
+//                tvcircletCount.setText("0");
 
                 //刷新消息和随手晒界面
 //                if (((MsgFragment) getActivity().getSupportFragmentManager().findFragmentByTag("聊天") != null))
