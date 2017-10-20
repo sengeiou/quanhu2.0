@@ -498,6 +498,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
+        if (!loadMore){
+            start=0;
+        }
         mUserService.getMoreFamous(loadMore?start:0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
