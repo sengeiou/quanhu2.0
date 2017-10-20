@@ -697,7 +697,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                     public void onClick(View v) {
                         if (v.getId() == R.id.tv_kick_dialog_left) {
                             closeDialog();
-                            EventBus.getDefault().post(new BaseEvent(20018));
+                            int kickOutYxCode = 200018;
+                            EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
                             String className = "com.rz.circled.ui.activity.LoginActivity";
                             Intent intent = new Intent();
                             intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
