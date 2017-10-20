@@ -152,7 +152,7 @@ public class EditorTwoAuthorityActivity extends BaseActivity {
             public void convert(ViewHolder helper, Object item, final int position) {
                 int price = (int) item;
                 TextView tvPrice = helper.getView(R.id.tv_authority_price_item);
-                tvPrice.setText(price + priceRootBean.getUnit());
+                tvPrice.setText(price / 100 + priceRootBean.getUnit());
 
                 if (authorityRootBean.getContentPrice() != price)
                     tvPrice.setSelected(false);
