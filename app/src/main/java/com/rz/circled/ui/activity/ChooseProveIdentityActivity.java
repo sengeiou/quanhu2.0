@@ -170,7 +170,6 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusHint.setVisibility(View.VISIBLE);
                 break;
             case ProveStatusBean.STATUS_FAIL:
-
                 tvStatusTitle.setText(R.string.prove_fail);
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.prove_again);

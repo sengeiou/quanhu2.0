@@ -549,7 +549,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             Double score = Double.valueOf(data.getScore());
             NumberFormat nf = new DecimalFormat("#");
-            custPointsTxt.setText("积分" + nf.format(score/100) + "");
+            custPointsTxt.setText("积分" + nf.format(score) + "");
             levelTxt.setText("Lv. " + data.getCustLevel());
 
             Session.setUserLevel(data.getCustLevel());

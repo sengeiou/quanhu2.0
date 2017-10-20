@@ -67,9 +67,9 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         }else{
             stringFormatUtil = new StringFormatUtil(mContext, model.getCustSimpleDTO().getCustNname(), keyWord, R.color.colorAccent).fillColor();
             if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
-                tvContent.setText(stringFormatUtil.getResult());
+                tvName.setText(stringFormatUtil.getResult().toString());
             }else{
-                tvContent.setText(model.getCustSimpleDTO().getCustNname());
+                tvName.setText(model.getCustSimpleDTO().getCustNname());
             }
 
         }
@@ -86,6 +86,18 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         tvContent.setText(model.getContent());
 
+
+        if(StringUtil.isEmpty(keyWord)){
+            tvContent.setText(model.getContent());
+        }else{
+            stringFormatUtil = new StringFormatUtil(mContext, model.getContent(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                tvContent.setText(stringFormatUtil.getResult().toString());
+            }else{
+                tvContent.setText(model.getContent());
+            }
+        }
+
         if(!TextUtils.isEmpty(model.getLocation())){
             placeLayout.setVisibility(View.VISIBLE);
             tvPlace.setText(model.getLocation());
@@ -95,12 +107,10 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         if( TextUtils.isEmpty(model.getImgUrl())){
             picImg.setVisibility(View.GONE);
-
 //            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //            lp.setMargins(2, 0, 0, 0);
 //
 //            tvTime.setLayoutParams(lp);
-
         }else{
             picImg.setVisibility(View.VISIBLE);
         }
@@ -140,10 +150,14 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 //            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
         }else if(model.getComplete() == 2){
 
-            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
-            tvStatus.setText("已完成");
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+            tvStatus.setText("公示期");
             tvTime.setVisibility(View.GONE);
         }else if(model.getComplete() == 3){
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
+            tvTime.setVisibility(View.GONE);
+            tvStatus.setText("已完成");
+        }else if(model.getComplete() == 4){
             tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
             tvTime.setVisibility(View.GONE);
             tvStatus.setText("已过期");
