@@ -2189,6 +2189,9 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      */
     private void callJs() {
         dataSource.setContentSource(jsResult);
+        if (dataSource.getContentPrice() < 100) {
+            dataSource.setContentPrice(dataSource.getContentPrice() * 100);
+        }
         rootBean.setDataSource(dataSource);
         if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//1.投票
             onLoadingStatus(CommonCode.General.DATA_SUCCESS);
