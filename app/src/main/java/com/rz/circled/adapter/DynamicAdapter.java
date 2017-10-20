@@ -58,7 +58,7 @@ public class DynamicAdapter extends CircleContentAdapter {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(mCivHead);
         }
 
-        mCivSuperV.setVisibility(item.talentType==1?View.VISIBLE:View.GONE);
+        mCivSuperV.setVisibility(item.cust.custRole==1?View.VISIBLE:View.GONE);
 
         if (item.cust != null) {
             mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);

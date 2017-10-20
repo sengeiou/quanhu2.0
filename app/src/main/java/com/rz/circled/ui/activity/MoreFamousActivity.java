@@ -90,11 +90,15 @@ public class MoreFamousActivity extends BaseActivity implements SwipyRefreshLayo
 
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
-        moreFamousList= (List<StarListBean>) t;
-        if (loadMore){
-            mAdapter.addData(moreFamousList);
-        }else {
-        mAdapter.setData(moreFamousList);
+        if (!loadMore){
+            moreFamousList.clear();
+        }
+        List<StarListBean> data = (List<StarListBean>) t;
+        moreFamousList.addAll(data);
+        if (loadMore) {
+            mAdapter.addData(data);
+        } else {
+            mAdapter.setData(data);
         }
     }
 
@@ -122,7 +126,7 @@ public class MoreFamousActivity extends BaseActivity implements SwipyRefreshLayo
 
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
-        mPresenter.getMoreFamousList(direction!=SwipyRefreshLayoutDirection.TOP);
+        mPresenter.getMoreFamousList(direction != SwipyRefreshLayoutDirection.TOP);
         mSbFamousRefresh.setRefreshing(false);
     }
 }
