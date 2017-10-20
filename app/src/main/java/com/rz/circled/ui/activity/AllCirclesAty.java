@@ -340,7 +340,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             CircleEntrModle circleEntrModle = loveList.get(position);
             holder.circle_follow.setVisibility(isEdit == true ? View.VISIBLE : View.GONE);
             if (Protect.checkLoadImageStatus(AllCirclesAty.this)) {
-                Glide.with(AllCirclesAty.this).load(circleEntrModle.circleIcon).into(holder.civ_circleImg);
+                Glide.with(AllCirclesAty.this).load(circleEntrModle.circleIcon).placeholder(R.drawable.circle_default).into(holder.civ_circleImg);
             }
             holder.itemView.setTag(position);//holder和position对应,pos塞进去
         }
@@ -387,7 +387,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             CircleEntrModle circleEntrModle = onLines.get(position);
             if (Protect.checkLoadImageStatus(AllCirclesAty.this)) {
                 Glide.with(AllCirclesAty.this).load(circleEntrModle.circleIcon).
-                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(holder.civ_circleImg);
+                        placeholder(R.drawable.circle_default).error(R.drawable.circle_default).into(holder.civ_circleImg);
             }
             holder.itemView.setTag(position);//holder和position对应,pos塞进去
         }
