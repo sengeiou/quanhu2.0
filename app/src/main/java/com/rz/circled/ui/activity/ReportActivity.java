@@ -14,7 +14,6 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 
 
-
 /**
  * Created by rzw2 on 2017/5/27.
  */
@@ -42,6 +41,11 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
 
     @Override
     public boolean hasDataInPage() {
+        return false;
+    }
+
+    @Override
+    protected boolean needShowTitle() {
         return false;
     }
 
@@ -89,12 +93,14 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
     @Override
     protected void onResume() {
         super.onResume();
+        mWebView.onResume();
         // ...
     }
 
     @SuppressLint("NewApi")
     @Override
     protected void onPause() {
+        mWebView.onPause();
         // ...
         super.onPause();
     }
@@ -124,10 +130,12 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
 
     @Override
     public void onPageStarted(String url, Bitmap favicon) {
+        mWebView.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onPageFinished(String url) {
+        mWebView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -140,6 +148,11 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
 
     @Override
     public void onExternalPageRequest(String url) {
+    }
+
+    @Override
+    public void callPhoneNumber(String uri) {
+
     }
 
     @Override

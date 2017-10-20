@@ -73,6 +73,7 @@ public class ApplyForPrivateGroupBelongActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        setTitleText(R.string.private_group_choose);
         selectId = getIntent().getStringExtra(IntentKey.EXTRA_ID);
         gv.setAdapter(mAdapter = new PrivateGroupBelongAdapter(mContext, R.layout.item_private_group_belong));
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

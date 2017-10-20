@@ -357,7 +357,7 @@ public class StringUtils {
      * @return time为null，或者时间格式不匹配，输出空字符""
      */
     public static String formatDisplayTime(String time) {
-        return formatDisplayTime(time.replace("\\\"", ""), "yyyy-MM-dd HH:mm:ss");
+        return formatDisplayTime(time.replace("\\\"", ""), "yyyy-MM-dd HH:mm");
     }
 
 

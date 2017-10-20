@@ -91,7 +91,7 @@ public class SearchRewardFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (!TextUtils.isEmpty(keyWord)) {
-                    ((SearchPresenter) searchPresenter).searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_REWARD);
+                    searchPresenter.searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_REWARD);
                 }
                 mRefresh.setRefreshing(false);
             }
@@ -117,7 +117,7 @@ public class SearchRewardFragment extends BaseFragment {
             //去搜索
             keyWord = (String) baseEvent.getData();
             if (!TextUtils.isEmpty(keyWord)) {
-                ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_REWARD);
+                searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_REWARD);
             }
 
         }
@@ -126,23 +126,22 @@ public class SearchRewardFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
-        if (t != null) {
-            List<RewardModel> mDatas = (List<RewardModel>) t;
-            if (null != mDatas && !mDatas.isEmpty()) {
-                if (!loadMore) {
-                    rewardBeanList.clear();
-                }
-                rewardBeanList.addAll(mDatas);
-                rewardAdapter.setKeyWord(keyWord);
-                rewardAdapter.setData(rewardBeanList);
-                rewardAdapter.notifyDataSetChanged();
-
-            } else {
-                if (!loadMore) {
-                    rewardBeanList.clear();
-                }
-                rewardAdapter.notifyDataSetChanged();
+        List<RewardModel> mDatas = (List<RewardModel>) t;
+        if (null != mDatas && !mDatas.isEmpty()) {
+            if (!loadMore) {
+                rewardBeanList.clear();
             }
+            rewardBeanList.addAll(mDatas);
+            rewardAdapter.setKeyWord(keyWord);
+            rewardAdapter.setData(rewardBeanList);
+            rewardAdapter.notifyDataSetChanged();
+
+        } else {
+            if (!loadMore) {
+                rewardBeanList.clear();
+            }
+            rewardAdapter.setData(rewardBeanList);
+            rewardAdapter.notifyDataSetChanged();
         }
     }
 
@@ -187,6 +186,6 @@ public class SearchRewardFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-        ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
+         searchPresenter.searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_REWARD);
     }
 }

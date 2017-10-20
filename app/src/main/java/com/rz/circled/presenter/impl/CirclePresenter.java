@@ -64,6 +64,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     public static final int TAG_DELETE_COMMENT = 1003;
     public static final int TAG_REWARD_LIST = 1004;
     public static final int TAG_ZAN_LIST = 1005;
+    private static final int ADD_SUCESS = 600;
+    private static final int DEL_SUCESS = 601;
 
     private IViewController mView;
     private Context mContext;
@@ -493,11 +495,15 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     /**
      * 发现更多达人
      */
-    public void getMoreFamousList() {
+    int start=0;
+    public void getMoreFamousList(final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
-        mUserService.getMoreFamous(Session.getUserId())
+        if (!loadMore){
+            start=0;
+        }
+        mUserService.getMoreFamous(loadMore?start:0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseData<MoreFamousModel<List<StarListBean>>>>() {
@@ -516,7 +522,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<StarListBean> data = res.getData().starList;
                             if (!data.isEmpty()) {
-                                mView.updateView(data);
+                                start+=10;
+                                mView.updateViewWithLoadMore(data,loadMore);
                             }else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,"");
                             }
@@ -551,8 +558,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     @Override
                     public void onNext(ResponseData res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
-//                            List<StarListBean> data = res.getData().starList;
-//                            mView.updateView(data);
+                            mView.updateView(DEL_SUCESS);
                         } else {
                             HandleRetCode.handler(mContext, res);
                         }
@@ -585,8 +591,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     @Override
                     public void onNext(ResponseData res) {
                         if (res.getRet() == ReturnCode.SUCCESS) {
-//                            List<StarListBean> data = res.getData().starList;
-//                            mView.updateView(data);
+                            mView.updateView(ADD_SUCESS);
                         } else {
                             HandleRetCode.handler(mContext, res);
                         }

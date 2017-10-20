@@ -42,7 +42,7 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.stampToDate(StringUtils.toDate(item.getCreateTime()).getTime(), "yyyy年MM月dd日 HH:mm"));
         holder.tvTitle.setText(item.getContent());
         Gson gson = new Gson();
         String json = gson.toJson(item.getBody());

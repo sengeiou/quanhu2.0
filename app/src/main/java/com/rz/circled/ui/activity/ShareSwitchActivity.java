@@ -61,6 +61,8 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
     TextView tvShareTitle;
     @BindView(R.id.layout)
     View layoutTeam;
+    @BindView(R.id.rtv_empty)
+    View rtvEmpty;
 
     private RecentContactAdapter adapter;
     // data
@@ -162,6 +164,13 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
                         items.clear();
                         items.addAll(recents);
                         adapter.notifyDataSetChanged();
+                        if (recents.isEmpty()) {
+                            rtvEmpty.setVisibility(View.VISIBLE);
+                            mRecentLv.setVisibility(View.GONE);
+                        } else {
+                            rtvEmpty.setVisibility(View.GONE);
+                            mRecentLv.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
             }
@@ -194,7 +203,7 @@ public class ShareSwitchActivity extends BaseActivity implements TAdapterDelegat
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
-        if (EventConstant.SWITCH_SHARE_SUCCESS==event.getType()) {
+        if (EventConstant.SWITCH_SHARE_SUCCESS == event.getType()) {
             finish();
         }
     }

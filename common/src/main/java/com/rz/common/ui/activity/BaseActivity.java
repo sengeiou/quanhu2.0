@@ -25,9 +25,11 @@ import android.widget.TextView;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.rz.common.R;
 import com.rz.common.application.BaseApplication;
+import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
@@ -66,6 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public Activity aty;
 
     private InputMethodManager mImm;
+    private KickDialog kickDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         initData();
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+        MyActivityManager.addActivity(this);
     }
 
     public void initPresenter() {
@@ -684,37 +688,40 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
         if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
+            Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
             //弹窗重新登录
-            Session.clearShareP();
-            final KickDialog kickDialog = new KickDialog(this) {
-
-                @Override
-                public void onClick(View v) {
-                    if (v.getId() == R.id.tv_kick_dialog_left) {
-                        closeDialog();
-                        String className = "com.rz.circled.ui.activity.LoginActivity";
-                        Intent intent = new Intent();
-                        intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setClassName(mContext, className);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        closeDialog();
-                        System.exit(0);
+            if (kickDialog == null) {
+                kickDialog = new KickDialog(this) {
+                    @Override
+                    public void onClick(View v) {
+                        if (v.getId() == R.id.tv_kick_dialog_left) {
+                            closeDialog();
+                            EventBus.getDefault().post(new BaseEvent(20018));
+                            String className = "com.rz.circled.ui.activity.LoginActivity";
+                            Intent intent = new Intent();
+                            intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.setClassName(mContext, className);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            closeDialog();
+                            MyActivityManager.finishAll();
+                        }
                     }
-                }
-            };
-            kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                @Override
-                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                        return true;
-                    } else {
-                        return false;
+                };
+                kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
-                }
-            });
+                });
+            }
+            if (kickDialog.isShowing()) return;
             kickDialog.setCancelable(false);
             kickDialog.showDialog();
         }

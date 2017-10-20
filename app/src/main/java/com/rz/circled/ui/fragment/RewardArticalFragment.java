@@ -89,24 +89,16 @@ public class RewardArticalFragment extends BaseFragment implements ScrollableHel
         lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo().getResourceId())||StringUtils.isEmpty(rewardBeanList.get(position).getResourceInfo())) {
+           if(position != 0){
 
-                  if(position != 0){
-//                      try {
-//                          JSONObject jsonobject = new JSONObject(rewardBeanList.get(position-1).getResourceInfo().getExtjson());
-//                          String coterieId = jsonobject.getString("coterieId");
-                          if(StringUtil.isEmpty(rewardBeanList.get(position-1).getResourceInfo().getCoterieId())){
-                              String circleUrl = CommomUtils.getCircleUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
-                              WebContainerActivity.startActivity(mActivity, circleUrl);
-                          }else{
-                              String circleUrl = CommomUtils.getDymanicUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(),rewardBeanList.get(position-1).getResourceInfo().getCoterieId(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
-                              WebContainerActivity.startActivity(mActivity, circleUrl);
-                          }
-
-//                      } catch (JSONException e) {
-//                          e.printStackTrace();
-//                      }
-                  }
+              if(StringUtil.isEmpty(rewardBeanList.get(position-1).getResourceInfo().getCoterieId())){
+                  String circleUrl = CommomUtils.getCircleUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
+                  WebContainerActivity.startActivity(mActivity, circleUrl);
+              }else{
+                  String circleUrl = CommomUtils.getDymanicUrl(rewardBeanList.get(position-1).getResourceInfo().getCircleRoute(),rewardBeanList.get(position-1).getResourceInfo().getModuleEnum(),rewardBeanList.get(position-1).getResourceInfo().getCoterieId(), rewardBeanList.get(position-1).getResourceInfo().getResourceId());
+                  WebContainerActivity.startActivity(mActivity, circleUrl);
+              }
+           }
             }
         });
     }

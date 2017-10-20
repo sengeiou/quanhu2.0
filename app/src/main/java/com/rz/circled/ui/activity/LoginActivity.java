@@ -516,9 +516,6 @@ public class LoginActivity extends BaseActivity {
 
                     skipActivity(aty, FollowCircle.class);
                 } else {
-//                    BaseEvent event = new BaseEvent();
-////            event.key = LOGIN_IN_SUCCESS;
-//                    EventBus.getDefault().post(event);
 
                     EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
 
@@ -564,8 +561,10 @@ public class LoginActivity extends BaseActivity {
         Session.setCustRole(model.getCustRole());
         if (TextUtils.equals("0", model.getCustSex())) {
             Session.setUser_sex("女");
-        } else {
+        } else if(TextUtils.equals("1", model.getCustSex())){
             Session.setUser_sex("男");
+        }else{
+            Session.setUser_sex("");
         }
         Session.setUser_area(model.getCustLocation());
         if (Type.HAD_SET_PW == model.getIsPayPassword()) {
@@ -631,13 +630,18 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
-        if (t != null) {
+        if (t != null && t instanceof List) {
             List<LoginTypeBean> model = (List<LoginTypeBean>) t;
             if (model.size() > 0 && model.size() == 4) {
                 //已经绑定过手机直接登录
                 if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
-                    skipActivity(aty, MainActivity.class);
-                    saveLoginData(loginModel);
+                    if(Session.getUserIsFirstDownload()) {
+                        saveLoginData(loginModel);
+                        skipActivity(aty, FollowCircle.class);
+//
+                    }else {
+                        skipActivity(aty, MainActivity.class);
+                    }
                 } else {
                     //传递登录时返回的对象
                     if (loginModel != null) {

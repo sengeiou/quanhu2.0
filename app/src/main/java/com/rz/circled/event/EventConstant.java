@@ -23,6 +23,7 @@ public class EventConstant {
 
     public static final int USER_AVATAR_REFUSE = 200013;
     public static final int USER_BE_FROZEN = 200014;
+    public static final int USER_BE_KICKOUT_BY_HTTP = 200018;
     public static final int PAY_RECHARGE_SUCCESS = 200015;
     public static final int SWITCH_SHARE_SUCCESS = 200017;
 

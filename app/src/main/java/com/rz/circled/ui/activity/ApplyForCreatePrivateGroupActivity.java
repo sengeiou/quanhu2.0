@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -94,6 +95,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     public void initView() {
         setTitleText(R.string.private_group_apply_for);
         setTitleRightText(R.string.submit);
+        setTitleRightTextColor(R.color.font_gray_s);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +129,12 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         etvName.addTextChangedListener(new MyTextWatcher(tvNameNum));
         etvDesc.addTextChangedListener(new MyTextWatcher(tvDescNum));
         etvGroupDesc.addTextChangedListener(new MyTextWatcher(tvDescGroupNum));
+        cbxProtocol.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                validateSubmit();
+            }
+        });
     }
 
     @Override
@@ -206,6 +214,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 if (array.length == 2) {
                     circleId = array[0];
                     tvGroup.setText(array[1]);
+                    validateSubmit();
                 }
                 break;
         }
@@ -226,6 +235,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                         Glide.with(mContext).load(coverPath).into(imgGroup);
                     imgGroup.setVisibility(View.VISIBLE);
                     btnUpdatePic.setVisibility(View.GONE);
+                    validateSubmit();
                 }
             }
         }
@@ -266,6 +276,19 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     }
 
+    private void validateSubmit() {
+        if (TextUtils.isEmpty(circleId)
+                || TextUtils.isEmpty(etvDesc.getText().toString().trim())
+                || TextUtils.isEmpty(coverPath)
+                || TextUtils.isEmpty(etvName.getText().toString().trim())
+                || TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())
+                || !cbxProtocol.isChecked()) {
+            setTitleRightTextColor(R.color.font_gray_s);
+        } else {
+            setTitleRightTextColor(R.color.font_color_blue);
+        }
+    }
+
     private class MyTextWatcher implements TextWatcher {
         private TextView tv;
 
@@ -286,6 +309,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         @Override
         public void afterTextChanged(Editable s) {
             tv.setText(String.valueOf(s.length()));
+            validateSubmit();
         }
     }
 }

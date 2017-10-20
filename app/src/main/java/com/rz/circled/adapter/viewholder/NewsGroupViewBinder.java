@@ -37,7 +37,7 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.stampToDate(StringUtils.toDate(item.getCreateTime()).getTime(), "yyyy年MM月dd日 HH:mm"));
         holder.tvTitle.setText(item.getTitle());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_private_group_icon).into(holder.avatar);
         Gson gson = new Gson();
@@ -51,7 +51,7 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
             holder.tvStatus.setText(R.string.private_group_free);
             holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.font_color_blue));
         } else {
-            holder.tvStatus.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_price), extra.getJoinFee()));
+            holder.tvStatus.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_youran_price), extra.getJoinFee()));
             holder.tvStatus.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.color_F5CD45));
         }
     }

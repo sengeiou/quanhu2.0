@@ -87,6 +87,7 @@ public class MyLevelActivity extends BaseActivity {
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
                     loadData(false);
+                    presenter.getLevelAcount();
                 } else {
                     loadData(true);
                 }

@@ -227,5 +227,14 @@ public class SearchActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean needSwipeBack() {
+        return false;
+    }
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.rz.httpapi.bean.CircleEntrModle;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,8 +51,10 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
     List<CircleEntrModle> onLines = new ArrayList<>();
     List<CircleEntrModle> followOnLines = new ArrayList<>();
     List<CircleEntrModle> noFollow = new ArrayList<>();
-    List<CircleEntrModle> loveList = new ArrayList<>();;
-    List<CircleEntrModle> loveAllList = new ArrayList<>();;
+    List<CircleEntrModle> loveList = new ArrayList<>();
+    ;
+    List<CircleEntrModle> loveAllList = new ArrayList<>();
+    ;
     PublishedAdapter publishedAdapter;
     ComingPublishedAdapter comingPublishedAdapter;
     ImageView mIvBaseTitleLeft;
@@ -60,6 +64,9 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.tv_nodata)
     TextView mTvNodata;
     private CirclePresenter mPresenter;
+    HashSet<String> delHs = new HashSet<>();
+    HashSet<String> addHs = new HashSet<>();
+    StringBuffer sb = new StringBuffer();
 
     @Nullable
     @Override
@@ -69,7 +76,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void initView() {
-        loveAllList= (List<CircleEntrModle>) getIntent().getSerializableExtra(LOVE_CIRCLE);
+        loveAllList = (List<CircleEntrModle>) getIntent().getSerializableExtra(LOVE_CIRCLE);
         initShowCircle();
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(QHApplication.getContext(), 4);
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(QHApplication.getContext(), 4);
@@ -88,9 +95,9 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                     loveList.remove(circleEntrModle);
                     onLines.add(circleEntrModle);
                     initShowCircle();
+                    delHs.add(appId);
                     publishedAdapter.notifyDataSetChanged();
                     comingPublishedAdapter.notifyDataSetChanged();
-                    mPresenter.removeLoveCircle(appId,Session.getUserId());
                 } else {
                     WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
                 }
@@ -104,20 +111,20 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
             public void onItemClick(View view, int pos, int status) {
 //                if (isLogin()) {
                 CircleEntrModle circleEntrModle = onLines.get(pos);
-                circleEntrModle.click+=1;
+                circleEntrModle.click += 1;
                 String appId = circleEntrModle.appId;
                 if (isEdit) {
                     onLines.remove(circleEntrModle);
                     loveList.add(0, circleEntrModle);
                     initShowCircle();
+                    addHs.add(appId);
                     publishedAdapter.notifyDataSetChanged();
                     comingPublishedAdapter.notifyDataSetChanged();
-                    mPresenter.addLoveCircle(appId,1);
                 } else {
                     circleEntrModle.click += 1;
                     if (circleEntrModle.click >= 3) {
                         mPresenter.addLoveCircle(circleEntrModle.appId, 2);
-                        circleEntrModle.click=0;
+                        circleEntrModle.click = 0;
                     }
                     WebContainerActivity.startActivity(AllCirclesAty.this, circleEntrModle.circleUrl);
                 }
@@ -134,7 +141,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
 
     private void delLove() {
         for (int i = 0; i < loveAllList.size(); i++) {
-            if (loveAllList.get(i).type==1){
+            if (loveAllList.get(i).type == 1) {
                 loveList.add(loveAllList.get(i));
             }
         }
@@ -143,10 +150,10 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
     }
 
     private void initShowCircle() {
-        if (loveList.size()==0){
+        if (loveList.size() == 0) {
             mTvNodata.setVisibility(View.VISIBLE);
             mRvAllcirclesPublished.setVisibility(View.GONE);
-        }else {
+        } else {
             mTvNodata.setVisibility(View.GONE);
             mRvAllcirclesPublished.setVisibility(View.VISIBLE);
         }
@@ -199,7 +206,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                 for (int i = 0; i < onLines.size(); i++) {
                     boolean isfind = false;
                     for (int j = 0; j < loveList.size(); j++) {
-                        if (onLines.get(i).appId.equals(loveList.get(j).appId)){
+                        if (onLines.get(i).appId.equals(loveList.get(j).appId)) {
                             isfind = true;
                             break;
                         }
@@ -209,13 +216,12 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                     }
                 }
                 onLines.clear();
-                onLines=noFollow;
+                onLines = noFollow;
                 comingPublishedAdapter.notifyDataSetChanged();
                 return;
             }
         }
     }
-
 
 
     @Override
@@ -236,7 +242,7 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
                 if (isEdit) {
                     isEdit = false;
                     mTvBaseTitleRight.setText(R.string.edit);
-                 EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
+                    mapFavCircle();
                 } else {
                     isEdit = true;
                     mTvBaseTitleRight.setText(R.string.finish);
@@ -246,6 +252,47 @@ public class AllCirclesAty extends BaseActivity implements View.OnClickListener 
 
 
         }
+    }
+
+    HashSet<String> bothHs = new HashSet<>();
+
+    private void mapFavCircle() {
+        if (addHs.size() != 0 && delHs.size() != 0) {
+            for (String addCircle : addHs) {
+                for (String delCircle : delHs) {
+                    if (addCircle.equals(delCircle)) {
+                        bothHs.add(addCircle);
+                    }
+                }
+            }
+            addHs.removeAll(bothHs);
+            delHs.removeAll(bothHs);
+        }
+        if (addHs.size() != 0) {
+            for (String appid : addHs) {
+                sb.append(appid + ",");
+            }
+            mPresenter.addLoveCircle(sb.toString(), 1);
+            Log.i(TAG, "mapFavCircle: " + sb.toString());
+            sb.delete(0, sb.length());
+        }
+        if (delHs.size() != 0) {
+            for (String appid : delHs) {
+                sb.append(appid + ",");
+            }
+            mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
+            Log.i(TAG, "mapFavCircle: " + sb.toString() + "llll");
+            sb.delete(0, sb.length());
+        }
+        delHs.clear();
+        addHs.clear();
+        bothHs.clear();
+    }
+
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
     }
 
     @Override
