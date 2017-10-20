@@ -44,6 +44,7 @@
             android:textColor="@color/color_999999"
             android:layout_marginLeft="@dimen/px34"
             android:gravity="center"
+            android:singleLine="true"
             />
 
         <TextView

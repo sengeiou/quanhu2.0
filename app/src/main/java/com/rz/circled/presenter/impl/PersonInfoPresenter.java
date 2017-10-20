@@ -487,7 +487,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
 
                     ResponseData<BuyingBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        List<MyBuyingModel> modelList = (List<MyBuyingModel>) res.getData().getList();
+                        List<MyBuyingModel> modelList = res.getData().getList();
 
                         if (null != modelList && !modelList.isEmpty()) {
                             isNoData = false;
