@@ -29,6 +29,7 @@ import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
@@ -689,14 +690,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
             Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
             //弹窗重新登录
-            Session.clearShareP();
             if (kickDialog == null) {
                 kickDialog = new KickDialog(this) {
-
                     @Override
                     public void onClick(View v) {
                         if (v.getId() == R.id.tv_kick_dialog_left) {
                             closeDialog();
+                            EventBus.getDefault().post(new BaseEvent(20018));
                             String className = "com.rz.circled.ui.activity.LoginActivity";
                             Intent intent = new Intent();
                             intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);

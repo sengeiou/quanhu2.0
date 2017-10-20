@@ -145,22 +145,21 @@ public class SearchPersonFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
-        if (t != null) {
-            List<StarListBean.CustInfoBean> mDatas = (List<StarListBean.CustInfoBean>) t;
-            if (null != mDatas && !mDatas.isEmpty()) {
-                if (!loadMore) {
-                    dataCustInfos.clear();
-                }
-                dataCustInfos.addAll(mDatas);
-                personAdapter.setKeyWord(keyWord);
-                personAdapter.setData(dataCustInfos);
-                personAdapter.notifyDataSetChanged();
-            } else {
-                if (!loadMore) {
-                    dataCustInfos.clear();
-                }
-                personAdapter.notifyDataSetChanged();
+        List<StarListBean.CustInfoBean> mDatas = (List<StarListBean.CustInfoBean>) t;
+        if (null != mDatas && !mDatas.isEmpty()) {
+            if (!loadMore) {
+                dataCustInfos.clear();
             }
+            dataCustInfos.addAll(mDatas);
+            personAdapter.setKeyWord(keyWord);
+            personAdapter.setData(dataCustInfos);
+            personAdapter.notifyDataSetChanged();
+        } else {
+            if (!loadMore) {
+                dataCustInfos.clear();
+            }
+            personAdapter.setData(dataCustInfos);
+            personAdapter.notifyDataSetChanged();
         }
 
     }

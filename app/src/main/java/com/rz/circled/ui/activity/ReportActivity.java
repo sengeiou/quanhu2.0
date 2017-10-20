@@ -45,6 +45,11 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
     }
 
     @Override
+    protected boolean needShowTitle() {
+        return false;
+    }
+
+    @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_report, null);
     }
@@ -143,6 +148,11 @@ public class ReportActivity extends BaseActivity implements FileWebView.Listener
 
     @Override
     public void onExternalPageRequest(String url) {
+    }
+
+    @Override
+    public void callPhoneNumber(String uri) {
+
     }
 
     @Override

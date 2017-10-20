@@ -415,6 +415,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case CommonCode.EventType.TYPE_LOGOUT:
                 finish();
                 break;
+            case EventConstant.USER_BE_KICKOUT_BY_HTTP:
+                kickOut(StatusCode.INVALID);
+                break;
         }
     }
 

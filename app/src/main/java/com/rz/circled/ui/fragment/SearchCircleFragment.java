@@ -142,6 +142,7 @@ public class SearchCircleFragment extends BaseFragment {
             if (!loadMore) {
                 circleBeanList.clear();
             }
+            circleAdapter.setData(circleBeanList);
             circleAdapter.notifyDataSetChanged();
         }
     }
