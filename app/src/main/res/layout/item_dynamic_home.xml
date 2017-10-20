@@ -16,14 +16,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/px58"
         android:orientation="horizontal">
-        android:orientation="horizontal"
-        android:visibility="visible"
-        >
 
         <ImageView
             android:id="@+id/civ_head"
-            android:layout_width="@dimen/px98"
-            android:layout_height="@dimen/px98"
+            android:layout_width="@dimen/px64"
+            android:layout_height="@dimen/px64"
             android:src="@drawable/ic_default_head_new" />
 
         <com.rz.circled.widget.CircleImageView
