@@ -81,6 +81,7 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
             EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
         } else {
             Session.setUser_desc(t.toString());
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_USER_UPDATE));
         }
 
         setResult(RESULT_CODE1);

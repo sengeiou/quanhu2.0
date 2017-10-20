@@ -21,8 +21,8 @@
 
         <RelativeLayout
             android:id="@+id/bg_rl_head"
-            android:layout_width="@dimen/px227"
-            android:layout_height="@dimen/px227"
+            android:layout_width="@dimen/px217"
+            android:layout_height="@dimen/px217"
             android:background="@drawable/shape_circle"
             android:layout_marginTop="@dimen/px176"
             >

@@ -796,12 +796,12 @@
     <string name="tab_coupons">卡券</string>
     <string name="tab_award">奖品</string>
     <string name="mine_article_txt">还没有发布内容哦~赶紧去发布</string>
-    <string name="ta_article_txt">ta还没有发布内容哦~</string>
+    <string name="ta_article_txt">Ta还没有发布内容哦~</string>
     <string name="mine_reward_txt">还没有发布悬赏信息哦~赶紧去发布</string>
     <string name="mine_answer_txt">还没有回答悬赏信息哦~赶紧去回答</string>
     <string name="mine_activity_txt">还没有参加任何活动哦~</string>
-    <string name="ta_reward_txt">ta还没有发布悬赏信息哦~</string>
-    <string name="ta_answer_txt">ta还没有回答悬赏信息哦~</string>
+    <string name="ta_reward_txt">Ta还没有发布悬赏信息哦~</string>
+    <string name="ta_answer_txt">Ta还没有回答悬赏信息哦~</string>
 
     <string name="call_phone_authorization">请授权拨打电话！</string>
     <string name="authorization_fail">授权失败！</string>
