@@ -74,25 +74,29 @@
                     android:paddingTop="@dimen/px10"
                     android:textColor="@color/font_gray_s"
                     android:textSize="@dimen/font_40"
+                    android:visibility="gone"
                     tool:text="这里是个人简介" />
 
                 <TextView
                     android:id="@+id/tv_scan"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/px28"
+                    android:lineSpacingExtra="@dimen/px16"
                     android:ellipsize="end"
-                    android:lines="1"
+                    android:maxLines="2"
                     android:textColor="@color/font_gray_s"
                     android:textSize="@dimen/font_40"
-                    tool:text="这里是圈子简介" />
+                    tool:text="这里是圈子简介数据" />
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/line_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/px44"
             android:layout_marginTop="@dimen/px44"
             android:orientation="horizontal">
 
@@ -112,10 +116,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="@dimen/font_40" />
+                android:textSize="@dimen/font_40"
+                android:visibility="gone" />
         </LinearLayout>
 
-        <View style="@style/line_horizontal_gray_s" />
+        <View
+            style="@style/line_horizontal_gray_s"
+            android:layout_marginTop="@dimen/px44" />
 
         <LinearLayout
             android:layout_width="match_parent"

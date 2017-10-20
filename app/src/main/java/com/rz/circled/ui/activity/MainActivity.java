@@ -3,9 +3,7 @@ package com.rz.circled.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,13 +55,10 @@ import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.cache.DataCacheManager;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
 import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
-import com.zbar.lib.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -315,7 +310,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
         presenter.attachView(this);
         presenter.ExitApp();
-
+        Session.clearShareP();
         JPushInterface.setAlias(mContext, "", null);
 
         int loginWay = Session.getLoginWay();
