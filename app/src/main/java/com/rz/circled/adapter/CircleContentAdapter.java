@@ -74,7 +74,7 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             }
 
             if(TextUtils.isEmpty(keyWord)){
-                mdes.setText(item.title);
+                mTitle.setText(item.title);
             }else {
                 stringFormatUtil = new StringFormatUtil(mContext, item.title, keyWord, R.color.colorAccent).fillColor();
                 if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
@@ -100,6 +100,7 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                         mTitle.setText(item.content);
                     }
 
+//                    mTitle.setText(item.content);
                 } else {
                     mdes.setVisibility(View.VISIBLE);
                     String s = item.content.trim().replaceAll("\\t", "");

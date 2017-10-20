@@ -105,9 +105,10 @@ public class ChatSettingActivity extends BaseActivity {
 
             if (TextUtils.equals("1", data.getCustSex()))
                 imgSex.setImageResource(R.mipmap.ic_male);
-            else
+            else if (TextUtils.equals("0", data.getCustSex()))
                 imgSex.setImageResource(R.mipmap.ic_female);
-
+            else
+                imgSex.setVisibility(View.GONE);
         }
     }
 

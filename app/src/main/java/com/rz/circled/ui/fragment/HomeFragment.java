@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
@@ -112,7 +113,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 trackUser("入口", "首页", "消息");
                 //跳最近联系人界面
-                startActivity(new Intent(mActivity, RecentContactActivity.class));
+                if (NIMClient.getStatus() == StatusCode.LOGINED)
+                    startActivity(new Intent(mActivity, RecentContactActivity.class));
+                else
+                    Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
             }
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
@@ -175,12 +179,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        if (t!=null){
-            mUserPermissionBean= (UserPermissionBean) t;
+        if (t != null) {
+            mUserPermissionBean = (UserPermissionBean) t;
             if (!mUserPermissionBean.disTalk)
                 WebContainerActivity.startActivity(mActivity, WebHomeBaseUrl + "/activity/new-circles");
-            else Toasty.info(mActivity,getString(R.string.NO_TALK_STATE)).show();
-            Log.i(TAG, "updateView: "+mUserPermissionBean.disTalk);
+            else Toasty.info(mActivity, getString(R.string.NO_TALK_STATE)).show();
+            Log.i(TAG, "updateView: " + mUserPermissionBean.disTalk);
         }
     }
 
@@ -200,7 +204,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        CircleDynamic circleDynamic = circleDynamicList.get(position-1);
+        CircleDynamic circleDynamic = circleDynamicList.get(position - 1);
         circleDynamic.click += 1;
         if (circleDynamic.click >= 3) {
             mPresenter.addLoveCircle(circleDynamic.circleId, 2);

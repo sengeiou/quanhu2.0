@@ -125,7 +125,6 @@
             <com.rz.common.widget.MyListView
                 android:id="@+id/id_content_lv"
                 style="@style/DefaultLvStyle"
-                android:layout_gravity="center"
                 android:dividerHeight="0dp" />
 
             <LinearLayout

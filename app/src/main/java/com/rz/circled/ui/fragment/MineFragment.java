@@ -387,6 +387,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         // TODO: 2017/9/18 判断是否有申请达人,未申请则不去请求
         getUserProveStatus();
         setData();
+        if (!isNotity()) {
+            EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
+        }
     }
 
 
@@ -546,7 +549,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             Double score = Double.valueOf(data.getScore());
             NumberFormat nf = new DecimalFormat("#");
-            custPointsTxt.setText("积分" + nf.format(score/100) + "");
+            custPointsTxt.setText("积分" + nf.format(score) + "");
             levelTxt.setText("Lv. " + data.getCustLevel());
 
             Session.setUserLevel(data.getCustLevel());
