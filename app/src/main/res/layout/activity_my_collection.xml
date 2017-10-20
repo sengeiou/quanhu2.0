@@ -15,6 +15,7 @@
         android:id="@+id/lv_collection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:listSelector="@color/white"
         android:dividerHeight="1dp"
         android:divider="@color/color_f5f5f5"
         ></ListView>

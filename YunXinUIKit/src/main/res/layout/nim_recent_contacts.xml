@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@+id/messages_list_layout"
-             xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/messages_list_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/lvMessages"
@@ -12,7 +12,7 @@
         android:cacheColorHint="@android:color/transparent"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dip"
-        android:fadingEdge="none"/>
+        android:fadingEdge="none" />
 
     <RelativeLayout
         android:id="@+id/emptyBg"
@@ -24,11 +24,12 @@
 
         <ImageView
             android:id="@+id/emptyBg1"
-            android:layout_width="@dimen/px300"
-            android:layout_height="@dimen/px300"
+            android:layout_width="@dimen/px450"
+            android:layout_height="@dimen/px450"
             android:layout_centerInParent="true"
             android:contentDescription="@string/empty"
-            android:src="@drawable/nim_messages_list_empty_bg"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/nim_messages_list_empty_bg" />
 
         <TextView
             android:id="@+id/message_list_empty_hint"
@@ -37,6 +38,6 @@
             android:layout_below="@id/emptyBg1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dip"
-            android:gravity="center"/>
+            android:gravity="center" />
     </RelativeLayout>
 </FrameLayout>

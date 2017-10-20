@@ -42,12 +42,12 @@ public class NewsGroupExtra {
     /**
      * 加入私圈价格
      */
-    private Integer joinFee;
+    private int joinFee;
 
     /**
      * 私圈成员数
      */
-    private Integer memberNum;
+    private int memberNum;
 
     public String getCircleId() {
         return circleId;
@@ -105,19 +105,19 @@ public class NewsGroupExtra {
         this.ownerIntro = ownerIntro;
     }
 
-    public Integer getJoinFee() {
-        return joinFee;
-    }
-
-    public void setJoinFee(Integer joinFee) {
-        this.joinFee = joinFee;
-    }
-
-    public Integer getMemberNum() {
+    public int getMemberNum() {
         return memberNum;
     }
 
-    public void setMemberNum(Integer memberNum) {
+    public void setMemberNum(int memberNum) {
         this.memberNum = memberNum;
+    }
+
+    public int getJoinFee() {
+        return joinFee;
+    }
+
+    public void setJoinFee(int joinFee) {
+        this.joinFee = joinFee;
     }
 }

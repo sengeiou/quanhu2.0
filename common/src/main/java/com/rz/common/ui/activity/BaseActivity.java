@@ -689,6 +689,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     public void onKickEvent(KickEvent kickEvent) {
         if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
             Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
+            Session.clearShareP();
             //弹窗重新登录
             if (kickDialog == null) {
                 kickDialog = new KickDialog(this) {
@@ -696,7 +697,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                     public void onClick(View v) {
                         if (v.getId() == R.id.tv_kick_dialog_left) {
                             closeDialog();
-                            EventBus.getDefault().post(new BaseEvent(20018));
+                            int kickOutYxCode = 200018;
+                            EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
                             String className = "com.rz.circled.ui.activity.LoginActivity";
                             Intent intent = new Intent();
                             intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
