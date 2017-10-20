@@ -313,7 +313,8 @@ public class BankPresenter extends AbsPresenter {
                         return;
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.withdraw_fail) : res.getMsg());
-                        mView.updateViewWithFlag("", 0);
+//                        mView.updateViewWithFlag("", 0);
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.withdraw_fail));
