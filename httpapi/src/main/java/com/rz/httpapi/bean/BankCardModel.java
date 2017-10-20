@@ -27,6 +27,8 @@ public class BankCardModel implements Serializable {
     //默认添加银行卡按钮
     public boolean isShowAdd;
 
+    public boolean isSelect;
+
 
     public String getCust2BankId() {
         return cust2BankId;
