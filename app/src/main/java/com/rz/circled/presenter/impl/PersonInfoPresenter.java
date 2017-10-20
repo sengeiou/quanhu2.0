@@ -405,7 +405,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
                             if (loadMore == false) {
-
+                                mView.updateViewWithLoadMore(modelList, loadMore);
                                 if(Session.getUserId().equals(custId)){
                                     if(type == 0){
                                         mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,mContext.getString(R.string.mine_reward_txt));
@@ -422,7 +422,6 @@ public class PersonInfoPresenter extends GeneralPresenter {
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
-                            mView.updateViewWithLoadMore(modelList, loadMore);
                             isNoData = true;
                         }
                         return;

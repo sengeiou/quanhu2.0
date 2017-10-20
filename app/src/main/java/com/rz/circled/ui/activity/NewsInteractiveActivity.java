@@ -8,6 +8,7 @@ import android.view.View;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentPagerAdapter;
 import com.rz.circled.adapter.NewsInteractiveNavigatorAdapter;
+import com.rz.circled.helper.NewsHelper;
 import com.rz.circled.ui.fragment.NewsCommonFragment;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.event.BaseEvent;
@@ -125,7 +126,14 @@ public class NewsInteractiveActivity extends BaseActivity {
             mFragments.add(newsCommonFragment);
         }
         viewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));
-        viewpager.setOffscreenPageLimit(1);
+        viewpager.setOffscreenPageLimit(mFragments.size());
+        viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                NewsHelper.clearUnreadByType(mTypes.get(position));
+            }
+        });
     }
 
     private void initIndicatorGroup() {

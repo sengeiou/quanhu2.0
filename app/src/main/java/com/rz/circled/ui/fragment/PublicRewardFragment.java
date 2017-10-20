@@ -149,6 +149,7 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
                 if (!loadMore) {
                     rewardBeanList.clear();
                 }
+                rewardAdapter.setData(rewardBeanList);
                 rewardAdapter.notifyDataSetChanged();
             }
         }

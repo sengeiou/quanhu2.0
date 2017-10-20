@@ -13,11 +13,11 @@ public interface H5Address {
     //举报
     String ONLINE_REPORT = "http://youranyizhi.mikecrm.com/1f4hJQA";
     //充值说明
-    String RECHARGE_INTRODUCE = "https://www.yryz.com/web/app/andrioid/help_cz.html";
+    String RECHARGE_INTRODUCE = H5_HEAD + "quanhu/doc/recharge_issue/index.html";
     //中国资源
     String CHINA_RESOURCE = "https://static.yryz.com/quanhu/activity/skating_club/index.html";
     //账户规则
-    String ACCOUNT_RULE = "https://static.yryz.com/quanhu/doc/account_rules/index.html";
+    String ACCOUNT_RULE = H5_HEAD + "quanhu/doc/account_rules/index.html";
 
     //平台奖励规则
     String REWARD_RULE = H5_HEAD + "quanhu/doc/platform_award_rule/index.html";
@@ -26,11 +26,11 @@ public interface H5Address {
     //积分获取攻略
     String INTEGRAL_STATEGY = H5_HEAD + "common/integral-strategy/index.html";
 
-    //创建私圈协议
+    //私圈创建协议
     String PRIVATE_GROUP_CREATE_AGREEMENT = H5_HEAD + "quanhu/doc/private_circle_rule/index.html";
 
     //私圈关于
-    String PRIVATE_GROUP_ABOUT_AGREEMENT = H5_HEAD + "quanhu/doc/private_circle_rule/index.html";
+    String PRIVATE_GROUP_ABOUT_AGREEMENT = H5_HEAD + "quanhu/doc/about_circle/index.html";
 
     //圈乎下载链接
     String APP_DOWNLOAD = H5_HEAD + "quanhu/download/index.html";

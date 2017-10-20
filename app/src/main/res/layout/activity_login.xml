@@ -213,6 +213,7 @@
                         android:text="@string/login_with_space"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/px50"
+                        android:paddingBottom="@dimen/px10"
                         />
 
                     <LinearLayout
