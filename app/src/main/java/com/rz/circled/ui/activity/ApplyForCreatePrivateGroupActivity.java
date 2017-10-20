@@ -120,7 +120,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     return;
                 }
                 if (!cbxProtocol.isChecked()) {
-                    Toast.makeText(mContext, "请阅读并同意私圈使用协议", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请阅读并同意私圈创建协议", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 updateCoverPic();

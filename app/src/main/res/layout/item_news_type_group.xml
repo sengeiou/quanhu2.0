@@ -70,25 +70,23 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:lines="1"
-                    android:paddingTop="@dimen/px10"
+                    android:lineSpacingExtra="@dimen/px16"
+                    android:maxLines="2"
+                    android:paddingTop="@dimen/px28"
                     android:textColor="@color/font_gray_s"
                     android:textSize="@dimen/font_40"
-                    android:visibility="gone"
                     tool:text="这里是个人简介" />
 
                 <TextView
                     android:id="@+id/tv_scan"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingTop="@dimen/px28"
-                    android:lineSpacingExtra="@dimen/px16"
+                    android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="2"
+                    android:lines="1"
                     android:textColor="@color/font_gray_s"
                     android:textSize="@dimen/font_40"
-                    tool:text="这里是圈子简介数据" />
+                    android:visibility="gone"
+                    tool:text="这里是圈子简介" />
             </LinearLayout>
 
         </LinearLayout>

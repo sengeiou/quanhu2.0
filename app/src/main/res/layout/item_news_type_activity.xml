@@ -40,7 +40,6 @@
             android:layout_marginTop="@dimen/px36"
             android:maxLines="3"
             android:includeFontPadding="false"
-            android:lines="1"
             android:textColor="@color/font_gray_l"
             android:textSize="@dimen/font_44"
             tool:text="这里是活动简介" />
