@@ -13,6 +13,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.NewsMultiTypeAdapter;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.NewsHelper;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
@@ -73,8 +74,6 @@ public class NewsCommonFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
-        if (type == NEWS_COMMENT)
-            clearUnreadByType(type);
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
     }
@@ -105,19 +104,13 @@ public class NewsCommonFragment extends BaseFragment {
     }
 
     @Override
-    protected void onVisible() {
-        super.onVisible();
-        clearUnreadByType(type);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         Log.e(TAG, "onDestroyView: " + getUserVisibleHint());
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
         if (getUserVisibleHint())
-            clearUnreadByType(refreshType);
+            NewsHelper.clearUnreadByType(refreshType);
     }
 
     @Override
@@ -268,61 +261,6 @@ public class NewsCommonFragment extends BaseFragment {
                 SVProgressHUD.showErrorWithStatus(getContext(), getString(R.string.request_failed));
             }
         });
-    }
-
-    private void clearUnreadByType(int type) {
-        if (type == -1)
-            return;
-        switch (type) {
-            case NEWS_ANNOUNCEMENT:
-                if (Session.getNewsAnnouncementNum() != 0) {
-                    Session.setNewsAnnouncementNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_SYSTEM_INFORMATION:
-                if (Session.getNewsSystemInformationNum() != 0) {
-                    Session.setNewsSystemInformationNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_RECOMMEND:
-                if (Session.getNewsRecommendNum() != 0) {
-                    Session.setNewsRecommendNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_ACCOUNT:
-                if (Session.getNewsAccountInformationNum() != 0) {
-                    Session.setNewsAccountInformationNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_COMMENT:
-                if (Session.getNewsCommentNum() != 0) {
-                    Session.setNewsCommentNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_QA:
-                if (Session.getNewsQaNum() != 0) {
-                    Session.setNewsQaNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_PRIVATE_GROUP:
-                if (Session.getNewsGroupNum() != 0) {
-                    Session.setNewsGroupNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-            case NEWS_ACTIVITY:
-                if (Session.getNewsActivityNum() != 0) {
-                    Session.setNewsActivityNum(0);
-                    EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_UNREAD_CHANGE));
-                }
-                break;
-        }
     }
 
     @Override

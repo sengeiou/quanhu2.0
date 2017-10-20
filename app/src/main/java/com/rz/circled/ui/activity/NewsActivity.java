@@ -11,6 +11,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.NewsOverviewAdapter;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.NewsHelper;
 import com.rz.circled.ui.fragment.NewsCommonFragment;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -83,18 +84,22 @@ public class NewsActivity extends BaseActivity {
                 switch (position) {
                     case 0:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_ANNOUNCEMENT);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_ANNOUNCEMENT);
                         break;
                     case 1:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_SYSTEM_INFORMATION);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_SYSTEM_INFORMATION);
                         break;
                     case 2:
                         startActivity(new Intent(mContext, NewsInteractiveActivity.class));
                         break;
                     case 3:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_RECOMMEND);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_RECOMMEND);
                         break;
                     case 4:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_ACCOUNT);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_ACCOUNT);
                         break;
                 }
             }
