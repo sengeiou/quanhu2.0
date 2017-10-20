@@ -1,6 +1,7 @@
 package com.rz.circled.presenter.impl;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.AbsPresenter;
@@ -306,21 +307,13 @@ public class BankPresenter extends AbsPresenter {
                 super.onResponse(call, response);
                 if (response.isSuccessful()) {
                     ResponseData res = response.body();
-                    if (res.getRet() == ReturnCode.SUCCESS) {
+                    if (res.isSuccessful()) {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                         mView.updateView("1");
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.withdraw_fail));
-                                    mView.updateViewWithFlag("", 0);
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.withdraw_fail) : res.getMsg());
+                        mView.updateViewWithFlag("", 0);
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.withdraw_fail));

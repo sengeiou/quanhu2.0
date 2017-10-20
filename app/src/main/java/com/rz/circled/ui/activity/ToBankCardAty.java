@@ -317,29 +317,31 @@ public class ToBankCardAty extends BaseActivity {
                 }
                 if (StringUtils.isEmpty(mRecharge) || Double.parseDouble(mRecharge) <= 0) {
                     SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_money));
-                } else {
-                    if (StringUtils.isEmpty(mIntegralSum)) {
-                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                    return;
+                }
+                if (StringUtils.isEmpty(mIntegralSum)) {
+                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                    return;
+                }
+                if (Double.parseDouble(mIntegralSum) <= 200) {
+                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                    return;
+                }
+                if (Double.parseDouble(mIntegralSum) >= Double.parseDouble(mRecharge)) {
+                    if (Double.parseDouble(mRecharge) < 5) {
+                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.atmost));
                     } else {
-                        if (Double.parseDouble(mIntegralSum) <= 200) {
-                            SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                        if (Double.parseDouble(mRecharge) > 1000) {
+                            SVProgressHUD.showInfoWithStatus(aty, getString(R.string.xiane));
                         } else {
-                            if (Double.parseDouble(mIntegralSum) > Double.parseDouble(mRecharge)) {
-                                if (Double.parseDouble(mRecharge) < 5) {
-                                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.atmost));
-                                } else {
-                                    if (Double.parseDouble(mRecharge) > 1000) {
-                                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.xiane));
-                                    } else {
-                                        //支付密码验证
-                                        mPayPresenter.isSettingPw(true);
-                                    }
-                                }
-                            } else {
-                                SVProgressHUD.showInfoWithStatus(aty, getString(R.string.fanwei));
-                            }
+                            //支付密码验证
+                            mPayPresenter.isSettingPw(true);
                         }
                     }
+                } else {
+                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.fanwei));
+                }
+
 //                    if (StringUtils.isEmpty(mCharge)) {
 //                        //无提现手续费
 //
@@ -360,7 +362,7 @@ public class ToBankCardAty extends BaseActivity {
 //                            SVProgressHUD.showInfoWithStatus(aty, "提现金额不得大于可提现金额+手续费的总和");
 //                        }
 //                    }
-                }
+
                 break;
             case R.id.tv_to_bankcard_reference:
                 MyReferenceDialog.newInstance().show(getSupportFragmentManager(), "");
