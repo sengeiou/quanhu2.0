@@ -153,6 +153,8 @@ public class PrivateCircledFragment extends BaseFragment {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
         if (flag == presenter.FLAG_LEVEL_ACOUNT) {
+            if (getFragmentManager().isDestroyed())
+                return;
             MyLevelAcountBean acountBean = (MyLevelAcountBean) t;
             if (acountBean == null) return;
             String level = TextUtils.isEmpty(acountBean.getGrowLevel()) ? "0" : acountBean.getGrowLevel();
