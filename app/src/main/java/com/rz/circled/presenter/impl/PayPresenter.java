@@ -829,7 +829,7 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
-                if (flag == 3) {
+                if (flag == 2 || flag == 3) {
                     mView.updateView(psw);
                 } else {
                     payOrder(orderId, psw);
@@ -911,7 +911,7 @@ public class PayPresenter extends AbsPresenter {
 
     public void hideInputMethod() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getApplicationWindowToken(), 0);
+        imm.hideSoftInputFromWindow(activity.getWindow().peekDecorView().getWindowToken(), 0);
     }
 
     /**

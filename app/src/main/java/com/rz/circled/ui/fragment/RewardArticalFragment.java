@@ -157,6 +157,7 @@ public class RewardArticalFragment extends BaseFragment implements ScrollableHel
                 if (!loadMore) {
                     rewardBeanList.clear();
                 }
+                rewardAdapter.setData(rewardBeanList);
                 rewardAdapter.notifyDataSetChanged();
             }
         }

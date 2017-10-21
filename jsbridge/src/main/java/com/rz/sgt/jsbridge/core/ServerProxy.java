@@ -1,5 +1,6 @@
 package com.rz.sgt.jsbridge.core;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
@@ -124,7 +125,11 @@ public class ServerProxy {
 
             serverHandler.handle(params, paramsObject, callback);
         } else {
-            Log.w("dispatchDirectInvoke", "no ServerHandler:" + paramsObject.getInvokeName());
+            String invokeName = paramsObject.getInvokeName();
+            Log.w("dispatchDirectInvoke", "no ServerHandler:" + invokeName);
+            if (!TextUtils.isEmpty(invokeName) && invokeName.endsWith("finishLoading")) {
+                webViewProxy.setWebFinish(true);
+            }
             webViewProxy.callbackInvoke(new Gson().toJson(paramsObject));
         }
     }

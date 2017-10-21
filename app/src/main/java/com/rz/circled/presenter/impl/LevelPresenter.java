@@ -23,7 +23,7 @@ import retrofit2.Response;
 /**
  * Created by Gsm on 2017/9/19.
  */
-public class LevelPersenter extends GeneralPresenter {
+public class LevelPresenter extends GeneralPresenter {
 
     public final int FLAG_LEVEL_ACOUNT = 100;//成长总值
     public final int FLAG_LEVEL_LIST = 101;//成长值列表数据

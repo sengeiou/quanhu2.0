@@ -63,7 +63,7 @@ public class Currency {
             money = String.format("%.2f", d);
         }
         if (flag == 1) {
-            money += context.getString(R.string.rmb_yuan) + " ";
+            money += context.getString(R.string.rmb_yuan);
         } else if (flag == 0) {
             if (StringUtils.isEmpty(currency)) {
                 currency = "156";

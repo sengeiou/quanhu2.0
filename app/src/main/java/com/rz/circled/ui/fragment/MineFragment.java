@@ -297,7 +297,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvcircletCount = (TextView) header.findViewById(R.id.tv_collect_count);
             tvactivityCount = (TextView) header.findViewById(R.id.tv_activity_count);
 
-            bgRlyout.getBackground().setAlpha(77);
+            bgRlyout.getBackground().setAlpha(66);
             if (Protect.checkLoadImageStatus(mActivity)) {
                 Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
                         placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
@@ -856,9 +856,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
 
-//        if ("0".equals(Session.getCustRole())) {
-//            famousTxt.setText("去认证");
-//        }
 
         if (TextUtils.isEmpty(Session.getUser_desc())) {
             idPersonLoginDays.setText(getString(R.string.mine_sign_default));

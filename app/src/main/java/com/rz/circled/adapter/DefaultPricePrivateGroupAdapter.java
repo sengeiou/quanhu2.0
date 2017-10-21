@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.Currency;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringFormatUtil;
 import com.rz.common.utils.TextViewUtils;
@@ -38,19 +39,19 @@ public class DefaultPricePrivateGroupAdapter extends DefaultPrivateGroupAdapter 
             tvStatus.setText(R.string.private_group_free);
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.font_color_blue));
         } else {
-            tvStatus.setText(String.format(mContext.getString(R.string.private_group_youran_price), item.getJoinFee()));
+            tvStatus.setText(Currency.returnDollar(Currency.RMB, item.getJoinFee() + "", 1));
             tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_F5CD45));
         }
 
-        if(keyWord != null){
+        if (keyWord != null) {
             stringFormatUtil = new StringFormatUtil(mContext, item.getName(), keyWord, R.color.colorAccent).fillColor();
-            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+            if (stringFormatUtil != null && stringFormatUtil.getResult() != null) {
                 ((TextView) helper.getView(R.id.tv_title)).setText(TextUtils.isEmpty(item.getName()) ? "" : stringFormatUtil.getResult());
-            }else{
+            } else {
                 ((TextView) helper.getView(R.id.tv_title)).setText(item.getName());
             }
 
-        }else{
+        } else {
             ((TextView) helper.getView(R.id.tv_title)).setText(item.getName());
         }
 

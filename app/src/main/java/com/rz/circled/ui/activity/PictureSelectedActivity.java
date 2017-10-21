@@ -42,7 +42,6 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.ImageFloder;
 import com.rz.httpapi.bean.PictureModel;
-import com.yryz.yunxinim.uikit.common.util.file.FileUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -614,10 +613,9 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
                         File parentFile = new File(path).getParentFile();
                         if (parentFile == null)
                             continue;
-                        String dirPath = parentFile.getAbsolutePath();
-                        if (FileUtils.getFileSize(dirPath, FileUtils.SIZETYPE_B) == 0) {
+                        if (FileUtils.getFileSize(path, FileUtils.SIZETYPE_B) == 0)
                             continue;
-                        }
+                        String dirPath = parentFile.getAbsolutePath();
                         ImageFloder imageFloder = null;
                         // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
                         if (mDirPaths.contains(dirPath)) {

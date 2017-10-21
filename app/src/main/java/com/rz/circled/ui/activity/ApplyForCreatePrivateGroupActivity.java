@@ -228,7 +228,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     ArrayList<String> picList = data.getExtras().getStringArrayList("picList");
                     if (null != picList && !picList.isEmpty())
                         coverPath = picList.get(0);
-                } else if (resultCode == PUBLISH_RESULT_CAMERA) //相机
+                } else if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT_CAMERA) //相机
                     coverPath = data.getStringExtra("picture");
                 if (!TextUtils.isEmpty(coverPath)) {
                     if (Protect.checkLoadImageStatus(mContext))
@@ -242,7 +242,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     }
 
     private void createPrivateGroupSubmit(String url, String groupName, String groupDesc, String ownDesc) {
-        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price, groupName, Session.getUserId(), ownDesc, Session.getUserName());
+        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price * 100, groupName, Session.getUserId(), ownDesc, Session.getUserName());
     }
 
     private void updateCoverPic() {

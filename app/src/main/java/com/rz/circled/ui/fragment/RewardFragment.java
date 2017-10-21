@@ -1,15 +1,22 @@
 package com.rz.circled.ui.fragment;
 
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.application.QHApplication;
 import com.rz.circled.js.RequestJsBroadcastHandler;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.H5Address;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.sgt.jsbridge.BaseParamsObject;
@@ -29,12 +36,13 @@ import butterknife.BindView;
 /**
  * Created by Gsm on 2017/8/29.
  */
-public class RewardFragment extends BaseFragment {
+public class RewardFragment extends BaseFragment implements AdvancedWebView.Listener {
 
-    @BindView(R.id.webView)
-    AdvancedWebView mWebView;
+    @BindView(R.id.ll_reward_root)
+    LinearLayout llRoot;
 
     private WebViewProxy mWebViewProxy;
+    private AdvancedWebView mWebView;
 
     @Override
     protected boolean needLoadingView() {
@@ -49,15 +57,41 @@ public class RewardFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
-        mWebViewProxy = new WebViewProxy(mWebView);
-        mWebViewProxy.registerAll(RegisterList.getAllRegisterHandler(getActivity()));
-
-//        mWebView.setVisibility(View.INVISIBLE);
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
-        mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + "/activity/reward");
-//        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
+        mWebView = QHApplication.getInstance().getWebView(false);
+        ViewParent viewParent = mWebView.getParent();
+        if (viewParent == null) {
+            addWebView();
+        } else if (viewParent instanceof ViewGroup) {
+            ((ViewGroup) viewParent).removeAllViews();
+            addWebView();
+        }
+        setRefreshListener(this);
     }
+
+    //添加webview
+    private void addWebView() {
+        ViewGroup.LayoutParams layoutParams = mWebView.getLayoutParams();
+        if (layoutParams == null)
+            layoutParams = new ViewGroup.LayoutParams(-1, -1);
+        else {
+            layoutParams.width = -1;
+            layoutParams.height = -1;
+        }
+        mWebView.setBackgroundColor(R.color.white);
+        llRoot.addView(mWebView, layoutParams);
+        Object tag = mWebView.getTag();
+        if (tag != null && tag instanceof WebViewProxy)
+            mWebViewProxy = (WebViewProxy) tag;
+        mWebViewProxy.registerAll(RegisterList.getAllRegisterHandler(getActivity()));
+        mWebView.setListener(mActivity, this);
+        if (!mWebViewProxy.isWebFinish())
+            onLoadingStatus(CommonCode.General.DATA_LOADING);
+        if (TextUtils.isEmpty(mWebView.getUrl())) {
+            mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + H5Address.REWARD_LIST_URL);
+            onLoadingStatus(CommonCode.General.DATA_LOADING);
+        }
+    }
+
 
     @Override
     public void initData() {
@@ -69,7 +103,8 @@ public class RewardFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 //        mWebView.resumeTimers();
-        mWebViewProxy.autoCancelUiHandler();
+        if (mWebViewProxy != null)
+            mWebViewProxy.autoCancelUiHandler();
     }
 
     @Override
@@ -142,6 +177,43 @@ public class RewardFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
+        if (mWebView != null)
+            mWebView.reload();
+    }
+
+    @Override
+    public void onPageStarted(String url, Bitmap favicon) {
 
     }
+
+    @Override
+    public void onPageFinished(String url) {
+
+    }
+
+    @Override
+    public void onPageError(int errorCode, String description, String failingUrl) {
+        onLoadingStatus(CommonCode.General.WEB_ERROR);
+    }
+
+    @Override
+    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
+
+    }
+
+    @Override
+    public void onExternalPageRequest(String url) {
+
+    }
+
+    @Override
+    public void callPhoneNumber(String uri) {
+
+    }
+
+    @Override
+    public void doUpdateVisitedHistory() {
+
+    }
+
 }

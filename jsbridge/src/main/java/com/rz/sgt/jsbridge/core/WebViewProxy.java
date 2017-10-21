@@ -38,6 +38,16 @@ public class WebViewProxy {
 
     private String userId;
 
+    private boolean isWebFinish = false;
+
+    public boolean isWebFinish() {
+        return isWebFinish;
+    }
+
+    public void setWebFinish(boolean webFinish) {
+        isWebFinish = webFinish;
+    }
+
 
     public WebViewProxy(AdvancedWebView webView) {
         this.mWebView = webView;

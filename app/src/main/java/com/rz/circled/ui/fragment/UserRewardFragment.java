@@ -82,13 +82,13 @@ public class UserRewardFragment extends BaseFragment implements ScrollableHelper
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
-        if(!Session.getUserId().equals(userId)){
-            myCreateTxt.setText("ta发起的悬赏");
-            answerTxt.setText("ta回答的悬赏");
-        }else{
-            myCreateTxt.setText("我发起的悬赏");
-            answerTxt.setText("我回答的悬赏");
-        }
+//        if(!Session.getUserId().equals(userId)){
+//            myCreateTxt.setText("ta发起的悬赏");
+//            answerTxt.setText("ta回答的悬赏");
+//        }else{
+            myCreateTxt.setText("发起的悬赏");
+            answerTxt.setText("回答的悬赏");
+//        }
         initFragments();
     }
 
