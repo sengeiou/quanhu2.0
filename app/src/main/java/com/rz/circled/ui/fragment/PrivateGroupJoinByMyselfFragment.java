@@ -104,7 +104,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
-            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
+            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px4));
             refreshLayout.setEnabled(false);
         }
         if (TextUtils.equals(userId, Session.getUserId())) {

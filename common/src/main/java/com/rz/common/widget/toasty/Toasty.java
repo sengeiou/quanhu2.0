@@ -192,13 +192,14 @@ public class Toasty {
                 .inflate(R.layout.layout_toast, null);
         final ImageView toastIcon = (ImageView) toastLayout.findViewById(R.id.toast_icon);
         final TextView toastTextView = (TextView) toastLayout.findViewById(R.id.toast_text);
+        final View toastView = toastLayout.findViewById(R.id.toast_root);
         Drawable drawableFrame;
 
-        if (shouldTint)
-            drawableFrame = ToastyUtils.tint9PatchDrawableFrame(context, tintColor);
-        else
-            drawableFrame = ToastyUtils.getDrawable(context, R.drawable.toast_frame);
-        ToastyUtils.setBackground(toastLayout, drawableFrame);
+//        if (shouldTint)
+//            drawableFrame = ToastyUtils.tint9PatchDrawableFrame(context, tintColor);
+//        else
+        drawableFrame = ToastyUtils.getDrawable(context, R.drawable.shape_bg_toast);
+        ToastyUtils.setBackground(toastView, drawableFrame);
 
         if (withIcon) {
             if (icon == null)
