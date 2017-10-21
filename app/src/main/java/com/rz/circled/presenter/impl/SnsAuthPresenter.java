@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.rz.circled.R;
 import com.rz.circled.modle.SnsLoginModel;
@@ -156,7 +157,10 @@ public class SnsAuthPresenter extends GeneralPresenter {
     public void bindThirdAccout(final int type, final String openId, final int action, String accessToken) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+
         }
+        Log.e("zxw", "bindThirdAccout: "+type );
+        Log.e("zxw",Thread.currentThread().getName());
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
         Call<ResponseData> call = mUserService.bindThirdAccount(
                 1012,
@@ -167,48 +171,48 @@ public class SnsAuthPresenter extends GeneralPresenter {
                 accessToken);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData>() {
-                         @Override
-                         public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-                             super.onResponse(call, response);
-                             if (response.isSuccessful()) {
-                                 ResponseData res = response.body();
-                                 if (res.getRet() == ReturnCode.SUCCESS) {
-                                     //绑定或者解绑
-                                     if (action == Type.ACTION_BIND) {
-                                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.bind_success));
-                                     } else {
-                                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.unbind_card_success));
-                                     }
-                                     mView.updateViewWithLoadMore(type, true);
-                                     return;
-                                 } else {
-                                     if (HandleRetCode.handler(mContext, res)) {
-                                         new Handler().postDelayed(new Runnable() {
-                                             @Override
-                                             public void run() {
-                                                 if (action == Type.ACTION_BIND) {
-                                                     if (type == Type.LOGIN_WX) {
-                                                         delWXAuth(openId);
-                                                     } else if (type == Type.LOGIN_SINA) {
-                                                         delWBAuth(openId);
-                                                     } else if (type == Type.LOGIN_QQ) {
-                                                         delQQAuth(openId);
-                                                     }
-                                                 }
-                                                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                                             }
-                                         }, 2000);
-                                         return;
-                                     }
-                                 }
-                             }
-                                 //绑定或者解绑
-                                 if (action == Type.ACTION_BIND) {
-                                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.bind_fail));
-                                 } else {
-                                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.unbind_card_fail));
-                                 }
-                             }
+            @Override
+            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData res = response.body();
+                    if (res.getRet() == ReturnCode.SUCCESS) {
+                        //绑定或者解绑
+                        if (action == Type.ACTION_BIND) {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.bind_success));
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.unbind_card_success));
+                        }
+                        mView.updateViewWithLoadMore(type, true);
+                        return;
+                    } else {
+                        if (HandleRetCode.handler(mContext, res)) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (action == Type.ACTION_BIND) {
+                                        if (type == Type.LOGIN_WX) {
+                                            delWXAuth(openId);
+                                        } else if (type == Type.LOGIN_SINA) {
+                                            delWBAuth(openId);
+                                        } else if (type == Type.LOGIN_QQ) {
+                                            delQQAuth(openId);
+                                        }
+                                    }
+                                    mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                                }
+                            }, 2000);
+                            return;
+                        }
+                    }
+                }
+                //绑定或者解绑
+                if (action == Type.ACTION_BIND) {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.bind_fail));
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.unbind_card_fail));
+                }
+            }
 
                              @Override
                              public void onFailure (Call < ResponseData > call, Throwable t){
@@ -359,11 +363,16 @@ public class SnsAuthPresenter extends GeneralPresenter {
         }
 
         @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-//            SVProgressHUD.showInfoWithStatus(mContext, "删除授权失败");
-            if (!TextUtils.isEmpty(throwable.getMessage()) && throwable.getMessage().contains("Argument error!")) {
-                toBindThirdAcout(share_media);
-            }
+        public void onError(final SHARE_MEDIA share_media, int i, final Throwable throwable) {
+            Log.e("zxw",Thread.currentThread().getName());
+            ((Activity)mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!TextUtils.isEmpty(throwable.getMessage()) && throwable.getMessage().contains("Argument error!")) {
+                        toBindThirdAcout(share_media);
+                    }
+                }
+            });
         }
 
         @Override
@@ -373,7 +382,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
 
     };
 
-    private void toBindThirdAcout(SHARE_MEDIA share_media) {
+    public void toBindThirdAcout(SHARE_MEDIA share_media) {
         int type = -1;
         switch (share_media) {
             case QQ: {
@@ -645,6 +654,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
     }
 
     private void delAuth(SHARE_MEDIA platform, boolean isReAuth) {
+        Log.e("zxw",Thread.currentThread().getName());
         isAuthAfterDel = isReAuth;
         mShareAPI.deleteOauth((Activity) mContext, platform, delAuthListener);
     }

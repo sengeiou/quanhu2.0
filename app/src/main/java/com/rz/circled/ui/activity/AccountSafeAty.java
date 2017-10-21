@@ -38,6 +38,7 @@ import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -145,6 +146,11 @@ public class AccountSafeAty extends BaseActivity {
 
     //记录小额免密支付的状态
     private boolean mRecordCheckEasyPay;
+
+    @Override
+    public void onLoadingStatus(int loadingStatus) {
+        super.onLoadingStatus(loadingStatus);
+    }
 
     @Override
     public void initView() {
@@ -310,13 +316,13 @@ public class AccountSafeAty extends BaseActivity {
 
     @Override
     public boolean hasDataInPage() {
-        return true;
+        return !mLoginWays.isEmpty();
     }
 
     @Override
     public <T> void updateView(T t) {
         if (null != t) {
-            if (t instanceof String) {
+           if (t instanceof String) {
                 String pw = (String) t;
                 if (StringUtils.isEmpty(pw)) {
                     mEasyPayBtn.setCheckedNoEvent(!mRecordCheckEasyPay);
