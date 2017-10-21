@@ -890,9 +890,10 @@ public class QHApplication extends BaseApplication {
         if (needLoad && NetUtils.isNetworkConnected(getContext())) {
             WebViewProxy webViewProxy = (WebViewProxy) mWebView.getTag();
             webViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + H5Address.REWARD_LIST_URL);
-            webViewProxy.setWebFinish(false);
+            webViewProxy.setNeedLoading(false);
         }
         return mWebView;
     }
+
 
 }

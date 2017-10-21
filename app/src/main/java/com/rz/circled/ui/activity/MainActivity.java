@@ -118,7 +118,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             tabHost.setCurrentTab(1);
         }
         mUnread = (ImageView) tabHost.findViewById(R.id.unread_msg_number);
-
         initCounter();
     }
 

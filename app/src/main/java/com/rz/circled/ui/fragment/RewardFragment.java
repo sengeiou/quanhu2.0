@@ -1,8 +1,8 @@
 package com.rz.circled.ui.fragment;
 
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +44,8 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
     private WebViewProxy mWebViewProxy;
     private AdvancedWebView mWebView;
 
+    private boolean finishloading = false;
+
     @Override
     protected boolean needLoadingView() {
         return true;
@@ -84,12 +86,7 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
             mWebViewProxy = (WebViewProxy) tag;
         mWebViewProxy.registerAll(RegisterList.getAllRegisterHandler(getActivity()));
         mWebView.setListener(mActivity, this);
-        if (!mWebViewProxy.isWebFinish())
-            onLoadingStatus(CommonCode.General.DATA_LOADING);
-        if (TextUtils.isEmpty(mWebView.getUrl())) {
-            mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + H5Address.REWARD_LIST_URL);
-            onLoadingStatus(CommonCode.General.DATA_LOADING);
-        }
+        toReload();
     }
 
 
@@ -122,6 +119,7 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
                 if (mWebView != null)
                     mWebView.setVisibility(View.VISIBLE);
                 onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                finishloading = true;
                 break;
             case CommonCode.EventType.TYPE_REWARD_REFRESH:
                 //刷新
@@ -138,6 +136,7 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
                 loginHandler.setRequestData(baseEvent.data);
                 if (mWebViewProxy != null)
                     mWebViewProxy.requestJsFun(loginHandler);
+                toReload();
                 break;
         }
     }
@@ -175,10 +174,29 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
         }
     }
 
+    private void toReload() {
+        if (mWebViewProxy != null) {
+            mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + H5Address.REWARD_LIST_URL);
+            onLoadingStatus(CommonCode.General.DATA_LOADING);
+            finishloading = false;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (finishloading) return;
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            onLoadingStatus(CommonCode.General.WEB_ERROR);
+                        }
+                    });
+                }
+            }, 20 * 1000);
+        }
+    }
+
     @Override
     public void refreshPage() {
-        if (mWebView != null)
-            mWebView.reload();
+        toReload();
     }
 
     @Override
