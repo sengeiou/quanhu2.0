@@ -3,6 +3,7 @@ package com.rz.circled.presenter.impl;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.rz.circled.R;
 import com.rz.circled.modle.SnsLoginModel;
@@ -154,7 +155,10 @@ public class SnsAuthPresenter extends GeneralPresenter {
     public void bindThirdAccout(final int type, final String openId, final int action, String accessToken) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+
         }
+        Log.e("zxw", "bindThirdAccout: " + type);
+        Log.e("zxw", Thread.currentThread().getName());
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
         Call<ResponseData> call = mUserService.bindThirdAccount(
                 1012,
@@ -189,7 +193,9 @@ public class SnsAuthPresenter extends GeneralPresenter {
                                 delQQAuth(openId);
                             }
                         }
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        return;
+
                     }
                 }
                 //绑定或者解绑
@@ -216,6 +222,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
     /**
      * 第三方登录请求
      */
+
     public void otherLogin(String openId, String accessToken, final int type) {
         ((Activity) mContext).runOnUiThread(new Runnable() {
             public void run() {
@@ -348,11 +355,16 @@ public class SnsAuthPresenter extends GeneralPresenter {
         }
 
         @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-//            SVProgressHUD.showInfoWithStatus(mContext, "删除授权失败");
-            if (!TextUtils.isEmpty(throwable.getMessage()) && throwable.getMessage().contains("Argument error!")) {
-                toBindThirdAcout(share_media);
-            }
+        public void onError(final SHARE_MEDIA share_media, int i, final Throwable throwable) {
+            Log.e("zxw", Thread.currentThread().getName());
+            ((Activity) mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!TextUtils.isEmpty(throwable.getMessage()) && throwable.getMessage().contains("Argument error!")) {
+                        toBindThirdAcout(share_media);
+                    }
+                }
+            });
         }
 
         @Override
@@ -362,7 +374,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
 
     };
 
-    private void toBindThirdAcout(SHARE_MEDIA share_media) {
+    public void toBindThirdAcout(SHARE_MEDIA share_media) {
         int type = -1;
         switch (share_media) {
             case QQ: {
@@ -634,6 +646,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
     }
 
     private void delAuth(SHARE_MEDIA platform, boolean isReAuth) {
+        Log.e("zxw", Thread.currentThread().getName());
         isAuthAfterDel = isReAuth;
         mShareAPI.deleteOauth((Activity) mContext, platform, delAuthListener);
     }

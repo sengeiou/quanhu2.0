@@ -29,6 +29,7 @@ import com.rz.common.oss.UploadPicManager;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -38,7 +39,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_BELONG_ID;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_CREATE_REFRESH;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.circled.ui.activity.PictureSelectedActivity.PUBLISH_RESULT_CAMERA;
 
 /**
@@ -164,6 +167,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         if (t instanceof Integer) {
             Integer data = (Integer) t;
             if (data == CommonCode.General.DATA_SUCCESS) {
+                EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_CREATE_REFRESH));
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ApplyForGroupSuccessDialog.newInstance().show(ft, "");
             }
