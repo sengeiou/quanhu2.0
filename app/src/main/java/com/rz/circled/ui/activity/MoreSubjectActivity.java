@@ -120,9 +120,9 @@ public class MoreSubjectActivity extends BaseActivity {
         mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent itnent = new Intent();
+                Intent itnent = new Intent(aty,SearchActivity.class);
                 itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PRIVATE);
-                skipActivity(aty, SearchActivity.class);
+                startActivity(itnent);
             }
         });
         mLvSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {

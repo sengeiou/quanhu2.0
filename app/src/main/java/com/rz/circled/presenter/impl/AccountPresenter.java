@@ -293,7 +293,7 @@ public class AccountPresenter extends GeneralPresenter {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
+//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
 //        Call<ResponseData> call = mUserService.closeOrOpenPay(
 //                1064,
 //                Session.getUserId(),
@@ -318,8 +318,9 @@ public class AccountPresenter extends GeneralPresenter {
                         mView.updateViewWithLoadMore(type, false);
                         return;
                     } else {
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
-                        mView.updateViewWithLoadMore(-1, false);
+                            mView.updateViewWithLoadMore(-1, false);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA,res.getMsg() );
+                            return;
                     }
                 } else {
                     mView.updateViewWithLoadMore(-1, false);
