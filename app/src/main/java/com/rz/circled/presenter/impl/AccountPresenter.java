@@ -318,12 +318,9 @@ public class AccountPresenter extends GeneralPresenter {
                         mView.updateViewWithLoadMore(type, false);
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
                             mView.updateViewWithLoadMore(-1, false);
-//                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.action_fail));
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA,res.getMsg() );
                             return;
-                        }
-                        mView.updateViewWithLoadMore(-1, false);
                     }
                 } else {
                     mView.updateViewWithLoadMore(-1, false);
