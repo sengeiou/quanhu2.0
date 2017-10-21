@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +80,7 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
             layoutParams.width = -1;
             layoutParams.height = -1;
         }
-        mWebView.setBackgroundColor(R.color.white);
+        mWebView.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.white));
         llRoot.addView(mWebView, layoutParams);
         Object tag = mWebView.getTag();
         if (tag != null && tag instanceof WebViewProxy)

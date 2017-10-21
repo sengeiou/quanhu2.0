@@ -132,9 +132,11 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrivateGroupBean item = mAdapter.getItem(position);
-                if (item.getStatus() == 3) {
-                    CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                if (position < mAdapter.getCount()) {
+                    PrivateGroupBean item = mAdapter.getItem(position);
+                    if (item.getStatus() == 3) {
+                        CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                    }
                 }
             }
         });
@@ -237,10 +239,10 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     private void loadData(boolean loadMore) {
         if (!loadMore) pageNo = 1;
 
-        if(Session.getUserId().equals(userId)){
-            mPresenter.privateGroupMyselfCreate(null,userId, pageNo, loadMore);                   //获取自己创建的所有圈子
-        }else{
-            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS,userId, pageNo, loadMore);       //获取他人创建的上架圈子
+        if (Session.getUserId().equals(userId)) {
+            mPresenter.privateGroupMyselfCreate(null, userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+        } else {
+            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
         }
 
     }

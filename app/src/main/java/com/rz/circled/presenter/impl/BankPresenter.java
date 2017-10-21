@@ -1,6 +1,5 @@
 package com.rz.circled.presenter.impl;
 
-import android.os.Handler;
 import android.text.TextUtils;
 
 import com.rz.circled.R;
@@ -73,12 +72,7 @@ public class BankPresenter extends AbsPresenter {
                         return;
                     } else {
                         if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.setting_fail));
-                                }
-                            }, 2000);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.setting_fail));
                             return;
                         }
                     }
@@ -124,12 +118,7 @@ public class BankPresenter extends AbsPresenter {
                         return;
                     } else {
                         if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
-                                }
-                            }, 2000);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                             return;
                         }
                     }
@@ -172,12 +161,7 @@ public class BankPresenter extends AbsPresenter {
 //                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
 //                        return;
                         if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.unbind_card_fail));
-                                }
-                            }, 2000);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.unbind_card_fail));
                             return;
                         }
                     }
@@ -217,12 +201,7 @@ public class BankPresenter extends AbsPresenter {
                         return;
                     } else {
                         if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.bind_fail));
-                                }
-                            }, 2000);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.bind_fail));
                             return;
                         }
                     }
@@ -268,12 +247,7 @@ public class BankPresenter extends AbsPresenter {
                         }
                     } else {
                         if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
-                                }
-                            }, 2000);
+                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
                             return;
                         }
                     }

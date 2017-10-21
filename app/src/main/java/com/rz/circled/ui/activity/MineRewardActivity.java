@@ -21,6 +21,7 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.RewardStatBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -154,10 +155,10 @@ public class MineRewardActivity extends BaseActivity {
         if(t instanceof RewardStatBean){
             RewardStatBean model = (RewardStatBean) t;
 
-            float price = Float.valueOf(model.getTotalRewardedAmount());
-            DecimalFormat fnum = new DecimalFormat("##0.00");
-            String  dd = fnum.format(price/100);
-            rewardTxt.setText(dd);
+//            float price = Float.valueOf(model.getTotalRewardedAmount());
+//            DecimalFormat fnum = new DecimalFormat("##0.00");
+//            String  dd = fnum.format(price/100);
+            rewardTxt.setText(Currency.returnDollar(Currency.RMB, model.getTotalRewardedAmount() + "", 0));
 
             BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.TYPE_REWARD_COUNT, model);
             EventBus.getDefault().post(baseEvent);

@@ -3,7 +3,6 @@ package com.rz.circled.widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -298,12 +297,7 @@ public class PopupView implements AdapterView.OnItemClickListener, View.OnClickL
                     mPriceAdapter.setCheckAtPosFalse(i, true);
 //                    mPriceAdapter.notifyDataSetChanged();
                     mListener.OnItemClick(i, ((OpusPriceModel) mPriceAdapter.getItem(i)).getPrice());
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            popWindow.dismiss();
-                        }
-                    }, 500);
+                    popWindow.dismiss();
                 }
                 break;
         }

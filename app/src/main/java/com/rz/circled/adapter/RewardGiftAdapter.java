@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.RewardGiftModel;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class RewardGiftAdapter extends CommonAdapter<RewardGiftModel> {
         TextView mTvPrice = (TextView) helper.getViewById(R.id.tv_item_transfer_gift_price);
         ImageView mIvCheck = (ImageView) helper.getViewById(R.id.iv_item_transfer_gift_check);
         mTvName.setText(item.getName());
-        mTvPrice.setText(Integer.parseInt(item.getPrice()) / 100 + mContext.getString(R.string.youranbi));
+        mTvPrice.setText(Currency.returnDollar(Currency.RMB, item.getPrice() + "", 1));
         if (checkMap.get(helper.getPosition(), false)) {
             mIvCheck.setVisibility(View.VISIBLE);
             rlRoot.setBackgroundResource(R.drawable.shape_reward_gift_select);

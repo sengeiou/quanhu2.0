@@ -96,7 +96,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
      * 用户头像
      */
     ImageView mImgPersonHead;
-    RelativeLayout idPersonNewsRela;
     TextView idPersonLoginDays;
 
     /**
@@ -177,7 +176,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         mSp = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
         initUserNews();
-        getData();
+//        getHeadData();
         newTitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
         newTitilbar.setBackgroundColor(getResources().getColor(R.color.color_main));
         newTitilbar.getBackground().setAlpha(0);
@@ -214,7 +213,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
 
-    private void getData() {
+    /**
+     * 获取我的头部栏数据
+     */
+    private void getHeadData() {
 
         if (presenter != null) {
             //获取签到状态
@@ -327,23 +329,24 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
 
             if (Session.getUserIsLogin()) {
-                mTxtPersonName.setText(Session.getUserName());
-
-                levelTxt.setText("Lv. " + Session.getUserLevel());
-                custPointsTxt.setText("积分" + Session.getCustPoints());
-//                if ("0".equals(Session.getCustRole())) {
-//                    famousTxt.setText("去认证");
+//                mTxtPersonName.setText(Session.getUserName());
+//
+//                levelTxt.setText("Lv. " + Session.getUserLevel());
+//                custPointsTxt.setText("积分" + Session.getCustPoints());
+//
+//                if (TextUtils.isEmpty(Session.getUser_desc())) {
+//                    idPersonLoginDays.setText(getString(R.string.mine_sign_default));
+//                } else {
+//                    idPersonLoginDays.setText(Session.getUser_desc());
 //                }
 
-                if (TextUtils.isEmpty(Session.getUser_desc())) {
-                    idPersonLoginDays.setText(getString(R.string.mine_sign_default));
-                } else {
-                    idPersonLoginDays.setText(Session.getUser_desc());
-                }
+                setData();
             } else {
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
                 idPersonLoginDays.setText("");
             }
+
+
 
             headHight = 146 + DensityUtils.dip2px(mActivity, 20);
             mListView.addHeaderView(header);
@@ -547,24 +550,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
 
-            Double score = Double.valueOf(data.getScore());
-            NumberFormat nf = new DecimalFormat("#");
-            custPointsTxt.setText("积分" + nf.format(score) + "");
+//            Double score = Double.valueOf(data.getScore());
+//            NumberFormat nf = new DecimalFormat("#");
+            custPointsTxt.setText("积分" +data.getScore());
             levelTxt.setText("Lv. " + data.getCustLevel());
 
             Session.setUserLevel(data.getCustLevel());
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
-
-//            if (data.getAuthStatus() == 0) {
-//                famousTxt.setText("认证审核中");
-//            } else if (data.getAuthStatus() == 1) {
-//                famousTxt.setText(data.getTradeField());
-//            } else if (data.getAuthStatus() == 2) {
-//                famousTxt.setText("认证失败");
-//            } else if (data.getAuthStatus() == 3) {
-//                famousTxt.setText("认证失败");
-//            }
 
             if (data.getAuthStatus() == ProveStatusBean.STATUS_ING) {
                 famousTxt.setText("认证审核中");
@@ -605,7 +598,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             proveStatusBean = (ProveStatusBean) t;
             if (proveStatusBean == null) {
                 famousLayout.setVisibility(View.GONE);
-//                famousTxt.setBackgroundResource(R.drawable.shape_white_bg);
                 return;
             }
             famousLayout.setVisibility(View.VISIBLE);
@@ -765,32 +757,21 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         return isWorkDate;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentCode.MineFrg.MINE_REQUEST_CODE) {
-            if (resultCode == IntentCode.Setting.SETTING_RESULT_CODE) {
-//                tvacticlesCount.setText("0");
-//                tvrewardCount.setText("0");
-//                tvcircletCount.setText("0");
-
-                //刷新消息和随手晒界面
-//                if (((MsgFragment) getActivity().getSupportFragmentManager().findFragmentByTag("聊天") != null))
-//                    ((MsgFragment) getActivity().getSupportFragmentManager().findFragmentByTag("聊天")).clearFrg();
-
-                mTxtPersonName.setText(getString(R.string.mine_no_login));
-                if (Protect.checkLoadImageStatus(mActivity)) {
-                    Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideRoundImage(mActivity)).
-                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
-                }
-
-//                BaseEvent event = new BaseEvent();
-//                event.key = LOGIN_OUT_SUCCESS;
-//                EventBus.getDefault().post(event);
-            }
-            return;
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == IntentCode.MineFrg.MINE_REQUEST_CODE) {
+//            if (resultCode == IntentCode.Setting.SETTING_RESULT_CODE) {
+//
+//                mTxtPersonName.setText(getString(R.string.mine_no_login));
+//                if (Protect.checkLoadImageStatus(mActivity)) {
+//                    Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideRoundImage(mActivity)).
+//                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
+//                }
+//            }
+//            return;
+//        }
+//    }
 
     @Override
     public void onDestroy() {
@@ -862,7 +843,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         } else {
             idPersonLoginDays.setText(Session.getUser_desc());
         }
-        getData();
+        getHeadData();
 
     }
 

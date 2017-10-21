@@ -335,6 +335,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                                 Session.setAdv_pic_url(model.isEmpty()?"":model.get(0).getPicUrl());
                                 Session.setAdv_url(model.isEmpty()?"":model.get(0).getUrl());
                                 Session.setAdv_upIngDate(model.isEmpty()?"":model.get(0).startTime);
+                            Log.i(TAG, "onResponse: "+Session.getAdv_upIngDate());
                                 Session.setAdv_expireDate(model.isEmpty()?"":model.get(0).endTime);
                         }
                         mView.updateViewWithFlag(model, Integer.parseInt(stats));

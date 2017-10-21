@@ -2,7 +2,6 @@ package com.rz.circled.presenter.impl;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
@@ -738,12 +737,7 @@ public class FriendPresenter1 extends GeneralPresenter {
                         FriendInformationBean model = res.getData();
                         mView.updateView(model);
                     } else if (HandleRetCode.handler(mContext, res)) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            }
-                        }, 2000);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -787,12 +781,7 @@ public class FriendPresenter1 extends GeneralPresenter {
                         RequestFriendStatusBean model = res.getData();
                         mView.updateView(model);
                     } else if (HandleRetCode.handler(mContext, res)) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            }
-                        }, 2000);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);

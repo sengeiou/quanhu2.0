@@ -1,7 +1,6 @@
 package com.rz.circled.presenter.impl;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
 import com.rz.circled.R;
@@ -13,7 +12,6 @@ import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.MessFreeBean;
@@ -142,15 +140,7 @@ public class UpdateOrExitPresenter extends GeneralPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, mContext.getString(R.string.exit_success));
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.exit_fail));
