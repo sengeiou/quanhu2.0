@@ -696,6 +696,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                     @Override
                     public void onClick(View v) {
                         if (v.getId() == R.id.tv_kick_dialog_left) {
+                            Log.d(TAG, "resumedLocalClassName = " + "closedialog");
                             closeDialog();
                             int kickOutYxCode = 200018;
                             EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
@@ -705,7 +706,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setClassName(mContext, className);
                             startActivity(intent);
+                            Log.d(TAG, "resumedLocalClassName = " + "closedialog2222");
                             finish();
+                            Log.d(TAG, "resumedLocalClassName = " + "closedialog3333");
                         } else {
                             closeDialog();
                             MyActivityManager.finishAll();

@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
@@ -37,7 +38,11 @@ import com.rz.circled.application.QHApplication;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.ui.view.CommonDialog;
+import com.rz.common.utils.NetUtils;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
+import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import butterknife.BindView;
 
@@ -47,6 +52,16 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
     @BindView(R.id.playview_exo)
     SimpleExoPlayerView playView;
     private SimpleExoPlayer player;
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return false;
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -66,58 +81,35 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
 
     @Override
     public void initData() {
-
-        int mSeekPosition = getIntent().getIntExtra(IntentKey.EXTRA_POSITION, 0);
-        String videoUrl = getIntent().getStringExtra(IntentKey.EXTRA_PATH);
-
-        //1. Create a default TrackSelector
-        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
-        TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
-        // 2. Create a default LoadControl
-        LoadControl loadControl = new DefaultLoadControl();
-        // 3. Create the player
-        player = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector, loadControl);
-
-        playView.setPlayer(player);
-
-        player.setVideoListener(this);
-        player.addListener(this);
-        // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, QHApplication.userAgent);
-        // Produces Extractor instances for parsing the media data.
-        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-        // This is the MediaSource representing the media to be played.
-        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(videoUrl), dataSourceFactory, extractorsFactory, null, null);
-        // Prepare the player with the source.
-        player.prepare(videoSource);
-        player.setPlayWhenReady(true);
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
-
+        checkWifi();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        player.setPlayWhenReady(true);
+        if (player != null)
+            player.setPlayWhenReady(true);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        player.setPlayWhenReady(true);
+        if (player != null)
+            player.setPlayWhenReady(true);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        player.setPlayWhenReady(false);
+        if (player != null)
+            player.setPlayWhenReady(false);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        player.setPlayWhenReady(false);
+        if (player != null)
+            player.setPlayWhenReady(false);
     }
 
     @Override
@@ -174,14 +166,18 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
     @Override
     public void onLoadingChanged(boolean isLoading) {
         Log.d(TAG, "isLoading = " + isLoading);
-        if (!isLoading) onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+        if (!isLoading) {
+            if (SVProgressHUD.isShowing(this))
+                SVProgressHUD.dismiss(this);
+        }
     }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         Log.d(TAG, "playWhenReady = " + playWhenReady + " / playbackState = " + playbackState);
         if (playbackState == ExoPlayer.STATE_READY && playWhenReady) {
-            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+            if (SVProgressHUD.isShowing(this))
+                SVProgressHUD.dismiss(this);
         }
         View videoSurfaceView = playView.getVideoSurfaceView();
     }
@@ -198,6 +194,63 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
 
     @Override
     public void refreshPage() {
+        checkWifi();
+    }
 
+    private void checkWifi() {
+        String videoUrl = getIntent().getStringExtra(IntentKey.EXTRA_PATH);
+        if (TextUtils.isEmpty(videoUrl)) {
+            onLoadingStatus(CommonCode.General.ERROR_DATA);
+            return;
+        }
+        if (videoUrl.startsWith("http")) {
+            if (!NetUtils.isNetworkConnected(mContext)) {
+                onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.no_net_work));
+                return;
+            }
+            if (NetworkUtil.isWifi(this)) {
+                initPlay();
+            } else {
+                CommonDialog commonDialog = new CommonDialog(mContext);
+                commonDialog.showDialog(getString(R.string.wifi_play), new CommonDialog.OnCommonDialogConfirmListener() {
+                    @Override
+                    public void onConfirmListener() {
+                        initPlay();
+                    }
+                });
+            }
+        } else {
+            initPlay();
+        }
+
+    }
+
+    private void initPlay() {
+        int mSeekPosition = getIntent().getIntExtra(IntentKey.EXTRA_POSITION, 0);
+        String videoUrl = getIntent().getStringExtra(IntentKey.EXTRA_PATH);
+
+        //1. Create a default TrackSelector
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
+        // 2. Create a default LoadControl
+        LoadControl loadControl = new DefaultLoadControl();
+        // 3. Create the player
+        player = ExoPlayerFactory.newSimpleInstance(mContext, trackSelector, loadControl);
+
+        playView.setPlayer(player);
+
+        player.setVideoListener(this);
+        player.addListener(this);
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, QHApplication.userAgent);
+        // Produces Extractor instances for parsing the media data.
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        // This is the MediaSource representing the media to be played.
+        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(videoUrl), dataSourceFactory, extractorsFactory, null, null);
+        // Prepare the player with the source.
+        player.prepare(videoSource);
+        player.setPlayWhenReady(true);
+        SVProgressHUD.show(this);
     }
 }

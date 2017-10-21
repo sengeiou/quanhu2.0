@@ -15,7 +15,9 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.Currency;
 import com.rz.common.utils.StringFormatUtil;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.RewardModel;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
@@ -25,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -77,12 +80,10 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         Glide.with(mContext).load(model.getCustSimpleDTO().getCustImg()).transform(new GlideCircleImage(mContext)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
 
-        rewardTxt.setText("悬赏金额 "+model.getPrice());
-
-        float price = Float.valueOf(model.getPrice());
-        DecimalFormat fnum = new DecimalFormat("##0.00");
-        String  dd = fnum.format(price/100);
-        rewardTxt.setText("悬赏金额 "+dd);
+//        float price = Float.valueOf(model.getPrice());
+//        DecimalFormat fnum = new DecimalFormat("##0.00");
+//        String  dd = fnum.format(price/100);
+        rewardTxt.setText("悬赏金额 "+ Currency.returnDollar(Currency.RMB, model.getPrice() + "", 0));
 
         tvContent.setText(model.getContent());
 
@@ -115,12 +116,6 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             picImg.setVisibility(View.VISIBLE);
         }
 
-        //获取当前时间
-        Date d = new Date();
-        System.out.println(d);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateNowStr = sdf.format(d);
-
         //判断悬赏是否在进行中
         if(model.getComplete() == 1){
 
@@ -128,25 +123,41 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
             tvStatus.setText("进行中");
             tvTime.setVisibility(View.VISIBLE);
 
-            String time = TimeUtil.getTime(dateNowStr,model.getTerminalTime());
-            String timeArray[] = time.replace("-","").split(",");
-            String time1 = timeArray[0];
-            String time2 = timeArray[1];
-            String time3 = timeArray[2];
+            //获取当前时间
+            Date d = new Date();
+            System.out.println(d);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String dateNowStr = sdf.format(d);
 
-            if(Integer.parseInt(time1)>0){
-                tvTime.setText("还剩" + time1+"天" + time2 + "小时" + time3 + "分钟");
-            }else{
-                if(Integer.parseInt(time2)>0){
-                    tvTime.setText("还剩" + time2 + "小时" + time3 + "分钟");
-                }else{
-                    if(Integer.parseInt(time3)<1){
-                        tvTime.setText("还剩1分钟");
-                    }else{
-                        tvTime.setText("还剩" + time3 + "分钟");
-                    }
-                }
+            long timeDiff = 0;
+            try {
+                timeDiff = sdf.parse(model.getTerminalTime()).getTime() - d.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+            String timeStr = StringUtils.formatHourTime(timeDiff);
+            tvTime.setText(timeStr);
+
+//            String time = TimeUtil.getTime(dateNowStr,model.getTerminalTime());
+//            String timeArray[] = time.replace("-","").split(",");
+//            String time1 = timeArray[0];
+//            String time2 = timeArray[1];
+//            String time3 = timeArray[2];
+//
+//            if(Integer.parseInt(time1)>0){
+//                tvTime.setText("还剩" + time1+"天" + time2 + "小时" + time3 + "分钟");
+//            }else{
+//                if(Integer.parseInt(time2)>0){
+//                    tvTime.setText("还剩" + time2 + "小时" + time3 + "分钟");
+//                }else{
+//                    if(Integer.parseInt(time3)<1){
+//                        tvTime.setText("还剩1分钟");
+//                    }else{
+//                        tvTime.setText("还剩" + time3 + "分钟");
+//                    }
+//                }
+//            }
 //            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
         }else if(model.getComplete() == 2){
 
