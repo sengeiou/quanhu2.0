@@ -103,7 +103,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
-        Log.e(TAG, "initView");
         String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
