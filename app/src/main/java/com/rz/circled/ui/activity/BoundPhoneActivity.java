@@ -23,6 +23,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -113,7 +114,7 @@ public class BoundPhoneActivity extends BaseActivity {
         secondTxt.setVisibility(View.VISIBLE);
         finishBtn.setText("完成");
 
-        loginModel = (UserInfoBean) getIntent().getExtras().getSerializable("loginmodel");
+        loginModel = (UserInfoBean) getIntent().getExtras().getSerializable(IntentKey.LOGIN_MODEL);
 
         mEditPhone.addTextChangedListener(new TextWatcher() {
             @Override

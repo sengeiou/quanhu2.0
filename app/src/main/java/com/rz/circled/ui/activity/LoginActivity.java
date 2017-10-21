@@ -640,6 +640,7 @@ public class LoginActivity extends BaseActivity {
                         skipActivity(aty, FollowCircle.class);
 //
                     }else {
+                        saveLoginData(loginModel);
                         skipActivity(aty, MainActivity.class);
                     }
                 } else {
@@ -647,7 +648,7 @@ public class LoginActivity extends BaseActivity {
                     if (loginModel != null) {
                         Intent intent = new Intent(this, BoundPhoneActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("loginmodel", loginModel);
+                        bundle.putSerializable(IntentKey.LOGIN_MODEL, loginModel);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
