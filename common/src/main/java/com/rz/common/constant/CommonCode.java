@@ -82,6 +82,8 @@ public interface CommonCode {
         int TYPE_REWARD_REFRESH = 40001;
 
         int TYPE_LOGIN_WEB = 50001;
+
+        int TYPE_HTTP_HEADER = 60001;
     }
 
     /**

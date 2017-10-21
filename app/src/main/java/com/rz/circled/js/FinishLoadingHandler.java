@@ -32,10 +32,6 @@ public class FinishLoadingHandler extends ServerHandler {
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         //finish loading
         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.FINISH_LOADING));
-        if (mActivity instanceof MainActivity) {
-            WebViewProxy mWebViewProxy = (WebViewProxy) QHApplication.getInstance().getWebView(false).getTag();
-            mWebViewProxy.setNeedLoading(false);
-        }
     }
 
     @Override
