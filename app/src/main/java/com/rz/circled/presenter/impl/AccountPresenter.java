@@ -1,7 +1,6 @@
 package com.rz.circled.presenter.impl;
 
 import android.content.Context;
-import android.os.Handler;
 
 import com.rz.circled.R;
 import com.rz.circled.presenter.GeneralPresenter;
@@ -102,15 +101,7 @@ public class AccountPresenter extends GeneralPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
@@ -222,15 +213,7 @@ public class AccountPresenter extends GeneralPresenter {
                         mView.updateView(type);
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
                     }
                 }
                 if (type == Type.HAD_SET_PW) {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -30,12 +29,7 @@ public class CommomUtils {
 
         idRefreshStatusTxt.setText("没有更多的搜索结果");
         idRefreshStatusLl.setVisibility(View.VISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                idRefreshStatusLl.setVisibility(View.GONE);
-            }
-        }, 3000);
+        idRefreshStatusLl.setVisibility(View.GONE);
     }
 
     /**
@@ -217,18 +211,20 @@ public class CommomUtils {
      * @param
      * @return
      */
-    public static String getDymanicUrl(String circleRoute,String moduleId, String coterieId, String resourceId) {
-        String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/coterie/" + coterieId + "/" + moduleId + "/" + resourceId;
+    public static String getDymanicUrl(String circleRoute, String moduleId, String coterieId, String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl + "/" + circleRoute + "/redirect/coterie/" + coterieId + "/" + moduleId + "/" + resourceId;
         return url;
     }
-//来自圈子文章链接拼接
-    public static String getCircleUrl(String circleRoute,String moduleId, String resourceId) {
-        String url = BuildConfig.WebHomeBaseUrl +"/"+ circleRoute+"/redirect/" + moduleId + "/" + resourceId;
+
+    //来自圈子文章链接拼接
+    public static String getCircleUrl(String circleRoute, String moduleId, String resourceId) {
+        String url = BuildConfig.WebHomeBaseUrl + "/" + circleRoute + "/redirect/" + moduleId + "/" + resourceId;
         return url;
     }
+
     //活动作品url
-    public static String getProductUrl(String activityId,String id) {
-        String url = BuildConfig.WebHomeBaseUrl +"/activity/platform-activity/vote/"+ activityId+ "/detail/" + id;
+    public static String getProductUrl(String activityId, String id) {
+        String url = BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/vote/" + activityId + "/detail/" + id;
         return url;
     }
 
