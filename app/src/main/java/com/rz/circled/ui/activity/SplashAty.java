@@ -29,7 +29,6 @@ import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
@@ -68,6 +67,7 @@ public class SplashAty extends BaseActivity {
     //时间是否结束
     private boolean isTimeOver;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
+    private CirclePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +93,9 @@ public class SplashAty extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        CirclePresenter presenter = new CirclePresenter();
-        presenter.attachView(this);
-        presenter.getBannerList("1");
+        mPresenter = new CirclePresenter();
+        mPresenter.attachView(this);
+
     }
 
     @Override
@@ -112,14 +112,8 @@ public class SplashAty extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // 判断用户是否是第一次安装
                 if (!Session.getUserIsFirstDownload()) {
-                    try {
-                        initV();
-                    } catch (ParseException e) {
-                        Log.i(TAG, "run: ");
-                        jumpTo();
-                    }
+                        mPresenter.getBannerList("1");
                 } else {
                     if (Session.getUserIsLogin()){
                         skipActivity(aty, MainActivity.class);
@@ -135,15 +129,16 @@ public class SplashAty extends BaseActivity {
                     }
                 }
             }
-        }, 2000);
+        }, 1500);
     }
-
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        bannerList.addAll((Collection<? extends BannerAddSubjectModel>) t);
-
-
+        try {
+            initV();
+        } catch (ParseException e) {
+            jumpTo();
+        }
     }
 
     @Override

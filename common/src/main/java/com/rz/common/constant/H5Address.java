@@ -41,5 +41,8 @@ public interface H5Address {
     //联系我们
     String CONECT_US = H5_HEAD + "quanhu/doc/contact_customer_service/index.html";
 
+    //悬赏列表链接
+    String REWARD_LIST_URL = "/activity/reward";
+
 
 }
