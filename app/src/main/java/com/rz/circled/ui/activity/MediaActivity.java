@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
@@ -39,6 +40,7 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.NetUtils;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
 import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
@@ -164,14 +166,18 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
     @Override
     public void onLoadingChanged(boolean isLoading) {
         Log.d(TAG, "isLoading = " + isLoading);
-        if (!isLoading) onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+        if (!isLoading) {
+            if (SVProgressHUD.isShowing(this))
+                SVProgressHUD.dismiss(this);
+        }
     }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         Log.d(TAG, "playWhenReady = " + playWhenReady + " / playbackState = " + playbackState);
         if (playbackState == ExoPlayer.STATE_READY && playWhenReady) {
-            onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+            if (SVProgressHUD.isShowing(this))
+                SVProgressHUD.dismiss(this);
         }
         View videoSurfaceView = playView.getVideoSurfaceView();
     }
@@ -192,21 +198,31 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
     }
 
     private void checkWifi() {
-        if (!NetUtils.isNetworkConnected(mContext)) {
-            onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.no_net_work));
+        String videoUrl = getIntent().getStringExtra(IntentKey.EXTRA_PATH);
+        if (TextUtils.isEmpty(videoUrl)) {
+            onLoadingStatus(CommonCode.General.ERROR_DATA);
             return;
         }
-        if (NetworkUtil.isWifi(this)) {
-            initPlay();
+        if (videoUrl.startsWith("http")) {
+            if (!NetUtils.isNetworkConnected(mContext)) {
+                onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.no_net_work));
+                return;
+            }
+            if (NetworkUtil.isWifi(this)) {
+                initPlay();
+            } else {
+                CommonDialog commonDialog = new CommonDialog(mContext);
+                commonDialog.showDialog(getString(R.string.wifi_play), new CommonDialog.OnCommonDialogConfirmListener() {
+                    @Override
+                    public void onConfirmListener() {
+                        initPlay();
+                    }
+                });
+            }
         } else {
-            CommonDialog commonDialog = new CommonDialog(mContext);
-            commonDialog.showDialog(getString(R.string.wifi_play), new CommonDialog.OnCommonDialogConfirmListener() {
-                @Override
-                public void onConfirmListener() {
-                    initPlay();
-                }
-            });
+            initPlay();
         }
+
     }
 
     private void initPlay() {
@@ -235,6 +251,6 @@ public class MediaActivity extends BaseActivity implements SimpleExoPlayer.Video
         // Prepare the player with the source.
         player.prepare(videoSource);
         player.setPlayWhenReady(true);
-        onLoadingStatus(CommonCode.General.DATA_LOADING);
+        SVProgressHUD.show(this);
     }
 }
