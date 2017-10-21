@@ -19,7 +19,7 @@ public class ResponseData<T> {
     /**
      * 提示信息
      */
-    private String msg;
+    private String msg = "";
 
     /**
      * 返回数据

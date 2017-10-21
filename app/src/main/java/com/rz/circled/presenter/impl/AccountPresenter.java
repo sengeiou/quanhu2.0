@@ -14,7 +14,6 @@ import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.LoginWayModel;
@@ -102,6 +101,7 @@ public class AccountPresenter extends GeneralPresenter {
                         return;
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
@@ -155,7 +155,7 @@ public class AccountPresenter extends GeneralPresenter {
                         }
                         return;
                     } else {
-                        HandleRetCode.handler(getContext(mView), res);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
                 }
                 if (null != mAccountAty) {
@@ -318,10 +318,7 @@ public class AccountPresenter extends GeneralPresenter {
                         mView.updateViewWithLoadMore(type, false);
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         mView.updateViewWithLoadMore(-1, false);
                     }
                 } else {

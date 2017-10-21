@@ -14,7 +14,6 @@ import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.LoginTypeBean;
@@ -235,10 +234,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         mView.updateView("");
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
-                            return;
-                        }
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.modify_fail));

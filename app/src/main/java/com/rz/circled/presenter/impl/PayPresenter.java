@@ -174,7 +174,6 @@ public class PayPresenter extends AbsPresenter {
                             return;
                         }
                     } else {
-                        HandleRetCode.handler(activity, res);
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         return;
                     }
@@ -394,11 +393,9 @@ public class PayPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                            isDataError = true;
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        isDataError = true;
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
@@ -456,11 +453,9 @@ public class PayPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            isDataError = true;
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        isDataError = true;
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
@@ -518,11 +513,9 @@ public class PayPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                            isDataError = true;
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        isDataError = true;
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
@@ -643,8 +636,7 @@ public class PayPresenter extends AbsPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(response.body().getData());
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
@@ -676,8 +668,7 @@ public class PayPresenter extends AbsPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(response.body().getData());
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
