@@ -206,11 +206,11 @@ public class UserInfoActivity extends BaseActivity {
             }
         });
 
-        editImg.setOnClickListener(new View.OnClickListener() {
+        editLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                skipActivity(UserInfoActivity.this, PersonInfoAty.class);
+                showActivity(UserInfoActivity.this, PersonInfoAty.class);
 
             }
         });

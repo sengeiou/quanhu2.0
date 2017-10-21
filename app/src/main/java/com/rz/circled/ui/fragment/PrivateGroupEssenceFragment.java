@@ -18,6 +18,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
+import com.rz.common.widget.MyListView;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.api.ApiPGService;
 import com.rz.httpapi.api.BaseCallback;
@@ -49,7 +50,7 @@ import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 public class PrivateGroupEssenceFragment extends BaseFragment {
 
     @BindView(R.id.lv)
-    ListView lv;
+    MyListView lv;
     @BindView(R.id.tv)
     TextView tv;
     @BindView(R.id.line)
@@ -132,7 +133,6 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
             mAdapter.setData(data);
         }
         tv.setVisibility(View.GONE);
-        Utility.setListViewHeightBasedOnChildren(lv);
     }
 
 

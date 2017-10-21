@@ -135,6 +135,7 @@ android {
                                     //暂时填写默认值即可.
                                     JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
+            debuggable true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

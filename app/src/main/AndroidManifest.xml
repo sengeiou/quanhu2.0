@@ -345,7 +345,8 @@
         <activity
             android:name=".ui.activity.ApplyForCreatePrivateGroupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent" />
+            android:theme="@style/BaseAppTheme.Translucent"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".ui.activity.ApplyForPrivateGroupBelongActivity"
             android:screenOrientation="portrait"

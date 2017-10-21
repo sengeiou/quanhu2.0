@@ -23,7 +23,6 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.ActivityBean;
