@@ -1495,4 +1495,65 @@ public class StringUtils {
         String dateStr = simpleDateFormat.format(date);
         return dateStr;
     }
+
+    /**
+     * 计算两个时间戳相隔时间，转换为相差时分
+     */
+
+    public static String getDateTimeDiff(long startTime,long endTime){
+//        Date nowDate=new Date();//当前时间\r
+//        long nowTime=nowDate.getTime;
+//        long lastTime=userTime.longValue();//以前的时间\r
+//        long time=nowTime-lastTime;//时间相减比较。
+//        if(time>(long)60000)//1分钟{}
+
+        String timeStr = "";
+        long diffTime = endTime - startTime;
+        String time = getDateTimeFromMillisecondNo1(diffTime);
+
+        if(time.contains(":")){
+            String timeArray[] = time.split(":");
+            if(Integer.valueOf(timeArray[0])>0 && Integer.valueOf(timeArray[1])>0){
+                timeStr = "还剩" + timeArray[0] + "小时"+ timeArray[1] + "分钟";
+            }else if(Integer.valueOf(timeArray[0])==0){
+                timeStr = "还剩" + timeArray[1] + "分钟";
+            }
+        }else{
+            timeStr = "还剩" + time + "分钟";
+        }
+        return timeStr;
+    }
+
+    //毫秒转化为时分秒
+    public static String formatHourTime(Long ms) {
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+//        Integer dd = hh * 24;
+
+//        Long day = ms / dd;
+        Long hour = ms / hh;
+        Long minute = (ms - hour * hh) / mi;
+        Long second = (ms - hour * hh - minute * mi) / ss;
+        Long milliSecond = ms - hour * hh - minute * mi - second * ss;
+
+        StringBuffer sb = new StringBuffer();
+
+        if (hour > 0) {
+            sb.append("还剩" + hour + "小时");
+        }else{
+            sb.append("还剩");
+        }
+        if (minute > 0) {
+            sb.append(minute + "分");
+        }
+//        if (second > 0) {
+//            sb.append(second + "秒");
+//        }
+//        if (milliSecond > 0) {
+//            sb.append(milliSecond + "毫秒");
+//        }
+        return sb.toString();
+    }
+
 }

@@ -111,7 +111,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
     }
 
-//    public void getV3CircleByCust(String userId, final boolean showLoadingStatus) {
+    //    public void getV3CircleByCust(String userId, final boolean showLoadingStatus) {
 //        Call<ResponseData<List<CircleEntrModle>>> call = null;
 //        if (TextUtils.isEmpty(userId)) {
 //            userId = null;
@@ -164,39 +164,38 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 //
 //
     //获取用户是否禁言
-    public  void  getUserPermession(){
+    public void getUserPermession() {
         if (!NetUtils.isNetworkConnected(mContext)) {
             Toast.makeText(mContext,mContext.getString(R.string.no_net_work),Toast.LENGTH_LONG).show();
             return;
         }
         mUserService.getUserPermission(Session.getUserId())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<ResponseData<UserPermissionBean>>() {
-                        @Override
-                        public void onCompleted() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData<UserPermissionBean>>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData<UserPermissionBean> res) {
+                        if (res.getRet() == ReturnCode.SUCCESS) {
+                            UserPermissionBean data = res.getData();
+                            mView.updateView(data);
                         }
 
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(ResponseData<UserPermissionBean> res) {
-                            if (res.getRet()==ReturnCode.SUCCESS){
-                                UserPermissionBean data = res.getData();
-                                mView.updateView(data);
-                            }else{
-                                HandleRetCode.handler(mContext, res);
-                            }
-
-                        }
-                    });
+                    }
+                });
 
 
     }
+
     /**
      * 首页动态列表
      *
@@ -259,8 +258,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                                 Log.d("test", "cacheData failed " + e.getMessage());
                             }
                             return;
-                        }else {
-                            HandleRetCode.handler(mContext, res);
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
 
                     }
@@ -335,6 +334,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                                 Session.setAdv_pic_url(model.isEmpty()?"":model.get(0).getPicUrl());
                                 Session.setAdv_url(model.isEmpty()?"":model.get(0).getUrl());
                                 Session.setAdv_upIngDate(model.isEmpty()?"":model.get(0).startTime);
+                            Log.i(TAG, "onResponse: "+Session.getAdv_upIngDate());
                                 Session.setAdv_expireDate(model.isEmpty()?"":model.get(0).endTime);
                         }
                         mView.updateViewWithFlag(model, Integer.parseInt(stats));
@@ -378,7 +378,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             mSubjectCache.putListEntity(data);
                             mView.updateViewWithFlag(data, stats);
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
                     }
                 });
@@ -412,10 +412,10 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<HotSubjectModel> data = res.getData();
                             if (!data.isEmpty())
-                            mView.updateView(data);
-                            else mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,"");
+                                mView.updateView(data);
+                            else mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
                     }
                 });
@@ -451,7 +451,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             mEntitiesBeanCache.putListEntity(entities);
                             mView.updateViewWithFlag(entities, state);
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
                     }
                 });
@@ -520,13 +520,13 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             List<StarListBean> data = res.getData().starList;
                             if (!data.isEmpty()) {
-                                start+=10;
-                                mView.updateViewWithLoadMore(data,loadMore);
-                            }else {
-                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,"");
+                                start += 10;
+                                mView.updateViewWithLoadMore(data, loadMore);
+                            } else {
+                                mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
                             }
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
                     }
                 });
@@ -558,7 +558,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             mView.updateView(DEL_SUCESS);
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
 
                     }
@@ -591,7 +591,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             mView.updateView(ADD_SUCESS);
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
 
                     }
@@ -603,7 +603,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      */
     public void getUserLoveCircle(String custId) {
         if (!NetUtils.isNetworkConnected(mContext)) {
-            Toast.makeText(mContext,mContext.getString(R.string.no_net_work),Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, mContext.getString(R.string.no_net_work), Toast.LENGTH_LONG).show();
             return;
         }
         mUserService.getLoveCircleList(custId)
@@ -626,7 +626,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             List<CircleEntrModle> data = res.getData();
                             mView.updateView(data);
                         } else {
-                            HandleRetCode.handler(mContext, res);
+                            mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                         }
                     }
                 });

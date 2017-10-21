@@ -1,6 +1,5 @@
 package com.rz.circled.presenter.impl;
 
-import android.os.Handler;
 import android.text.TextUtils;
 
 import com.rz.circled.R;
@@ -12,7 +11,6 @@ import com.rz.common.utils.NetUtils;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.BankCardModel;
@@ -72,15 +70,8 @@ public class BankPresenter extends AbsPresenter {
                         mView.updateView("2");
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.setting_fail));
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.setting_fail) : res.getMsg());
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.setting_fail));
@@ -123,18 +114,11 @@ public class BankPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.load_fail) : res.getMsg());
+                        return;
                     }
-                }
-                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
+                } else
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
             }
 
             @Override
@@ -168,18 +152,8 @@ public class BankPresenter extends AbsPresenter {
                         mView.updateView("1");
                         return;
                     } else {
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "error");
-//                        mView.onLoadingStatus(CodeStatus.Gegeneral.ERROR_DATA, "");
-//                        return;
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.unbind_card_fail));
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.unbind_card_fail) : res.getMsg());
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.unbind_card_fail));
@@ -216,15 +190,8 @@ public class BankPresenter extends AbsPresenter {
                         mView.updateView(res.getRet());
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.bind_fail));
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.bind_fail) : res.getMsg());
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.bind_fail));
@@ -267,15 +234,8 @@ public class BankPresenter extends AbsPresenter {
                             return;
                         }
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, TextUtils.isEmpty(res.getMsg()) ? activity.getString(R.string.load_fail) : res.getMsg());
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));

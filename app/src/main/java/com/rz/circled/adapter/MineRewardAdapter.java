@@ -11,6 +11,8 @@ import com.rz.circled.R;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.Currency;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.MineRewardBean;
 
@@ -46,40 +48,42 @@ public class MineRewardAdapter extends CommonAdapter {
             Glide.with(mContext).load(model.getUser().getCustImg()).placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).transform(new GlideCircleImage(mContext)).into(avatar);
         }
 
-        //获取当前时间
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateNowStr = sdf.format(d);
+        tvTime.setText(StringUtils.formatDisplayTime(String.valueOf(model.getCreateTime()),"yyyy-MM-dd HH:mm:ss"));
 
-        long lt = new Long(model.getCreateTime());
-        Date date = new Date(lt);
-        String res = sdf.format(date);
-        String time = TimeUtil.getTime(res, dateNowStr);
-        String timeArray[] = time.replace("-", "").split(",");
-        String time1 = timeArray[0];
-        String time2 = timeArray[1];
-        String time3 = timeArray[2];
-
-        if (Integer.parseInt(time1) > 0) {
-            if (Integer.valueOf(time1) >= 2) {
-                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                tvTime.setText(sdf2.format(model.getCreateTime()));
-            } else {
-                tvTime.setText(time1 + "天" + time2 + "小时" + time3 + "分钟前");
-            }
-        } else {
-            if (Integer.parseInt(time2) > 0) {
-                tvTime.setText(time2 + "小时" + time3 + "分钟前");
-            } else if (Integer.parseInt(time3) > 0) {
-                tvTime.setText(time3 + "分钟前");
-            } else {
-                tvTime.setText("刚刚");
-            }
-        }
+//        //获取当前时间
+//        Date d = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateNowStr = sdf.format(d);
+//
+//        long lt = new Long(model.getCreateTime());
+//        Date date = new Date(lt);
+//        String res = sdf.format(date);
+//        String time = TimeUtil.getTime(res, dateNowStr);
+//        String timeArray[] = time.replace("-", "").split(",");
+//        String time1 = timeArray[0];
+//        String time2 = timeArray[1];
+//        String time3 = timeArray[2];
+//
+//        if (Integer.parseInt(time1) > 0) {
+//            if (Integer.valueOf(time1) >= 2) {
+//                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//                tvTime.setText(sdf2.format(model.getCreateTime()));
+//            } else {
+//                tvTime.setText(time1 + "天" + time2 + "小时" + time3 + "分钟前");
+//            }
+//        } else {
+//            if (Integer.parseInt(time2) > 0) {
+//                tvTime.setText(time2 + "小时" + time3 + "分钟前");
+//            } else if (Integer.parseInt(time3) > 0) {
+//                tvTime.setText(time3 + "分钟前");
+//            } else {
+//                tvTime.setText("刚刚");
+//            }
+//        }
 
         tvName.setText(model.getUser().getCustNname());
 //        tvTime.setText(model.getCreateTime()+"");
-        tvTitle.setText(model.getUser().getCustNname() + "打赏了价值" + model.getRewardPrice() / 100 + "悠然币的" + model.getGiftInfo().getName() + "给");
+        tvTitle.setText(model.getUser().getCustNname() + "打赏了价值" +  Currency.returnDollar(Currency.RMB, model.getRewardPrice() + "", 0) + "悠然币的" + model.getGiftInfo().getName() + "给");
 
         if (!TextUtils.isEmpty(model.getResourceInfo().getPics())) {
             rewardImg.setVisibility(View.VISIBLE);

@@ -28,9 +28,11 @@ import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.sgt.jsbridge.JsEvent;
+import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -375,11 +377,11 @@ public class UploadVideoActivity extends BaseActivity {
             }
             mVideoFilePath = filePath;
             initVideoDuration();
-            getRxBytes();
+            checkWifi();
         } else if (requestCode == SYSTEM_SHOOT_VIDEO) {
             mVideoFilePath = this.filePath;
             initVideoDuration();
-            getRxBytes();
+            checkWifi();
         }
     }
 
@@ -453,5 +455,23 @@ public class UploadVideoActivity extends BaseActivity {
             processOss();
         }
 
+    }
+
+    private void checkWifi() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
+            return;
+        }
+        if (NetworkUtil.isWifi(this)) {
+            processOss();
+        } else {
+            CommonDialog commonDialog = new CommonDialog(mContext);
+            commonDialog.showDialog(getString(R.string.wifi_upload), new CommonDialog.OnCommonDialogConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    processOss();
+                }
+            });
+        }
     }
 }
