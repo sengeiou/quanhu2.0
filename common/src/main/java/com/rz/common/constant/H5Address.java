@@ -9,7 +9,7 @@ public interface H5Address {
     String H5_HEAD_RE = "https://static.yryz.com/";
     String H5_HEAD = H5_HEAD_RE;
     //用户服务协议
-    String USER_SERVER = H5_HEAD + "common/user_serve_protocol/index.html";
+    String USER_SERVER = H5_HEAD + "quanhu/doc/user_serve_protocol/index.html";
     //举报
     String ONLINE_REPORT = "http://youranyizhi.mikecrm.com/1f4hJQA";
     //充值说明
@@ -24,7 +24,7 @@ public interface H5Address {
     //升级攻略
     String UPGRADE_STRATEGY = H5_HEAD + "quanhu/doc/upgrade_strategy/index.html";
     //积分获取攻略
-    String INTEGRAL_STATEGY = H5_HEAD + "common/integral-strategy/index.html";
+    String INTEGRAL_STATEGY = H5_HEAD + "quanhu/doc/get_the_tips/index.html";
 
     //私圈创建协议
     String PRIVATE_GROUP_CREATE_AGREEMENT = H5_HEAD + "quanhu/doc/private_circle_rule/index.html";
