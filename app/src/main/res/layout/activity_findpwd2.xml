@@ -80,7 +80,7 @@
                                 android:layout_marginLeft="@dimen/px24"
                                 android:src="@mipmap/ic_login_pw"
                                 android:layout_below="@id/splite_line"
-                                android:layout_marginTop="@dimen/px50"
+                                android:layout_marginTop="@dimen/px53"
                                 />
 
                             <EditText
