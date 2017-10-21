@@ -73,6 +73,7 @@ import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.Record;
@@ -80,6 +81,7 @@ import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.CallManager;
 import com.rz.sgt.jsbridge.JsEvent;
+import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1230,7 +1232,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         jsResult = new ArrayList<>();
         if (TextUtils.isEmpty(mVideoFilePath))
             publicUpload();
-        else getRxBytes();
+        else checkWifi();
     }
 
     private void publicUpload() {
@@ -2449,5 +2451,23 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             publicUpload();
         }
 
+    }
+
+    private void checkWifi() {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
+            return;
+        }
+        if (NetworkUtil.isWifi(this)) {
+            publicUpload();
+        } else {
+            CommonDialog commonDialog = new CommonDialog(mContext);
+            commonDialog.showDialog(getString(R.string.wifi_upload), new CommonDialog.OnCommonDialogConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    publicUpload();
+                }
+            });
+        }
     }
 }
