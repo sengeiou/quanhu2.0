@@ -41,6 +41,7 @@ import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_CREATE_REFRESH;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_ID;
@@ -230,6 +231,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
+            case PRIVATE_GROUP_CREATE_REFRESH:
             case PRIVATE_GROUP_TAB_REFRESH:
                 loadData(false);
                 break;
