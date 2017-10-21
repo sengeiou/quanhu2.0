@@ -53,7 +53,6 @@ import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.LoginTypeBean;
-import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.umeng.socialize.UMShareAPI;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -561,9 +560,9 @@ public class LoginActivity extends BaseActivity {
         Session.setCustRole(model.getCustRole());
         if (TextUtils.equals("0", model.getCustSex())) {
             Session.setUser_sex("女");
-        } else if(TextUtils.equals("1", model.getCustSex())){
+        } else if (TextUtils.equals("1", model.getCustSex())) {
             Session.setUser_sex("男");
-        }else{
+        } else {
             Session.setUser_sex("");
         }
         Session.setUser_area(model.getCustLocation());
@@ -635,11 +634,11 @@ public class LoginActivity extends BaseActivity {
             if (model.size() > 0 && model.size() == 4) {
                 //已经绑定过手机直接登录
                 if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
-                    if(Session.getUserIsFirstDownload()) {
+                    if (Session.getUserIsFirstDownload()) {
                         saveLoginData(loginModel);
                         skipActivity(aty, FollowCircle.class);
 //
-                    }else {
+                    } else {
                         skipActivity(aty, MainActivity.class);
                     }
                 } else {

@@ -47,6 +47,7 @@ public class NewsActivityViewBinder extends ItemViewBinder<NewsBean, NewsActivit
         NewsActivityExtra extra = gson.fromJson(json, NewsActivityExtra.class);
         String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
         holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        holder.tvFrom.setVisibility(TextUtils.isEmpty(from) ? View.INVISIBLE : View.VISIBLE);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

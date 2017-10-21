@@ -97,11 +97,7 @@ public class ChatSettingActivity extends BaseActivity {
 
             tvNick.setText(data.getCustNname());
 
-            if (!TextUtils.isEmpty(data.getCustSignature())) {
-                tvSignature.setText(getString(R.string.introduction) + data.getCustDesc());
-            } else {
-                tvSignature.setText(R.string.introduction);
-            }
+            tvSignature.setText(getString(R.string.introduction) + (TextUtils.isEmpty(data.getCustDesc()) ? getString(R.string.mine_sign_default) : data.getCustDesc()));
 
             if (!TextUtils.isEmpty(data.getCustLocation())) {
                 tvLocation.setText(data.getCustLocation());
@@ -109,9 +105,10 @@ public class ChatSettingActivity extends BaseActivity {
 
             if (TextUtils.equals("1", data.getCustSex()))
                 imgSex.setImageResource(R.mipmap.ic_male);
-            else
+            else if (TextUtils.equals("0", data.getCustSex()))
                 imgSex.setImageResource(R.mipmap.ic_female);
-
+            else
+                imgSex.setVisibility(View.GONE);
         }
     }
 

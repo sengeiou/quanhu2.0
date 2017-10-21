@@ -94,6 +94,11 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     private void getData(final boolean loadMore){
 
+        if (!NetUtils.isNetworkConnected(mActivity)) {
+            onLoadingStatus(CommonCode.General.UN_NETWORK, mActivity.getString(R.string.no_net_work));
+            return;
+        }
+
         if (!loadMore) {
             pageNo = 1;
         } else {
@@ -117,10 +122,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onError(Throwable e) {
-                        if (!NetUtils.isNetworkConnected(mActivity)) {
-                            onLoadingStatus(CommonCode.General.UN_NETWORK, mActivity.getString(R.string.no_net_work));
-                            return;
-                        }
+
                     }
 
                     @Override
@@ -167,10 +169,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     }
                 });
-
     }
-
-
 
 
     @Override

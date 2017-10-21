@@ -3,6 +3,8 @@ package com.rz.circled.js;
 
 import android.app.Activity;
 
+import com.rz.circled.application.QHApplication;
+import com.rz.circled.ui.activity.MainActivity;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.sgt.jsbridge.BaseParamsObject;
@@ -30,6 +32,10 @@ public class FinishLoadingHandler extends ServerHandler {
     public void handle(String params, ParamsObject paramObj, Callback callback) {
         //finish loading
         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.FINISH_LOADING));
+        if (mActivity instanceof MainActivity) {
+            WebViewProxy mWebViewProxy = (WebViewProxy) QHApplication.getInstance().getWebView(false).getTag();
+            mWebViewProxy.setNeedLoading(false);
+        }
     }
 
     @Override

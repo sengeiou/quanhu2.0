@@ -42,8 +42,6 @@ public class HttpHeaderHandler extends ServerHandler {
         headerModel.sign = "ceshi";
         headerModel.token = Session.getSessionKey();
         headerModel.devType = "2";
-//        String sign = DesUtils.encrypt(act + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", "");
-//        headerModel.apiVersion ="V3.0.0";
         try {
             headerModel.devName = URLEncoder.encode(Build.MODEL, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -57,9 +55,6 @@ public class HttpHeaderHandler extends ServerHandler {
         headerModel.userId = Session.getJsUserId();
         headerModel.phone = Session.getUserPhone();
         headerModel.cityCode = Session.getCityCode();
-//        Gson gson = new Gson();
-//        paramStr= gson.toJson(headerModel);
-//        Log.e("fengan", "handle:paramStr== "+paramStr );
         JsEvent.callJsEvent(paramObj.getInvokeId(), headerModel, headerModel != null ? BaseParamsObject.RESULT_CODE_SUCRESS : BaseParamsObject.RESULT_CODE_FAILED);
     }
 

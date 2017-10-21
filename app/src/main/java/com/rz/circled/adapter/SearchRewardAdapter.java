@@ -18,6 +18,7 @@ import com.rz.common.adapter.ViewHolder;
 import com.rz.common.utils.StringFormatUtil;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.RewardModel;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +61,18 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
         LinearLayout placeLayout = (LinearLayout) helper.getViewById(R.id.place_layout);
         ImageView picImg = (ImageView) helper.getViewById(R.id.pic_logo_img);
 
-        tvName.setText(model.getCustSimpleDTO().getCustNname());
+
+        if(StringUtil.isEmpty(keyWord)){
+            tvName.setText(model.getCustSimpleDTO().getCustNname());
+        }else{
+            stringFormatUtil = new StringFormatUtil(mContext, model.getCustSimpleDTO().getCustNname(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                tvName.setText(stringFormatUtil.getResult().toString());
+            }else{
+                tvName.setText(model.getCustSimpleDTO().getCustNname());
+            }
+
+        }
 
         Glide.with(mContext).load(model.getCustSimpleDTO().getCustImg()).transform(new GlideCircleImage(mContext)).
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
@@ -74,6 +86,18 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         tvContent.setText(model.getContent());
 
+
+        if(StringUtil.isEmpty(keyWord)){
+            tvContent.setText(model.getContent());
+        }else{
+            stringFormatUtil = new StringFormatUtil(mContext, model.getContent(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+                tvContent.setText(stringFormatUtil.getResult().toString());
+            }else{
+                tvContent.setText(model.getContent());
+            }
+        }
+
         if(!TextUtils.isEmpty(model.getLocation())){
             placeLayout.setVisibility(View.VISIBLE);
             tvPlace.setText(model.getLocation());
@@ -83,12 +107,10 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 
         if( TextUtils.isEmpty(model.getImgUrl())){
             picImg.setVisibility(View.GONE);
-
 //            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //            lp.setMargins(2, 0, 0, 0);
 //
 //            tvTime.setLayoutParams(lp);
-
         }else{
             picImg.setVisibility(View.VISIBLE);
         }
@@ -128,24 +150,40 @@ public class SearchRewardAdapter extends SearchCommonAdapter {
 //            tvTime.setText("还剩"+TimeUtil.getTime(dateNowStr,model.getTerminalTime()));
         }else if(model.getComplete() == 2){
 
-            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
-            tvStatus.setText("已完成");
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+            tvStatus.setText("公示期");
             tvTime.setVisibility(View.GONE);
         }else if(model.getComplete() == 3){
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
+            tvTime.setVisibility(View.GONE);
+            tvStatus.setText("已完成");
+        }else if(model.getComplete() == 4){
             tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
             tvTime.setVisibility(View.GONE);
             tvStatus.setText("已过期");
         }
 
-        stringFormatUtil = new StringFormatUtil(mContext, model.getContent(), keyWord, R.color.colorAccent).fillColor();
-        tvContent.setText(stringFormatUtil.getResult());
-//        tvContent.setText(model.getContent());
+        if(StringUtil.isEmpty(keyWord)){
+            tvContent.setText(model.getContent());
+        }else{
+            stringFormatUtil = new StringFormatUtil(mContext, model.getContent(), keyWord, R.color.colorAccent).fillColor();
+            if(stringFormatUtil != null && stringFormatUtil.getResult() != null) {
+                tvContent.setText(stringFormatUtil.getResult());
+            }else{
+                tvContent.setText(model.getContent());
+            }
+        }
 
         if(model.getReplyNum() == 0){
             tvPerNum.setVisibility(View.GONE);
         }else{
-            tvPerNum.setVisibility(View.VISIBLE);
-            tvPerNum.setText(model.getReplyNum()+"人参加");
+            if(model.getComplete() == 1 || model.getComplete() == 2){
+                tvPerNum.setVisibility(View.VISIBLE);
+                tvPerNum.setText(model.getReplyNum()+"人参加");
+            }else{
+                tvPerNum.setVisibility(View.VISIBLE);
+                tvPerNum.setText("该悬赏有"+model.getReplyNum()+"个回答");
+            }
         }
     }
 

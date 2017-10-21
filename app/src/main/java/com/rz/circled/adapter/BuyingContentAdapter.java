@@ -33,7 +33,7 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
     private String keyWord = "";
     public StringFormatUtil stringFormatUtil;
 
-    public void setKeyWord(String keyWord){
+    public void setKeyWord(String keyWord) {
         this.keyWord = keyWord;
     }
 
@@ -43,7 +43,7 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
 
     }
 
-    public  void bindCircleContent(ViewHolder helper, MyBuyingModel item) {
+    public void bindCircleContent(ViewHolder helper, MyBuyingModel item) {
         if (item != null) {
             LinearLayout mll_circleinfo_content = helper.getView(R.id.ll_circle_info_content);//展位图,标题,描述 content
             ImageView mIvThumbnail = helper.getView(R.id.iv_thumbnail);//展位图
@@ -62,12 +62,12 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
             rl_circle_video_content.getLayoutParams().height = newWidth * 559 / 994;
             rl_circle_video_content.getLayoutParams().width = newWidth;
             rl_circle_video_content.requestLayout();
-                mIvThumbnail.setVisibility(View.GONE);
+            mIvThumbnail.setVisibility(View.GONE);
             if (TextUtils.isEmpty(item.getResource().pics)) {
             } else {
                 rl_circle_video_content.setVisibility(View.GONE);
                 ll_circle_3imgs.setVisibility(View.GONE);
-                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().pics,R.dimen.px288,R.dimen.px260);
+                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().pics, R.dimen.px288, R.dimen.px260);
                 helper.setImageByUrlTransger(mIvThumbnail, url, R.drawable.ic_default_thumbnail);
             }
             mTitle.setText(item.getResource().title);
@@ -86,12 +86,15 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
 
 //                    StringStaticFormatUtil.fillColor(s, SearchActivity.searchWord,R.color.colorAccent);
 
-                    if(TextUtils.isEmpty(keyWord)){
+                    if (TextUtils.isEmpty(keyWord)) {
                         mdes.setText(s);
-                    }else{
+                    } else {
                         stringFormatUtil = new StringFormatUtil(mContext, s, keyWord, R.color.colorAccent).fillColor();
-
-                        mdes.setText(stringFormatUtil.getResult());
+                        if (stringFormatUtil != null && stringFormatUtil.getResult() != null) {
+                            mdes.setText(stringFormatUtil.getResult());
+                        } else {
+                            mdes.setText(s);
+                        }
                     }
                 }
             }
@@ -105,7 +108,7 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
                 if (pics.length == 1) {
                     iv_circle_1img.setVisibility(View.VISIBLE);
                     ll_circle_3imgs.setVisibility(View.GONE);
-                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().pics,R.dimen.px994,R.dimen.px558);
+                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.getResource().pics, R.dimen.px994, R.dimen.px558);
                     helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
                 } else {
                     iv_circle_1img.setVisibility(View.GONE);
@@ -128,7 +131,7 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
                             iv_circle_img03.setVisibility(View.VISIBLE);
                             iv = iv_circle_img03;
                         }
-                        String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i],R.dimen.px320,R.dimen.px320);
+                        String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i], R.dimen.px320, R.dimen.px320);
                         helper.setImageByUrlTransger(iv, url, R.drawable.ic_circle_img3);
                     }
                 }
@@ -145,7 +148,6 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
 
         }
     }
-
 
 
     public static void bindCircleContent(ViewHolder helper, CircleDynamic item, String searchBox) {
@@ -172,8 +174,8 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
                 mIvThumbnail.setVisibility(View.GONE);
             } else {
                 mIvThumbnail.setVisibility(View.VISIBLE);
-                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.thumbnail,R.dimen.px288,R.dimen.px260);
-                helper.setImageByUrlTransger(mIvThumbnail,url, R.drawable.ic_default_thumbnail);
+                String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.thumbnail, R.dimen.px288, R.dimen.px260);
+                helper.setImageByUrlTransger(mIvThumbnail, url, R.drawable.ic_default_thumbnail);
             }
             if (TextUtils.isEmpty(item.title)) {
                 mTitle.setVisibility(View.GONE);
@@ -209,7 +211,7 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
                 if (pics.length == 1) {
                     iv_circle_1img.setVisibility(View.VISIBLE);
                     ll_circle_3imgs.setVisibility(View.GONE);
-                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.pics,R.dimen.px994,R.dimen.px558);
+                    String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), item.pics, R.dimen.px994, R.dimen.px558);
                     helper.setImageByUrlTransger(iv_circle_1img, url, R.drawable.ic_circle_img1);
                 } else {
                     iv_circle_1img.setVisibility(View.GONE);
@@ -232,7 +234,7 @@ public abstract class BuyingContentAdapter extends CommonAdapter<MyBuyingModel> 
                             iv_circle_img03.setVisibility(View.VISIBLE);
                             iv = iv_circle_img03;
                         }
-                        String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i],R.dimen.px320,R.dimen.px320);
+                        String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), pics[i], R.dimen.px320, R.dimen.px320);
                         helper.setImageByUrlTransger(iv, url, R.drawable.ic_circle_img3);
                     }
                 }

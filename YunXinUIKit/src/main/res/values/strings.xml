@@ -264,6 +264,8 @@
     <string name="most_choice">最多选择</string>
     <string name="lease_choose">至少选择</string>
     <string name="no_chat_record">暂无聊天记录...</string>
+    <string name="no_chat_record1">您还没有任何好友，\n快去加好友开启聊天吧。</string>
+    <string name="add_friend">加好友</string>
     <string name="viewholder_picture">[图片]</string>
     <string name="viewholder_video">[视频]</string>
     <string name="viewholder_voice">[语音消息]</string>

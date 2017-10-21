@@ -38,6 +38,15 @@ public class WebViewProxy {
 
     private String userId;
 
+    private boolean needLoading = false;
+
+    public boolean isNeedLoading() {
+        return needLoading;
+    }
+
+    public void setNeedLoading(boolean needLoading) {
+        this.needLoading = needLoading;
+    }
 
     public WebViewProxy(AdvancedWebView webView) {
         this.mWebView = webView;

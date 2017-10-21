@@ -332,12 +332,10 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         List<BannerAddSubjectModel> model = (List<BannerAddSubjectModel>) res.getData();
                         if ("1".equals(stats)) {
-                            if(model != null && model.size()>0){
-                                Session.setAdv_pic_url(model.get(0).getPicUrl());
-                                Session.setAdv_url(model.get(0).getUrl());
-                                Session.setAdv_upIngDate(model.get(0).startTime);
-                                Session.setAdv_expireDate(model.get(0).endTime);
-                            }
+                                Session.setAdv_pic_url(model.isEmpty()?"":model.get(0).getPicUrl());
+                                Session.setAdv_url(model.isEmpty()?"":model.get(0).getUrl());
+                                Session.setAdv_upIngDate(model.isEmpty()?"":model.get(0).startTime);
+                                Session.setAdv_expireDate(model.isEmpty()?"":model.get(0).endTime);
                         }
                         mView.updateViewWithFlag(model, Integer.parseInt(stats));
 

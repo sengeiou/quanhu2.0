@@ -110,7 +110,7 @@ public class JsPayOrderActivity extends BaseActivity {
                 }
             }
             if (t instanceof AccountBean) {
-                presenter.pay(orderId, payMoney * 100);
+                presenter.pay(orderId, payMoney);
             }
         }
     }

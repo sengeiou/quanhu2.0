@@ -51,6 +51,11 @@ public class AddBankCardAty extends BaseActivity {
     private BankPresenter presenter;
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public boolean hasDataInPage() {
         return true;
     }
@@ -59,6 +64,7 @@ public class AddBankCardAty extends BaseActivity {
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_add_bank, null);
     }
+
 
     @Override
     public void initPresenter() {

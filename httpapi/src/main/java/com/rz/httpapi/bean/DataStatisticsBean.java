@@ -12,7 +12,7 @@ public class DataStatisticsBean implements Serializable {
     private int articleNum;    //文章数量
     private int coterieNum;   //私圈数量
     private int offerNum;       //悬赏数量
-    private int score;          //积分
+    private String score;          //积分
     private String custLevel;   //等级
 
     public String getCustId() {
@@ -47,11 +47,12 @@ public class DataStatisticsBean implements Serializable {
         this.offerNum = offerNum;
     }
 
-    public int getScore() {
+
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

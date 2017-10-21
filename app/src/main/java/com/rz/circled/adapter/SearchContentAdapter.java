@@ -2,20 +2,14 @@ package com.rz.circled.adapter;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
-import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.circled.widget.CircleImageView;
-import com.rz.circled.widget.GlideCircleImage;
 import com.rz.circled.widget.ViewHolder;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.CircleDynamic;
@@ -30,10 +24,10 @@ import java.util.List;
  * Created by Administrator on 2017/3/30/030.
  */
 
-public class ArticleAdapter extends CircleContentAdapter {
+public class SearchContentAdapter extends CircleContentAdapter {
 
 
-    public ArticleAdapter(Context context, List mDatas) {
+    public SearchContentAdapter(Context context, List mDatas) {
         super(context, mDatas, R.layout.item_dynamic_home);
     }
 
@@ -53,45 +47,7 @@ public class ArticleAdapter extends CircleContentAdapter {
         }else {
             fromWhere.setText("来自私圈 "+item.coterieName);
         }
-//        tv_other_left.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd"));
-
-//        long endtime = System.currentTimeMillis();
-        tv_other_left.setText(StringUtils.formatDisplayTime(String.valueOf(item.createTime),"yyyy-MM-dd HH:mm:ss"));
-
-        //获取当前时间
-//        Date d = new Date();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String dateNowStr = sdf.format(d);
-//
-//        long lt = new Long(item.createTime);
-//        Date date = new Date(lt);
-//        String res = sdf.format(date);
-//        String time = TimeUtil.getTime(res, dateNowStr);
-//        String timeArray[] = time.replace("-", "").split(",");
-//        String time1 = timeArray[0];
-//        String time2 = timeArray[1];
-//        String time3 = timeArray[2];
-//
-//        if(Integer.parseInt(time1)>365){
-//            SimpleDateFormat sdf2 = new SimpleDateFormat("yy-MM-dd HH:mm");
-//            tv_other_left.setText(sdf2.format(item.createTime));
-//        }else if (Integer.parseInt(time1) > 0 && Integer.parseInt(time1) < 2) {
-//            if (Integer.valueOf(time1) >= 2) {
-//                SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH:mm");
-//                tv_other_left.setText(sdf2.format(item.createTime));
-//            } else {
-//                tv_other_left.setText(time1 + "天" + time2 + "小时" + time3 + "分钟前");
-//            }
-//        } else {
-//            if (Integer.parseInt(time2) > 0) {
-//                tv_other_left.setText(time2 + "小时" + time3 + "分钟前");
-//            } else if (Integer.parseInt(time3) > 0) {
-//                tv_other_left.setText(time3 + "分钟前");
-//            } else {
-//                tv_other_left.setText("刚刚");
-//            }
-//        }
-
+        tv_other_left.setText(item.readNum+ "  阅读");
 
         fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
