@@ -17,10 +17,10 @@ public interface H5Address {
     //中国资源
     String CHINA_RESOURCE = "https://static.yryz.com/quanhu/activity/skating_club/index.html";
     //账户规则
-    String ACCOUNT_RULE = H5_HEAD + "quanhu/doc/account_rules/index.html";
+    String ACCOUNT_RULE = H5_HEAD + "quanhu/doc/account_rules/android/index.html";
 
     //平台奖励规则
-    String REWARD_RULE = H5_HEAD + "quanhu/doc/platform_award_rule/index.html";
+    String REWARD_RULE = H5_HEAD + "quanhu/doc/platform_award_rule/android/index.html";
     //升级攻略
     String UPGRADE_STRATEGY = H5_HEAD + "quanhu/doc/upgrade_strategy/index.html";
     //积分获取攻略
