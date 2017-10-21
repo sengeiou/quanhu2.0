@@ -221,7 +221,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (BackGroundService.time_code != 0) {
+            startCount(BackGroundService.time_code);
+        }
+
+    }
+
+    @Override
     public void initData() {
+
         mEditPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
