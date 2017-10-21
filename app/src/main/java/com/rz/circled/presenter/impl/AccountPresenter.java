@@ -34,6 +34,7 @@ import retrofit2.Response;
  */
 public class AccountPresenter extends GeneralPresenter {
 
+    private static final String OPEN_PAY = "OPEN_PAY";
     //处理缓存
     private EntityCache<LoginWayModel> mLoginWay;
 
@@ -293,7 +294,7 @@ public class AccountPresenter extends GeneralPresenter {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
+//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
 //        Call<ResponseData> call = mUserService.closeOrOpenPay(
 //                1064,
 //                Session.getUserId(),
@@ -319,7 +320,8 @@ public class AccountPresenter extends GeneralPresenter {
                         return;
                     } else {
                         if (HandleRetCode.handler(mContext, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                            mView.updateViewWithLoadMore(-1, false);
+//                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.action_fail));
                             return;
                         }
                         mView.updateViewWithLoadMore(-1, false);

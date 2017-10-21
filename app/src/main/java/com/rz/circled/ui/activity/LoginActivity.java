@@ -634,8 +634,8 @@ public class LoginActivity extends BaseActivity {
             if (model.size() > 0 && model.size() == 4) {
                 //已经绑定过手机直接登录
                 if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
+                    saveLoginData(loginModel);
                     if (Session.getUserIsFirstDownload()) {
-                        saveLoginData(loginModel);
                         skipActivity(aty, FollowCircle.class);
 //
                     } else {
