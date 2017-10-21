@@ -96,8 +96,10 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.constant.H5Address;
 import com.rz.common.event.KickEvent;
 import com.rz.common.utils.IntentUtil;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.HandleRetCode;
@@ -105,6 +107,7 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.sgt.jsbridge.RegisterList;
 import com.rz.sgt.jsbridge.core.AdvancedWebView;
+import com.rz.sgt.jsbridge.core.WebViewProxy;
 import com.tencent.bugly.Bugly;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
@@ -156,6 +159,7 @@ public class QHApplication extends BaseApplication {
     public static String userAgent;
 
     public static int isFlag = BuildConfig.isFlag;
+    private AdvancedWebView mWebView;
 
 
     @Override
@@ -202,6 +206,7 @@ public class QHApplication extends BaseApplication {
         configJpush();
         configUmeng();
         initOSS();
+        getWebView(true);
     }
 
     private void configFresco() {
@@ -874,6 +879,20 @@ public class QHApplication extends BaseApplication {
             Log.e("app", e.getLocalizedMessage());
         }
         return new PackageInfo();
+    }
+
+    public AdvancedWebView getWebView(boolean needLoad) {
+        if (mWebView == null) {
+            mWebView = new AdvancedWebView(this);
+            WebViewProxy webViewProxy = new WebViewProxy(mWebView);
+            mWebView.setTag(webViewProxy);
+        }
+        if (needLoad && NetUtils.isNetworkConnected(getContext())) {
+            WebViewProxy webViewProxy = (WebViewProxy) mWebView.getTag();
+            webViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + H5Address.REWARD_LIST_URL);
+            webViewProxy.setWebFinish(false);
+        }
+        return mWebView;
     }
 
 }
