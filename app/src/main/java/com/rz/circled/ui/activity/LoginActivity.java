@@ -599,7 +599,6 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        QHApplication.getInstance().getWebView(true);
     }
 
     /**

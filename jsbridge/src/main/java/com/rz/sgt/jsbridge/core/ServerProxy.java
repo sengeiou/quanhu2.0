@@ -128,7 +128,7 @@ public class ServerProxy {
             String invokeName = paramsObject.getInvokeName();
             Log.w("dispatchDirectInvoke", "no ServerHandler:" + invokeName);
             if (!TextUtils.isEmpty(invokeName) && invokeName.endsWith("finishLoading")) {
-                webViewProxy.setWebFinish(true);
+                webViewProxy.setNeedLoading(false);
             }
             webViewProxy.callbackInvoke(new Gson().toJson(paramsObject));
         }
