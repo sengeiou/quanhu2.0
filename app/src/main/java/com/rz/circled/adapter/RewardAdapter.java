@@ -16,12 +16,14 @@ import com.rz.circled.R;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.utils.Currency;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TimeUtil;
 import com.rz.httpapi.bean.MyRewardBean;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -62,10 +64,10 @@ public class RewardAdapter extends CommonAdapter {
                 placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
 
         if(!TextUtils.isEmpty(model.getPrice())){
-            float price = Float.valueOf(model.getPrice());
-            DecimalFormat fnum = new DecimalFormat("##0.00");
-            String  dd = fnum.format(price/100);
-            rewardTxt.setText("悬赏金额 "+dd);
+//            float price = Float.valueOf(model.getPrice());
+//            DecimalFormat fnum = new DecimalFormat("##0.00");
+//            String  dd = fnum.format(price/100);
+            rewardTxt.setText("悬赏金额 "+Currency.returnDollar(Currency.RMB, model.getPrice() + "", 0));
         }else{
             rewardTxt.setText("悬赏金额 0.00");
         }
@@ -93,14 +95,6 @@ public class RewardAdapter extends CommonAdapter {
             picImg.setVisibility(View.VISIBLE);
         }
 
-        //获取当前时间
-        Date d = new Date();
-        System.out.println(d);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateNowStr = sdf.format(d);
-
-
-//        StringUtils.formatDisplayTime()
 
         //判断悬赏是否在进行中
         if(model.getComplete() == 1){
@@ -109,31 +103,50 @@ public class RewardAdapter extends CommonAdapter {
             tvStatus.setText("进行中");
             tvTime.setVisibility(View.VISIBLE);
 
-            String time = TimeUtil.getTime(dateNowStr,model.getTerminalTime());
-            String timeArray[] = time.replace("-","").split(",");
-            String time1 = timeArray[0];
-            String time2 = timeArray[1];
-            String time3 = timeArray[2];
+            //获取当前时间
+            Date d = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            String dateNowStr = sdf.format(d);
 
-            if(Integer.parseInt(time1)>0){
-                tvTime.setText("还剩" + time1+"天" + time2 + "小时" + time3 + "分钟");
-            }else{
-                if(Integer.parseInt(time2)>0){
-                    tvTime.setText("还剩" + time2 + "小时" + time3 + "分钟");
-                }else{
-                    if(Integer.parseInt(time3)<1){
-                        tvTime.setText("还剩1分钟");
-                    }else{
-                        tvTime.setText("还剩" + time3 + "分钟");
-                    }
-                }
+            long timeDiff = 0;
+            try {
+                timeDiff = sdf.parse(model.getTerminalTime()).getTime() - d.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+            String timeStr = StringUtils.formatHourTime(timeDiff);
+            tvTime.setText(timeStr);
+//            String time = TimeUtil.getTime(dateNowStr,model.getTerminalTime());
+//            String timeArray[] = time.replace("-","").split(",");
+//            String time1 = timeArray[0];
+//            String time2 = timeArray[1];
+//            String time3 = timeArray[2];
+//
+//            if(Integer.parseInt(time1)>0){
+//                tvTime.setText("还剩" + time1+"天" + time2 + "小时" + time3 + "分钟");
+//            }else{
+//                if(Integer.parseInt(time2)>0){
+//                    tvTime.setText("还剩" + time2 + "小时" + time3 + "分钟");
+//                }else{
+//                    if(Integer.parseInt(time3)<1){
+//                        tvTime.setText("还剩1分钟");
+//                    }else{
+//                        tvTime.setText("还剩" + time3 + "分钟");
+//                    }
+//                }
+//            }
         }else if(model.getComplete() == 2){
-            tvStatus.setTextColor(ContextCompat.getColor(mContext,R.color.font_gray_m));
-            tvStatus.setText("已完成");
+
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+            tvStatus.setText("公示期");
             tvTime.setVisibility(View.GONE);
         }else if(model.getComplete() == 3){
-            tvStatus.setTextColor(ContextCompat.getColor(mContext,R.color.font_gray_m));
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
+            tvTime.setVisibility(View.GONE);
+            tvStatus.setText("已完成");
+        }else if(model.getComplete() == 4){
+            tvStatus.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_m));
             tvTime.setVisibility(View.GONE);
             tvStatus.setText("已过期");
         }
@@ -141,8 +154,13 @@ public class RewardAdapter extends CommonAdapter {
         if(model.getReplyNum() == 0){
             tvPerNum.setVisibility(View.GONE);
         }else{
-            tvPerNum.setVisibility(View.VISIBLE);
-            tvPerNum.setText("该悬赏有"+model.getReplyNum()+"个回答");
+            if(model.getComplete() == 1 || model.getComplete() == 2){
+                tvPerNum.setVisibility(View.VISIBLE);
+                tvPerNum.setText(model.getReplyNum()+"人参加");
+            }else{
+                tvPerNum.setVisibility(View.VISIBLE);
+                tvPerNum.setText("该悬赏有"+model.getReplyNum()+"个回答");
+            }
         }
     }
 

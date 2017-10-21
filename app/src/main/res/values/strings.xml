@@ -826,4 +826,6 @@
     <string name="mess_no">消息免打扰</string>
     <string name="no_more">没有更多了...</string>
     <string name="hava_updata">有更新</string>
+    <string name="wifi_upload">当前无WiFi连接，继续上传视频将消耗您的自有流量</string>
+    <string name="wifi_play">当前无WiFi连接，继续播放将消耗您的自有流量</string>
 </resources>
