@@ -200,8 +200,9 @@ public class ToBankCardAty extends BaseActivity {
                 mRelaBank.setVisibility(View.GONE);
                 mRelaAdd.setVisibility(View.VISIBLE);
                 showRechargeDialog();
+            } else {
+                super.onLoadingStatus(loadingStatus, string);
             }
-            super.onLoadingStatus(loadingStatus, string);
         }
     }
 

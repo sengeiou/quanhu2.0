@@ -116,7 +116,7 @@ public class BankPresenter extends AbsPresenter {
                     if (res.getRet() == ReturnCode.SUCCESS) {
                         List<BankCardModel> dataList = res.getData();
                         if (dataList != null && !dataList.isEmpty()) {
-                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mView.updateView(dataList);
                         } else {
                             mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
