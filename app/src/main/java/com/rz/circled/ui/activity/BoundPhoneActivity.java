@@ -285,8 +285,14 @@ public class BoundPhoneActivity extends BaseActivity {
 
         }else{
             if (null != t) {
-                if(t.equals("1")){
-                    skipActivity(aty, MainActivity.class);
+                if(t.equals("1")){              //第三方登录绑定手机号成功
+//                    skipActivity(aty, MainActivity.class);
+                    if (Session.getUserIsFirstDownload()) {
+                        skipActivity(aty, FollowCircle.class);
+//
+                    }else {
+                        skipActivity(aty, MainActivity.class);
+                    }
 
                     //发送存储对象存储用户信息
                     if(loginModel!= null) {
@@ -309,7 +315,6 @@ public class BoundPhoneActivity extends BaseActivity {
             if (!StringUtils.isEmpty(mCode)) {
                 if (TextUtils.equals(mPhone, mRecordPhone)) {
                     if (TextUtils.equals(pWType, Type.FUNCTION_CODE_5)) {
-                        //注册手机号
 //                        handleSuccess(1);
                         ((UserInfoPresenter) presenter).boundPhone(mPhone, null,mCode,loginModel.getCustId());
 
