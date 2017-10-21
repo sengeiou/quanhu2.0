@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.rz.circled.R;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.VideoEnabledWebChromeClient;
@@ -69,7 +70,7 @@ public class VideoH5Aty extends Activity {
      */
     private String titleName;
 
-    private TextView titleText,titleBack;
+    private TextView titleText, titleBack;
 
 
     /**
@@ -104,7 +105,7 @@ public class VideoH5Aty extends Activity {
     }
 
     public void initView() {
-
+        StatusBarUtils.setDarkStatusIcon(this, true);
         titleText = (TextView) findViewById(R.id.titlebar_title_text);
         titleBack = (TextView) findViewById(R.id.titlebar_back_text);
         page = getIntent().getIntExtra("page", Constants.DEFAULTVALUE);
@@ -177,7 +178,6 @@ public class VideoH5Aty extends Activity {
         }
 
 
-
     }
 
     public class WebViewClient extends android.webkit.WebViewClient {
@@ -203,7 +203,8 @@ public class VideoH5Aty extends Activity {
         ViewGroup videoLayout = (ViewGroup) findViewById(R.id.videoLayout); // Your own view, read class comments
         //noinspection all
         View loadingView = getLayoutInflater().inflate(R.layout.view_loading_video, null); // Your own view, read class comments
-        webChromeClient = new VideoEnabledWebChromeClient(nonVideoLayout, videoLayout, loadingView, webView) // See all available constructors...
+        webChromeClient = new VideoEnabledWebChromeClient(nonVideoLayout, videoLayout, loadingView, webView) // See all available
+                // constructors...
         {
 
             // Subscribe to standard events, such as onProgressChanged()...
@@ -249,7 +250,6 @@ public class VideoH5Aty extends Activity {
             }
         });
     }
-
 
 
     @Override
