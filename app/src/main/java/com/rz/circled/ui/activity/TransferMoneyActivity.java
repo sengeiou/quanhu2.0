@@ -2,7 +2,6 @@ package com.rz.circled.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -286,16 +285,6 @@ public class TransferMoneyActivity extends BaseActivity {
                 mPayPresenter.hideInputMethod();
                 break;
         }
-    }
-
-    public void setHitEdit() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //将ScrollView滚动到底
-                mScrollView.fullScroll(View.FOCUS_DOWN);
-            }
-        }, 100);
     }
 
     @Override
