@@ -29,6 +29,7 @@ import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
@@ -95,7 +96,7 @@ public class SplashAty extends BaseActivity {
     public void initPresenter() {
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
-
+        mPresenter.getBannerList("1");
     }
 
     @Override
@@ -113,7 +114,11 @@ public class SplashAty extends BaseActivity {
             @Override
             public void run() {
                 if (!Session.getUserIsFirstDownload()) {
-                        mPresenter.getBannerList("1");
+                    try {
+                        initV();
+                    } catch (ParseException e) {
+                        jumpTo();
+                    }
                 } else {
                     if (Session.getUserIsLogin()){
                         skipActivity(aty, MainActivity.class);
@@ -129,16 +134,12 @@ public class SplashAty extends BaseActivity {
                     }
                 }
             }
-        }, 1500);
+        }, 2000);
     }
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        try {
-            initV();
-        } catch (ParseException e) {
-            jumpTo();
-        }
+        bannerList= (List<BannerAddSubjectModel>) t;
     }
 
     @Override
@@ -151,27 +152,22 @@ public class SplashAty extends BaseActivity {
         //当前日期
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long currentTime = System.currentTimeMillis();
+        String format = sdf.format(new Date(currentTime));
+        Log.i(TAG, "initV: "+format);
         //上刊日期
         String adv_upIngDate = Session.getAdv_upIngDate();
         String adv_exDate = Session.getAdv_expireDate();
-        if (!StringUtil.isEmpty(adv_exDate)&&!StringUtil.isEmpty(adv_exDate)){
+        if (!StringUtil.isEmpty(adv_upIngDate)&&!StringUtil.isEmpty(adv_exDate)){
         long startTime = sdf.parse(adv_upIngDate).getTime();
         long endTime = sdf.parse(adv_exDate).getTime();
-        long upIngDate = StringUtils.isEmpty(Session.getAdv_upIngDate()) ? 0 : startTime;
         //过期日期
-        long expireDate = StringUtils.isEmpty(Session.getAdv_expireDate()) ? 0 :endTime ;
-        Log.d("time-----", "当前时间" + currentTime + "上刊时间" + upIngDate + "过期日期" + expireDate);
-        if (currentTime >= upIngDate && currentTime < expireDate) {
+        Log.d("time-----", "当前时间" + currentTime + "上刊时间" + startTime + "过期日期" + endTime);
+        if (currentTime >= startTime && currentTime < endTime) {
             recLen = 1000 * 5;
-            if (Session.getAdv_pic_url().endsWith(".gif")) {
-                if (Protect.checkLoadImageStatus(aty)) {
-                    Glide.with(aty).load(Session.getAdv_pic_url()).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mImgBg);
-                }
-            } else {
                 if (Protect.checkLoadImageStatus(aty)) {
                     Glide.with(aty).load(Session.getAdv_pic_url()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL).into(mImgBg);
                 }
-            }
+
             if (!StringUtils.isEmpty(Session.getAdv_url()) && isNetUrl(Session.getAdv_url())) {
                 mImgBg.setOnClickListener(new View.OnClickListener() {
                     @Override
