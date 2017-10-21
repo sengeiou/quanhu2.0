@@ -629,6 +629,13 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
+        if (flag == IntentCode.Register.GET_REQUEST_CODE_FAIL) {
+            if (null != mc) {
+                mc.cancel();
+                mc.onFinish();
+            }
+        }
+
         if (t != null && t instanceof List) {
             List<LoginTypeBean> model = (List<LoginTypeBean>) t;
             if (model.size() > 0 && model.size() == 4) {

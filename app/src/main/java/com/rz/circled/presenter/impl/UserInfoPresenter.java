@@ -7,6 +7,7 @@ import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.GeneralPresenter;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.IntentCode;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.inter.IViewController;
@@ -93,7 +94,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         }
                     } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
                         mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
-                        mView.updateViewWithFlag("", 200);
+                        mView.updateViewWithFlag("", IntentCode.Register.GET_REQUEST_CODE_FAIL);      //验证码获取失败发送消息，取消验证码倒计时
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, mContext.getString(R.string.send_code_failed));
