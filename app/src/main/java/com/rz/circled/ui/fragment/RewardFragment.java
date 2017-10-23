@@ -94,6 +94,8 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+        if (mWebView != null)
+            mWebView.destroy();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
