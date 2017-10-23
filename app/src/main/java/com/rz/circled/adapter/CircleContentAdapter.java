@@ -78,7 +78,11 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
             }else {
                 stringFormatUtil = new StringFormatUtil(mContext, item.title, keyWord, R.color.colorAccent).fillColor();
                 if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
-                    mTitle.setText(stringFormatUtil.getResult());
+                    if("1001".equals(item.resourceType)){
+                        mTitle.setText("#" + stringFormatUtil.getResult() +"#");
+                    }else{
+                        mTitle.setText(stringFormatUtil.getResult());
+                    }
                 }else{
                     mTitle.setText(item.title);
                 }
@@ -95,7 +99,13 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
 
                     stringFormatUtil = new StringFormatUtil(mContext, item.content, keyWord, R.color.colorAccent).fillColor();
                     if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
-                        mTitle.setText(stringFormatUtil.getResult());
+//                        mTitle.setText(stringFormatUtil.getResult());
+                        if("1001".equals(item.resourceType)){                   //资源类型为话题时需要##
+                            mTitle.setText("#" + stringFormatUtil.getResult() +"#");
+                        }else{
+                            mTitle.setText(stringFormatUtil.getResult());
+                        }
+
                     }else{
                         mTitle.setText(item.content);
                     }
@@ -114,7 +124,11 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
 
                         stringFormatUtil = new StringFormatUtil(mContext, s, keyWord, R.color.colorAccent).fillColor();
                         if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
-                            mdes.setText(stringFormatUtil.getResult());
+                            if("1001".equals(item.resourceType)){                   //资源类型为话题时需要##
+                                mTitle.setText("#" + stringFormatUtil.getResult() +"#");
+                            }else{
+                                mTitle.setText(stringFormatUtil.getResult());
+                            }
                         }else{
                             mdes.setText(s);
                         }

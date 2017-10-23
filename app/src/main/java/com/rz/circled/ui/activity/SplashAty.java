@@ -101,7 +101,6 @@ public class SplashAty extends BaseActivity {
 
     @Override
     public void initView() {
-
         mImgBg = (ImageView) findViewById(R.id.id_start_page_bg_img);
         mImgBg.setImageResource(R.drawable.page_bg_qq_new);
         if (!TextUtils.equals(StringUtils.isEmpty(Session.getAppVersion()) ? "" : Session.getAppVersion(), SystemUtils.getVersionName(this))) {
@@ -115,7 +114,11 @@ public class SplashAty extends BaseActivity {
             public void run() {
                 if (!Session.getUserIsFirstDownload()) {
                     try {
+//                        if (Session.getUserIsLogin()){
                         initV();
+//                        }else {
+//                            skipActivity(aty, LoginActivity.class);
+//                        }
                     } catch (ParseException e) {
                         jumpTo();
                     }

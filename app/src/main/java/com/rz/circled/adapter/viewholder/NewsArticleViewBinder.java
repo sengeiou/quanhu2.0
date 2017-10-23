@@ -44,20 +44,23 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         Gson gson = new Gson();
         String json = gson.toJson(item.getBody());
         NewsArticleExtra extra = gson.fromJson(json, NewsArticleExtra.class);
-        if (TextUtils.isEmpty(item.getImg())) {
+        if (TextUtils.isEmpty(extra.getBodyImg())) {
             holder.img.setVisibility(View.GONE);
         } else {
             Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
             holder.img.setVisibility(View.VISIBLE);
         }
         holder.tvContent.setText(extra.getBodyTitle());
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        if (TextUtils.isEmpty(from)) {
-            holder.lineFrom.setVisibility(View.GONE);
+        String from;
+        if (!TextUtils.isEmpty(extra.getCoterieId()) && extra.getCoterieId().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_group), extra.getCoterieName());
+        } else if (!TextUtils.isEmpty(extra.getCircleName()) && extra.getCircleName().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_circled), extra.getCircleName());
         } else {
-            holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
-            holder.lineFrom.setVisibility(View.VISIBLE);
+            from = "";
         }
+        holder.tvFrom.setText(from);
+        holder.lineFrom.setVisibility(TextUtils.isEmpty(from) ? View.GONE : View.VISIBLE);
 
     }
 

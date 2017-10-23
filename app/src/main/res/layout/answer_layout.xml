@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/font_44"
                 android:maxLines="2"
+                android:ellipsize="end"
                 android:text="求纯正发育是是"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/font_44"
@@ -119,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/font_44"
                     android:maxLines="3"
+                    android:ellipsize="end"
                     android:text="求纯正发育是是盛大发售的发生的发生的发顺丰"
                     android:textColor="@color/color_000000"
                     android:textSize="@dimen/font_44"
@@ -130,7 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px446"
                     android:layout_marginTop="@dimen/px30"
-                    android:background="@color/color_666666"
+                    android:background="@color/white"
                     android:scaleType="fitXY"
                     />
             </LinearLayout>

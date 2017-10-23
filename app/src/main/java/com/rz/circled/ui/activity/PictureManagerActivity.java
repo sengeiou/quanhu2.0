@@ -434,8 +434,8 @@ public class PictureManagerActivity extends BaseActivity implements OnItemClickL
                 mPhotoFilePath = mPhotoFile.getAbsolutePath();
                 // 下面这句指定调用相机拍照后的照片存储的路径
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
-//                startActivityForResult(intent,
-//                        Constants.REQUEST_CODE_TAKE_PICTURE);// 使用手机进行拍照的请求码是：1
+                startActivityForResult(intent,
+                        Constants.REQUEST_CODE_TAKE_PICTURE);// 使用手机进行拍照的请求码是：1
             } else {
                 //	ViewInject.toast(getString(R.string.personal_no_sd_card));
 //                showToast(getString(R.string.personal_no_sd_card));

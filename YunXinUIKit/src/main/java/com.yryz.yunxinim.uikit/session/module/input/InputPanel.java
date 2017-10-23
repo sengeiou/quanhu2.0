@@ -198,6 +198,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
         // 语音
         audioRecordBtn = (Button) view.findViewById(R.id.audioRecord);
         audioAnimLayout = view.findViewById(R.id.layoutPlayAudio);
+        
+        //// TODO: 2017/10/23  
         time = (Chronometer) view.findViewById(R.id.timer);
         timerTip = (TextView) view.findViewById(R.id.timer_tip);
         timerTipContainer = (LinearLayout) view.findViewById(R.id.timer_tip_container);
