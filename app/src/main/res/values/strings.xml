@@ -230,7 +230,8 @@
     <string name="private_group_apply_for">申请创建私圈</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
-    <string name="private_group_from">来自 %1$s</string>
+    <string name="private_group_from_group">来自私圈 %1$s</string>
+    <string name="private_group_from_circled">来自圈子 %1$s</string>
     <string name="private_group_free">免费</string>
     <string name="private_group_youran_price">%1$d悠然币</string>
     <string name="private_group_essence_scan">%1$d 阅读</string>

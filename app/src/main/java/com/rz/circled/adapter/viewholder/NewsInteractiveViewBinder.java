@@ -48,7 +48,7 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         String json = gson.toJson(item.getBody());
         NewsInteractiveExtra extra = gson.fromJson(json, NewsInteractiveExtra.class);
         holder.tvName.setText(extra.getCustName());
-        if (TextUtils.isEmpty(item.getImg())) {
+        if (TextUtils.isEmpty(extra.getBodyImg())) {
             holder.img.setVisibility(View.GONE);
         } else {
             Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
@@ -56,13 +56,16 @@ public class NewsInteractiveViewBinder extends ItemViewBinder<NewsBean, NewsInte
         }
         Glide.with(holder.itemView.getContext()).load(extra.getCustImg()).error(R.mipmap.ic_default_avatar_small).into(holder.avatar);
         holder.tvContent.setText(extra.getBodyTitle());
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        if (TextUtils.isEmpty(from)) {
-            holder.lineFrom.setVisibility(View.GONE);
+        String from;
+        if (!TextUtils.isEmpty(extra.getCoterieId()) && extra.getCoterieId().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_group), extra.getCoterieName());
+        } else if (!TextUtils.isEmpty(extra.getCircleName()) && extra.getCircleName().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_circled), extra.getCircleName());
         } else {
-            holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
-            holder.lineFrom.setVisibility(View.VISIBLE);
+            from = "";
         }
+        holder.tvFrom.setText(from);
+        holder.lineFrom.setVisibility(TextUtils.isEmpty(from) ? View.GONE : View.VISIBLE);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
