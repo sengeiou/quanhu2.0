@@ -133,7 +133,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position < mAdapter.getCount()) {
+                if (mAdapter != null && position < mAdapter.getCount()) {
                     PrivateGroupBean item = mAdapter.getItem(position);
                     if (item.getStatus() == 3) {
                         CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
