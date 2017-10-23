@@ -220,7 +220,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     } else {
                         if (!StringUtils.isEmpty(answer.imgUrl)) {
                             vh.iv_answer.setVisibility(View.VISIBLE);
-                            Glide.with(mContext).load(answer.imgUrl).transform(new GlideCenterRoundImage(mContext, 10)).into(vh.iv_answer);
+                            String[] pics = answer.imgUrl.split(",");
+                            Glide.with(mContext).load(pics[0]).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(vh.iv_answer);
                         } else {
                             vh.iv_answer.setVisibility(View.GONE);
                         }

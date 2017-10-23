@@ -125,6 +125,7 @@ public class NewsInteractiveActivity extends BaseActivity {
             BaseFragment newsCommonFragment = NewsCommonFragment.newInstance(type);
             mFragments.add(newsCommonFragment);
         }
+        NewsHelper.clearUnreadByType(mTypes.get(0));
         viewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments));
         viewpager.setOffscreenPageLimit(mFragments.size());
         viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
