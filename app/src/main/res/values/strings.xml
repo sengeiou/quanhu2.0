@@ -819,8 +819,8 @@
     <string name="input_subject_search">输入话题名称搜索</string>
     <string name="subject">话题</string>
     <string name="discuss">讨论</string>
-    <string name="from_coterie">来自私圈 </string>
-    <string name="from_circle">来自圈子 </string>
+    <string name="from_coterie">来自私圈&#160;</string>
+    <string name="from_circle">来自圈子&#160;</string>
     <string name="my_collection">我的收藏</string>
     <string name="upgrade_idea">升级攻略</string>
     <string name="mess_no">消息免打扰</string>
