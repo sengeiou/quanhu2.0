@@ -166,7 +166,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
 
         @Override
         public int getCount() {
-            return scrollble ? 200 : mItems.size();
+            return mItems==null?0:scrollble ? 200 : mItems.size();
         }
 
         @Override
