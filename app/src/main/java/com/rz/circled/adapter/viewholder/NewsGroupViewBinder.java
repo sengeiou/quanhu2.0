@@ -44,8 +44,15 @@ public class NewsGroupViewBinder extends ItemViewBinder<NewsBean, NewsGroupViewB
         Gson gson = new Gson();
         String json = gson.toJson(item.getBody());
         NewsGroupExtra extra = gson.fromJson(json, NewsGroupExtra.class);
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        String from;
+        if (!TextUtils.isEmpty(extra.getCoterieId()) && extra.getCoterieId().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_group), extra.getCoterieName());
+        } else if (!TextUtils.isEmpty(extra.getCircleName()) && extra.getCircleName().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_circled), extra.getCircleName());
+        } else {
+            from = "";
+        }
+        holder.tvFrom.setText(from);
         holder.lineFrom.setVisibility(TextUtils.isEmpty(from) ? View.GONE : View.VISIBLE);
         holder.tvScan.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_joined_user), extra.getMemberNum()));
         if (extra.getJoinFee() == 0) {

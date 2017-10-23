@@ -48,7 +48,7 @@
                     android:lines="1"
                     android:textColor="@color/color_main"
                     android:textSize="@dimen/font_44"
-                    tool:text="基督教" />
+                    tool:text="" />
 
                 <TextView
                     android:id="@+id/tv_time"
@@ -58,7 +58,7 @@
                     android:lines="1"
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/font_40"
-                    tool:text="2小时前"
+                    tool:text=""
                     />
 
             </LinearLayout>
@@ -98,7 +98,9 @@
                     android:lineSpacingExtra="@dimen/px12"
                     android:textColor="@color/font_gray_m"
                     android:textSize="@dimen/font_40"
-                    tool:text="这里的是内容" />
+                    tool:text=""
+                    android:ellipsize="end"
+                    />
             </LinearLayout>
         </LinearLayout>
 

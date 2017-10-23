@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.Currency;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.TimeUtil;
@@ -36,7 +38,7 @@ public class MineRewardAdapter extends CommonAdapter {
     @Override
     public void convert(ViewHolder helper, Object item, int position) {
 
-        MineRewardBean model = (MineRewardBean) item;
+        final MineRewardBean model = (MineRewardBean) item;
         ImageView avatar = (ImageView) helper.getViewById(R.id.avatar);
         TextView tvName = (TextView) helper.getViewById(R.id.tv_name);
         TextView tvTime = (TextView) helper.getViewById(R.id.tv_time);
@@ -80,6 +82,21 @@ public class MineRewardAdapter extends CommonAdapter {
 //                tvTime.setText("刚刚");
 //            }
 //        }
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.newFrindInfo(mContext, model.getUser().getCustId());
+            }
+        });
+
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.newFrindInfo(mContext, model.getUser().getCustId());
+            }
+        });
+
 
         tvName.setText(model.getUser().getCustNname());
 //        tvTime.setText(model.getCreateTime()+"");
