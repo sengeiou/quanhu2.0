@@ -233,9 +233,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             List<CircleDynamic> model = res.getData();
                             ACache mCache = ACache.get(mContext);
                             mCache.put(Constants.HOME_FRAGMENT_CACHE, (Serializable) model);
-                            dynamicCreateTime = model.get(model.size()-1).createTime;
                             if (null != model && model.size() != 0) {
                                 //发送成功
+                            dynamicCreateTime = model.get(model.size()-1).createTime;
                                 mView.updateViewWithLoadMore(model, loadMore);
                                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             } else {
