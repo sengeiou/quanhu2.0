@@ -78,6 +78,7 @@ import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.Record;
 import com.rz.common.utils.SystemUtils;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.CallManager;
 import com.rz.sgt.jsbridge.JsEvent;
@@ -1230,6 +1231,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             return;
         }
         jsResult = new ArrayList<>();
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
+            return;
+        }
         if (TextUtils.isEmpty(mVideoFilePath))
             publicUpload();
         else checkWifi();
@@ -2454,10 +2459,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void checkWifi() {
-        if (!NetUtils.isNetworkConnected(mContext)) {
-            Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
-            return;
-        }
         if (NetworkUtil.isWifi(this)) {
             publicUpload();
         } else {
@@ -2469,5 +2470,18 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (SVProgressHUD.isShowing(this)) return;
+        if (commonDialog == null)
+            commonDialog = new CommonDialog(mContext);
+        commonDialog.showDialog(R.string.editor_two_cancel, new CommonDialog.OnCommonDialogConfirmListener() {
+            @Override
+            public void onConfirmListener() {
+                finish();
+            }
+        });
     }
 }

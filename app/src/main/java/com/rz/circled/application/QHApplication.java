@@ -206,7 +206,6 @@ public class QHApplication extends BaseApplication {
         configJpush();
         configUmeng();
         initOSS();
-        getWebView(true);
     }
 
     private void configFresco() {
@@ -413,12 +412,14 @@ public class QHApplication extends BaseApplication {
             Interceptor headerInterceptor = new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
-                    String sign = DesUtils.encrypt(Session.getNowAct() + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", "");
+                    String sign = DesUtils.encrypt(Session.getNowAct() + "." + Session.getUserId() + "." + Session.getSessionKey())
+                            .replace("\\s", "").replace("\n", "");
                     Request originalRequest = chain.request();
                     Request.Builder requestBuilder = originalRequest.newBuilder()
                             .header("devType", "2")
                             .header("sign", sign.replace("\n", "").replace("\r", ""));
-                    Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey() + "   ==sign== " + sign.replace("\n", "").replace("\r", ""));
+                    Log.d("token", "setHeaderInterceptor headToken is " + Session.getSessionKey() + "   ==sign== " + sign.replace("\n",
+                            "").replace("\r", ""));
                     if (!TextUtils.isEmpty(Session.getSessionKey())) {
                         requestBuilder.header("token", Session.getSessionKey());
                     }
@@ -428,7 +429,8 @@ public class QHApplication extends BaseApplication {
                     requestBuilder.header("appSecret", CommonCode.App.APP_SECRET);
 //                    requestBuilder.header("devId", SystemUtils.getIMEI(mContent));
                     requestBuilder.header("devId", Session.getJpushId());
-                    Log.d("token", "setHeaderInterceptor " + " /  appId = " + CommonCode.App.APP_ID + " / appSecret = " + CommonCode.App.APP_SECRET
+                    Log.d("token", "setHeaderInterceptor " + " /  appId = " + CommonCode.App.APP_ID + " / appSecret = " + CommonCode.App
+                            .APP_SECRET
                             + " / deviceId = " + Session.getJpushId());
                     requestBuilder.header("ip", SystemUtils.getIp(mContent));
                     requestBuilder.header("net", IntentUtil.getNetType(mContent));
@@ -753,7 +755,8 @@ public class QHApplication extends BaseApplication {
             public boolean messageFilter(MsgAttachment attachment) {
                 if (attachment instanceof LuckyTipAttachment) {
                     LuckyTipAttachment lucky = (LuckyTipAttachment) attachment;
-                    if (!TextUtils.equals(lucky.getUserId(), NimUIKit.getAccount()) && !TextUtils.equals(lucky.getReceiveId(), NimUIKit.getAccount())) {
+                    if (!TextUtils.equals(lucky.getUserId(), NimUIKit.getAccount()) && !TextUtils.equals(lucky.getReceiveId(), NimUIKit
+                            .getAccount())) {
                         return true;
                     }
                 }
@@ -879,20 +882,6 @@ public class QHApplication extends BaseApplication {
             Log.e("app", e.getLocalizedMessage());
         }
         return new PackageInfo();
-    }
-
-    public AdvancedWebView getWebView(boolean needLoad) {
-        if (mWebView == null) {
-            mWebView = new AdvancedWebView(this);
-            WebViewProxy webViewProxy = new WebViewProxy(mWebView);
-            mWebView.setTag(webViewProxy);
-        }
-        if (needLoad && NetUtils.isNetworkConnected(getContext())) {
-            WebViewProxy webViewProxy = (WebViewProxy) mWebView.getTag();
-            webViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + H5Address.REWARD_LIST_URL);
-            webViewProxy.setNeedLoading(false);
-        }
-        return mWebView;
     }
 
 
