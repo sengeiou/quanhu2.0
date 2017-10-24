@@ -304,7 +304,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         Preferences.saveUserToken("");
 
         NIMClient.getService(AuthService.class).logout();
-        if (code != StatusCode.KICKOUT) {
+        if (code == StatusCode.KICKOUT) {
             UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
             presenter.attachView(this);
             presenter.ExitApp();
@@ -313,7 +313,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         JPushInterface.setAlias(mContext, "", null);
 
         int loginWay = Session.getLoginWay();
-        if (loginWay != Type.LOGIN_PHONE) {
+        if (loginWay == Type.LOGIN_PHONE) {
             String openId = Session.getOpenId();
             SnsAuthPresenter snsPresenter = new SnsAuthPresenter();
             snsPresenter.attachView(this);
