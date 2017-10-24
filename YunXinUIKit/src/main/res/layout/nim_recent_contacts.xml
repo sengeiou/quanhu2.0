@@ -50,7 +50,7 @@
             android:layout_marginRight="@dimen/px125"
             android:layout_marginBottom="@dimen/px20"
             android:layout_below="@+id/message_list_empty_hint"
-            android:layout_marginTop="@dimen/px20"
+            android:layout_marginTop="@dimen/px24"
             android:background="@drawable/shape_bg_blue_sel"
             android:gravity="center"
             android:minHeight="0dp"

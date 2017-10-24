@@ -405,10 +405,13 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             if (!loadMore) mJoinCache.putEntity(data, TAG_JOIN);
                         } else {
-                            if (loadMore)
+                            mView.updateViewWithLoadMore(null, loadMore);
+                            if (loadMore) {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
-                            else
+                            } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_join));
+                                mJoinCache.cleanEntity(PrivateGroupListBean.class, TAG_JOIN);
+                            }
                         }
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
@@ -443,7 +446,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        Call<ResponseData<PrivateGroupListBean>> call = mApiService.privateGroupMyselfCreate(custId, pageNo, PAGE_SIZE , status);
+        Call<ResponseData<PrivateGroupListBean>> call = mApiService.privateGroupMyselfCreate(custId, pageNo, PAGE_SIZE, status);
         call.enqueue(new BaseCallback<ResponseData<PrivateGroupListBean>>() {
             @Override
             public void onResponse(Call<ResponseData<PrivateGroupListBean>> call, Response<ResponseData<PrivateGroupListBean>> response) {
@@ -457,10 +460,13 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                             if (!loadMore) mCreateCache.putEntity(data, TAG_CREATE);
                         } else {
-                            if (loadMore)
+                            mView.updateViewWithLoadMore(null, loadMore);
+                            if (loadMore) {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
-                            else
+                            } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_create));
+                                mCreateCache.cleanEntity(PrivateGroupListBean.class, TAG_CREATE);
+                            }
                         }
                     } else {
                         if (data != null) mView.updateView(data);
