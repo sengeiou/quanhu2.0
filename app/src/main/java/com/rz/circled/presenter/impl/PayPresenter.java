@@ -560,7 +560,7 @@ public class PayPresenter extends AbsPresenter {
                         return;
                     } else {
                         mView.updateView(res.getRet());
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));

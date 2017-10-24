@@ -406,10 +406,12 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                             if (!loadMore) mJoinCache.putEntity(data, TAG_JOIN);
                         } else {
                             mView.updateViewWithLoadMore(null, loadMore);
-                            if (loadMore)
+                            if (loadMore) {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
-                            else
+                            } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_join));
+                                mJoinCache.cleanEntity(PrivateGroupListBean.class, TAG_JOIN);
+                            }
                         }
                     } else {
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, response.body().getMsg());
@@ -463,6 +465,7 @@ public class PrivateGroupPresenter extends GeneralPresenter {
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK, "");
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, mContext.getString(R.string.private_group_no_create));
+                                mCreateCache.cleanEntity(PrivateGroupListBean.class, TAG_CREATE);
                             }
                         }
                     } else {

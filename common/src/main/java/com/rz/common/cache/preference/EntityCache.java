@@ -45,7 +45,6 @@ public class EntityCache<T> {
         }
     }
 
-
     public final T getEntity(Class<T> cls) {
         return getEntity(cls, "");
     }
@@ -130,5 +129,11 @@ public class EntityCache<T> {
             String key = LIST_KEY + tag + mClass.getCanonicalName();
             sp.edit().remove(key).apply();
         }
+    }
+
+    public void cleanEntity(Class<T> cls, String tag) {
+        SharedPreferences sp = context.getSharedPreferences(ENTITY_CACHE, Context.MODE_PRIVATE);
+        String key = ENTITY_KEY + tag + cls.getCanonicalName();
+        sp.edit().remove(key).apply();
     }
 }

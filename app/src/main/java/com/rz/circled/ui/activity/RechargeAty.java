@@ -68,11 +68,6 @@ public class RechargeAty extends BaseActivity {
     }
 
     @Override
-    protected boolean needLoadingView() {
-        return true;
-    }
-
-    @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_recharge, null);
     }
