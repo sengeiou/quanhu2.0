@@ -166,6 +166,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     private void findViews() {
         listView = findView(R.id.lvMessages);
         emptyBg = findView(R.id.emptyBg);
+        emptyBg1 = findView(R.id.emptyBg1);
         emptyHint = findView(R.id.message_list_empty_hint);
         btnAdd = findView(R.id.add_friend_btn);
         btnAdd.setOnClickListener(new View.OnClickListener() {
