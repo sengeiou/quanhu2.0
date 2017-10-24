@@ -121,7 +121,8 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onError(Throwable e) {
-
+                        onLoadingStatus(CommonCode.General.LOAD_ERROR, mActivity.getString(R.string.load_fail));
+                        return;
                     }
 
                     @Override
