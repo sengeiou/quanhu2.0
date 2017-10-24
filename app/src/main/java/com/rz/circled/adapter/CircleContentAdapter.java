@@ -94,20 +94,23 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                 if (TextUtils.isEmpty(item.title)) {
                     mdes.setVisibility(View.GONE);
                     mTitle.setVisibility(View.VISIBLE);
-
                     mTitle.setMaxLines(2);
 
-                    stringFormatUtil = new StringFormatUtil(mContext, item.content, keyWord, R.color.colorAccent).fillColor();
-                    if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
-//                        mTitle.setText(stringFormatUtil.getResult());
-                        if("1001".equals(item.resourceType)){                   //资源类型为话题时需要##
-                            mTitle.setText("#" + stringFormatUtil.getResult() +"#");
-                        }else{
-                            mTitle.setText(stringFormatUtil.getResult());
-                        }
-
-                    }else{
+                    if(TextUtils.isEmpty(keyWord)){
                         mTitle.setText(item.content);
+                    }else{
+                        stringFormatUtil = new StringFormatUtil(mContext, item.content, keyWord, R.color.colorAccent).fillColor();
+                        if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+//                        mTitle.setText(stringFormatUtil.getResult());
+                            if("1001".equals(item.resourceType)){                   //资源类型为话题时需要##
+                                mTitle.setText("#" + stringFormatUtil.getResult() +"#");
+                            }else{
+                                mTitle.setText(stringFormatUtil.getResult());
+                            }
+
+                        }else{
+                            mTitle.setText(item.content);
+                        }
                     }
 
 //                    mTitle.setText(item.content);
@@ -124,11 +127,7 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
 
                         stringFormatUtil = new StringFormatUtil(mContext, s, keyWord, R.color.colorAccent).fillColor();
                         if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
-                            if("1001".equals(item.resourceType)){                   //资源类型为话题时需要##
-                                mTitle.setText("#" + stringFormatUtil.getResult() +"#");
-                            }else{
-                                mTitle.setText(stringFormatUtil.getResult());
-                            }
+                            mdes.setText(stringFormatUtil.getResult());
                         }else{
                             mdes.setText(s);
                         }
