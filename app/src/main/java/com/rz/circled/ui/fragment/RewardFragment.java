@@ -86,6 +86,7 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
     public void onResume() {
         super.onResume();
 //        mWebView.resumeTimers();
+        mWebView.onResume();
         mWebViewProxy.autoCancelUiHandler();
     }
 
@@ -94,8 +95,12 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
-        if (mWebView != null)
-            mWebView.destroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.onPause();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
