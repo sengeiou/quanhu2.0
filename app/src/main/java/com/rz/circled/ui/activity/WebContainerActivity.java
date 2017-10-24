@@ -80,7 +80,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 
     @Override
     protected boolean hasDataInPage() {
-            return false;
+        return false;
     }
 
     @Override
@@ -169,7 +169,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mWebView.destroy();
+//        mWebView.destroy();
     }
 
     @Override

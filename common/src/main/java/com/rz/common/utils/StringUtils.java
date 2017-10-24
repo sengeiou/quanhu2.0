@@ -45,7 +45,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * 字符串操作工具包<br>
- * <p/>
+ * <p>
  * <b>创建时间</b> 2014-8-14
  *
  * @author kymjs (https://github.com/kymjs)
@@ -366,7 +366,7 @@ public class StringUtils {
      *
      * @param time    需要格式化的时间 如"2014-07-14 19:01:45"
      * @param pattern 输入参数time的时间格式 如:"yyyy-MM-dd HH:mm:ss"
-     *                <p/>
+     *                <p>
      *                如果为空则默认使用"yyyy-MM-dd HH:mm:ss"格式
      * @return time为null，或者时间格式不匹配，输出空字符""
      */
@@ -1500,7 +1500,7 @@ public class StringUtils {
      * 计算两个时间戳相隔时间，转换为相差时分
      */
 
-    public static String getDateTimeDiff(long startTime,long endTime){
+    public static String getDateTimeDiff(long startTime, long endTime) {
 //        Date nowDate=new Date();//当前时间\r
 //        long nowTime=nowDate.getTime;
 //        long lastTime=userTime.longValue();//以前的时间\r
@@ -1511,14 +1511,14 @@ public class StringUtils {
         long diffTime = endTime - startTime;
         String time = getDateTimeFromMillisecondNo1(diffTime);
 
-        if(time.contains(":")){
+        if (time.contains(":")) {
             String timeArray[] = time.split(":");
-            if(Integer.valueOf(timeArray[0])>0 && Integer.valueOf(timeArray[1])>0){
-                timeStr = "还剩" + timeArray[0] + "小时"+ timeArray[1] + "分钟";
-            }else if(Integer.valueOf(timeArray[0])==0){
+            if (Integer.valueOf(timeArray[0]) > 0 && Integer.valueOf(timeArray[1]) > 0) {
+                timeStr = "还剩" + timeArray[0] + "小时" + timeArray[1] + "分钟";
+            } else if (Integer.valueOf(timeArray[0]) == 0) {
                 timeStr = "还剩" + timeArray[1] + "分钟";
             }
-        }else{
+        } else {
             timeStr = "还剩" + time + "分钟";
         }
         return timeStr;
@@ -1541,7 +1541,7 @@ public class StringUtils {
 
         if (hour > 0) {
             sb.append("还剩" + hour + "小时");
-        }else{
+        } else {
             sb.append("还剩");
         }
         if (minute > 0) {
@@ -1554,6 +1554,42 @@ public class StringUtils {
 //            sb.append(milliSecond + "毫秒");
 //        }
         return sb.toString();
+    }
+
+    /**
+     * 判断是否为身份证号
+     *
+     * @param cardNum
+     * @return
+     */
+    public static boolean isIdCardNum(String cardNum) {
+        Pattern p = Pattern.compile("^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$");
+        Pattern p1 = Pattern.compile("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{4}$");
+        Pattern p2 = Pattern.compile("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|x)$");
+        Pattern p3 = Pattern.compile("^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$");
+        Matcher matcher = p.matcher(cardNum);
+        Matcher matcher1 = p1.matcher(cardNum);
+        Matcher matcher2 = p2.matcher(cardNum);
+        Matcher matcher3 = p3.matcher(cardNum);
+//        if (matcher.matches())
+//            return true;
+        if (matcher1.matches() || matcher2.matches() || matcher3.matches())
+            return validate(cardNum);
+        return false;
+    }
+
+    public static boolean validate(String no) {
+        // 1-17位相乘因子数组
+        int[] factor = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
+        // 18位随机码数组
+        char[] random = "10X98765432".toCharArray();
+        // 计算1-17位与相应因子乘积之和
+        int total = 0;
+        for (int i = 0; i < 17; i++) {
+            total += Character.getNumericValue(no.charAt(i)) * factor[i];
+        }
+        // 判断随机码是否相等
+        return random[total % 11] == no.charAt(17);
     }
 
 }
