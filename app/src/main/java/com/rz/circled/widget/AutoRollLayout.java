@@ -21,6 +21,7 @@ import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.VideoH5Aty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.utils.Protect;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
@@ -166,7 +167,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
 
         @Override
         public int getCount() {
-            return scrollble ? 200 : mItems.size();
+            return mItems==null?0:scrollble ? 200 : mItems.size();
         }
 
         @Override
@@ -178,7 +179,9 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
         public Object instantiateItem(ViewGroup container, final int position) {
             ImageView imageView = new ImageView(container.getContext());
             final int i = position % mItems.size();
-            Glide.with(container.getContext().getApplicationContext()).load(mItems.get(i).getPicUrl()).placeholder(R.drawable.banner_default).into(imageView);
+            if (Protect.checkLoadImageStatus(container.getContext())) {
+                Glide.with(container.getContext()).load(mItems.get(i).getPicUrl()).placeholder(R.drawable.banner_default).into(imageView);
+            }
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setOnClickListener(new OnClickListener() {
                 @Override

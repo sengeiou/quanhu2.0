@@ -70,7 +70,7 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
         if (Protect.checkLoadImageStatus(mContext))
             Glide.with(mContext).load(item.getIcon()).error(R.mipmap.ic_default_private_group_icon).into((ImageView) helper.getView(R.id.avatar));
         helper.setText(R.id.tv_scan, type == TYPE_SCAN ? String.format(mContext.getString(R.string.private_group_joined_user), item.getMemberNum()) : item.getIntro());
-        helper.setText(R.id.tv_from, String.format(mContext.getString(R.string.private_group_from), TextUtils.isEmpty(item.getCircleName()) ? "" : item.getCircleName()));
+        helper.setText(R.id.tv_from, String.format(mContext.getString(R.string.private_group_from_circled), TextUtils.isEmpty(item.getCircleName()) ? "" : item.getCircleName()));
         TextView tvStatus = helper.getView(R.id.tv_status);
         TextView tvTitle = helper.getView(R.id.tv_title);
         switch (item.getStatus()) {

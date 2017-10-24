@@ -288,7 +288,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             LogUtil.i("Auth", "Kicked!");
         }
 
-        onLogout();
+        onLogout(code);
 
         if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT)
             EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
@@ -298,16 +298,17 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     // 注销
-    private void onLogout() {
+    private void onLogout(StatusCode code) {
         // 清理缓存&注销监听&清除状态
         LogoutHelper.logout();
         Preferences.saveUserToken("");
 
         NIMClient.getService(AuthService.class).logout();
-
-        UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
-        presenter.attachView(this);
-        presenter.ExitApp();
+        if (code == StatusCode.KICKOUT) {
+            UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
+            presenter.attachView(this);
+            presenter.ExitApp();
+        }
         Session.clearShareP();
         JPushInterface.setAlias(mContext, "", null);
 

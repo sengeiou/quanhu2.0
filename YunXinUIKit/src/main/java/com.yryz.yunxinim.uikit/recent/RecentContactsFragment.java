@@ -15,6 +15,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -77,6 +78,8 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     private ListView listView;
 
     private View emptyBg;
+
+    private ImageView emptyBg1;
 
     private TextView emptyHint;
 
@@ -141,9 +144,11 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
             if (FriendDataCache.getInstance().getMyFriendCounts() == 0) {
                 emptyHint.setHint(R.string.no_chat_record1);
                 btnAdd.setVisibility(View.VISIBLE);
+                emptyBg1.setImageResource(R.drawable.nim_contact_list_empty_bg);
             } else {
                 emptyHint.setHint(R.string.no_chat_record);
                 btnAdd.setVisibility(View.GONE);
+                emptyBg1.setImageResource(R.drawable.nim_messages_list_empty_bg);
             }
         }
     }
@@ -161,6 +166,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     private void findViews() {
         listView = findView(R.id.lvMessages);
         emptyBg = findView(R.id.emptyBg);
+        emptyBg1 = findView(R.id.emptyBg1);
         emptyHint = findView(R.id.message_list_empty_hint);
         btnAdd = findView(R.id.add_friend_btn);
         btnAdd.setOnClickListener(new View.OnClickListener() {

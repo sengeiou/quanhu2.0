@@ -133,7 +133,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position < mAdapter.getCount()) {
+                if (mAdapter != null && position < mAdapter.getCount()) {
                     PrivateGroupBean item = mAdapter.getItem(position);
                     if (item.getStatus() == 3) {
                         CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
@@ -171,6 +171,13 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
+        if (t == null) {
+            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
+                mAdapter.getData().clear();
+                mAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
         if (t instanceof PrivateGroupListBean) {
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
             processData(_data, loadMore);

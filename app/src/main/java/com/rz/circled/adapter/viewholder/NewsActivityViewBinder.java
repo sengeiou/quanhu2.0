@@ -45,8 +45,15 @@ public class NewsActivityViewBinder extends ItemViewBinder<NewsBean, NewsActivit
         Gson gson = new Gson();
         String json = gson.toJson(item.getBody());
         NewsActivityExtra extra = gson.fromJson(json, NewsActivityExtra.class);
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        String from;
+        if (!TextUtils.isEmpty(extra.getCoterieId()) && extra.getCoterieId().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_group), extra.getCoterieName());
+        } else if (!TextUtils.isEmpty(extra.getCircleName()) && extra.getCircleName().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_circled), extra.getCircleName());
+        } else {
+            from = "";
+        }
+        holder.tvFrom.setText(from);
         holder.tvFrom.setVisibility(TextUtils.isEmpty(from) ? View.INVISIBLE : View.VISIBLE);
     }
 

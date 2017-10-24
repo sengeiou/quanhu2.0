@@ -168,11 +168,13 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusTitle.setText(R.string.prove_info_submit_success);
                 tvStatusHint.setText(R.string.prove_info_verify_ing);
                 tvStatusHint.setVisibility(View.VISIBLE);
+                ivStatusVerify.setImageResource(R.mipmap.icon_submit_success);
                 break;
             case ProveStatusBean.STATUS_FAIL:
                 tvStatusTitle.setText(R.string.prove_fail);
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.prove_again);
+                ivStatusVerify.setImageResource(R.mipmap.icon_submit_error);
                 break;
 
             case ProveStatusBean.STATUS_SUCCESS:
@@ -182,6 +184,7 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusContent.setVisibility(View.VISIBLE);
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.change_prove_info_hint);
+                ivStatusVerify.setImageResource(R.mipmap.icon_prove_success);
                 break;
             case ProveStatusBean.STATUS_NORMAL://未认证
             case ProveStatusBean.STATUS_CANCEL://取消认证同未认证

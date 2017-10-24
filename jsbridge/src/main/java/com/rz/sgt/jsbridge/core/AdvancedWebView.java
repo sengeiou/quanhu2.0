@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -26,7 +25,6 @@ import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ClientCertRequest;
@@ -263,13 +261,13 @@ public class AdvancedWebView extends WebView {
         if (Build.VERSION.SDK_INT >= 11) {
             super.onResume();
         }
-        resumeTimers();
+//        resumeTimers();
     }
 
     @SuppressLint("NewApi")
     @SuppressWarnings("all")
     public void onPause() {
-        pauseTimers();
+//        pauseTimers();
         if (Build.VERSION.SDK_INT >= 11) {
             super.onPause();
         }
