@@ -138,7 +138,6 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     protected void onResume() {
         super.onResume();
-//        mWebView.resumeTimers();
         mWebViewProxy.autoCancelUiHandler();
         mWebView.onResume();
     }
@@ -146,7 +145,6 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     protected void onPause() {
         super.onPause();
-//        mWebView.pauseTimers();
         mWebView.onPause();
     }
 

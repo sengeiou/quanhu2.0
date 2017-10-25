@@ -412,7 +412,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter>
-                <action android:name="com.rz.yryz.FRIEND_SELECT_ACTION"/>
+                <action android:name="com.rz.quanhu.FRIEND_SELECT_ACTION"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -470,7 +470,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter>
-                <action android:name="com.rz.yryz.FRIEND_INFO_ACTION"/>
+                <action android:name="com.rz.quanhu.FRIEND_INFO_ACTION"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -505,7 +505,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter>
-                <action android:name="com.rz.yryz.FRIEND_ADD_ACTION"/>
+                <action android:name="com.rz.quanhu.FRIEND_ADD_ACTION"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
