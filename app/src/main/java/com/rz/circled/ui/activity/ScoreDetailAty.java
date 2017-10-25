@@ -22,6 +22,7 @@ import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Currency;
 import com.rz.httpapi.bean.BillDetailModel;
+import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.ScoreBean;
 
 import java.util.ArrayList;
@@ -143,10 +144,11 @@ public class ScoreDetailAty extends BaseActivity {
                 if (!loadMore) {
                     mBillDetails.clear();
                 }
-                for (ScoreBean model : bills) {
-                    if (model.getAllScore() > 0) {
-                        mBillDetails.add(model);
-                    }
+                mBillDetails.addAll(bills);
+                mAdapter.notifyDataSetChanged();
+            }else{
+                if (!loadMore) {
+                    mBillDetails.clear();
                 }
                 mAdapter.notifyDataSetChanged();
             }
