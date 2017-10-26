@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
+        android:src="@drawable/page_bg_qq_new"
         android:visibility="visible" />
 
     <TextView

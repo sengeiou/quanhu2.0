@@ -109,8 +109,6 @@ public class BankPresenter extends AbsPresenter {
                         if (dataList != null && !dataList.isEmpty()) {
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             mView.updateView(dataList);
-                        } else {
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
                         }
                         return;
                     } else {
