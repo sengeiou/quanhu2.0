@@ -2195,7 +2195,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 2.发布或匿名发布走 -> 调用发布接口,给js回调,且关闭页面
      */
     private void callJs() {
-        dataSource.setContentSource(jsResult);
+        Gson gson = new Gson();
+        dataSource.setContentSource(gson.toJson(jsResult));
         rootBean.setDataSource(dataSource);
         if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//1.投票
             onLoadingStatus(CommonCode.General.DATA_SUCCESS);
@@ -2313,7 +2314,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 处理内容相关数据
      */
     private void processContentData() {
-        ArrayList<Map<String, Object>> textList = dataSource.getContentSource();
+        ArrayList<Map<String, Object>> demoList = new ArrayList<>();
+        String contentSource = dataSource.getContentSource();
+        Gson gson = new Gson();
+        ArrayList<Map<String, Object>> textList = gson.fromJson(contentSource, demoList.getClass());
         for (int i = 0; i < textList.size(); i++) {
             Map<String, Object> contentMap = textList.get(i);
             if (contentMap != null && contentMap.size() > 0) {

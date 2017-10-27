@@ -14,7 +14,9 @@ public class EditorDataSourceTwoModel implements Serializable {
     private Long classifyId;
     private Long classifyItemId = null;
     private String content;
-    private ArrayList<Map<String, Object>> contentSource;
+    //    private ArrayList<Map<String, Object>> contentSource;
+    private String contentSource;
+
     private String coverPlanUrl;
     private int createUserId;
     private String date;
@@ -147,11 +149,20 @@ public class EditorDataSourceTwoModel implements Serializable {
         this.description = description;
     }
 
-    public ArrayList<Map<String, Object>> getContentSource() {
+//    public ArrayList<Map<String, Object>> getContentSource() {
+//        return contentSource;
+//    }
+//
+//    public void setContentSource(ArrayList<Map<String, Object>> contentSource) {
+//        this.contentSource = contentSource;
+//    }
+
+
+    public String getContentSource() {
         return contentSource;
     }
 
-    public void setContentSource(ArrayList<Map<String, Object>> contentSource) {
+    public void setContentSource(String contentSource) {
         this.contentSource = contentSource;
     }
 
