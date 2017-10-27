@@ -311,6 +311,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 mBanks.clear();
                 mBanks.add(addCard());
                 mAdapter.notifyDataSetChanged();
+                return;
             }
             super.onLoadingStatus(loadingStatus, string);
         }

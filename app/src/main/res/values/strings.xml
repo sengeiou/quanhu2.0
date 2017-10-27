@@ -453,7 +453,7 @@
     <string name="fuwufei">服务费；</string>
     <string name="tixian_money">请输入提现金额</string>
     <string name="tixian_no">提现金额不足</string>
-    <string name="atmost">单笔兑换至少5元</string>
+    <string name="atmost">单笔兑换至少100元</string>
     <string name="xiane">单笔兑换限额1000元</string>
     <string name="fanwei">提现金额超出可提现范围</string>
     <string name="possible_recharge_score">可提现：</string>
@@ -461,7 +461,7 @@
     <string name="excharge_rate">(1悠然币=1元)</string>
     <string name="input_recharge">请输入提现金额</string>
     <string name="withdraw_note">如因用户输入持卡人姓名、银行卡号错误或持卡人姓名和银行卡号不匹配等造成提现不成功，提现金额将退还到用户收益账户，银行会照常扣除服务费。</string>
-    <string name="withdraw_tip1">提现金额范围5-1000元,每天最多提现5次；</string>
+    <string name="withdraw_tip1">提现金额范围100-1000元,每天最多提现5次；</string>
     <string name="withdraw_tip2">每笔提现银行收取2元服务费</string>
     <string name="withdraw_tip3">平台于每日23：00到次日9：00进行系统维护，此时间段内暂不提供提现服务。</string>
     <string name="withdraw_tip4">可供提现的银行卡参考</string>
