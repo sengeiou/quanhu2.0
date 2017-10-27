@@ -1035,7 +1035,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void OnItemClick(int position, String tag) {
                     if (position == 0) toVideoRecorder();
-                    else startActivityForResult(new Intent(mContext, VideoChooseActivity.class), VIDEO_PUBLISH_REQUEST);
+                    else
+                        startActivityForResult(new Intent(mContext, VideoChooseActivity.class), VIDEO_PUBLISH_REQUEST);
                 }
             });
         } else {
@@ -1846,7 +1847,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     else dataSource.setContent(dataSource.getContent() + text);
                 } else {//其他情况走后台接口 content:\n -> 空格 contentSource \n -> <br>
                     String contentText = articleItem.content.replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
-                    if (TextUtils.isEmpty(dataSource.getContent())) dataSource.setContent(contentText);
+                    if (TextUtils.isEmpty(dataSource.getContent()))
+                        dataSource.setContent(contentText);
                     else dataSource.setContent(dataSource.getContent() + contentText);
                     String contentSourceText = articleItem.content.replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, contentSourceText);
@@ -2269,11 +2271,18 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         Map data = (Map) hashMap.get("data");
                         if (data.containsKey("contentSource"))
                             data.remove("contentSource");
+                        if (data.containsKey("content"))
+                            data.remove("content");
+                        if (data.containsKey("description"))
+                            data.remove("description");
+                        if (data.containsKey("title"))
+                            data.remove("title");
                         hashMap.put("dataSource", data);
                         hashMap.remove("data");
                         JsEvent.callJsEvent(hashMap, true);
                         finish();
-                    } else publishFail(hashMap.containsKey("msg") ? (String) hashMap.get("msg") : "");
+                    } else
+                        publishFail(hashMap.containsKey("msg") ? (String) hashMap.get("msg") : "");
                 } else {
                     publishFail("");
                 }
