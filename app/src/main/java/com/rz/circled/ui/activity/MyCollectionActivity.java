@@ -25,6 +25,7 @@ import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
@@ -362,16 +363,15 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
         mLvCollection.setAdapter(mCollectionAdapter);
 
     }
-
-    @Override
-    public void refreshPage() {
-        mPresenter.getCircleCollection(false);
-    }
-
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
         mPresenter.getCircleCollection(direction != SwipyRefreshLayoutDirection.TOP);
         mRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void refreshPage() {
+onLoadingStatus(CommonCode.General.DATA_EMPTY,"您还没有收藏过内容哦~");
     }
 
     class viewHold {

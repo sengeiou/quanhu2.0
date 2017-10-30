@@ -334,7 +334,7 @@ public class ToBankCardAty extends BaseActivity {
                     return;
                 }
                 if (Double.parseDouble(mIntegralSum) >= Double.parseDouble(mRecharge)) {
-                    if (Double.parseDouble(mRecharge) < 5) {
+                    if (Double.parseDouble(mRecharge) < 100) {
                         SVProgressHUD.showInfoWithStatus(aty, getString(R.string.atmost));
                     } else {
                         if (Double.parseDouble(mRecharge) > 1000) {
