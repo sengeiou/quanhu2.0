@@ -122,20 +122,20 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void initData() {
-//
-//        /***** 获取升级信息 *****/
-//        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-//
-//        if (upgradeInfo != null) {
-//            BaseEvent event = new BaseEvent();
-//            event.info = "versionUpdate";
-//            EventBus.getDefault().post(event);
-//        } else {
-//            BaseEvent event = new BaseEvent();
-//            event.info = "noVersionUpdate";
-//            EventBus.getDefault().post(event);
-//        }
-//
+
+        /***** 获取升级信息 *****/
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+
+        if (upgradeInfo != null) {
+            BaseEvent event = new BaseEvent();
+            event.key = "versionUpdate";
+            EventBus.getDefault().post(event);
+        } else {
+            BaseEvent event = new BaseEvent();
+            event.key = "noVersionUpdate";
+            EventBus.getDefault().post(event);
+        }
+
         calculateCache();
     }
 
