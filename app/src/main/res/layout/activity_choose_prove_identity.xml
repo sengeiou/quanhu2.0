@@ -69,7 +69,7 @@
     <ImageView
         android:id="@+id/iv_choose_prove_oneself"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px576"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/px55"
         android:layout_marginTop="@dimen/px55"
         android:src="@mipmap/bg_prove_identity_oneself"/>
@@ -77,7 +77,19 @@
     <ImageView
         android:id="@+id/iv_choose_prove_agency"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px576"
+        android:layout_height="wrap_content"
         android:src="@mipmap/bg_prove_identity_agency"/>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="@dimen/px58"-->
+        <!--android:background="@color/color_daf0fc"-->
+        <!--android:orientation="vertical">-->
+
+
+
+
+    <!--</LinearLayout>-->
+
 
 </LinearLayout>
