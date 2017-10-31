@@ -222,7 +222,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
         };
         mListview.setAdapter(mAdapter);
         presenter.getBanckCardList(Session.getUserId());
-        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+//        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
     }
 
     public BankCardModel addCard() {
@@ -311,6 +311,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 mBanks.clear();
                 mBanks.add(addCard());
                 mAdapter.notifyDataSetChanged();
+                return;
             }
             super.onLoadingStatus(loadingStatus, string);
         }

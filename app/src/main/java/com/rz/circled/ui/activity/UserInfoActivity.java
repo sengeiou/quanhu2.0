@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.util.Util;
 import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.cpoopc.scrollablelayoutlib.ScrollableLayout;
 import com.netease.nimlib.sdk.NIMClient;
@@ -38,6 +39,7 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.Protect;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
@@ -147,9 +149,11 @@ public class UserInfoActivity extends BaseActivity {
 
         //个人中心
         if (userId.equals(Session.getUserId())) {
+            if (Protect.checkLoadImageStatus(mContext)) {
+                Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
+                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+            }
 
-            Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
-                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
             nameTxt.setText(Session.getUserName());
             levelTxt.setText("Lv." + Session.getUserLevel());
             if (TextUtils.isEmpty(Session.getUser_desc())) {
@@ -352,8 +356,12 @@ public class UserInfoActivity extends BaseActivity {
 
         if (model == null) {
             if (userId.equals(Session.getUserId())) {
-                Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
-                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+
+                if (Protect.checkLoadImageStatus(mContext)) {
+                    Glide.with(this).load(Session.getUserPicUrl()).transform(new GlideCircleImage(this)).
+                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+                }
+
                 nameTxt.setText(Session.getUserName());
                 levelTxt.setText("Lv." + Session.getUserLevel());
                 if (TextUtils.isEmpty(Session.getUser_desc())) {
@@ -365,8 +373,11 @@ public class UserInfoActivity extends BaseActivity {
                 addFriendLayout.setVisibility(View.GONE);
             }
         } else {
-            Glide.with(this).load(model.getCustImg()).transform(new GlideCircleImage(this)).
-                    placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+            if (Protect.checkLoadImageStatus(mContext)) {
+                Glide.with(this).load(model.getCustImg()).transform(new GlideCircleImage(this)).
+                        placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(avatarImg);
+            }
+
             nameTxt.setText(model.getCustNname());
             levelTxt.setText("Lv." + model.getCustLevel());
             if (TextUtils.isEmpty(model.getCustDesc())) {
