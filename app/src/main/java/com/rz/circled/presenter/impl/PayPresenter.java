@@ -557,13 +557,13 @@ public class PayPresenter extends AbsPresenter {
                         //收益兑换成功
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                         mView.updateView(res.getRet());
-                        return;
                     } else {
                         mView.updateView(res.getRet());
                         mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
                 }
-                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
             }
 
             @Override
