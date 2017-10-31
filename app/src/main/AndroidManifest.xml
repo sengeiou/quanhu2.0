@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 
     <application
         android:name=".application.QHApplication"
@@ -98,12 +99,12 @@
 
         <!-- 支付宝 -->
         <!-- alipay sdk begin -->
-        <!--<activity-->
-        <!--android:name="com.alipay.sdk.app.H5PayActivity"-->
-        <!--android:configChanges="orientation|keyboardHidden|navigation|screenSize"-->
-        <!--android:exported="false"-->
-        <!--android:screenOrientation="behind"-->
-        <!--android:windowSoftInputMode="adjustResize|stateHidden" />-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <!-- 微信支付 -->
         <receiver android:name=".wxapi.AppRegister">
@@ -344,7 +345,8 @@
         <activity
             android:name=".ui.activity.ApplyForCreatePrivateGroupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".ui.activity.ApplyForPrivateGroupBelongActivity"
             android:screenOrientation="portrait"
@@ -410,7 +412,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter>
-                <action android:name="com.rz.yryz.FRIEND_SELECT_ACTION"/>
+                <action android:name="com.rz.quanhu.FRIEND_SELECT_ACTION"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
@@ -467,13 +469,11 @@
             android:name=".ui.activity.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
-
             <intent-filter>
-                <action android:name="com.rz.yryz.FRIEND_INFO_ACTION"/>
+                <action android:name="com.rz.quanhu.FRIEND_INFO_ACTION"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-
         </activity>
 
         <activity
@@ -503,7 +503,13 @@
         <activity
             android:name=".ui.activity.AddContactsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent">
+            <intent-filter>
+                <action android:name="com.rz.quanhu.FRIEND_ADD_ACTION"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.MobileContactsActivity"
             android:screenOrientation="portrait"

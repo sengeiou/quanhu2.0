@@ -53,7 +53,6 @@ import com.rz.common.widget.SwipeBackLayout;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.LoginTypeBean;
-import com.rz.httpapi.bean.NewsOverviewBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.umeng.socialize.UMShareAPI;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -222,7 +221,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (BackGroundService.time_code != 0) {
+            startCount(BackGroundService.time_code);
+        }
+
+    }
+
+    @Override
     public void initData() {
+
         mEditPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -490,20 +500,16 @@ public class LoginActivity extends BaseActivity {
             if (null != loginModel) {
                 zhugeIdentify(loginModel);
                 Session.setSessionKey(loginModel.getToken());
-//                saveLoginData(loginModel);
                 switch (Session.getLoginWay()) {
                     case Type.LOGIN_WX:
-//                        MobclickAgent.onProfileSignIn("wx", model.getCustId());
                         zhugeTrack("wx");
                         ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
                         return;
                     case Type.LOGIN_SINA:
-//                        MobclickAgent.onProfileSignIn("sina", model.getCustId());
                         zhugeTrack("sina");
                         ((UserInfoPresenter) userPresenter).verfityBoundPhone(loginModel.getCustId());
                         return;
                     default:
-//                        MobclickAgent.onProfileSignIn(model.getCustId());
                         zhugeTrack("phonenum");
                         break;
                 }
@@ -515,36 +521,29 @@ public class LoginActivity extends BaseActivity {
                 } else if (loginType == Type.TYPE_LOGIN_WEB) {
                     //从圈子过来跳转登录的
 //                    JsEvent.callJsEvent(getLoginWebResultData(), true);
-                    finish();
                 } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
                     //从向导页面过来
 
                     skipActivity(aty, FollowCircle.class);
-                    finish();
                 } else {
-                    BaseEvent event = new BaseEvent();
-//            event.key = LOGIN_IN_SUCCESS;
-                    EventBus.getDefault().post(event);
 
                     EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
 
                     setResult(IntentCode.Login.LOGIN_RESULT_CODE);
                     skipActivity(aty, MainActivity.class);
-                    finish();
+
                 }
                 //webCon
                 BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
                 baseEvent.type = CommonCode.EventType.TYPE_LOGIN_WEB;
                 baseEvent.key = "nativeLogin";
                 EventBus.getDefault().post(baseEvent);
-
             }
         }
     }
 
     //登录成功后保存数据
     private void saveLoginData(UserInfoBean model) {
-//                MobclickAgent.onEvent(aty, "login");
         //单独记录随手晒缓存记录，防止刷新
         if (TextUtils.equals(Session.getBeforeUserId(), model.getCustId())) {
             EntityCache entityCache = new EntityCache<ShowListModel>(this, ShowListModel.class);
@@ -572,8 +571,10 @@ public class LoginActivity extends BaseActivity {
         Session.setCustRole(model.getCustRole());
         if (TextUtils.equals("0", model.getCustSex())) {
             Session.setUser_sex("女");
-        } else {
+        } else if (TextUtils.equals("1", model.getCustSex())) {
             Session.setUser_sex("男");
+        } else {
+            Session.setUser_sex("");
         }
         Session.setUser_area(model.getCustLocation());
         if (Type.HAD_SET_PW == model.getIsPayPassword()) {
@@ -639,19 +640,32 @@ public class LoginActivity extends BaseActivity {
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
 
-        if (t != null) {
+        if (flag == IntentCode.Register.GET_REQUEST_CODE_FAIL) {
+            if (null != mc) {
+                mc.cancel();
+                mc.onFinish();
+            }
+        }
+
+        if (t != null && t instanceof List) {
             List<LoginTypeBean> model = (List<LoginTypeBean>) t;
             if (model.size() > 0 && model.size() == 4) {
                 //已经绑定过手机直接登录
                 if (!TextUtils.isEmpty(model.get(3).getCreateDate())) {
-                    skipActivity(aty, MainActivity.class);
                     saveLoginData(loginModel);
+                    if (Session.getUserIsFirstDownload()) {
+                        skipActivity(aty, FollowCircle.class);
+//
+                    }else {
+                        saveLoginData(loginModel);
+                        skipActivity(aty, MainActivity.class);
+                    }
                 } else {
                     //传递登录时返回的对象
                     if (loginModel != null) {
                         Intent intent = new Intent(this, BoundPhoneActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("loginmodel", loginModel);
+                        bundle.putSerializable(IntentKey.LOGIN_MODEL, loginModel);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }

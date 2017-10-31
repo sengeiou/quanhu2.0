@@ -7,13 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.rz.circled.R;
+import com.rz.circled.adapter.viewholder.extra.NewsActivityExtra;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -35,14 +38,30 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.stampToDate(StringUtils.toDate(item.getCreateTime()).getTime(), "yyyy年MM月dd日 HH:mm"));
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
-        NewsArticleExtra extra = new Gson().fromJson(item.getBody().toString(), NewsArticleExtra.class);
-        Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
+        Gson gson = new Gson();
+        String json = gson.toJson(item.getBody());
+        NewsArticleExtra extra = gson.fromJson(json, NewsArticleExtra.class);
+        if (TextUtils.isEmpty(extra.getBodyImg())) {
+            holder.img.setVisibility(View.GONE);
+        } else {
+            Glide.with(holder.itemView.getContext()).load(extra.getBodyImg()).error(R.mipmap.ic_default_bg).into(holder.img);
+            holder.img.setVisibility(View.VISIBLE);
+        }
         holder.tvContent.setText(extra.getBodyTitle());
-        String from = TextUtils.isEmpty(extra.getCoterieId()) ? (TextUtils.isEmpty(extra.getCircleName()) ? "" : extra.getCircleName()) : extra.getCoterieName();
-        holder.tvFrom.setText(String.format(holder.itemView.getContext().getString(R.string.private_group_from), from));
+        String from;
+        if (!TextUtils.isEmpty(extra.getCoterieId()) && extra.getCoterieId().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_group), extra.getCoterieName());
+        } else if (!TextUtils.isEmpty(extra.getCircleName()) && extra.getCircleName().length() > 0) {
+            from = String.format(holder.itemView.getContext().getString(R.string.private_group_from_circled), extra.getCircleName());
+        } else {
+            from = "";
+        }
+        holder.tvFrom.setText(from);
+        holder.lineFrom.setVisibility(TextUtils.isEmpty(from) ? View.GONE : View.VISIBLE);
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,6 +78,8 @@ public class NewsArticleViewBinder extends ItemViewBinder<NewsBean, NewsArticleV
         TextView tvContent;
         @BindView(R.id.tv_from)
         TextView tvFrom;
+        @BindView(R.id.line_from)
+        LinearLayout lineFrom;
 
         NewsBean item;
 

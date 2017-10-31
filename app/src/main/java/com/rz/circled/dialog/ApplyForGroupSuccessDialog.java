@@ -11,6 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.rz.circled.R;
+import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.fragment.PrivateGroupCreateByMyselfFragment;
 import com.rz.common.utils.DensityUtils;
 
 import butterknife.ButterKnife;
@@ -73,6 +75,7 @@ public class ApplyForGroupSuccessDialog extends DialogFragment {
 
     @OnClick(R.id.id_set_pay_pw_txt)
     public void onClick() {
+        MyPrivateGroupActivity.startMyPrivateGroup(getActivity(), 0);
         dismiss();
     }
 }

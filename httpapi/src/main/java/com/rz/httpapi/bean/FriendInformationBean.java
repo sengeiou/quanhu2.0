@@ -48,6 +48,8 @@ public class FriendInformationBean implements Serializable {
     private String firstLetter;
     @DatabaseField
     private int relation;
+    @DatabaseField
+    private String custDesc;
 
     private boolean select;
     private boolean disable;
@@ -178,5 +180,13 @@ public class FriendInformationBean implements Serializable {
 
     public void setCustLocation(String custLocation) {
         this.custLocation = custLocation;
+    }
+
+    public String getCustDesc() {
+        return custDesc;
+    }
+
+    public void setCustDesc(String custDesc) {
+        this.custDesc = custDesc;
     }
 }

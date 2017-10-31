@@ -38,6 +38,7 @@ import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.UserInfoModel;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -46,6 +47,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 /**
  * 账户与安全
  */
@@ -112,6 +114,12 @@ public class AccountSafeAty extends BaseActivity {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+
+    @Override
     public void initPresenter() {
         mAuthPresenter = new SnsAuthPresenter();
         mAuthPresenter.attachView(this);
@@ -138,6 +146,11 @@ public class AccountSafeAty extends BaseActivity {
 
     //记录小额免密支付的状态
     private boolean mRecordCheckEasyPay;
+
+    @Override
+    public void onLoadingStatus(int loadingStatus) {
+        super.onLoadingStatus(loadingStatus);
+    }
 
     @Override
     public void initView() {
@@ -293,7 +306,8 @@ public class AccountSafeAty extends BaseActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();}
+        super.onPause();
+    }
 
     @Override
     protected void onDestroy() {
@@ -306,17 +320,9 @@ public class AccountSafeAty extends BaseActivity {
     }
 
     @Override
-    public void onLoadingStatus(int loadingStatus, String string) {
-        if (loadingStatus == CommonCode.General.ERROR_DATA) {
-            mEasyPayBtn.setCheckedNoEvent(!mRecordCheckEasyPay);
-        }
-        super.onLoadingStatus(loadingStatus, string);
-    }
-
-    @Override
     public <T> void updateView(T t) {
         if (null != t) {
-            if (t instanceof String) {
+           if (t instanceof String) {
                 String pw = (String) t;
                 if (StringUtils.isEmpty(pw)) {
                     mEasyPayBtn.setCheckedNoEvent(!mRecordCheckEasyPay);
@@ -392,7 +398,7 @@ public class AccountSafeAty extends BaseActivity {
                     if (!StringUtils.isEmpty(mStr)) {
                         if (Session.getUserLoginPw()) {
                             //设置了登录密码-去修改登录密码
-                            showActivity(aty,ModifyPwdAty.class);
+                            showActivity(aty, ModifyPwdAty.class);
                         } else {
                             //未设置登录密码-去设置登录密码
                             //手机绑定
@@ -406,7 +412,7 @@ public class AccountSafeAty extends BaseActivity {
             //支付密码
             case R.id.id_loginway_pay_ll:
                 if (loadingStatus == CommonCode.General.DATA_SUCCESS) {
-                    
+
                     Intent intent = new Intent(aty, SetPayPassAty.class);
                     intent.putExtra(IntentKey.KEY_TYPE, isSetPayPw);
                     showActivity(aty, intent);

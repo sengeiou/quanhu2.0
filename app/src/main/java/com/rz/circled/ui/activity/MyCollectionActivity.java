@@ -25,6 +25,7 @@ import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.GlideCenterRoundImage;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
@@ -220,7 +221,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     } else {
                         if (!StringUtils.isEmpty(answer.imgUrl)) {
                             vh.iv_answer.setVisibility(View.VISIBLE);
-                            Glide.with(mContext).load(answer.imgUrl).transform(new GlideCenterRoundImage(mContext, 10)).into(vh.iv_answer);
+                            String[] pics = answer.imgUrl.split(",");
+                            Glide.with(mContext).load(pics[0]).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(vh.iv_answer);
                         } else {
                             vh.iv_answer.setVisibility(View.GONE);
                         }
@@ -361,16 +363,15 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
         mLvCollection.setAdapter(mCollectionAdapter);
 
     }
-
-    @Override
-    public void refreshPage() {
-        mPresenter.getCircleCollection(false);
-    }
-
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection direction) {
         mPresenter.getCircleCollection(direction != SwipyRefreshLayoutDirection.TOP);
         mRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void refreshPage() {
+onLoadingStatus(CommonCode.General.DATA_EMPTY,"您还没有收藏过内容哦~");
     }
 
     class viewHold {

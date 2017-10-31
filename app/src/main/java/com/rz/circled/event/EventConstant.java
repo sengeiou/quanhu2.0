@@ -12,6 +12,7 @@ public class EventConstant {
     public static final int PRIVATE_GROUP_BELONG_ID = 200005;
     public static final int PRIVATE_GROUP_ESSENCE_MORE = 200006;
     public static final int PRIVATE_GROUP_TAB_REFRESH = 200007;
+    public static final int PRIVATE_GROUP_CREATE_REFRESH = 200019;
     public static final int PRIVATE_GROUP_JOIN_WAY = 200016;
 
     public static final int NEWS_COME_UNREAD = 200004;
@@ -23,6 +24,7 @@ public class EventConstant {
 
     public static final int USER_AVATAR_REFUSE = 200013;
     public static final int USER_BE_FROZEN = 200014;
+    public static final int USER_BE_KICKOUT_BY_HTTP = 200018;
     public static final int PAY_RECHARGE_SUCCESS = 200015;
     public static final int SWITCH_SHARE_SUCCESS = 200017;
 

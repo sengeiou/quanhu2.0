@@ -41,7 +41,7 @@
                     android:id="@+id/btn_resource"
                     android:layout_marginLeft="@dimen/px44"
                     android:layout_marginRight="@dimen/px44"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/px476"
                     android:layout_height="wrap_content"
                     android:background="@drawable/find_chainaresour"
                     android:textColor="@color/black"
@@ -49,7 +49,7 @@
 
                 <Button
                     android:id="@+id/btn_quanle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/px476"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/px44"
                     android:background="@drawable/find_quanquanle"
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/px34"
-                android:paddingLeft="@dimen/px34"
+                android:paddingLeft="@dimen/px10"
                 >
             </android.support.v7.widget.RecyclerView>
 
@@ -168,7 +168,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/px80"
                 android:layout_marginTop="@dimen/px44"
                 android:paddingBottom="@dimen/px10"
                 >

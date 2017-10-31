@@ -23,6 +23,7 @@
                 android:gravity="top|left"
                 android:textSize="@dimen/font_50"
                 android:maxLength="40"
+                android:hint="@string/edit_user_introduce"
                 android:layout_width="match_parent"/>
 
             <ImageView

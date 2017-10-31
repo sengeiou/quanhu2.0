@@ -13,7 +13,9 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.rz.circled.R;
 import com.rz.circled.adapter.viewholder.extra.NewsArticleExtra;
+import com.rz.circled.adapter.viewholder.extra.NewsInteractiveExtra;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -35,10 +37,12 @@ public class NewsRewardViewBinder extends ItemViewBinder<NewsBean, NewsRewardVie
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.stampToDate(StringUtils.toDate(item.getCreateTime()).getTime(), "yyyy年MM月dd日 HH:mm"));
         holder.tvTitle.setText(item.getTitle());
         holder.tvDesc.setText(item.getContent());
-        NewsArticleExtra extra = new Gson().fromJson(item.getBody().toString(), NewsArticleExtra.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(item.getBody());
+        NewsArticleExtra extra = gson.fromJson(json, NewsArticleExtra.class);
         holder.tvContent.setText(extra.getBodyTitle());
     }
 

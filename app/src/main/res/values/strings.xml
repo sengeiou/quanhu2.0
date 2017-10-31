@@ -56,6 +56,7 @@
     <string name="reast_password">重置支付密码</string>
     <string name="open_small_pay_no_psw">开启小额免密支付功能</string>
     <string name="password_sucess">密码重置成功</string>
+    <string name="edit_user_introduce">请输入个人简介</string>
 
     <string name="tab_home">首页</string>
     <string name="tab_find">发现</string>
@@ -229,12 +230,13 @@
     <string name="private_group_apply_for">申请创建私圈</string>
     <string name="private_group_apply_for_success">申请提交成功</string>
     <string name="private_group_apply_for_tip">我们将尽快处理您的申请，\n请关注系统通知！</string>
-    <string name="private_group_from">来自 %1$s</string>
+    <string name="private_group_from_group">来自私圈 %1$s</string>
+    <string name="private_group_from_circled">来自圈子 %1$s</string>
     <string name="private_group_free">免费</string>
-    <string name="private_group_price">%1$d圈币</string>
     <string name="private_group_youran_price">%1$d悠然币</string>
     <string name="private_group_essence_scan">%1$d 阅读</string>
     <string name="private_group_join_way_change">修改加入私圈方式</string>
+    <string name="private_group_choose">选择圈子</string>
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
@@ -275,8 +277,8 @@
     <string name="leave_message_to_friend">给朋友留言</string>
     <string name="add_qh_square">邀请您的好友，加入我们的圈乎吧</string>
     <string name="input_nick">输入昵称和手机号搜索</string>
-    <string name="share_title">进圈乎，玩圈子，一切都有了！</string>
-    <string name="share_desc">圈乎，大型资源共享与价值变现O2O平台。“人人找资源、人人即资源、人人有资源。”帮你解决资源难题！</string>
+    <string name="share_title">圈子有了，一切都有了！</string>
+    <string name="share_desc">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
     <string name="share_title1">圈子有了，一切都有了！</string>
     <string name="share_desc1">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
 
@@ -311,10 +313,10 @@
     <string name="click_finish_record">点击结束录音</string>
     <string name="record_cancel_error_hint">录音长度需大于3秒，请重新录制</string>
     <string name="search_all_hint">搜圈子、达人、私圈、资源...</string>
-    <string name="search_persion_hint">输入昵称／姓名搜索</string>
+    <string name="search_persion_hint">输入昵称搜索</string>
     <string name="search_private_hint">输入私圈名称搜索</string>
     <string name="search_circle_hint">输入圈子名称搜索</string>
-    <string name="search_reward_hint">输入悬赏名称搜索</string>
+    <string name="search_reward_hint">输入悬赏内容搜索</string>
     <string name="search">搜索</string>
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
@@ -451,15 +453,15 @@
     <string name="fuwufei">服务费；</string>
     <string name="tixian_money">请输入提现金额</string>
     <string name="tixian_no">提现金额不足</string>
-    <string name="atmost">单笔兑换至少5元</string>
+    <string name="atmost">单笔兑换至少100元</string>
     <string name="xiane">单笔兑换限额1000元</string>
     <string name="fanwei">提现金额超出可提现范围</string>
     <string name="possible_recharge_score">可提现：</string>
     <string name="withdraw_money">提现金额</string>
     <string name="excharge_rate">(1悠然币=1元)</string>
     <string name="input_recharge">请输入提现金额</string>
-    <string name="withdraw_note">如因用户输入持卡人姓名、银行卡号错误或持卡人姓名和银行卡号不匹配等造成提现不成功，提现金额将退还到用户悠然账户，手续费照常扣除。</string>
-    <string name="withdraw_tip1">提现金额范围5-1000悠然币；</string>
+    <string name="withdraw_note">如因用户输入持卡人姓名、银行卡号错误或持卡人姓名和银行卡号不匹配等造成提现不成功，提现金额将退还到用户收益账户，银行会照常扣除服务费。</string>
+    <string name="withdraw_tip1">提现金额范围100-1000元,每天最多提现5次；</string>
     <string name="withdraw_tip2">每笔提现银行收取2元服务费</string>
     <string name="withdraw_tip3">平台于每日23：00到次日9：00进行系统维护，此时间段内暂不提供提现服务。</string>
     <string name="withdraw_tip4">可供提现的银行卡参考</string>
@@ -493,7 +495,7 @@
     <string name="match">确认</string>
     <string name="person">人</string>
     <string name="no_friend_to_add">你暂时还没有好友哦，\n快去添加好友吧</string>
-    <string name="search_key3">输入昵称或手机号搜索用户</string>
+    <string name="search_key3">输入昵称、手机号搜索</string>
     <string name="remark_fail">备注失败</string>
     <string name="obtain_fail">获取失败</string>
     <string name="inval_sucess">邀请成功</string>
@@ -507,7 +509,7 @@
     <string name="new_friend">新的好友</string>
     <string name="phone_contacts">手机联系人</string>
     <string name="qh_personal">圈乎用户</string>
-    <string name="search_key1">输入昵称或手机号码</string>
+    <string name="search_key1">输入昵称或手机号码搜索</string>
     <string name="invite_friend">邀请好友</string>
     <string name="mine_my_contacts">通讯录</string>
     <string name="contacts_phone">手机联系人</string>
@@ -527,7 +529,7 @@
     <string name="phone_introduce">添加或邀请手机通讯录中的朋友</string>
     <string name="contacts_permissiongs_run">圈乎要使用通讯录权限，否则app可能无法正常运行</string>
     <string name="un_quanhu_user_invite_register">该用户还不是圈乎用户，是否邀请注册？</string>
-    <string name="at_add_download">有人@你，来玩圈乎吧！喜欢什么，就加入什么圈子。内容丰富，玩法多样！点击http://t.cn/RV2a6cS下载，我在圈乎等你哦！</string>
+    <string name="at_add_download">有人喊你来玩圈乎啦！进圈乎，玩圈子，共享资源，价值变现，点击%1$s下载，我在圈乎等你哦~</string>
     <string name="friends">已是好友</string>
     <string name="no_contacts_permissions_hint">由于您的手机未能开启访问通讯录的权限\n此处无法获取您的手机联系人</string>
     <string name="open_contacts_permissions_hint">请通过手机设置中\n开启“圈乎”访问通讯录后重新尝试</string>
@@ -708,6 +710,7 @@
     <string name="reward_success">打赏成功</string>
 
     <string name="share_to">分享到</string>
+    <string name="share_tip">独乐乐不如众乐乐\n圈子有了，一切都有了！</string>
     <string name="share_note">(无法获得平台圈币)</string>
     <string name="wx_friend">微信好友</string>
     <string name="firend_circle">朋友圈</string>
@@ -793,11 +796,13 @@
     <string name="my_coupons">我的卡券</string>
     <string name="tab_coupons">卡券</string>
     <string name="tab_award">奖品</string>
-    <string name="mine_article_txt">还没有发布内容哦~赶紧去发布</string>
-    <string name="ta_article_txt">ta还没有发布内容哦~</string>
-    <string name="mine_reward_txt">还没有悬赏信息哦</string>
-    <string name="mine_activity_txt">还没有任何已参加活动</string>
-
+    <string name="mine_article_txt">还没有发布资源哦~赶紧去发布</string>
+    <string name="ta_article_txt">Ta还没有发布资源哦~</string>
+    <string name="mine_reward_txt">还没有发布悬赏信息哦~赶紧去发布</string>
+    <string name="mine_answer_txt">还没有回答悬赏信息哦~赶紧去回答</string>
+    <string name="mine_activity_txt">还没有参加任何活动哦~</string>
+    <string name="ta_reward_txt">Ta还没有发布悬赏信息哦~</string>
+    <string name="ta_answer_txt">Ta还没有回答悬赏信息哦~</string>
 
     <string name="call_phone_authorization">请授权拨打电话！</string>
     <string name="authorization_fail">授权失败！</string>
@@ -815,10 +820,13 @@
     <string name="input_subject_search">输入话题名称搜索</string>
     <string name="subject">话题</string>
     <string name="discuss">讨论</string>
-    <string name="from_coterie">来自私圈 </string>
-    <string name="from_circle">来自圈子 </string>
+    <string name="from_coterie">来自私圈&#160;</string>
+    <string name="from_circle">来自圈子&#160;</string>
     <string name="my_collection">我的收藏</string>
     <string name="upgrade_idea">升级攻略</string>
     <string name="mess_no">消息免打扰</string>
     <string name="no_more">没有更多了...</string>
+    <string name="hava_updata">有更新</string>
+    <string name="wifi_upload">当前无WiFi连接，继续上传视频将消耗您的自有流量</string>
+    <string name="wifi_play">当前无WiFi连接，继续播放将消耗您的自有流量</string>
 </resources>

@@ -46,8 +46,8 @@ public class LetterContactsAdapter extends CommonAdapter<FriendInformationBean> 
                 mTxtName.setText(model.getNameNotes());
             }
 
-            if (!TextUtils.isEmpty(model.getCustSignature())) {
-                mTxtBrief.setText(model.getCustSignature());
+            if (!TextUtils.isEmpty(model.getCustDesc())) {
+                mTxtBrief.setText(model.getCustDesc());
                 mTxtBrief.setVisibility(View.VISIBLE);
             } else {
                 mTxtBrief.setVisibility(View.GONE);

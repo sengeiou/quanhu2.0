@@ -174,8 +174,7 @@ public class PayPresenter extends AbsPresenter {
                             return;
                         }
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         return;
                     }
                 }
@@ -285,15 +284,7 @@ public class PayPresenter extends AbsPresenter {
                             return;
                         }
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
@@ -339,15 +330,7 @@ public class PayPresenter extends AbsPresenter {
                             return;
                         }
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                                    return;
-                                }
-                            }, 2000);
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
                     }
                 }
                 if (flag) {
@@ -410,11 +393,9 @@ public class PayPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                            isDataError = true;
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        isDataError = true;
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
@@ -472,11 +453,9 @@ public class PayPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            isDataError = true;
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        isDataError = true;
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
@@ -498,7 +477,7 @@ public class PayPresenter extends AbsPresenter {
      *
      * @param loadmore true 加载更多 false 刷新
      */
-    public void requestGetRewardList(final boolean loadmore,String rewardId) {
+    public void requestGetRewardList(final boolean loadmore, String rewardId) {
         if (!NetUtils.isNetworkConnected(activity)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
@@ -534,11 +513,9 @@ public class PayPresenter extends AbsPresenter {
                         }
                         return;
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                            isDataError = true;
-                            return;
-                        }
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                        isDataError = true;
+                        return;
                     }
                 }
                 mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.load_fail));
@@ -580,24 +557,13 @@ public class PayPresenter extends AbsPresenter {
                         //收益兑换成功
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
                         mView.updateView(res.getRet());
-                        return;
                     } else {
-//                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "error");
-//                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-//                        return;
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.updateView(res.getRet());
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
-                                }
-                            }, 2000);
-                            return;
-                        }
+                        mView.updateView(res.getRet());
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
                 }
-                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.action_fail));
             }
 
             @Override
@@ -638,8 +604,7 @@ public class PayPresenter extends AbsPresenter {
                             mView.updateView(res.getRet());
                         }
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -671,8 +636,7 @@ public class PayPresenter extends AbsPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(response.body().getData());
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
@@ -704,8 +668,7 @@ public class PayPresenter extends AbsPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         mView.updateView(response.body().getData());
                     } else {
-                        HandleRetCode.handler(activity, res);
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.LOAD_ERROR);
@@ -830,7 +793,7 @@ public class PayPresenter extends AbsPresenter {
                 hideInputMethod();
                 mPayDialog.dismiss();
                 //去支付
-                if (flag == 3) {
+                if (flag == 2 || flag == 3) {
                     mView.updateView(psw);
                 } else {
                     payOrder(orderId, psw);
@@ -912,7 +875,7 @@ public class PayPresenter extends AbsPresenter {
 
     public void hideInputMethod() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getApplicationWindowToken(), 0);
+        imm.hideSoftInputFromWindow(activity.getWindow().peekDecorView().getWindowToken(), 0);
     }
 
     /**
@@ -1043,15 +1006,8 @@ public class PayPresenter extends AbsPresenter {
                             }
                         }
                     } else {
-                        if (HandleRetCode.handler(activity, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                                    return;
-                                }
-                            }, 2000);
-                        }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
+                        return;
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA, activity.getString(R.string.check_fail));

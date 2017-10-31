@@ -32,17 +32,13 @@ public class SearchCircleAdapter extends SearchCommonAdapter {
         tvName.setSelected(model.isSeleced());
         tvName.setText("");
 
-//        if(stringFormatUtil == null){
-//            stringFormatUtil = new StringFormatUtil(mContext, model.circleName, keyWord, R.color.colorAccent).fillColor();
-//
-//            tvName.setText(stringFormatUtil.getResult());
-//
-//        }
+
         stringFormatUtil = new StringFormatUtil(mContext, model.circleName, keyWord, R.color.colorAccent).fillColor();
+        if(stringFormatUtil != null && stringFormatUtil.getResult() != null){
+            tvName.setText(stringFormatUtil.getResult());
+        }else{
+            tvName.setText(model.circleName);
+        }
 
-        tvName.setText(stringFormatUtil.getResult());
-
-
-//        tvName.append(getSpan(model.circleName));
     }
 }

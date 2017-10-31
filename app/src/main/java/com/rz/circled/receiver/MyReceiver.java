@@ -8,7 +8,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import com.rz.circled.constants.JPushTypeConstants;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
@@ -25,6 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
@@ -125,14 +132,15 @@ public class MyReceiver extends BroadcastReceiver {
 
                 //打开自定义的Activity
                 String str = bundle.getString(JPushInterface.EXTRA_EXTRA);
-                Gson gson = new Gson();
+                GsonBuilder gsonbuilder = new GsonBuilder();
+                Gson gson = gsonbuilder.create();
                 JPushExtraBean jPushExtraModel = gson.fromJson(str, new TypeToken<JPushExtraBean>() {
                 }.getType());
                 assert jPushExtraModel != null;
                 NewsBean mNews = gson.fromJson(jPushExtraModel.getMessage(), NewsBean.class);
                 MyPushInfo mInfo = gson.fromJson(jPushExtraModel.getMessage(), MyPushInfo.class);
                 if (mNews != null && !TextUtils.isEmpty(mNews.getMessageId())) {
-                    NewsJumpHelper.startAcceptActivity(context, mNews);
+                    NewsJumpHelper.startAcceptActivity(context, mNews, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     if (mNews.getType() == NewsTypeConstants.NEWS_ANNOUNCEMENT) {
                         if (Session.getNewsAnnouncementNum() > 0) {
                             Session.setNewsAnnouncementNum(Session.getNewsAnnouncementNum() - 1);
@@ -152,6 +160,37 @@ public class MyReceiver extends BroadcastReceiver {
             } else {
                 Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
             }
+        }
+    }
+
+    public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
+        @SuppressWarnings("unchecked")
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+            Class<T> rawType = (Class<T>) type.getRawType();
+            if (rawType != NewsBean.class) {
+                return null;
+            }
+            return (TypeAdapter<T>) new StringNullAdapter();
+        }
+    }
+
+    public class StringNullAdapter extends TypeAdapter<String> {
+        @Override
+        public String read(JsonReader reader) throws IOException {
+            if (reader.peek() == JsonToken.NULL) {
+                reader.nextNull();
+                return "";
+            }
+            return reader.nextString();
+        }
+
+        @Override
+        public void write(JsonWriter writer, String value) throws IOException {
+            if (value == null) {
+                writer.nullValue();
+                return;
+            }
+            writer.value(value);
         }
     }
 }

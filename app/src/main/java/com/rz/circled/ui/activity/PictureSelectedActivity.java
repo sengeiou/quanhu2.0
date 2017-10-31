@@ -36,6 +36,7 @@ import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.CacheUtils;
 import com.rz.common.utils.DensityUtils;
+import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
@@ -215,6 +216,8 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
 
         mTxtPicNum.setText(mSaveScanAllPics.size() + getString(R.string.zhang));
         mTxtPicName.setText(R.string.all_pic);
+
+        onLoadingStatus(CommonCode.General.DATA_SUCCESS);
     }
 
     /**
@@ -242,21 +245,29 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
             for (String aPicName : picName) {
                 PictureModel pic = new PictureModel();
                 String filePath = mImgDir.getAbsolutePath() + "/" + aPicName;
-                pic.setmPicPath(filePath);
-                pic.setLastModifyTime(new File(filePath).lastModified());
-                // pic.setmBitmap(ImageUtils.GetZoom(filePath));
-                if (mSaveScanAllPics.isEmpty()) {
-                    pic.setSelect(false);
-                } else {
-                    for (PictureModel model : mSaveScanAllPics) {
-                        if (model.getmPicPath().equals(filePath)) {
-                            if (model.isSelect()) {
-                                pic.setSelect(true);
+                double fileSize = FileUtils.getFileSize(filePath, FileUtils.SIZETYPE_B);
+                if (fileSize > 0) {
+                    File file = new File(filePath);
+                    if (file.exists()) {
+                        pic.setmPicPath(filePath);
+                        pic.setLastModifyTime(file.lastModified());
+                        // pic.setmBitmap(ImageUtils.GetZoom(filePath));
+                        if (mSaveScanAllPics.isEmpty()) {
+                            pic.setSelect(false);
+                        } else {
+                            for (PictureModel model : mSaveScanAllPics) {
+                                if (model.getmPicPath().equals(filePath)) {
+                                    if (model.isSelect()) {
+                                        pic.setSelect(true);
+                                    }
+                                }
                             }
                         }
+                        mPicPaths.add(pic);
                     }
                 }
-                mPicPaths.add(pic);
+
+
             }
         }
         return mPicPaths;
@@ -571,6 +582,8 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
         }
         // 扫描图片文件夹
 
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
+
         mDirPaths.clear();
         mImageFloders.clear();
 
@@ -599,6 +612,8 @@ public class PictureSelectedActivity extends BaseActivity implements OnItemClick
                         // 获取该图片的父路径名
                         File parentFile = new File(path).getParentFile();
                         if (parentFile == null)
+                            continue;
+                        if (FileUtils.getFileSize(path, FileUtils.SIZETYPE_B) == 0)
                             continue;
                         String dirPath = parentFile.getAbsolutePath();
                         ImageFloder imageFloder = null;

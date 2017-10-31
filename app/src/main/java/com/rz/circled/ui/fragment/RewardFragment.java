@@ -1,9 +1,12 @@
 package com.rz.circled.ui.fragment;
 
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
@@ -29,12 +32,14 @@ import butterknife.BindView;
 /**
  * Created by Gsm on 2017/8/29.
  */
-public class RewardFragment extends BaseFragment {
+public class RewardFragment extends BaseFragment implements AdvancedWebView.Listener {
 
     @BindView(R.id.webView)
     AdvancedWebView mWebView;
 
     private WebViewProxy mWebViewProxy;
+
+    private boolean hadHeader = false;
 
     @Override
     protected boolean needLoadingView() {
@@ -57,6 +62,18 @@ public class RewardFragment extends BaseFragment {
         onLoadingStatus(CommonCode.General.DATA_LOADING);
         mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + "/activity/reward");
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
+
+        mWebView.setListener(getActivity(), this);
+        setRefreshListener(this);
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress > 90 && hadHeader) {
+                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                }
+            }
+        });
     }
 
     @Override
@@ -68,7 +85,7 @@ public class RewardFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        mWebView.resumeTimers();
+        mWebView.onResume();
         mWebViewProxy.autoCancelUiHandler();
     }
 
@@ -79,6 +96,12 @@ public class RewardFragment extends BaseFragment {
             EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.onPause();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent == null) return;
@@ -87,22 +110,6 @@ public class RewardFragment extends BaseFragment {
                 if (mWebView != null)
                     mWebView.setVisibility(View.VISIBLE);
                 onLoadingStatus(CommonCode.General.DATA_SUCCESS);
-                break;
-            case CommonCode.EventType.TYPE_REWARD_REFRESH:
-                //刷新
-                RequestJsBroadcastHandler refreshHandler = new RequestJsBroadcastHandler(mActivity);
-                refreshHandler.setNativeEvent(baseEvent.key);
-                refreshHandler.setRequestData(baseEvent.data);
-                if (mWebViewProxy != null)
-                    mWebViewProxy.requestJsFun(refreshHandler);
-                break;
-            case CommonCode.EventType.TYPE_LOGIN_WEB:
-                //登录
-                RequestJsBroadcastHandler loginHandler = new RequestJsBroadcastHandler(mActivity);
-                loginHandler.setNativeEvent(baseEvent.key);
-                loginHandler.setRequestData(baseEvent.data);
-                if (mWebViewProxy != null)
-                    mWebViewProxy.requestJsFun(loginHandler);
                 break;
         }
     }
@@ -140,8 +147,63 @@ public class RewardFragment extends BaseFragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBaseEvent(BaseEvent baseEvent) {
+        if (baseEvent == null) return;
+        switch (baseEvent.type) {
+            case CommonCode.EventType.TYPE_REWARD_REFRESH:
+                //刷新
+                RequestJsBroadcastHandler refreshHandler = new RequestJsBroadcastHandler(mActivity);
+                refreshHandler.setNativeEvent(baseEvent.key);
+                refreshHandler.setRequestData(baseEvent.data);
+                if (mWebViewProxy != null)
+                    mWebViewProxy.requestJsFun(refreshHandler);
+                break;
+            case CommonCode.EventType.TYPE_HTTP_HEADER:
+                hadHeader = true;
+                break;
+        }
+    }
+
     @Override
     public void refreshPage() {
+        onLoadingStatus(CommonCode.General.DATA_LOADING);
+        mWebView.reload();
+    }
+
+    @Override
+    public void onPageStarted(String url, Bitmap favicon) {
+
+    }
+
+    @Override
+    public void onPageFinished(String url) {
+
+    }
+
+    @Override
+    public void onPageError(int errorCode, String description, String failingUrl) {
+        onLoadingStatus(CommonCode.General.ERROR_DATA);
+    }
+
+    @Override
+    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition,
+                                    String userAgent) {
+
+    }
+
+    @Override
+    public void onExternalPageRequest(String url) {
+
+    }
+
+    @Override
+    public void callPhoneNumber(String uri) {
+
+    }
+
+    @Override
+    public void doUpdateVisitedHistory() {
 
     }
 }

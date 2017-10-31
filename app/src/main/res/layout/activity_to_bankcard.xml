@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_bg_gray_common">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_item_bank_card" />
+        <include layout="@layout/layout_item_bank_card"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,13 +24,14 @@
                 android:paddingRight="@dimen/px44"
                 android:text="@string/change_bank_card"
                 android:textColor="@color/color_main"
-                android:textSize="@dimen/px38" />
+                android:textSize="@dimen/px38"/>
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/px110"
+            android:background="@color/app_bg_gray_common"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/px44"
@@ -46,14 +47,14 @@
                     style="@style/DefaultTvStyle"
                     android:text="@string/my_income_money"
                     android:textColor="@color/color_74"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
 
                 <TextView
                     android:id="@+id/id_my_shouyi_txt"
                     style="@style/DefaultTvStyle"
                     android:layout_marginLeft="@dimen/px10"
                     android:textColor="@color/color_74"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
             </LinearLayout>
 
             <LinearLayout
@@ -67,14 +68,14 @@
                     style="@style/DefaultTvStyle"
                     android:text="@string/possible_recharge_score"
                     android:textColor="@color/color_74"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
 
                 <TextView
                     android:id="@+id/id_tv_score"
                     style="@style/DefaultTvStyle"
                     android:layout_marginLeft="@dimen/px10"
                     android:textColor="@color/color_F5BB1E"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -90,16 +91,15 @@
             <TextView
                 style="@style/DefaultTvStyle"
                 android:text="@string/withdraw_money"
-                android:textSize="@dimen/font_44" />
+                android:textSize="@dimen/font_44"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingRight="@dimen/px30"
-                android:text="@string/excharge_rate"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/font_38" />
+                android:textSize="@dimen/font_38"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,7 +119,7 @@
                     android:paddingRight="@dimen/px20"
                     android:textColor="@color/font_gray_l"
                     android:textColorHint="@color/font_gray_a"
-                    android:textSize="@dimen/font_50" />
+                    android:textSize="@dimen/font_50"/>
 
                 <ImageView
                     android:id="@+id/id_back_clear_img"
@@ -128,14 +128,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/px20"
                     android:background="@drawable/ic_clear"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/yuan"
                     android:textColor="@color/font_gray_s"
-                    android:textSize="@dimen/px50" />
+                    android:textSize="@dimen/px50"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -143,12 +143,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/app_bg_gray_common"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/px44"
             android:paddingBottom="@dimen/px44"
             android:paddingLeft="@dimen/px44"
             android:paddingRight="@dimen/px44"
-            >
+            android:paddingTop="@dimen/px44">
 
 
             <ImageView
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/px10"
                 android:background="@mipmap/ic_withcash_warn"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"/>
 
             <TextView
                 style="@style/DefaultTvStyle"
@@ -167,7 +167,7 @@
                 android:singleLine="false"
                 android:text="@string/withdraw_note"
                 android:textColor="@color/color_F5BB1E"
-                android:textSize="@dimen/px38" />
+                android:textSize="@dimen/px38"/>
         </LinearLayout>
 
         <LinearLayout
@@ -192,14 +192,14 @@
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_38" />
+                    android:textSize="@dimen/font_38"/>
 
                 <TextView
                     style="@style/DefaultTvStyle"
                     android:layout_marginLeft="@dimen/px30"
                     android:text="@string/withdraw_tip1"
                     android:textColor="@color/font_gray_s"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
             </LinearLayout>
 
             <LinearLayout
@@ -219,7 +219,7 @@
                     android:gravity="center"
                     android:text="2"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_38" />
+                    android:textSize="@dimen/font_38"/>
 
                 <TextView
                     android:id="@+id/id_bank_charge_txt"
@@ -227,7 +227,7 @@
                     android:layout_marginLeft="@dimen/px30"
                     android:text="@string/withdraw_tip2"
                     android:textColor="@color/font_gray_s"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
             </LinearLayout>
 
             <LinearLayout
@@ -245,7 +245,7 @@
                     android:gravity="center"
                     android:text="3"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_38" />
+                    android:textSize="@dimen/font_38"/>
 
                 <TextView
                     android:id="@+id/tv_to_bankcard_reference"
@@ -255,7 +255,7 @@
                     android:singleLine="false"
                     android:text="@string/withdraw_tip4"
                     android:textColor="@color/font_color_blue"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
             </LinearLayout>
 
             <LinearLayout
@@ -274,7 +274,7 @@
                     android:gravity="center"
                     android:text="4"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_38" />
+                    android:textSize="@dimen/font_38"/>
 
                 <TextView
                     style="@style/DefaultTvStyle"
@@ -283,28 +283,30 @@
                     android:singleLine="false"
                     android:text="@string/withdraw_tip3"
                     android:textColor="@color/font_gray_s"
-                    android:textSize="@dimen/px40" />
+                    android:textSize="@dimen/px40"/>
             </LinearLayout>
         </LinearLayout>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
-        <Button
-            android:id="@+id/id_recharge_submit_btn"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/px30"
-            android:layout_marginLeft="@dimen/px180"
-            android:layout_marginRight="@dimen/px180"
-            android:layout_marginTop="@dimen/px160"
-            android:background="@drawable/shape_bg_blue_sel"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:padding="@dimen/px32"
-            android:text="@string/confirm_recharge"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_46" />
-</RelativeLayout>
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <Button
+                android:id="@+id/id_recharge_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/px30"
+                android:layout_marginLeft="@dimen/px180"
+                android:layout_marginRight="@dimen/px180"
+                android:layout_marginTop="@dimen/px160"
+                android:background="@drawable/shape_bg_blue_sel"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:padding="@dimen/px32"
+                android:text="@string/confirm_recharge"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_46"/>
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

@@ -2,6 +2,7 @@ package com.rz.circled.adapter.viewholder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.rz.circled.R;
 import com.rz.circled.helper.NewsJumpHelper;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.NewsBean;
 
 import butterknife.BindView;
@@ -32,7 +34,7 @@ public class NewsUserViewBinder extends ItemViewBinder<NewsBean, NewsUserViewBin
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull NewsBean item) {
         holder.item = item;
-        holder.tvTime.setText(item.getCreateTime());
+        holder.tvTime.setText(TextUtils.isEmpty(item.getCreateTime()) ? "" : StringUtils.stampToDate(StringUtils.toDate(item.getCreateTime()).getTime(), "yyyy年MM月dd日 HH:mm"));
         holder.tvName.setText(item.getTitle());
         holder.tvIntro.setText(item.getContent());
         Glide.with(holder.itemView.getContext()).load(item.getImg()).error(R.mipmap.ic_default_avatar_big).into(holder.avatar);

@@ -69,6 +69,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
 
     //
     private int type;
+    private BankCardModel cardModel;
 
     /**
      * 启动我绑定的银行卡列表
@@ -79,6 +80,18 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
         Intent intent = new Intent(activity, BankCardListAty.class);
         intent.putExtra(IntentKey.EXTRA_TYPE, type);
         activity.startActivityForResult(intent, IntentCode.BankCard.BankCard_REQUEST_CODE);
+    }
+
+    public static void startBankCardList(Activity activity, int type, BankCardModel bankCardModel) {
+        Intent intent = new Intent(activity, BankCardListAty.class);
+        intent.putExtra(IntentKey.EXTRA_TYPE, type);
+        intent.putExtra(IntentKey.EXTRA_MODEL, bankCardModel);
+        activity.startActivityForResult(intent, IntentCode.BankCard.BankCard_REQUEST_CODE);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
     }
 
     @Override
@@ -104,6 +117,9 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
         mTitle = new String[]{getString(R.string.unbind_bank_card), getString(R.string.set_default)};
         mTitleColor = new String[]{"#333333", "#0185ff"};
         type = getIntent().getIntExtra(IntentKey.EXTRA_TYPE, Constants.DEFAULTVALUE);
+        if (getIntent().hasExtra(IntentKey.EXTRA_MODEL)) {
+            cardModel = (BankCardModel) getIntent().getSerializableExtra(IntentKey.EXTRA_MODEL);
+        }
         if (type == 1) {
             setTitleText(getString(R.string.bank_card));
             mPopupView = new PopupView(aty);
@@ -177,7 +193,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                     helper.setText(R.id.id_tv_bank_name, bankName);
                     Glide.with(mContext).load(UnitUtil.checkBankLogo(bankName)).transform(new GlideCircleImage(BankCardListAty.this)).crossFade().into(mBankImg);
 //                    mBankImg.setBackgroundResource(UnitUtil.checkBankLogo(bankName));
-                    if (item.getDefaultCard() == 1) {
+                    if (item.isSelect) {
                         mDefaultImg.setVisibility(View.VISIBLE);
                     } else {
                         mDefaultImg.setVisibility(View.GONE);
@@ -206,7 +222,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
         };
         mListview.setAdapter(mAdapter);
         presenter.getBanckCardList(Session.getUserId());
-        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
+//        ((BankPresenter) presenter).getBanckCardList(Session.getUserId());
     }
 
     public BankCardModel addCard() {
@@ -226,6 +242,18 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                     mBanks.addAll(dataList);
                     if (type == 1) {
                         mBanks.add(addCard());
+                    }
+                    if (cardModel != null) {
+                        for (BankCardModel mBank : mBanks) {
+                            if (cardModel.bankCardNo.equals(mBank.bankCardNo)) {
+                                mBank.isSelect = true;
+                            } else mBank.isSelect = false;
+                        }
+                    } else {
+                        for (BankCardModel mBank : mBanks) {
+                            if (mBank.getDefaultCard() == 1)
+                                mBank.isSelect = true;
+                        }
                     }
                     mAdapter.notifyDataSetChanged();
                 }
@@ -283,6 +311,7 @@ public class BankCardListAty extends BaseActivity implements XListView.IXListVie
                 mBanks.clear();
                 mBanks.add(addCard());
                 mAdapter.notifyDataSetChanged();
+                return;
             }
             super.onLoadingStatus(loadingStatus, string);
         }

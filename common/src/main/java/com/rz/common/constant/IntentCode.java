@@ -46,6 +46,9 @@ public class IntentCode {
         public static final int REGISTER_RESULT_CODE = 1002;
         //注册成功返回码
         public static final int REGISTER_RESULT_ONLY_CODE = 1003;
+
+        //获取验证码失败
+        public static final int GET_REQUEST_CODE_FAIL = 1006;
     }
 
     /**

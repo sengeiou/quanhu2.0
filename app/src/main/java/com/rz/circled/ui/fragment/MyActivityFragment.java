@@ -1,7 +1,6 @@
 package com.rz.circled.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,7 @@ import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ScrollableHelper.ScrollableContainer{
+public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ScrollableHelper.ScrollableContainer {
 
     List<EntitiesBean> bean = new ArrayList<>();
     @BindView(R.id.my_listview)
@@ -92,7 +91,12 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         getData(false);
     }
 
-    private void getData(final boolean loadMore){
+    private void getData(final boolean loadMore) {
+
+        if (!NetUtils.isNetworkConnected(mActivity)) {
+            onLoadingStatus(CommonCode.General.UN_NETWORK, mActivity.getString(R.string.no_net_work));
+            return;
+        }
 
         if (!loadMore) {
             pageNo = 1;
@@ -100,7 +104,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             if (isNoData) {
                 pageNo = record_start;
             } else {
-                pageNo ++;
+                pageNo++;
             }
             record_start = pageNo;
         }
@@ -117,16 +121,14 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
                     @Override
                     public void onError(Throwable e) {
-                        if (!NetUtils.isNetworkConnected(mActivity)) {
-                            onLoadingStatus(CommonCode.General.UN_NETWORK, mActivity.getString(R.string.no_net_work));
-                            return;
-                        }
+                        onLoadingStatus(CommonCode.General.LOAD_ERROR, mActivity.getString(R.string.load_fail));
+                        return;
                     }
 
                     @Override
                     public void onNext(ResponseData<ActivityBean> res) {
                         List<EntitiesBean> entities = null;
-                        if(res.getData() != null && res.getData().entities != null){
+                        if (res.getData() != null && res.getData().entities != null) {
                             entities = res.getData().entities;
                         }
                         if (res.getRet() == ReturnCode.SUCCESS) {
@@ -140,37 +142,29 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
                                 mEntitiesBeanCommonAdapter.notifyDataSetChanged();
 
                             } else {
-                                if(loadMore == false){
+                                if (loadMore == false) {
 
-                                    if(Session.getUserId().equals(userid)){
-                                        onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
-                                    }else{
-                                        onLoadingStatus(CommonCode.General.DATA_EMPTY,getString(R.string.mine_activity_txt));
+                                    if (Session.getUserId().equals(userid)) {
+                                        onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.mine_activity_txt));
+                                    } else {
+                                        onLoadingStatus(CommonCode.General.DATA_EMPTY, getString(R.string.mine_activity_txt));
                                     }
 
-                                }else{
+                                } else {
                                     onLoadingStatus(CommonCode.General.DATA_LACK);
                                 }
                                 isNoData = true;
                             }
                             return;
                         } else {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onLoadingStatus(CommonCode.General.ERROR_DATA);
-                                }
-                            }, 2000);
+                            onLoadingStatus(CommonCode.General.ERROR_DATA);
                             isNoData = true;
                             return;
                         }
 
                     }
                 });
-
     }
-
-
 
 
     @Override
@@ -198,7 +192,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             public void convert(ViewHolder helper, EntitiesBean item) {
                 ((TextView) helper.getView(R.id.activity_title)).setText(item.getTitle());
                 ImageView iv = (ImageView) helper.getView(R.id.iv_activity_icon);
-                Glide.with(mContext).load(item.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext,10)).into(iv);
+                Glide.with(mContext).load(item.getCoverPlan()).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(iv);
             }
         };
         mLv.setAdapter(mEntitiesBeanCommonAdapter);
@@ -227,6 +221,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     protected boolean hasDataInPage() {
         return mEntitiesBeanCommonAdapter.getCount() != 0;
     }
+
     @Override
 
     protected boolean needLoadingView() {
@@ -254,7 +249,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     public void onEvent(BaseEvent baseEvent) {
         if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
             View view = View.inflate(mActivity, R.layout.foot_view, null);
-            if(mLv.getFooterViewsCount()<=0){
+            if (mLv.getFooterViewsCount() <= 0) {
                 mLv.addFooterView(view);
 
                 mEntitiesBeanCommonAdapter.notifyDataSetChanged();

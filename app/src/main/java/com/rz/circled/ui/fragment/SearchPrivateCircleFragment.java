@@ -93,9 +93,8 @@ public class SearchPrivateCircleFragment extends BaseFragment {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if(!TextUtils.isEmpty(keyWord)){
-                    ((SearchPresenter) searchPresenter).searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
+                    searchPresenter.searchQH(true,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
                 }
-
                 mRefresh.setRefreshing(false);
             }
         });
@@ -120,7 +119,7 @@ public class SearchPrivateCircleFragment extends BaseFragment {
 
             keyWord = (String) baseEvent.getData();
             if(!TextUtils.isEmpty(keyWord)){
-                ((SearchPresenter) searchPresenter).searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
+                 searchPresenter.searchQH(false,keyWord,"","","",SearchPresenter.SEARCH_PERSION_CIRCLE);
             }
 
         }
@@ -129,22 +128,21 @@ public class SearchPrivateCircleFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
-        if (t != null) {
-            List<PrivateGroupBean> mDatas = (List<PrivateGroupBean>) t;
-            if (null != mDatas && !mDatas.isEmpty()) {
-                if (!loadMore) {
-                    coterieInfosData.clear();
-                }
-                coterieInfosData.addAll(mDatas);
-                mAdapter.setKeyWord(keyWord);
-                mAdapter.setData(coterieInfosData);
-                mAdapter.notifyDataSetChanged();
-            } else {
-                if (!loadMore) {
-                    coterieInfosData.clear();
-                }
-                mAdapter.notifyDataSetChanged();
+        List<PrivateGroupBean> mDatas = (List<PrivateGroupBean>) t;
+        if (null != mDatas && !mDatas.isEmpty()) {
+            if (!loadMore) {
+                coterieInfosData.clear();
             }
+            coterieInfosData.addAll(mDatas);
+            mAdapter.setKeyWord(keyWord);
+            mAdapter.setData(coterieInfosData);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            if (!loadMore) {
+                coterieInfosData.clear();
+            }
+            mAdapter.setData(coterieInfosData);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -168,6 +166,6 @@ public class SearchPrivateCircleFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-        ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION_CIRCLE);
+        searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_PERSION_CIRCLE);
     }
 }

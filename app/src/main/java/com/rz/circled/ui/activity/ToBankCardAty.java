@@ -9,13 +9,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import android.widget.TextView;
 
 import com.litesuits.common.utils.HexUtil;
@@ -40,11 +37,9 @@ import com.rz.httpapi.bean.BankCardModel;
 import com.rz.httpapi.bean.CashModel;
 import com.rz.httpapi.bean.UserInfoModel;
 
-
 import java.util.List;
 
 import butterknife.BindView;
-
 import butterknife.OnClick;
 
 /**
@@ -111,6 +106,11 @@ public class ToBankCardAty extends BaseActivity {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public boolean hasDataInPage() {
         return true;
     }
@@ -133,14 +133,14 @@ public class ToBankCardAty extends BaseActivity {
     public void initView() {
         setTitleText(getString(R.string.tixian));
         mIntegralSum = getIntent().getStringExtra(IntentKey.EXTRA_MONEY);
-        mTxtMyIncome.setText(Currency.returnDollar(Currency.RMB, mIntegralSum, 0));
+        mTxtMyIncome.setText(Currency.returnDollar(Currency.RMB, mIntegralSum, 0) + "元");
         if (TextUtils.isEmpty(mIntegralSum)) {
-            idTvScore.setText("0.00");
+            idTvScore.setText("0.00" + "元");
         } else {
             if (Double.parseDouble(mIntegralSum) <= 200) {
-                idTvScore.setText("0.00");
+                idTvScore.setText("0.00" + "元");
             } else {
-                idTvScore.setText(Currency.returnDollar(Currency.RMB, "" + (Long.parseLong(mIntegralSum) - 200), 0));
+                idTvScore.setText(Currency.returnDollar(Currency.RMB, "" + (Long.parseLong(mIntegralSum) - 200), 0) + "元");
             }
         }
         idEtRecharge.addTextChangedListener(new TextWatcher() {
@@ -181,12 +181,14 @@ public class ToBankCardAty extends BaseActivity {
         mRelaAdd.setVisibility(View.GONE);
         mDefaultModel = model;
         //银行卡名称
-        String bankName = model.bankCode;
-        idTvBankName.setText(bankName);
-        idIvIcon.setBackgroundResource(UnitUtil.checkBankLogo(bankName));
-        //卡号
-        String bankNo = model.bankCardNo;
-        idTvBankNum.setText(StringUtils.replaceBankString(bankNo.replace(" ", ""), bankNo.length() - 4));
+        if (model != null) {
+            String bankName = model.bankCode;
+            idTvBankName.setText(bankName);
+            idIvIcon.setBackgroundResource(UnitUtil.checkBankLogo(bankName));
+            //卡号
+            String bankNo = model.bankCardNo;
+            idTvBankNum.setText(StringUtils.replaceBankString(bankNo.replace(" ", ""), bankNo.length() - 4));
+        }
     }
 
     @Override
@@ -198,8 +200,9 @@ public class ToBankCardAty extends BaseActivity {
                 mRelaBank.setVisibility(View.GONE);
                 mRelaAdd.setVisibility(View.VISIBLE);
                 showRechargeDialog();
+            } else {
+                super.onLoadingStatus(loadingStatus, string);
             }
-            super.onLoadingStatus(loadingStatus, string);
         }
     }
 
@@ -308,7 +311,7 @@ public class ToBankCardAty extends BaseActivity {
                 if (CountDownTimer.isFastClick()) {
                     return;
                 }
-                BankCardListAty.startBankCardList(aty, 2);
+                BankCardListAty.startBankCardList(aty, 2, mDefaultModel);
                 break;
             case R.id.id_back_clear_img:
                 idEtRecharge.setText("");
@@ -320,29 +323,31 @@ public class ToBankCardAty extends BaseActivity {
                 }
                 if (StringUtils.isEmpty(mRecharge) || Double.parseDouble(mRecharge) <= 0) {
                     SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_money));
-                } else {
-                    if (StringUtils.isEmpty(mIntegralSum)) {
-                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                    return;
+                }
+                if (StringUtils.isEmpty(mIntegralSum)) {
+                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                    return;
+                }
+                if (Double.parseDouble(mIntegralSum) <= 200) {
+                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                    return;
+                }
+                if (Double.parseDouble(mIntegralSum) >= Double.parseDouble(mRecharge)) {
+                    if (Double.parseDouble(mRecharge) < 100) {
+                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.atmost));
                     } else {
-                        if (Double.parseDouble(mIntegralSum) <= 200) {
-                            SVProgressHUD.showInfoWithStatus(aty, getString(R.string.tixian_no));
+                        if (Double.parseDouble(mRecharge) > 1000) {
+                            SVProgressHUD.showInfoWithStatus(aty, getString(R.string.xiane));
                         } else {
-                            if (Double.parseDouble(mIntegralSum) > Double.parseDouble(mRecharge)) {
-                                if (Double.parseDouble(mRecharge) < 5) {
-                                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.atmost));
-                                } else {
-                                    if (Double.parseDouble(mRecharge) > 1000) {
-                                        SVProgressHUD.showInfoWithStatus(aty, getString(R.string.xiane));
-                                    } else {
-                                        //支付密码验证
-                                        mPayPresenter.isSettingPw(true);
-                                    }
-                                }
-                            } else {
-                                SVProgressHUD.showInfoWithStatus(aty, getString(R.string.fanwei));
-                            }
+                            //支付密码验证
+                            mPayPresenter.isSettingPw(true);
                         }
                     }
+                } else {
+                    SVProgressHUD.showInfoWithStatus(aty, getString(R.string.fanwei));
+                }
+
 //                    if (StringUtils.isEmpty(mCharge)) {
 //                        //无提现手续费
 //
@@ -363,7 +368,7 @@ public class ToBankCardAty extends BaseActivity {
 //                            SVProgressHUD.showInfoWithStatus(aty, "提现金额不得大于可提现金额+手续费的总和");
 //                        }
 //                    }
-                }
+
                 break;
             case R.id.tv_to_bankcard_reference:
                 MyReferenceDialog.newInstance().show(getSupportFragmentManager(), "");
@@ -376,7 +381,7 @@ public class ToBankCardAty extends BaseActivity {
         if (requestCode == IntentCode.BankCard.BankCard_REQUEST_CODE) {
             if (resultCode == IntentCode.BankCard.BankCard_RESULT_CODE) {
                 if (null != data) {
-                    BankCardModel model = (BankCardModel) data.getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
+                    BankCardModel model = (BankCardModel) data.getSerializableExtra(IntentKey.EXTRA_MODEL);
                     setDefaultCard(model);
                 }
             }

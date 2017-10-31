@@ -120,14 +120,17 @@ public class MoreSubjectActivity extends BaseActivity {
         mEtSearchKeywordBase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent itnent = new Intent();
-                itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PERSON);
-                skipActivity(aty, SearchActivity.class);
+                Intent itnent = new Intent(aty,SearchActivity.class);
+                itnent.putExtra(SearchActivity.SEARCH_TYPE, SearchActivity.TYPE_PRIVATE);
+                startActivity(itnent);
             }
         });
         mLvSubject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==subjectList.size()){
+                    return;
+                }
                 HotSubjectModel hotSubjectModel = subjectList.get(position);
                 String coterieId = hotSubjectModel.getCoterieId();
                 String coterieName = hotSubjectModel.getCoterieName();

@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -26,7 +25,6 @@ import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ClientCertRequest;
@@ -136,51 +134,6 @@ public class AdvancedWebView extends WebView {
     public AdvancedWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-//        if (interceptTouch) {
-//            requestDisallowInterceptTouchEvent(true);
-//            return false;
-//        } else {
-        return super.onTouchEvent(event);
-//        }
-
-    }
-
-    private Rect mRectSrc = new Rect();
-    private int[] location = new int[2];
-    private int x, y;
-    @Override
-    protected void onSizeChanged(int w, int h, int ow, int oh) {
-        super.onSizeChanged(w, h, ow, oh);
-        Log.e("yeying", "onSizeChanged: w=" + w + "  h=" + h + "   ow=" + ow + "   oh==" + oh+"  super=");
-
-        Log.d("yeying", "Button.Width--->" + getWidth());
-        Log.d("yeying", "Button.Height--->" + getHeight());
-
-        getLocalVisibleRect(mRectSrc);
-        Log.d("yeying", "LocalVisibleRect--->" + mRectSrc);
-
-        getGlobalVisibleRect(mRectSrc);
-        Log.d("yeying", "GlobalVisibleRect--->" + mRectSrc);
-
-        getLocationOnScreen(location);
-        x = location[0];
-        y = location[1];
-        Log.d("yeying", "Screenx--->" + x + "  " + "Screeny--->" + y);
-
-        getLocationInWindow(location);
-        x = location[0];
-        y = location[1];
-        Log.d("yeying", "Window--->" + x + "  " + "Window--->" + y);
-
-        Log.d("yeying", "left:" + getLeft());
-        Log.d("yeying", "right:" + getRight());
-        Log.d("yeying", "Top:" + getTop());
-        Log.d("yeying", "Bottom:" + getBottom());
-
     }
 
     public boolean isInterceptTouch() {
@@ -308,13 +261,11 @@ public class AdvancedWebView extends WebView {
         if (Build.VERSION.SDK_INT >= 11) {
             super.onResume();
         }
-        resumeTimers();
     }
 
     @SuppressLint("NewApi")
     @SuppressWarnings("all")
     public void onPause() {
-        pauseTimers();
         if (Build.VERSION.SDK_INT >= 11) {
             super.onPause();
         }

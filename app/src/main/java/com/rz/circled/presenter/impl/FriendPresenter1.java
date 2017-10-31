@@ -2,7 +2,6 @@ package com.rz.circled.presenter.impl;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,7 +27,6 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.FriendInformationBean;
@@ -365,8 +363,8 @@ public class FriendPresenter1 extends GeneralPresenter {
                         if (!StringUtils.isEmpty(friend.getCustNname())) {
                             info.setCustNname(name + "(" + friend.getCustNname() + ")");
                         }
-                        if (!StringUtils.isEmpty(friend.getCustSignature())) {
-                            info.setCustSignature(friend.getCustSignature());
+                        if (!StringUtils.isEmpty(friend.getCustDesc())) {
+                            info.setCustSignature(friend.getCustDesc());
                         }
                     }
                 }
@@ -737,13 +735,8 @@ public class FriendPresenter1 extends GeneralPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         FriendInformationBean model = res.getData();
                         mView.updateView(model);
-                    } else if (HandleRetCode.handler(mContext, res)) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            }
-                        }, 2000);
+                    } else {
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
@@ -757,7 +750,6 @@ public class FriendPresenter1 extends GeneralPresenter {
             }
         });
     }
-
 
 
     /**
@@ -786,13 +778,8 @@ public class FriendPresenter1 extends GeneralPresenter {
                         mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         RequestFriendStatusBean model = res.getData();
                         mView.updateView(model);
-                    } else if (HandleRetCode.handler(mContext, res)) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA);
-                            }
-                        }, 2000);
+                    } else {
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.load_fail) : res.getMsg());
                     }
                 } else {
                     mView.onLoadingStatus(CommonCode.General.ERROR_DATA);

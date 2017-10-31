@@ -104,7 +104,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
-            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
+            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px4));
             refreshLayout.setEnabled(false);
         }
         if (TextUtils.equals(userId, Session.getUserId())) {
@@ -161,6 +161,13 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
+        if (t == null) {
+            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
+                mAdapter.getData().clear();
+                mAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
         if (t instanceof PrivateGroupListBean) {
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
             processData(_data, loadMore);
@@ -179,6 +186,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     }
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
+        if (lv == null) return;
         List<PrivateGroupBean> data = _data.getList();
         if (type == TYPE_PART) {
             if (data.size() > 2) {
@@ -229,6 +237,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     private void loadData(final boolean loadMore) {
         if (!loadMore) pageNo = 1;
         mPresenter.privateGroupMyselfJoin(userId, pageNo, loadMore);
+
     }
 
     @Override

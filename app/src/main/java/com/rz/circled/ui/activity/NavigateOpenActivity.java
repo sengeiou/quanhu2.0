@@ -37,7 +37,6 @@ import butterknife.OnClick;
 public class NavigateOpenActivity extends BaseActivity {
 
 
-
     private static final String EXTRA_LATITUDE = "extraLatitude";
     private static final String EXTRA_LONGITUDE = "extraLongitude";
     private static final String EXTRA_NAME = "extraName";
@@ -140,7 +139,6 @@ public class NavigateOpenActivity extends BaseActivity {
         //启动定位
         mLocationClient.startLocation();
     }
-
 
 
     //声明定位回调监听器

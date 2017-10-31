@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.rz.common.oss.UploadPicManager;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -37,7 +39,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_BELONG_ID;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_CREATE_REFRESH;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.circled.ui.activity.PictureSelectedActivity.PUBLISH_RESULT_CAMERA;
 
 /**
@@ -94,6 +98,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
     public void initView() {
         setTitleText(R.string.private_group_apply_for);
         setTitleRightText(R.string.submit);
+        setTitleRightTextColor(R.color.font_gray_s);
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,11 +111,11 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     return;
                 }
                 if (TextUtils.isEmpty(coverPath)) {
-                    Toast.makeText(mContext, "封面图为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请上传私圈封面图", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(etvName.getText().toString().trim())) {
-                    Toast.makeText(mContext, "私圈名称为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请填写私圈名称", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())) {
@@ -118,7 +123,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     return;
                 }
                 if (!cbxProtocol.isChecked()) {
-                    Toast.makeText(mContext, "请同意创建协议", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请阅读并同意私圈创建协议", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 updateCoverPic();
@@ -127,6 +132,12 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         etvName.addTextChangedListener(new MyTextWatcher(tvNameNum));
         etvDesc.addTextChangedListener(new MyTextWatcher(tvDescNum));
         etvGroupDesc.addTextChangedListener(new MyTextWatcher(tvDescGroupNum));
+        cbxProtocol.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                validateSubmit();
+            }
+        });
     }
 
     @Override
@@ -156,6 +167,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         if (t instanceof Integer) {
             Integer data = (Integer) t;
             if (data == CommonCode.General.DATA_SUCCESS) {
+                EventBus.getDefault().post(new BaseEvent(PRIVATE_GROUP_CREATE_REFRESH));
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ApplyForGroupSuccessDialog.newInstance().show(ft, "");
             }
@@ -206,6 +218,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                 if (array.length == 2) {
                     circleId = array[0];
                     tvGroup.setText(array[1]);
+                    validateSubmit();
                 }
                 break;
         }
@@ -219,20 +232,21 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     ArrayList<String> picList = data.getExtras().getStringArrayList("picList");
                     if (null != picList && !picList.isEmpty())
                         coverPath = picList.get(0);
-                } else if (resultCode == PUBLISH_RESULT_CAMERA) //相机
+                } else if (resultCode == CommonCode.REQUEST.PUBLISH_RESULT_CAMERA) //相机
                     coverPath = data.getStringExtra("picture");
                 if (!TextUtils.isEmpty(coverPath)) {
                     if (Protect.checkLoadImageStatus(mContext))
                         Glide.with(mContext).load(coverPath).into(imgGroup);
                     imgGroup.setVisibility(View.VISIBLE);
                     btnUpdatePic.setVisibility(View.GONE);
+                    validateSubmit();
                 }
             }
         }
     }
 
     private void createPrivateGroupSubmit(String url, String groupName, String groupDesc, String ownDesc) {
-        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price, groupName, Session.getUserId(), ownDesc, Session.getUserName());
+        mPresenter.privateGroupCreate(circleId, url, groupDesc, price == 0 ? (cbx.isChecked() ? 1 : 0) : 0, price * 100, groupName, Session.getUserId(), ownDesc, Session.getUserName());
     }
 
     private void updateCoverPic() {
@@ -266,6 +280,19 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     }
 
+    private void validateSubmit() {
+        if (TextUtils.isEmpty(circleId)
+                || TextUtils.isEmpty(etvDesc.getText().toString().trim())
+                || TextUtils.isEmpty(coverPath)
+                || TextUtils.isEmpty(etvName.getText().toString().trim())
+                || TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())
+                || !cbxProtocol.isChecked()) {
+            setTitleRightTextColor(R.color.font_gray_s);
+        } else {
+            setTitleRightTextColor(R.color.font_color_blue);
+        }
+    }
+
     private class MyTextWatcher implements TextWatcher {
         private TextView tv;
 
@@ -286,6 +313,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         @Override
         public void afterTextChanged(Editable s) {
             tv.setText(String.valueOf(s.length()));
+            validateSubmit();
         }
     }
 }

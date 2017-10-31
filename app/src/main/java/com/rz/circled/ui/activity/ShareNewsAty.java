@@ -178,7 +178,7 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
         if (mData != null && mData.isShowReport()) mShares.add(model7);
 
         if (TextUtils.isEmpty(mData.getTumb())) {
-            image = new UMImage(aty, R.mipmap.icon_logo);
+            image = new UMImage(aty, R.mipmap.share_logo);
         } else {
             if (mData.getTumb().startsWith("http")) {
                 image = new UMImage(aty, mData.getTumb());
@@ -186,7 +186,7 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
                 image = new UMImage(aty, Integer.valueOf(mData.getTumb()));
             }
         }
-        UMImage thumb = new UMImage(this, R.mipmap.icon_logo);
+        UMImage thumb = new UMImage(this, R.mipmap.share_logo);
         image.setThumb(thumb);
 
         web = new UMWeb(mData.getUrl());

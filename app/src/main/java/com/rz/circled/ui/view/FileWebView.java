@@ -23,7 +23,10 @@ import android.os.Environment;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Base64;
+import android.util.Log;
+import android.view.InputEvent;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ClientCertRequest;
@@ -45,11 +48,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebStorage.QuotaUpdater;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
-import com.rz.circled.R;
 import com.rz.sgt.jsbridge.core.AdvancedWebView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
@@ -67,6 +70,8 @@ import java.util.MissingResourceException;
 @SuppressWarnings("deprecation")
 public class FileWebView extends WebView {
 
+    private InputStream stream;
+
     public interface Listener {
         void onPageStarted(String url, Bitmap favicon);
 
@@ -77,10 +82,13 @@ public class FileWebView extends WebView {
         void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent);
 
         void onExternalPageRequest(String url);
+
+        void callPhoneNumber(String uri);
     }
 
     public static final String PACKAGE_NAME_DOWNLOAD_MANAGER = "com.android.providers.downloads";
     protected static final int REQUEST_CODE_FILE_PICKER = 51426;
+    protected static final String FILE_SUB_FOLDER = "/file";
     protected static final String DATABASES_SUB_FOLDER = "/databases";
     protected static final String LANGUAGE_DEFAULT_ISO3 = "eng";
     protected static final String CHARSET_DEFAULT = "UTF-8";
@@ -104,10 +112,17 @@ public class FileWebView extends WebView {
     protected String mLanguageIso3;
     protected int mRequestCodeFilePicker = REQUEST_CODE_FILE_PICKER;
     protected WebViewClient mCustomWebViewClient;
-    protected WebChromeClient mCustomWebChromeClient;
+    protected VideoEnabledWebChromeClient mCustomWebChromeClient;
     protected boolean mGeolocationEnabled;
-    protected String mUploadableFileTypes = "image/*";
+    protected String mUploadableFileTypes = "*/*";
     protected final Map<String, String> mHttpHeaders = new HashMap<String, String>();
+
+    public static boolean cacheAble = true;
+
+    public boolean interceptTouch;
+
+    public boolean hasRedirection = false;
+
 
     public FileWebView(Context context) {
         super(context);
@@ -122,6 +137,25 @@ public class FileWebView extends WebView {
     public FileWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+//        if (interceptTouch) {
+//            requestDisallowInterceptTouchEvent(true);
+//            return false;
+//        } else {
+        return super.onTouchEvent(event);
+//        }
+
+    }
+
+    public boolean isInterceptTouch() {
+        return interceptTouch;
+    }
+
+    public void setInterceptTouch(boolean interceptTouch) {
+        this.interceptTouch = interceptTouch;
     }
 
     public void setListener(final Activity activity, final Listener listener) {
@@ -162,10 +196,6 @@ public class FileWebView extends WebView {
         mCustomWebViewClient = client;
     }
 
-    @Override
-    public void setWebChromeClient(final WebChromeClient client) {
-        mCustomWebChromeClient = client;
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
     public void setGeolocationEnabled(final boolean enabled) {
@@ -245,13 +275,11 @@ public class FileWebView extends WebView {
         if (Build.VERSION.SDK_INT >= 11) {
             super.onResume();
         }
-//        resumeTimers();
     }
 
     @SuppressLint("NewApi")
     @SuppressWarnings("all")
     public void onPause() {
-//        pauseTimers();
         if (Build.VERSION.SDK_INT >= 11) {
             super.onPause();
         }
@@ -276,18 +304,6 @@ public class FileWebView extends WebView {
 
     public void onActivityResult(final int requestCode, final int resultCode, final Intent intent) {
         if (requestCode == mRequestCodeFilePicker) {
-//            boolean isImage = false;
-//            if (intent != null) {
-//                String path = ImageUtils.getRealPathFromUri(this.getContext(), intent.getData());
-//                isImage = !TextUtils.isEmpty(path)
-//                        && (path.endsWith(".jpg")
-//                        || path.endsWith(".png")
-//                        || path.endsWith(".gif")
-//                        || path.endsWith(".bmp")
-//                        || path.endsWith(".psd")
-//                        || path.endsWith(".tiff")
-//                        || path.endsWith(".jepg"));
-//            }
             if (resultCode == Activity.RESULT_OK) {
                 if (intent != null) {
                     if (mFileUploadCallbackFirst != null) {
@@ -320,8 +336,6 @@ public class FileWebView extends WebView {
                     }
                 }
             } else {
-                if (intent != null)
-                    Toast.makeText(getContext(), R.string.file_format_un_sure, Toast.LENGTH_SHORT).show();
                 if (mFileUploadCallbackFirst != null) {
                     mFileUploadCallbackFirst.onReceiveValue(null);
                     mFileUploadCallbackFirst = null;
@@ -335,26 +349,25 @@ public class FileWebView extends WebView {
 
     /**
      * Adds an additional HTTP header that will be sent along with every HTTP `GET` request
-     * <p>
+     * <p/>
      * This does only affect the main requests, not the requests to included resources (e.g. images)
-     * <p>
+     * <p/>
      * If you later want to delete an HTTP header that was previously added this way, call `removeHttpHeader()`
-     * <p>
+     * <p/>
      * The `WebView` implementation may in some cases overwrite headers that you set or unset
      *
      * @param name  the name of the HTTP header to add
      * @param value the value of the HTTP header to send
      */
-
     public void addHttpHeader(final String name, final String value) {
         mHttpHeaders.put(name, value);
     }
 
     /**
      * Removes one of the HTTP headers that have previously been added via `addHttpHeader()`
-     * <p>
+     * <p/>
      * If you want to unset a pre-defined header, set it to an empty string with `addHttpHeader()` instead
-     * <p>
+     * <p/>
      * The `WebView` implementation may in some cases overwrite headers that you set or unset
      *
      * @param name the name of the HTTP header to remove
@@ -443,6 +456,8 @@ public class FileWebView extends WebView {
 
     @SuppressLint({"SetJavaScriptEnabled"})
     protected void init(Context context) {
+//        cacheAble = context.getResources().getBoolean(R.bool.webViewCache);
+
         // in IDE's preview mode
         if (isInEditMode()) {
             // do not run the code from this method
@@ -460,14 +475,29 @@ public class FileWebView extends WebView {
 
         setSaveEnabled(true);
 
+
         final String filesDir = context.getFilesDir().getPath();
         final String databaseDir = filesDir.substring(0, filesDir.lastIndexOf("/")) + DATABASES_SUB_FOLDER;
+        final String appDir = filesDir.substring(0, filesDir.lastIndexOf("/")) + FILE_SUB_FOLDER;
 
         final WebSettings webSettings = getSettings();
-        webSettings.setAllowFileAccess(false);
-        setAllowAccessFromFileUrls(webSettings, false);
+
+        //yeying
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);
+//        setHorizontalScrollBarEnabled(false); // 水平不显示滚动条
+//        setOverScrollMode(View.OVER_SCROLL_NEVER); // 禁止即在网页顶出现一个空白，又自动回去。
+        //yeying
+
+        webSettings.setAllowFileAccess(true);
+        setAllowAccessFromFileUrls(webSettings, true);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setJavaScriptEnabled(true);
+//        if (!cacheAble) {
+//            webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        }
+        webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
         if (Build.VERSION.SDK_INT < 18) {
             webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
@@ -476,6 +506,9 @@ public class FileWebView extends WebView {
         if (Build.VERSION.SDK_INT < 19) {
             webSettings.setDatabasePath(databaseDir);
         }
+        webSettings.setAppCachePath(appDir);
+        webSettings.setAppCacheEnabled(true);
+
         setMixedContentAllowed(webSettings, true);
 
         setThirdPartyCookiesEnabled(true);
@@ -508,8 +541,23 @@ public class FileWebView extends WebView {
                 }
             }
 
+//            @Override
+//            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+//                super.onReceivedHttpError(view, request, errorResponse);
+//                Log.d("yeying", "this is onReceivedError " + request.toString());
+//
+//                setLastError();
+//                if (mListener != null) {
+//                    mListener.onPageError(0, "", "");
+//                }
+//                if (mCustomWebViewClient != null) {
+//                    mCustomWebViewClient.onReceivedError(view, 0, "", "");
+//                }
+//            }
+
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Log.d("yeying", "this is onReceivedError " + failingUrl);
                 setLastError();
 
                 if (mListener != null) {
@@ -523,32 +571,40 @@ public class FileWebView extends WebView {
 
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
-                // if the hostname may not be accessed
-                if (!isHostnameAllowed(url)) {
-                    // if a listener is available
-                    if (mListener != null) {
-                        // inform the listener about the request
-                        mListener.onExternalPageRequest(url);
+                if (url.startsWith("tel:")) {
+                    if (mListener != null)
+                        mListener.callPhoneNumber(url);
+                    return true;
+                } else {
+                    // if the hostname may not be accessed
+                    if (!isHostnameAllowed(url)) {
+                        // if a listener is available
+                        if (mListener != null) {
+                            // inform the listener about the request
+                            mListener.onExternalPageRequest(url);
+                        }
+
+                        // cancel the original request
+                        return true;
                     }
+
+                    // if there is a user-specified handler available
+                    if (mCustomWebViewClient != null) {
+                        // if the user-specified handler asks to override the request
+                        if (mCustomWebViewClient.shouldOverrideUrlLoading(view, url)) {
+                            // cancel the original request
+                            return true;
+                        }
+                    }
+
+                    hasRedirection = true;
+
+                    // route the request through the custom URL loading method
+                    view.loadUrl(url);
 
                     // cancel the original request
                     return true;
                 }
-
-                // if there is a user-specified handler available
-                if (mCustomWebViewClient != null) {
-                    // if the user-specified handler asks to override the request
-                    if (mCustomWebViewClient.shouldOverrideUrlLoading(view, url)) {
-                        // cancel the original request
-                        return true;
-                    }
-                }
-
-                // route the request through the custom URL loading method
-                view.loadUrl(url);
-
-                // cancel the original request
-                return true;
             }
 
             @Override
@@ -564,10 +620,15 @@ public class FileWebView extends WebView {
             @SuppressWarnings("all")
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
                 if (Build.VERSION.SDK_INT >= 11) {
-                    if (mCustomWebViewClient != null) {
-                        return mCustomWebViewClient.shouldInterceptRequest(view, url);
-                    } else {
-                        return super.shouldInterceptRequest(view, url);
+                    WebResourceResponse webResourceResponse = reloadUrl(url);
+                    if (webResourceResponse != null)
+                        return webResourceResponse;
+                    else {
+                        if (mCustomWebViewClient != null) {
+                            return mCustomWebViewClient.shouldInterceptRequest(view, url);
+                        } else {
+                            return super.shouldInterceptRequest(view, url);
+                        }
                     }
                 } else {
                     return null;
@@ -578,10 +639,15 @@ public class FileWebView extends WebView {
             @SuppressWarnings("all")
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 if (Build.VERSION.SDK_INT >= 21) {
-                    if (mCustomWebViewClient != null) {
-                        return mCustomWebViewClient.shouldInterceptRequest(view, request);
-                    } else {
-                        return super.shouldInterceptRequest(view, request);
+                    WebResourceResponse webResourceResponse = reloadUrl(request.getUrl().toString());
+                    if (webResourceResponse != null)
+                        return webResourceResponse;
+                    else {
+                        if (mCustomWebViewClient != null) {
+                            return mCustomWebViewClient.shouldInterceptRequest(view, request);
+                        } else {
+                            return super.shouldInterceptRequest(view, request);
+                        }
                     }
                 } else {
                     return null;
@@ -654,17 +720,17 @@ public class FileWebView extends WebView {
                 }
             }
 
-//            @SuppressLint("NewApi")
-//            @SuppressWarnings("all")
-//            public void onUnhandledInputEvent(WebView view, InputEvent event) {
-//                if (Build.VERSION.SDK_INT >= 21) {
-//                    if (mCustomWebViewClient != null) {
-//                        mCustomWebViewClient.onUnhandledInputEvent(view, event);
-//                    } else {
-//                        super.onUnhandledInputEvent(view, event);
-//                    }
-//                }
-//            }
+            @SuppressLint("NewApi")
+            @SuppressWarnings("all")
+            public void onUnhandledInputEvent(WebView view, InputEvent event) {
+                if (Build.VERSION.SDK_INT >= 21) {
+                    if (mCustomWebViewClient != null) {
+                        mCustomWebViewClient.onUnhandledInputEvent(view, event);
+                    } else {
+                        super.onUnhandledInputEvent(view, event);
+                    }
+                }
+            }
 
             @Override
             public void onScaleChanged(WebView view, float oldScale, float newScale) {
@@ -702,7 +768,8 @@ public class FileWebView extends WebView {
                 openFileChooser(uploadMsg, acceptType, null);
             }
 
-            // file upload callback (Android 4.1 (API level 16) -- Android 4.3 (API level 18)) (hidden method)
+            // file
+            // callback (Android 4.1 (API level 16) -- Android 4.3 (API level 18)) (hidden method)
             @SuppressWarnings("unused")
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
                 openFileInput(uploadMsg, null, false);
@@ -760,6 +827,7 @@ public class FileWebView extends WebView {
 
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
+                Log.d("yeying", "onShowCustomView");
                 if (mCustomWebChromeClient != null) {
                     mCustomWebChromeClient.onShowCustomView(view, callback);
                 } else {
@@ -770,6 +838,7 @@ public class FileWebView extends WebView {
             @SuppressLint("NewApi")
             @SuppressWarnings("all")
             public void onShowCustomView(View view, int requestedOrientation, CustomViewCallback callback) {
+                Log.d("yeying", "onShowCustomView");
                 if (Build.VERSION.SDK_INT >= 14) {
                     if (mCustomWebChromeClient != null) {
                         mCustomWebChromeClient.onShowCustomView(view, requestedOrientation, callback);
@@ -781,6 +850,7 @@ public class FileWebView extends WebView {
 
             @Override
             public void onHideCustomView() {
+                Log.d("yeying", "onHideCustomView");
                 if (mCustomWebChromeClient != null) {
                     mCustomWebChromeClient.onHideCustomView();
                 } else {
@@ -1180,7 +1250,7 @@ public class FileWebView extends WebView {
 
     /**
      * Returns whether file uploads can be used on the current device (generally all platform versions except for 4.4)
-     * <p>
+     * <p/>
      * On Android 4.4.3/4.4.4, file uploads may be possible but will come with a wrong MIME type
      *
      * @param needsCorrectMimeType whether a correct MIME type is required for file uploads or `application/octet-stream` is acceptable
@@ -1198,9 +1268,9 @@ public class FileWebView extends WebView {
 
     /**
      * Handles a download by loading the file from `fromUrl` and saving it to `toFilename` on the external storage
-     * <p>
+     * <p/>
      * This requires the two permissions `android.permission.INTERNET` and `android.permission.WRITE_EXTERNAL_STORAGE`
-     * <p>
+     * <p/>
      * Only supported on API level 9 (Android 2.3) and above
      *
      * @param context    a valid `Context` reference
@@ -1341,5 +1411,54 @@ public class FileWebView extends WebView {
         }
 
     }
+
+
+    @Override
+    public void setWebChromeClient(WebChromeClient client) {
+        if (client instanceof VideoEnabledWebChromeClient) {
+            this.mCustomWebChromeClient = (VideoEnabledWebChromeClient) client;
+            return;
+        }
+        super.setWebChromeClient(client);
+    }
+
+
+    /**
+     * Indicates if the video is being displayed using a custom view (typically full-screen)
+     *
+     * @return true it the video is being displayed using a custom view (typically full-screen)
+     */
+    @SuppressWarnings("unused")
+    public boolean isVideoFullscreen() {
+        return mCustomWebChromeClient != null && mCustomWebChromeClient.isVideoFullscreen();
+    }
+
+    private WebResourceResponse reloadUrl(String url) {
+        //text/html  html
+        //application/javascript  js
+        //text/javascript  js
+        //text/css  css
+        //application/json
+        //image/jpeg
+        //image/png
+        //image/gif
+        String localUrl = null;
+//        if (url.contains("common") && url.endsWith(".js")) {
+//            localUrl = "common.ac1f8014.js";
+//        }
+//        if (url.contains("vendor.47798442.js")) {
+//            localUrl = "vendor.47798442.js";
+//        }
+        if (localUrl != null) {
+            try {
+                InputStream stream = mActivity.get().getAssets().open(localUrl);
+                return new WebResourceResponse("text/javascript", "UTF-8", stream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else return null;
+    }
+
 
 }

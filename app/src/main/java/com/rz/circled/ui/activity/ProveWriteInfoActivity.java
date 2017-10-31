@@ -20,6 +20,7 @@ import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.NetUtils;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.ProveStatusBean;
 
@@ -130,6 +131,9 @@ public class ProveWriteInfoActivity extends BaseActivity {
                     etProveIdNumber.setEnabled(false);
                     etProveIdNumber.setFocusable(false);
                     etProveIdNumber.setKeyListener(null);
+                    etProveTrueName.setEnabled(false);
+                    etProveTrueName.setFocusable(false);
+                    etProveTrueName.setKeyListener(null);
                 } else {
                     etProveTrueName.setText(infoBean.getOrganizationName());
                     etProvePhone.setText(infoBean.getRealName());
@@ -182,7 +186,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
         proveInfoPresenter.attachView(this);
     }
 
-    @OnClick(R.id.tv_prove_area)
+    @OnClick(R.id.rl_prove_area)
     public void onClick() {
         Intent locationIntent = new Intent(this, PersonAreaAty.class);
         locationIntent.putExtra(IntentKey.EXTRA_BOOLEAN, false);
@@ -197,14 +201,14 @@ public class ProveWriteInfoActivity extends BaseActivity {
             return;
         }
         String phone = etProvePhone.getText().toString();
-        String phoneErrorHint = isOneSelf ? getString(R.string.prove_phone_error_hint) : getString(R.string.prove_phone_error_hint);
+        String phoneErrorHint = isOneSelf ? getString(R.string.prove_phone_error_hint) : getString(R.string.true_name_error_hint);
         if (TextUtils.isEmpty(phone) || (isOneSelf && phone.length() != 11) || (!isOneSelf && phone.length() < 2)) {
             Toasty.info(mContext, phoneErrorHint).show();
             return;
         }
         String idNumber = etProveIdNumber.getText().toString();
         String idNumberErrorInfo = isOneSelf ? getString(R.string.prove_id_number_error_hint) : getString(R.string.prove_contact_phone_error_hint);
-        if (TextUtils.isEmpty(idNumber) || (isOneSelf && idNumber.length() != 16 && idNumber.length() != 18)) {
+        if (TextUtils.isEmpty(idNumber) || (isOneSelf && !StringUtils.isIdCardNum(idNumber))) {
             Toasty.info(mContext, idNumberErrorInfo).show();
             return;
         }

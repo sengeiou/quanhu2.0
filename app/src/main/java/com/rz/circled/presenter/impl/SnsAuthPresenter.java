@@ -2,8 +2,8 @@ package com.rz.circled.presenter.impl;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.rz.circled.R;
 import com.rz.circled.modle.SnsLoginModel;
@@ -19,7 +19,6 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.ApiService;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
-import com.rz.httpapi.api.HandleRetCode;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.UserInfoBean;
@@ -124,9 +123,9 @@ public class SnsAuthPresenter extends GeneralPresenter {
                             return;
                         }
                     } else {
-                        if(!TextUtils.isEmpty(res.getMsg())){
+                        if (!TextUtils.isEmpty(res.getMsg())) {
                             mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
-                        }else{
+                        } else {
                             mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
                         }
                         return;
@@ -156,7 +155,10 @@ public class SnsAuthPresenter extends GeneralPresenter {
     public void bindThirdAccout(final int type, final String openId, final int action, String accessToken) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+
         }
+        Log.e("zxw", "bindThirdAccout: " + type);
+        Log.e("zxw", Thread.currentThread().getName());
         mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.data_loading));
         Call<ResponseData> call = mUserService.bindThirdAccount(
                 1012,
@@ -182,24 +184,18 @@ public class SnsAuthPresenter extends GeneralPresenter {
                         mView.updateViewWithLoadMore(type, true);
                         return;
                     } else {
-                        if (HandleRetCode.handler(mContext, res)) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (action == Type.ACTION_BIND) {
-                                        if (type == Type.LOGIN_WX) {
-                                            delWXAuth(openId);
-                                        } else if (type == Type.LOGIN_SINA) {
-                                            delWBAuth(openId);
-                                        } else if (type == Type.LOGIN_QQ) {
-                                            delQQAuth(openId);
-                                        }
-                                    }
-                                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
-                                }
-                            }, 2000);
-                            return;
+                        if (action == Type.ACTION_BIND) {
+                            if (type == Type.LOGIN_WX) {
+                                delWXAuth(openId);
+                            } else if (type == Type.LOGIN_SINA) {
+                                delWBAuth(openId);
+                            } else if (type == Type.LOGIN_QQ) {
+                                delQQAuth(openId);
+                            }
                         }
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        return;
+
                     }
                 }
                 //绑定或者解绑
@@ -223,9 +219,10 @@ public class SnsAuthPresenter extends GeneralPresenter {
         });
     }
 
-     /**
+    /**
      * 第三方登录请求
      */
+
     public void otherLogin(String openId, String accessToken, final int type) {
         ((Activity) mContext).runOnUiThread(new Runnable() {
             public void run() {
@@ -358,11 +355,16 @@ public class SnsAuthPresenter extends GeneralPresenter {
         }
 
         @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-//            SVProgressHUD.showInfoWithStatus(mContext, "删除授权失败");
-            if (!TextUtils.isEmpty(throwable.getMessage()) && throwable.getMessage().contains("Argument error!")) {
-                toBindThirdAcout(share_media);
-            }
+        public void onError(final SHARE_MEDIA share_media, int i, final Throwable throwable) {
+            Log.e("zxw", Thread.currentThread().getName());
+            ((Activity) mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!TextUtils.isEmpty(throwable.getMessage()) && throwable.getMessage().contains("Argument error!")) {
+                        toBindThirdAcout(share_media);
+                    }
+                }
+            });
         }
 
         @Override
@@ -372,7 +374,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
 
     };
 
-    private void toBindThirdAcout(SHARE_MEDIA share_media) {
+    public void toBindThirdAcout(SHARE_MEDIA share_media) {
         int type = -1;
         switch (share_media) {
             case QQ: {
@@ -546,6 +548,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
 //        return model;
 //    }
 //
+
     /**
      * QQ授权登录
      */
@@ -643,6 +646,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
     }
 
     private void delAuth(SHARE_MEDIA platform, boolean isReAuth) {
+        Log.e("zxw", Thread.currentThread().getName());
         isAuthAfterDel = isReAuth;
         mShareAPI.deleteOauth((Activity) mContext, platform, delAuthListener);
     }
@@ -650,7 +654,7 @@ public class SnsAuthPresenter extends GeneralPresenter {
     /**
      * 验证码登录
      */
-    public void codeLogin(String phone, String pw){
+    public void codeLogin(String phone, String pw) {
 
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
@@ -687,13 +691,8 @@ public class SnsAuthPresenter extends GeneralPresenter {
                     } else {
 //                        if (HandleRetCode.handler(mContext, res)) {
                         //登录失败
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
-                                Toasty.info(mContext,res.getMsg()).show();
-                            }
-                        }, 2000);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.login_fail));
+                        Toasty.info(mContext, res.getMsg()).show();
                         return;
 //                        }
 

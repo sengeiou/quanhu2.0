@@ -114,7 +114,6 @@ public class SearchPresenter extends GeneralPresenter {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
             return;
         }
-        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         if (!loadMore) {
             start = 0;
         } else {
@@ -145,7 +144,7 @@ public class SearchPresenter extends GeneralPresenter {
 
                     ResponseData<SearchDataBean> res = response.body();
                     if (res.getRet() == ReturnCode.SUCCESS) {
-                        SearchDataBean model = (SearchDataBean) res.getData();
+                        SearchDataBean model = res.getData();
 
                         List dataList = null;
                         if(searchType == 1){
@@ -165,13 +164,15 @@ public class SearchPresenter extends GeneralPresenter {
                             mView.updateViewWithLoadMore(dataList, loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                         } else {
+
+                            mView.updateViewWithLoadMore(dataList, loadMore);
+                            isNoData = true;
                             if(loadMore == false){
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,  mContext.getString(R.string.search_content));
                             }else{
                                 mView.onLoadingStatus(CommonCode.General.DATA_LACK);
                             }
-                            mView.updateViewWithLoadMore(dataList, loadMore);
-                            isNoData = true;
+
                         }
                         return;
                     } else {

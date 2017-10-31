@@ -73,13 +73,16 @@ import com.rz.common.ui.view.CommonDialog;
 import com.rz.common.utils.CountDownTimer;
 import com.rz.common.utils.FileUtils;
 import com.rz.common.utils.ImageUtils;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.Record;
 import com.rz.common.utils.SystemUtils;
+import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.api.CallManager;
 import com.rz.sgt.jsbridge.JsEvent;
+import com.yryz.yunxinim.uikit.common.util.sys.NetworkUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1032,7 +1035,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void OnItemClick(int position, String tag) {
                     if (position == 0) toVideoRecorder();
-                    else startActivityForResult(new Intent(mContext, VideoChooseActivity.class), VIDEO_PUBLISH_REQUEST);
+                    else
+                        startActivityForResult(new Intent(mContext, VideoChooseActivity.class), VIDEO_PUBLISH_REQUEST);
                 }
             });
         } else {
@@ -1228,9 +1232,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             return;
         }
         jsResult = new ArrayList<>();
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
+            return;
+        }
         if (TextUtils.isEmpty(mVideoFilePath))
             publicUpload();
-        else getRxBytes();
+        else checkWifi();
     }
 
     private void publicUpload() {
@@ -1839,7 +1847,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     else dataSource.setContent(dataSource.getContent() + text);
                 } else {//其他情况走后台接口 content:\n -> 空格 contentSource \n -> <br>
                     String contentText = articleItem.content.replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
-                    if (TextUtils.isEmpty(dataSource.getContent())) dataSource.setContent(contentText);
+                    if (TextUtils.isEmpty(dataSource.getContent()))
+                        dataSource.setContent(contentText);
                     else dataSource.setContent(dataSource.getContent() + contentText);
                     String contentSourceText = articleItem.content.replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, contentSourceText);
@@ -2188,7 +2197,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 2.发布或匿名发布走 -> 调用发布接口,给js回调,且关闭页面
      */
     private void callJs() {
-        dataSource.setContentSource(jsResult);
+        Gson gson = new Gson();
+        dataSource.setContentSource(gson.toJson(jsResult));
         rootBean.setDataSource(dataSource);
         if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//1.投票
             onLoadingStatus(CommonCode.General.DATA_SUCCESS);
@@ -2261,11 +2271,18 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         Map data = (Map) hashMap.get("data");
                         if (data.containsKey("contentSource"))
                             data.remove("contentSource");
+                        if (data.containsKey("content"))
+                            data.remove("content");
+                        if (data.containsKey("description"))
+                            data.remove("description");
+                        if (data.containsKey("title"))
+                            data.remove("title");
                         hashMap.put("dataSource", data);
                         hashMap.remove("data");
                         JsEvent.callJsEvent(hashMap, true);
                         finish();
-                    } else publishFail(hashMap.containsKey("msg") ? (String) hashMap.get("msg") : "");
+                    } else
+                        publishFail(hashMap.containsKey("msg") ? (String) hashMap.get("msg") : "");
                 } else {
                     publishFail("");
                 }
@@ -2306,7 +2323,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 处理内容相关数据
      */
     private void processContentData() {
-        ArrayList<Map<String, Object>> textList = dataSource.getContentSource();
+        ArrayList<Map<String, Object>> demoList = new ArrayList<>();
+        String contentSource = dataSource.getContentSource();
+        Gson gson = new Gson();
+        ArrayList<Map<String, Object>> textList = gson.fromJson(contentSource, demoList.getClass());
         for (int i = 0; i < textList.size(); i++) {
             Map<String, Object> contentMap = textList.get(i);
             if (contentMap != null && contentMap.size() > 0) {
@@ -2449,5 +2469,32 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             publicUpload();
         }
 
+    }
+
+    private void checkWifi() {
+        if (NetworkUtil.isWifi(this)) {
+            publicUpload();
+        } else {
+            CommonDialog commonDialog = new CommonDialog(mContext);
+            commonDialog.showDialog(getString(R.string.wifi_upload), new CommonDialog.OnCommonDialogConfirmListener() {
+                @Override
+                public void onConfirmListener() {
+                    publicUpload();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (SVProgressHUD.isShowing(this)) return;
+        if (commonDialog == null)
+            commonDialog = new CommonDialog(mContext);
+        commonDialog.showDialog(R.string.editor_two_cancel, new CommonDialog.OnCommonDialogConfirmListener() {
+            @Override
+            public void onConfirmListener() {
+                finish();
+            }
+        });
     }
 }

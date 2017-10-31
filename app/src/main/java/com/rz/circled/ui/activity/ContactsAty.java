@@ -64,7 +64,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
      */
     @BindView(R.id.id_letter_dialog)
     TextView mTxtDialog;
-
+    @BindView(R.id.id_search_key)
+    TextView tvSearch;
     /**
      * 空布局
      */
@@ -113,6 +114,7 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
         setTitleText(getString(R.string.mine_my_contacts));
         setTitleRightText(R.string.add_friends);
         setTitleRightListener(this);
+        tvSearch.setText(getString(R.string.search_key1));
         mLayoutSearch1.setVisibility(View.GONE);
         mLayoutSearch2.setVisibility(View.VISIBLE);
         initHeadView();

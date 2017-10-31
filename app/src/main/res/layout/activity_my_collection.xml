@@ -15,6 +15,7 @@
         android:id="@+id/lv_collection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:listSelector="@color/white"
         android:dividerHeight="1dp"
         android:divider="@color/color_f5f5f5"
         ></ListView>
@@ -31,7 +32,7 @@
         <View
             android:layout_width="match_parent"
             android:background="@color/color_E7E7E7"
-            android:layout_marginBottom="@dimen/px40"
+            android:layout_marginBottom="@dimen/px20"
             android:layout_height="@dimen/px2"></View>
     <Button
         android:id="@+id/btn_del"
@@ -39,7 +40,7 @@
         android:layout_width="@dimen/px748"
         android:background="@drawable/collection_bg"
         android:text="删除"
-        android:layout_marginBottom="@dimen/font_40"
+        android:layout_marginBottom="@dimen/px20"
         android:textColor="@color/white"
         android:layout_height="@dimen/px98"/>
     </LinearLayout>

@@ -45,7 +45,6 @@ public class CouponsPresenter extends GeneralPresenter {
     public void detachView() {
 
     }
-
     /**
      * 获得卡券列表
      *
@@ -64,9 +63,6 @@ public class CouponsPresenter extends GeneralPresenter {
                     if (responseData.isSuccessful()) {
                         List<CouponsBean> data = responseData.getData();
                         mView.updateViewWithFlag(data, isOverdue == 0 ? FLAG_COUPONS_NORMAL_LIST : FLAG_COUPONS_EXPIRED_LIST);
-                        if (data.isEmpty()){
-                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY,status==1?"目前没有卡券信息":"目前没有奖品信息");
-                        }
                     } else {
                         mView.updateViewWithFlag(null, 0);
                     }

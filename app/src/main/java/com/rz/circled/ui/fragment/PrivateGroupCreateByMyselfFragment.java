@@ -41,6 +41,7 @@ import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_CREATE_REFRESH;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
 import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_ID;
@@ -105,7 +106,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
-            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px2));
+            lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px4));
             refreshLayout.setEnabled(false);
         }
         if (TextUtils.equals(userId, Session.getUserId())) {
@@ -132,9 +133,11 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrivateGroupBean item = mAdapter.getItem(position);
-                if (item.getStatus() == 3) {
-                    CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                if (mAdapter != null && position < mAdapter.getCount()) {
+                    PrivateGroupBean item = mAdapter.getItem(position);
+                    if (item.getStatus() == 3) {
+                        CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                    }
                 }
             }
         });
@@ -168,6 +171,13 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
+        if (t == null) {
+            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
+                mAdapter.getData().clear();
+                mAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
         if (t instanceof PrivateGroupListBean) {
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
             processData(_data, loadMore);
@@ -186,6 +196,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
+        if (refreshLayout == null) return;
         List<PrivateGroupBean> data = _data.getList();
         if (type == TYPE_PART) {
             if (data.size() > 2) {
@@ -227,6 +238,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
+            case PRIVATE_GROUP_CREATE_REFRESH:
             case PRIVATE_GROUP_TAB_REFRESH:
                 loadData(false);
                 break;
@@ -235,7 +247,13 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     private void loadData(boolean loadMore) {
         if (!loadMore) pageNo = 1;
-        mPresenter.privateGroupMyselfCreate(userId, pageNo, loadMore);
+
+        if (Session.getUserId().equals(userId)) {
+            mPresenter.privateGroupMyselfCreate(null, userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+        } else {
+            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
+        }
+
     }
 
     @Override

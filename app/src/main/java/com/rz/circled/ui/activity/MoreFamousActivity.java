@@ -10,11 +10,14 @@ import android.widget.ListView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchPersonAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.widget.SwipyRefreshLayoutBanner;
+import com.rz.common.constant.Constants;
+import com.rz.common.swiperefresh.SwipyRefreshLayout;
+import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.httpapi.bean.StarListBean;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,13 +27,16 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/9/4/004.
  */
 
-public class MoreFamousActivity extends BaseActivity {
+public class MoreFamousActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
     @BindView(R.id.lv_m_famous)
     ListView mLvMFamous;
     @BindView(R.id.et_search_keyword_base)
     EditText mEtSearchKeywordBase;
+    @BindView(R.id.sb_famous_refresh)
+    SwipyRefreshLayoutBanner mSbFamousRefresh;
     private List<StarListBean> moreFamousList = new ArrayList<>();
     private SearchPersonAdapter mAdapter;
+    private CirclePresenter mPresenter;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -39,18 +45,21 @@ public class MoreFamousActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        CirclePresenter presenter=new CirclePresenter();
-        presenter.attachView(this);
-        presenter.getMoreFamousList();
+        mPresenter = new CirclePresenter();
+        mPresenter.attachView(this);
+        mPresenter.getMoreFamousList(false);
 
     }
 
     @Override
     public void initView() {
+        mSbFamousRefresh.setColorSchemeColors(Constants.COLOR_SCHEMES);
+        mSbFamousRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
+        mSbFamousRefresh.setOnRefreshListener(this);
         setTitleText(getString(R.string.famous));
-        View inflate = View.inflate(mContext, R.layout.item_footer, null);
-        inflate.findViewById(R.id.view_dd).setVisibility(View.GONE);
-        mLvMFamous.addFooterView(inflate);
+//        View inflate = View.inflate(mContext, R.layout.item_footer, null);
+//        inflate.findViewById(R.id.view_dd).setVisibility(View.GONE);
+//        mLvMFamous.addFooterView(inflate);
         mAdapter = new SearchPersonAdapter(this, R.layout.item_search_person);
         mAdapter.setTalentPage(true);
         mLvMFamous.setDividerHeight(0);
@@ -59,7 +68,7 @@ public class MoreFamousActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String custId = moreFamousList.get(position).custInfo.getCustId();
-                UserInfoActivity.newFrindInfo(mContext,custId);
+                UserInfoActivity.newFrindInfo(mContext, custId);
             }
         });
 
@@ -73,18 +82,24 @@ public class MoreFamousActivity extends BaseActivity {
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable(SearchActivity.SEARCH_TYPE,SearchActivity.TYPE_PERSON);
 //                skipActivity(aty,SearchActivity.class,bundle);
-                SearchActivity.stratActivity(mContext,SearchActivity.TYPE_PERSON);
+                SearchActivity.stratActivity(mContext, SearchActivity.TYPE_PERSON);
             }
         });
 
     }
 
     @Override
-    public <T> void updateView(T t) {
-        moreFamousList.addAll((Collection<? extends StarListBean>) t);
-        mAdapter.setData(moreFamousList);
-        mAdapter.notifyDataSetChanged();
-
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        if (!loadMore){
+            moreFamousList.clear();
+        }
+        List<StarListBean> data = (List<StarListBean>) t;
+        moreFamousList.addAll(data);
+        if (loadMore) {
+            mAdapter.addData(data);
+        } else {
+            mAdapter.setData(data);
+        }
     }
 
     @Override
@@ -106,6 +121,12 @@ public class MoreFamousActivity extends BaseActivity {
 
     @Override
     protected boolean hasDataInPage() {
-        return mAdapter!=null&&mAdapter.getCount()!=0;
+        return mAdapter != null && mAdapter.getCount() != 0;
+    }
+
+    @Override
+    public void onRefresh(SwipyRefreshLayoutDirection direction) {
+        mPresenter.getMoreFamousList(direction != SwipyRefreshLayoutDirection.TOP);
+        mSbFamousRefresh.setRefreshing(false);
     }
 }

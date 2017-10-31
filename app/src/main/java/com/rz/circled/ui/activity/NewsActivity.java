@@ -11,6 +11,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.NewsOverviewAdapter;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.NewsHelper;
 import com.rz.circled.ui.fragment.NewsCommonFragment;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
@@ -22,7 +23,6 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.NewsBean;
 import com.rz.httpapi.bean.NewsOverviewBean;
-import com.rz.httpapi.bean.NewsUnreadBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -85,18 +84,22 @@ public class NewsActivity extends BaseActivity {
                 switch (position) {
                     case 0:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_ANNOUNCEMENT);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_ANNOUNCEMENT);
                         break;
                     case 1:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_SYSTEM_INFORMATION);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_SYSTEM_INFORMATION);
                         break;
                     case 2:
                         startActivity(new Intent(mContext, NewsInteractiveActivity.class));
                         break;
                     case 3:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_RECOMMEND);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_RECOMMEND);
                         break;
                     case 4:
                         NewsFragmentActivity.startNewsFragment(mContext, NewsCommonFragment.NEWS_ACCOUNT);
+                        NewsHelper.clearUnreadByType(NewsCommonFragment.NEWS_ACCOUNT);
                         break;
                 }
             }
@@ -194,9 +197,20 @@ public class NewsActivity extends BaseActivity {
                 NewsBean item = data.get(String.valueOf(id));
                 for (NewsOverviewBean bean : mAdapter.getData()) {
                     if (bean.getTypeId() == id) {
-                        bean.setDesc(item.getTitle());
+                        switch (id) {
+                            case NewsTypeConstants.NEWS_ANNOUNCEMENT:
+                            case NewsTypeConstants.NEWS_RECOMMEND:
+                                bean.setDesc(item.getTitle());
+                                cache.setDesc(item.getTitle());
+                                break;
+                            case NewsTypeConstants.NEWS_SYSTEM:
+                            case NewsTypeConstants.NEWS_INTERACTIVE:
+                            case NewsTypeConstants.NEWS_ACCOUNT:
+                                bean.setDesc(item.getContent());
+                                cache.setDesc(item.getContent());
+                                break;
+                        }
                         bean.setTime(item.getCreateTime());
-                        cache.setDesc(item.getTitle());
                         cache.setTime(item.getCreateTime());
                     }
                 }

@@ -1,9 +1,9 @@
 package com.rz.circled.ui.activity;
 
+import android.Manifest;
+import android.content.Intent;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +36,7 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
+import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.BadgeUtil;
 import com.rz.common.utils.ClickCounter;
@@ -57,15 +58,14 @@ import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import cn.jpush.android.api.JPushInterface;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private Toast mToast;
 
     private String[] tabTags = new String[]{"首页", "发现", "悬赏", "私圈", "我的"};
-
+    private static final String TAG_EXIT = "exit";
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -103,8 +103,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void initView() {
-        getVirtuakeyHight();
-        Log.e(TAG, "initView");
         String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
@@ -119,12 +117,27 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             tabHost.setCurrentTab(1);
         }
         mUnread = (ImageView) tabHost.findViewById(R.id.unread_msg_number);
-
         initCounter();
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);
+            if (isExit) {
+                this.finish();
+            }
+        }
+    }
+
+    @Override
     public void initData() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.KILL_BACKGROUND_PROCESSES};
+        if (!EasyPermissions.hasPermissions(this, perms)) {
+            EasyPermissions.requestPermissions(this, getString(R.string.carme_sd_permission), RC_VIDEO_AND_EXTENER, perms);
+        }
+
         if (Session.getUserIsLogin()) {
             initYX(Session.getUserId(), Session.getUserId());
             loadUnreadMessage();
@@ -255,25 +268,20 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         @Override
         public void onEvent(StatusCode code) {
             Log.e(TAG, "onEvent: " + code.getValue());
-            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT) {
+            if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR) {
                 kickOut(code);
             } else {
                 if (code == StatusCode.NET_BROKEN) {
                 } else if (code == StatusCode.UNLOGIN) {
                 } else if (code == StatusCode.CONNECTING) {
                 } else if (code == StatusCode.LOGINING) {
-                } else if (code == StatusCode.KICKOUT) {
-                    EventBus.getDefault().post(new KickEvent(5));
                 } else {
-
                 }
             }
         }
     };
 
     private void kickOut(StatusCode code) {
-        Preferences.saveUserToken("");
-
         if (code == StatusCode.PWD_ERROR) {
             LogUtil.e("Auth", "user password error");
         } else {
@@ -282,18 +290,27 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
         onLogout(code);
 
-        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
+        if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT)
+            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
+        if (code == StatusCode.KICKOUT) {
+            EventBus.getDefault().post(new KickEvent(5));
+        }
     }
 
     // 注销
     private void onLogout(StatusCode code) {
         // 清理缓存&注销监听&清除状态
         LogoutHelper.logout();
-        NIMClient.getService(AuthService.class).logout();
+        Preferences.saveUserToken("");
 
-        UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
-        presenter.attachView(this);
-        presenter.ExitApp();
+        NIMClient.getService(AuthService.class).logout();
+        if (code == StatusCode.KICKOUT) {
+            UpdateOrExitPresenter presenter = new UpdateOrExitPresenter();
+            presenter.attachView(this);
+            presenter.ExitApp();
+        }
+        Session.clearShareP();
+        JPushInterface.setAlias(mContext, "", null);
 
         int loginWay = Session.getLoginWay();
         if (loginWay != Type.LOGIN_PHONE) {
@@ -392,6 +409,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case CommonCode.EventType.TYPE_LOGOUT:
                 finish();
                 break;
+            case EventConstant.USER_BE_KICKOUT_BY_HTTP:
+                kickOut(StatusCode.INVALID);
+                break;
         }
     }
 
@@ -443,47 +463,5 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     public void refreshPage() {
 
-    }
-
-    /**
-     * 获取屏幕尺寸，但是不包括虚拟功能高度
-     *
-     * @return
-     */
-    public int getNoHasVirtualKey() {
-        int height = getWindowManager().getDefaultDisplay().getHeight();
-        return height;
-    }
-
-    /**
-     * 通过反射，获取包含虚拟键的整体屏幕高度
-     *
-     * @return
-     */
-    private int getHasVirtualKey() {
-        int dpi = 0;
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        @SuppressWarnings("rawtypes")
-        Class c;
-        try {
-            c = Class.forName("android.view.Display");
-            @SuppressWarnings("unchecked")
-            Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
-            method.invoke(display, dm);
-            dpi = dm.heightPixels;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dpi;
-    }
-
-    /**
-     * 获取虚拟键的高度
-     */
-    private void getVirtuakeyHight() {
-        Log.d("zxw", "不包含虚拟键的高度=" + getNoHasVirtualKey());
-        Log.d("zxw", "包含虚拟键的高度=" + getHasVirtualKey());
-        Log.d("zxw", "虚拟键的高度=" + (getHasVirtualKey() - getNoHasVirtualKey()));
     }
 }

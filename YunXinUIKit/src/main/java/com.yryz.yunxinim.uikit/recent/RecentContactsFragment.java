@@ -1,5 +1,6 @@
 package com.yryz.yunxinim.uikit.recent;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -13,6 +14,8 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +61,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static com.yryz.yunxinim.uikit.Constants.FRIEND_ADD_ACTION;
+import static com.yryz.yunxinim.uikit.Constants.FRIEND_INFO_ACTION;
 import static com.yryz.yunxinim.uikit.common.ui.dialog.CustomAlertDialog.onSeparateItemClickListener;
 
 /**
@@ -74,7 +79,11 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
 
     private View emptyBg;
 
+    private ImageView emptyBg1;
+
     private TextView emptyHint;
+
+    private Button btnAdd;
 
     // data
     private List<RecentContact> items;
@@ -130,8 +139,18 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     private void notifyDataSetChanged() {
         adapter.notifyDataSetChanged();
         boolean empty = items.isEmpty() && msgLoaded;
-        emptyBg.setVisibility(empty ? View.VISIBLE : View.GONE);
-        emptyHint.setHint(R.string.no_chat_record);
+        if (empty) {
+            emptyBg.setVisibility(View.VISIBLE);
+            if (FriendDataCache.getInstance().getMyFriendCounts() == 0) {
+                emptyHint.setHint(R.string.no_chat_record1);
+                btnAdd.setVisibility(View.VISIBLE);
+                emptyBg1.setImageResource(R.drawable.nim_contact_list_empty_bg);
+            } else {
+                emptyHint.setHint(R.string.no_chat_record);
+                btnAdd.setVisibility(View.GONE);
+                emptyBg1.setImageResource(R.drawable.nim_messages_list_empty_bg);
+            }
+        }
     }
 
     @Override
@@ -147,7 +166,16 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     private void findViews() {
         listView = findView(R.id.lvMessages);
         emptyBg = findView(R.id.emptyBg);
+        emptyBg1 = findView(R.id.emptyBg1);
         emptyHint = findView(R.id.message_list_empty_hint);
+        btnAdd = findView(R.id.add_friend_btn);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FRIEND_ADD_ACTION);
+                startActivity(intent);
+            }
+        });
     }
 
     /**

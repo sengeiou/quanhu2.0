@@ -1217,7 +1217,6 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
-//        mView.onLoadingStatus(CommonCode.General.DATA_LOADING);
         Call<ResponseData<UserSignBean>> call = mUserService.getSignStatus(custId, eventCode);
         CallManager.add(call);
         call.enqueue(new BaseCallback<ResponseData<UserSignBean>>() {
@@ -1245,7 +1244,6 @@ public class V3CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             }
         });
     }
-
 
     /**
      * 获取达人状态

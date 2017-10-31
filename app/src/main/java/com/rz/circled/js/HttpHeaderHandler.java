@@ -8,6 +8,8 @@ import com.rz.circled.BuildConfig;
 import com.rz.circled.application.QHApplication;
 import com.rz.circled.js.model.HeaderModel;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.SystemUtils;
 import com.rz.sgt.jsbridge.BaseParamsObject;
@@ -16,6 +18,8 @@ import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -42,8 +46,6 @@ public class HttpHeaderHandler extends ServerHandler {
         headerModel.sign = "ceshi";
         headerModel.token = Session.getSessionKey();
         headerModel.devType = "2";
-//        String sign = DesUtils.encrypt(act + "." + Session.getUserId() + "." + Session.getSessionKey()).replace("\\s", "").replace("\n", "");
-//        headerModel.apiVersion ="V3.0.0";
         try {
             headerModel.devName = URLEncoder.encode(Build.MODEL, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -57,10 +59,9 @@ public class HttpHeaderHandler extends ServerHandler {
         headerModel.userId = Session.getJsUserId();
         headerModel.phone = Session.getUserPhone();
         headerModel.cityCode = Session.getCityCode();
-//        Gson gson = new Gson();
-//        paramStr= gson.toJson(headerModel);
-//        Log.e("fengan", "handle:paramStr== "+paramStr );
-        JsEvent.callJsEvent(paramObj.getInvokeId(), headerModel, headerModel != null ? BaseParamsObject.RESULT_CODE_SUCRESS : BaseParamsObject.RESULT_CODE_FAILED);
+        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_HTTP_HEADER));
+        JsEvent.callJsEvent(paramObj.getInvokeId(), headerModel, headerModel != null ? BaseParamsObject.RESULT_CODE_SUCRESS :
+                BaseParamsObject.RESULT_CODE_FAILED);
     }
 
     @Override

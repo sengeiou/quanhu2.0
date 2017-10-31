@@ -13,7 +13,7 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyLevelAdapter;
-import com.rz.circled.presenter.impl.LevelPersenter;
+import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.widget.GlideCircleImage;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.H5Address;
@@ -61,7 +61,7 @@ public class MyLevelActivity extends BaseActivity {
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout layoutRefresh;
 
-    private LevelPersenter presenter;
+    private LevelPresenter presenter;
     private MyLevelAdapter mAdapter;
 
     @Override
@@ -71,8 +71,18 @@ public class MyLevelActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-        presenter = new LevelPersenter();
+        presenter = new LevelPresenter();
         presenter.attachView(this);
+    }
+
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
     }
 
     @Override
@@ -87,6 +97,7 @@ public class MyLevelActivity extends BaseActivity {
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 if (direction == SwipyRefreshLayoutDirection.TOP) {
                     loadData(false);
+                    presenter.getLevelAcount();
                 } else {
                     loadData(true);
                 }
@@ -95,7 +106,7 @@ public class MyLevelActivity extends BaseActivity {
         setTitleRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonH5Activity.startCommonH5(mContext, "升级攻略", H5Address.UPGRADE_STRATEGY);
+                CommonH5Activity.startCommonH5(mContext, "", H5Address.UPGRADE_STRATEGY);
             }
         });
     }

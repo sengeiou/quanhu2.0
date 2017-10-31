@@ -94,7 +94,7 @@ public class SearchCircleFragment extends BaseFragment {
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
                 if (!TextUtils.isEmpty(keyWord)) {
-                    ((SearchPresenter) searchPresenter).searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
+                    searchPresenter.searchQH(true, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
                 }
 
                 mRefresh.setRefreshing(false);
@@ -120,7 +120,7 @@ public class SearchCircleFragment extends BaseFragment {
             //去搜索
             keyWord = (String) baseEvent.getData();
             if (!TextUtils.isEmpty(keyWord)) {
-                ((SearchPresenter) searchPresenter).searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
+                searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
             }
 
         }
@@ -129,22 +129,21 @@ public class SearchCircleFragment extends BaseFragment {
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
-        if (t != null) {
-            List<CircleEntrModle> mDatas = (List<CircleEntrModle>) t;
-            if (null != mDatas && !mDatas.isEmpty()) {
-                if (!loadMore) {
-                    circleBeanList.clear();
-                }
-                circleBeanList.addAll(mDatas);
-                circleAdapter.setKeyWord(keyWord);
-                circleAdapter.setData(circleBeanList);
-                circleAdapter.notifyDataSetChanged();
-            } else {
-                if (!loadMore) {
-                    circleBeanList.clear();
-                }
-                circleAdapter.notifyDataSetChanged();
+        List<CircleEntrModle> mDatas = (List<CircleEntrModle>) t;
+        if (null != mDatas && !mDatas.isEmpty()) {
+            if (!loadMore) {
+                circleBeanList.clear();
             }
+            circleBeanList.addAll(mDatas);
+            circleAdapter.setKeyWord(keyWord);
+            circleAdapter.setData(circleBeanList);
+            circleAdapter.notifyDataSetChanged();
+        } else {
+            if (!loadMore) {
+                circleBeanList.clear();
+            }
+            circleAdapter.setData(circleBeanList);
+            circleAdapter.notifyDataSetChanged();
         }
     }
 
@@ -188,6 +187,6 @@ public class SearchCircleFragment extends BaseFragment {
 
     @Override
     public void refreshPage() {
-
+        searchPresenter.searchQH(false, keyWord, "", "", "", SearchPresenter.SEARCH_CIRCLE);
     }
 }
