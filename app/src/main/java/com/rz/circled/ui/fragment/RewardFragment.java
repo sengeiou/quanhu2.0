@@ -85,7 +85,6 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
     @Override
     public void onResume() {
         super.onResume();
-//        mWebView.resumeTimers();
         mWebView.onResume();
         mWebViewProxy.autoCancelUiHandler();
     }

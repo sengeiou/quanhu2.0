@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
-import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.rz.circled.R;
 import com.rz.circled.adapter.ContactsAdp;
 import com.rz.circled.modle.ShareModel;
@@ -213,15 +212,9 @@ public class ShareFriendsListActivity extends BaseActivity implements AdapterVie
         if (NimUIKit.getContactEventListener() != null) {
             ShareModel model = (ShareModel) getIntent().getSerializableExtra(EXTRA_DATA_ITEM_DATA);
             // 判断是否需要ImageLoader加载
-            final UserInfoProvider.UserInfo userInfo = NimUIKit.getUserInfoProvider().getUserInfo(item.getCustId());
-            if (userInfo != null) {
-                if (userInfo.getAvatar() != null)
-                    model.setUserAvater(userInfo.getAvatar());
-                model.setUserName(UserInfoHelper.getUserTitleName(item.getCustId(), SessionTypeEnum.P2P));
-                if (userInfo.getAccount() != null)
-                    model.setUserId(userInfo.getAccount());
-            }
-
+            model.setUserAvater(TextUtils.isEmpty(item.getCustImg()) ? "" : item.getCustImg());
+            model.setUserName(UserInfoHelper.getUserTitleName(item.getCustId(), SessionTypeEnum.P2P));
+            model.setUserId(TextUtils.isEmpty(item.getCustId()) ? "" : item.getCustId());
             model.setTypeEnum(SessionTypeEnum.P2P);
             new WorkImShareDialog(ShareFriendsListActivity.this, model).show();
         }
