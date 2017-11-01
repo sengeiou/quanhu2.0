@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/app_base_padding"
-    android:paddingRight="@dimen/app_base_padding"
     tools:context="com.rz.circled.ui.activity.ChooseProveIdentityActivity">
 
     <LinearLayout
@@ -79,17 +77,94 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@mipmap/bg_prove_identity_agency"/>
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="@dimen/px58"-->
-        <!--android:background="@color/color_daf0fc"-->
-        <!--android:orientation="vertical">-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/px58"
+        android:paddingBottom="@dimen/px100"
+        android:background="@color/color_daf0fc"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px44"
+            android:layout_marginRight="@dimen/px44"
+            android:layout_marginTop="@dimen/px22"
+            android:background="@drawable/identity_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px44"
+            android:paddingRight="@dimen/px44"
+            android:paddingTop="@dimen/px58">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/what_identity"
+                android:textColor="@color/color_a78563"
+                android:textSize="@dimen/px44"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px30"
+                android:text="@string/what_identity_answer"
+                android:textColor="@color/color_a78563"
+                android:lineSpacingMultiplier="1.1"
+                android:textSize="@dimen/px38"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px38"
+                android:text="@string/what_good"
+                android:textColor="@color/color_a78563"
+                android:textSize="@dimen/px44"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px30"
+                android:text="@string/what_good_answer"
+                android:textColor="@color/color_a78563"
+                android:lineSpacingMultiplier="1.1"
+                android:textSize="@dimen/px38"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px38"
+                android:text="@string/how_identity"
+                android:textColor="@color/color_a78563"
+                android:textSize="@dimen/px44"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px30"
+                android:text="@string/how_identity_answer"
+                android:textColor="@color/color_a78563"
+                android:lineSpacingMultiplier="1.1"
+                android:textSize="@dimen/px38"
+
+                />
 
 
+        </LinearLayout>
 
 
-    <!--</LinearLayout>-->
+    </LinearLayout>
 
 
 </LinearLayout>

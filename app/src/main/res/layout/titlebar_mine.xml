@@ -4,7 +4,7 @@
     android:id="@+id/titlebar_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_main"
+    android:background="@color/mine_blue_color"
     android:paddingTop="@dimen/title_bar_padding_top">
 
     <RelativeLayout
@@ -48,36 +48,40 @@
             android:maxLines="1"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/px50"
-            tools:text="@string/app_name" />
+            tools:text="@string/app_name"
+            android:textStyle="bold"
+            />
 
         <RelativeLayout
             android:id="@+id/sign_layout"
             android:layout_width="@dimen/px188"
-            android:layout_height="@dimen/px64"
+            android:layout_height="@dimen/px80"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@mipmap/ic_sign_bg"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/scores_img"
-                android:layout_width="@dimen/px64"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_scores" />
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/titlebar_login_icon_img"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/scores_img"
                 android:gravity="center"
                 android:text="签到"
-                android:textColor="@color/white"
-                android:visibility="visible" />
+                android:layout_alignParentRight="true"
+                android:textColor="@color/app_main"
+                android:visibility="visible"
+                android:layout_marginRight="@dimen/px20"
+                android:textSize="@dimen/font_40"
+                />
 
+            <ImageView
+                android:id="@+id/scores_img"
+                android:layout_width="@dimen/px64"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/titlebar_login_icon_img"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_sign" />
 
         </RelativeLayout>
 

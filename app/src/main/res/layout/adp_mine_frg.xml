@@ -45,12 +45,13 @@
             android:id="@+id/id_remark"
             style="@style/MineMeTvStyle"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px30"
+            android:layout_marginRight="@dimen/px34"
             android:layout_toLeftOf="@+id/id_right"
-            android:text="12344444"
-            android:textColor="@color/color_666666"
+            android:text=""
+            android:textColor="@color/mine_scrore_red"
             android:textSize="@dimen/px44"
-            android:visibility="gone"/>
+            android:visibility="visible"
+            />
 
         <ImageView
             android:id="@+id/version_update"
@@ -70,7 +71,7 @@
             android:layout_marginRight="@dimen/px40"
             android:background="@drawable/ic_right_arrow"
             android:scaleType="fitXY"
-            android:visibility="gone"
+            android:visibility="visible"
             />
 
 
