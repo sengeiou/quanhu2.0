@@ -63,7 +63,9 @@ public class DynamicAdapter extends CircleContentAdapter {
         if (item.cust != null) {
             mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);
         }
-        tv_other_left.setText(item.readNum+" 阅读");
+        int readNum = item.readNum;
+        int readCount=readNum/10000;
+        tv_other_left.setText((readCount>=10?readCount+"w+":readNum)+" 阅读");
         if (StringUtil.isEmpty(item.coterieId)||StringUtil.isEmpty(item.coterieName)){
             fromWhere.setText("来自圈子 "+item.circleName);
         }else {
