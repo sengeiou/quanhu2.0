@@ -4,7 +4,7 @@
     android:id="@+id/titlebar_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_main"
+    android:background="@color/mine_blue_color"
     android:paddingTop="@dimen/title_bar_padding_top">
 
     <RelativeLayout

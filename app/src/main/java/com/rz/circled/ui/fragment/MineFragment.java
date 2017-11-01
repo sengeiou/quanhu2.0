@@ -3,6 +3,7 @@ package com.rz.circled.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,8 +118,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     ImageView scoreImg;
     private ImageView mUnread;
 
-    public static String URL = "https://wap.yryz.com/inviteRegister.html?inviter=";
-
     List<MineFragItemModel> mModelList;
     CommonAdapter adapter;
     TextView tvacticlesCount;        //文章
@@ -126,7 +125,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     TextView tvcircletCount;        //私圈
     TextView tvactivityCount;       //活动
 
-//    LinearLayout scoresLayout;
 
     protected IPresenter presenter;
     protected IPresenter userPresenter;
@@ -135,7 +133,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     private TextView mTxtPersonName;
     private TextView levelTxt;
-//    private TextView custPointsTxt;
     private TextView famousTxt;
     private LinearLayout famousLayout;
 
@@ -149,12 +146,12 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     ProveStatusBean data;
     UserSignBean signBean = new UserSignBean();
 
+    MineFragItemModel modeScore;
 
     @Override
     public View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_mine, null);
     }
-
 
     @Override
     public void initPresenter() {
@@ -177,7 +174,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             EventBus.getDefault().register(this);
 
         mSp = getContext().getSharedPreferences("", Context.MODE_PRIVATE);
-//        getHeadData();
         newTitilbar = View.inflate(getActivity(), R.layout.titlebar_mine, null);
         newTitilbar.setBackgroundColor(getResources().getColor(R.color.mine_blue_color));
         newTitilbar.getBackground().setAlpha(0);
@@ -210,7 +206,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
         });
 
-        getUserProveStatus();
+
+        /**
+         * 获得个人认证状态
+         */
+//        getUserProveStatus();
     }
 
 
@@ -319,7 +319,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
 
             if (Session.getUserIsLogin()) {
-
                 setData();
             } else {
                 mTxtPersonName.setText(getString(R.string.mine_no_login));
@@ -409,7 +408,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         MineFragItemModel modeBuy = new MineFragItemModel(true, getString(R.string.my_purchase), R.mipmap.ic_buy, false);
         MineFragItemModel modeReward = new MineFragItemModel(true, getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
         MineFragItemModel modeColection = new MineFragItemModel(true, getString(R.string.my_collect), R.mipmap.ic_colection, false);
-        MineFragItemModel modeScore = new MineFragItemModel(true, Session.getCustPoints(),getString(R.string.my_score), R.mipmap.ic_score, true);
+        modeScore = new MineFragItemModel(true, Session.getCustPoints(),getString(R.string.my_score), R.mipmap.ic_score, true);
         MineFragItemModel modeLevel = new MineFragItemModel(true, getString(R.string.my_level), R.mipmap.ic_level, false);
         MineFragItemModel modeAcount = new MineFragItemModel(true, getString(R.string.mine_my_account), R.mipmap.ic_count, false);
         MineFragItemModel modeTicket = new MineFragItemModel(true, getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
@@ -487,8 +486,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         });
         mListView.setOnItemClickListener(this);
 
-//        checkUpdate();
-
         if (Session.getUserIsLogin()) {
             EntityCache<CircleStatsModel> entityCache = new EntityCache<>(mActivity, CircleStatsModel.class);
             CircleStatsModel circleStatsModel = entityCache.getEntity(CircleStatsModel.class);
@@ -514,12 +511,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 scoreImg.setVisibility(View.GONE);
                 RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-                titlebarSignTxt.setTextColor(getResources().getColor(R.color.color_0185ff));
+//                titlebarSignTxt.setTextColor(getResources().getColor(R.color.color_0185ff));
+                titlebarSignTxt.setTextColor(Color.argb(168, 1, 133, 255));   //文字透明度
                 titlebarSignTxt.setText("已签到");
                 titlebarSignTxt.setLayoutParams(lp);
 
             } else {
-                titlebarSignTxt.setTextColor(getResources().getColor(R.color.app_main));
+//                titlebarSignTxt.setTextColor(getResources().getColor(R.color.color_0185ff));
+                titlebarSignTxt.setTextColor(Color.argb(255, 1, 133, 255));   //文字透明度
                 titlebarSignTxt.setText("签到");
                 scoreImg.setVisibility(View.VISIBLE);
             }
@@ -530,13 +529,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount.setText(data.getOfferNum() + "");
             tvcircletCount.setText(data.getCoterieNum() + "");
 
-            MineFragItemModel scroreModel = mModelList.get(3);
-            scroreModel.remark = data.getScore();
-            tv_remark.setText(data.getScore());
+            modeScore.remark = data.getScore();
+            adapter.notifyDataSetChanged();
             Session.setCustPoints(data.getScore());
 
             levelTxt.setText("Lv. " + data.getCustLevel());
-
             Session.setUserLevel(data.getCustLevel());
         } else if (t instanceof ProveStatusBean) {
             data = (ProveStatusBean) t;
@@ -612,14 +609,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             scoreImg.setVisibility(View.GONE);
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
+//            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
+            titlebarSignTxt.setTextColor(Color.argb(168, 1, 133, 255));   //文字透明度
             titlebarSignTxt.setText("已签到");
             titlebarSignTxt.setLayoutParams(lp);
 
             //签到成功，重新拉取积分
             //获取数据统计
             ((V3CirclePresenter) presenter).getUserStat(Session.getUserId());
-//            setData();
 
         }
     }
@@ -753,21 +750,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         return isWorkDate;
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == IntentCode.MineFrg.MINE_REQUEST_CODE) {
-//            if (resultCode == IntentCode.Setting.SETTING_RESULT_CODE) {
-//
-//                mTxtPersonName.setText(getString(R.string.mine_no_login));
-//                if (Protect.checkLoadImageStatus(mActivity)) {
-//                    Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideRoundImage(mActivity)).
-//                            placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).crossFade().into(mImgPersonHead);
-//                }
-//            }
-//            return;
-//        }
-//    }
 
     @Override
     public void onDestroy() {
@@ -843,7 +825,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             idPersonLoginDays.setText(Session.getUser_desc());
         }
         getHeadData();
-
     }
 
     private void requestUnreadMsg() {
