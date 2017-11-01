@@ -549,6 +549,7 @@
     <string name="my_circle">我的圈子</string>
     <string name="my_transfer">我的转发</string>
     <string name="my_collect">我的收藏</string>
+    <string name="my_score">我的积分</string>
     <string name="red_bag_adv">红包广告</string>
     <string name="other_login_style">其他登录方式</string>
     <string name="replace_bind_phone">更换绑定手机请联系客服</string>

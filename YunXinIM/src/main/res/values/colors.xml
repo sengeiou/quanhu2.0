@@ -84,5 +84,8 @@
 
     <color name="color_e3e3e3">#e3e3e3</color>
     <color name="sign_color">#006ACC</color>
+    <color name="mine_blue_color">#4ACAFF</color>
+    <color name="mine_scrore_red">#ED9174</color>
+
 
 </resources>
