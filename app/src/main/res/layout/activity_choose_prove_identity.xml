@@ -113,7 +113,7 @@
                 android:layout_marginTop="@dimen/px30"
                 android:text="@string/what_identity_answer"
                 android:textColor="@color/color_a78563"
-                android:lineSpacingMultiplier="1.2"
+                android:lineSpacingMultiplier="1.1"
                 android:textSize="@dimen/px38"
 
                 />
@@ -134,7 +134,7 @@
                 android:layout_marginTop="@dimen/px30"
                 android:text="@string/what_good_answer"
                 android:textColor="@color/color_a78563"
-                android:lineSpacingMultiplier="1.2"
+                android:lineSpacingMultiplier="1.1"
                 android:textSize="@dimen/px38"
 
                 />
@@ -155,7 +155,7 @@
                 android:layout_marginTop="@dimen/px30"
                 android:text="@string/how_identity_answer"
                 android:textColor="@color/color_a78563"
-                android:lineSpacingMultiplier="1.2"
+                android:lineSpacingMultiplier="1.1"
                 android:textSize="@dimen/px38"
 
                 />
