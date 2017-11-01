@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="add_text_pic_here">在这里添加文字和图文...</string>
+    <string name="add_text_pic_here">在这里，输入文字或者添加图片、视频</string>
 </resources>
