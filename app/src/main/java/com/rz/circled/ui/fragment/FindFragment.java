@@ -55,7 +55,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.rz.common.constant.Constants.FIND_LOVE_CACHE;
 import static com.rz.common.constant.Constants.LOVE_CIRCLE;
@@ -249,7 +248,7 @@ public class FindFragment extends BaseFragment {
                 Glide.with(mActivity)
                         .load(hotSubjectModel.getThumbnail())
                         .placeholder(R.drawable.subject_default)
-                        .bitmapTransform(new RoundedCornersTransformation(mActivity, 20, 0, RoundedCornersTransformation.CornerType.LEFT))
+                        .error(R.drawable.subject_default)
                         .into(vh.topicIcon);
                 vh.topicName.setText("#"+hotSubjectModel.getTitle()+"#");
                 vh.topicCount.setText(hotSubjectModel.getPartNum() + " 讨论");

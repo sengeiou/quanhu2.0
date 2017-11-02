@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="@dimen/px494"
-                android:layout_marginLeft="@dimen/font_34"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_marginLeft="@dimen/font_34"
               android:orientation="vertical"
               android:layout_height="@dimen/px194">
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@drawable/hot_subject_bg"
         android:layout_height="match_parent">
-<ImageView
+<com.makeramen.roundedimageview.RoundedImageView
     android:id="@+id/topic_iv"
     android:layout_width="@dimen/px180"
     android:layout_height="@dimen/px180"
     android:layout_centerVertical="true"
     android:layout_marginLeft="@dimen/px4"
     android:scaleType="fitXY"
+    app:riv_corner_radius_top_left="@dimen/px20"
+    app:riv_corner_radius_bottom_left="@dimen/px20"
     android:src="@drawable/default_subject_bg"/>
     <TextView
         android:id="@+id/topic_name"
