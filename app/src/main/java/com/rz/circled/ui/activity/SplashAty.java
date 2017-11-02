@@ -131,6 +131,7 @@ public class SplashAty extends BaseActivity {
                         intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
                         startActivity(intent);
                         finish();
+
                     }else{
                         skipActivity(aty, GuideActivity.class);
                     }
