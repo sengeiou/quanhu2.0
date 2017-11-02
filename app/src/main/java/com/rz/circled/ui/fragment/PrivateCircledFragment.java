@@ -123,8 +123,6 @@ public class PrivateCircledFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         mPresenter.privateGroupBanner("3");
     }
 
@@ -163,13 +161,6 @@ public class PrivateCircledFragment extends BaseFragment {
             else
                 startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe

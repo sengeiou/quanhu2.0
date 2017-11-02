@@ -941,7 +941,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             llContentNum.setVisibility(View.VISIBLE);
             llContentText.setTag(contentModel);
             tvContentTextCount.setText("/" + contentModel.getUpperLimit());
-            initContentEditText();
+            initContentEditText(contentModel);
         }
     }
 
@@ -1341,7 +1341,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         changeChooseAudioStatus();
     }
 
-    private void initContentEditText() {
+    private void initContentEditText(EditorConfigTwoModel contentModel) {
         final EditText et = (EditText) getLayoutInflater().inflate(R.layout.layout_et_article_item, llContentText, false);
         et.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_xl));
         et.setHintTextColor(ContextCompat.getColor(mContext, R.color.font_gray_a));
@@ -1370,7 +1370,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         et.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
         llContentText.addView(et);
         if (isFirstInput) {
-            et.setHint(R.string.add_text_pic_here);
+            et.setHint(TextUtils.isEmpty(contentModel.getInputPrompt()) ? getString(R.string.add_text_pic_here) : contentModel.getInputPrompt());
             isFirstInput = false;
         }
 //        et.requestFocus();
