@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="@dimen/px494"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_marginLeft="@dimen/font_34"
-              android:orientation="vertical"
-              android:layout_height="@dimen/px194">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/px494"
+    android:layout_height="@dimen/px194"
+    android:layout_marginLeft="@dimen/font_34"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@drawable/hot_subject_bg"
-        android:layout_height="match_parent">
-<com.makeramen.roundedimageview.RoundedImageView
-    android:id="@+id/topic_iv"
-    android:layout_width="@dimen/px180"
-    android:layout_height="@dimen/px180"
-    android:layout_centerVertical="true"
-    android:layout_marginLeft="@dimen/px4"
-    android:scaleType="fitXY"
-    app:riv_corner_radius_top_left="@dimen/px20"
-    app:riv_corner_radius_bottom_left="@dimen/px20"
-    android:src="@drawable/default_subject_bg"/>
-    <TextView
-        android:id="@+id/topic_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/px26"
-        android:layout_marginLeft="@dimen/px22"
-        android:layout_marginRight="@dimen/px14"
-        android:layout_toRightOf="@+id/topic_iv"
-        android:textColor="@color/color_2c2c2c"
-        android:textStyle="bold"
-        android:maxLines="2"
-        android:textSize="@dimen/font_40"
-        android:text="#怎么画好一幅画啊?#"
-        />
-    <TextView
-        android:id="@+id/topic_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/px22"
-        android:layout_marginTop="@dimen/px26"
-        android:layout_toRightOf="@+id/topic_iv"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/px14"
-        android:text="2343人参与"
-        android:maxLines="1"
-        android:textSize="@dimen/font_38"
-        android:textColor="@color/color_666666"
-        />
+        android:layout_height="match_parent"
+        android:background="@drawable/hot_subject_bg">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/topic_iv"
+            android:layout_width="@dimen/px180"
+            android:layout_height="@dimen/px180"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px4"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_subject_bg"
+            app:riv_corner_radius_bottom_left="@dimen/px20"
+            app:riv_corner_radius_top_left="@dimen/px20" />
+
+        <TextView
+            android:id="@+id/topic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px22"
+            android:layout_marginRight="@dimen/px14"
+            android:layout_toRightOf="@+id/topic_iv"
+            android:maxLines="2"
+            android:paddingTop="@dimen/px26"
+            android:textColor="@color/color_2c2c2c"
+            android:textSize="@dimen/font_40"
+            android:textStyle="bold"
+            tools:text="#怎么画好一幅画啊?#" />
+
+        <TextView
+            android:id="@+id/topic_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/px14"
+            android:layout_marginLeft="@dimen/px22"
+            android:layout_marginTop="@dimen/px26"
+            android:layout_toRightOf="@+id/topic_iv"
+            android:maxLines="1"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/font_38"
+            tools:text="2343人参与" />
     </RelativeLayout>
 </LinearLayout>
