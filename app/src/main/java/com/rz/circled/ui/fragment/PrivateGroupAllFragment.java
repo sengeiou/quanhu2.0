@@ -75,8 +75,6 @@ public class PrivateGroupAllFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
         lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_SCAN));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -142,13 +140,6 @@ public class PrivateGroupAllFragment extends BaseFragment {
         super.onLoadingStatus(loadingStatus, string);
         if (layoutRefresh != null)
             layoutRefresh.setRefreshing(false);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe
