@@ -79,6 +79,7 @@ public class SplashAty extends BaseActivity {
     public View loadView(LayoutInflater inflater) {
         trackUser("入口", "启动", "");
 //        initMainRequest();
+        getWindow().setBackgroundDrawable(null);
         return inflater.inflate(R.layout.activity_splash, null);
     }
 
@@ -131,9 +132,11 @@ public class SplashAty extends BaseActivity {
                         intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
                         startActivity(intent);
                         finish();
+
                     }else{
                         skipActivity(aty, GuideActivity.class);
                     }
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
             }
         }, 2000);
