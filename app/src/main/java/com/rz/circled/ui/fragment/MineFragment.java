@@ -407,8 +407,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         mModelList = new ArrayList<>();
         MineFragItemModel modeBuy = new MineFragItemModel(true, getString(R.string.my_purchase), R.mipmap.ic_buy, false);
         MineFragItemModel modeReward = new MineFragItemModel(true, getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
-        MineFragItemModel modeColection = new MineFragItemModel(true, getString(R.string.my_collect), R.mipmap.ic_colection, false);
-        modeScore = new MineFragItemModel(true, Session.getCustPoints(),getString(R.string.my_score), R.mipmap.ic_score, true);
+        MineFragItemModel modeColection = new MineFragItemModel(true, getString(R.string.my_collect), R.mipmap.ic_colection, true);
+        modeScore = new MineFragItemModel(true, Session.getCustPoints(),getString(R.string.my_score), R.mipmap.ic_score, false);
         MineFragItemModel modeLevel = new MineFragItemModel(true, getString(R.string.my_level), R.mipmap.ic_level, false);
         MineFragItemModel modeAcount = new MineFragItemModel(true, getString(R.string.mine_my_account), R.mipmap.ic_count, false);
         MineFragItemModel modeTicket = new MineFragItemModel(true, getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
