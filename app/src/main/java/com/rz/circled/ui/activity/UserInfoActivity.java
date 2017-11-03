@@ -135,6 +135,8 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        userId = getIntent().getExtras().getString(IntentKey.KEY_ID);
         if (TextUtils.isEmpty(userId)) {
             userId = Session.getUserId();
         }
