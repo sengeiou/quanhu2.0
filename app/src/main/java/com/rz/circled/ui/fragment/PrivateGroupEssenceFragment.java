@@ -75,6 +75,8 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         tv.setText(R.string.private_group_essence_no_more);
         lv.setAdapter(mAdapter = new PrivateGroupEssenceAdapter(getContext(), R.layout.item_private_group_essence));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -146,6 +148,13 @@ public class PrivateGroupEssenceFragment extends BaseFragment {
                 line.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.tv)
