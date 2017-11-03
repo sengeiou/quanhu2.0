@@ -136,7 +136,7 @@
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/font_44"
                     android:paddingLeft="@dimen/px20"
-                    android:paddingRight="@dimen/px20"
+                    android:paddingRight="@dimen/px10"
                     />
 
             </LinearLayout>
