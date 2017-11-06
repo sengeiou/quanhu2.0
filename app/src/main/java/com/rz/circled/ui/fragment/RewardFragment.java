@@ -1,6 +1,7 @@
 package com.rz.circled.ui.fragment;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,10 +12,15 @@ import android.webkit.WebView;
 import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.application.QHApplication;
 import com.rz.circled.js.RequestJsBroadcastHandler;
+import com.rz.circled.js.model.HeaderModel;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.IntentUtil;
+import com.rz.common.utils.SystemUtils;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.RegisterList;
@@ -26,6 +32,9 @@ import com.rz.sgt.jsbridge.core.WebViewProxy;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import butterknife.BindView;
 
@@ -205,5 +214,35 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
     @Override
     public void doUpdateVisitedHistory() {
 
+    }
+
+    @Override
+    protected void onVisible() {
+        super.onVisible();
+        RequestJsBroadcastHandler requestJsBroadcastHandler = new RequestJsBroadcastHandler(getActivity());
+        requestJsBroadcastHandler.setNativeEvent("nativeActivated");
+        requestJsBroadcastHandler.setRequestData(getLoginWebResultData());
+        mWebViewProxy.requestJsFun(requestJsBroadcastHandler);
+    }
+
+    private HeaderModel getLoginWebResultData() {
+        HeaderModel headerModel = new HeaderModel();
+        headerModel.sign = "sign";
+        headerModel.token = Session.getSessionKey();
+        headerModel.devType = "2";
+        try {
+            headerModel.devName = URLEncoder.encode(Build.MODEL, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        headerModel.appVersion = BuildConfig.VERSION_NAME;
+        headerModel.devId = SystemUtils.getIMEI(QHApplication.getContext());
+        headerModel.ip = SystemUtils.getIp(QHApplication.getContext());
+        headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
+        headerModel.custId = Session.getUserId();
+        headerModel.userId = Session.getJsUserId();
+        headerModel.phone = Session.getUserPhone();
+        headerModel.cityCode = Session.getCityCode();
+        return headerModel;
     }
 }

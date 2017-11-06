@@ -44,7 +44,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/14 0014.
  */
 
-public class RewardArticalFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer{
+public class 若wRewardArticalFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer{
 
     protected IPresenter presenter;
     @BindView(R.id.refresh)
