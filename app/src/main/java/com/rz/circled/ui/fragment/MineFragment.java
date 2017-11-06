@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,7 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
+import static com.umeng.socialize.utils.DeviceConfig.context;
 
 
 /**
@@ -299,6 +301,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             tvrewardCount = (TextView) header.findViewById(R.id.tv_transfer_count);
             tvcircletCount = (TextView) header.findViewById(R.id.tv_collect_count);
             tvactivityCount = (TextView) header.findViewById(R.id.tv_activity_count);
+
+            idPersonLoginDays.setTextColor(Color.argb(166, 255, 255, 255)); //背景透明度
 
             if (Protect.checkLoadImageStatus(mActivity)) {
                 Glide.with(mActivity).load(Session.getUserPicUrl()).transform(new GlideCircleImage(mActivity)).
@@ -539,15 +543,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             data = (ProveStatusBean) t;
 
             if (data.getAuthStatus() == ProveStatusBean.STATUS_ING) {
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 famousLayout.getBackground().setAlpha(255);
                 famousTxt.setText("认证审核中");
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
                 famousLayout.getBackground().setAlpha(0);
+                famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(data.getTradeField());
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 famousLayout.getBackground().setAlpha(255);
                 famousTxt.setText("认证失败");
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || data.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 famousLayout.getBackground().setAlpha(255);
                 famousTxt.setText("达人认证");
             }
@@ -586,14 +595,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             famousLayout.setVisibility(View.VISIBLE);
             if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
                 famousLayout.getBackground().setAlpha(255);
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 famousTxt.setText("认证审核中");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                famousLayout.getBackground().setAlpha(0);
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
+                famousLayout.setBackgroundResource(0);
+
+                famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(proveStatusBean.getTradeField());
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
                 famousLayout.getBackground().setAlpha(255);
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
+                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 famousLayout.getBackground().setAlpha(255);
                 famousTxt.setText("达人认证");
             }

@@ -100,6 +100,8 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
         if (type == TYPE_PART) {
             lv.setDivider(getResources().getDrawable(R.drawable.shape_private_group_divider));
             lv.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.px4));
@@ -214,6 +216,13 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             if (loadingStatus == CommonCode.General.DATA_EMPTY)
                 EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, mAdapter.getCount()));
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().unregister(this);
     }
 
     @Subscribe

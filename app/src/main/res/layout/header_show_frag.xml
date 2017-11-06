@@ -41,7 +41,7 @@
             android:id="@+id/user_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px170"
+            android:layout_marginTop="@dimen/px180"
             android:layout_marginLeft="@dimen/px30"
             android:layout_marginRight="@dimen/px30"
             android:layout_toRightOf="@+id/bg_rl_head"
@@ -91,7 +91,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_38"
                 android:text=""
-                android:layout_marginTop="@dimen/px18"
+                android:layout_marginTop="@dimen/px14"
                 />
 
 
@@ -99,6 +99,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_info_layout"
@@ -108,68 +109,20 @@
             >
 
 
-            <!--<LinearLayout-->
-                <!--android:id="@+id/scores_layout"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:background="@drawable/shape_mine_rect_divider"-->
-                <!--android:paddingLeft="@dimen/px30"-->
-                <!--android:paddingRight="@dimen/px30"-->
-                <!--android:paddingBottom="@dimen/px5"-->
-                <!--android:paddingTop="@dimen/px5"-->
-                <!--android:visibility="gone"-->
-                <!--&gt;-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:src="@mipmap/ic_scores"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/cust_points_txt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="积分 "-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="@dimen/font_34"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:layout_marginLeft="@dimen/px14"-->
-                    <!--/>-->
-
-
-            <!--</LinearLayout>-->
-
-
-
-            <!--<View-->
-                <!--style="@style/line_vertical_gray_s"-->
-                <!--android:layout_marginLeft="@dimen/px32"-->
-                <!--android:layout_marginRight="@dimen/px32"-->
-                <!--android:layout_height="@dimen/px52"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--/>-->
-
-
-
-
             <LinearLayout
                 android:id="@+id/famous_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@drawable/shape_white_bg"
-                android:padding="@dimen/px5"
                 >
 
                 <ImageView
+                    android:id="@+id/famous_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_famous"
                     android:layout_gravity="center_vertical"
-                    android:padding="@dimen/px7"
                     />
 
                 <TextView
@@ -183,7 +136,7 @@
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/font_44"
                     android:paddingLeft="@dimen/px20"
-                    android:paddingRight="@dimen/px20"
+                    android:paddingRight="@dimen/px10"
                     />
 
             </LinearLayout>
@@ -242,7 +195,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/px30"
-            android:paddingTop="@dimen/px30">
+            >
 
             <LinearLayout
                 android:id="@+id/btn_my_article"
@@ -385,13 +338,19 @@
         </LinearLayout>
     </LinearLayout>
 
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        />
     <View
         android:id="@+id/id_divider_v"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px30"
         android:background="#F5F5F5"
         android:visibility="visible"/>
-
+    <View
+        style="@style/line_horizontal_gray_s"
+        />
 
 
 </LinearLayout>
