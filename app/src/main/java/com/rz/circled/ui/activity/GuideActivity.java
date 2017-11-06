@@ -21,7 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 
 
-
 /**
  * Created by Administrator on 2017/8/11/011.
  */
@@ -66,6 +65,9 @@ public class GuideActivity extends BaseActivity {
                                 Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
                                 intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
                                 startActivity(intent);
+//                                Bundle intent =new Bundle();
+//                                intent.putString(JUMP_FIND_FIRST,FIRST_BLOOD);
+//                                skipActivity(aty, MainActivity.class,intent);
                                 finish();
                             }
                         });
