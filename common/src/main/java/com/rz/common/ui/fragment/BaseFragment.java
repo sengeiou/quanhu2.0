@@ -143,16 +143,18 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     }
 
     /**
-     * 用户是否登录
+     * 判断用户是否登录
+     * @return
      */
-    public boolean isLogin() {
+    protected boolean isLogin() {
         if (Session.getUserIsLogin()) {
             return true;
         } else {
-//            Intent login = new Intent(mActivity, LoginActivity.class);
-//            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
-            return false;
+            Intent intent = new Intent();
+            intent.setAction("quanhu.login");
+            startActivity(intent);
         }
+        return false;
     }
 
     @Override
