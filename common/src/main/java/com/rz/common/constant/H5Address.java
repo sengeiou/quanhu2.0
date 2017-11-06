@@ -15,7 +15,7 @@ public interface H5Address {
     //充值说明
     String RECHARGE_INTRODUCE = H5_HEAD + "quanhu/doc/recharge_issue/index.html";
     //中国资源
-    String CHINA_RESOURCE = "https://static.yryz.com/quanhu/activity/skating_club/index.html";
+    String CHINA_RESOURCE = "https://static.yryz.com/quanhu/activity/apply_talent/index.html";
     //账户规则
     String ACCOUNT_RULE = H5_HEAD + "quanhu/doc/account_rules/android/index.html";
 
