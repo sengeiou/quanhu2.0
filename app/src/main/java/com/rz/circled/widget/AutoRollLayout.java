@@ -1,8 +1,6 @@
 package com.rz.circled.widget;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,10 +15,6 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
-import com.rz.circled.ui.activity.LoginActivity;
-import com.rz.circled.ui.activity.VideoH5Aty;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.common.cache.preference.Session;
 import com.rz.common.utils.Protect;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -92,6 +86,7 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
         addDots();
         // 默认状态的问题
         mOnPageChangeListener.onPageSelected(0);
+
     }
 
     private void addDots() {
@@ -187,20 +182,9 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
                 @Override
                 public void onClick(View v) {
                     String url = mItems.get(i).getUrl();
-                    trackUser("推广", "Banner图", url);
-                    if (url.contains("opus")) {
-                        if (url.contains("opus-h")) {
-                            VideoH5Aty.startCommonH5((Activity) v.getContext(), url, context.getString(R.string.app_name));
-                        } else {
-                            WebContainerActivity.startActivity(v.getContext(), url, true);
-                        }
-                    } else {
-                        if (Session.getUserIsLogin()) {
-                            WebContainerActivity.startActivity(v.getContext(), url, true);
-                        } else {
-                            getContext().startActivity(new Intent(v.getContext(), LoginActivity.class));
-                        }
-                    }
+                 if (null!=mOnItemClickLisenter){
+                     mOnItemClickLisenter.onClickLisenter(i,url);
+                 }
                 }
             });
             container.addView(imageView);
@@ -215,6 +199,13 @@ public class AutoRollLayout extends FrameLayout implements View.OnClickListener 
 
     };
 
+    public interface onItemClickLisenter{
+        void onClickLisenter(int position,String url);
+    }
+    private onItemClickLisenter mOnItemClickLisenter;
+    public void setOnItemClickLisenter(onItemClickLisenter onItemClickLisenter){
+        mOnItemClickLisenter=onItemClickLisenter;
+    }
     private void trackUser(String text, String name, String value) {
         //定义与事件相关的属性信息
         JSONObject eventObject = new JSONObject();

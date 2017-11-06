@@ -156,6 +156,25 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 mRefresh.setRefreshing(false);
             }
         });
+        mAuto_viewpager.setOnItemClickLisenter(new AutoRollLayout.onItemClickLisenter() {
+            @Override
+            public void onClickLisenter(int position,String url) {
+                trackUser("推广", "Banner图", url);
+//                if (url.contains("opus")) {
+//                    if (url.contains("opus-h")) {
+//                        VideoH5Aty.startCommonH5(mActivity, url, context.getString(R.string.app_name));
+//                    } else {
+//                        WebContainerActivity.startActivity(mActivity, url, true);
+//                    }
+//                } else {
+//                    if (Session.getUserIsLogin()) {
+//                        WebContainerActivity.startActivity(mActivity, url, true);
+//                    } else {
+//                        getContext().startActivity(new Intent(mActivity, LoginActivity.class));
+//                    }
+//                }
+            }
+        });
     }
 
     @Override
