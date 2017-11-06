@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -134,6 +135,7 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
         userId = getIntent().getExtras().getString(IntentKey.KEY_ID);
         if (TextUtils.isEmpty(userId)) {
             userId = Session.getUserId();
@@ -147,6 +149,7 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     public void initData() {
 
+        signTxt.setTextColor(Color.argb(168, 255, 255, 255)); //背景透明度
         //个人中心
         if (userId.equals(Session.getUserId())) {
             if (Protect.checkLoadImageStatus(mContext)) {
@@ -187,9 +190,9 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     public void initHead() {
-        avatarLayout.getBackground().setAlpha(66);
+//        avatarLayout.getBackground().setAlpha(66);
         newTitilbar = View.inflate(this, R.layout.titlebar_user_info, null);
-        newTitilbar.setBackgroundResource(R.mipmap.topbar_blue_top);
+//        newTitilbar.setBackgroundResource(R.mipmap.topbar_blue_top);
         newTitilbar.getBackground().mutate().setAlpha(255);
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);

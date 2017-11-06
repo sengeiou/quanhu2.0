@@ -128,7 +128,6 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                 lv.addFooterView(view);
             }
         }
-
         lv.setAdapter(mAdapter = new DefaultPrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

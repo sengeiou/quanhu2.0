@@ -10,7 +10,7 @@
         android:id="@+id/id_person_news_rela"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px520"
-        android:background="@mipmap/perision_info_head"
+        android:background="@color/mine_blue_color"
         android:clickable="true"
         android:paddingBottom="@dimen/px50"
         android:paddingLeft="@dimen/px45"
@@ -21,16 +21,15 @@
 
         <RelativeLayout
             android:id="@+id/bg_rl_head"
-            android:layout_width="@dimen/px217"
-            android:layout_height="@dimen/px217"
-            android:background="@drawable/shape_circle"
+            android:layout_width="@dimen/px216"
+            android:layout_height="@dimen/px216"
             android:layout_marginTop="@dimen/px176"
             >
 
             <ImageView
                 android:id="@+id/id_person_head_img"
-                android:layout_width="@dimen/px188"
-                android:layout_height="@dimen/px188"
+                android:layout_width="@dimen/px217"
+                android:layout_height="@dimen/px217"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_default_head"
                 android:layout_centerInParent="true"
@@ -42,7 +41,7 @@
             android:id="@+id/user_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/px190"
+            android:layout_marginTop="@dimen/px180"
             android:layout_marginLeft="@dimen/px30"
             android:layout_marginRight="@dimen/px30"
             android:layout_toRightOf="@+id/bg_rl_head"
@@ -63,7 +62,7 @@
                     android:includeFontPadding="false"
                     android:gravity="start"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_48"
+                    android:textSize="@dimen/font_52"
                     android:text=""
                     />
 
@@ -74,13 +73,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/px36"
                     android:gravity="center"
-                    android:text="Lv.10"
+                    android:text="Lv.1"
                     android:textColor="@color/color_FFF000"
                     android:textSize="@dimen/px44"
                     />
 
             </LinearLayout>
-            
+
 
 
             <TextView
@@ -92,14 +91,15 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_38"
                 android:text=""
-                android:layout_marginTop="@dimen/px24"
+                android:layout_marginTop="@dimen/px14"
                 />
 
 
 
         </LinearLayout>
-        
+
         <LinearLayout
+            android:id="@+id/lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_info_layout"
@@ -110,66 +110,20 @@
 
 
             <LinearLayout
-                android:id="@+id/scores_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/shape_mine_rect_divider"
-                android:paddingLeft="@dimen/px30"
-                android:paddingRight="@dimen/px30"
-                android:paddingBottom="@dimen/px5"
-                android:paddingTop="@dimen/px5"
-                >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_scores"
-                    android:layout_gravity="center_vertical"
-                    />
-
-                <TextView
-                    android:id="@+id/cust_points_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="积分 "
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_34"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/px14"
-                    />
-
-
-            </LinearLayout>
-
-
-
-            <View
-                style="@style/line_vertical_gray_s"
-                android:layout_marginLeft="@dimen/px32"
-                android:layout_marginRight="@dimen/px32"
-                android:layout_height="@dimen/px52"
-                android:layout_gravity="center_vertical"
-                />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_famous"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/px11"
-                />
-
-
-            <LinearLayout
                 android:id="@+id/famous_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@drawable/shape_white_bg"
-                android:alpha="77"
-                android:padding="@dimen/px5"
                 >
+
+                <ImageView
+                    android:id="@+id/famous_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_famous"
+                    android:layout_gravity="center_vertical"
+                    />
 
                 <TextView
                     android:id="@+id/famous_txt"
@@ -178,11 +132,11 @@
                     android:text=""
                     android:singleLine="true"
                     android:ellipsize="end"
-                    android:textColor="@color/white"
+                    android:textColor="@color/color_F5CD45"
                     android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/font_34"
+                    android:textSize="@dimen/font_44"
                     android:paddingLeft="@dimen/px20"
-                    android:paddingRight="@dimen/px20"
+                    android:paddingRight="@dimen/px10"
                     />
 
             </LinearLayout>
@@ -241,7 +195,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/px30"
-            android:paddingTop="@dimen/px30">
+            >
 
             <LinearLayout
                 android:id="@+id/btn_my_article"
@@ -384,13 +338,19 @@
         </LinearLayout>
     </LinearLayout>
 
+
+    <View
+        style="@style/line_horizontal_gray_s"
+        />
     <View
         android:id="@+id/id_divider_v"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px30"
         android:background="#F5F5F5"
         android:visibility="visible"/>
-
+    <View
+        style="@style/line_horizontal_gray_s"
+        />
 
 
 </LinearLayout>

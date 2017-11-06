@@ -126,7 +126,7 @@
     <string name="play_audio_fail">播放音频失败</string>
     <string name="share">分享</string>
     <string name="add_text">添加正文</string>
-    <string name="add_text_pic_here">在这里添加文字和图文...</string>
+    <string name="add_text_pic_here">在这里，输入文字或者添加图片、视频</string>
     <string name="delete">删除</string>
     <string name="text">文字</string>
     <string name="video">视频</string>
@@ -549,6 +549,7 @@
     <string name="my_circle">我的圈子</string>
     <string name="my_transfer">我的转发</string>
     <string name="my_collect">我的收藏</string>
+    <string name="my_score">我的积分</string>
     <string name="red_bag_adv">红包广告</string>
     <string name="other_login_style">其他登录方式</string>
     <string name="replace_bind_phone">更换绑定手机请联系客服</string>
@@ -745,7 +746,7 @@
     <string name="app_had_at">"[有人@我] "</string>
     <string name="app_lucky_money">"[红包] "</string>
 
-    <string name="choose_prove_identity">选择认证身份</string>
+    <string name="choose_prove_identity">达人认证</string>
     <string name="true_name">真实姓名</string>
     <string name="phone_number">手机号</string>
     <string name="required">(必填)</string>
@@ -829,4 +830,10 @@
     <string name="hava_updata">有更新</string>
     <string name="wifi_upload">当前无WiFi连接，继续上传视频将消耗您的自有流量</string>
     <string name="wifi_play">当前无WiFi连接，继续播放将消耗您的自有流量</string>
+    <string name="what_identity">什么是达人认证？</string>
+    <string name="what_identity_answer">达人认证是圈乎提供的一项身份识别服务，用户在通过认证后，可成为圈乎达人，达人可享有特殊的身份及权益。</string>
+    <string name="what_good">成为圈乎达人有什么好处？</string>
+    <string name="what_good_answer">在圈乎平台，达人标识是行业专家或领袖的重要标志，如果您成功认证为达人，会员等级可自动升级到LV5，有权限创建私圈，成为私圈圈主，且享有达人专属的活动及权益。</string>
+    <string name="how_identity">怎么认证？</string>
+    <string name="how_identity_answer">达人认证分为两类，个人认证和机构认证，您可根据认证需求自行选择，填写对应信息提交， 圈乎在收到认证申请后，3个工作日反馈通过或未通过认证的结果。</string>
 </resources>
