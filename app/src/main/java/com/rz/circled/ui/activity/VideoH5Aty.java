@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.rz.circled.R;
+import com.rz.circled.modle.ShareModel;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.utils.StatusBarUtils;
@@ -70,8 +72,11 @@ public class VideoH5Aty extends Activity {
      */
     private String titleName;
 
+    private String titleDescription;
+
     private TextView titleText, titleBack;
 
+    private TextView mTvTitleBarRight;
 
     /**
      * 启动h5界面
@@ -108,12 +113,24 @@ public class VideoH5Aty extends Activity {
         StatusBarUtils.setDarkStatusIcon(this, true);
         titleText = (TextView) findViewById(R.id.titlebar_title_text);
         titleBack = (TextView) findViewById(R.id.titlebar_back_text);
+        mTvTitleBarRight = (TextView) findViewById(R.id.titlebar_right_text);
         page = getIntent().getIntExtra("page", Constants.DEFAULTVALUE);
         url = getIntent().getStringExtra(IntentKey.KEY_URL);
         if (getIntent().getStringExtra(IntentKey.KEY_DESC) != null) {
             titleName = getIntent().getStringExtra(IntentKey.KEY_DESC);
             setTitleText(titleName);
         }
+
+        titleDescription = getString(R.string.app_name);
+
+        mTvTitleBarRight.setText("分享");
+        mTvTitleBarRight.setTextColor(getResources().getColor(R.color.font_gray_l));
+        mTvTitleBarRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                injectGetContent();
+            }
+        });
 
         titleBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +158,7 @@ public class VideoH5Aty extends Activity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.setHorizontalScrollbarOverlay(false);
         webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        webView.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
 //        webView.addJavascriptInterface(this, ServerProxy.JAVA_BRIDGE);
 
         webView.setDownloadListener(new DownloadListener() {
@@ -196,6 +214,25 @@ public class VideoH5Aty extends Activity {
             }
             return true;
         }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+        }
+    }
+
+    private void injectGetContent() {
+        String script = "javascript:window.local_obj.getMetaContent(function (){" +
+                "var children = document.head.children;var sons=[];" +
+                "for (var i=0; i<children.length; i++) {" +
+                "var son = children[i];sons.push(son.outerHTML);" +
+                "   if (son.tagName.toLowerCase()=='meta' && son.name == 'description') {" +
+                "       return son.content;" +
+                "       }" +
+                "   }" +
+                " return \"\"}());";
+        Log.e("zxw", "injectGetContent: " + script);
+        webView.loadUrl(script);
     }
 
     private void initVideoConfig() {
@@ -213,6 +250,18 @@ public class VideoH5Aty extends Activity {
                 Log.d("yeying", "onProgressChanged " + progress);
             }
 
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                Bundle extras = getIntent().getExtras();
+                Log.d("videoH5", "webTitle = " + title);
+                if (extras != null && TextUtils.isEmpty(extras.getString(IntentKey.EXTRA_TITLE)) && !TextUtils.isEmpty(title)) {
+//                    String loadUrl = mWebView.getUrl();
+                    if (!TextUtils.isEmpty(title) && !title.startsWith("http://") && !title.startsWith("https://") && !title.startsWith("www."))
+                        setTitleText(title);
+                }
+                titleName = !TextUtils.isEmpty(title) ? title : titleName;
+            }
         };
         webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
             @Override
@@ -308,9 +357,26 @@ public class VideoH5Aty extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         webView.onPause();
     }
 
+    /**
+     * 获取WebView的数据:标题,描述,分享链接等
+     */
+    final class InJavaScriptLocalObj {
+        @android.webkit.JavascriptInterface
+        public void getMetaContent(String string) {
+            Log.e("zxw", "getShareTitle: " + string);
+            titleDescription = TextUtils.isEmpty(string) ? getString(R.string.app_name) : string;
+            ShareNewsAty.startShareNews(VideoH5Aty.this, new ShareModel(titleName, titleDescription, url));
+        }
+    }
 }
