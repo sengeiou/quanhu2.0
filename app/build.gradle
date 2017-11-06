@@ -147,7 +147,7 @@ android {
             buildConfigField "String", "BaseOpusUrl", "\"http://opusapi-dev.quanhu365.com/\""
             buildConfigField "String", "HomeUrl", "\"http://www-dev.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
-            buildConfigField "String", "OpusBaseUrl", "\"https://opus-dev.quanhu365.com\""
+            buildConfigField "String", "OpusBaseUrl", "\"http://opus-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
@@ -235,6 +235,7 @@ dependencies {
     compile project(':umshare')
     compile project(':zbarsdk')
     compile project(':rangebar')
+    compile project(':ucrop')
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'

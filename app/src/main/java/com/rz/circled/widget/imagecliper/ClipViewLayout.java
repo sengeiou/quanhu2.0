@@ -260,19 +260,19 @@ public class ClipViewLayout extends RelativeLayout {
                         //手势缩放比例
                         float scale = newDist / oldDist;
                         if (scale < 1) { //缩小
-                            // 边界检查
-                            if (!checkBorder())
-                                if (getScale() > minScale) {
-                                    matrix.set(savedMatrix);
-                                    mVerticalPadding = clipView.getClipRect().top;
+                            if (getScale() > minScale) {
+                                matrix.set(savedMatrix);
+                                mVerticalPadding = clipView.getClipRect().top;
+                                matrix.postScale(scale, scale, mid.x, mid.y);
+                                //缩放到最小范围下面去了，则返回到最小范围大小
+                                if (getScale() < minScale) {
+                                    //返回到最小范围的放大比例
+                                    scale = minScale / getScale();
                                     matrix.postScale(scale, scale, mid.x, mid.y);
-                                    //缩放到最小范围下面去了，则返回到最小范围大小
-                                    while (getScale() < minScale) {
-                                        //返回到最小范围的放大比例
-                                        scale = 1 + 0.01F;
-                                        matrix.postScale(scale, scale, mid.x, mid.y);
-                                    }
                                 }
+                            }
+                            // 边界检查
+                            checkBorder();
                         } else { //放大
                             if (getScale() <= maxScale) {
                                 matrix.set(savedMatrix);
@@ -311,21 +311,21 @@ public class ClipViewLayout extends RelativeLayout {
         int width = imageView.getWidth();
         int height = imageView.getHeight();
         // 如果宽或高大于屏幕，则控制范围 ; 这里的0.001是因为精度丢失会产生问题，但是误差一般很小，所以我们直接加了一个0.01
-        if (rect.width() > width - 2 * mHorizontalPadding) {
+        if (rect.width() >= width - 2 * mHorizontalPadding) {
             if (rect.left >= mHorizontalPadding) {
                 deltaX = -rect.left + mHorizontalPadding;
             }
             if (rect.right < width - mHorizontalPadding) {
                 deltaX = width - mHorizontalPadding - rect.right;
             }
-//            if (rect.height() < height - 2 * mVerticalPadding) {
-//                if (rect.top < mVerticalPadding) {
-//                    deltaY = -rect.top + mVerticalPadding;
-//                }
-//                if (rect.bottom > height - mVerticalPadding) {
-//                    deltaY = height - mVerticalPadding - rect.bottom;
-//                }
-//            }
+            if (rect.height() < height - 2 * mVerticalPadding) {
+                if (rect.top < mVerticalPadding) {
+                    deltaY = -rect.top + mVerticalPadding;
+                }
+                if (rect.bottom > height - mVerticalPadding) {
+                    deltaY = height - mVerticalPadding - rect.bottom;
+                }
+            }
         }
         if (rect.height() >= height - 2 * mVerticalPadding) {
             if (rect.top > mVerticalPadding) {
@@ -334,14 +334,14 @@ public class ClipViewLayout extends RelativeLayout {
             if (rect.bottom < height - mVerticalPadding) {
                 deltaY = height - mVerticalPadding - rect.bottom;
             }
-//            if (rect.width() < width - 2 * mHorizontalPadding) {
-//                if (rect.left < mHorizontalPadding) {
-//                    deltaX = -rect.left + mHorizontalPadding;
-//                }
-//                if (rect.right > width - mHorizontalPadding) {
-//                    deltaX = width - mHorizontalPadding - rect.right;
-//                }
-//            }
+            if (rect.width() < width - 2 * mHorizontalPadding) {
+                if (rect.left < mHorizontalPadding) {
+                    deltaX = -rect.left + mHorizontalPadding;
+                }
+                if (rect.right > width - mHorizontalPadding) {
+                    deltaX = width - mHorizontalPadding - rect.right;
+                }
+            }
         }
         matrix.postTranslate(deltaX, deltaY);
         return deltaX != 0 || deltaY != 0;

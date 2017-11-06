@@ -28,6 +28,8 @@ import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
+import com.yalantis.ucrop.UCrop;
+import com.yalantis.ucrop.UCropActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -171,6 +173,14 @@ public class UploadPicActivity extends BaseActivity {
     private void doPhoto(Uri uri) {
         initHeadPicPath();
         gotoClipActivity(uri);
+//        UCrop.Options options = new UCrop.Options();
+//        options.setAllowedGestures(UCropActivity.ALL, UCropActivity.ALL, UCropActivity.ALL);
+//        UCrop.of(uri, uri)
+//                .withAspectRatio(16, 9)
+//                .withMaxResultSize(1600, 900)
+//                .withOptions(options)
+//                .start(UploadPicActivity.this);
+
 //        int width = rlRoot.getWidth();
 //        int height = rlRoot.getHeight();
 //        if (scaleY * width < height) {
