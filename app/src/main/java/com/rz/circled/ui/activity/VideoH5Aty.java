@@ -117,11 +117,8 @@ public class VideoH5Aty extends Activity {
         page = getIntent().getIntExtra("page", Constants.DEFAULTVALUE);
         url = getIntent().getStringExtra(IntentKey.KEY_URL);
         if (getIntent().getStringExtra(IntentKey.KEY_DESC) != null) {
-            titleName = getIntent().getStringExtra(IntentKey.KEY_DESC);
-            setTitleText(titleName);
+            setTitleText(getIntent().getStringExtra(IntentKey.KEY_DESC));
         }
-
-        titleDescription = getString(R.string.app_name);
 
         mTvTitleBarRight.setText("分享");
         mTvTitleBarRight.setTextColor(getResources().getColor(R.color.font_gray_l));
@@ -138,7 +135,6 @@ public class VideoH5Aty extends Activity {
                 onBackPressed();
             }
         });
-
 
         webView.setVisibility(View.VISIBLE);
         webView.getSettings().setDomStorageEnabled(true);
@@ -260,7 +256,7 @@ public class VideoH5Aty extends Activity {
                     if (!TextUtils.isEmpty(title) && !title.startsWith("http://") && !title.startsWith("https://") && !title.startsWith("www."))
                         setTitleText(title);
                 }
-                titleName = !TextUtils.isEmpty(title) ? title : titleName;
+                titleName = !TextUtils.isEmpty(title) ? title : getString(R.string.share_activity_title);
             }
         };
         webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
@@ -375,7 +371,7 @@ public class VideoH5Aty extends Activity {
         @android.webkit.JavascriptInterface
         public void getMetaContent(String string) {
             Log.e("zxw", "getShareTitle: " + string);
-            titleDescription = TextUtils.isEmpty(string) ? getString(R.string.app_name) : string;
+            titleDescription = TextUtils.isEmpty(string) ? getString(R.string.share_activity_desc) : string;
             ShareNewsAty.startShareNews(VideoH5Aty.this, new ShareModel(titleName, titleDescription, url));
         }
     }
