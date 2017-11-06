@@ -1,6 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -17,8 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
@@ -126,15 +123,15 @@ public class SplashAty extends BaseActivity {
                         skipActivity(aty, MainActivity.class);
                         return;
                     }
-                    if (!Session.getUserIsFirstGuide()) {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
-                        startActivity(intent);
-                        finish();
-
-                    }else{
+//                    if (!Session.getUserIsFirstGuide()) {
+//                        Intent intent = new Intent(mContext, LoginActivity.class);
+//                        intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
+//                        startActivity(intent);
+//                        finish();
+//
+//                    }else{
                         skipActivity(aty, GuideActivity.class);
-                    }
+//                    }
                 }
             }
         }, 2000);
