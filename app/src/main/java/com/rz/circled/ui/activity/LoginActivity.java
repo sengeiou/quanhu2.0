@@ -28,7 +28,6 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
-import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.db.DBHelper;
 import com.rz.circled.js.model.HeaderModel;
 import com.rz.circled.modle.ShowListModel;
@@ -568,14 +567,14 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void jumpWhere() {
-        if(StringUtil.isEmpty(className)){
-            skipActivity(aty, MainActivity.class);
-        }else{
-            Intent intent = new Intent();
-            intent.setClassName(this,className);
-            startActivity(intent);
-//            StatusBarUtils.setDarkStatusIcon(this, false);
-        }
+//        if(StringUtil.isEmpty(className)){
+//            skipActivity(aty, MainActivity.class);
+//        }else{
+//            Intent intent = new Intent();
+//            intent.setClassName(this,className);
+//            startActivity(intent);
+////            StatusBarUtils.setDarkStatusIcon(this, false);
+//        }
     }
 
     //登录成功后保存数据
