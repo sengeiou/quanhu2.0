@@ -207,20 +207,6 @@ public class LoginActivity extends BaseActivity {
             }
         }
 
-//        mBtnSendCode.setVisibility(View.VISIBLE);
-//        mEditPass.setHint("请输入验证码");
-//        typePwd.setImageResource(R.mipmap.icon_code);
-//        mImgWatchPw.setVisibility(View.GONE);
-//        mEditPass.setText("");
-//        mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-
-//        //动态设置top图片
-//        Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
-//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-//        layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
-//        layoutLoginPhone.setText("密码登录");
-
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
             mImgClearPhone.setVisibility(View.VISIBLE);
@@ -237,7 +223,6 @@ public class LoginActivity extends BaseActivity {
         if (BackGroundService.time_code != 0) {
             startCount(BackGroundService.time_code);
         }
-
     }
 
     @Override
@@ -394,6 +379,7 @@ public class LoginActivity extends BaseActivity {
                 mIvBack.setVisibility(View.GONE);
             }
 
+
             codeType = 1;
 
         }
@@ -536,6 +522,8 @@ public class LoginActivity extends BaseActivity {
 
                 saveLoginData(loginModel);
                 jumpWhere();
+
+                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
 //                if (getIntent().getBooleanExtra("isFromSplash", false)) {
 //                    skipActivity(aty, MainActivity.class);
