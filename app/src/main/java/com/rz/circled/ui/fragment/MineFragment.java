@@ -73,6 +73,8 @@ import com.rz.httpapi.bean.DataStatisticsBean;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.UserSignBean;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -354,6 +356,19 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     }
 
+    private void checkUpdate() {
+        /***** 获取升级信息 *****/
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+        boolean update = Session.getUserIsLogin() && upgradeInfo != null && !mModelList.isEmpty() && null != adapter;
+        for (MineFragItemModel item : mModelList) {
+            if (TextUtils.equals(item.getName(), getString(R.string.mine_my_setting))) {
+                item.setUpdate(update);
+                adapter.notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -412,7 +427,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         MineFragItemModel modeBuy = new MineFragItemModel(true, getString(R.string.my_purchase), R.mipmap.ic_buy, false);
         MineFragItemModel modeReward = new MineFragItemModel(true, getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
         MineFragItemModel modeColection = new MineFragItemModel(true, getString(R.string.my_collect), R.mipmap.ic_colection, true);
-        modeScore = new MineFragItemModel(true, Session.getCustPoints(),getString(R.string.my_score), R.mipmap.ic_score, false);
+        modeScore = new MineFragItemModel(true, Session.getCustPoints(), getString(R.string.my_score), R.mipmap.ic_score, false);
         MineFragItemModel modeLevel = new MineFragItemModel(true, getString(R.string.my_level), R.mipmap.ic_level, false);
         MineFragItemModel modeAcount = new MineFragItemModel(true, getString(R.string.mine_my_account), R.mipmap.ic_count, false);
         MineFragItemModel modeTicket = new MineFragItemModel(true, getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
@@ -499,6 +514,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
 
         initUserNews();
+        checkUpdate();
     }
 
     @Override
@@ -794,6 +810,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 getUserProveStatus();
             setData();
         }
+
         if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
             setData();
             return;
@@ -825,7 +842,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private void setData() {
         mTxtPersonName.setText(Session.getUserName());
         levelTxt.setText("Lv. " + Session.getUserLevel());
-        if(tv_remark != null){
+        if (tv_remark != null) {
             tv_remark.setText(Session.getCustPoints());
         }
 
@@ -849,16 +866,15 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             mUnread.setVisibility(View.GONE);
         }
         int unreadNum = (TextUtils.isEmpty(Session.getUserFocusNum()) ? 0 : Integer.parseInt(Session.getUserFocusNum()));
-        if (Session.getUserIsLogin() && unreadNum != 0 && null != mModelList && !mModelList.isEmpty() && null != adapter) {
-            mModelList.get(6).setContacts(true);
-            mModelList.get(6).setmFocusNum(String.valueOf(unreadNum));
-            adapter.notifyDataSetChanged();
-        } else {
-            if (mModelList == null)
+        if (mModelList == null) return;
+        boolean redDot = Session.getUserIsLogin() && unreadNum != 0 && !mModelList.isEmpty() && null != adapter;
+        for (MineFragItemModel item : mModelList) {
+            if (TextUtils.equals(item.getName(), getString(R.string.mine_my_contacts))) {
+                item.setContacts(redDot);
+                item.setmFocusNum(redDot ? String.valueOf(unreadNum) : "");
+                adapter.notifyDataSetChanged();
                 return;
-            mModelList.get(6).setContacts(false);
-            mModelList.get(6).setmFocusNum("");
-            adapter.notifyDataSetChanged();
+            }
         }
     }
 

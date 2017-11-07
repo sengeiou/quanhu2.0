@@ -122,6 +122,13 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        checkUpdate(false);
+        calculateCache();
+    }
+
+    private void checkUpdate(boolean showUpdateDialog) {
+        /***** 检查更新 *****/
+        if (showUpdateDialog) Beta.checkUpgrade();
 
         /***** 获取升级信息 *****/
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
@@ -135,8 +142,6 @@ public class SettingActivity extends BaseActivity {
             event.key = "noVersionUpdate";
             EventBus.getDefault().post(event);
         }
-
-        calculateCache();
     }
 
     /**
@@ -162,7 +167,7 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit,R.id.id_layout_update})
+    @OnClick({R.id.id_layout_account_and_safe, R.id.id_layout_send_friend_ll, R.id.id_layout_clean_cache, R.id.id_btn_exit, R.id.id_layout_update})
     public void onClick(View view) {
         View dialogView = LayoutInflater.from(aty).inflate(R.layout.comm_dialog, null);
         final Dialog dialog = DialogUtils.selfDialog(aty, dialogView, false);
@@ -185,21 +190,7 @@ public class SettingActivity extends BaseActivity {
                         IntentCode.Setting.SETTING_RESULT_CODE);
                 break;
             case R.id.id_layout_update:
-                /***** 检查更新 *****/
-                Beta.checkUpgrade();
-
-                /***** 获取升级信息 *****/
-                UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-
-                if (upgradeInfo != null) {
-                    BaseEvent event = new BaseEvent();
-                    event.key = "versionUpdate";
-                    EventBus.getDefault().post(event);
-                } else {
-                    BaseEvent event = new BaseEvent();
-                    event.key = "noVersionUpdate";
-                    EventBus.getDefault().post(event);
-                }
+                checkUpdate(true);
                 break;
             //清除缓存
             case R.id.id_layout_clean_cache:
@@ -210,9 +201,9 @@ public class SettingActivity extends BaseActivity {
                     public void onClick(View view) {
                         dialog.dismiss();
                         mTxtCacheNum.setText("0M");
-                        DataCleanManager.cleanApplicationData(mContext,"");
+                        DataCleanManager.cleanApplicationData(mContext, "");
                         Session.setUserIsFirstDownload(false);
-                        Toast.makeText(mContext,getString(R.string.clean_cache_complete),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, getString(R.string.clean_cache_complete), Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -256,7 +247,6 @@ public class SettingActivity extends BaseActivity {
     }
 
     public void exitApp() {
-
         int loginWay = Session.getLoginWay();
         if (loginWay != Type.LOGIN_PHONE) {
             String openId = Session.getOpenId();
@@ -324,6 +314,7 @@ public class SettingActivity extends BaseActivity {
             snsPresenter.detachView();
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventUpdate(BaseEvent event) {
         if (TextUtils.equals("versionUpdate", event.key)) {
@@ -335,6 +326,7 @@ public class SettingActivity extends BaseActivity {
             mTvVersionName.setTextColor(getResources().getColor(R.color.color_666666));
         }
     }
+
     /**
      * 用户是否登录
      */
