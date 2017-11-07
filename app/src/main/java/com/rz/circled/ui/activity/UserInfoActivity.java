@@ -411,19 +411,14 @@ public class UserInfoActivity extends BaseActivity {
     @OnClick(R.id.add_friend_btn)
     public void addFriendClick() {
 
-        if(Session.getUserIsLogin()){
+        if(isLogin()){
             if (model != null && model.getRelation() == 0) {
                 ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
             } else {
                 if (checkLogin() && model != null)
                     SessionHelper.startP2PSession(this, model.getCustId());
             }
-        }else{
-            Bundle bundle = new Bundle();
-            bundle.putString(CommonConstants.CLASSNAME,"com.rz.circled.ui.activity.UserInfoActivity");
-            showActivity(this,LoginActivity.class,bundle);
         }
-
     }
 
     @OnClick(R.id.user_avatar)

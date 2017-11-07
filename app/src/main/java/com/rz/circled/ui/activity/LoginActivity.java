@@ -155,7 +155,7 @@ public class LoginActivity extends BaseActivity {
      */
     private MyCount mc;
 
-    private String className = "";
+    private String jumpType = "";
 
     @Override
     protected boolean needSwipeBack() {
@@ -202,8 +202,8 @@ public class LoginActivity extends BaseActivity {
     public void initView() {
 
         if(getIntent().getExtras()!= null){
-            className =  getIntent().getExtras().getString(CommonConstants.CLASSNAME);
-            if(className != null){
+            jumpType =  getIntent().getExtras().getString(Constants.JUMPTYPE);
+            if(!TextUtils.isEmpty(jumpType)){
                 mIvBack.setVisibility(View.VISIBLE);
             }
         }
@@ -305,7 +305,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.titlebar_main_left_btn)
     public void onClick() {
 
-        if(StringUtil.isEmpty(className)){
+        if(StringUtil.isEmpty(jumpType)){
             setData();
         }else{
             this.finish();
@@ -567,14 +567,14 @@ public class LoginActivity extends BaseActivity {
             skipActivity(aty,FollowCircle.class);
             return;
         }
-        if(StringUtil.isEmpty(className)){
-            skipActivity(aty, MainActivity.class);
-        }else{
-            Intent intent = new Intent();
-            intent.setClassName(this,className);
-            startActivity(intent);
-//            StatusBarUtils.setDarkStatusIcon(this, false);
-        }
+//        if(StringUtil.isEmpty(className)){
+//            skipActivity(aty, MainActivity.class);
+//        }else{
+//            Intent intent = new Intent();
+//            intent.setClassName(this,className);
+//            startActivity(intent);
+////            StatusBarUtils.setDarkStatusIcon(this, false);
+//        }
     }
 
     //登录成功后保存数据

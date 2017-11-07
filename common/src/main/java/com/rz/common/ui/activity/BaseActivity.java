@@ -28,6 +28,7 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
@@ -678,6 +679,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             return true;
         } else {
             Intent intent = new Intent();
+            intent.putExtra(Constants.JUMPTYPE,Constants.BACKLOGIN);
             intent.setAction("quanhu.login");
             startActivity(intent);
         }
