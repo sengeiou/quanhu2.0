@@ -525,7 +525,7 @@ public class LoginActivity extends BaseActivity {
 
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
-                if(!checkApplication("com.rz.circled.ui.activity")){
+                if(!checkApplication("com.rz.circled.ui.activity.MainActivity")){
                     skipActivity(aty, MainActivity.class);
                 }
 
