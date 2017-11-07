@@ -48,7 +48,6 @@ import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.NetUtils;
-import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.SwipeBackLayout;
@@ -567,14 +566,14 @@ public class LoginActivity extends BaseActivity {
             skipActivity(aty,FollowCircle.class);
             return;
         }
-        if(StringUtil.isEmpty(className)){
-            skipActivity(aty, MainActivity.class);
-        }else{
-            Intent intent = new Intent();
-            intent.setClassName(this,className);
-            startActivity(intent);
-//            StatusBarUtils.setDarkStatusIcon(this, false);
-        }
+//        if(StringUtil.isEmpty(className)){
+//            skipActivity(aty, MainActivity.class);
+//        }else{
+//            Intent intent = new Intent();
+//            intent.setClassName(this,className);
+//            startActivity(intent);
+////            StatusBarUtils.setDarkStatusIcon(this, false);
+//        }
     }
 
     //登录成功后保存数据
