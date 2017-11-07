@@ -166,10 +166,12 @@ public class FindFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
-                if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)&&isLogin()) {
-                    Intent intent = new Intent(mActivity, AllCirclesAty.class);
-                    intent.putExtra(LOVE_CIRCLE, (Serializable) circleEntrModleList);
-                    getActivity().startActivity(intent);
+                if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
+                    if (isLogin()) {
+                        Intent intent = new Intent(mActivity, AllCirclesAty.class);
+                        intent.putExtra(LOVE_CIRCLE, (Serializable) circleEntrModleList);
+                        getActivity().startActivity(intent);
+                    }
                 } else {
                     circleEntrModle.click += 1;
                     WebContainerActivity.startActivity(mActivity, circleEntrModleList.get(position).circleUrl);
