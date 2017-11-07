@@ -307,7 +307,11 @@ public class LoginActivity extends BaseActivity {
         if(StringUtil.isEmpty(jumpType)){
             setData();
         }else{
-            this.finish();
+            if(codeType == 1){
+                this.finish();
+            }else{
+                setData();
+            }
         }
     }
 
@@ -386,7 +390,9 @@ public class LoginActivity extends BaseActivity {
             typePwd.setImageResource(R.mipmap.ic_login_pw);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            mIvBack.setVisibility(View.GONE);
+            if(StringUtil.isEmpty(jumpType)){
+                mIvBack.setVisibility(View.GONE);
+            }
 
             codeType = 1;
 

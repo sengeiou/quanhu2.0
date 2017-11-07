@@ -679,8 +679,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             return true;
         } else {
             Intent intent = new Intent();
-            intent.putExtra(Constants.JUMPTYPE,Constants.BACKLOGIN);
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
             intent.setAction("quanhu.login");
+            intent.putExtras(bundle);
             startActivity(intent);
         }
         return false;
