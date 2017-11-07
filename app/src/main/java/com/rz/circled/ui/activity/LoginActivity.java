@@ -203,6 +203,9 @@ public class LoginActivity extends BaseActivity {
 
         if(getIntent().getExtras()!= null){
             className =  getIntent().getExtras().getString(CommonConstants.CLASSNAME);
+            if(className != null){
+                mIvBack.setVisibility(View.VISIBLE);
+            }
         }
 
 //        mBtnSendCode.setVisibility(View.VISIBLE);
@@ -302,7 +305,11 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.titlebar_main_left_btn)
     public void onClick() {
 
-        setData();
+        if(StringUtil.isEmpty(className)){
+            setData();
+        }else{
+            this.finish();
+        }
     }
 
 
@@ -566,7 +573,7 @@ public class LoginActivity extends BaseActivity {
             Intent intent = new Intent();
             intent.setClassName(this,className);
             startActivity(intent);
-            StatusBarUtils.setDarkStatusIcon(this, false);
+//            StatusBarUtils.setDarkStatusIcon(this, false);
         }
     }
 
