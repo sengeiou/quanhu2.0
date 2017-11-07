@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.rz.common.R;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Constants;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -149,7 +150,10 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
             return true;
         } else {
             Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
             intent.setAction("quanhu.login");
+            intent.putExtras(bundle);
             startActivity(intent);
         }
         return false;

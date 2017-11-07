@@ -35,6 +35,7 @@ import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
@@ -195,7 +196,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             if (TextUtils.equals(tabTags[4], tabId)) {
                 Bundle bundle = new Bundle();
 //                bundle.putString("tabIndex", tabId);
-                bundle.putString(CommonConstants.CLASSNAME,"com.rz.circled.ui.activity.MainActivity");
+                bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
                 showActivity(this, LoginActivity.class, bundle);
                 return true;
             }

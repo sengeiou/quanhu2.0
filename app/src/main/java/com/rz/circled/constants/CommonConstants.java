@@ -8,4 +8,5 @@ public class CommonConstants {
 
     public static final String  CLASSNAME = "ClassName";
 
+
 }
