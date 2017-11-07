@@ -3,6 +3,7 @@ package com.rz.circled.ui.activity;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -525,7 +526,10 @@ public class LoginActivity extends BaseActivity {
 
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
-                if(!checkApplication("com.rz.circled.ui.activity")){
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.rz.circled.ui.activity.MainActivity");
+                ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                if(resolveInfo == null) {
                     skipActivity(aty, MainActivity.class);
                 }
 
@@ -886,18 +890,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void refreshPage() {
 
-    }
-
-    public boolean checkApplication(String packageName) {
-        if (packageName == null || "".equals(packageName)){
-            return false;
-        }
-        try {
-            ApplicationInfo info = getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
     }
 
 
