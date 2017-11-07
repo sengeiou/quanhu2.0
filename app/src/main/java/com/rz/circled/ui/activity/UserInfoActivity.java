@@ -49,6 +49,7 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RequestFriendStatusBean;
 import com.yryz.yunxinim.session.SessionHelper;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -297,7 +298,9 @@ public class UserInfoActivity extends BaseActivity {
                 ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
                 break;
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
-                ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+                if(model != null && !StringUtil.isEmpty(model.getCustId())){
+                    ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
+                }
                 break;
         }
     }
