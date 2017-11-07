@@ -312,12 +312,11 @@ public class FindFragment extends BaseFragment {
                 fvh.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (isLogin()) {
                             String starName = famousModel.custInfo.getCustNname();
                             String custId = famousModel.custInfo.getCustId();
                             trackUser("推广", "达人", starName);
                             UserInfoActivity.newFrindInfo(mActivity, custId);
-                        }
+
                     }
                 });
             }
