@@ -22,7 +22,7 @@ def gitVersionCode() {
  * @return versionName
  */
 def gitVersionName(String buildType) {
-    def defaultVersion = "1.0.0"
+    def defaultVersion = "v1.0.0"
     def cmd = 'git describe --tags'
     def version = cmd.execute().text.trim()
     println("tag:" + version)
@@ -40,7 +40,7 @@ def gitVersionName(String buildType) {
     println("versionName:" + version)
     println("-----")
     version = version.substring(1)
-    return "1.0.3"
+    return version
 }
 
 android {

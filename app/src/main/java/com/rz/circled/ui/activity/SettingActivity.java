@@ -122,8 +122,13 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        checkUpdate(false);
         calculateCache();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkUpdate(false);
     }
 
     private void checkUpdate(boolean showUpdateDialog) {
