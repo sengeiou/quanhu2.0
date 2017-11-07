@@ -23,8 +23,10 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
+import com.rz.circled.ui.activity.VideoH5Aty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
@@ -53,6 +55,7 @@ import rx.functions.Action1;
 
 import static com.rz.circled.BuildConfig.WebHomeBaseUrl;
 import static com.rz.common.utils.SystemUtils.trackUser;
+import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -154,6 +157,25 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 mPresenter.getBannerList("2");
                 mPresenter.getCircleDynamicList(direction != SwipyRefreshLayoutDirection.TOP);
                 mRefresh.setRefreshing(false);
+            }
+        });
+        mAuto_viewpager.setOnItemClickLisenter(new AutoRollLayout.onItemClickLisenter() {
+            @Override
+            public void onClickLisenter(int position,String url) {
+                trackUser("推广", "Banner图", url);
+                if (url.contains("opus")) {
+                    if (url.contains("opus-h")) {
+                        VideoH5Aty.startCommonH5(mActivity, url, context.getString(R.string.app_name));
+                    } else {
+                        WebContainerActivity.startActivity(mActivity, url, true);
+                    }
+                } else {
+                    if (Session.getUserIsLogin()) {
+                        WebContainerActivity.startActivity(mActivity, url, true);
+                    } else {
+                        getContext().startActivity(new Intent(mActivity, LoginActivity.class));
+                    }
+                }
             }
         });
     }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,13 +20,20 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
+import com.rz.circled.application.QHApplication;
 import com.rz.circled.js.RequestBackHandler;
+import com.rz.circled.js.RequestJsBroadcastHandler;
+import com.rz.circled.js.model.HeaderModel;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.BaseLoadView;
+import com.rz.common.utils.IntentUtil;
+import com.rz.common.utils.SystemUtils;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.RegisterList;
@@ -37,6 +45,9 @@ import com.rz.sgt.jsbridge.core.WebViewProxy;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class WebContainerActivity extends BaseActivity implements BaseLoadView.RefreshListener {
 
@@ -140,6 +151,11 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         super.onResume();
         mWebViewProxy.autoCancelUiHandler();
         mWebView.onResume();
+
+        RequestJsBroadcastHandler requestJsBroadcastHandler = new RequestJsBroadcastHandler(this);
+        requestJsBroadcastHandler.setNativeEvent("nativeActivated");
+        requestJsBroadcastHandler.setRequestData(getLoginWebResultData());
+        mWebViewProxy.requestJsFun(requestJsBroadcastHandler);
     }
 
     @Override
@@ -198,7 +214,8 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         }
 
         @Override
-        public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
+        public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String
+                contentDisposition, String userAgent) {
 
         }
 
@@ -222,7 +239,8 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
                     Toast.makeText(mContext, R.string.call_phone_authorization, Toast.LENGTH_LONG).show();
                 } else {
                     // 不需要解释为何需要该权限，直接请求授权
-                    ActivityCompat.requestPermissions(WebContainerActivity.this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                    ActivityCompat.requestPermissions(WebContainerActivity.this, new String[]{Manifest.permission.CALL_PHONE},
+                            MY_PERMISSIONS_REQUEST_CALL_PHONE);
                 }
             } else {
                 // 已经获得授权，可以打电话
@@ -314,6 +332,28 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
                 Toast.makeText(this, R.string.authorization_fail, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+    private HeaderModel getLoginWebResultData() {
+        HeaderModel headerModel = new HeaderModel();
+        headerModel.sign = "sign";
+        headerModel.token = Session.getSessionKey();
+        headerModel.devType = "2";
+        try {
+            headerModel.devName = URLEncoder.encode(Build.MODEL, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        headerModel.appVersion = BuildConfig.VERSION_NAME;
+        headerModel.devId = SystemUtils.getIMEI(QHApplication.getContext());
+        headerModel.ip = SystemUtils.getIp(QHApplication.getContext());
+        headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
+        headerModel.custId = Session.getUserId();
+        headerModel.userId = Session.getJsUserId();
+        headerModel.phone = Session.getUserPhone();
+        headerModel.cityCode = Session.getCityCode();
+        return headerModel;
     }
 
 }

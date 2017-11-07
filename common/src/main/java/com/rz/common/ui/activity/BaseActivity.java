@@ -46,7 +46,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks, BaseLoadView.RefreshListener {
+public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks,
+        BaseLoadView.RefreshListener {
     protected static final int RC_CAMERA_PERM = 123;
     protected static final int RC_LOCATION_CONTACTS_PERM = 124;
     protected static final int RC_SETTINGS_SCREEN = 125;
@@ -666,6 +667,21 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+    }
+
+    /**
+     * 判断用户是否登录
+     * @return
+     */
+    protected boolean isLogin() {
+        if (Session.getUserIsLogin()) {
+            return true;
+        } else {
+            Intent intent = new Intent();
+            intent.setAction("quanhu.login");
+            startActivity(intent);
+        }
+        return false;
     }
 
 
