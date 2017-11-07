@@ -1,6 +1,8 @@
 package com.rz.circled.ui.activity;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -520,7 +522,12 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 saveLoginData(loginModel);
+
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
+
+                if(!checkApplication("com.rz.circled.ui.activity")){
+                    skipActivity(aty, MainActivity.class);
+                }
 
 //                if (getIntent().getBooleanExtra("isFromSplash", false)) {
 //                    skipActivity(aty, MainActivity.class);
@@ -880,6 +887,19 @@ public class LoginActivity extends BaseActivity {
     public void refreshPage() {
 
     }
+
+    public boolean checkApplication(String packageName) {
+        if (packageName == null || "".equals(packageName)){
+            return false;
+        }
+        try {
+            ApplicationInfo info = getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
 
 
 }
