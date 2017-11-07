@@ -33,7 +33,9 @@ import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -42,6 +44,9 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.UserPermissionBean;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -180,7 +185,15 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             }
         });
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(BaseEvent event) {
+        switch (event.getType()){
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                mPresenter.getCircleDynamicList(false);
+                break;
+        }
 
+    }
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
