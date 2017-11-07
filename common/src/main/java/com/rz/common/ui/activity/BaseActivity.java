@@ -687,49 +687,49 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
-        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
-            Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
-            Session.clearShareP();
-            //弹窗重新登录
-            if (kickDialog == null) {
-                kickDialog = new KickDialog(this) {
-                    @Override
-                    public void onClick(View v) {
-                        if (v.getId() == R.id.tv_kick_dialog_left) {
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog");
-                            closeDialog();
-                            int kickOutYxCode = 200018;
-                            EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
-                            String className = "com.rz.circled.ui.activity.LoginActivity";
-                            Intent intent = new Intent();
-                            intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setClassName(mContext, className);
-                            startActivity(intent);
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog2222");
-                            finish();
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog3333");
-                        } else {
-                            closeDialog();
-                            MyActivityManager.finishAll();
-                        }
-                    }
-                };
-                kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
-            }
-            if (kickDialog.isShowing()) return;
-            kickDialog.setCancelable(false);
-            kickDialog.showDialog();
-        }
+//        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
+//            Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
+//            Session.clearShareP();
+//            //弹窗重新登录
+//            if (kickDialog == null) {
+//                kickDialog = new KickDialog(this) {
+//                    @Override
+//                    public void onClick(View v) {
+////                        if (v.getId() == R.id.tv_kick_dialog_left) {
+////                            Log.d(TAG, "resumedLocalClassName = " + "closedialog");
+////                            closeDialog();
+////                            int kickOutYxCode = 200018;
+////                            EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
+////                            String className = "com.rz.circled.ui.activity.LoginActivity";
+////                            Intent intent = new Intent();
+////                            intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
+////                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+////                            intent.setClassName(mContext, className);
+////                            startActivity(intent);
+////                            Log.d(TAG, "resumedLocalClassName = " + "closedialog2222");
+////                            finish();
+////                            Log.d(TAG, "resumedLocalClassName = " + "closedialog3333");
+////                        } else {
+////                            closeDialog();
+////                            MyActivityManager.finishAll();
+////                        }
+//                    }
+//                };
+//                kickDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//                    @Override
+//                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+//                        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//                            return true;
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+//                });
+//            }
+//            if (kickDialog.isShowing()) return;
+//            kickDialog.setCancelable(false);
+//            kickDialog.showDialog();
+//        }
     }
 
 }

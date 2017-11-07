@@ -122,19 +122,19 @@ public class SplashAty extends BaseActivity {
                         jumpTo();
                     }
                 } else {
-                    if (Session.getUserIsLogin()){
-                        skipActivity(aty, MainActivity.class);
-                        return;
-                    }
-                    if (!Session.getUserIsFirstGuide()) {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
-                        startActivity(intent);
-                        finish();
-
-                    }else{
+//                    if (Session.getUserIsLogin()){
+//                        skipActivity(aty, MainActivity.class);
+//                        return;
+//                    }
+//                    if (!Session.getUserIsFirstGuide()) {
+//                        Intent intent = new Intent(mContext, LoginActivity.class);
+//                        intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
+//                        startActivity(intent);
+//                        finish();
+//
+//                    }else{
                         skipActivity(aty, GuideActivity.class);
-                    }
+//                    }
                 }
             }
         }, 2000);
@@ -231,11 +231,12 @@ public class SplashAty extends BaseActivity {
      */
     private void jumpTo() {
         if (!isClickAdv){
-        if (Session.getUserIsLogin()) {
+//        if (Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
-        } else {
-            skipActivity(aty, LoginActivity.class);
-        }}
+//        } else {
+//            skipActivity(aty, LoginActivity.class);
+//        }
+        }
     }
 
     @Override

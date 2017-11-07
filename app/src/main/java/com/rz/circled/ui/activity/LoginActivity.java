@@ -28,6 +28,7 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.db.DBHelper;
 import com.rz.circled.js.model.HeaderModel;
 import com.rz.circled.modle.ShowListModel;
@@ -47,6 +48,7 @@ import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.NetUtils;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.SwipeBackLayout;
@@ -55,6 +57,7 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.umeng.socialize.UMShareAPI;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.greenrobot.eventbus.EventBus;
@@ -152,6 +155,8 @@ public class LoginActivity extends BaseActivity {
      */
     private MyCount mc;
 
+    private String className = "";
+
     @Override
     protected boolean needSwipeBack() {
         return false;
@@ -196,6 +201,9 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView() {
 
+        if(getIntent().getExtras()!= null){
+            className =  getIntent().getExtras().getString(CommonConstants.CLASSNAME);
+        }
 
 //        mBtnSendCode.setVisibility(View.VISIBLE);
 //        mEditPass.setHint("请输入验证码");
@@ -516,28 +524,40 @@ public class LoginActivity extends BaseActivity {
 
                 saveLoginData(loginModel);
 
-                if (getIntent().getBooleanExtra("isFromSplash", false)) {
+//                if (getIntent().getBooleanExtra("isFromSplash", false)) {
+//                    skipActivity(aty, MainActivity.class);
+//                } else if (loginType == Type.TYPE_LOGIN_WEB) {
+//                    //从圈子过来跳转登录的
+////                    JsEvent.callJsEvent(getLoginWebResultData(), true);
+//                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
+//                    //从向导页面过来
+//
+//                    skipActivity(aty, FollowCircle.class);
+//                } else {
+//
+//                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
+//
+//                    setResult(IntentCode.Login.LOGIN_RESULT_CODE);
+//                    skipActivity(aty, MainActivity.class);
+//
+//                }
+
+                if(StringUtil.isEmpty(className)){
                     skipActivity(aty, MainActivity.class);
-                } else if (loginType == Type.TYPE_LOGIN_WEB) {
-                    //从圈子过来跳转登录的
-//                    JsEvent.callJsEvent(getLoginWebResultData(), true);
-                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
-                    //从向导页面过来
-
-                    skipActivity(aty, FollowCircle.class);
-                } else {
-
-                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
-
-                    setResult(IntentCode.Login.LOGIN_RESULT_CODE);
-                    skipActivity(aty, MainActivity.class);
-
+                }else{
+                    Intent intent = new Intent();
+                    intent.setClassName(this,className);
+                    startActivity(intent);
+                    StatusBarUtils.setDarkStatusIcon(this, false);
                 }
+
                 //webCon
                 BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
                 baseEvent.type = CommonCode.EventType.TYPE_LOGIN_WEB;
                 baseEvent.key = "nativeLogin";
                 EventBus.getDefault().post(baseEvent);
+
+                finish();
             }
         }
     }
