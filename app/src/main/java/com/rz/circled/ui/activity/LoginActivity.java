@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -525,10 +527,7 @@ public class LoginActivity extends BaseActivity {
 
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
-                Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.rz.circled.ui.activity.MainActivity");
-                ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-                if(resolveInfo == null) {
+                if(!isExistMainActivity(MainActivity.class)) {
                     skipActivity(aty, MainActivity.class);
                 }
 
@@ -549,7 +548,6 @@ public class LoginActivity extends BaseActivity {
 //                    skipActivity(aty, MainActivity.class);
 //
 //                }
-
 
                 //webCon
                 BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
@@ -891,6 +889,23 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+
+    private boolean isExistMainActivity(Class<?> activity){
+        Intent intent = new Intent(this, activity);
+        ComponentName cmpName = intent.resolveActivity(getPackageManager());
+        boolean flag = false;
+        if (cmpName != null) { // 说明系统中存在这个activity
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);  //获取从栈顶开始往下查找的10个activity
+            for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                if (taskInfo.baseActivity.equals(cmpName)) { // 说明它已经启动了
+                    flag = true;
+                    break;  //跳出循环，优化效率
+                }
+            }
+        }
+        return flag;
+    }
 
 
 }
