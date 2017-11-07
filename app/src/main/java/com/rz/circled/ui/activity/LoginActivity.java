@@ -523,6 +523,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 saveLoginData(loginModel);
+                jumpWhere();
 
 //                if (getIntent().getBooleanExtra("isFromSplash", false)) {
 //                    skipActivity(aty, MainActivity.class);
@@ -542,14 +543,6 @@ public class LoginActivity extends BaseActivity {
 //
 //                }
 
-                if(StringUtil.isEmpty(className)){
-                    skipActivity(aty, MainActivity.class);
-                }else{
-                    Intent intent = new Intent();
-                    intent.setClassName(this,className);
-                    startActivity(intent);
-                    StatusBarUtils.setDarkStatusIcon(this, false);
-                }
 
                 //webCon
                 BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
@@ -559,6 +552,21 @@ public class LoginActivity extends BaseActivity {
 
                 finish();
             }
+        }
+    }
+
+    private void jumpWhere() {
+        if (Session.getUserIsFirstDownload()){
+            skipActivity(aty,FollowCircle.class);
+            return;
+        }
+        if(StringUtil.isEmpty(className)){
+            skipActivity(aty, MainActivity.class);
+        }else{
+            Intent intent = new Intent();
+            intent.setClassName(this,className);
+            startActivity(intent);
+            StatusBarUtils.setDarkStatusIcon(this, false);
         }
     }
 

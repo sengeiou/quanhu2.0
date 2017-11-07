@@ -55,7 +55,6 @@ import rx.functions.Action1;
 
 import static com.rz.circled.BuildConfig.WebHomeBaseUrl;
 import static com.rz.common.utils.SystemUtils.trackUser;
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 /**
  * Created by Gsm on 2017/8/29.
@@ -116,17 +115,19 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 trackUser("入口", "首页", "消息");
                 //跳最近联系人界面
+                if (isLogin()){
                 if (NIMClient.getStatus() == StatusCode.LOGINED)
                     startActivity(new Intent(mActivity, RecentContactActivity.class));
                 else
                     Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
-            }
+            }}
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
                 //跳发布
                 trackUser("入口", "首页", "发布按钮");
+                if (isLogin())
                 mPresenter.getUserPermession();
             }
         });
@@ -165,7 +166,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 trackUser("推广", "Banner图", url);
                 if (url.contains("opus")) {
                     if (url.contains("opus-h")) {
-                        VideoH5Aty.startCommonH5(mActivity, url, context.getString(R.string.app_name));
+                        VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name));
                     } else {
                         WebContainerActivity.startActivity(mActivity, url, true);
                     }
