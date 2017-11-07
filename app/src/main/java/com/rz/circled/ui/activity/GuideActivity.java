@@ -62,7 +62,7 @@ public class GuideActivity extends BaseActivity {
                         iv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Session.setUserIsFirstGuide(false);
+                                Session.setUserIsFirstDownload(false);
 //                                Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
 //                                intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
 //                                startActivity(intent);

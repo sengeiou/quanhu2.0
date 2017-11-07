@@ -108,7 +108,7 @@ public class SplashAty extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!Session.getUserIsFirstGuide()) {
+                if (!Session.getUserIsFirstDownload()) {
                     try {
 //                        if (Session.getUserIsLogin()){
                         initV();

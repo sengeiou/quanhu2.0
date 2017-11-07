@@ -498,10 +498,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
-            android:name=".ui.activity.AwesomeTabsAty"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity
             android:name=".ui.activity.VideoH5Aty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
