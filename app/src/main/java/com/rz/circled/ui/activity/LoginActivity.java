@@ -48,7 +48,6 @@ import com.rz.common.event.NotifyEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.IntentUtil;
 import com.rz.common.utils.NetUtils;
-import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.SwipeBackLayout;
