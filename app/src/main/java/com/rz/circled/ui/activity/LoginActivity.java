@@ -30,7 +30,6 @@ import com.litesuits.common.utils.MD5Util;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
-import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.db.DBHelper;
 import com.rz.circled.js.model.HeaderModel;
 import com.rz.circled.modle.ShowListModel;
