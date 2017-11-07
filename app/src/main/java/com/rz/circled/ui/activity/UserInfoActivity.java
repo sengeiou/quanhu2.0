@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -283,18 +284,21 @@ public class UserInfoActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
-            setData(null);
-        }
-
-        if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
-            Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
-            ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
-        }
-
-        if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
-            //更新用户详情
-            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+        switch(baseEvent.type){
+            case CommonCode.EventType.TYPE_USER_UPDATE:
+                setData(null);
+                break;
+            case FriendPresenter1.FRIEND_EVENT:
+                Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
+                ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
+                break;
+            case EventConstant.USER_AVATAR_REFUSE:
+                //更新用户详情
+                ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+                break;
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+                break;
         }
     }
 
