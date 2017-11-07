@@ -520,8 +520,6 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 saveLoginData(loginModel);
-                jumpWhere();
-
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
 //                if (getIntent().getBooleanExtra("isFromSplash", false)) {
@@ -552,17 +550,6 @@ public class LoginActivity extends BaseActivity {
                 finish();
             }
         }
-    }
-
-    private void jumpWhere() {
-//        if(StringUtil.isEmpty(className)){
-//            skipActivity(aty, MainActivity.class);
-//        }else{
-//            Intent intent = new Intent();
-//            intent.setClassName(this,className);
-//            startActivity(intent);
-////            StatusBarUtils.setDarkStatusIcon(this, false);
-//        }
     }
 
     //登录成功后保存数据

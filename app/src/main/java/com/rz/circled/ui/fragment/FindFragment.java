@@ -33,6 +33,7 @@ import com.rz.circled.widget.MListView;
 import com.rz.circled.widget.XGridView;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.H5Address;
 import com.rz.common.event.BaseEvent;
@@ -43,7 +44,6 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -376,12 +376,16 @@ public class FindFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
-        if (EventConstant.UPDATE_LOVE_CIRCLE == event.getType()) {
-            mPresenter.getUserLoveCircle(Session.getUserId());
+        switch (event.getType()){
+            case EventConstant.UPDATE_LOVE_CIRCLE:
+                mPresenter.getUserLoveCircle(Session.getUserId());
+                break;
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                initPresenter();
+                break;
         }
-    }
 
-    ;
+    }
 
 
     @Override
@@ -429,7 +433,6 @@ public class FindFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        EventBus.getDefault().register(this);
         ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -453,12 +456,6 @@ public class FindFragment extends BaseFragment {
                 WebContainerActivity.startActivity(mActivity, BuildConfig.OpusBaseUrl + "/activity/qql");
                 break;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -20,6 +20,8 @@ import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.utils.ACache;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -52,6 +54,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_base_fragment, null);
+        EventBus.getDefault().register(this);
         LinearLayout llRoot = (LinearLayout) rootView.findViewById(R.id.ll_base_fragment_root);
         initContentView(inflater, llRoot);
         unbinder = ButterKnife.bind(this, rootView);
@@ -276,6 +279,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         mLoadView = null;
         unbinder.unbind();
 
