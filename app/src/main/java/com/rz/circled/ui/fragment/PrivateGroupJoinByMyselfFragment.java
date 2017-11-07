@@ -162,11 +162,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
         if (t == null) {
-            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
-                mAdapter.getData().clear();
-                mAdapter.notifyDataSetChanged();
-            }
-            return;
+            processData(null, loadMore);
         }
         if (t instanceof PrivateGroupListBean) {
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
@@ -187,35 +183,36 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
         if (lv == null) return;
-        List<PrivateGroupBean> data = _data.getList();
-        if (type == TYPE_PART) {
-            if (data.size() > 2) {
-                mAdapter.setData(data.subList(0, 2));
+        if (_data != null) {
+            List<PrivateGroupBean> data = _data.getList();
+            if (type == TYPE_PART) {
+                if (data.size() > 2) {
+                    mAdapter.setData(data.subList(0, 2));
+                } else {
+                    mAdapter.setData(data);
+                }
+                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
             } else {
-                mAdapter.setData(data);
+                if (loadMore) {
+                    mAdapter.addData(data);
+                } else {
+                    mAdapter.setData(data);
+                }
+                pageNo++;
             }
-            Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
         } else {
-            if (loadMore) {
-                mAdapter.addData(data);
-            } else {
-                mAdapter.setData(data);
+            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
+                mAdapter.getData().clear();
+                mAdapter.notifyDataSetChanged();
             }
-            pageNo++;
         }
-        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data.getCount()));
+        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
     }
 
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
-        if (type != TYPE_PART) {
-            super.onLoadingStatus(loadingStatus, string);
-            if (refreshLayout != null)
-                refreshLayout.setRefreshing(false);
-        } else {
-            if (loadingStatus == CommonCode.General.DATA_EMPTY)
-                EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, mAdapter.getCount()));
-        }
+        super.onLoadingStatus(loadingStatus, string);
+        if (type != TYPE_PART && refreshLayout != null) refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -235,9 +232,12 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     }
 
     private void loadData(final boolean loadMore) {
-        if (!loadMore) pageNo = 1;
-        mPresenter.privateGroupMyselfJoin(userId, pageNo, loadMore);
-
+        if (isLogin()) {
+            if (!loadMore) pageNo = 1;
+            mPresenter.privateGroupMyselfJoin(userId, pageNo, loadMore);
+        } else {
+            processData(null, loadMore);
+        }
     }
 
     @Override
