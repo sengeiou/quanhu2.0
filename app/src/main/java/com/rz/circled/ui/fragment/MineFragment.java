@@ -816,12 +816,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 getUserProveStatus();
             setData();
         }
-        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
-            setData();
-            return;
-        }
-
-        if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE || baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
             setData();
             return;
         }
