@@ -119,7 +119,8 @@ public class VideoH5Aty extends Activity {
         if (getIntent().getStringExtra(IntentKey.KEY_DESC) != null) {
             setTitleText(getIntent().getStringExtra(IntentKey.KEY_DESC));
         }
-
+        titleName = getString(R.string.share_activity_title);
+        titleDescription = getString(R.string.share_activity_desc);
         mTvTitleBarRight.setText("分享");
         mTvTitleBarRight.setTextColor(getResources().getColor(R.color.font_gray_l));
         mTvTitleBarRight.setOnClickListener(new View.OnClickListener() {
@@ -253,10 +254,11 @@ public class VideoH5Aty extends Activity {
                 Log.d("videoH5", "webTitle = " + title);
                 if (extras != null && TextUtils.isEmpty(extras.getString(IntentKey.EXTRA_TITLE)) && !TextUtils.isEmpty(title)) {
 //                    String loadUrl = mWebView.getUrl();
-                    if (!TextUtils.isEmpty(title) && !title.startsWith("http://") && !title.startsWith("https://") && !title.startsWith("www."))
+                    if (!TextUtils.isEmpty(title) && !title.startsWith("http://") && !title.startsWith("https://") && !title.startsWith("www.")) {
                         setTitleText(title);
+                        titleName = !TextUtils.isEmpty(title) ? title : getString(R.string.share_activity_title);
+                    }
                 }
-                titleName = !TextUtils.isEmpty(title) ? title : getString(R.string.share_activity_title);
             }
         };
         webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
@@ -371,7 +373,7 @@ public class VideoH5Aty extends Activity {
         @android.webkit.JavascriptInterface
         public void getMetaContent(String string) {
             Log.e("zxw", "getShareTitle: " + string);
-            titleDescription = TextUtils.isEmpty(string) ? getString(R.string.share_activity_desc) : string;
+            titleDescription = TextUtils.isEmpty(string.trim()) ? getString(R.string.share_activity_desc) : string;
             ShareNewsAty.startShareNews(VideoH5Aty.this, new ShareModel(titleName, titleDescription, url));
         }
     }
