@@ -236,12 +236,13 @@ public class SettingActivity extends BaseActivity {
                         }
                         dialog.dismiss();
                         presenter.ExitApp();
-                        exitApp();
+//                        exitApp();
                         Session.clearShareP();
-                        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-                        intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
+                        Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+//                        intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
                         startActivity(intent);
-                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
+
+//                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
 
                     }
                 });

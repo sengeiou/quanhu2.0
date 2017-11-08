@@ -423,7 +423,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 DefaultTipsDialog.newInstance(getString(R.string.account_lock)).show(getSupportFragmentManager(), "");
                 break;
             case CommonCode.EventType.TYPE_LOGOUT:
-                finish();
+//                finish();
                 break;
             case EventConstant.USER_BE_KICKOUT_BY_HTTP:
                 kickOut(StatusCode.INVALID);
