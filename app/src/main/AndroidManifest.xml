@@ -84,7 +84,7 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
@@ -187,6 +187,7 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter >
                 <action android:name="quanhu.login" />
