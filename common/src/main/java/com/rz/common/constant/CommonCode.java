@@ -84,6 +84,8 @@ public interface CommonCode {
         int TYPE_LOGIN_WEB = 50001;
 
         int TYPE_HTTP_HEADER = 60001;
+
+        int TYPE_BACKLOGIN_REFRESH = 70001;
     }
 
     /**

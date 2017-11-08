@@ -28,6 +28,7 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
@@ -46,7 +47,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks, BaseLoadView.RefreshListener {
+public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks,
+        BaseLoadView.RefreshListener {
     protected static final int RC_CAMERA_PERM = 123;
     protected static final int RC_LOCATION_CONTACTS_PERM = 124;
     protected static final int RC_SETTINGS_SCREEN = 125;
@@ -666,6 +668,24 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+    }
+
+    /**
+     * 判断用户是否登录
+     * @return
+     */
+    protected boolean isLogin() {
+        if (Session.getUserIsLogin()) {
+            return true;
+        } else {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
+            intent.setAction("quanhu.login");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        return false;
     }
 
 

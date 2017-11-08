@@ -293,4 +293,7 @@ public class Constants {
 
     public static final String LOGIN_OUT_SUCCESS = "login_out_success";
 
+    public static final String JUMPTYPE = "jumptype";
+    public static final String BACKLOGIN = "backlogin";
+
 }

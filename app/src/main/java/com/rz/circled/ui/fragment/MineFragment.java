@@ -137,6 +137,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private TextView levelTxt;
     private TextView famousTxt;
     private LinearLayout famousLayout;
+//    private TextView loginTxt;
 
     TextView tv_remark;
 
@@ -202,8 +203,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         signLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (signBean != null && !signBean.isSignFlag()) {
-                    ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
+                if (isLogin()) {
+                    if (signBean != null && !signBean.isSignFlag()) {
+                        ((V3CirclePresenter) presenter).signRequest(Session.getUserId(), "15");
+                    }
                 }
             }
         });
@@ -313,6 +316,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             levelTxt = (TextView) header.findViewById(R.id.level_txt);
             famousTxt = (TextView) header.findViewById(R.id.famous_txt);
             famousLayout = (LinearLayout) header.findViewById(R.id.famous_layout);
+//            loginTxt = (TextView) header.findViewById(R.id.login_txt);
 
             famousLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -325,7 +329,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             if (Session.getUserIsLogin()) {
                 setData();
             } else {
-                mTxtPersonName.setText(getString(R.string.mine_no_login));
+
+//                loginTxt.setVisibility(View.VISIBLE);
+//                mTxtPersonName.setText(getString(R.string.mine_no_login));
                 idPersonLoginDays.setText("");
             }
 
@@ -370,7 +376,13 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         requestUnreadMsg();
 
         getUserProveStatus();
-        setData();
+        if (Session.getUserIsLogin()) {
+            setData();
+        } else {
+//            loginTxt.setVisibility(View.VISIBLE);
+//            mTxtPersonName.setText(getString(R.string.mine_no_login));
+            idPersonLoginDays.setText("");
+        }
         if (!isNotity()) {
             EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
         }
@@ -381,8 +393,16 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onResume() {
         super.onResume();
         requestUnreadMsg();
-        if (null != mTxtPersonName && null != mImgPersonHead) {
-            initUserNews();
+//        if (null != mTxtPersonName && null != mImgPersonHead) {
+//            initUserNews();
+//        }
+        getUserProveStatus();
+        if (Session.getUserIsLogin()) {
+            setData();
+        } else {
+//            loginTxt.setVisibility(View.VISIBLE);
+//            mTxtPersonName.setText(getString(R.string.mine_no_login));
+            idPersonLoginDays.setText("");
         }
         if (!isNotity()) {
             EventBus.getDefault().post(new BaseEvent(EventConstant.NEWS_COME_UNREAD));
@@ -480,8 +500,10 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (TextUtils.isEmpty(item.remark)) {
                     tv_remark.setVisibility(View.GONE);
                 } else {
-                    tv_remark.setVisibility(View.VISIBLE);
-                    tv_remark.setText(item.remark);
+                    if(Session.getUserIsLogin()){
+                        tv_remark.setVisibility(View.VISIBLE);
+                        tv_remark.setText(item.remark);
+                    }
                 }
 
                 helper.setImageResource(R.id.id_icon_img, item.getDrawable());
@@ -794,12 +816,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 getUserProveStatus();
             setData();
         }
-        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
-            setData();
-            return;
-        }
-
-        if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
+        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE || baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
             setData();
             return;
         }
