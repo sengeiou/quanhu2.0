@@ -137,6 +137,11 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+    @Override
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t instanceof List) {
