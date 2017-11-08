@@ -228,13 +228,17 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
             case PRIVATE_GROUP_TAB_REFRESH:
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+            case CommonCode.EventType.TYPE_LOGOUT:
                 loadData(false);
                 break;
+
+
         }
     }
 
     private void loadData(final boolean loadMore) {
-        if (isLogin()) {
+        if (Session.getUserIsLogin()) {
             if (!loadMore) pageNo = 1;
             mPresenter.privateGroupMyselfJoin(userId, pageNo, loadMore);
         } else {

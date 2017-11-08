@@ -247,55 +247,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         if (mListView.getHeaderViewsCount() == 0) {
             header = View.inflate(getActivity(), R.layout.header_show_frag, null);
-            //个人中心
-            header.findViewById(R.id.bg_rl_head).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isLogin()) {
-                        UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
-                    }
-                }
-            });
+            HeadOnCLickListener headOnCLickListener = new HeadOnCLickListener();
 
-            //文章
-            header.findViewById(R.id.btn_my_article).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isLogin()) {
-                        jump(MyArticleActivity.class);
-                    }
-                }
-            });
+            header.findViewById(R.id.bg_rl_head).setOnClickListener(headOnCLickListener);
+            header.findViewById(R.id.btn_my_article).setOnClickListener(headOnCLickListener);
+            header.findViewById(R.id.btn_my_transfer).setOnClickListener(headOnCLickListener);
+            header.findViewById(R.id.btn_my_circle).setOnClickListener(headOnCLickListener);
+            header.findViewById(R.id.btn_activity_collect).setOnClickListener(headOnCLickListener);
 
-            //悬赏
-            header.findViewById(R.id.btn_my_transfer).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isLogin()) {
-                        jump(MyRewardActivity.class);
-                    }
-                }
-            });
-
-            //私圈
-            header.findViewById(R.id.btn_my_circle).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isLogin()) {
-                        MyPrivateGroupActivity.startMyPrivateGroup(mActivity, 0);
-                    }
-                }
-            });
-
-            //活动
-            header.findViewById(R.id.btn_activity_collect).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isLogin()) {
-                        jump(MinePageActivity.class);
-                    }
-                }
-            });
 
             mImgPersonHead = (ImageView) header.findViewById(R.id.id_person_head_img);
             RelativeLayout bgRlyout = (RelativeLayout) header.findViewById(R.id.bg_rl_head);
@@ -358,6 +317,36 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
         }
 
+    }
+
+
+    class HeadOnCLickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                //个人中心
+                case R.id.bg_rl_head:
+                    UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
+                    break;
+                //资源
+                case R.id.btn_my_article:
+                    jump(MyArticleActivity.class);
+                    break;
+                //悬赏
+                case R.id.btn_my_transfer:
+                    jump(MyRewardActivity.class);
+                    break;
+                //私圈
+                case R.id.btn_my_circle:
+                    MyPrivateGroupActivity.startMyPrivateGroup(mActivity, 0);
+                    break;
+                //活动
+                case R.id.btn_activity_collect:
+                    jump(MinePageActivity.class);
+                    break;
+            }
+        }
     }
 
     @Override

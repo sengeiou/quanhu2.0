@@ -141,6 +141,12 @@ public class PrivateCircledFragment extends BaseFragment {
         return true;
     }
 
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
+    }
+
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
@@ -205,7 +211,7 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void checkGroupNull() {
-        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && isLogin()) {
+        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && Session.getUserIsLogin()) {
             layoutNoData.setVisibility(View.VISIBLE);
         } else {
             layoutNoData.setVisibility(View.GONE);
