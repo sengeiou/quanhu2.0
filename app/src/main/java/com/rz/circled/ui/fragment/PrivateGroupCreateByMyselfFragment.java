@@ -171,11 +171,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
         super.updateViewWithLoadMore(t, loadMore);
         if (t == null) {
-            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
-                mAdapter.getData().clear();
-                mAdapter.notifyDataSetChanged();
-            }
-            return;
+            processData(null, loadMore);
         }
         if (t instanceof PrivateGroupListBean) {
             PrivateGroupListBean _data = (PrivateGroupListBean) t;
@@ -196,34 +192,37 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
         if (refreshLayout == null) return;
-        List<PrivateGroupBean> data = _data.getList();
-        if (type == TYPE_PART) {
-            if (data.size() > 2) {
-                mAdapter.setData(data.subList(0, 2));
+        if (_data != null) {
+            List<PrivateGroupBean> data = _data.getList();
+            if (type == TYPE_PART) {
+                if (data.size() > 2) {
+                    mAdapter.setData(data.subList(0, 2));
+                } else {
+                    mAdapter.setData(data);
+                }
+                Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
             } else {
-                mAdapter.setData(data);
+                if (loadMore) {
+                    mAdapter.addData(data);
+                } else {
+                    mAdapter.setData(data);
+                }
+                pageNo++;
             }
-            Utility.setViewHeight(refreshLayout, Utility.setListViewHeightBasedOnChildren(lv));
         } else {
-            if (loadMore) {
-                mAdapter.addData(data);
-            } else {
-                mAdapter.setData(data);
+            if (hasDataInPage() && !loadMore && mAdapter != null && mAdapter.getData() != null) {
+                mAdapter.getData().clear();
+                mAdapter.notifyDataSetChanged();
             }
-            pageNo++;
         }
-        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, _data.getCount()));
+        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
     }
 
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
-        if (type != TYPE_PART) {
+        if (type != TYPE_PART && refreshLayout != null) {
             super.onLoadingStatus(loadingStatus, string);
-            if (refreshLayout != null)
-                refreshLayout.setRefreshing(false);
-        } else {
-            if (loadingStatus == CommonCode.General.DATA_EMPTY)
-                EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, mAdapter.getCount()));
+            refreshLayout.setRefreshing(false);
         }
     }
 
@@ -239,20 +238,25 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
         switch (event.getType()) {
             case PRIVATE_GROUP_CREATE_REFRESH:
             case PRIVATE_GROUP_TAB_REFRESH:
-                loadData(false);
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+            case CommonCode.EventType.TYPE_LOGOUT:
+
+                    loadData(false);
                 break;
         }
     }
 
     private void loadData(boolean loadMore) {
-        if (!loadMore) pageNo = 1;
-
-        if (Session.getUserId().equals(userId)) {
-            mPresenter.privateGroupMyselfCreate(null, userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+        if (Session.getUserIsLogin()) {
+            if (!loadMore) pageNo = 1;
+            if (Session.getUserId().equals(userId)) {
+                mPresenter.privateGroupMyselfCreate(null, userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+            } else {
+                mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
+            }
         } else {
-            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
+            processData(null, loadMore);
         }
-
     }
 
     @Override

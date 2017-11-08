@@ -199,6 +199,7 @@ public class WebViewProxy {
 
     public String toCallbackJsParams(String params) {
         String result = String.format(Locale.getDefault(), "%s(\'%s\',window.location.origin)", JS_BRIDGE_SEND, params);
+//        result = result.replaceAll("\\\\", "\\\\\\\\");
         Log.d("JsBridge", "js callback " + result);
 //        Toast.makeText(mWebView.getContext(), result, Toast.LENGTH_LONG).show();
         return result;

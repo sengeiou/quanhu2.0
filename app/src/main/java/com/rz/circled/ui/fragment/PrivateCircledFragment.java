@@ -137,6 +137,17 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
+    }
+
+    @Override
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t instanceof List) {
@@ -200,7 +211,7 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void checkGroupNull() {
-        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE) {
+        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && Session.getUserIsLogin()) {
             layoutNoData.setVisibility(View.VISIBLE);
         } else {
             layoutNoData.setVisibility(View.GONE);
@@ -309,7 +320,6 @@ public class PrivateCircledFragment extends BaseFragment {
                     presenter.getLevelAcount();
                 } else
                     startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
-
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);
