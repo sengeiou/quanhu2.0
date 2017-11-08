@@ -59,6 +59,16 @@
             android:name="JPUSH_APPKEY"
             android:value="${JPUSH_APPKEY}"/>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
             android:name=".receiver.MyReceiver"
@@ -629,7 +639,11 @@
         <activity
             android:name=".ui.activity.RewardDetailAty"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent" />
+        <activity
+            android:name=".ui.activity.ClipImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.FullScreen" />
     </application>
 
 </manifest>

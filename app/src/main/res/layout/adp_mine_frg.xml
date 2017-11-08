@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/comm_item_selector"
-        android:paddingTop="@dimen/px15"
         android:paddingBottom="@dimen/px15"
-        >
-
+        android:paddingTop="@dimen/px15">
 
         <ImageView
             android:id="@+id/id_icon_img"
@@ -19,7 +17,7 @@
             android:layout_height="@dimen/px73"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/px40"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/id_name_txt"
@@ -28,18 +26,18 @@
             android:layout_marginLeft="@dimen/px26"
             android:layout_toRightOf="@+id/id_icon_img"
             android:textColor="@color/black"
-            android:textSize="@dimen/px48"/>
+            android:textSize="@dimen/px48" />
 
         <TextView
             android:id="@+id/id_contact_num_update"
             style="@style/DefaultTvStyle"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px44"
-            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/px15"
+            android:layout_toLeftOf="@+id/id_right"
             android:background="@drawable/unread_count_bg"
             android:textColor="@color/white"
             android:textSize="@dimen/px30"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/id_remark"
@@ -50,8 +48,7 @@
             android:text=""
             android:textColor="@color/mine_scrore_red"
             android:textSize="@dimen/px44"
-            android:visibility="visible"
-            />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/version_update"
@@ -60,7 +57,7 @@
             android:layout_marginRight="@dimen/px15"
             android:layout_toLeftOf="@+id/id_right"
             android:background="@mipmap/red"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/id_right"
@@ -71,9 +68,7 @@
             android:layout_marginRight="@dimen/px40"
             android:background="@drawable/ic_right_arrow"
             android:scaleType="fitXY"
-            android:visibility="visible"
-            />
-
+            android:visibility="visible" />
 
 
     </RelativeLayout>
@@ -84,29 +79,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <View
             android:id="@+id/top_line_view"
             style="@style/line_horizontal_gray_s"
             android:layout_alignParentTop="true"
-            android:visibility="visible"
-            />
+            android:visibility="visible" />
 
         <View
             android:id="@+id/id_divider_v"
             android:layout_width="match_parent"
             android:layout_height="@dimen/px30"
             android:background="#F5F5F5"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <View
             android:id="@+id/bottom_line_view"
             style="@style/line_horizontal_gray_s"
             android:layout_alignParentBottom="true"
-            android:visibility="visible"
-            />
+            android:visibility="visible" />
 
     </LinearLayout>
 
@@ -115,5 +107,5 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/px3"
         android:background="#EEEEEE"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>
