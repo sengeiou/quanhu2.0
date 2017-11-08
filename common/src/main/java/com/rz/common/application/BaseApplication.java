@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.rz.common.oss.OssManager;
 
@@ -27,12 +28,12 @@ public class BaseApplication extends Application {
 
             @Override
             public void onActivityStarted(Activity activity) {
-                resumedLocalClassName = activity.getLocalClassName();
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-
+                resumedLocalClassName = activity.getLocalClassName();
+                Log.d("base", "resumedLocalClassName = " + resumedLocalClassName);
             }
 
             @Override
