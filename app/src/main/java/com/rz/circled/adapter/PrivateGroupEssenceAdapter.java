@@ -28,7 +28,7 @@ public class PrivateGroupEssenceAdapter extends CommonAdapter<PrivateGroupResour
     public void convert(ViewHolder helper, PrivateGroupResourceBean item, int position) {
         PrivateGroupResourceBean.Cust cust = item.getCust();
         TextView tvContent = (TextView) helper.getViewById(R.id.tv_desc);
-        helper.setText(R.id.tv_title, cust.getCustNname() + "  " + (TextUtils.isEmpty(cust.getCustDesc()) ? "" : cust.getCustDesc()));
+        helper.setText(R.id.tv_title, cust.getCustNname() + "  " + (TextUtils.isEmpty(item.getOwnerIntro()) ? "" : item.getOwnerIntro()));
         tvContent.setVisibility(View.VISIBLE);
         tvContent.setText(TextUtils.isEmpty(item.getTitle()) ? item.getSummary() : item.getTitle());
         if (TextUtils.isEmpty(tvContent.getText().toString().trim())) {
