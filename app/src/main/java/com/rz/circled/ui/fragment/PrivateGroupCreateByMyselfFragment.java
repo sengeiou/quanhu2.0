@@ -220,8 +220,10 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
 
     @Override
     public void onLoadingStatus(int loadingStatus, String string) {
-        super.onLoadingStatus(loadingStatus, string);
-        if (type != TYPE_PART && refreshLayout != null) refreshLayout.setRefreshing(false);
+        if (type != TYPE_PART && refreshLayout != null) {
+            super.onLoadingStatus(loadingStatus, string);
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

@@ -200,7 +200,7 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void checkGroupNull() {
-        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE) {
+        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && isLogin()) {
             layoutNoData.setVisibility(View.VISIBLE);
         } else {
             layoutNoData.setVisibility(View.GONE);
@@ -309,7 +309,6 @@ public class PrivateCircledFragment extends BaseFragment {
                     presenter.getLevelAcount();
                 } else
                     startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
-
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);
