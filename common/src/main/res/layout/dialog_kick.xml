@@ -63,7 +63,7 @@
                 android:background="@drawable/shape_bg_right_bottom_roller_f5"
                 android:gravity="center"
                 android:padding="@dimen/px30"
-                android:text="@string/kick_exit_app"
+                android:text="@string/cancel"
                 android:textColor="@color/txt_common_dialog"
                 android:textSize="@dimen/font_48"/>
 
