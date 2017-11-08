@@ -97,7 +97,14 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="quanhu.main"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".ui.activity.LoadResActivity"
@@ -196,14 +203,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
-            <intent-filter >
-                <action android:name="quanhu.login" />
-                <category android:name="android.intent.category.DEFAULT" />
+            <intent-filter>
+                <action android:name="quanhu.login"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            </activity>
+        </activity>
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait"

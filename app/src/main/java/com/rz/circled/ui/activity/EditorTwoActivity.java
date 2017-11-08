@@ -39,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
@@ -2197,7 +2198,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 2.发布或匿名发布走 -> 调用发布接口,给js回调,且关闭页面
      */
     private void callJs() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         dataSource.setContentSource(gson.toJson(jsResult));
         rootBean.setDataSource(dataSource);
         if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//1.投票

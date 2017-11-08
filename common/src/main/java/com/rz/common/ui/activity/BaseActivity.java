@@ -29,7 +29,6 @@ import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
-import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
@@ -668,10 +667,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        MyActivityManager.removeActivity(this);
     }
 
     /**
      * 判断用户是否登录
+     *
      * @return
      */
     protected boolean isLogin() {
@@ -680,7 +681,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         } else {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
+            bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
             intent.setAction("quanhu.login");
             intent.putExtras(bundle);
             startActivity(intent);
@@ -720,21 +721,15 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                             closeDialog();
                             int kickOutYxCode = 200018;
                             EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
-                            String className = "com.rz.circled.ui.activity.LoginActivity";
-                            Intent intent = new Intent();
-                            intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setClassName(mContext, className);
-                            startActivity(intent);
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog2222");
-//                            finish();
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog3333");
+                            isLogin();
+                            MyActivityManager.finishAllUnIncludeMian();
                         } else {
                             closeDialog();
-
-
                             EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
-//                            MyActivityManager.finishAll();
+                            if (!BaseApplication.getInstance().resumedLocalClassName.equalsIgnoreCase(MyActivityManager.mainClass)) {
+                                startMainActivity();
+                                MyActivityManager.finishAllUnIncludeMian();
+                            }
                         }
                     }
                 };
@@ -753,6 +748,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             kickDialog.setCancelable(false);
             kickDialog.showDialog();
         }
+    }
+
+    protected void startMainActivity() {
+        Intent intent = new Intent();
+        intent.setAction("quanhu.main");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 public class MyActivityManager {
 
     static LinkedList<BaseActivity> activites = new LinkedList<BaseActivity>();
+    public static final String mainClass = "ui.activity.MainActivity";
 
     public static void addActivity(BaseActivity baseActivity) {
         activites.addFirst(baseActivity);
@@ -27,6 +28,15 @@ public class MyActivityManager {
         for (BaseActivity activite : activites) {
             if (activite == null) continue;
             if (activite.isFinishing()) continue;
+            activite.finish();
+        }
+    }
+
+    public static void finishAllUnIncludeMian() {
+        for (BaseActivity activite : activites) {
+            if (activite == null) continue;
+            if (activite.isFinishing()) continue;
+            if (activite.getLocalClassName().equalsIgnoreCase(mainClass)) continue;
             activite.finish();
         }
     }
