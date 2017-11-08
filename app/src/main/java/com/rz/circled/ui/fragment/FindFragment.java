@@ -21,7 +21,6 @@ import com.rz.circled.R;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.AllCirclesAty;
-import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -35,7 +34,6 @@ import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
-import com.rz.common.constant.H5Address;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.httpapi.bean.CircleEntrModle;
@@ -44,6 +42,7 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.HotSubjectModel;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -143,8 +142,9 @@ public class FindFragment extends BaseFragment {
             }
             if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
                 viewHolder.icv_circle_img.setImageResource(R.drawable.resource_more);
+                viewHolder.tv_circle_name.setText(R.string.find_more);
             } else {
-//                viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
+                viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
                 Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
             }
             return convertView;
@@ -383,6 +383,9 @@ public class FindFragment extends BaseFragment {
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
                 initPresenter();
                 break;
+            case CommonCode.EventType.TYPE_LOGOUT:
+                initPresenter();
+                break;
         }
 
     }
@@ -433,11 +436,13 @@ public class FindFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        if (!EventBus.getDefault().isRegistered(this)){
+        EventBus.getDefault().register(this);}
         ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @OnClick({R.id.tv_famous_more, R.id.tv_subject_more, R.id.tv_activity_more, R.id.btn_resource, R.id.btn_quanle})
+    @OnClick({R.id.tv_famous_more, R.id.tv_subject_more, R.id.tv_activity_more, R.id.btn_quanle})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_famous_more:
@@ -448,9 +453,6 @@ public class FindFragment extends BaseFragment {
                 break;
             case R.id.tv_activity_more:
                 WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity");
-                break;
-            case R.id.btn_resource:
-                CommonH5Activity.startCommonH5(mActivity,"",H5Address.CHINA_RESOURCE);
                 break;
             case R.id.btn_quanle:
                 WebContainerActivity.startActivity(mActivity, BuildConfig.OpusBaseUrl + "/activity/qql");

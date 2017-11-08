@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:gravity="center_horizontal"
               android:orientation="vertical">
 
@@ -18,7 +19,7 @@
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:gravity="center_horizontal"
-            android:background="@color/color_e9f1fc"
+            android:background="@color/white"
             />
 
         <!--<ImageView-->
@@ -35,11 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/px22"
+        android:layout_marginTop="@dimen/px15"
         android:gravity="center_horizontal"
         android:textColor="@color/color_000000"
-        android:visibility="gone"
-        android:textSize="@dimen/font_40" />
+        android:visibility="visible"
+        tools:text="I am a title"
+        android:textSize="@dimen/px44" />
 
     <TextView
         android:id="@+id/id_circle_peoplenums"

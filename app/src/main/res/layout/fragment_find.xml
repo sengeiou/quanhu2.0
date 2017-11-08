@@ -24,8 +24,7 @@
                 android:id="@+id/find_gv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:listSelector="@color/color_e9f1fc"
-                android:background="@color/color_e9f1fc"
+                android:listSelector="@color/white"
                 android:paddingBottom="@dimen/px20"
                 android:numColumns="4">
             </com.rz.circled.widget.XGridView>
@@ -33,27 +32,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/px35"
+                android:layout_marginBottom="@dimen/px44"
                 android:layout_marginTop="@dimen/px35"
                 android:gravity="center"
                 android:orientation="horizontal"
                 >
 
-                <Button
-                    android:id="@+id/btn_resource"
-                    android:layout_marginLeft="@dimen/px44"
-                    android:layout_marginRight="@dimen/px44"
-                    android:layout_width="@dimen/px476"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/find_private_circle"
-                    android:textColor="@color/black"
-                    />
+                <!--<Button-->
+                    <!--android:id="@+id/btn_resource"-->
+                    <!--android:layout_marginLeft="@dimen/px44"-->
+                    <!--android:layout_marginRight="@dimen/px44"-->
+                    <!--android:layout_width="@dimen/px476"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/find_private_circle"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
 
                 <Button
                     android:id="@+id/btn_quanle"
-                    android:layout_width="@dimen/px476"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/px44"
+                    android:layout_marginLeft="@dimen/px44"
                     android:background="@drawable/find_quanquanle"
                     android:textColor="@color/black"
                     />
