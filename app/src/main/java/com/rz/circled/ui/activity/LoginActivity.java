@@ -527,9 +527,9 @@ public class LoginActivity extends BaseActivity {
 
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
-                if(!isExistMainActivity(MainActivity.class)) {
-                    skipActivity(aty, MainActivity.class);
-                }
+//                if(!isExistMainActivity(MainActivity.class)) {
+//                    skipActivity(aty, MainActivity.class);
+//                }
 
 //                if (getIntent().getBooleanExtra("isFromSplash", false)) {
 //                    skipActivity(aty, MainActivity.class);
@@ -555,7 +555,7 @@ public class LoginActivity extends BaseActivity {
                 baseEvent.key = "nativeLogin";
                 EventBus.getDefault().post(baseEvent);
 
-                finish();
+                this.finish();
             }
         }
     }

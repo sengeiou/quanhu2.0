@@ -137,7 +137,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     private TextView levelTxt;
     private TextView famousTxt;
     private LinearLayout famousLayout;
-    private TextView loginTxt;
+//    private TextView loginTxt;
 
     TextView tv_remark;
 
@@ -316,7 +316,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             levelTxt = (TextView) header.findViewById(R.id.level_txt);
             famousTxt = (TextView) header.findViewById(R.id.famous_txt);
             famousLayout = (LinearLayout) header.findViewById(R.id.famous_layout);
-            loginTxt = (TextView) header.findViewById(R.id.login_txt);
+//            loginTxt = (TextView) header.findViewById(R.id.login_txt);
 
             famousLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -330,7 +330,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 setData();
             } else {
 
-                loginTxt.setVisibility(View.VISIBLE);
+//                loginTxt.setVisibility(View.VISIBLE);
 //                mTxtPersonName.setText(getString(R.string.mine_no_login));
                 idPersonLoginDays.setText("");
             }
@@ -379,7 +379,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (Session.getUserIsLogin()) {
             setData();
         } else {
-            loginTxt.setVisibility(View.VISIBLE);
+//            loginTxt.setVisibility(View.VISIBLE);
 //            mTxtPersonName.setText(getString(R.string.mine_no_login));
             idPersonLoginDays.setText("");
         }
@@ -400,7 +400,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (Session.getUserIsLogin()) {
             setData();
         } else {
-            loginTxt.setVisibility(View.VISIBLE);
+//            loginTxt.setVisibility(View.VISIBLE);
 //            mTxtPersonName.setText(getString(R.string.mine_no_login));
             idPersonLoginDays.setText("");
         }
@@ -500,7 +500,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (TextUtils.isEmpty(item.remark)) {
                     tv_remark.setVisibility(View.GONE);
                 } else {
-                    if(isLogin()){
+                    if(Session.getUserIsLogin()){
                         tv_remark.setVisibility(View.VISIBLE);
                         tv_remark.setText(item.remark);
                     }
