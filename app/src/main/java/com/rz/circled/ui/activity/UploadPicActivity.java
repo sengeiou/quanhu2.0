@@ -2,7 +2,6 @@ package com.rz.circled.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -169,29 +168,54 @@ public class UploadPicActivity extends BaseActivity {
     }
 
     private void doPhoto(Uri uri) {
-        int width = rlRoot.getWidth();
-        int height = rlRoot.getHeight();
-        if (scaleY * width < height) {
-            height = (int) (scaleY * width);
-        } else {
-            scaleY = height / width;
-        }
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
-        intent.putExtra("crop", "true");
-        // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1 * 100);
-        intent.putExtra("aspectY", (int) (scaleY * 100));
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", width);
-        intent.putExtra("outputY", height);
-//        intent.putExtra("return-data", true);
-        intent.putExtra("return-data", false);
         initHeadPicPath();
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPhotoFileName)));
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", true); // no face detection
+        gotoClipActivity(uri);
+//        UCrop.Options options = new UCrop.Options();
+//        options.setAllowedGestures(UCropActivity.ALL, UCropActivity.ALL, UCropActivity.ALL);
+//        UCrop.of(uri, uri)
+//                .withAspectRatio(16, 9)
+//                .withMaxResultSize(1600, 900)
+//                .withOptions(options)
+//                .start(UploadPicActivity.this);
+
+//        int width = rlRoot.getWidth();
+//        int height = rlRoot.getHeight();
+//        if (scaleY * width < height) {
+//            height = (int) (scaleY * width);
+//        } else {
+//            scaleY = height / width;
+//        }
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+//        // 下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
+//        intent.putExtra("crop", "true");
+//        // aspectX aspectY 是宽高的比例
+//        intent.putExtra("aspectX", 1 * 100);
+//        intent.putExtra("aspectY", (int) (scaleY * 100));
+//        // outputX outputY 是裁剪图片宽高
+//        intent.putExtra("outputX", width);
+//        intent.putExtra("outputY", height);
+////        intent.putExtra("return-data", true);
+//        intent.putExtra("return-data", false);
+//        initHeadPicPath();
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPhotoFileName)));
+//        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+//        intent.putExtra("noFaceDetection", true); // no face detection
+//        startActivityForResult(intent, CommonCode.REQUEST.CHOOSE_TRUE);
+    }
+
+    /**
+     * 打开截图界面
+     */
+    public void gotoClipActivity(Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setClass(this, ClipImageActivity.class);
+        intent.putExtra("type", 2);
+        intent.putExtra("fileName", mPhotoFileName);
+        intent.setData(uri);
         startActivityForResult(intent, CommonCode.REQUEST.CHOOSE_TRUE);
     }
 
