@@ -58,48 +58,48 @@ public class DynamicAdapter extends CircleContentAdapter {
                     placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).into(mCivHead);
         }
 
-        mCivSuperV.setVisibility(item.cust.custRole==1?View.VISIBLE:View.GONE);
+        mCivSuperV.setVisibility(item.cust.custRole == 1 ? View.VISIBLE : View.GONE);
 
         if (item.cust != null) {
             mTvName.setText(item.cust.custNname == null ? "" : item.cust.custNname);
         }
         int readNum = item.readNum;
-        int readCount=readNum/10000;
-        tv_other_left.setText((readCount>=10?readCount+"w+":readNum)+" 阅读");
-        if (StringUtil.isEmpty(item.coterieId)||StringUtil.isEmpty(item.coterieName)){
-            fromWhere.setText("来自圈子 "+item.circleName);
-        }else {
-            fromWhere.setText("来自私圈 "+item.coterieName);
+        int readCount = readNum / 10000;
+        tv_other_left.setText((readCount >= 10 ? readCount + "w+" : readNum) + " 阅读");
+        if (StringUtil.isEmpty(item.coterieId) || StringUtil.isEmpty(item.coterieName)) {
+            fromWhere.setText("来自圈子 " + item.circleName);
+        } else {
+            fromWhere.setText("来自私圈 " + item.coterieName);
         }
         mTvTime.setText(StringUtils.stampToDate(item.createTime, "yyyy-MM-dd HH:mm:ss"));
         fromWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StringUtil.isEmpty(item.coterieId)||StringUtil.isEmpty(item.coterieName)){
-                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/");
-                }else {
-                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl+"/"+item.circleRoute+"/coterie/"+item.coterieId);
+                if (StringUtil.isEmpty(item.coterieId) || StringUtil.isEmpty(item.coterieName)) {
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/" + item.circleRoute + "/");
+                } else {
+                    WebContainerActivity.startActivity(mContext, BuildConfig.WebHomeBaseUrl + "/" + item.circleRoute + "/coterie/" + item.coterieId);
                 }
             }
         });
         mCivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isLogin()) {
-                    if (item.cust != null) {
-                        UserInfoActivity.newFrindInfo(mContext, item.cust.custId);
-                    }
+
+                if (item.cust != null) {
+                    UserInfoActivity.newFrindInfo(mContext, item.cust.custId);
                 }
+
             }
         });
         mTvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isLogin()) {
-                    if (item.cust != null) {
-                        UserInfoActivity.newFrindInfo(mContext, item.cust.custId);
-                    }
+
+                if (item.cust != null) {
+                    UserInfoActivity.newFrindInfo(mContext, item.cust.custId);
                 }
+
             }
         });
 

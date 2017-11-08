@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.msg.MsgService;
 import com.rz.circled.R;
+import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
@@ -33,6 +35,7 @@ import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
@@ -170,6 +173,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     public void onTabChanged(String tabId) {
         trackUser("入口", "导航栏", tabId);
+
+
         if (tabTags[0].equals(tabId)) {
             StatusBarUtils.setDarkStatusIcon(this, true);
         } else if (tabTags[1].equals(tabId)) {
@@ -180,12 +185,23 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             StatusBarUtils.setDarkStatusIcon(this, true);
         } else if (tabTags[4].equals(tabId)) {
             StatusBarUtils.setDarkStatusIcon(this, false);
-        }
 
+        }
     }
 
     @Override
     public boolean intercept(String tabId) {
+
+        if (!Session.getUserIsLogin()) {
+            if (TextUtils.equals(tabTags[4], tabId)) {
+                Bundle bundle = new Bundle();
+//                bundle.putString("tabIndex", tabId);
+                bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
+                showActivity(this, LoginActivity.class, bundle);
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -407,7 +423,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 DefaultTipsDialog.newInstance(getString(R.string.account_lock)).show(getSupportFragmentManager(), "");
                 break;
             case CommonCode.EventType.TYPE_LOGOUT:
-                finish();
+//                finish();
+                tabHost.setCurrentTab(0);
                 break;
             case EventConstant.USER_BE_KICKOUT_BY_HTTP:
                 kickOut(StatusCode.INVALID);

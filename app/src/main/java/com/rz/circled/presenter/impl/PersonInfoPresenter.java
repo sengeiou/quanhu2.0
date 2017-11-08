@@ -453,7 +453,7 @@ public class PersonInfoPresenter extends GeneralPresenter {
         Call<ResponseData<BuyingBean>> call = mUserService.getMyBuying(
                 custId,
                 startbuy,
-                10);
+                20);
 
 
         CallManager.add(call);

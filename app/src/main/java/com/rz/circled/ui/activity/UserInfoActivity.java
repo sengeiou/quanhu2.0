@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,8 +23,10 @@ import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.cpoopc.scrollablelayoutlib.ScrollableLayout;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.StatusCode;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentStatePagerAdapter;
+import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
@@ -46,6 +49,7 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
 import com.rz.httpapi.bean.RequestFriendStatusBean;
 import com.yryz.yunxinim.session.SessionHelper;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -281,18 +285,23 @@ public class UserInfoActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_USER_UPDATE) {
-            setData(null);
-        }
-
-        if (baseEvent.getType() == FriendPresenter1.FRIEND_EVENT) {
-            Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
-            ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
-        }
-
-        if (baseEvent.type == EventConstant.USER_AVATAR_REFUSE) {
-            //更新用户详情
-            ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+        switch(baseEvent.type){
+            case CommonCode.EventType.TYPE_USER_UPDATE:
+                setData(null);
+                break;
+            case FriendPresenter1.FRIEND_EVENT:
+                Toasty.info(mContext, mContext.getString(R.string.add_friend_success)).show();
+                ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
+                break;
+            case EventConstant.USER_AVATAR_REFUSE:
+                //更新用户详情
+                ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
+                break;
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                if(model != null && !StringUtil.isEmpty(model.getCustId())){
+                    ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
+                }
+                break;
         }
     }
 
@@ -408,12 +417,40 @@ public class UserInfoActivity extends BaseActivity {
 
     @OnClick(R.id.add_friend_btn)
     public void addFriendClick() {
-        if (model != null && model.getRelation() == 0) {
-            ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
-        } else {
-            if (checkLogin() && model != null)
-                SessionHelper.startP2PSession(this, model.getCustId());
+
+        if(isLogin()){
+            if (model != null && model.getRelation() == 0) {
+                ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
+            } else {
+                if (checkLogin() && model != null)
+                    SessionHelper.startP2PSession(this, model.getCustId());
+            }
         }
+    }
+
+    @OnClick(R.id.user_avatar)
+    void avatarClick(){
+        List<String> imageList = new ArrayList<String>();
+        if(imageList.size()>0){
+            imageList.clear();
+        }
+        if (userId.equals(Session.getUserId())) {
+            imageList.add(Session.getUserPicUrl());
+        }else{
+            if (model.getCustImg() != null && !TextUtils.isEmpty(model.getCustImg())) {
+                imageList.add(model.getCustImg());
+            } else {
+                imageList.add("http://i1.piimg.com/4851/9f9fd766410b0d94.png");
+            }
+        }
+
+        ImagePagerActivity.imageSize = new ImageSize(avatarImg
+                .getMeasuredWidth(), avatarImg
+                .getMeasuredHeight());
+        ImagePagerActivity.isLocation = false;
+        ImagePagerActivity.startImagePagerActivity(aty,
+                imageList, 0);
+
     }
 
     private boolean checkLogin() {
@@ -424,4 +461,6 @@ public class UserInfoActivity extends BaseActivity {
             return false;
         }
     }
+
+
 }

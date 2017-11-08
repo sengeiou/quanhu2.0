@@ -1,6 +1,6 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyPagerAdapter;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -20,6 +18,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.rz.common.constant.Constants.FIRST_BLOOD;
+import static com.rz.common.constant.IntentKey.JUMP_FIND_FIRST;
 
 
 /**
@@ -62,10 +62,13 @@ public class GuideActivity extends BaseActivity {
                         iv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Session.setUserIsFirstGuide(false);
-                                Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
-                                intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
-                                startActivity(intent);
+                                Session.setUserIsFirstDownload(false);
+//                                Intent intent = new Intent(GuideActivity.this, LoginActivity.class);
+//                                intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
+//                                startActivity(intent);
+                                Bundle intent =new Bundle();
+                                intent.putString(JUMP_FIND_FIRST,FIRST_BLOOD);
+                                skipActivity(aty, MainActivity.class,intent);
                                 finish();
                             }
                         });

@@ -84,7 +84,7 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
@@ -187,7 +187,13 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:launchMode="singleInstance"
+            android:theme="@style/BaseAppTheme.Translucent">
+            <intent-filter >
+                <action android:name="quanhu.login" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            </activity>
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait"
@@ -490,10 +496,6 @@
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
             android:name=".ui.activity.PersonScanAty"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity
-            android:name=".ui.activity.AwesomeTabsAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity

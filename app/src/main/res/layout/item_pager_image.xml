@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.rz.rz_rrz.widget.photoview.PhotoView
+    <com.rz.circled.widget.photoview.PhotoView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

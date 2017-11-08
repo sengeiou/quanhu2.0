@@ -23,15 +23,19 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
+import com.rz.circled.ui.activity.VideoH5Aty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
 import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -40,6 +44,9 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.UserPermissionBean;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -113,17 +120,19 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 trackUser("入口", "首页", "消息");
                 //跳最近联系人界面
+                if (isLogin()){
                 if (NIMClient.getStatus() == StatusCode.LOGINED)
                     startActivity(new Intent(mActivity, RecentContactActivity.class));
                 else
                     Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
-            }
+            }}
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
                 //跳发布
                 trackUser("入口", "首页", "发布按钮");
+                if (isLogin())
                 mPresenter.getUserPermession();
             }
         });
@@ -156,8 +165,35 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 mRefresh.setRefreshing(false);
             }
         });
+        mAuto_viewpager.setOnItemClickLisenter(new AutoRollLayout.onItemClickLisenter() {
+            @Override
+            public void onClickLisenter(int position,String url) {
+                trackUser("推广", "Banner图", url);
+                if (url.contains("opus")) {
+                    if (url.contains("opus-h")) {
+                        VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name));
+                    } else {
+                        WebContainerActivity.startActivity(mActivity, url, true);
+                    }
+                } else {
+                    if (Session.getUserIsLogin()) {
+                        WebContainerActivity.startActivity(mActivity, url, true);
+                    } else {
+                        getContext().startActivity(new Intent(mActivity, LoginActivity.class));
+                    }
+                }
+            }
+        });
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(BaseEvent event) {
+        switch (event.getType()){
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                mPresenter.getCircleDynamicList(false);
+                break;
+        }
 
+    }
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);

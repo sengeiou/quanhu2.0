@@ -1,5 +1,6 @@
 package com.rz.circled.http;
 
+import com.rz.common.cache.preference.Session;
 import com.rz.common.event.KickEvent;
 import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.HandleRetCode;
@@ -33,8 +34,11 @@ public class MyHandleResponse implements BaseCallback.interceptorResponse {
             if (object != null && object instanceof ResponseData) {
                 ResponseData responseData = (ResponseData) object;
                 boolean needProcess = HandleRetCode.handlerExpire(responseData);
-                if (needProcess) {
-                    EventBus.getDefault().post(new KickEvent(responseData.getRet()));
+
+                if(Session.getUserIsLogin()){
+                    if (needProcess) {
+                        EventBus.getDefault().post(new KickEvent(responseData.getRet()));
+                    }
                 }
             }
         }
