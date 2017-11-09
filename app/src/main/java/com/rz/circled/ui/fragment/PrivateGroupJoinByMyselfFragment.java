@@ -232,15 +232,13 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             case CommonCode.EventType.TYPE_LOGOUT:
                 loadData(false);
                 break;
-
-
         }
     }
 
     private void loadData(final boolean loadMore) {
         if (Session.getUserIsLogin()) {
             if (!loadMore) pageNo = 1;
-            mPresenter.privateGroupMyselfJoin(userId, pageNo, loadMore);
+            mPresenter.privateGroupMyselfJoin(TextUtils.isEmpty(userId) ? Session.getUserId() : userId, pageNo, loadMore);
         } else {
             processData(null, loadMore);
         }

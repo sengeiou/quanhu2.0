@@ -240,8 +240,7 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
             case PRIVATE_GROUP_TAB_REFRESH:
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
             case CommonCode.EventType.TYPE_LOGOUT:
-
-                    loadData(false);
+                loadData(false);
                 break;
         }
     }
@@ -249,8 +248,8 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     private void loadData(boolean loadMore) {
         if (Session.getUserIsLogin()) {
             if (!loadMore) pageNo = 1;
-            if (Session.getUserId().equals(userId)) {
-                mPresenter.privateGroupMyselfCreate(null, userId, pageNo, loadMore);                   //获取自己创建的所有圈子
+            if (TextUtils.isEmpty(userId) || Session.getUserId().equals(userId)) {
+                mPresenter.privateGroupMyselfCreate(null, Session.getUserId(), pageNo, loadMore);                   //获取自己创建的所有圈子
             } else {
                 mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
             }
