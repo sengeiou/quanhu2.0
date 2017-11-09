@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/shape_bg_right_bottom_roller_f5"
+                android:background="@drawable/shape_bg_left_bottom_roller_f5"
                 android:gravity="center"
                 android:padding="@dimen/px30"
                 android:text="@string/kick_watch_txt"
@@ -54,13 +54,13 @@
 
             <View
                 style="@style/line_vertical_gray_s"/>
-
+            shape_bg_left_bottom_roller_f5
             <TextView
                 android:id="@+id/tv_kick_dialog_left"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/shape_bg_left_bottom_roller_f5"
+                android:background="@drawable/shape_bg_right_bottom_roller_f5"
                 android:gravity="center"
                 android:padding="@dimen/px30"
                 android:text="@string/kick_again_login"
