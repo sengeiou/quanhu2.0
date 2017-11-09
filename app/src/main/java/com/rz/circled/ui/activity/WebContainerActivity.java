@@ -350,7 +350,6 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         headerModel.ip = SystemUtils.getIp(QHApplication.getContext());
         headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
         headerModel.custId = Session.getUserId();
-        headerModel.userId = Session.getJsUserId();
         headerModel.phone = Session.getUserPhone();
         headerModel.cityCode = Session.getCityCode();
         return headerModel;

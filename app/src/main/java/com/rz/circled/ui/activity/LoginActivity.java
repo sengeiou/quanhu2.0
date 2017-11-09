@@ -3,9 +3,6 @@ package com.rz.circled.ui.activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -649,7 +646,6 @@ public class LoginActivity extends BaseActivity {
         headerModel.ip = SystemUtils.getIp(QHApplication.getContext());
         headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
         headerModel.custId = Session.getUserId();
-        headerModel.userId = Session.getJsUserId();
         headerModel.phone = Session.getUserPhone();
         headerModel.cityCode = Session.getCityCode();
         return headerModel;
