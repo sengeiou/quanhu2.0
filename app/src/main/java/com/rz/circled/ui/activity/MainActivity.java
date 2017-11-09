@@ -190,7 +190,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             if (TextUtils.equals(tabTags[4], tabId)) {
                 Bundle bundle = new Bundle();
 //                bundle.putString("tabIndex", tabId);
-                bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
+//                bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
                 showActivity(this, LoginActivity.class, bundle);
                 return true;
             }

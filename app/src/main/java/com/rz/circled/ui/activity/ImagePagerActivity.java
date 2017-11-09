@@ -34,6 +34,7 @@ import com.rz.circled.widget.photoview.PhotoView;
 import com.rz.circled.widget.photoview.PhotoViewAttacher;
 import com.rz.circled.widget.photoview.PicSaveDialog;
 import com.rz.common.utils.ImageUtils;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.PicModel;
 
 import java.io.IOException;
@@ -228,6 +229,8 @@ public class ImagePagerActivity extends Activity {
                                                                                     loadedImage,
                                                                                     datas.get(position),
                                                                                     context);
+
+                                                                    Toasty.info(ImagePagerActivity.this, ImagePagerActivity.this.getString(R.string.save_success)).show();
                                                                 } catch (IOException e) { // TODO
                                                                     // //
                                                                     // Auto-generated
@@ -248,6 +251,8 @@ public class ImagePagerActivity extends Activity {
                                                                         imageUri,
                                                                         view,
                                                                         failReason);
+                                                                Toasty.info(ImagePagerActivity.this, ImagePagerActivity.this.getString(R.string.save_fail)).show();
+
                                                             }
                                                         });
                                         /*ImageUtils.saveFile(bm, fileName,

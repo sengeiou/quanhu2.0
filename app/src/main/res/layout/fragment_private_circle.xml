@@ -220,10 +220,10 @@
 
                             <TextView
                                 android:id="@+id/btn_about"
-                                android:layout_width="@dimen/px400"
+                                android:layout_width="wrap_content"
                                 android:layout_height="@dimen/px110"
                                 android:layout_marginTop="@dimen/px58"
-                                android:background="@drawable/shape_stork_main"
+                                android:drawableLeft="@mipmap/waring_icon"
                                 android:gravity="center"
                                 android:includeFontPadding="false"
                                 android:text="@string/private_group_about"
