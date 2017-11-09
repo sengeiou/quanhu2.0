@@ -651,7 +651,9 @@
             android:name=".ui.activity.ClipImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.FullScreen" />
-        <activity android:name=".ui.activity.AllCirclesActivity"/>
+        <activity android:name=".ui.activity.AllCirclesActivity"
+                  android:theme="@style/BaseAppTheme.Translucent"
+            />
     </application>
 
 </manifest>

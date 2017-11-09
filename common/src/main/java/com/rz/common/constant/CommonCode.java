@@ -78,7 +78,8 @@ public interface CommonCode {
         int TYPE_EMPTY_COUNT = 300006;
         int TYPE_SAVE = 300007;
         int TYPE_ADD_LAYOUT = 300008;
-
+        int TYPE_CIRCLE_TATE=5001;
+        int TYPE_FINISH_TATE=5000002;
         int TYPE_REWARD_REFRESH = 40001;
 
         int TYPE_LOGIN_WEB = 50001;

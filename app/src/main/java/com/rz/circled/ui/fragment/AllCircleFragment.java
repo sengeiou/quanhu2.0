@@ -4,26 +4,37 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.CircleAdapter;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.SideBar;
-import com.rz.circled.widget.pinyin.PinyinComparator;
+import com.rz.circled.widget.pinyin.CharacterParser;
+import com.rz.circled.widget.pinyin.CircleComparator;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentKey;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.bean.CircleEntrModle;
 
-import java.text.Collator;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
 
+import static com.rz.common.constant.CommonCode.EventType.TYPE_CIRCLE_TATE;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_FINISH_TATE;
 import static com.rz.common.constant.Constants.LOVE_CIRCLE;
 
 /**
@@ -54,18 +65,24 @@ public class AllCircleFragment extends BaseFragment {
     private View mheadView;
     @BindView(R.id.id_letter_dialog)
     TextView mTxtDialog;
-    private PinyinComparator mPyComparator;
+    private CircleComparator mPyComparator;
     private CirclePresenter mPresenter;
     List<CircleEntrModle> loveAllList;
-    List<CircleEntrModle> loveList=new ArrayList<>();
-    List<String> loveListaaaaa=new ArrayList<>();
+    List<CircleEntrModle> loveList = new ArrayList<>();
+    List<CircleEntrModle> noFollow = new ArrayList<>();
     List<CircleEntrModle> recommendList;
-    boolean isEdit = false;
+    List<CircleEntrModle> delHs = new ArrayList<>();
+    List<CircleEntrModle> addHs = new ArrayList<>();
+    private boolean isEdit;
     int type;
+    private CharacterParser mCharacterParser;
 
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return inflater.inflate(R.layout.fragment_circle_layout, null);
     }
 
@@ -80,42 +97,103 @@ public class AllCircleFragment extends BaseFragment {
     @Override
     public void initPresenter() {
         mPresenter = new CirclePresenter();
+        mCharacterParser = CharacterParser.getInstance();
         mPresenter.attachView(this);
     }
 
     @Override
     public void initView() {
         loveAllList = (List<CircleEntrModle>) getActivity().getIntent().getSerializableExtra(LOVE_CIRCLE);
-        mPyComparator=new PinyinComparator();
+        mPyComparator = new CircleComparator();
         Bundle bundle = getArguments();
         if (bundle != null) {
             type = bundle.getInt(IntentKey.EXTRA_TYPE);
         }
         initHeadView();
+        delLove();
         mListview.addHeaderView(mheadView);
         mListview.setDividerHeight(0);
         if (type == 0) {
-            mCircleAdapter = new CircleAdapter(mActivity,R.layout.circle_adapter_item);
+            mCircleAdapter = new CircleAdapter(mActivity, R.layout.circle_adapter_item);
             mListview.setAdapter(mCircleAdapter);
-            delLove();
+            mCircleAdapter.setData(loveList);
         } else {
             mRecommCircleAdapter = new CircleAdapter(mActivity, R.layout.circle_adapter_item);
             mListview.setAdapter(mRecommCircleAdapter);
         }
 
     }
+
     private void delLove() {
         for (int i = 0; i < loveAllList.size(); i++) {
             if (loveAllList.get(i).type == 1) {
                 loveList.add(loveAllList.get(i));
             }
         }
-//        Collections.sort(loveList, mPyComparator);
-//        Comparator<Object> comparator = Collator.getInstance(java.util.Locale.CHINA);
-//
-//        Collections.sort(loveList,comparator);
-        mCircleAdapter.setData(loveList);
+        changeLetter(loveList);
+
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(BaseEvent event) {
+        if (event.getType() == TYPE_CIRCLE_TATE) {
+            this.isEdit = (boolean) event.getData();
+            if (type==0){
+            mCircleAdapter.setEdit(isEdit);
+            mCircleAdapter.notifyDataSetChanged();
+
+            }else {
+            mRecommCircleAdapter.setEdit(isEdit);
+            mRecommCircleAdapter.notifyDataSetChanged();
+            }
+            return;
+        }
+        if (event.getType()==TYPE_FINISH_TATE){
+            if (type==0){
+                delHs.clear();
+                for (int i = 0; i < loveList.size(); i++) {
+                    if (loveList.get(i).isSeleced){
+                        delHs.add(loveList.get(i));
+                    }
+                }
+                if (delHs.isEmpty()){
+                    return;
+                }
+                loveList.removeAll(delHs);
+                mCircleAdapter.setData(loveList);
+                mapPresenter(delHs);
+
+            }else {
+                addHs.clear();
+                for (int i = 0; i < recommendList.size(); i++) {
+                    if (recommendList.get(i).isSeleced){
+                        addHs.add(recommendList.get(i));
+                    }
+                }
+                if (addHs.isEmpty()){
+                    return;
+                }
+                recommendList.removeAll(addHs);
+                mRecommCircleAdapter.setData(recommendList);
+                mapPresenter(addHs);
+            }
+            return;
+        }
+
+    }
+    StringBuffer sb = new StringBuffer();
+    private void mapPresenter(List<CircleEntrModle> list) {
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i).appId + ",");
+        }
+        if (type==0){
+        mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
+        }else {
+            mPresenter.addLoveCircle(sb.toString(),1);
+        }
+        sb.delete(0, sb.length());
+    }
+
     private void initHeadView() {
         mheadView = LayoutInflater.from(mActivity).inflate(R.layout.all_circle_head_layout, null);
     }
@@ -135,39 +213,120 @@ public class AllCircleFragment extends BaseFragment {
             }
         });
         mSidebar.setTextView(mTxtDialog);
-    }
+        mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (type == 0) {
+                    CircleEntrModle circleEntrModle = loveList.get(position - 1);
+                    boolean isSeleced = circleEntrModle.isSeleced;
+                    if (isEdit) {
+                        if (isSeleced) {
+                            circleEntrModle.isSeleced = false;
+                        } else {
+                            circleEntrModle.isSeleced = true;
+                        }
+                        mCircleAdapter.notifyDataSetChanged();
+                    } else {
+                        WebContainerActivity.startActivity(mActivity, circleEntrModle.getCircleUrl());
+                    }
+                } else {
+                    CircleEntrModle circleEntrModle = recommendList.get(position - 1);
+                    boolean isSeleced = circleEntrModle.isSeleced;
+                    if (isEdit) {
+                        if (isSeleced) {
+                            circleEntrModle.isSeleced = false;
+                        } else {
+                            circleEntrModle.isSeleced = true;
+                        }
+                        mRecommCircleAdapter.notifyDataSetChanged();
+                    } else {
+                        WebContainerActivity.startActivity(mActivity, circleEntrModle.getCircleUrl());
+                    }
 
+
+                }
+
+            }
+        });
+    }
+    @Override
+    public <T> void updateView(T t) {
+        super.updateView(t);
+        EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
+    }
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        if (t != null&&type==1) {
+        if (t != null && type == 1) {
             List<CircleEntrModle> circleEntrModleList = (List<CircleEntrModle>) t;
             if (flag == 0) {
                 //全部圈子列表
                 recommendList = circleEntrModleList;
-//                for (int i = 0; i < onLines.size(); i++) {
-//                    boolean isfind = false;
-//                    for (int j = 0; j < loveList.size(); j++) {
-//                        if (onLines.get(i).appId.equals(loveList.get(j).appId)) {
-//                            isfind = true;
-//                            break;
-//                        }
-//                    }
-//                    if (!isfind) {
-//                        noFollow.add(onLines.get(i));
-//                    }
-//                }
-//                onLines.clear();
-//                onLines = noFollow;
-                Comparator<Object> comparator = Collator.getInstance(java.util.Locale.CHINA);
                 for (int i = 0; i < recommendList.size(); i++) {
-                    loveListaaaaa.add(recommendList.get(i).getCircleName());
+                    boolean isfind = false;
+                    for (int j = 0; j < loveList.size(); j++) {
+                        if (recommendList.get(i).appId.equals(loveList.get(j).appId)) {
+                            isfind = true;
+                            break;
+                        }
+                    }
+                    if (!isfind) {
+                        noFollow.add(recommendList.get(i));
+                    }
                 }
-                Collections.sort(loveListaaaaa,comparator);
+                recommendList.clear();
+                recommendList = noFollow;
+                changeLetter(recommendList);
                 mRecommCircleAdapter.setData(recommendList);
                 return;
             }
         }
+    }
+
+    /**
+     * 对数据进行字母排序，并保存字母的首字母
+     *
+     * @param friendList
+     */
+    public void changeLetter(List<CircleEntrModle> friendList) {
+        for (int i = 0; i < friendList.size(); i++) {
+            CircleEntrModle model = friendList.get(i);
+            setModelFirstLetter(model);
+        }
+        Collections.sort(friendList, mPyComparator);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 单个model设置首字母
+     *
+     * @param model
+     */
+    public void setModelFirstLetter(CircleEntrModle model) {
+        String mFirstLetter;
+        if (!StringUtils.isEmpty(model.getCircleName())) {
+            mFirstLetter = mCharacterParser.getSelling(model.getCircleName());
+        } else {
+            mFirstLetter = "#";
+        }
+        if (!StringUtils.isEmpty(mFirstLetter)) {
+            String sortString = mFirstLetter.substring(0, 1).toUpperCase();
+
+            if (sortString.matches("[A-Z]")) {
+                model.setFirstLetter(sortString.toUpperCase());
+            } else {
+                model.setFirstLetter("#");
+            }
+        } else {
+            model.setFirstLetter("#");
+        }
+
     }
 
     @Override

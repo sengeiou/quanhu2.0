@@ -35,7 +35,7 @@
             android:layout_centerInParent="true"
             android:paddingRight="@dimen/font_44"
             android:gravity="center"
-            android:text="删除"
+            android:text="编辑"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/font_44"
           />
