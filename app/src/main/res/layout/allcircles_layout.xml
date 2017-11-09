@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/title_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+    <com.rz.circled.widget.PagerSlidingTabStripHome
+        android:id="@+id/tab_allcircle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px112"
+        android:background="@color/white"
+        android:textSize="@dimen/font_46"
+        app:pstsIndicatorHeight="@dimen/px4"
+        app:pstsUnderlineHeight="0dp"
+        app:tabIndicatorColor="@color/color_0185FF"
+        app:tabSelectedTextColor="@color/color_0185FF"
+        app:tabTextColor="@color/color_000000"
+        />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_allcircle_main"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+</LinearLayout>
