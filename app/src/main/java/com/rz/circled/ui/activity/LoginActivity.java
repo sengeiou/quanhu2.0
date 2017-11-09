@@ -3,6 +3,8 @@ package com.rz.circled.ui.activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,6 +58,7 @@ import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.UserInfoBean;
+import com.rz.sgt.jsbridge.JsEvent;
 import com.umeng.socialize.UMShareAPI;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 import com.zhuge.analysis.stat.ZhugeSDK;
@@ -155,7 +158,6 @@ public class LoginActivity extends BaseActivity {
      */
     private MyCount mc;
 
-    private String jumpType = "";
 
     @Override
     protected boolean needSwipeBack() {
@@ -200,13 +202,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
-        if(getIntent().getExtras()!= null){
-            jumpType =  getIntent().getExtras().getString(Constants.JUMPTYPE);
-            if(!TextUtils.isEmpty(jumpType)){
-                mIvBack.setVisibility(View.VISIBLE);
-            }
-        }
 
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
@@ -289,15 +284,10 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.titlebar_main_left_btn)
     public void onClick() {
-
-        if(StringUtil.isEmpty(jumpType)){
-            setData();
+        if(codeType == 1){
+            this.finish();
         }else{
-            if(codeType == 1){
-                this.finish();
-            }else{
-                setData();
-            }
+            setData();
         }
     }
 
@@ -357,7 +347,6 @@ public class LoginActivity extends BaseActivity {
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-            mIvBack.setVisibility(View.VISIBLE);
 
             codeType = 2;
 
@@ -376,10 +365,6 @@ public class LoginActivity extends BaseActivity {
             typePwd.setImageResource(R.mipmap.ic_login_pw);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            if(StringUtil.isEmpty(jumpType)){
-                mIvBack.setVisibility(View.GONE);
-            }
-
 
             codeType = 1;
 
@@ -533,7 +518,7 @@ public class LoginActivity extends BaseActivity {
 //                    skipActivity(aty, MainActivity.class);
 //                } else if (loginType == Type.TYPE_LOGIN_WEB) {
 //                    //从圈子过来跳转登录的
-////                    JsEvent.callJsEvent(getLoginWebResultData(), true);
+//                    JsEvent.callJsEvent(getLoginWebResultData(), true);
 //                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
 //                    //从向导页面过来
 //
@@ -646,6 +631,7 @@ public class LoginActivity extends BaseActivity {
         headerModel.ip = SystemUtils.getIp(QHApplication.getContext());
         headerModel.net = IntentUtil.getNetType(QHApplication.getContext());
         headerModel.custId = Session.getUserId();
+        headerModel.userId = Session.getJsUserId();
         headerModel.phone = Session.getUserPhone();
         headerModel.cityCode = Session.getCityCode();
         return headerModel;

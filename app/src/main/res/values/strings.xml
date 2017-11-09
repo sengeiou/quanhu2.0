@@ -322,6 +322,7 @@
     <string name="search">搜索</string>
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
+    <string name="find_more">更多</string>
     <string name="send_gift_success">礼物打赏成功</string>
 
     <!-- 登录-->

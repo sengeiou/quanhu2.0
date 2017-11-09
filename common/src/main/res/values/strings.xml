@@ -71,5 +71,6 @@
 
     <string name="kick_again_login">重新登录</string>
     <string name="kick_exit_app">退出应用</string>
-    <string name="kick_hint">您的账号在另一设备登录，您被迫下线。\n如有疑问，请联系客服。</string>
+    <string name="kick_hint">您的账号已在另一设备上登录，是否重新登录？</string>
+    <string name="kick_watch_txt">随便看看</string>
 </resources>

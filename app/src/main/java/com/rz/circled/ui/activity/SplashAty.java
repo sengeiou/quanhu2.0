@@ -232,6 +232,7 @@ public class SplashAty extends BaseActivity {
         if (!isClickAdv){
 //        if (Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 //        } else {
 //            skipActivity(aty, LoginActivity.class);
 //        }

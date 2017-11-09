@@ -141,6 +141,12 @@ public class PrivateCircledFragment extends BaseFragment {
         return true;
     }
 
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
+    }
+
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
@@ -205,7 +211,7 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void checkGroupNull() {
-        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && isLogin()) {
+        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && Session.getUserIsLogin()) {
             layoutNoData.setVisibility(View.VISIBLE);
         } else {
             layoutNoData.setVisibility(View.GONE);
@@ -309,11 +315,14 @@ public class PrivateCircledFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btn_apply_for:
                 trackUser("入口", "创建私圈", "");
-                String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
-                if (Integer.parseInt(level) < 5) {
-                    presenter.getLevelAcount();
-                } else
-                    startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+                if (isLogin()) {
+                    String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                    if (Integer.parseInt(level) < 5) {
+                        presenter.getLevelAcount();
+                    } else {
+                        startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+                    }
+                }
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);

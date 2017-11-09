@@ -54,7 +54,6 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_base_fragment, null);
-//        EventBus.getDefault().register(this);
         LinearLayout llRoot = (LinearLayout) rootView.findViewById(R.id.ll_base_fragment_root);
         initContentView(inflater, llRoot);
         unbinder = ButterKnife.bind(this, rootView);
@@ -154,7 +153,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         } else {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
+//            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
             intent.setAction("quanhu.login");
             intent.putExtras(bundle);
             startActivity(intent);
@@ -279,7 +278,6 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
         mLoadView = null;
         unbinder.unbind();
 

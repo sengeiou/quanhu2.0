@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/px44"
                         android:src="@mipmap/arrow_left"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         />
 
                 </RelativeLayout>

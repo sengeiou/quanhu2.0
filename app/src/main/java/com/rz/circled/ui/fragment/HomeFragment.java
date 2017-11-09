@@ -45,6 +45,7 @@ import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.UserPermissionBean;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -84,6 +85,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
+        if (!EventBus.getDefault().isRegistered(this)){
+        EventBus.getDefault().register(this);}
         return inflater.inflate(R.layout.fragment_home, null);
     }
 
@@ -189,6 +192,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     public void onMessageEvent(BaseEvent event) {
         switch (event.getType()){
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                mPresenter.getCircleDynamicList(false);
+                break;
+            case CommonCode.EventType.TYPE_LOGOUT:
                 mPresenter.getCircleDynamicList(false);
                 break;
         }
@@ -325,5 +331,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         } else {
             mUnread.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
