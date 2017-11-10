@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchCircleAdapter;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.toasty.Toasty;
@@ -143,22 +144,12 @@ public class AllCircleSearchActivity extends BaseActivity {
             Toasty.info(mContext,mContext.getString(R.string.search_attention_title)).show();
             return;
         }
-        //本地匹配关键词搜索
-
-        List<CircleEntrModle> dataList = new ArrayList<>();
-
-        for(int i=0;i<circleBeanList.size();i++){
-            if(circleBeanList.get(i).getCircleName().contains(keyWord)){
-                dataList.add(circleBeanList.get(i));
-            }
-        }
-        circleAdapter.setData(dataList);
-        circleAdapter.notifyDataSetChanged();
+        loadData();
     }
 
     @Override
     public void refreshPage() {
-
+        loadData();
     }
 
     @Override
@@ -170,5 +161,31 @@ public class AllCircleSearchActivity extends BaseActivity {
     protected boolean needSwipeBack() {
         return false;
     }
+
+    @Override
+    protected boolean hasDataInPage() {
+        return circleAdapter != null && circleAdapter.getCount() != 0;
+    }
+
+    private void loadData(){
+
+        //本地匹配关键词搜索
+
+        List<CircleEntrModle> dataList = new ArrayList<>();
+
+        for(int i=0;i<circleBeanList.size();i++){
+            if(circleBeanList.get(i).getCircleName().contains(searchWord)){
+                dataList.add(circleBeanList.get(i));
+            }
+        }
+        circleAdapter.setData(dataList);
+        circleAdapter.notifyDataSetChanged();
+
+        if(dataList.size()<=0){
+            this.onLoadingStatus(CommonCode.General.DATA_EMPTY);
+        }
+
+    }
+
 
 }
