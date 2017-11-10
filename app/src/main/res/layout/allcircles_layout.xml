@@ -25,7 +25,7 @@
         app:tabSelectedTextColor="@color/color_0185FF"
         app:tabTextColor="@color/color_000000"
         />
-    <android.support.v4.view.ViewPager
+    <com.rz.circled.widget.CustomNoSlideViewPager
         android:id="@+id/vp_allcircle_main"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -36,6 +36,7 @@
         android:id="@+id/rl_layout"
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         android:layout_height="match_parent">
     <ImageView
         android:layout_width="match_parent"
