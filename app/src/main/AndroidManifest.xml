@@ -669,6 +669,8 @@
                 <!--<action android:name="Android.intent.action.VIEW" />-->
             <!--</intent-filter>-->
 
+            <!--quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com//activity/qql&category=1002-->
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -676,9 +678,9 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="opus"
-                    android:pathPrefix="/sharedetail"
-                    android:scheme="yryz"/>
+                    android:host="open"
+                    android:pathPrefix="/data"
+                    android:scheme="quanhu"/>
             </intent-filter>
 
         </activity>

@@ -236,11 +236,11 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     }
 
     private void loadData(final boolean loadMore) {
-        if (Session.getUserIsLogin()) {
-            if (!loadMore) pageNo = 1;
-            mPresenter.privateGroupMyselfJoin(TextUtils.isEmpty(userId) ? Session.getUserId() : userId, pageNo, loadMore);
-        } else {
+        if (!loadMore) pageNo = 1;
+        if (TextUtils.isEmpty(userId) && !Session.getUserIsLogin()) {
             processData(null, loadMore);
+        } else {
+            mPresenter.privateGroupMyselfJoin(TextUtils.isEmpty(userId) ? Session.getUserId() : userId, pageNo, loadMore);
         }
     }
 

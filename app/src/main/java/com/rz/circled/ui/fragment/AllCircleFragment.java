@@ -211,7 +211,7 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!isEdit) {
-                    AllCircleSearchActivity.stratActivity(mActivity, type, loveList);
+                    AllCircleSearchActivity.stratActivity(mActivity, loveList);
                 }
             }
         });

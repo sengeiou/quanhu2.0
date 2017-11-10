@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:horizontalSpacing="@dimen/app_base_padding"
             android:listSelector="@color/transparent"
-            android:numColumns="3"
+            android:numColumns="1"
             android:paddingLeft="@dimen/app_base_padding"
             android:paddingRight="@dimen/app_base_padding"
             android:paddingTop="@dimen/app_base_padding"
