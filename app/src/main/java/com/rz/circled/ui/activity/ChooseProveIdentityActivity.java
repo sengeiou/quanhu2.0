@@ -41,6 +41,13 @@ public class ChooseProveIdentityActivity extends BaseActivity {
     LinearLayout llStatus;
 
 
+    @BindView(R.id.iv_choose_prove_oneself)
+    ImageView ivChooseProveOneself;
+    @BindView(R.id.iv_choose_prove_agency)
+    ImageView ivChooseProveAgency;
+    @BindView((R.id.ll_famous_sure))
+    LinearLayout llFamousSure;
+
     private ProveStatusBean proveStatusBean;
     private ProveInfoPresenter proveInfoPresenter;
 
@@ -169,14 +176,21 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusHint.setText(R.string.prove_info_verify_ing);
                 tvStatusHint.setVisibility(View.VISIBLE);
                 ivStatusVerify.setImageResource(R.mipmap.icon_submit_success);
+
+                ivChooseProveOneself.setVisibility(View.GONE);
+                ivChooseProveAgency.setVisibility(View.GONE);
+                llFamousSure.setVisibility(View.GONE);
                 break;
             case ProveStatusBean.STATUS_FAIL:
                 tvStatusTitle.setText(R.string.prove_fail);
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.prove_again);
                 ivStatusVerify.setImageResource(R.mipmap.icon_submit_error);
-                break;
 
+                ivChooseProveOneself.setVisibility(View.GONE);
+                ivChooseProveAgency.setVisibility(View.GONE);
+                llFamousSure.setVisibility(View.GONE);
+                break;
             case ProveStatusBean.STATUS_SUCCESS:
                 tvStatusTitle.setText(getString(R.string.prove_identity_hint) +
                         (proveStatusBean.isOneSelf() ? getString(R.string.prove_oneself) : getString(R.string.prove_agency)));
@@ -185,11 +199,19 @@ public class ChooseProveIdentityActivity extends BaseActivity {
                 tvStatusChange.setVisibility(View.VISIBLE);
                 tvStatusChange.setText(R.string.change_prove_info_hint);
                 ivStatusVerify.setImageResource(R.mipmap.icon_prove_success);
+
+                ivChooseProveOneself.setVisibility(View.GONE);
+                ivChooseProveAgency.setVisibility(View.GONE);
+                llFamousSure.setVisibility(View.GONE);
                 break;
             case ProveStatusBean.STATUS_NORMAL://未认证
             case ProveStatusBean.STATUS_CANCEL://取消认证同未认证
                 llStatus.setVisibility(View.GONE);
                 setTitleText(R.string.choose_prove_identity);
+
+                ivChooseProveOneself.setVisibility(View.VISIBLE);
+                ivChooseProveAgency.setVisibility(View.VISIBLE);
+                llFamousSure.setVisibility(View.VISIBLE);
                 break;
         }
     }

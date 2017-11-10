@@ -518,7 +518,7 @@ public class LoginActivity extends BaseActivity {
 //                    skipActivity(aty, MainActivity.class);
 //                } else if (loginType == Type.TYPE_LOGIN_WEB) {
 //                    //从圈子过来跳转登录的
-//                    JsEvent.callJsEvent(getLoginWebResultData(), true);
+                JsEvent.callJsEvent(getLoginWebResultData(), true);
 //                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
 //                    //从向导页面过来
 //
