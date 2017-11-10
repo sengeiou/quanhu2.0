@@ -80,8 +80,8 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
-                isEdit = false;
-                setRightText();
+//                isEdit = false;
+//                setRightText();
             }
 
             @Override
@@ -90,6 +90,13 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
             }
         };
         mViewPager.addOnPageChangeListener(mListener);
+//        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
+
     }
 
     @Override
