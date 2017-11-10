@@ -9,6 +9,9 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.rz.circled.R;
 import com.rz.common.widget.toasty.Toasty;
@@ -51,14 +54,32 @@ public class SaveImageHandler extends ServerHandler {
             org.json.JSONObject jsonObject = new org.json.JSONObject(dataJson);
             String name = jsonObject.getString("name");
             String data = jsonObject.getString("data");
-            if (data.split(",").length == 2) {
-                data = data.split(",")[1];
+            if (data.startsWith("http://") || data.startsWith("https://")) {
+                Glide.with(mActivity).load(data).asBitmap().into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                        try {
+                            saveFile(bitmap, System.currentTimeMillis() + ".jpg", "");
+                            Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
+                            JsEvent.callJsEvent(null, true);
+                        } catch (IOException e) {
+                            Toasty.info(mActivity, mActivity.getString(R.string.save_fail)).show();
+                            e.printStackTrace();
+                            Log.e("zxw", e.getMessage(), e);
+                            JsEvent.callJsEvent(null, false);
+                        }
+                    }
+                });
+            } else {
+                if (data.split(",").length == 2) {
+                    data = data.split(",")[1];
+                }
+                byte[] bytes = Base64.decode(data, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                saveFile(bitmap, System.currentTimeMillis() + ".jpg", "");
+                Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
+                JsEvent.callJsEvent(null, true);
             }
-            byte[] bytes = Base64.decode(data, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            saveFile(bitmap, System.currentTimeMillis() + ".jpg", "");
-            Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
-            JsEvent.callJsEvent(null, true);
         } catch (JSONException | IOException e) {
             Toasty.info(mActivity, mActivity.getString(R.string.save_fail)).show();
             e.printStackTrace();
