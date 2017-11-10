@@ -70,6 +70,8 @@ public class AllCircleFragment extends BaseFragment {
     List<CircleEntrModle> loveAllList;
     List<CircleEntrModle> loveList = new ArrayList<>();
     List<CircleEntrModle> noFollow = new ArrayList<>();
+    static List<CircleEntrModle> loveChagelist = new ArrayList<>();
+    static List<CircleEntrModle> recommendChangelist = new ArrayList<>();
     List<CircleEntrModle> recommendList;
     List<CircleEntrModle> delHs = new ArrayList<>();
     List<CircleEntrModle> addHs = new ArrayList<>();
@@ -138,13 +140,13 @@ public class AllCircleFragment extends BaseFragment {
     public void onMessageEvent(BaseEvent event) {
         if (event.getType() == TYPE_CIRCLE_TATE) {
             this.isEdit = (boolean) event.getData();
-            if (type==0){
-            mCircleAdapter.setEdit(isEdit);
-            mCircleAdapter.notifyDataSetChanged();
+            if (type == 0) {
+                mCircleAdapter.setEdit(isEdit);
+                mCircleAdapter.notifyDataSetChanged();
 
-            }else {
-            mRecommCircleAdapter.setEdit(isEdit);
-            mRecommCircleAdapter.notifyDataSetChanged();
+            } else {
+                mRecommCircleAdapter.setEdit(isEdit);
+                mRecommCircleAdapter.notifyDataSetChanged();
             }
             return;
         }
@@ -153,13 +155,14 @@ public class AllCircleFragment extends BaseFragment {
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
                     if (loveList.get(i).isSeleced){
+                        loveList.get(i).setSeleced(false);
                         delHs.add(loveList.get(i));
+                        loveChagelist.add(loveList.get(i));
                     }
                 }
-                if (delHs.isEmpty()){
-                    return;
-                }
                 loveList.removeAll(delHs);
+                loveList.addAll(recommendChangelist);
+                recommendChangelist.clear();
                 mCircleAdapter.setData(loveList);
                 mapPresenter(delHs);
 
@@ -167,13 +170,18 @@ public class AllCircleFragment extends BaseFragment {
                 addHs.clear();
                 for (int i = 0; i < recommendList.size(); i++) {
                     if (recommendList.get(i).isSeleced){
+                        recommendList.get(i).setSeleced(false);
                         addHs.add(recommendList.get(i));
+                        recommendChangelist.add(recommendList.get(i));
                     }
                 }
-                if (addHs.isEmpty()){
-                    return;
-                }
+//                if (addHs.isEmpty()){
+//                    return;
+//                }
+                recommendList.addAll(loveChagelist);
+                loveChagelist.clear();
                 recommendList.removeAll(addHs);
+                changeLetter(recommendList);
                 mRecommCircleAdapter.setData(recommendList);
                 mapPresenter(addHs);
             }
@@ -181,15 +189,17 @@ public class AllCircleFragment extends BaseFragment {
         }
 
     }
+
     StringBuffer sb = new StringBuffer();
+
     private void mapPresenter(List<CircleEntrModle> list) {
         for (int i = 0; i < list.size(); i++) {
             sb.append(list.get(i).appId + ",");
         }
-        if (type==0){
-        mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
-        }else {
-            mPresenter.addLoveCircle(sb.toString(),1);
+        if (type == 0) {
+            mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
+        } else {
+            mPresenter.addLoveCircle(sb.toString(), 1);
         }
         sb.delete(0, sb.length());
     }
@@ -249,11 +259,13 @@ public class AllCircleFragment extends BaseFragment {
             }
         });
     }
+
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
         EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
     }
+
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
@@ -300,7 +312,7 @@ public class AllCircleFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
-        EventBus.getDefault().unregister(this);
+            EventBus.getDefault().unregister(this);
     }
 
     /**

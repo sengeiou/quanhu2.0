@@ -63,8 +63,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     public static final int TAG_DELETE_COMMENT = 1003;
     public static final int TAG_REWARD_LIST = 1004;
     public static final int TAG_ZAN_LIST = 1005;
-    private static final int ADD_SUCESS = 600;
-    private static final int DEL_SUCESS = 601;
+    public static final int ADD_SUCESS = 600;
+    public static final int DEL_SUCESS = 601;
 
     private IViewController mView;
     private Context mContext;
