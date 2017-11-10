@@ -40,13 +40,13 @@ public class AllCircleSearchActivity extends BaseActivity {
     private List<CircleEntrModle> circleBeanList = new ArrayList<>();
 
     public static String searchWord = "";
-    private int type = 0;
+//    private int type = 0;
 
-    public static final void stratActivity(Context context, int type, List dataList) {
+    public static final void stratActivity(Context context, List dataList) {
         Intent intent = new Intent(context, AllCircleSearchActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(IntentKey.ALL_CIRCLE_TYPE, (Serializable) dataList);
-        bundle.putInt(IntentKey.EXTRA_TYPE, type);
+//        bundle.putInt(IntentKey.EXTRA_TYPE, type);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
@@ -61,7 +61,7 @@ public class AllCircleSearchActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         circleBeanList = (List<CircleEntrModle>) bundle.getSerializable(IntentKey.ALL_CIRCLE_TYPE);
-        type = bundle.getInt(IntentKey.EXTRA_TYPE,0);
+//        type = bundle.getInt(IntentKey.EXTRA_TYPE,0);
 
 
         circleAdapter = new SearchCircleAdapter(this, R.layout.circle_adapter_item);
