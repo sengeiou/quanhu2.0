@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.AllCircleAdapter;
 import com.rz.circled.ui.fragment.AllCircleFragment;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -38,6 +40,10 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
     ImageView mIvBaseTitleLeft;
     TextView mTvBaseTitleRight;
     boolean isEdit = false;
+    @BindView(R.id.rl_layout)
+    RelativeLayout mRlLayout;
+    @BindView(R.id.iv_know)
+    ImageView mIvKnow;
     private ViewPager.OnPageChangeListener mListener;
     private TextView mEditCancle;
 
@@ -53,6 +59,11 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void initView() {
+        if (Session.getUserIsFirstGuide()) {
+            mRlLayout.setVisibility(View.VISIBLE);
+        } else {
+            mRlLayout.setVisibility(View.GONE);
+        }
         fragments = new AllCircleFragment[]{AllCircleFragment.newInstance(0), AllCircleFragment.newInstance(1)};
 
         tabPagerCircle.setCustomLayoutParams(2);
@@ -105,7 +116,13 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
                 setRightText();
             }
         });
-
+        mIvKnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Session.setUserIsFirstGuide(false);
+                mRlLayout.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -158,7 +175,8 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
             }
         }
     }
-    public boolean getEditState(){
+
+    public boolean getEditState() {
         return isEdit;
     }
 
