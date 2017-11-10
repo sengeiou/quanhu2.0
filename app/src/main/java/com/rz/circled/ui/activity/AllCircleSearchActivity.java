@@ -63,8 +63,7 @@ public class AllCircleSearchActivity extends BaseActivity {
         circleBeanList = (List<CircleEntrModle>) bundle.getSerializable(IntentKey.ALL_CIRCLE_TYPE);
         type = bundle.getInt(IntentKey.EXTRA_TYPE,0);
 
-        circleAdapter = new SearchCircleAdapter(this, R.layout.circle_adapter_item);
-        circleAdapter.setData(circleBeanList);
+
         circleAdapter = new SearchCircleAdapter(this, R.layout.circle_adapter_item);
 //        circleAdapter.setData(circleBeanList);
         gvCircle.setAdapter(circleAdapter);
