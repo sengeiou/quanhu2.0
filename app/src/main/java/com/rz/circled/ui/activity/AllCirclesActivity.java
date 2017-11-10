@@ -27,6 +27,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.rz.common.constant.CommonCode.EventType.TYPE_RIGHT_CLICK;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_RIGHT_NOTI_CLICK;
 import static com.rz.common.constant.CommonCode.EventType.TYPE_SET_CURRENT;
 
 /**
@@ -160,6 +162,8 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_CIRCLE_TATE, isEdit));
         tabPagerCircle.setClisk(isEdit ? false : true);
         mViewPager.setScanScroll(isEdit ? false : true);
+        mTvBaseTitleRight.setTextColor(isEdit ? getResources().getColor(R.color.color_666):getResources().getColor(R.color.color_0185ff));
+        mTvBaseTitleRight.setClickable(isEdit ? false :true);
         mEditCancle.setVisibility(isEdit ? View.VISIBLE : View.GONE);
         mIvBaseTitleLeft.setVisibility(isEdit ? View.GONE : View.VISIBLE);
         if (mViewPager.getCurrentItem() == 0) {
@@ -186,6 +190,16 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
     public void onMessageEvent(BaseEvent event) {
         if (event.getType() == TYPE_SET_CURRENT) {
             mViewPager.setCurrentItem(1);
+            return;
+        }
+        if (event.getType() == TYPE_RIGHT_CLICK){
+            mTvBaseTitleRight.setTextColor(getResources().getColor(R.color.color_0185ff));
+            mTvBaseTitleRight.setClickable(true);
+            return;
+        }
+        if (event.getType() == TYPE_RIGHT_NOTI_CLICK){
+            mTvBaseTitleRight.setTextColor(getResources().getColor(R.color.color_666));
+            mTvBaseTitleRight.setClickable(false);
         }
 
     }

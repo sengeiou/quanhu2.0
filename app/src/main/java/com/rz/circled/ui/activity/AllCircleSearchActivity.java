@@ -39,7 +39,7 @@ public class AllCircleSearchActivity extends BaseActivity {
     GridView gvCircle;
     private SearchCircleAdapter circleAdapter;
     private List<CircleEntrModle> circleBeanList = new ArrayList<>();
-
+    List<CircleEntrModle> dataList;
     public static String searchWord = "";
 //    private int type = 0;
 
@@ -74,14 +74,8 @@ public class AllCircleSearchActivity extends BaseActivity {
         gvCircle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CircleEntrModle circleEntrModle = circleBeanList.get(position);
-                if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
-                    Intent intent = new Intent(AllCircleSearchActivity.this, AllCirclesAty.class);
-                    AllCircleSearchActivity.this.startActivity(intent);
-                } else {
-                    circleEntrModle.click += 1;
-                    WebContainerActivity.startActivity(AllCircleSearchActivity.this, circleBeanList.get(position).circleUrl);
-                }
+                     CircleEntrModle circleEntrModle = dataList.get(position);
+                    WebContainerActivity.startActivity(AllCircleSearchActivity.this, circleEntrModle.circleUrl);
             }
         });
 
@@ -171,7 +165,7 @@ public class AllCircleSearchActivity extends BaseActivity {
 
         //本地匹配关键词搜索
 
-        List<CircleEntrModle> dataList = new ArrayList<>();
+        dataList = new ArrayList<>();
 
         for(int i=0;i<circleBeanList.size();i++){
             if(circleBeanList.get(i).getCircleName().contains(searchWord)){

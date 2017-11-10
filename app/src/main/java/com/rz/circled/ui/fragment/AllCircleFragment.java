@@ -35,6 +35,10 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.common.constant.CommonCode.EventType.TYPE_CIRCLE_TATE;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_FINISH_TATE;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_RECOMM_TATE;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_RIGHT_CLICK;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_RIGHT_NOTI_CLICK;
 import static com.rz.common.constant.CommonCode.EventType.TYPE_SET_CURRENT;
 import static com.rz.common.constant.Constants.LOVE_CIRCLE;
 
@@ -76,6 +80,7 @@ public class AllCircleFragment extends BaseFragment {
     List<CircleEntrModle> recommendList;
     List<CircleEntrModle> delHs = new ArrayList<>();
     List<CircleEntrModle> addHs = new ArrayList<>();
+    List<CircleEntrModle> notifyList = new ArrayList<>();
     private boolean isEdit;
     int type;
     private CharacterParser mCharacterParser;
@@ -121,6 +126,7 @@ public class AllCircleFragment extends BaseFragment {
             mListview.setAdapter(mCircleAdapter);
             mCircleAdapter.setData(loveList);
         } else {
+            mPresenter.getCircleEntranceList(0);
             mRecommCircleAdapter = new CircleAdapter(mActivity, R.layout.circle_adapter_item);
             mListview.setAdapter(mRecommCircleAdapter);
         }
@@ -134,7 +140,7 @@ public class AllCircleFragment extends BaseFragment {
             }
         }
         changeLetter(loveList);
-        if (loveList.isEmpty()){
+        if (loveList.isEmpty()) {
             EventBus.getDefault().post(new BaseEvent(TYPE_SET_CURRENT));
         }
 
@@ -154,8 +160,8 @@ public class AllCircleFragment extends BaseFragment {
             }
             return;
         }
-//        if (event.getType()==TYPE_FINISH_TATE){
-            if (type==0){
+        if (event.getType() == TYPE_FINISH_TATE || event.getType() == TYPE_RECOMM_TATE) {
+            if (type == 0) {
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
                     if (loveList.get(i).isSeleced) {
@@ -168,7 +174,9 @@ public class AllCircleFragment extends BaseFragment {
                 loveList.addAll(recommendChangelist);
                 recommendChangelist.clear();
                 mCircleAdapter.setData(loveList);
+                if (!delHs.isEmpty()){
                 mapPresenter(delHs);
+                }
 
             } else {
                 addHs.clear();
@@ -179,18 +187,17 @@ public class AllCircleFragment extends BaseFragment {
                         recommendChangelist.add(recommendList.get(i));
                     }
                 }
-//                if (addHs.isEmpty()){
-//                    return;
-//                }
                 recommendList.addAll(loveChagelist);
                 loveChagelist.clear();
                 recommendList.removeAll(addHs);
                 changeLetter(recommendList);
                 mRecommCircleAdapter.setData(recommendList);
+                if (!addHs.isEmpty()){
                 mapPresenter(addHs);
+                }
             }
             return;
-//        }
+        }
 
     }
 
@@ -215,7 +222,7 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!isEdit) {
-                    AllCircleSearchActivity.stratActivity(mActivity, type==0?loveList:recommendList);
+                    AllCircleSearchActivity.stratActivity(mActivity, type == 0 ? loveList : recommendList);
                 }
             }
         });
@@ -223,7 +230,6 @@ public class AllCircleFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        mPresenter.getCircleEntranceList(0);
         // 设置右侧触摸监听
         mSidebar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
@@ -244,7 +250,7 @@ public class AllCircleFragment extends BaseFragment {
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position==0){
+                if (position == 0) {
                     return;
                 }
                 if (type == 0) {
@@ -256,6 +262,7 @@ public class AllCircleFragment extends BaseFragment {
                         } else {
                             circleEntrModle.isSeleced = true;
                         }
+                        postActivity(loveList);
                         mCircleAdapter.notifyDataSetChanged();
                     } else {
                         WebContainerActivity.startActivity(mActivity, circleEntrModle.getCircleUrl());
@@ -269,6 +276,7 @@ public class AllCircleFragment extends BaseFragment {
                         } else {
                             circleEntrModle.isSeleced = true;
                         }
+                        postActivity(recommendList);
                         mRecommCircleAdapter.notifyDataSetChanged();
                     } else {
                         WebContainerActivity.startActivity(mActivity, circleEntrModle.getCircleUrl());
@@ -279,6 +287,21 @@ public class AllCircleFragment extends BaseFragment {
 
             }
         });
+    }
+
+    private void postActivity(List<CircleEntrModle> loveList) {
+        notifyList.clear();
+        for (int i = 0; i < loveList.size(); i++) {
+            if (loveList.get(i).isSeleced) {
+                notifyList.add(loveList.get(i));
+            }
+        }
+        if (notifyList.isEmpty()) {
+            EventBus.getDefault().post(new BaseEvent(TYPE_RIGHT_NOTI_CLICK));
+        } else {
+            EventBus.getDefault().post(new BaseEvent(TYPE_RIGHT_CLICK));
+        }
+
     }
 
     @Override
