@@ -18,6 +18,17 @@
             android:paddingRight="@dimen/px40"
             android:src="@mipmap/icon_arrow_left_gray"/>
         <TextView
+            android:id="@+id/edit_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px44"
+            android:text="取消"
+            android:paddingLeft="@dimen/app_base_padding"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:textColor="@color/color_666666"
+            />
+        <TextView
             android:id="@+id/tv_base_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +47,7 @@
             android:paddingRight="@dimen/font_44"
             android:gravity="center"
             android:text="编辑"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/color_0185ff"
             android:textSize="@dimen/font_44"
           />
     </RelativeLayout>
