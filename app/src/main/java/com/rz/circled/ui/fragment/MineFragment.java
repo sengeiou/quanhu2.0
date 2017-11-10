@@ -332,23 +332,33 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             switch (v.getId()){
                 //个人中心
                 case R.id.bg_rl_head:
-                    UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
+                    if (isLogin()) {
+                        UserInfoActivity.newFrindInfo(mActivity, Session.getUserId());
+                    }
                     break;
                 //资源
                 case R.id.btn_my_article:
-                    jump(MyArticleActivity.class);
+                    if (isLogin()) {
+                        jump(MyArticleActivity.class);
+                    }
                     break;
                 //悬赏
                 case R.id.btn_my_transfer:
-                    jump(MyRewardActivity.class);
+                    if (isLogin()) {
+                        jump(MyRewardActivity.class);
+                    }
                     break;
                 //私圈
                 case R.id.btn_my_circle:
-                    MyPrivateGroupActivity.startMyPrivateGroup(mActivity, 0);
+                    if (isLogin()) {
+                        MyPrivateGroupActivity.startMyPrivateGroup(mActivity, 0);
+                    }
                     break;
                 //活动
                 case R.id.btn_activity_collect:
-                    jump(MinePageActivity.class);
+                    if (isLogin()) {
+                        jump(MinePageActivity.class);
+                    }
                     break;
             }
         }

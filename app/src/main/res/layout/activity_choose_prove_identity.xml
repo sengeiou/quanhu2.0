@@ -82,6 +82,7 @@
         android:src="@mipmap/bg_prove_identity_agency"/>
 
     <LinearLayout
+        android:id="@+id/ll_famous_sure"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

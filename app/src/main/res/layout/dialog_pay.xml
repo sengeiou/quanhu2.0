@@ -65,7 +65,7 @@
             <TextView
                 android:id="@+id/id_dialog_pay_yuan_txt"
                 style="@style/DefaultTvStyle"
-                android:text="@string/yuan"
+                android:text="@string/rmb_yuan"
                 android:textColor="@color/font_gray_s"
                 android:textSize="@dimen/font_44" />
         </LinearLayout>
