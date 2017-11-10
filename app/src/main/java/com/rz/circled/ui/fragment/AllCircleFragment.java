@@ -151,11 +151,11 @@ public class AllCircleFragment extends BaseFragment {
             }
             return;
         }
-        if (event.getType()==TYPE_FINISH_TATE){
-            if (type==0){
+        if (event.getType() == TYPE_FINISH_TATE) {
+            if (type == 0) {
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
-                    if (loveList.get(i).isSeleced){
+                    if (loveList.get(i).isSeleced) {
                         loveList.get(i).setSeleced(false);
                         delHs.add(loveList.get(i));
                         loveChagelist.add(loveList.get(i));
@@ -167,10 +167,10 @@ public class AllCircleFragment extends BaseFragment {
                 mCircleAdapter.setData(loveList);
                 mapPresenter(delHs);
 
-            }else {
+            } else {
                 addHs.clear();
                 for (int i = 0; i < recommendList.size(); i++) {
-                    if (recommendList.get(i).isSeleced){
+                    if (recommendList.get(i).isSeleced) {
                         recommendList.get(i).setSeleced(false);
                         addHs.add(recommendList.get(i));
                         recommendChangelist.add(recommendList.get(i));
@@ -211,8 +211,8 @@ public class AllCircleFragment extends BaseFragment {
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isEdit){
-                    AllCircleSearchActivity.stratActivity(mActivity,0,loveList);
+                if (!isEdit) {
+                    AllCircleSearchActivity.stratActivity(mActivity, 0, loveList);
                 }
             }
         });
@@ -226,7 +226,12 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
-                int position = mCircleAdapter.getPositionForSection(s.charAt(0));
+                int position;
+                if (type == 0) {
+                    position = mCircleAdapter.getPositionForSection(s.charAt(0));
+                } else {
+                    position = mRecommCircleAdapter.getPositionForSection(s.charAt(0));
+                }
                 if (position != -1) {
                     mListview.setSelection(position);
                 }
