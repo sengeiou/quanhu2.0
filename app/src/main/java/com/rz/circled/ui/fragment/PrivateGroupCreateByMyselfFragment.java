@@ -246,15 +246,15 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
     }
 
     private void loadData(boolean loadMore) {
-        if (Session.getUserIsLogin()) {
-            if (!loadMore) pageNo = 1;
-            if (TextUtils.isEmpty(userId) || Session.getUserId().equals(userId)) {
+        if (!loadMore) pageNo = 1;
+        if (TextUtils.isEmpty(userId) || Session.getUserId().equals(userId)) {
+            if (Session.getUserIsLogin()) {
                 mPresenter.privateGroupMyselfCreate(null, Session.getUserId(), pageNo, loadMore);                   //获取自己创建的所有圈子
             } else {
-                mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
+                processData(null, loadMore);
             }
         } else {
-            processData(null, loadMore);
+            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
         }
     }
 
