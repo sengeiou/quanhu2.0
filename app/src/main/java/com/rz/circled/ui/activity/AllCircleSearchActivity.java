@@ -57,13 +57,13 @@ public class AllCircleSearchActivity extends BaseActivity {
 
     public static String searchWord = "";
     private int type = 0;
-    public static final String SEARCH_TYPE = "search_type";
 
     public static final void stratActivity(Context context, int type, List dataList) {
         Intent intent = new Intent(context, AllCircleSearchActivity.class);
         Bundle bundle = new Bundle();
-        intent.putExtra(IntentKey.EXTRA_TYPE, type);
-//        intent.putExtras("", (Serializable)dataList);
+        bundle.putSerializable(IntentKey.ALL_CIRCLE_TYPE, (Serializable) dataList);
+        bundle.putInt(IntentKey.EXTRA_TYPE, type);
+        intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
@@ -75,12 +75,15 @@ public class AllCircleSearchActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        Intent intent = getIntent();
-        type = intent.getIntExtra(IntentKey.EXTRA_TYPE,0);
+        Bundle bundle = getIntent().getExtras();
+        circleBeanList = (List<CircleEntrModle>) bundle.getSerializable(IntentKey.ALL_CIRCLE_TYPE);
+        type = bundle.getInt(IntentKey.EXTRA_TYPE,0);
 
         circleAdapter = new SearchCircleAdapter(this, R.layout.item_choose_circle);
         circleAdapter.setData(circleBeanList);
         gvCircle.setAdapter(circleAdapter);
+
+        etKeyword.setHint("搜圈子");
 
         gvCircle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -155,19 +158,17 @@ public class AllCircleSearchActivity extends BaseActivity {
             Toasty.info(mContext,mContext.getString(R.string.search_attention_title)).show();
             return;
         }
-//        BaseEvent baseEvent = new BaseEvent(CommonCode.EventType.SEARCH_KEYWORD, keyWord);
-//        EventBus.getDefault().post(baseEvent);
-
         //本地匹配关键词搜索
-//        circleBeanList
 
         List<CircleEntrModle> dataList = new ArrayList<>();
-//        if(circleBeanList)
 
-//        circleBeanList.addAll(mDatas);
-//        circleAdapter.setKeyWord(keyWord);
-//        circleAdapter.setData(circleBeanList);
-//        circleAdapter.notifyDataSetChanged();
+        for(int i=0;i<circleBeanList.size();i++){
+            if(circleBeanList.get(i).getCircleName().contains(keyWord)){
+                dataList.add(circleBeanList.get(i));
+            }
+        }
+        circleAdapter.setData(dataList);
+        circleAdapter.notifyDataSetChanged();
     }
 
     @Override

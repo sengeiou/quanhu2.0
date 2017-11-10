@@ -151,8 +151,8 @@ public class AllCircleFragment extends BaseFragment {
             }
             return;
         }
-        if (event.getType() == TYPE_FINISH_TATE) {
-            if (type == 0) {
+//        if (event.getType()==TYPE_FINISH_TATE){
+            if (type==0){
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
                     if (loveList.get(i).isSeleced) {
@@ -187,7 +187,7 @@ public class AllCircleFragment extends BaseFragment {
                 mapPresenter(addHs);
             }
             return;
-        }
+//        }
 
     }
 

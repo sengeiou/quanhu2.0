@@ -145,21 +145,22 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
             } else {
                 Log.i(TAG, "setRightText: " + "1");
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_FINISH_TATE));
+                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_RECOMM_TATE));
                 mTvBaseTitleRight.setText(R.string.edit);
-
             }
         } else {
             if (isEdit) {
                 mTvBaseTitleRight.setText(R.string.add);
             } else {
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_FINISH_TATE));
-                Log.i(TAG, "setRightText: " + "2");
+
+                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_RECOMM_TATE));
+                Log.i(TAG, "setRightText: "+"2");
                 mTvBaseTitleRight.setText(R.string.edit);
             }
         }
     }
-
-    public boolean getEditState() {
+    public boolean getEditState(){
         return isEdit;
     }
 
