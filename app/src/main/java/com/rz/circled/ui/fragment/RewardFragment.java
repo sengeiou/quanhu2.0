@@ -171,6 +171,11 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
             case CommonCode.EventType.TYPE_HTTP_HEADER:
                 hadHeader = true;
                 break;
+
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                mWebView.reload();
+                break;
+
         }
     }
 

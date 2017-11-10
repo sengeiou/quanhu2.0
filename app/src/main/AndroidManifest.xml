@@ -654,6 +654,35 @@
         <activity android:name=".ui.activity.AllCirclesActivity"
                   android:theme="@style/BaseAppTheme.Translucent"
             />
+
+        <activity android:name=".ui.activity.NativeAppActivity">
+
+            <!--&lt;!&ndash; 要想在别的App上能成功调起App，必须添加intent过滤器 &ndash;&gt;-->
+            <!--<intent-filter>-->
+
+                <!--&lt;!&ndash; 协议部分，随便设置 &ndash;&gt;-->
+                <!--<data android:scheme="uumobile" />-->
+                <!--&lt;!&ndash; 下面这几行也必须得设置 &ndash;&gt;-->
+                <!--<category android:name="Android.intent.category.DEFAULT" />-->
+                <!--<category android:name="Android.intent.category.BROWSABLE" />-->
+
+                <!--<action android:name="Android.intent.action.VIEW" />-->
+            <!--</intent-filter>-->
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="opus"
+                    android:pathPrefix="/sharedetail"
+                    android:scheme="yryz"/>
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".ui.activity.AllCircleSearchActivity"/>
     </application>
 
 </manifest>

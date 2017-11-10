@@ -12,6 +12,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.CircleAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.AllCircleSearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.SideBar;
 import com.rz.circled.widget.pinyin.CharacterParser;
@@ -34,7 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.common.constant.CommonCode.EventType.TYPE_CIRCLE_TATE;
-import static com.rz.common.constant.CommonCode.EventType.TYPE_FINISH_TATE;
 import static com.rz.common.constant.Constants.LOVE_CIRCLE;
 
 /**
@@ -70,6 +70,8 @@ public class AllCircleFragment extends BaseFragment {
     List<CircleEntrModle> loveAllList;
     List<CircleEntrModle> loveList = new ArrayList<>();
     List<CircleEntrModle> noFollow = new ArrayList<>();
+    static List<CircleEntrModle> loveChagelist = new ArrayList<>();
+    static List<CircleEntrModle> recommendChangelist = new ArrayList<>();
     List<CircleEntrModle> recommendList;
     List<CircleEntrModle> delHs = new ArrayList<>();
     List<CircleEntrModle> addHs = new ArrayList<>();
@@ -138,64 +140,81 @@ public class AllCircleFragment extends BaseFragment {
     public void onMessageEvent(BaseEvent event) {
         if (event.getType() == TYPE_CIRCLE_TATE) {
             this.isEdit = (boolean) event.getData();
-            if (type==0){
-            mCircleAdapter.setEdit(isEdit);
-            mCircleAdapter.notifyDataSetChanged();
+            if (type == 0) {
+                mCircleAdapter.setEdit(isEdit);
+                mCircleAdapter.notifyDataSetChanged();
 
-            }else {
-            mRecommCircleAdapter.setEdit(isEdit);
-            mRecommCircleAdapter.notifyDataSetChanged();
+            } else {
+                mRecommCircleAdapter.setEdit(isEdit);
+                mRecommCircleAdapter.notifyDataSetChanged();
             }
             return;
         }
-        if (event.getType()==TYPE_FINISH_TATE){
+//        if (event.getType()==TYPE_FINISH_TATE){
             if (type==0){
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
-                    if (loveList.get(i).isSeleced){
+                    if (loveList.get(i).isSeleced) {
+                        loveList.get(i).setSeleced(false);
                         delHs.add(loveList.get(i));
+                        loveChagelist.add(loveList.get(i));
                     }
                 }
-                if (delHs.isEmpty()){
-                    return;
-                }
                 loveList.removeAll(delHs);
+                loveList.addAll(recommendChangelist);
+                recommendChangelist.clear();
                 mCircleAdapter.setData(loveList);
                 mapPresenter(delHs);
 
-            }else {
+            } else {
                 addHs.clear();
                 for (int i = 0; i < recommendList.size(); i++) {
-                    if (recommendList.get(i).isSeleced){
+                    if (recommendList.get(i).isSeleced) {
+                        recommendList.get(i).setSeleced(false);
                         addHs.add(recommendList.get(i));
+                        recommendChangelist.add(recommendList.get(i));
                     }
                 }
-                if (addHs.isEmpty()){
-                    return;
-                }
+//                if (addHs.isEmpty()){
+//                    return;
+//                }
+                recommendList.addAll(loveChagelist);
+                loveChagelist.clear();
                 recommendList.removeAll(addHs);
+                changeLetter(recommendList);
                 mRecommCircleAdapter.setData(recommendList);
                 mapPresenter(addHs);
             }
             return;
-        }
+//        }
 
     }
+
     StringBuffer sb = new StringBuffer();
+
     private void mapPresenter(List<CircleEntrModle> list) {
         for (int i = 0; i < list.size(); i++) {
             sb.append(list.get(i).appId + ",");
         }
-        if (type==0){
-        mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
-        }else {
-            mPresenter.addLoveCircle(sb.toString(),1);
+        if (type == 0) {
+            mPresenter.removeLoveCircle(sb.toString(), Session.getUserId());
+        } else {
+            mPresenter.addLoveCircle(sb.toString(), 1);
         }
         sb.delete(0, sb.length());
     }
 
     private void initHeadView() {
         mheadView = LayoutInflater.from(mActivity).inflate(R.layout.all_circle_head_layout, null);
+        View etSearch = mheadView.findViewById(R.id.id_search_key_rela1);
+        etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isEdit) {
+                    AllCircleSearchActivity.stratActivity(mActivity, type, loveList);
+                }
+            }
+        });
     }
 
     @Override
@@ -206,16 +225,27 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
-//                int position = mCircleAdapter.getPositionForSection(s.charAt(0));
-//                if (position != -1) {
-//                    mListview.setSelection(position);
-//                }
+                int position;
+                if (type == 0) {
+                    position = mCircleAdapter.getPositionForSection(s.charAt(0));
+                } else {
+                    position = mRecommCircleAdapter.getPositionForSection(s.charAt(0));
+                }
+                if (position != -1) {
+                    mListview.setSelection(position);
+                }
             }
         });
         mSidebar.setTextView(mTxtDialog);
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0){
+//                    if (!isEdit) {
+//                        AllCircleSearchActivity.stratActivity(mActivity, type, loveList);
+//                    }
+                    return;
+                }
                 if (type == 0) {
                     CircleEntrModle circleEntrModle = loveList.get(position - 1);
                     boolean isSeleced = circleEntrModle.isSeleced;
@@ -249,11 +279,13 @@ public class AllCircleFragment extends BaseFragment {
             }
         });
     }
+
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
         EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
     }
+
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
@@ -300,7 +332,7 @@ public class AllCircleFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         if (EventBus.getDefault().isRegistered(this))
-        EventBus.getDefault().unregister(this);
+            EventBus.getDefault().unregister(this);
     }
 
     /**

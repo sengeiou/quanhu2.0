@@ -65,4 +65,7 @@ public interface IntentKey {
     String EXTRA_TAB = "extraTab";
 
     String LOGIN_MODEL = "loginmodel";
+
+    String ALL_CIRCLE_TYPE = "allCircleType";
+
 }

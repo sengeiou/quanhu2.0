@@ -31,6 +31,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/px115"
         android:src="@drawable/no_select"
+        android:visibility="gone"
         />
     <View
         style="@style/line_horizontal_gray_s"
