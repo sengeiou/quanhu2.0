@@ -54,6 +54,7 @@ import java.util.Locale;
 public class PagerSlidingTabStripHome extends HorizontalScrollView {
 
     private boolean mIsMain;
+    private boolean isClick=true;
 
     public interface IconTabProvider {
         public int getPageIconResId(int position);
@@ -335,12 +336,18 @@ public class PagerSlidingTabStripHome extends HorizontalScrollView {
 
     }
 
+    public void setClisk(boolean isClick) {
+        this.isClick=isClick;
+    }
+
     private void addTab(final int position, View tab) {
         tab.setFocusable(true);
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (isClick){
                 pager.setCurrentItem(position);
+                }
             }
         });
 

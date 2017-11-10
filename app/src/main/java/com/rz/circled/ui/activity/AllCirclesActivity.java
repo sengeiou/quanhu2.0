@@ -39,6 +39,7 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
     TextView mTvBaseTitleRight;
     boolean isEdit = false;
     private ViewPager.OnPageChangeListener mListener;
+    private TextView mEditCancle;
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -70,6 +71,7 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
         mTitleContent.addView(v);
         mIvBaseTitleLeft = (ImageView) v.findViewById(R.id.all_circle__title_left);
         mTvBaseTitleRight = (TextView) v.findViewById(R.id.all_circle_title_right);
+        mEditCancle = (TextView) v.findViewById(R.id.edit_cancel);
         mIvBaseTitleLeft.setOnClickListener(this);
         mTvBaseTitleRight.setOnClickListener(this);
         mListener = new ViewPager.OnPageChangeListener() {
@@ -96,6 +98,13 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
 //                return true;
 //            }
 //        });
+        mEditCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isEdit = false;
+                setRightText();
+            }
+        });
 
     }
 
@@ -126,20 +135,23 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
     }
 
     private void setRightText() {
-        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_CIRCLE_TATE,isEdit));
+        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_CIRCLE_TATE, isEdit));
+        tabPagerCircle.setClisk(isEdit ? false : true);
+        mEditCancle.setVisibility(isEdit ? View.VISIBLE : View.GONE);
+        mIvBaseTitleLeft.setVisibility(isEdit ? View.GONE : View.VISIBLE);
         if (mViewPager.getCurrentItem() == 0) {
-            if (isEdit){
-            mTvBaseTitleRight.setText(R.string.delete);
-            }else {
-                Log.i(TAG, "setRightText: "+"1");
+            if (isEdit) {
+                mTvBaseTitleRight.setText(R.string.delete);
+            } else {
+                Log.i(TAG, "setRightText: " + "1");
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_FINISH_TATE));
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_RECOMM_TATE));
                 mTvBaseTitleRight.setText(R.string.edit);
             }
         } else {
-            if (isEdit){
+            if (isEdit) {
                 mTvBaseTitleRight.setText(R.string.add);
-            }else {
+            } else {
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_FINISH_TATE));
 
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_RECOMM_TATE));

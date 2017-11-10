@@ -17,21 +17,21 @@
         android:visibility="visible">
 
         <ImageView
-            android:layout_width="16dp"
+            android:layout_width="@dimen/px800"
             android:layout_height="16dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
             android:src="@drawable/search_key_icon" />
 
         <com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon
-            android:id="@+id/team_search_edittext"
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:focusable="false"
             android:background="@color/transparent"
-            android:hint="@string/input_keyword"
+            android:hint="@string/search_circle"
             android:imeOptions="actionSearch"
             android:inputType="textImeMultiLine"
             android:lines="1"

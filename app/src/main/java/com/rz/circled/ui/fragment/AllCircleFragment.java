@@ -12,6 +12,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.CircleAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.AllCircleSearchActivity;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.SideBar;
 import com.rz.circled.widget.pinyin.CharacterParser;
@@ -154,7 +155,7 @@ public class AllCircleFragment extends BaseFragment {
             if (type==0){
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
-                    if (loveList.get(i).isSeleced){
+                    if (loveList.get(i).isSeleced) {
                         loveList.get(i).setSeleced(false);
                         delHs.add(loveList.get(i));
                         loveChagelist.add(loveList.get(i));
@@ -166,10 +167,10 @@ public class AllCircleFragment extends BaseFragment {
                 mCircleAdapter.setData(loveList);
                 mapPresenter(delHs);
 
-            }else {
+            } else {
                 addHs.clear();
                 for (int i = 0; i < recommendList.size(); i++) {
-                    if (recommendList.get(i).isSeleced){
+                    if (recommendList.get(i).isSeleced) {
                         recommendList.get(i).setSeleced(false);
                         addHs.add(recommendList.get(i));
                         recommendChangelist.add(recommendList.get(i));
@@ -206,6 +207,15 @@ public class AllCircleFragment extends BaseFragment {
 
     private void initHeadView() {
         mheadView = LayoutInflater.from(mActivity).inflate(R.layout.all_circle_head_layout, null);
+        View etSearch = mheadView.findViewById(R.id.et_search);
+        etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isEdit) {
+                    AllCircleSearchActivity.stratActivity(mActivity, 0, loveList);
+                }
+            }
+        });
     }
 
     @Override
@@ -216,10 +226,15 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
-//                int position = mCircleAdapter.getPositionForSection(s.charAt(0));
-//                if (position != -1) {
-//                    mListview.setSelection(position);
-//                }
+                int position;
+                if (type == 0) {
+                    position = mCircleAdapter.getPositionForSection(s.charAt(0));
+                } else {
+                    position = mRecommCircleAdapter.getPositionForSection(s.charAt(0));
+                }
+                if (position != -1) {
+                    mListview.setSelection(position);
+                }
             }
         });
         mSidebar.setTextView(mTxtDialog);
