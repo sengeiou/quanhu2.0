@@ -241,9 +241,6 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position==0){
-//                    if (!isEdit) {
-//                        AllCircleSearchActivity.stratActivity(mActivity, type, loveList);
-//                    }
                     return;
                 }
                 if (type == 0) {
