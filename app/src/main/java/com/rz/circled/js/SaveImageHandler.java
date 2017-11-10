@@ -28,6 +28,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Gsm on 2017/8/11.
@@ -52,24 +53,12 @@ public class SaveImageHandler extends ServerHandler {
         String dataJson = gson.toJson(paramObj.getData());
         try {
             org.json.JSONObject jsonObject = new org.json.JSONObject(dataJson);
-            String name = jsonObject.getString("name");
             String data = jsonObject.getString("data");
             if (data.startsWith("http://") || data.startsWith("https://")) {
-                Glide.with(mActivity).load(data).asBitmap().into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                        try {
-                            saveFile(bitmap, System.currentTimeMillis() + ".jpg", "");
-                            Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
-                            JsEvent.callJsEvent(null, true);
-                        } catch (IOException e) {
-                            Toasty.info(mActivity, mActivity.getString(R.string.save_fail)).show();
-                            e.printStackTrace();
-                            Log.e("zxw", e.getMessage(), e);
-                            JsEvent.callJsEvent(null, false);
-                        }
-                    }
-                });
+                Bitmap bitmap = Glide.with(mActivity).load(data).asBitmap().into(-1, -1).get();
+                saveFile(bitmap, System.currentTimeMillis() + ".jpg", "");
+                Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
+                JsEvent.callJsEvent(null, true);
             } else {
                 if (data.split(",").length == 2) {
                     data = data.split(",")[1];
@@ -80,7 +69,7 @@ public class SaveImageHandler extends ServerHandler {
                 Toasty.info(mActivity, mActivity.getString(R.string.save_success)).show();
                 JsEvent.callJsEvent(null, true);
             }
-        } catch (JSONException | IOException e) {
+        } catch (JSONException | IOException | InterruptedException | ExecutionException e) {
             Toasty.info(mActivity, mActivity.getString(R.string.save_fail)).show();
             e.printStackTrace();
             Log.e("zxw", e.getMessage(), e);
