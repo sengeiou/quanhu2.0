@@ -423,6 +423,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case EventConstant.USER_BE_KICKOUT_BY_HTTP:
                 kickOut(StatusCode.INVALID);
                 break;
+            case EventConstant.SET_REWARD_TAB:
+                tabHost.setCurrentTab(2);
+                break;
+
         }
     }
 

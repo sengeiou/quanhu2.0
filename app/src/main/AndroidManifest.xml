@@ -678,9 +678,10 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
+                    android:scheme="quanhu"
                     android:host="open"
                     android:pathPrefix="/data"
-                    android:scheme="quanhu"/>
+                    />
             </intent-filter>
 
         </activity>
