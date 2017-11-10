@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.rz.circled.R;
 import com.rz.circled.adapter.AllCircleAdapter;
 import com.rz.circled.ui.fragment.AllCircleFragment;
+import com.rz.circled.widget.CustomNoSlideViewPager;
 import com.rz.circled.widget.PagerSlidingTabStripHome;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
@@ -20,9 +21,13 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.rz.common.constant.CommonCode.EventType.TYPE_SET_CURRENT;
 
 /**
  * Created by Administrator on 2017/11/8/008.
@@ -32,7 +37,7 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
     @BindView(R.id.tab_allcircle)
     PagerSlidingTabStripHome tabPagerCircle;
     @BindView(R.id.vp_allcircle_main)
-    ViewPager mViewPager;
+    CustomNoSlideViewPager mViewPager;
     @BindView(R.id.title_content)
     FrameLayout mTitleContent;
     AllCircleFragment[] fragments;
@@ -137,14 +142,14 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.all_circle_title_right:
-                if (isEdit) {
-                    isEdit = false;
-                } else {
-                    isEdit = true;
+                if (isLogin()) {
+                    if (isEdit) {
+                        isEdit = false;
+                    } else {
+                        isEdit = true;
+                    }
+                    setRightText();
                 }
-
-                setRightText();
-//                publishedAdapter.notifyDataSetChanged();
                 break;
 
 
@@ -154,6 +159,7 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
     private void setRightText() {
         EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_CIRCLE_TATE, isEdit));
         tabPagerCircle.setClisk(isEdit ? false : true);
+        mViewPager.setScanScroll(isEdit ? false : true);
         mEditCancle.setVisibility(isEdit ? View.VISIBLE : View.GONE);
         mIvBaseTitleLeft.setVisibility(isEdit ? View.GONE : View.VISIBLE);
         if (mViewPager.getCurrentItem() == 0) {
@@ -176,14 +182,27 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    public boolean getEditState() {
-        return isEdit;
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(BaseEvent event) {
+        if (event.getType() == TYPE_SET_CURRENT) {
+            mViewPager.setCurrentItem(1);
+        }
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

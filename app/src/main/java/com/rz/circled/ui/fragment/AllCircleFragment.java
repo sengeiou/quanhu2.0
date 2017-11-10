@@ -35,6 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.common.constant.CommonCode.EventType.TYPE_CIRCLE_TATE;
+import static com.rz.common.constant.CommonCode.EventType.TYPE_SET_CURRENT;
 import static com.rz.common.constant.Constants.LOVE_CIRCLE;
 
 /**
@@ -133,6 +134,9 @@ public class AllCircleFragment extends BaseFragment {
             }
         }
         changeLetter(loveList);
+        if (loveList.isEmpty()){
+            EventBus.getDefault().post(new BaseEvent(TYPE_SET_CURRENT));
+        }
 
     }
 
@@ -211,7 +215,7 @@ public class AllCircleFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (!isEdit) {
-                    AllCircleSearchActivity.stratActivity(mActivity, loveList);
+                    AllCircleSearchActivity.stratActivity(mActivity, type==0?loveList:recommendList);
                 }
             }
         });
