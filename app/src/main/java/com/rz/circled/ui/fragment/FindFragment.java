@@ -20,7 +20,7 @@ import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
-import com.rz.circled.ui.activity.AllCirclesAty;
+import com.rz.circled.ui.activity.AllCirclesActivity;
 import com.rz.circled.ui.activity.MoreFamousActivity;
 import com.rz.circled.ui.activity.MoreSubjectActivity;
 import com.rz.circled.ui.activity.UserInfoActivity;
@@ -92,7 +92,7 @@ public class FindFragment extends BaseFragment {
     private RecyclerView.Adapter mFamousAdapter;
     private RecyclerView.Adapter mSubjectAdapter;
     private BaseAdapter mActivityAdapter1;
-
+    private int[] resourceColors={R.drawable.resource_blue,R.drawable.resource_red,R.drawable.resource_yellow,R.drawable.resource_green,R.drawable.resource_pink,R.drawable.resource_purple,R.drawable.resource_cyan};
 
     @Nullable
     @Override
@@ -145,7 +145,8 @@ public class FindFragment extends BaseFragment {
                 viewHolder.tv_circle_name.setText(R.string.find_more);
             } else {
                 viewHolder.tv_circle_name.setText(circleEntrModle.circleName);
-                Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
+                viewHolder.icv_circle_img.setImageResource(resourceColors[position]);
+//                Glide.with(FindFragment.this).load(circleEntrModle.circleIcon).into(viewHolder.icv_circle_img);
             }
             return convertView;
         }
@@ -168,7 +169,7 @@ public class FindFragment extends BaseFragment {
                 CircleEntrModle circleEntrModle = circleEntrModleList.get(position);
                 if (getString(R.string.FIND_MORE).equals(circleEntrModle.appId)) {
                     if (isLogin()) {
-                        Intent intent = new Intent(mActivity, AllCirclesAty.class);
+                        Intent intent = new Intent(mActivity, AllCirclesActivity.class);
                         intent.putExtra(LOVE_CIRCLE, (Serializable) circleEntrModleList);
                         getActivity().startActivity(intent);
                     }

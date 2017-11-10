@@ -28,7 +28,7 @@ public class CircleEntrModle implements Serializable {
     public boolean isSeleced;
     public int click;
     public int type;
-
+    private String firstLetter;
 
     public int id;
     public String appSecret;
@@ -47,6 +47,14 @@ public class CircleEntrModle implements Serializable {
 
     public void setSeleced(boolean seleced) {
         isSeleced = seleced;
+    }
+
+    public String getFirstLetter() {
+        return firstLetter;
+    }
+
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter;
     }
 
 
