@@ -3,10 +3,6 @@ package com.rz.circled.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,20 +15,10 @@ import android.widget.ImageView;
 
 import com.rz.circled.R;
 import com.rz.circled.adapter.SearchCircleAdapter;
-import com.rz.circled.ui.fragment.SearchCircleFragment;
-import com.rz.circled.ui.fragment.SearchContentFragment;
-import com.rz.circled.ui.fragment.SearchPersonFragment;
-import com.rz.circled.ui.fragment.SearchPrivateCircleFragment;
-import com.rz.circled.ui.fragment.SearchRewardFragment;
-import com.rz.circled.widget.PagerSlidingTabStripHome;
-import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
-import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.CircleEntrModle;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,8 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.R.attr.key;
 
 public class AllCircleSearchActivity extends BaseActivity {
 
@@ -79,7 +63,7 @@ public class AllCircleSearchActivity extends BaseActivity {
         circleBeanList = (List<CircleEntrModle>) bundle.getSerializable(IntentKey.ALL_CIRCLE_TYPE);
         type = bundle.getInt(IntentKey.EXTRA_TYPE,0);
 
-        circleAdapter = new SearchCircleAdapter(this, R.layout.item_choose_circle);
+        circleAdapter = new SearchCircleAdapter(this, R.layout.circle_adapter_item);
         circleAdapter.setData(circleBeanList);
         gvCircle.setAdapter(circleAdapter);
 

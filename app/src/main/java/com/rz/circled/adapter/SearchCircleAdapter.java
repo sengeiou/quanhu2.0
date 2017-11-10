@@ -1,7 +1,6 @@
 package com.rz.circled.adapter;
 
 import android.content.Context;
-import android.text.SpannableString;
 import android.widget.ImageView;
 import android.widget.TextView;
 

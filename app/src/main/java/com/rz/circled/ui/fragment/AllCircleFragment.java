@@ -35,7 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.common.constant.CommonCode.EventType.TYPE_CIRCLE_TATE;
-import static com.rz.common.constant.CommonCode.EventType.TYPE_FINISH_TATE;
 import static com.rz.common.constant.Constants.LOVE_CIRCLE;
 
 /**
@@ -207,12 +206,12 @@ public class AllCircleFragment extends BaseFragment {
 
     private void initHeadView() {
         mheadView = LayoutInflater.from(mActivity).inflate(R.layout.all_circle_head_layout, null);
-        View etSearch = mheadView.findViewById(R.id.et_search);
+        View etSearch = mheadView.findViewById(R.id.id_search_key_rela1);
         etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isEdit) {
-                    AllCircleSearchActivity.stratActivity(mActivity, 0, loveList);
+                    AllCircleSearchActivity.stratActivity(mActivity, type, loveList);
                 }
             }
         });
@@ -241,6 +240,12 @@ public class AllCircleFragment extends BaseFragment {
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0){
+//                    if (!isEdit) {
+//                        AllCircleSearchActivity.stratActivity(mActivity, type, loveList);
+//                    }
+                    return;
+                }
                 if (type == 0) {
                     CircleEntrModle circleEntrModle = loveList.get(position - 1);
                     boolean isSeleced = circleEntrModle.isSeleced;

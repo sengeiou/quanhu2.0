@@ -153,9 +153,7 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
                 mTvBaseTitleRight.setText(R.string.add);
             } else {
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_FINISH_TATE));
-
                 EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_RECOMM_TATE));
-                Log.i(TAG, "setRightText: "+"2");
                 mTvBaseTitleRight.setText(R.string.edit);
             }
         }
