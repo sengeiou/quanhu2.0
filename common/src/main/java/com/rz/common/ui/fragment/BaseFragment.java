@@ -153,7 +153,7 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
         } else {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
+//            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
             intent.setAction("quanhu.login");
             intent.putExtras(bundle);
             startActivity(intent);

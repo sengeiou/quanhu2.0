@@ -119,6 +119,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     RelativeLayout signLayout;
     TextView titlebarSignTxt;
+    TextView titlebarSigned;
     ImageView scoreImg;
     private ImageView mUnread;
 
@@ -188,6 +189,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         signLayout = (RelativeLayout) newTitilbar.findViewById(R.id.sign_layout);
         signLayout.setVisibility(View.VISIBLE);
         titlebarSignTxt = (TextView) newTitilbar.findViewById(R.id.titlebar_login_icon_img);
+        titlebarSigned = (TextView) newTitilbar.findViewById(R.id.titlebar_signed);
         scoreImg = (ImageView) newTitilbar.findViewById(R.id.scores_img);
 
         ib.setVisibility(View.VISIBLE);
@@ -320,6 +322,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         }
 
     }
+
 
 
     class HeadOnCLickListener implements View.OnClickListener {
@@ -540,18 +543,20 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             signBean = (UserSignBean) t;
             if (signBean.isSignFlag()) {
                 scoreImg.setVisibility(View.GONE);
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-//                titlebarSignTxt.setTextColor(getResources().getColor(R.color.color_0185ff));
-                titlebarSignTxt.setTextColor(Color.argb(168, 1, 133, 255));   //文字透明度
-                titlebarSignTxt.setText("已签到");
-                titlebarSignTxt.setLayoutParams(lp);
+                titlebarSignTxt.setVisibility(View.GONE);
+                titlebarSigned.setVisibility(View.VISIBLE);
+
+                titlebarSigned.setTextColor(Color.argb(168, 1, 133, 255));   //文字透明度
+                titlebarSigned.setText("已签到");
 
             } else {
-//                titlebarSignTxt.setTextColor(getResources().getColor(R.color.color_0185ff));
+
                 titlebarSignTxt.setTextColor(Color.argb(255, 1, 133, 255));   //文字透明度
                 titlebarSignTxt.setText("签到");
+
                 scoreImg.setVisibility(View.VISIBLE);
+                titlebarSignTxt.setVisibility(View.VISIBLE);
+                titlebarSigned.setVisibility(View.GONE);
             }
         } else if (t instanceof DataStatisticsBean) {
             DataStatisticsBean data = (DataStatisticsBean) t;
@@ -649,12 +654,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             //签到成功
             scoreImg.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-//            titlebarSignTxt.setTextColor(getResources().getColor(R.color.sign_color));
-            titlebarSignTxt.setTextColor(Color.argb(168, 1, 133, 255));   //文字透明度
-            titlebarSignTxt.setText("已签到");
-            titlebarSignTxt.setLayoutParams(lp);
+            titlebarSignTxt.setVisibility(View.GONE);
+
+            titlebarSigned.setVisibility(View.VISIBLE);
+            titlebarSigned.setTextColor(Color.argb(168, 1, 133, 255));   //文字透明度
+            titlebarSigned.setText("已签到");
 
             //签到成功，重新拉取积分
             //获取数据统计
