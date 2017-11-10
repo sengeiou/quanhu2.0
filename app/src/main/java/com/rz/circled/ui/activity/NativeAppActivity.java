@@ -31,6 +31,8 @@ public class NativeAppActivity extends BaseActivity {
             String uriQuery = uri.getQuery();
             Intent intent;
             if (pathSegments != null && pathSegments.size() > 0) {
+                this.getIntent().getScheme();//获得Scheme名称
+                this.getIntent().getDataString();//获得Uri全部路径
                 // 解析SCHEME
 //                if (someif) {
 //                    dosomething();
