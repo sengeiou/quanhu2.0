@@ -29,7 +29,7 @@ public class NativeAppActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        Log.e("gggggg","------");
+        Log.e("NativeAppActivity","------");
 
         Uri uri = getIntent().getData();
         if (uri != null)

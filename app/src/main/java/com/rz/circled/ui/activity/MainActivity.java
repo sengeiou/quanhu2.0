@@ -2,6 +2,7 @@ package com.rz.circled.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -57,6 +58,7 @@ import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.cache.DataCacheManager;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
 import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -125,7 +127,43 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent != null) {
+            Uri uri = getIntent().getData();
+            if (uri != null){
+                List<String> pathSegments = uri.getPathSegments();
+                String uriQuery = uri.getQuery();
+                if (pathSegments != null && pathSegments.size() > 0) {
+                    String scheme = this.getIntent().getScheme();//获得S称
+                    String host = uri.getHost();
+
+//                    quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002
+
+                    if(!StringUtil.isEmpty(scheme) && !StringUtil.isEmpty(host)){
+                        String tab = uri.getQueryParameter("type");
+                        String url = uri.getQueryParameter("url");
+                        String categary = uri.getQueryParameter("category");
+
+                        if(tab.equals(1)){
+                            CommonH5Activity.startCommonH5(this,"",url);
+                        }else{
+                            if(!StringUtil.isEmpty(categary) && categary.equals("2001")){    //个人中心
+                                intent.setClass(this,UserInfoActivity.class);
+                                startActivity(intent);
+                            }else if(!StringUtil.isEmpty(categary) && categary.equals("2002")){  //悬赏
+                                intent.setClass(this,MainActivity.class);
+                                startActivity(intent);
+                                //发送event到
+                                EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
+                            }
+                        }
+                    }
+                } else {
+                    finish();
+                }
+            } else {
+                finish();
+            }
         }
+
     }
 
     @Override
@@ -358,6 +396,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         });
     }
 
+
     private void parsesData(HashMap<String, String> data) {
         List<NewsUnreadBean> unreadBeanList = new ArrayList<>();
         for (String key : data.keySet()) {
@@ -479,4 +518,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void refreshPage() {
 
     }
+
+
+
 }
