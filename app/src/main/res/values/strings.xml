@@ -236,7 +236,7 @@
     <string name="private_group_youran_price">%1$d悠然币</string>
     <string name="private_group_essence_scan">%1$d 阅读</string>
     <string name="private_group_join_way_change">修改加入私圈方式</string>
-    <string name="private_group_choose">选择圈子</string>
+    <string name="private_group_choose">选择所属圈子</string>
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
