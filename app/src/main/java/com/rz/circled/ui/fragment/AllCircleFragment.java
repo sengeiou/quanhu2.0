@@ -18,6 +18,7 @@ import com.rz.circled.widget.SideBar;
 import com.rz.circled.widget.pinyin.CharacterParser;
 import com.rz.circled.widget.pinyin.CircleComparator;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -84,6 +85,7 @@ public class AllCircleFragment extends BaseFragment {
     private boolean isEdit;
     int type;
     private CharacterParser mCharacterParser;
+    boolean isFirstLogin=false;
 
     @Nullable
     @Override
@@ -148,6 +150,11 @@ public class AllCircleFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
+        if (event.getType() == CommonCode.EventType.TYPE_BACKLOGIN_REFRESH){
+            isFirstLogin=true;
+            mPresenter.getUserLoveCircle(Session.getUserId());
+            return;
+        }
         if (event.getType() == TYPE_CIRCLE_TATE) {
             this.isEdit = (boolean) event.getData();
             if (type == 0) {
@@ -307,6 +314,14 @@ public class AllCircleFragment extends BaseFragment {
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
+        if (t !=null&&isFirstLogin){
+            isFirstLogin=false;
+            mPresenter.getCircleEntranceList(0);
+            loveAllList.clear();
+            loveAllList= (List<CircleEntrModle>) t;
+            delLove();
+            mCircleAdapter.setData(loveList);
+        }
         EventBus.getDefault().post(new BaseEvent(EventConstant.UPDATE_LOVE_CIRCLE));
     }
 
@@ -317,6 +332,7 @@ public class AllCircleFragment extends BaseFragment {
             List<CircleEntrModle> circleEntrModleList = (List<CircleEntrModle>) t;
             if (flag == 0) {
                 //全部圈子列表
+                noFollow.clear();
                 recommendList = circleEntrModleList;
                 for (int i = 0; i < recommendList.size(); i++) {
                     boolean isfind = false;
