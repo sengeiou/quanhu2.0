@@ -98,6 +98,8 @@ public class AllCircleSearchActivity extends BaseActivity {
                 } else {
                     ivClearKeyword.setVisibility(View.GONE);
                 }
+                if (!TextUtils.isEmpty(etKeyword.getText().toString()))
+                toSearch();
             }
         });
 
@@ -166,15 +168,16 @@ public class AllCircleSearchActivity extends BaseActivity {
         //本地匹配关键词搜索
 
         dataList = new ArrayList<>();
-
-        for(int i=0;i<circleBeanList.size();i++){
-            if(circleBeanList.get(i).getCircleName().contains(searchWord)){
-                dataList.add(circleBeanList.get(i));
-            }
+    if (circleBeanList!=null) {
+    for (int i = 0; i < circleBeanList.size(); i++) {
+        if (circleBeanList.get(i).getCircleName().contains(searchWord)||circleBeanList.get(i).circleIntro.contains(searchWord)) {
+            dataList.add(circleBeanList.get(i));
         }
-        circleAdapter.setData(dataList);
-        circleAdapter.notifyDataSetChanged();
-
+    }
+    circleAdapter.setData(dataList);
+    circleAdapter.notifyDataSetChanged();
+        onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+}
         if(dataList.size()<=0){
             this.onLoadingStatus(CommonCode.General.DATA_EMPTY);
         }
