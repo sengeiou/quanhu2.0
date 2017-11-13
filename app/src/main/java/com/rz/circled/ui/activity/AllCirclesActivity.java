@@ -188,10 +188,12 @@ public class AllCirclesActivity extends BaseActivity implements View.OnClickList
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
+        //当我的圈子没有数据时，自动定位到推荐圈子下
         if (event.getType() == TYPE_SET_CURRENT) {
             mViewPager.setCurrentItem(1);
             return;
         }
+        //监听当点击编辑时，文字变色
         if (event.getType() == TYPE_RIGHT_CLICK){
             mTvBaseTitleRight.setTextColor(getResources().getColor(R.color.color_0185ff));
             mTvBaseTitleRight.setClickable(true);

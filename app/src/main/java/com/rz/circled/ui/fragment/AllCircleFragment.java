@@ -151,11 +151,13 @@ public class AllCircleFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
         if (event.getType() == CommonCode.EventType.TYPE_BACKLOGIN_REFRESH){
+            //登录后的监听
             isFirstLogin=true;
             mPresenter.getUserLoveCircle(Session.getUserId());
             return;
         }
         if (event.getType() == TYPE_CIRCLE_TATE) {
+            //当前是否为编辑状态的监听
             this.isEdit = (boolean) event.getData();
             if (type == 0) {
                 mCircleAdapter.setEdit(isEdit);
@@ -168,6 +170,7 @@ public class AllCircleFragment extends BaseFragment {
             return;
         }
         if (event.getType() == TYPE_FINISH_TATE || event.getType() == TYPE_RECOMM_TATE) {
+            //我的圈子数据改变后，推荐圈子数据互斥监听
             if (type == 0) {
                 delHs.clear();
                 for (int i = 0; i < loveList.size(); i++) {
@@ -180,6 +183,7 @@ public class AllCircleFragment extends BaseFragment {
                 loveList.removeAll(delHs);
                 loveList.addAll(recommendChangelist);
                 recommendChangelist.clear();
+                changeLetter(loveList);
                 mCircleAdapter.setData(loveList);
                 if (!delHs.isEmpty()){
                 mapPresenter(delHs);
@@ -315,6 +319,7 @@ public class AllCircleFragment extends BaseFragment {
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t !=null&&isFirstLogin){
+            //只有当退出登录，重新登录后才会进来，解决登录以后数据不刷新的问题
             isFirstLogin=false;
             mPresenter.getCircleEntranceList(0);
             loveAllList.clear();
