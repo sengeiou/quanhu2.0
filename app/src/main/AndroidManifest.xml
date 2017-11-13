@@ -101,9 +101,17 @@
             <intent-filter>
                 <action android:name="quanhu.main"/>
 
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:scheme="quanhu"
+                    android:host="open"
+                    android:pathPrefix="/data"
+                    />
             </intent-filter>
+
         </activity>
 
         <activity
@@ -655,36 +663,35 @@
                   android:theme="@style/BaseAppTheme.Translucent"
             />
 
-        <activity android:name=".ui.activity.NativeAppActivity">
+        <!--<activity android:name=".ui.activity.NativeAppActivity">-->
 
-            <!--&lt;!&ndash; 要想在别的App上能成功调起App，必须添加intent过滤器 &ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash; 要想在别的App上能成功调起App，必须添加intent过滤器 &ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;&lt;!&ndash; 协议部分，随便设置 &ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;<data android:scheme="uumobile" />&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash; 下面这几行也必须得设置 &ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;<category android:name="Android.intent.category.DEFAULT" />&ndash;&gt;-->
+                <!--&lt;!&ndash;<category android:name="Android.intent.category.BROWSABLE" />&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<action android:name="Android.intent.action.VIEW" />&ndash;&gt;-->
+            <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com//activity/qql&category=1002&ndash;&gt;-->
+
             <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW"/>-->
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+                <!--<category android:name="android.intent.category.BROWSABLE"/>-->
 
-                <!--&lt;!&ndash; 协议部分，随便设置 &ndash;&gt;-->
-                <!--<data android:scheme="uumobile" />-->
-                <!--&lt;!&ndash; 下面这几行也必须得设置 &ndash;&gt;-->
-                <!--<category android:name="Android.intent.category.DEFAULT" />-->
-                <!--<category android:name="Android.intent.category.BROWSABLE" />-->
-
-                <!--<action android:name="Android.intent.action.VIEW" />-->
+                <!--<data-->
+                    <!--android:scheme="quanhu"-->
+                    <!--android:host="open"-->
+                    <!--android:pathPrefix="/data"-->
+                    <!--/>-->
             <!--</intent-filter>-->
 
-            <!--quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com//activity/qql&category=1002-->
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-
-                <data
-                    android:scheme="quanhu"
-                    android:host="open"
-                    android:pathPrefix="/data"
-                    />
-            </intent-filter>
-
-        </activity>
+        <!--</activity>-->
         <activity android:name=".ui.activity.AllCircleSearchActivity"/>
     </application>
 
