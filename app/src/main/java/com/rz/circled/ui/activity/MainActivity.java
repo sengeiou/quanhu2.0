@@ -126,8 +126,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (intent != null) {
-            Uri uri = getIntent().getData();
+        setIntent(intent);
+//        if (intent != null) {
+            Uri uri = intent.getData();
             if (uri != null){
                 List<String> pathSegments = uri.getPathSegments();
                 String uriQuery = uri.getQuery();
@@ -135,20 +136,20 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                     String scheme = this.getIntent().getScheme();//获得S称
                     String host = uri.getHost();
 
-//                    quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002
-
+//                    String test  ="quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002";
+//                    Uri urlff = Uri.parse(test);
                     if(!StringUtil.isEmpty(scheme) && !StringUtil.isEmpty(host)){
                         String tab = uri.getQueryParameter("type");
                         String url = uri.getQueryParameter("url");
                         String categary = uri.getQueryParameter("category");
 
-                        if(tab.equals(1)){
+                        if(("1").equals(tab)){
                             CommonH5Activity.startCommonH5(this,"",url);
                         }else{
-                            if(!StringUtil.isEmpty(categary) && categary.equals("2001")){    //个人中心
+                            if("2001".equals(categary)){    //个人中心
                                 intent.setClass(this,UserInfoActivity.class);
                                 startActivity(intent);
-                            }else if(!StringUtil.isEmpty(categary) && categary.equals("2002")){  //悬赏
+                            }else if("2002".equals(categary)){  //悬赏
                                 intent.setClass(this,MainActivity.class);
                                 startActivity(intent);
                                 //发送event到
@@ -159,10 +160,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 } else {
                     finish();
                 }
-            } else {
-                finish();
             }
-        }
+//        }
 
     }
 

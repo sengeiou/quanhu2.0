@@ -151,6 +151,10 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
     public void initView() {
         mData = (ShareModel) getIntent().getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
         from = getIntent().getIntExtra(IntentKey.EXTRA_PAGE, Constants.DEFAULTVALUE);
+
+        if(from == 1020){
+            mTv_title.setText("分享到");
+        }
     }
 
     @Override
