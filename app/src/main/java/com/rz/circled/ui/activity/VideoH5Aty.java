@@ -97,6 +97,14 @@ public class VideoH5Aty extends Activity {
         activity.startActivity(intent);
     }
 
+    public static void startCommonH5(Activity activity, String url, String titleName, int pages) {
+        Intent intent = new Intent(activity, VideoH5Aty.class);
+        intent.putExtra(IntentKey.KEY_URL, url);
+        intent.putExtra(IntentKey.KEY_DESC, titleName);
+        intent.putExtra("page", pages);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -374,7 +382,7 @@ public class VideoH5Aty extends Activity {
         public void getMetaContent(String string) {
             Log.e("zxw", "getShareTitle: " + string);
             titleDescription = TextUtils.isEmpty(string.trim()) ? getString(R.string.share_activity_desc) : string;
-            ShareNewsAty.startShareNews(VideoH5Aty.this, new ShareModel(titleName, titleDescription, url));
+            ShareNewsAty.startShareNews(VideoH5Aty.this, new ShareModel(titleName, titleDescription, url),page);
         }
     }
 }

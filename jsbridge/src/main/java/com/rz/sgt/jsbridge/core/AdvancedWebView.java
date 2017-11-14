@@ -481,6 +481,11 @@ public class AdvancedWebView extends WebView {
 
 //        setHorizontalScrollBarEnabled(false); // 水平不显示滚动条
 //        setOverScrollMode(View.OVER_SCROLL_NEVER); // 禁止即在网页顶出现一个空白，又自动回去。
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            webSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
+
         //yeying
         //设置支持缩放
         webSettings.setAllowFileAccess(true);

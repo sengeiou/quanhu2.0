@@ -23,10 +23,13 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.LoginActivity;
+import com.rz.circled.ui.activity.MainActivity;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
+import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.ui.activity.VideoH5Aty;
 import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.AutoRollLayout;
@@ -184,38 +187,48 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void onClickLisenter(int position,String url) {
                 trackUser("推广", "Banner图", url);
 
+                Intent intent = new Intent();
                 Map parametersMap = getParameters(url);
                 String jumpUrl = (String) parametersMap.get("url");
+                String type = (String) parametersMap.get("type");
+                String category = (String) parametersMap.get("category");
 
-                if(!StringUtil.isEmpty(jumpUrl)){
-                    if (jumpUrl.contains("opus")) {
-                        if (jumpUrl.contains("opus-h")) {
-                            VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
+                if("1".equals(type)){
+                    if(!StringUtil.isEmpty(jumpUrl)){
+                        if (jumpUrl.contains("opus")) {
+                            if (jumpUrl.contains("opus-h")) {
+                                VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
+                            } else {
+                                WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+                            }
                         } else {
                             WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                        }
-                    } else {
-                        if (Session.getUserIsLogin()) {
-                            WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                        } else {
-                            getContext().startActivity(new Intent(mActivity, LoginActivity.class));
                         }
                     }
-                }
+                }else if("2".equals(type)){
+                    if("2001".equals(category)){    //个人中心
+                        String custId = (String) parametersMap.get("custId");
+                        if(!StringUtil.isEmpty(custId)){
+                            UserInfoActivity.newFrindInfo(mActivity,custId);
+                        }
+                    }else if("2002".equals(category)){  //悬赏
+                        intent.setClass(mActivity,MainActivity.class);
+                        startActivity(intent);
+                        //发送event到
+                        EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
+                    }
+                }else{
+                    if (url.contains("opus")) {
+                        if (url.contains("opus-h")) {
 
-//                if (url.contains("opus")) {
-//                    if (url.contains("opus-h")) {
-//                        VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name));
-//                    } else {
-//                        WebContainerActivity.startActivity(mActivity, url, true);
-//                    }
-//                } else {
-//                    if (Session.getUserIsLogin()) {
-//                        WebContainerActivity.startActivity(mActivity, url, true);
-//                    } else {
-//                        getContext().startActivity(new Intent(mActivity, LoginActivity.class));
-//                    }
-//                }
+                            VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name),1020);
+                        } else {
+                            WebContainerActivity.startActivity(mActivity, url, true);
+                        }
+                    } else {
+                        WebContainerActivity.startActivity(mActivity, url, true);
+                    }
+                }
             }
         });
     }
