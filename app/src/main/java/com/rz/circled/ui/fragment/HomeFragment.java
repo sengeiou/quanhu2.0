@@ -24,7 +24,6 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.event.EventConstant;
-import com.rz.circled.js.BannerJumpHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MainActivity;
@@ -85,6 +84,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     ImageView mHomePublish;
     @BindView(R.id.refresh)
     SwipyRefreshLayoutBanner mRefresh;
+    @BindView(R.id.id_floating_button)
+    ImageButton mFloatBtn;
     private ImageView mUnread;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
@@ -95,8 +96,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        if (!EventBus.getDefault().isRegistered(this)){
-        EventBus.getDefault().register(this);}
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return inflater.inflate(R.layout.fragment_home, null);
     }
 
@@ -133,12 +135,13 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 trackUser("入口", "首页", "消息");
                 //跳最近联系人界面
-                if (isLogin()){
-                if (NIMClient.getStatus() == StatusCode.LOGINED)
-                    startActivity(new Intent(mActivity, RecentContactActivity.class));
-                else
-                    Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
-            }}
+                if (isLogin()) {
+                    if (NIMClient.getStatus() == StatusCode.LOGINED)
+                        startActivity(new Intent(mActivity, RecentContactActivity.class));
+                    else
+                        Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
+                }
+            }
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
@@ -146,7 +149,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 //跳发布
 //                trackUser("入口", "首页", "发布按钮");
                 if (isLogin())
-                mPresenter.getUserPermession();
+                    mPresenter.getUserPermession();
 
 //                String url = "quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002";
 //                Uri uri = Uri.parse(url);
@@ -154,7 +157,12 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 //                getContext().startActivity(intent);
             }
         });
-
+        RxView.clicks(mFloatBtn).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                mHomeLv.smoothScrollToPosition(0);
+            }
+        });
     }
 
     private void initDynamicLv() {
@@ -185,7 +193,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         });
         mAuto_viewpager.setOnItemClickLisenter(new AutoRollLayout.onItemClickLisenter() {
             @Override
-            public void onClickLisenter(int position,String url) {
+            public void onClickLisenter(int position, String url) {
                 trackUser("推广", "Banner图", url);
 
 //                bannerJumpRule(url);
@@ -194,9 +202,10 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             }
         });
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
-        switch (event.getType()){
+        switch (event.getType()) {
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
                 mPresenter.getCircleDynamicList(false);
                 break;
@@ -206,6 +215,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         }
 
     }
+
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
@@ -344,56 +354,6 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
-
-
-    private void bannerJumpRule(String url){
-
-        Intent intent = new Intent();
-        Map parametersMap = getParameters(url);
-        String jumpUrl = (String) parametersMap.get("url");
-        String type = (String) parametersMap.get("type");
-        String category = (String) parametersMap.get("category");
-
-        if("1".equals(type)){
-            if(!StringUtil.isEmpty(jumpUrl)){
-                if (jumpUrl.contains("opus")) {
-                    if (jumpUrl.contains("opus-h")) {
-                        VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
-                    } else {
-                        WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                    }
-                } else {
-                    WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                }
-            }
-        }else if("2".equals(type)){
-            if("2001".equals(category)){    //个人中心
-                String custId = (String) parametersMap.get("custId");
-                if(!StringUtil.isEmpty(custId)){
-                    UserInfoActivity.newFrindInfo(mActivity,custId);
-                }
-            }else if("2002".equals(category)){  //悬赏
-                intent.setClass(mActivity,MainActivity.class);
-                startActivity(intent);
-                //发送event到
-                EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
-            }
-        }else{
-            if (url.contains("opus")) {
-                if (url.contains("opus-h")) {
-
-                    VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name),1020);
-                } else {
-                    WebContainerActivity.startActivity(mActivity, url, true);
-                }
-            } else {
-                WebContainerActivity.startActivity(mActivity, url, true);
-            }
-        }
-
-    }
-
 
     public Map<String, String> getParameters(String url) {
         Map<String, String> params=new HashMap<String, String>();
