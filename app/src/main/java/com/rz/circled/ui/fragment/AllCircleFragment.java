@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.rz.common.constant.CommonCode.EventType.TYPE_CIRCLE_TATE;
 import static com.rz.common.constant.CommonCode.EventType.TYPE_FINISH_TATE;
@@ -60,6 +63,8 @@ public class AllCircleFragment extends BaseFragment {
 
     @BindView(R.id.id_sidrbar)
     SideBar mSidebar;
+    @BindView(R.id.id_floating_button)
+    ImageButton mFloatingButton;
     private CircleAdapter mCircleAdapter;
     private CircleAdapter mRecommCircleAdapter;
     /**
@@ -85,7 +90,7 @@ public class AllCircleFragment extends BaseFragment {
     private boolean isEdit;
     int type;
     private CharacterParser mCharacterParser;
-    boolean isFirstLogin=false;
+    boolean isFirstLogin = false;
 
     @Nullable
     @Override
@@ -113,6 +118,7 @@ public class AllCircleFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        mFloatingButton.setVisibility(View.VISIBLE);
         loveAllList = (List<CircleEntrModle>) getActivity().getIntent().getSerializableExtra(LOVE_CIRCLE);
         mPyComparator = new CircleComparator();
         Bundle bundle = getArguments();
@@ -150,9 +156,9 @@ public class AllCircleFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(BaseEvent event) {
-        if (event.getType() == CommonCode.EventType.TYPE_BACKLOGIN_REFRESH){
+        if (event.getType() == CommonCode.EventType.TYPE_BACKLOGIN_REFRESH) {
             //登录后的监听
-            isFirstLogin=true;
+            isFirstLogin = true;
             mPresenter.getUserLoveCircle(Session.getUserId());
             return;
         }
@@ -185,8 +191,8 @@ public class AllCircleFragment extends BaseFragment {
                 recommendChangelist.clear();
                 changeLetter(loveList);
                 mCircleAdapter.setData(loveList);
-                if (!delHs.isEmpty()){
-                mapPresenter(delHs);
+                if (!delHs.isEmpty()) {
+                    mapPresenter(delHs);
                 }
 
             } else {
@@ -203,8 +209,8 @@ public class AllCircleFragment extends BaseFragment {
                 recommendList.removeAll(addHs);
                 changeLetter(recommendList);
                 mRecommCircleAdapter.setData(recommendList);
-                if (!addHs.isEmpty()){
-                mapPresenter(addHs);
+                if (!addHs.isEmpty()) {
+                    mapPresenter(addHs);
                 }
             }
             return;
@@ -241,6 +247,12 @@ public class AllCircleFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        mFloatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListview.smoothScrollToPosition(0);
+            }
+        });
         // 设置右侧触摸监听
         mSidebar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
@@ -318,12 +330,12 @@ public class AllCircleFragment extends BaseFragment {
     @Override
     public <T> void updateView(T t) {
         super.updateView(t);
-        if (t !=null&&isFirstLogin){
+        if (t != null && isFirstLogin) {
             //只有当退出登录，重新登录后才会进来，解决登录以后数据不刷新的问题
-            isFirstLogin=false;
+            isFirstLogin = false;
             mPresenter.getCircleEntranceList(0);
             loveAllList.clear();
-            loveAllList= (List<CircleEntrModle>) t;
+            loveAllList = (List<CircleEntrModle>) t;
             delLove();
             mCircleAdapter.setData(loveList);
         }
@@ -409,5 +421,13 @@ public class AllCircleFragment extends BaseFragment {
     @Override
     public void refreshPage() {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }
