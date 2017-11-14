@@ -17,11 +17,16 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
 import com.rz.circled.dialog.GroupLevelLessDialog;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
+import com.rz.circled.ui.activity.MainActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
+import com.rz.circled.ui.activity.UserInfoActivity;
+import com.rz.circled.ui.activity.VideoH5Aty;
+import com.rz.circled.ui.activity.WebContainerActivity;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.H5Address;
@@ -35,6 +40,7 @@ import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.GroupBannerBean;
 import com.rz.httpapi.bean.MyLevelAcountBean;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigator;
@@ -42,8 +48,12 @@ import net.lucode.hackware.magicindicator.buildins.circlenavigator.CircleNavigat
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -247,7 +257,8 @@ public class PrivateCircledFragment extends BaseFragment {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+//                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                    bannerJumpRule(pic);
                 }
             });
         }
@@ -342,4 +353,90 @@ public class PrivateCircledFragment extends BaseFragment {
     public void refreshPage() {
 
     }
+
+    private void bannerJumpRule(GroupBannerBean pic){
+
+        Intent intent = new Intent();
+        Map parametersMap = getParameters(pic.getUrl());
+        String jumpUrl = (String) parametersMap.get("url");
+        String type = (String) parametersMap.get("type");
+        String category = (String) parametersMap.get("category");
+
+        if("1".equals(type)){
+            if(!StringUtil.isEmpty(jumpUrl)){
+                if (jumpUrl.contains("opus")) {
+                    if (jumpUrl.contains("opus-h")) {
+                        VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
+                    } else {
+//                        WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+                        CommonH5Activity.startCommonH5(mActivity, "", jumpUrl);
+                    }
+                } else {
+//                    WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+                    CommonH5Activity.startCommonH5(mActivity, "", jumpUrl);
+                }
+            }
+        }else if("2".equals(type)){
+            if("2001".equals(category)){    //个人中心
+                String custId = (String) parametersMap.get("custId");
+                if(!StringUtil.isEmpty(custId)){
+                    UserInfoActivity.newFrindInfo(mActivity,custId);
+                }
+            }else if("2002".equals(category)){  //悬赏
+                intent.setClass(mActivity,MainActivity.class);
+                startActivity(intent);
+                //发送event到
+                EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
+            }
+        }else{
+            if (pic.getUrl().contains("opus")) {
+                if (pic.getUrl().contains("opus-h")) {
+
+                    VideoH5Aty.startCommonH5(mActivity, pic.getUrl(), mActivity.getString(R.string.app_name),1020);
+                } else {
+//                    WebContainerActivity.startActivity(mActivity, pic.getUrl(), true);
+                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                }
+            } else {
+//                WebContainerActivity.startActivity(mActivity, pic.getUrl(), true);
+                CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+            }
+        }
+
+    }
+
+    public Map<String, String> getParameters(String url) {
+        Map<String, String> params=new HashMap<String, String>();
+        if(url==null || "".equals(url.trim())){
+            return params;
+        }
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+        String[] split = url.split("[?]");
+        if (split.length == 2 && !"".equals(split[1].trim())) {
+            String[] parameters = split[1].split("&");
+            if (parameters != null && parameters.length != 0) {
+                for (int i = 0; i < parameters.length; i++) {
+                    if (parameters[i] != null
+                            && parameters[i].trim().contains("=")) {
+                        String[] split2 = parameters[i].split("=");
+                        //split2可能为1，可能为2
+                        if(split2.length==1){
+                            //有这个参数但是是空的
+                            params.put(split2[0], "");
+                        }else if(split2.length==2){
+                            if(!"".equals(split2[0].trim())){
+                                params.put(split2[0], split2[1]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return params;
+    }
+
 }

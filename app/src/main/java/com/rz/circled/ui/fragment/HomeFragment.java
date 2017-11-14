@@ -187,48 +187,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void onClickLisenter(int position,String url) {
                 trackUser("推广", "Banner图", url);
 
-                Intent intent = new Intent();
-                Map parametersMap = getParameters(url);
-                String jumpUrl = (String) parametersMap.get("url");
-                String type = (String) parametersMap.get("type");
-                String category = (String) parametersMap.get("category");
-
-                if("1".equals(type)){
-                    if(!StringUtil.isEmpty(jumpUrl)){
-                        if (jumpUrl.contains("opus")) {
-                            if (jumpUrl.contains("opus-h")) {
-                                VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
-                            } else {
-                                WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                            }
-                        } else {
-                            WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                        }
-                    }
-                }else if("2".equals(type)){
-                    if("2001".equals(category)){    //个人中心
-                        String custId = (String) parametersMap.get("custId");
-                        if(!StringUtil.isEmpty(custId)){
-                            UserInfoActivity.newFrindInfo(mActivity,custId);
-                        }
-                    }else if("2002".equals(category)){  //悬赏
-                        intent.setClass(mActivity,MainActivity.class);
-                        startActivity(intent);
-                        //发送event到
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
-                    }
-                }else{
-                    if (url.contains("opus")) {
-                        if (url.contains("opus-h")) {
-
-                            VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name),1020);
-                        } else {
-                            WebContainerActivity.startActivity(mActivity, url, true);
-                        }
-                    } else {
-                        WebContainerActivity.startActivity(mActivity, url, true);
-                    }
-                }
+                bannerJumpRule(url);
             }
         });
     }
@@ -382,6 +341,56 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+
+
+    private void bannerJumpRule(String url){
+
+        Intent intent = new Intent();
+        Map parametersMap = getParameters(url);
+        String jumpUrl = (String) parametersMap.get("url");
+        String type = (String) parametersMap.get("type");
+        String category = (String) parametersMap.get("category");
+
+        if("1".equals(type)){
+            if(!StringUtil.isEmpty(jumpUrl)){
+                if (jumpUrl.contains("opus")) {
+                    if (jumpUrl.contains("opus-h")) {
+                        VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
+                    } else {
+                        WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+                    }
+                } else {
+                    WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+                }
+            }
+        }else if("2".equals(type)){
+            if("2001".equals(category)){    //个人中心
+                String custId = (String) parametersMap.get("custId");
+                if(!StringUtil.isEmpty(custId)){
+                    UserInfoActivity.newFrindInfo(mActivity,custId);
+                }
+            }else if("2002".equals(category)){  //悬赏
+                intent.setClass(mActivity,MainActivity.class);
+                startActivity(intent);
+                //发送event到
+                EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
+            }
+        }else{
+            if (url.contains("opus")) {
+                if (url.contains("opus-h")) {
+
+                    VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name),1020);
+                } else {
+                    WebContainerActivity.startActivity(mActivity, url, true);
+                }
+            } else {
+                WebContainerActivity.startActivity(mActivity, url, true);
+            }
+        }
+
+    }
+
 
     public Map<String, String> getParameters(String url) {
         Map<String, String> params=new HashMap<String, String>();
