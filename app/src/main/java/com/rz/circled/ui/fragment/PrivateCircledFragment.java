@@ -18,6 +18,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
 import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.js.BannerJumpHelper;
 import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
@@ -258,7 +259,8 @@ public class PrivateCircledFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
 //                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
-                    bannerJumpRule(pic);
+//                    bannerJumpRule(pic);
+                    BannerJumpHelper.bannerJumpActivityHelper(mActivity,pic.getUrl());
                 }
             });
         }
@@ -368,12 +370,12 @@ public class PrivateCircledFragment extends BaseFragment {
                     if (jumpUrl.contains("opus-h")) {
                         VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
                     } else {
-//                        WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                        CommonH5Activity.startCommonH5(mActivity, "", jumpUrl);
+                        WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+//                        CommonH5Activity.startCommonH5(mActivity, "", jumpUrl);
                     }
                 } else {
-//                    WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                    CommonH5Activity.startCommonH5(mActivity, "", jumpUrl);
+                    WebContainerActivity.startActivity(mActivity, jumpUrl, true);
+//                    CommonH5Activity.startCommonH5(mActivity, "", jumpUrl);
                 }
             }
         }else if("2".equals(type)){
@@ -394,12 +396,12 @@ public class PrivateCircledFragment extends BaseFragment {
 
                     VideoH5Aty.startCommonH5(mActivity, pic.getUrl(), mActivity.getString(R.string.app_name),1020);
                 } else {
-//                    WebContainerActivity.startActivity(mActivity, pic.getUrl(), true);
-                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                    WebContainerActivity.startActivity(mActivity, pic.getUrl(), true);
+//                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
                 }
             } else {
-//                WebContainerActivity.startActivity(mActivity, pic.getUrl(), true);
-                CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+                WebContainerActivity.startActivity(mActivity, pic.getUrl(), true);
+//                CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
             }
         }
 

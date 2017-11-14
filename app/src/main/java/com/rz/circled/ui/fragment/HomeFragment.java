@@ -24,6 +24,7 @@ import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.js.BannerJumpHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MainActivity;
@@ -187,7 +188,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void onClickLisenter(int position,String url) {
                 trackUser("推广", "Banner图", url);
 
-                bannerJumpRule(url);
+//                bannerJumpRule(url);
+
+                BannerJumpHelper.bannerJumpActivityHelper(mActivity,url);
             }
         });
     }

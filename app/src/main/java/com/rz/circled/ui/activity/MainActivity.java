@@ -127,11 +127,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-//        if (intent != null) {
+        if (intent != null) {
             Uri uri = intent.getData();
             if (uri != null){
                 List<String> pathSegments = uri.getPathSegments();
-                String uriQuery = uri.getQuery();
+//                String uriQuery = uri.getQuery();
                 if (pathSegments != null && pathSegments.size() > 0) {
                     String scheme = this.getIntent().getScheme();//获得S称
                     String host = uri.getHost();
@@ -142,27 +142,30 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                         String tab = uri.getQueryParameter("type");
                         String url = uri.getQueryParameter("url");
                         String categary = uri.getQueryParameter("category");
+                        String custId = uri.getQueryParameter("custId");
 
                         if(("1").equals(tab)){
                             CommonH5Activity.startCommonH5(this,"",url);
-                        }else{
+                        }else if( "2".equals(tab)){
                             if("2001".equals(categary)){    //个人中心
-                                intent.setClass(this,UserInfoActivity.class);
-                                startActivity(intent);
+                                if(!StringUtil.isEmpty(custId)){
+                                    UserInfoActivity.newFrindInfo(this,custId);
+                                }
                             }else if("2002".equals(categary)){  //悬赏
                                 intent.setClass(this,MainActivity.class);
                                 startActivity(intent);
                                 //发送event到
                                 EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
                             }
+                        }else{
+
                         }
                     }
                 } else {
                     finish();
                 }
             }
-//        }
-
+        }
     }
 
     @Override
@@ -464,7 +467,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             case EventConstant.SET_REWARD_TAB:
                 tabHost.setCurrentTab(2);
                 break;
-
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                initYX(Session.getUserId(), Session.getUserId());
+                loadUnreadMessage();
+                break;
         }
     }
 

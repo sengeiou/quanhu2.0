@@ -47,9 +47,15 @@ import android.webkit.WebStorage.QuotaUpdater;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.rz.common.event.BaseEvent;
+import com.rz.common.utils.StringUtils;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -81,6 +87,7 @@ public class AdvancedWebView extends WebView {
         void callPhoneNumber(String uri);
 
         void doUpdateVisitedHistory();
+
     }
 
     public static final String PACKAGE_NAME_DOWNLOAD_MANAGER = "com.android.providers.downloads";
@@ -587,6 +594,11 @@ public class AdvancedWebView extends WebView {
 
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+                Log.d("WebView", "shouldOverrideUrlLoading: " + url);
+//                if (url.startsWith("quanhu:") && mListener != null) {
+//                    mListener.bannerJumpRule(url);
+//                    return true;
+//                }
                 if (url.startsWith("tel:")) {
                     if (mListener != null)
                         mListener.callPhoneNumber(url);
