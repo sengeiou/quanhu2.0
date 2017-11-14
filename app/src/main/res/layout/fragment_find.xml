@@ -50,10 +50,8 @@
 
                 <Button
                     android:id="@+id/btn_quanle"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/px44"
-                    android:layout_marginLeft="@dimen/px44"
                     android:background="@drawable/find_quanquanle"
                     android:textColor="@color/black"
                     />
