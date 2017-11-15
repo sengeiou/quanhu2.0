@@ -1,6 +1,7 @@
 package com.rz.circled.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -25,6 +25,7 @@ import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.impl.CirclePresenter;
+import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MainActivity;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
@@ -195,48 +196,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void onClickLisenter(int position, String url) {
                 trackUser("推广", "Banner图", url);
 
-                Intent intent = new Intent();
-                Map parametersMap = getParameters(url);
-                String jumpUrl = (String) parametersMap.get("url");
-                String type = (String) parametersMap.get("type");
-                String category = (String) parametersMap.get("category");
+//                bannerJumpRule(url);
 
-                if ("1".equals(type)) {
-                    if (!StringUtil.isEmpty(jumpUrl)) {
-                        if (jumpUrl.contains("opus")) {
-                            if (jumpUrl.contains("opus-h")) {
-                                VideoH5Aty.startCommonH5(mActivity, jumpUrl, mActivity.getString(R.string.app_name));
-                            } else {
-                                WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                            }
-                        } else {
-                            WebContainerActivity.startActivity(mActivity, jumpUrl, true);
-                        }
-                    }
-                } else if ("2".equals(type)) {
-                    if ("2001".equals(category)) {    //个人中心
-                        String custId = (String) parametersMap.get("custId");
-                        if (!StringUtil.isEmpty(custId)) {
-                            UserInfoActivity.newFrindInfo(mActivity, custId);
-                        }
-                    } else if ("2002".equals(category)) {  //悬赏
-                        intent.setClass(mActivity, MainActivity.class);
-                        startActivity(intent);
-                        //发送event到
-                        EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
-                    }
-                } else {
-                    if (url.contains("opus")) {
-                        if (url.contains("opus-h")) {
-
-                            VideoH5Aty.startCommonH5(mActivity, url, mActivity.getString(R.string.app_name), 1020);
-                        } else {
-                            WebContainerActivity.startActivity(mActivity, url, true);
-                        }
-                    } else {
-                        WebContainerActivity.startActivity(mActivity, url, true);
-                    }
-                }
+                BannerJumpHelper.bannerJumpActivityHelper(mActivity,url);
             }
         });
     }
@@ -394,8 +356,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
     public Map<String, String> getParameters(String url) {
-        Map<String, String> params = new HashMap<String, String>();
-        if (url == null || "".equals(url.trim())) {
+        Map<String, String> params=new HashMap<String, String>();
+        if(url==null || "".equals(url.trim())){
             return params;
         }
         try {
@@ -412,11 +374,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                             && parameters[i].trim().contains("=")) {
                         String[] split2 = parameters[i].split("=");
                         //split2可能为1，可能为2
-                        if (split2.length == 1) {
+                        if(split2.length==1){
                             //有这个参数但是是空的
                             params.put(split2[0], "");
-                        } else if (split2.length == 2) {
-                            if (!"".equals(split2[0].trim())) {
+                        }else if(split2.length==2){
+                            if(!"".equals(split2[0].trim())){
                                 params.put(split2[0], split2[1]);
                             }
                         }

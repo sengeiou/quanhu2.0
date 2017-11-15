@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
+import com.rz.circled.event.EventConstant;
 import com.rz.circled.js.RequestBackHandler;
 import com.rz.circled.js.RequestJsBroadcastHandler;
 import com.rz.circled.js.model.HeaderModel;
@@ -33,6 +34,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.utils.IntentUtil;
+import com.rz.common.utils.StringUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
@@ -42,12 +44,15 @@ import com.rz.sgt.jsbridge.core.AndroidBug5497Workaround;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 public class WebContainerActivity extends BaseActivity implements BaseLoadView.RefreshListener {
 

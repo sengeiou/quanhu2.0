@@ -445,6 +445,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
+        initUserNews();
+
         mModelList = new ArrayList<>();
         MineFragItemModel modeBuy = new MineFragItemModel(true, getString(R.string.my_purchase), R.mipmap.ic_buy, false);
         MineFragItemModel modeReward = new MineFragItemModel(true, getString(R.string.v3_my_reward), R.mipmap.ic_reward, false);
@@ -537,7 +539,6 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
         }
 
-        initUserNews();
         checkUpdate();
     }
 
