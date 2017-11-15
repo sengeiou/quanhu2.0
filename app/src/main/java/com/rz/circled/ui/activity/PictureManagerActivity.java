@@ -230,7 +230,11 @@ public class PictureManagerActivity extends BaseActivity implements OnItemClickL
                         || filename.endsWith(".jpeg")
                         || filename.endsWith(".JPG")
                         || filename.endsWith(".PNG")
-                        || filename.endsWith(".JPEG"))
+                        || filename.endsWith(".JPEG")
+                        || filename.endsWith(".gif")
+                        || filename.endsWith(".GIF")
+                        || filename.endsWith(".BMP")
+                        || filename.endsWith(".bmp"))
                     return true;
                 return false;
             }

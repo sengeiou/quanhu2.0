@@ -215,7 +215,9 @@ public class PrivateGroupCreateByMyselfFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
+        if(!loadMore){
+            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
+        }
     }
 
     @Override

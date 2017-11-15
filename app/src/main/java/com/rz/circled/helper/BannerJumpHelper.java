@@ -1,4 +1,4 @@
-package com.rz.circled.js;
+package com.rz.circled.helper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,12 +24,12 @@ import java.util.Map;
 
 public class BannerJumpHelper {
 
-    private static String tab_html = "1";
-    private static String tab_native = "2";
-    private static String user_info_acy = "2001";
-    private static String reward_aty = "2002";
+    public static String tab_html = "1";
+    public static String tab_native = "2";
+    public static String user_info_acy = "2001";
+    public static String reward_aty = "2002";
 
-    public static void bannerJumpHanderHelper(Activity mActivity,String url){
+    public static void bannerJumpHanderHelper(Activity mActivity,String url,boolean jssdk){
         if(url.startsWith("quanhu:")){
             Intent intent = new Intent();
             Map parametersMap = StringUtils.getParameters(url);
@@ -52,7 +52,11 @@ public class BannerJumpHelper {
                 }
             }
         }else{
-            CommonH5Activity.startCommonH5(mActivity, "", url);
+            if(jssdk){
+                WebContainerActivity.startActivity(mActivity, url, true);
+            }else{
+                CommonH5Activity.startCommonH5(mActivity, "", url);
+            }
         }
     }
 

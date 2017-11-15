@@ -25,6 +25,7 @@ import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
@@ -144,21 +145,21 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                         String categary = uri.getQueryParameter("category");
                         String custId = uri.getQueryParameter("custId");
 
-                        if(("1").equals(tab)){
-                            CommonH5Activity.startCommonH5(this,"",url);
-                        }else if( "2".equals(tab)){
-                            if("2001".equals(categary)){    //个人中心
+                        if(BannerJumpHelper.tab_html.equals(tab)){
+                            WebContainerActivity.startActivity(this,url);
+                        }else if(BannerJumpHelper.tab_native.equals(tab)){
+                            if(BannerJumpHelper.user_info_acy.equals(categary)){    //个人中心
                                 if(!StringUtil.isEmpty(custId)){
                                     UserInfoActivity.newFrindInfo(this,custId);
                                 }
-                            }else if("2002".equals(categary)){  //悬赏
+                            }else if(BannerJumpHelper.reward_aty.equals(categary)){  //悬赏
                                 intent.setClass(this,MainActivity.class);
                                 startActivity(intent);
                                 //发送event到
                                 EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
                             }
                         }else{
-
+                            CommonH5Activity.startCommonH5(this,"",url);
                         }
                     }
                 } else {
