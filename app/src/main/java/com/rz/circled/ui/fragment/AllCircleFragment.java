@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -63,8 +62,6 @@ public class AllCircleFragment extends BaseFragment {
 
     @BindView(R.id.id_sidrbar)
     SideBar mSidebar;
-    @BindView(R.id.id_floating_button)
-    ImageButton mFloatingButton;
     private CircleAdapter mCircleAdapter;
     private CircleAdapter mRecommCircleAdapter;
     /**
@@ -118,7 +115,6 @@ public class AllCircleFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        mFloatingButton.setVisibility(View.VISIBLE);
         loveAllList = (List<CircleEntrModle>) getActivity().getIntent().getSerializableExtra(LOVE_CIRCLE);
         mPyComparator = new CircleComparator();
         Bundle bundle = getArguments();
@@ -247,12 +243,6 @@ public class AllCircleFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        mFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListview.smoothScrollToPosition(0);
-            }
-        });
         // 设置右侧触摸监听
         mSidebar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override

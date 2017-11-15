@@ -6,6 +6,4 @@
 
     <include layout="@layout/view_letter_guide"/>
 
-
-
 </LinearLayout>

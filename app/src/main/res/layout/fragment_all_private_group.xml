@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/layout_refresh"
         android:layout_width="match_parent"
@@ -14,5 +16,15 @@
             style="@style/DefaultLvStyle"
             android:clipToPadding="false" />
     </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
-
+    <ImageButton
+        android:id="@+id/id_floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="@dimen/px28"
+        android:layout_marginBottom="@dimen/px30"
+        android:background="@null"
+        android:src="@drawable/ic_float_btn"
+        android:visibility="visible" />
+</FrameLayout>
 </LinearLayout>
