@@ -23,6 +23,7 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
+import com.rz.circled.js.BannerJumpHelper;
 import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.RecentContactActivity;

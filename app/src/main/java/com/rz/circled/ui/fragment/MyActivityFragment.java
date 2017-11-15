@@ -219,7 +219,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
 
     @Override
     protected boolean hasDataInPage() {
-        return mEntitiesBeanCommonAdapter.getCount() != 0;
+        return mEntitiesBeanCommonAdapter!=null&&mEntitiesBeanCommonAdapter.getCount() != 0;
     }
 
     @Override

@@ -49,14 +49,4 @@
             android:textColor="@color/font_gray_m"
             android:textSize="@dimen/font_44" />
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/id_floating_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_marginRight="@dimen/px28"
-        android:layout_marginBottom="@dimen/px40"
-        android:background="@null"
-        android:src="@drawable/ic_float_btn"
-        android:visibility="gone"/>
 </FrameLayout>
