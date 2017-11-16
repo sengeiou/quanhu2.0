@@ -237,12 +237,17 @@ public class ContactsSearchAty extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        int type = getIntent().getExtras().getInt("type", Type.custType_3);
         /**
          * 进入好友详情
          */
         FriendInformationBean item = mAdapter.getItem(i);
         if (item != null) {
-            UserInfoActivity.newFrindInfo(aty, item.getCustId());
+            if (item.getRelation() == Type.relation_friend && type != Type.custType_0) {
+                UserInfoActivity.newFrindInfo(aty, item.getCustId());
+            } else {
+                ((FriendPresenter1) presenter).requestSaveFriendByFriend(item);
+            }
         }
     }
 

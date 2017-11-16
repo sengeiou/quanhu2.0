@@ -227,6 +227,7 @@ public class UploadPicManager {
                         }
                     }
                 } catch (Exception e) {
+                    Log.e("zxw", "Exception: " + Thread.currentThread().getName());
                     e.printStackTrace();
                     return null;
                 }
@@ -236,6 +237,7 @@ public class UploadPicManager {
             @Override
             protected void onPostExecute(List<UploadInfo> s) {
                 super.onPostExecute(s);
+                Log.e("zxw", "onPostExecute: " + Thread.currentThread().getName());
                 if (s != null) {
                     uploads(context, s, objectDir);
                 } else {

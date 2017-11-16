@@ -206,7 +206,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if(!loadMore){
+        if (!loadMore) {
             EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
         }
     }
@@ -229,9 +229,10 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
+            case CommonCode.EventType.TYPE_LOGOUT:
+                userId = "";
             case PRIVATE_GROUP_TAB_REFRESH:
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
-            case CommonCode.EventType.TYPE_LOGOUT:
                 loadData(false);
                 break;
         }
