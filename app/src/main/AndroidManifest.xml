@@ -98,8 +98,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
+
             <intent-filter>
                 <action android:name="quanhu.main"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+            </intent-filter>
+
+            <intent-filter>
 
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -211,7 +217,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent">
             <intent-filter>
