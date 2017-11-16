@@ -259,6 +259,13 @@ public class PrivateCircledFragment extends BaseFragment {
         circleNavigator.setCircleCount(pics.size());
         circleNavigator.setCircleColor(getResources().getColor(R.color.color_main));
         indicatorBanner.setNavigator(circleNavigator);
+
+        if(pics.size()<=0){
+            indicatorBanner.setVisibility(View.GONE);
+        }else{
+            indicatorBanner.setVisibility(View.VISIBLE);
+        }
+
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
