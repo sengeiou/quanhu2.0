@@ -28,7 +28,6 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;

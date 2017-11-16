@@ -657,7 +657,7 @@ public class LoginActivity extends BaseActivity {
                     if (Session.getUserIsFirstDownload()) {
                         skipActivity(aty, FollowCircle.class);
 //
-                    }else {
+                    } else {
                         saveLoginData(loginModel);
                         skipActivity(aty, MainActivity.class);
                     }
