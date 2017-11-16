@@ -711,6 +711,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
             Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
             Session.clearShareP();
+            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
             //弹窗重新登录
             if (kickDialog == null) {
                 kickDialog = new KickDialog(this) {
@@ -725,7 +726,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                             MyActivityManager.finishAllUnIncludeMian();
                         } else {
                             closeDialog();
-                            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
                             if (!BaseApplication.getInstance().resumedLocalClassName.equalsIgnoreCase(MyActivityManager.mainClass)) {
                                 startMainActivity();
                                 MyActivityManager.finishAllUnIncludeMian();
