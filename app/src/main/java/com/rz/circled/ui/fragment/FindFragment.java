@@ -460,6 +460,12 @@ public class FindFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this))
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void refreshPage() {
 
     }
