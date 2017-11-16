@@ -715,6 +715,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                 kickDialog = new KickDialog(this) {
                     @Override
                     public void onClick(View v) {
+                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
                         if (v.getId() == R.id.tv_kick_dialog_left) {
                             Log.d(TAG, "resumedLocalClassName = " + "closedialog");
                             closeDialog();
@@ -724,7 +725,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
                             MyActivityManager.finishAllUnIncludeMian();
                         } else {
                             closeDialog();
-                            EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
                             if (!BaseApplication.getInstance().resumedLocalClassName.equalsIgnoreCase(MyActivityManager.mainClass)) {
                                 startMainActivity();
                                 MyActivityManager.finishAllUnIncludeMian();
