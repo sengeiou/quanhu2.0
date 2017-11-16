@@ -13,7 +13,7 @@
 
     </FrameLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,26 +32,33 @@
                 android:divider="@color/color_F4F4F4"
                 />
         </com.rz.circled.widget.SwipyRefreshLayoutBanner>
-        <ImageButton
-            android:id="@+id/id_floating_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginBottom="@dimen/px240"
-            android:layout_marginRight="@dimen/px20"
-            android:background="@null"
-            android:src="@drawable/ic_float_btn"
-            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/home_publish"
             android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
             android:layout_marginBottom="@dimen/px30"
             android:src="@drawable/home_publish"
             />
-    </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/id_floating_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:src="@drawable/ic_float_btn"
+            android:layout_above="@id/home_publish"
+            android:visibility="visible"
+            android:layout_alignBaseline="@id/home_publish"
+            android:layout_alignLeft="@id/home_publish"
+            android:layout_marginBottom="@dimen/px26"
+            />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>

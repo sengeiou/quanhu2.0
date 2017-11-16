@@ -77,14 +77,14 @@ public class MyRewardActivity extends BaseActivity {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
-            case USER_CREATE_PRIVATE_GROUP_NUM:
-                mDataList.set(0, String.format(getString(R.string.my_create_reward)));
-                groupNavigatorAdapter.notifyDataSetChanged();
-                break;
-            case USER_JOIN_PRIVATE_GROUP_NUM:
-                mDataList.set(1, String.format(getString(R.string.my_answer_reward)));
-                groupNavigatorAdapter.notifyDataSetChanged();
-                break;
+//            case USER_CREATE_PRIVATE_GROUP_NUM:
+//                mDataList.set(0, String.format(getString(R.string.my_create_reward)));
+//                groupNavigatorAdapter.notifyDataSetChanged();
+//                break;
+//            case USER_JOIN_PRIVATE_GROUP_NUM:
+//                mDataList.set(1, String.format(getString(R.string.my_answer_reward)));
+//                groupNavigatorAdapter.notifyDataSetChanged();
+//                break;
         }
     }
 

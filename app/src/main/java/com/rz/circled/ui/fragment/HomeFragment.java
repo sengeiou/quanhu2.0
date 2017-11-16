@@ -23,7 +23,7 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
-import com.rz.circled.js.BannerJumpHelper;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
@@ -50,13 +50,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -350,37 +346,4 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
         EventBus.getDefault().unregister(this);
     }
 
-    public Map<String, String> getParameters(String url) {
-        Map<String, String> params=new HashMap<String, String>();
-        if(url==null || "".equals(url.trim())){
-            return params;
-        }
-        try {
-            url = URLDecoder.decode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        }
-        String[] split = url.split("[?]");
-        if (split.length == 2 && !"".equals(split[1].trim())) {
-            String[] parameters = split[1].split("&");
-            if (parameters != null && parameters.length != 0) {
-                for (int i = 0; i < parameters.length; i++) {
-                    if (parameters[i] != null
-                            && parameters[i].trim().contains("=")) {
-                        String[] split2 = parameters[i].split("=");
-                        //split2可能为1，可能为2
-                        if(split2.length==1){
-                            //有这个参数但是是空的
-                            params.put(split2[0], "");
-                        }else if(split2.length==2){
-                            if(!"".equals(split2[0].trim())){
-                                params.put(split2[0], split2[1]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return params;
-    }
 }

@@ -139,7 +139,7 @@ public class MyCircleFragment extends BaseFragment implements ScrollableHelper.S
 
     private void initFragments() {
         BaseFragment privateGroupJoinByMyselfFragment = PrivateGroupJoinByMyselfFragment.newInstance(PrivateGroupJoinByMyselfFragment.TYPE_ALL, userId);
-        BaseFragment privateGroupCreateByMyselfFragment = PrivateGroupCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_ALL, userId);
+        BaseFragment privateGroupCreateByMyselfFragment = UserInfoCreateByMyselfFragment.newInstance(PrivateGroupCreateByMyselfFragment.TYPE_ALL, userId);
         mFragments.add(privateGroupCreateByMyselfFragment);
         mFragments.add(privateGroupJoinByMyselfFragment);
     }

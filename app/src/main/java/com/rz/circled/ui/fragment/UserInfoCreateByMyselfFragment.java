@@ -14,35 +14,28 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutD
 import com.rz.circled.R;
 import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
+import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
-import com.rz.circled.ui.activity.AllPrivateGroupActivity;
+import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.Utility;
-import com.rz.common.widget.svp.SVProgressHUD;
-import com.rz.httpapi.api.ApiPGService;
-import com.rz.httpapi.api.BaseCallback;
-import com.rz.httpapi.api.Http;
-import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
 import com.rz.httpapi.bean.PrivateGroupListBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Response;
 
+import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_CREATE_REFRESH;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
-import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_ID;
 import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
 
@@ -50,7 +43,8 @@ import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
  * Created by rzw2 on 2017/8/31.
  */
 
-public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
+public class UserInfoCreateByMyselfFragment extends BaseFragment {
+
     public static final int TYPE_PART = 0;
     public static final int TYPE_ALL = 1;
 
@@ -66,12 +60,12 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     private DefaultPricePrivateGroupAdapter mAdapter;
     private int pageNo = 1;
 
-    public static PrivateGroupJoinByMyselfFragment newInstance(int type) {
+    public static UserInfoCreateByMyselfFragment newInstance(int type) {
         return newInstance(type, Session.getUserId());
     }
 
-    public static PrivateGroupJoinByMyselfFragment newInstance(int type, String userId) {
-        PrivateGroupJoinByMyselfFragment fragment = new PrivateGroupJoinByMyselfFragment();
+    public static UserInfoCreateByMyselfFragment newInstance(int type, String userId) {
+        UserInfoCreateByMyselfFragment fragment = new UserInfoCreateByMyselfFragment();
         Bundle args = new Bundle();
         args.putInt(EXTRA_TYPE, type);
         args.putString(EXTRA_ID, userId);
@@ -89,7 +83,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.fragment_my_join_private_group, null);
+        return inflater.inflate(R.layout.fragment_my_create_private_group, null);
     }
 
     @Override
@@ -108,11 +102,15 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             refreshLayout.setEnabled(false);
         }
         if (TextUtils.equals(userId, Session.getUserId())) {
-            setFunctionText(R.string.private_group_show_all);
+            setFunctionText(R.string.private_group_apply_for);
             setFunctionClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getContext(), AllPrivateGroupActivity.class));
+                    String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                    if (Integer.parseInt(level) < 5)
+                        GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+                    else
+                        startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
                 }
             });
         } else {
@@ -122,13 +120,16 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                 lv.addFooterView(view);
             }
         }
-
         lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrivateGroupBean item = mAdapter.getItem(position);
-                CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                if (mAdapter != null && position < mAdapter.getCount()) {
+                    PrivateGroupBean item = mAdapter.getItem(position);
+                    if (item.getStatus() == 3) {
+                        CommonH5JumpHelper.startGroupHome(mActivity, item.getCircleRoute(), item.getCoterieId());
+                    }
+                }
             }
         });
         refreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
@@ -182,7 +183,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     }
 
     private void processData(PrivateGroupListBean _data, boolean loadMore) {
-        if (lv == null) return;
+        if (refreshLayout == null) return;
         if (_data != null) {
             List<PrivateGroupBean> data = _data.getList();
             if (type == TYPE_PART) {
@@ -207,7 +208,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
             }
         }
         if(!loadMore){
-            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
+            EventBus.getDefault().post(new BaseEvent(EventConstant.USER_CREATE_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
         }
     }
 
@@ -229,6 +230,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
     @Subscribe
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
+            case PRIVATE_GROUP_CREATE_REFRESH:
             case PRIVATE_GROUP_TAB_REFRESH:
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
             case CommonCode.EventType.TYPE_LOGOUT:
@@ -237,12 +239,16 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
         }
     }
 
-    private void loadData(final boolean loadMore) {
+    private void loadData(boolean loadMore) {
         if (!loadMore) pageNo = 1;
-        if (TextUtils.isEmpty(userId) && !Session.getUserIsLogin()) {
-            processData(null, loadMore);
+        if (TextUtils.isEmpty(userId) || Session.getUserId().equals(userId)) {
+            if (Session.getUserIsLogin()) {
+                mPresenter.privateGroupMyselfCreate(null, Session.getUserId(), pageNo, loadMore);                   //获取自己创建的所有圈子
+            } else {
+                processData(null, loadMore);
+            }
         } else {
-            mPresenter.privateGroupMyselfJoin(TextUtils.isEmpty(userId) ? Session.getUserId() : userId, pageNo, loadMore);
+            mPresenter.privateGroupMyselfCreate(PrivateGroupPresenter.LOADING_STATUS, userId, pageNo, loadMore);       //获取他人创建的上架圈子
         }
     }
 
