@@ -476,6 +476,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         }
     }
 
+    public void setRightVisible() {
+        tvCommonTitleRight.setVisibility(View.VISIBLE);
+    }
+
+    public void setRightGone() {
+        tvCommonTitleRight.setVisibility(View.GONE);
+    }
+
     public void setTitleRightBackground(int color) {
         tvCommonTitleRight.setBackgroundColor(color);
     }

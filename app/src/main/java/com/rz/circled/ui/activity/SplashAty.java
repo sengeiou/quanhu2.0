@@ -153,7 +153,7 @@ public class SplashAty extends BaseActivity {
 //        loadRewardGiftList();
         //当前日期
         if (Protect.checkLoadImageStatus(aty)&&!StringUtil.isEmpty(Session.getAdv_pic_url())) {
-            Glide.with(aty).load(Session.getAdv_pic_url()).into(mImgBg);
+            Glide.with(aty).load(Session.getAdv_pic_url()).placeholder(R.drawable.page_bg_qq_new).into(mImgBg);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long currentTime = System.currentTimeMillis();
@@ -170,7 +170,7 @@ public class SplashAty extends BaseActivity {
         if (currentTime >= startTime && currentTime < endTime) {
             recLen = 1000 * 5;
                 if (Protect.checkLoadImageStatus(aty)) {
-                    Glide.with(aty).load(Session.getAdv_pic_url()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL).into(mImgBg);
+                    Glide.with(aty).load(Session.getAdv_pic_url()).diskCacheStrategy(DiskCacheStrategy.ALL).into(mImgBg);
                 }
 
             if (!StringUtils.isEmpty(Session.getAdv_url()) && isNetUrl(Session.getAdv_url())) {

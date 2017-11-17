@@ -724,13 +724,13 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
-    Integer cid = null;
+    String cid = null;
     public void getCircleCollection(final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
-        mUserService.getCircleCollect(loadMore?cid:null, Session.getUserId(), Constants.PAGESIZE)
+        mUserService.getCircleCollect(loadMore?cid:null, Session.getUserId(), 2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
@@ -749,7 +749,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             List<CollectionBean> data = res.getData();
                             if (data!=null&& !data.isEmpty()){
                             cid = data.get(data.size() - 1).cid;
-                            mView.updateView(data);
+                            mView.updateViewWithLoadMore(data,loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             }else {
                                 if (loadMore){
@@ -774,7 +774,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
-    public void requestDeleteCollected(int cid) {
+    public void requestDeleteCollected(String cid) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
@@ -794,7 +794,38 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
                     @Override
                     public void onNext(ResponseData responseData) {
+                        mView.updateView("sucess");
+                    }
+                });
 
+
+    }
+    /**
+     * 批量收藏
+     *
+     * @param
+     */
+    public void requestDeleteSomeCollected(String cid) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.delSomeCollect(Session.getUserId(), cid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData responseData) {
+                        mView.updateView("sucess");
                     }
                 });
 
