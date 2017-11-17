@@ -63,6 +63,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
     private ImageView mIv_edit;
     boolean isEdit = false;
     List<String> cid = new ArrayList<>();
+    List<CollectionBean> updateList = new ArrayList<>();
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -87,8 +88,10 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     if (isSelect) {
                         collectionBean.isSelect = false;
                         cid.remove(collectionBean.cid);
+                        updateList.remove(collectionBean);
                     } else {
                         cid.add(collectionBean.cid);
+                        updateList.add(collectionBean);
                         collectionBean.isSelect = true;
                     }
                     mCollectionAdapter.notifyDataSetChanged();
@@ -122,6 +125,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     isEdit = false;
                     setTitleRightText(getString(R.string.edit));
                     mLlEdit.setVisibility(View.GONE);
+                    mPresenter.getCircleCollection(false);
 //                    mBtnDel.setVisibility(View.GONE);
                 } else {
                     //编辑
@@ -149,7 +153,8 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
         String[]  cidArr = new String[cid.size()];
         cid.toArray(cidArr);
         mPresenter.requestDeleteSomeCollected(gson.toJson(cidArr));
-//        mCollectionAdapter.notifyDataSetChanged();
+        collectionList.removeAll(updateList);
+        mCollectionAdapter.notifyDataSetChanged();
 
 
     }
@@ -410,7 +415,7 @@ onLoadingStatus(CommonCode.General.DATA_EMPTY,"您还没有收藏过内容哦~")
     @Override
     public <T> void updateView(T t) {
         if (t instanceof String){
-            mPresenter.getCircleCollection(false);
+
             return;
         }
         collectionList.clear();
