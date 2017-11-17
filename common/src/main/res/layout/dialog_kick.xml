@@ -54,7 +54,6 @@
 
             <View
                 style="@style/line_vertical_gray_s"/>
-            shape_bg_left_bottom_roller_f5
             <TextView
                 android:id="@+id/tv_kick_dialog_left"
                 android:layout_width="0dp"
