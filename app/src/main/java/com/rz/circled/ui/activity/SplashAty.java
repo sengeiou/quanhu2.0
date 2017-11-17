@@ -152,6 +152,9 @@ public class SplashAty extends BaseActivity {
     private void initV() throws ParseException {
 //        loadRewardGiftList();
         //当前日期
+        if (Protect.checkLoadImageStatus(aty)&&!StringUtil.isEmpty(Session.getAdv_pic_url())) {
+            Glide.with(aty).load(Session.getAdv_pic_url()).into(mImgBg);
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long currentTime = System.currentTimeMillis();
         String format = sdf.format(new Date(currentTime));
