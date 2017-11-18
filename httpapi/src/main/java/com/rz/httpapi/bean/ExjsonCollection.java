@@ -102,7 +102,7 @@ public class ExjsonCollection {
         public String resourceId;
         public String answerAudio;
         public Object answerContent;
-        public int audioLength;
+        public Integer audioLength;
         public int orderFlag;
         public Object orderId;
         public String userName;

@@ -68,6 +68,10 @@ public class CircleApi {
      * 添加收藏
      */
     public static final String CIRCLE_DEL_COLLECT = "v3/collection/delete";
+    /**
+     * 批量删除收藏
+     */
+    public static final String CIRCLE_DEL_SOME_COLLECT = "v3/collection/batchDelete";
 
     /**
      * 3.3查询转发列表（我转别人）

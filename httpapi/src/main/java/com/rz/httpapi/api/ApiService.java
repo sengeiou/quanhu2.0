@@ -525,7 +525,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_COLLECT_LIST)
     Observable<ResponseData<List<CollectionBean>>> getCircleCollect(
-            @Field("cid") Integer cid,
+            @Field("cid") String cid,
             @Field("custId") String custId,
             @Field("limit") int limit
     );
@@ -547,7 +547,16 @@ public interface ApiService {
     @POST(CircleApi.CIRCLE_DEL_COLLECT)
     Observable<ResponseData> delCollect(
             @Field("custId") String custId,
-            @Field("cid") int cid
+            @Field("cid") String cid
+    );
+    /**
+     * 批量删除收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_DEL_SOME_COLLECT)
+    Observable<ResponseData> delSomeCollect(
+            @Field("custId") String custId,
+            @Field("cid") String cid
     );
 
     /**
