@@ -25,9 +25,7 @@ import com.rz.circled.modle.ShareModel;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentCode;
 import com.rz.common.event.BaseEvent;
-import com.rz.common.utils.DensityUtils;
 import com.rz.common.utils.Protect;
-import com.rz.common.utils.StringUtils;
 import com.rz.common.widget.toasty.Toasty;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.yryz.yunxinim.session.SessionHelper;
@@ -79,7 +77,7 @@ public class WorkImShareDialog extends Dialog {
 
         LinearLayout root = (LinearLayout) findViewById(R.id.layout_root);
         ViewGroup.LayoutParams params = root.getLayoutParams();
-        params.width = (int) (DensityUtils.getScreenW(context) * 0.67);
+        params.width = (int) (ScreenUtil.getDisplayWidth() * 0.67);
         root.setLayoutParams(params);
 
         ImageView shareImgUserAvater = (ImageView) findViewById(R.id.share_user_avater);
