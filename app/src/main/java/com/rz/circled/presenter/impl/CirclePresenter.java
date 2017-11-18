@@ -730,7 +730,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
             return;
         }
-        mUserService.getCircleCollect(loadMore?cid:null, Session.getUserId(), 2)
+        mUserService.getCircleCollect(loadMore?cid:null, Session.getUserId(), Constants.PAGESIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseData<List<CollectionBean>>>() {
