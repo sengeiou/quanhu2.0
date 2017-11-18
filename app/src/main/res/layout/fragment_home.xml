@@ -54,7 +54,7 @@
             android:visibility="visible"
             android:layout_alignBaseline="@id/home_publish"
             android:layout_alignLeft="@id/home_publish"
-            android:layout_marginBottom="@dimen/px26"
+            android:layout_marginBottom="@dimen/px28"
             />
 
 
