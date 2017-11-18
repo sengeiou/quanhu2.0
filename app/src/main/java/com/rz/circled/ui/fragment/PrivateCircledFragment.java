@@ -260,7 +260,7 @@ public class PrivateCircledFragment extends BaseFragment {
         circleNavigator.setCircleColor(getResources().getColor(R.color.color_main));
         indicatorBanner.setNavigator(circleNavigator);
 
-        if(pics.size()<=0){
+        if(pics.size()<=1){
             indicatorBanner.setVisibility(View.GONE);
         }else{
             indicatorBanner.setVisibility(View.VISIBLE);
