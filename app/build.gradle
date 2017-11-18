@@ -40,7 +40,7 @@ def gitVersionName(String buildType) {
     println("versionName:" + version)
     println("-----")
     version = version.substring(1)
-    return version
+    return "1.0.5"
 }
 
 android {
