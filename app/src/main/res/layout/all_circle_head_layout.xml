@@ -6,11 +6,11 @@
     <RelativeLayout
         android:id="@+id/id_search_key_rela1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px100"
-        android:layout_marginBottom="5dp"
+        android:layout_height="@dimen/px78"
+        android:layout_marginBottom="@dimen/px30"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/px30"
         android:gravity="center"
         android:background="@drawable/shape_bg_white_stoke_f4f4f4"
         android:visibility="visible">
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/px42"
             android:hint="@string/search_circle"
+            android:textColor="#aaa"
             />
 
 
