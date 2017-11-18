@@ -206,7 +206,7 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (!loadMore && TextUtils.equals(userId, Session.getUserId())) {
+        if (!loadMore && (TextUtils.equals(userId, Session.getUserId()) || TextUtils.isEmpty(userId))) {
             EventBus.getDefault().post(new BaseEvent(EventConstant.USER_JOIN_PRIVATE_GROUP_NUM, _data == null ? 0 : _data.getCount()));
         }
     }
