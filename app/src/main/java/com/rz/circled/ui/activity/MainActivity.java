@@ -57,6 +57,7 @@ import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
 import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.cache.DataCacheManager;
+import com.yryz.yunxinim.uikit.common.activity.UI;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
 import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
@@ -344,7 +345,23 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT)
             EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
         if (code == StatusCode.KICKOUT) {
-            EventBus.getDefault().post(new KickEvent(5));
+            Intent intent = new Intent();
+            intent.setAction(UI.KICKACTION);
+            sendBroadcast(intent);
+
+            new Thread(new Runnable(){
+
+                public void run(){
+                    try {
+                        Thread.sleep(500);
+                        EventBus.getDefault().post(new KickEvent(5));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+
         }
     }
 
