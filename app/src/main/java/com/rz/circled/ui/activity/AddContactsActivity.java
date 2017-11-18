@@ -115,12 +115,12 @@ public class AddContactsActivity extends BaseActivity implements View.OnClickLis
                 JSONObject object = new JSONObject(scanResult);
                 Bundle bundle = new Bundle();
                 if (object.has("uid")) {
-                    UserInfoActivity.newFrindInfo(aty,object.getString("uid"));
+                    UserInfoActivity.newFrindInfo(aty, object.getString("uid"));
                 } else {
-                    Toast.makeText(aty, scanResult, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(aty, "不支持此类链接", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(aty, scanResult, Toast.LENGTH_SHORT).show();
+                Toast.makeText(aty, "不支持此类链接", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
