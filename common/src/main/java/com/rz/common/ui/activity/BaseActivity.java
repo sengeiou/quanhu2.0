@@ -28,7 +28,6 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.Constants;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
@@ -477,6 +476,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         }
     }
 
+    public void setRightVisible() {
+        tvCommonTitleRight.setVisibility(View.VISIBLE);
+    }
+
+    public void setRightGone() {
+        tvCommonTitleRight.setVisibility(View.GONE);
+    }
+
     public void setTitleRightBackground(int color) {
         tvCommonTitleRight.setBackgroundColor(color);
     }
@@ -708,8 +715,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
-        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
-            Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
+        Log.d(TAG, "------test----- = "+getLocalClassName());
+        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName) ) {
+            Log.d(TAG, "------resumedLocalClassName----- = " + BaseApplication.getInstance().resumedLocalClassName);
             Session.clearShareP();
             //弹窗重新登录
             if (kickDialog == null) {

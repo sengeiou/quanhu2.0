@@ -637,22 +637,33 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
             famousLayout.setVisibility(View.VISIBLE);
             if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
-                famousLayout.getBackground().setAlpha(255);
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                if(famousLayout != null){
+                    famousLayout.getBackground().setAlpha(255);
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+
+                }
                 famousTxt.setText("认证审核中");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
-                famousLayout.setBackgroundResource(0);
+                if(famousLayout != null){
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
+                    famousLayout.setBackgroundResource(0);
+                }
 
                 famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(proveStatusBean.getTradeField());
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
-                famousLayout.getBackground().setAlpha(255);
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                if(famousLayout != null){
+                    famousLayout.getBackground().setAlpha(255);
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                }
+
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if(famousLayout != null){
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
+
                 famousTxt.setText("达人认证");
             }
             return;

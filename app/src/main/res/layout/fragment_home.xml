@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/px30"
             android:src="@drawable/home_publish"
+            android:layout_marginRight="@dimen/px21"
             />
 
         <ImageButton
@@ -54,7 +55,8 @@
             android:visibility="visible"
             android:layout_alignBaseline="@id/home_publish"
             android:layout_alignLeft="@id/home_publish"
-            android:layout_marginBottom="@dimen/px26"
+            android:layout_marginRight="@dimen/px21"
+            android:layout_marginBottom="@dimen/px28"
             />
 
 

@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -164,6 +165,11 @@ public class ImageUtils {
         newOpts.inJustDecodeBounds = true;
         // 此时返回bm为空
         Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+        String outMimeType = newOpts.outMimeType;
+        Log.d("outMimeType", outMimeType);
+        if (!TextUtils.isEmpty(outMimeType) && outMimeType.equalsIgnoreCase("image/gif")) {
+            return null;
+        }
 
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
@@ -239,6 +245,8 @@ public class ImageUtils {
 
 
     public static File compressBmpToFile(Context context, Bitmap bmp, int minSize) {
+        if (bmp == null)
+            return null;
         File appDir = new File(Environment.getExternalStorageDirectory(), "cache");
         if (!appDir.exists()) {
             appDir.mkdir();

@@ -1469,7 +1469,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 //                    iv.setImageDrawable(resource.getCurrent());
 //                }
 //            });
-            Glide.with(this).load(imgPath).into(iv);
+            Glide.with(this).load(imgPath).placeholder(R.drawable.circle_default).error(R.drawable.circle_default).into(iv);
         }
         initImageCount();
     }

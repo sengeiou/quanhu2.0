@@ -46,9 +46,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/px24"
                 android:lineSpacingMultiplier="1.2"
-                android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="3"
+                android:ellipsize="end"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/font_44"
                 android:visibility="visible" />

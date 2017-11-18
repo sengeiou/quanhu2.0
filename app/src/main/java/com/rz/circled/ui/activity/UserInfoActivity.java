@@ -299,7 +299,7 @@ public class UserInfoActivity extends BaseActivity {
                 break;
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
                 if(model != null && !StringUtil.isEmpty(model.getCustId())){
-                    ((FriendPresenter1) friendPresenter).getFriendRequire(model.getCustId());
+                    ((FriendPresenter1) friendPresenter).getFriendInfoDetail(model.getCustId());
                 }
                 break;
         }

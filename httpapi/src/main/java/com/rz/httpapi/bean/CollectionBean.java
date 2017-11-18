@@ -15,7 +15,7 @@ public class CollectionBean {
      * user : {"custId":"测试内容e25u","custImg":"测试内容ku81","custLevel":1,"custNname":"测试内容tmdv","custRole":0,"custSex":"测试内容xodc","nameNotes":"测试内容4fp6"}
      */
 
-    public int cid;
+    public String cid;
     public CircleInfoBean circleInfo;
     public CoterieInfoBean coterieInfo;
     public long createTime;
