@@ -145,7 +145,6 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.pwd_type_img)
     ImageView typePwd;
 
-    private String tabType="";
 
     private int loginType;
     private int mGuideType;
@@ -211,7 +210,6 @@ public class LoginActivity extends BaseActivity {
 
         mLoginBtn.setEnabled(true);
 
-        tabType = getIntent().getExtras().getString("tabIndex");
 
     }
 
