@@ -352,9 +352,7 @@ public class FindFragment extends BaseFragment {
         List<CircleEntrModle> circleEntrModleList = (List<CircleEntrModle>) mACache.getAsObject(FIND_LOVE_CACHE);
         List<HotSubjectModel> subjectList = entityCache.getListEntity(HotSubjectModel.class);
         List<FamousModel> FamousModel = FamousModelCache.getListEntity(FamousModel.class);
-        ;
         List<EntitiesBean> EntitiesBean = EntitiesBeanCache.getListEntity(EntitiesBean.class);
-        ;
         updateView(circleEntrModleList);
         updateViewWithFlag(subjectList, 2);
         updateViewWithFlag(FamousModel, 7);
