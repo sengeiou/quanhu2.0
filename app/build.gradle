@@ -278,4 +278,5 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
     compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
