@@ -202,6 +202,7 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //解决魅族审核索引越界问题
                 if (position>=bean.size()){
+
                     return;
                 }
                 EntitiesBean entitiesBean = bean.get(position);
