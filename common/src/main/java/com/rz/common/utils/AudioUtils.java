@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+
 import com.rz.common.widget.svp.SVProgressHUD;
 
 import java.io.ByteArrayOutputStream;
@@ -50,8 +51,8 @@ public class AudioUtils {
 
     Activity aty;
 
-    public AudioUtils(Activity aty){
-        this.aty=aty;
+    public AudioUtils(Activity aty) {
+        this.aty = aty;
 
         /**
          *  创建目录
@@ -77,8 +78,9 @@ public class AudioUtils {
         }
 
     }
+
     //调用摄像头并回调
-    public void callImageCapture(){
+    public void callImageCapture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(new File(IMGPATH, IMAGE_FILE_NAME)));
@@ -86,7 +88,7 @@ public class AudioUtils {
     }
 
     //调用本地图库并回调，区分4.3及4.4
-    public void callImageGellery(){
+    public void callImageGellery() {
         if (mIsKitKat) {
             selectImageUriAfterKikat();
         } else {
@@ -95,34 +97,63 @@ public class AudioUtils {
     }
 
     //保存图片到本地相册
-   public void saveImageToGallery(Bitmap bitmap) {
+    public void saveImageToGallery(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG , 100 , stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        File dir=new File(Environment.getExternalStorageDirectory ().getAbsolutePath()+"/picture" );
-        if(!dir.isFile()){
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/picture");
+        if (!dir.isFile()) {
             dir.mkdir();
         }
-        File file=new File(dir,"dfadf" +".png" );
+        File file = new File(dir, "dfadf" + ".png");
         try {
-            FileOutputStream fos=new FileOutputStream(file);
-            fos.write(byteArray, 0 , byteArray.length);
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(byteArray, 0, byteArray.length);
             fos.flush();
             //用广播通知相册进行更新相册
-            Intent intent = new Intent(Intent. ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri uri = Uri.fromFile(file);
             intent.setData(uri);
             aty.sendBroadcast(intent);
-            SVProgressHUD.showSuccessWithStatus(aty,"保存成功");
+            SVProgressHUD.showSuccessWithStatus(aty, "保存成功");
         } catch (FileNotFoundException e) {
-            SVProgressHUD.showErrorWithStatus(aty,"保存失败");
+            SVProgressHUD.showErrorWithStatus(aty, "保存失败");
             e.printStackTrace();
         } catch (IOException e) {
-            SVProgressHUD.showErrorWithStatus(aty,"保存失败");
+            SVProgressHUD.showErrorWithStatus(aty, "保存失败");
             e.printStackTrace();
 
         }
     }
+
+    public boolean saveImageToGallery(Bitmap bitmap, String name) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/picture");
+        if (!dir.isFile()) {
+            dir.mkdir();
+        }
+        File file = new File(dir, name + ".png");
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(byteArray, 0, byteArray.length);
+            fos.flush();
+            //用广播通知相册进行更新相册
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(file);
+            intent.setData(uri);
+            aty.sendBroadcast(intent);
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * 功能简述:4.4以上裁剪图片方法实现
@@ -180,10 +211,12 @@ public class AudioUtils {
         intent.putExtra("noFaceDetection", true);
         aty.startActivityForResult(intent, SET_PICTURE);
     }
+
     /**
      * <br>功能简述: 4.4及以上改动版裁剪图片方法实现 --------------------相机
      * <br>功能详细描述:
      * <br>注意:
+     *
      * @param uri
      */
     public void cropImageUriAfterKikat(Uri uri) {
@@ -208,6 +241,7 @@ public class AudioUtils {
      * <br>功能简述:
      * <br>功能详细描述:
      * <br>注意:
+     *
      * @return
      */
     public Bitmap decodeUriAsBitmap(Uri uri) {
@@ -227,6 +261,7 @@ public class AudioUtils {
      * <br>功能简述:4.4及以上获取图片的方法
      * <br>功能详细描述:
      * <br>注意:
+     *
      * @param context
      * @param uri
      * @return
@@ -273,7 +308,7 @@ public class AudioUtils {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] { split[1] };
+                final String[] selectionArgs = new String[]{split[1]};
 
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
@@ -300,7 +335,7 @@ public class AudioUtils {
 
         Cursor cursor = null;
         final String column = "_data";
-        final String[] projection = { column };
+        final String[] projection = {column};
 
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
@@ -351,25 +386,26 @@ public class AudioUtils {
 
     /**
      * 图片uri转换成地址
+     *
      * @param context
      * @param uri
      * @return
      */
-    public static String getRealFilePath( final Context context, final Uri uri ) {
-        if ( null == uri ) return null;
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
         final String scheme = uri.getScheme();
         String data = null;
-        if ( scheme == null )
+        if (scheme == null)
             data = uri.getPath();
-        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
-        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
-            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
-            if ( null != cursor ) {
-                if ( cursor.moveToFirst() ) {
-                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
-                    if ( index > -1 ) {
-                        data = cursor.getString( index );
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
                     }
                 }
                 cursor.close();
@@ -377,7 +413,6 @@ public class AudioUtils {
         }
         return data;
     }
-
 
 
 }

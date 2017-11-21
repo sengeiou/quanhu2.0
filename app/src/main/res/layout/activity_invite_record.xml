@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:divider="@drawable/divider_default_match"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px126"
+        android:gravity="center"
+        android:text="已邀请0位好友"
+        android:textColor="@color/font_gray_l"
+        android:textSize="@dimen/font_44" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px100"
+        android:background="@color/app_bg_gray_common"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/app_base_padding"
+        android:paddingRight="@dimen/app_base_padding">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="受邀用户"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_44" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册时间"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_44" />
+    </LinearLayout>
+
+    <com.rz.common.swiperefresh.SwipyRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lv"
+            style="@style/DefaultLvStyle"
+            android:divider="@drawable/divider_default_inset" />
+    </com.rz.common.swiperefresh.SwipyRefreshLayout>
+</LinearLayout>

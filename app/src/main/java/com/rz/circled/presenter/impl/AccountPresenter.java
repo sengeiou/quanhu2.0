@@ -16,8 +16,10 @@ import com.rz.httpapi.api.BaseCallback;
 import com.rz.httpapi.api.CallManager;
 import com.rz.httpapi.api.Http;
 import com.rz.httpapi.api.ResponseData.ResponseData;
+import com.rz.httpapi.bean.InviteRecordBean;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.UserInfoModel;
+import com.rz.httpapi.bean.UserInviteLinkBean;
 import com.rz.httpapi.constans.ReturnCode;
 
 import java.util.List;
@@ -318,9 +320,9 @@ public class AccountPresenter extends GeneralPresenter {
                         mView.updateViewWithLoadMore(type, false);
                         return;
                     } else {
-                            mView.updateViewWithLoadMore(-1, false);
-                            mView.onLoadingStatus(CommonCode.General.ERROR_DATA,res.getMsg() );
-                            return;
+                        mView.updateViewWithLoadMore(-1, false);
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
+                        return;
                     }
                 } else {
                     mView.updateViewWithLoadMore(-1, false);
@@ -377,5 +379,85 @@ public class AccountPresenter extends GeneralPresenter {
         });
     }
 
+    /**
+     * 获取邀请链接和邀请码
+     */
+    public void getInviteLink() {
+        if (!NetUtils.isNetworkConnected(getContext(mView))) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+        Call<ResponseData<UserInviteLinkBean>> call = mUserService.getInviteLink(Session.getUserId());
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<UserInviteLinkBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<UserInviteLinkBean>> call, Response<ResponseData<UserInviteLinkBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<UserInviteLinkBean> res = response.body();
+                    if (res.isSuccessful()) {
+                        UserInviteLinkBean data = res.getData();
+                        if (null != data) {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.updateView(data);
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
+                        }
+                    } else {
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseData<UserInviteLinkBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+            }
+        });
+    }
+
+    /**
+     * 查询已邀请用户
+     */
+    public void getInviteRecord(final Integer inviterId, int limit) {
+        if (!NetUtils.isNetworkConnected(getContext(mView))) {
+            mView.onLoadingStatus(CommonCode.General.UN_NETWORK, mContext.getString(R.string.no_net_work));
+            return;
+        }
+        mView.onLoadingStatus(CommonCode.General.DATA_LOADING, mContext.getString(R.string.is_loading));
+        Call<ResponseData<InviteRecordBean>> call = mUserService.getInviteRecord(inviterId, limit);
+        CallManager.add(call);
+        call.enqueue(new BaseCallback<ResponseData<InviteRecordBean>>() {
+            @Override
+            public void onResponse(Call<ResponseData<InviteRecordBean>> call, Response<ResponseData<InviteRecordBean>> response) {
+                super.onResponse(call, response);
+                if (response.isSuccessful()) {
+                    ResponseData<InviteRecordBean> res = response.body();
+                    if (res.isSuccessful()) {
+                        InviteRecordBean data = res.getData();
+                        if (null != data) {
+                            mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS, "");
+                            mView.updateViewWithLoadMore(data, inviterId != null);
+                        } else {
+                            mView.onLoadingStatus(CommonCode.General.DATA_EMPTY, "");
+                        }
+                    } else {
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                    }
+                } else {
+                    mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseData<InviteRecordBean>> call, Throwable t) {
+                super.onFailure(call, t);
+                mView.onLoadingStatus(CommonCode.General.ERROR_DATA, mContext.getString(R.string.load_fail));
+            }
+        });
+    }
 }

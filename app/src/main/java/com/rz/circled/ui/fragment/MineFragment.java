@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
 import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
+import com.rz.circled.presenter.impl.AccountPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
@@ -31,6 +33,8 @@ import com.rz.circled.ui.activity.AccountDetailAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
+import com.rz.circled.ui.activity.InviteRecordActivity;
+import com.rz.circled.ui.activity.InviteRewardActivity;
 import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
 import com.rz.circled.ui.activity.MineRewardActivity;
@@ -66,15 +70,18 @@ import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
+import com.rz.common.utils.ImageUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.DataStatisticsBean;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.ProveStatusBean;
+import com.rz.httpapi.bean.UserInviteLinkBean;
 import com.rz.httpapi.bean.UserSignBean;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.zbar.lib.encoding.EncodingUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -133,6 +140,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
     protected IPresenter presenter;
     protected IPresenter userPresenter;
+    protected IPresenter accountPresenter;
     private CustormServiceModel mCustormServiceModel;
     private SharedPreferences mSp;
 
@@ -167,6 +175,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         userPresenter = new FriendPresenter1();
         userPresenter.attachView(this);
 
+        accountPresenter = new AccountPresenter();
+        accountPresenter.attachView(this);
     }
 
     @Override
@@ -243,6 +253,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
             //更新用户详情
             ((FriendPresenter1) userPresenter).getFriendInfoDetail(Session.getUserId());
+
+            ((AccountPresenter) accountPresenter).getInviteLink();
         }
     }
 
@@ -324,12 +336,11 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
     }
 
 
-
     class HeadOnCLickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 //个人中心
                 case R.id.bg_rl_head:
                     if (isLogin()) {
@@ -519,7 +530,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 if (TextUtils.isEmpty(item.remark)) {
                     tv_remark.setVisibility(View.GONE);
                 } else {
-                    if(Session.getUserIsLogin()){
+                    if (Session.getUserIsLogin()) {
                         tv_remark.setVisibility(View.VISIBLE);
                         tv_remark.setText(item.remark);
                     }
@@ -623,6 +634,9 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 Session.setUserPicUrl(bean.getCustImg());
             }
+        } else if (t instanceof UserInviteLinkBean) {
+            UserInviteLinkBean data = (UserInviteLinkBean) t;
+            Session.setInviteLink(data.getInviterLink());
         }
     }
 
@@ -637,14 +651,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
             famousLayout.setVisibility(View.VISIBLE);
             if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
-                if(famousLayout != null){
+                if (famousLayout != null) {
                     famousLayout.getBackground().setAlpha(255);
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
 
                 }
                 famousTxt.setText("认证审核中");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                if(famousLayout != null){
+                if (famousLayout != null) {
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
                     famousLayout.setBackgroundResource(0);
                 }
@@ -652,14 +666,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(proveStatusBean.getTradeField());
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
-                if(famousLayout != null){
+                if (famousLayout != null) {
                     famousLayout.getBackground().setAlpha(255);
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 }
 
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
-                if(famousLayout != null){
+                if (famousLayout != null) {
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                     famousLayout.getBackground().setAlpha(255);
                 }
@@ -761,11 +775,8 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             case 10:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "一键邀请好友");
-                    ShareNewsAty.startShareNews(getContext(), new ShareModel(
-                                    getString(R.string.share_title),
-                                    getString(R.string.share_desc),
-                                    H5Address.APP_DOWNLOAD),
-                            IntentCode.Setting.SETTING_RESULT_CODE);
+                    jump(InviteRewardActivity.class);
+                    jump(InviteRecordActivity.class);
                 }
                 break;
 
