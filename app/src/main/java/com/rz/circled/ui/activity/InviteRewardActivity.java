@@ -25,6 +25,7 @@ import com.rz.circled.modle.ShareNewsModel;
 import com.rz.circled.widget.MyGridView;
 import com.rz.common.adapter.CommonAdapter;
 import com.rz.common.adapter.ViewHolder;
+import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.H5Address;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.activity.BaseActivity;
@@ -117,11 +118,19 @@ public class InviteRewardActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void initView() {
-        mData = new ShareModel(
-                getString(R.string.share_title),
-                getString(R.string.share_desc),
-                H5Address.APP_DOWNLOAD);
+        mData = new ShareModel(Session.getUserName() +
+                getString(R.string.invite_title),
+                getString(R.string.invite_desc),
+                Session.getInviteLink());
         setTitleText("邀请有奖");
+        setTitleRightText("我的邀请");
+        setTitleRightTextColor(R.color.font_color_blue);
+        setTitleRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showActivity(aty, InviteRecordActivity.class);
+            }
+        });
     }
 
     @Override
