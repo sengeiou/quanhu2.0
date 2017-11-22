@@ -246,10 +246,13 @@ public class UserInfoActivity extends BaseActivity {
         for (int resId : TITLES) mTitles.add(getString(resId));
         tabPagerSearch.setCustomLayoutParams(4);
         tabPagerSearch.setLineFitFont(true);
+
         viewPager.setAdapter(infoAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList, mTitles));
         viewPager.setOffscreenPageLimit(4);
         tabPagerSearch.setViewPager(viewPager);
         tabPagerSearch.notifyDataSetChanged();
+        tabPagerSearch.setTempPosition(2);
+        viewPager.setCurrentItem(2);
         tabPagerSearch.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
