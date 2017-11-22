@@ -73,14 +73,14 @@
 
                 <View
                     style="@style/line_horizontal_gray_s"/>
+                <!--
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/px28"
+                                    android:background="@color/color_F4F4F4"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px28"
-                    android:background="@color/color_F4F4F4"/>
-
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                                <View
+                                    style="@style/line_horizontal_gray_s"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -93,7 +93,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="@dimen/px158"
+                    android:minHeight="@dimen/px185"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/px44"
                     android:paddingRight="@dimen/px44">
@@ -117,7 +117,8 @@
                         android:layout_gravity="center_vertical"
                         android:text="0"
                         android:textColor="@color/font_gray_m"
-                        android:textSize="@dimen/font_38"/>
+                        android:textSize="@dimen/font_38"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/tv_editor_two_title_count"
@@ -126,21 +127,22 @@
                         android:layout_gravity="center_vertical"
                         android:text="/0"
                         android:textColor="@color/font_gray_a"
-                        android:textSize="@dimen/font_38"/>
+                        android:textSize="@dimen/font_38"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
                 <View
                     style="@style/line_horizontal_gray_s"/>
 
-                <View
-                    android:id="@+id/view_editor_two"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px28"
-                    android:background="@color/color_F4F4F4"/>
+                <!--<View-->
+                <!--android:id="@+id/view_editor_two"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/px28"-->
+                <!--android:background="@color/color_F4F4F4"/>-->
 
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                <!--<View-->
+                <!--style="@style/line_horizontal_gray_s"/>-->
             </LinearLayout>
 
 
@@ -282,13 +284,13 @@
 
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px28"
-                    android:background="@color/color_F4F4F4"/>
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/px28"-->
+                <!--android:background="@color/color_F4F4F4"/>-->
 
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                <!--<View-->
+                <!--style="@style/line_horizontal_gray_s"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -335,7 +337,8 @@
                         android:layout_gravity="center_vertical"
                         android:text="0"
                         android:textColor="@color/font_gray_m"
-                        android:textSize="@dimen/font_38"/>
+                        android:textSize="@dimen/font_38"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/tv_editor_two_label_count"
@@ -344,20 +347,21 @@
                         android:layout_gravity="center_vertical"
                         android:text="/0"
                         android:textColor="@color/font_gray_a"
-                        android:textSize="@dimen/font_38"/>
+                        android:textSize="@dimen/font_38"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
                 <View
                     style="@style/line_horizontal_gray_s"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px30"
-                    android:background="@color/color_F4F4F4"/>
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/px30"-->
+                <!--android:background="@color/color_F4F4F4"/>-->
 
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                <!--<View-->
+                <!--style="@style/line_horizontal_gray_s"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -386,7 +390,8 @@
                     android:layout_gravity="right"
                     android:layout_marginBottom="@dimen/px20"
                     android:layout_marginRight="@dimen/px44"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_editor_two_introduction_num"
@@ -411,13 +416,13 @@
                 <View
                     style="@style/line_horizontal_gray_s"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px28"
-                    android:background="@color/color_F4F4F4"/>
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/px28"-->
+                <!--android:background="@color/color_F4F4F4"/>-->
 
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                <!--<View-->
+                <!--style="@style/line_horizontal_gray_s"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -431,6 +436,7 @@
                     android:id="@+id/ll_editor_two_content_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="@dimen/px400"
                     android:orientation="vertical">
 
                 </LinearLayout>
@@ -440,7 +446,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/px40">
+                    android:paddingTop="@dimen/px40"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/ll_editor_two_content_num"
@@ -520,16 +527,13 @@
 
                 </LinearLayout>
 
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/px28"-->
+                <!--android:background="@color/color_F4F4F4"/>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/px28"
-                    android:background="@color/color_F4F4F4"/>
-
-                <View
-                    style="@style/line_horizontal_gray_s"/>
+                <!--<View-->
+                <!--style="@style/line_horizontal_gray_s"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -539,6 +543,8 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <View
+                    style="@style/line_horizontal_gray_s"/>
 
                 <TextView
                     android:id="@+id/tv_editor_two_media"
@@ -648,7 +654,8 @@
                     android:layout_gravity="right"
                     android:layout_marginBottom="@dimen/px30"
                     android:layout_marginTop="@dimen/px80"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/ll_editor_two_video_num"
@@ -734,12 +741,10 @@
         android:id="@+id/ll_editor_two_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@mipmap/bg_editor_bottom"
+        android:gravity="bottom"
         android:orientation="vertical"
         android:visibility="visible">
-
-        <View
-            style="@style/line_horizontal_gray_s"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -750,7 +755,7 @@
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_pic"
-                android:layout_width="@dimen/px100"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/px44"
@@ -759,7 +764,7 @@
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_video"
-                android:layout_width="@dimen/px100"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/px44"
@@ -768,7 +773,7 @@
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_audio"
-                android:layout_width="@dimen/px100"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_editor_audio"
@@ -830,7 +835,7 @@
                         android:paddingLeft="@dimen/px15"
                         android:paddingRight="@dimen/px25"
                         android:paddingTop="@dimen/px20"
-                        android:text="@string/editor_authority"
+                        android:text="@string/authority_setting"
                         android:textColor="@color/font_color_blue"
                         android:visibility="gone"/>
                 </LinearLayout>
