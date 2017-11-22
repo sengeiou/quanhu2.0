@@ -641,7 +641,7 @@
     <string name="shine_rule">“随手晒”使用规则</string>
     <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
     <string name="clear_cache">您是否要清除缓存？</string>
-    <string name="article_info">资源</string>
+    <string name="article_info">动态</string>
     <string name="article_activity">动态</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
