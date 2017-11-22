@@ -307,9 +307,11 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         fromWhere.setVisibility(View.GONE);
                         only_iv.setVisibility(View.VISIBLE);
                         iv_layout.setVisibility(View.GONE);
+                        mVideo_Preview.setVisibility(View.GONE);
                         String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), resourceInfo.getThumnail(), R.dimen.px994, R.dimen.px558);
                         Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(only_iv);
                     } else {
+                        mVideo_Preview.setVisibility(View.VISIBLE);
                         fromWhere.setVisibility(View.VISIBLE);
                         //多图区域
                         String pics1 = resourceInfo.getPics();

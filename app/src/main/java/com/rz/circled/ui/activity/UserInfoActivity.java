@@ -105,7 +105,7 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.add_friend_btn)
     Button addFriendBtn;
 
-    private static final Integer[] TITLES = new Integer[]{R.string.article_info, R.string.tab_reward, R.string.tab_private_circle, R.string.news_interactive_tab_activity};
+    private static final Integer[] TITLES = new Integer[]{R.string.article_activity, R.string.tab_reward, R.string.tab_private_circle, R.string.news_interactive_tab_activity};
     private List<String> mTitles = new ArrayList<>();
     private MyFragmentStatePagerAdapter infoAdapter;
     private List<Fragment> fragmentList = new ArrayList<>();
@@ -246,10 +246,13 @@ public class UserInfoActivity extends BaseActivity {
         for (int resId : TITLES) mTitles.add(getString(resId));
         tabPagerSearch.setCustomLayoutParams(4);
         tabPagerSearch.setLineFitFont(true);
+
         viewPager.setAdapter(infoAdapter = new MyFragmentStatePagerAdapter(getSupportFragmentManager(), fragmentList, mTitles));
         viewPager.setOffscreenPageLimit(4);
         tabPagerSearch.setViewPager(viewPager);
         tabPagerSearch.notifyDataSetChanged();
+        tabPagerSearch.setTempPosition(2);
+        viewPager.setCurrentItem(2);
         tabPagerSearch.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

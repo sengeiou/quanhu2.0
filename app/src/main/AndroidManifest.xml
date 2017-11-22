@@ -665,8 +665,16 @@
             android:theme="@style/BaseAppTheme.FullScreen"/>
         <activity
             android:name=".ui.activity.AllCirclesActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
-
+        <activity
+            android:name=".ui.activity.InviteRewardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.InviteRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
         <!--<activity android:name=".ui.activity.NativeAppActivity">-->
 
         <!--&lt;!&ndash;&lt;!&ndash; 要想在别的App上能成功调起App，必须添加intent过滤器 &ndash;&gt;&ndash;&gt;-->

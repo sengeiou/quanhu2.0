@@ -201,4 +201,14 @@ public class APIUser {
      */
     public static final String  GET_LIST_COUNT =  "yyl/v1/activity/info/mylistCount";
 
+    /**
+     * 查询已邀请用户
+     */
+    public static final String  GET_INVITE_RECORD =  "v3/user/getInviterUser";
+
+    /**
+     * 获取邀请链接和邀请码
+     */
+    public static final String  GET_INVITE_LINK =  "v3/user/getInviterLink";
+
 }

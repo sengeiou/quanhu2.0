@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.rz.circled.R;
@@ -22,7 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 /**
  * Created by Administrator on 2017/9/4/004.
  */
@@ -34,6 +34,8 @@ public class MoreFamousActivity extends BaseActivity implements SwipyRefreshLayo
     EditText mEtSearchKeywordBase;
     @BindView(R.id.sb_famous_refresh)
     SwipyRefreshLayoutBanner mSbFamousRefresh;
+    @BindView(R.id.ib_top)
+    ImageButton mIbTop;
     private List<StarListBean> moreFamousList = new ArrayList<>();
     private SearchPersonAdapter mAdapter;
     private CirclePresenter mPresenter;
@@ -71,6 +73,12 @@ public class MoreFamousActivity extends BaseActivity implements SwipyRefreshLayo
                 UserInfoActivity.newFrindInfo(mContext, custId);
             }
         });
+        mIbTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLvMFamous.smoothScrollToPosition(0);
+            }
+        });
 
     }
 
@@ -90,7 +98,7 @@ public class MoreFamousActivity extends BaseActivity implements SwipyRefreshLayo
 
     @Override
     public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
-        if (!loadMore){
+        if (!loadMore) {
             moreFamousList.clear();
         }
         List<StarListBean> data = (List<StarListBean>) t;

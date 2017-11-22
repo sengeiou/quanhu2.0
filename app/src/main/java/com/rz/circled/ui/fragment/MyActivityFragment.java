@@ -200,6 +200,11 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //解决魅族审核索引越界问题
+                if (position>=bean.size()){
+
+                    return;
+                }
                 EntitiesBean entitiesBean = bean.get(position);
                 if (entitiesBean.getActivityType() == 1) {
                     WebContainerActivity.startActivity(mActivity, BuildConfig.WebHomeBaseUrl + "/activity/platform-activity/signup/" + entitiesBean.getId());
