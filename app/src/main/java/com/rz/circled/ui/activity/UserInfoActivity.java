@@ -105,7 +105,7 @@ public class UserInfoActivity extends BaseActivity {
     @BindView(R.id.add_friend_btn)
     Button addFriendBtn;
 
-    private static final Integer[] TITLES = new Integer[]{R.string.article_info, R.string.tab_reward, R.string.tab_private_circle, R.string.news_interactive_tab_activity};
+    private static final Integer[] TITLES = new Integer[]{R.string.article_activity, R.string.tab_reward, R.string.tab_private_circle, R.string.news_interactive_tab_activity};
     private List<String> mTitles = new ArrayList<>();
     private MyFragmentStatePagerAdapter infoAdapter;
     private List<Fragment> fragmentList = new ArrayList<>();
