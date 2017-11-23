@@ -19,6 +19,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -78,6 +79,7 @@ import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.Record;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
@@ -251,6 +253,40 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     //权限
     @BindView(R.id.tv_editor_two_authority)
     TextView tvAuthority;
+    @BindView(R.id.tv_editor_title_left)
+    TextView tvEditorTitleLeft;
+    @BindView(R.id.tv_base_title)
+    TextView tvBaseTitle;
+    @BindView(R.id.tv_editor_title_right)
+    TextView tvEditorTitleRight;
+    //    @BindView(R.id.et_editor_two_title)
+//    EditText etEditorTwoTitle;
+//    @BindView(R.id.tv_editor_two_sort_name)
+//    TextView tvEditorTwoSortName;
+//    @BindView(R.id.tv_editor_two_location_name)
+//    TextView tvEditorTwoLocationName;
+    @BindView(R.id.iv_editor_two_location_arrow)
+    ImageView ivEditorTwoLocationArrow;
+    //    @BindView(R.id.tv_editor_two_time_name)
+//    TextView tvEditorTwoTimeName;
+    @BindView(R.id.iv_editor_two_time_arrow)
+    ImageView ivEditorTwoTimeArrow;
+    //    @BindView(R.id.et_editor_two_label)
+//    EditText etEditorTwoLabel;
+//    @BindView(R.id.tv_editor_two_introduction_num)
+//    TextView tvEditorTwoIntroductionNum;
+//    @BindView(R.id.tv_editor_two_content_num)
+//    TextView tvEditorTwoContentNum;
+//    @BindView(R.id.rl_editor_two_video)
+//    RelativeLayout rlEditorTwoVideo;
+//    @BindView(R.id.rl_editor_two_audio)
+//    RelativeLayout rlEditorTwoAudio;
+//    @BindView(R.id.iv_editor_two_choose_pic)
+//    ImageView ivEditorTwoChoosePic;
+//    @BindView(R.id.cb_editor_two_anonymity)
+//    CheckBox cbEditorTwoAnonymity;
+//    @BindView(R.id.tv_editor_two_authority)
+//    TextView tvEditorTwoAuthority;
     //视频
     private String[] videoItems = {"拍摄视频", "从手机相册中选取"};
     private static final int TYPE_TEXT = 1;
@@ -320,11 +356,19 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private CommonDialog commonDialog;
     private String videoFilePath;
 
-    private int llMinHeight = 0;
+    @Override
+    protected boolean needStatusBarTint() {
+        return false;
+    }
 
     @Override
     protected boolean needLoadingView() {
         return true;
+    }
+
+    @Override
+    protected boolean needShowTitle() {
+        return false;
     }
 
     @Override
@@ -333,9 +377,24 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
+    public void setTitleRightText(int StringId) {
+        tvEditorTitleRight.setText(getString(StringId));
+    }
+
+    @Override
+    public void setTitleRightListener(View.OnClickListener rightListener) {
+        tvEditorTitleRight.setOnClickListener(rightListener);
+    }
+
+    @Override
+    public void setTitleLeftListener(View.OnClickListener leftListener) {
+        tvEditorTitleLeft.setOnClickListener(leftListener);
+    }
+
+    @Override
     public void initView() {
-        setTitleLeftText(R.string.cancel);
-        setTitleText("");
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        StatusBarUtils.setDarkStatusIcon(this, true);
         setTitleRightText(R.string.publish);
         setTitleRightTextColor(R.color.color_main);
         setTitleRightListener(new OnTitleRightClickListener());
@@ -378,7 +437,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 Toasty.info(mContext, getString(R.string.play_audio_fail)).show();
             }
         });
-        llMinHeight = (int) getResources().getDimension(R.dimen.px400);
     }
 
     @Override
