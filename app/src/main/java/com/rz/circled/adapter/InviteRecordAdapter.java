@@ -21,6 +21,6 @@ public class InviteRecordAdapter extends CommonAdapter<InviteRecordBean.InviterD
     @Override
     public void convert(ViewHolder helper, InviteRecordBean.InviterDetailBean item, int position) {
         helper.setText(R.id.tv_name, item.getCustNname());
-        helper.setText(R.id.tv_time, StringUtils.stampToDate(item.getRegTime(), "yyyy年MM月dd日 HH:mm"));
+        helper.setText(R.id.tv_time, StringUtils.stampToDate(item.getCustRegTime(), "yyyy年MM月dd日 HH:mm"));
     }
 }
