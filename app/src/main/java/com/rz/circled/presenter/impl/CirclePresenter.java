@@ -187,6 +187,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             UserPermissionBean data = res.getData();
                             mView.updateView(data);
+                        }else {
+                            Toast.makeText(mContext,res.getMsg(),Toast.LENGTH_LONG).show();
                         }
 
                     }
