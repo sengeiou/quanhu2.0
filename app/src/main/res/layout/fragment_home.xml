@@ -35,10 +35,10 @@
 
         <ImageView
             android:id="@+id/home_publish"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/px144"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/px144"
             android:layout_marginBottom="@dimen/px44"
             android:src="@drawable/home_publish"
             android:layout_marginRight="@dimen/px30"
@@ -46,8 +46,8 @@
 
         <ImageButton
             android:id="@+id/id_floating_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/px144"
+            android:layout_height="@dimen/px144"
             android:layout_alignParentRight="true"
             android:background="@null"
             android:src="@drawable/ic_float_btn"
