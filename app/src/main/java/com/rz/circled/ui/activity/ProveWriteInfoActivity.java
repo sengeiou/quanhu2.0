@@ -202,7 +202,7 @@ public class ProveWriteInfoActivity extends BaseActivity {
         }
         String phone = etProvePhone.getText().toString();
         String phoneErrorHint = isOneSelf ? getString(R.string.prove_phone_error_hint) : getString(R.string.true_name_error_hint);
-        if (TextUtils.isEmpty(phone) || (isOneSelf && phone.length() != 11) || (!isOneSelf && phone.length() < 2)) {
+        if (TextUtils.isEmpty(phone) || (isOneSelf && !StringUtils.isMobile(phone)) || (!isOneSelf && phone.length() < 2)) {
             Toasty.info(mContext, phoneErrorHint).show();
             return;
         }

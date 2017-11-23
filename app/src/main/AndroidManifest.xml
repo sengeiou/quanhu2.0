@@ -256,8 +256,7 @@
         <activity
             android:name=".ui.activity.EditorTwoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"
-            android:windowSoftInputMode="adjustResize"/>
+            android:theme="@style/BaseAppTheme.Translucent"/>
 
         <activity
             android:name=".ui.activity.EditorTwoSortActivity"
