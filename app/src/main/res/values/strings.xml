@@ -289,7 +289,7 @@
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
     <string name="editor_authority">权限</string>
-    <string name="authority_setting">权限设置</string>
+    <string name="authority_setting">设置</string>
     <string name="authority_share">允许成员分享</string>
     <string name="authority_read">付费可读</string>
     <string name="authority_popularize">允许平台免费推广</string>
@@ -641,7 +641,8 @@
     <string name="shine_rule">“随手晒”使用规则</string>
     <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
     <string name="clear_cache">您是否要清除缓存？</string>
-    <string name="article_info">资源</string>
+    <string name="article_info">动态</string>
+    <string name="article_activity">动态</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
     <string name="my_create_reward">我发起的悬赏</string>

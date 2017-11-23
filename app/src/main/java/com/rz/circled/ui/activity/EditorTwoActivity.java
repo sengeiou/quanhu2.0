@@ -320,6 +320,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private CommonDialog commonDialog;
     private String videoFilePath;
 
+    private int llMinHeight = 0;
+
     @Override
     protected boolean needLoadingView() {
         return true;
@@ -376,6 +378,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                 Toasty.info(mContext, getString(R.string.play_audio_fail)).show();
             }
         });
+        llMinHeight = (int) getResources().getDimension(R.dimen.px400);
     }
 
     @Override
@@ -1368,8 +1371,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     processContentEditViewInputFilter(false);
             }
         });
-        et.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-        llContentText.addView(et);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(-1, -1);
+        et.setMinHeight((int) getResources().getDimension(R.dimen.px400));
+        et.setLineSpacing(0, 1.3f);
+        llContentText.addView(et, layoutParams);
         if (isFirstInput) {
             et.setHint(TextUtils.isEmpty(contentModel.getInputPrompt()) ? getString(R.string.add_text_pic_here) : contentModel.getInputPrompt());
             isFirstInput = false;
@@ -1407,6 +1412,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     processContentEditViewInputFilter(false);
             }
         });
+        et.setLineSpacing(0, 1.3f);
         llContentText.addView(et, position);
         if (isFirstInput) {
             et.setHint(R.string.add_text);
@@ -1472,6 +1478,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             Glide.with(this).load(imgPath).placeholder(R.drawable.circle_default).error(R.drawable.circle_default).into(iv);
         }
         initImageCount();
+
     }
 
     private void processImageEdit(int position) {
@@ -1618,7 +1625,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     private void initImageCount() {
         contentImageCount = 0;
-        for (int i = 0; i < llContentText.getChildCount(); i++) {
+        int childCount = llContentText.getChildCount();
+        for (int i = 0; i < childCount; i++) {
             if (llContentText.getChildAt(i) instanceof FrameLayout) {
                 contentImageCount++;
             }
@@ -1627,6 +1635,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         changeChooseImageStatus();
         changeChooseVideoStatus();
         changeChooseAudioStatus();
+        if (childCount > 0) {
+            View childAt = llContentText.getChildAt(0);
+            if (childAt instanceof EditText) {
+                int minHeight = childCount == 1 ? R.dimen.px400 : R.dimen.px100;
+                ((EditText) childAt).setMinHeight((int) getResources().getDimension(minHeight));
+            }
+        }
     }
 
     private void initDurationText() {
@@ -1841,17 +1856,17 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             } else {
                 Map map = new HashMap();
                 if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//投票 走jsSdk
-                    String text = articleItem.content.replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String text = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, text);
                     jsResult.add(map);
                     if (TextUtils.isEmpty(dataSource.getContent())) dataSource.setContent(text);
                     else dataSource.setContent(dataSource.getContent() + text);
                 } else {//其他情况走后台接口 content:\n -> 空格 contentSource \n -> <br>
-                    String contentText = articleItem.content.replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String contentText = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
                     if (TextUtils.isEmpty(dataSource.getContent()))
                         dataSource.setContent(contentText);
                     else dataSource.setContent(dataSource.getContent() + contentText);
-                    String contentSourceText = articleItem.content.replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String contentSourceText = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, contentSourceText);
                     jsResult.add(map);
                 }

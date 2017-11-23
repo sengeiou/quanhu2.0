@@ -67,7 +67,6 @@ public class RewardFragment extends BaseFragment implements AdvancedWebView.List
         mWebViewProxy = new WebViewProxy(mWebView);
         mWebViewProxy.registerAll(RegisterList.getAllRegisterHandler(getActivity()));
 
-//        mWebView.setVisibility(View.INVISIBLE);
         onLoadingStatus(CommonCode.General.DATA_LOADING);
         mWebViewProxy.removeRepetLoadUrl(BuildConfig.WebHomeBaseUrl + "/activity/reward");
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
