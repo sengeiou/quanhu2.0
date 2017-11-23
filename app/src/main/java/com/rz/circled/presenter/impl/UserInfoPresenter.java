@@ -328,7 +328,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         mView.updateView("1");
                         return;
                     } else {
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         return;
                     }
                 }
