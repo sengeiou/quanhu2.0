@@ -74,7 +74,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StatusBarUtils.transparencyBar(this);
         mContext = this;
         this.aty = this;
         TAG = getClass().getSimpleName();
@@ -84,9 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         LinearLayout llContent = (LinearLayout) findViewById(R.id.ll_base_content);
         FrameLayout flTransTitle = (FrameLayout) findViewById(R.id.fl_base_title_transparent);
 
-        initSupportSwipeBack();
         initTint();
-        StatusBarUtils.setDarkStatusIcon(this, true);
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         initTitleView(llTitle, flTransTitle);
@@ -225,6 +222,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      */
     private void initTint() {
         if (needStatusBarTint()) {
+            StatusBarUtils.transparencyBar(this);
+            initSupportSwipeBack();
+            StatusBarUtils.setDarkStatusIcon(this, true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 SystemBarTintManager tintManager = new SystemBarTintManager(this);
                 tintManager.setStatusBarTintEnabled(true);
@@ -715,8 +715,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
-        Log.d(TAG, "------test----- = "+getLocalClassName());
-        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName) ) {
+        Log.d(TAG, "------test----- = " + getLocalClassName());
+        if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
             Log.d(TAG, "------resumedLocalClassName----- = " + BaseApplication.getInstance().resumedLocalClassName);
             Session.clearShareP();
             //弹窗重新登录

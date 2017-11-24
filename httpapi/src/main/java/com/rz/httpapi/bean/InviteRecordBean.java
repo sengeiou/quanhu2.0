@@ -41,7 +41,7 @@ public class InviteRecordBean {
 
         private String custNname;
         private int inviterId;
-        private long regTime;
+        private long custRegTime;
 
         public String getCustNname() {
             return custNname;
@@ -59,12 +59,12 @@ public class InviteRecordBean {
             this.inviterId = inviterId;
         }
 
-        public long getRegTime() {
-            return regTime;
+        public long getCustRegTime() {
+            return custRegTime;
         }
 
-        public void setRegTime(long regTime) {
-            this.regTime = regTime;
+        public void setCustRegTime(long custRegTime) {
+            this.custRegTime = custRegTime;
         }
     }
 }
