@@ -125,7 +125,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                 1002,
                 phone,
                 password,
-                veriCode, "1",
+                veriCode,
                 "",
                 cityCode,
                 location

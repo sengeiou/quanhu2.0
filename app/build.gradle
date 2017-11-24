@@ -22,25 +22,7 @@ def gitVersionCode() {
  * @return versionName
  */
 def gitVersionName(String buildType) {
-    def defaultVersion = "v1.0.0"
-    def cmd = 'git describe --tags'
-    def version = cmd.execute().text.trim()
-    println("tag:" + version)
-    int index = version.indexOf("-")
-    if (index != -1) {
-        version = version.substring(0, index)
-    }
-    def pattern = "^v(((\\d+)[.])+)(\\d+)\$"
-    if (!version.matches(pattern)) {
-        version = defaultVersion
-    }
-    if (!buildType.equals("release")) {
-        version = version + "." + gitVersionCode()
-    }
-    println("versionName:" + version)
-    println("-----")
-    version = version.substring(1)
-    return "1.0.5"
+    return "1.0.6"
 }
 
 android {
@@ -215,7 +197,7 @@ android {
     productFlavors {
 
         //应用宝
-        yryz_yingyongbao {
+        quanhu_yingyongbao {
             dimension "default"
             manifestPlaceholders = [CHANNEL: "yryz"]
             buildConfigField "String", "serverChannel", "\"YRYZ－TXYYB\""

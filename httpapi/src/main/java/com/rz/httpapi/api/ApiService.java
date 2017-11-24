@@ -129,7 +129,6 @@ public interface ApiService {
      * @param phone    手机号
      * @param password 密码
      * @param veriCode 手机验证码
-     * @param inviter  邀请者用户ID
      * @param channel  渠道编码
      * @return
      */
@@ -140,7 +139,6 @@ public interface ApiService {
             @Field("phone") String phone,
             @Field("password") String password,
             @Field("veriCode") String veriCode,
-            @Field("inviter") String inviter,
             @Field("channel") String channel,
             @Field("cityCode") String cityCode,
             @Field("location") String location

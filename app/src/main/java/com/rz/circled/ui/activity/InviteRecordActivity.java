@@ -86,10 +86,12 @@ public class InviteRecordActivity extends BaseActivity {
         if (null != t) {
             if (t instanceof InviteRecordBean) {
                 InviteRecordBean data = (InviteRecordBean) t;
-                SpannableString msp = new SpannableString("已邀请" + data.getTotal() + "位好友");
-                //设置字体前景色
-                msp.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.font_color_blue)), 3, 3 + String.valueOf(data.getTotal()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                tvNum.setText(msp);
+                if (data.getTotal() != 0) {
+                    SpannableString msp = new SpannableString("已邀请" + data.getTotal() + "位好友");
+                    //设置字体前景色
+                    msp.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.font_color_blue)), 3, 3 + String.valueOf(data.getTotal()).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tvNum.setText(msp);
+                }
                 if (data.getInviterDetail() != null) {
                     if (loadMore) {
                         mAdapter.addData(data.getInviterDetail());
