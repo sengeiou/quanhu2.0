@@ -1801,15 +1801,23 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         EditText editText = null;
         isPicChange = true;
         processContentEditViewInputFilter(true);
+        boolean selectionEnd = false;
         for (int i = 0; i < llContentText.getChildCount(); i++) {
             View view = llContentText.getChildAt(i);
             if (view instanceof EditText) {
                 if (editText != null) {
                     EditText temp = (EditText) view;
+                    String afterText = editText.getText().toString() + "";
                     editText.setText(editText.getText().toString() + temp.getText().toString());
                     llContentText.removeView(temp);
                     editText.requestFocus();
-                    editText.setSelection(editText.getText().length());
+                    if (!selectionEnd) {
+                        editText.setSelection(afterText.length());
+                    } else {
+                        editText.setSelection(editText.getText().toString().trim().length());
+                        selectionEnd = true;
+                    }
+
                     break;
                 } else {
                     editText = (EditText) view;

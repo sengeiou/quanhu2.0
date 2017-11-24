@@ -792,11 +792,12 @@
             android:layout_height="@dimen/px158"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/app_base_padding">
+            android:paddingLeft="@dimen/app_base_padding"
+            android:paddingTop="@dimen/px10">
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_pic"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/px200"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/px44"
@@ -805,7 +806,7 @@
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_video"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/px200"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/px44"
@@ -814,7 +815,7 @@
 
             <ImageView
                 android:id="@+id/iv_editor_two_choose_audio"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/px200"
                 android:layout_height="@dimen/px100"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_editor_audio"
