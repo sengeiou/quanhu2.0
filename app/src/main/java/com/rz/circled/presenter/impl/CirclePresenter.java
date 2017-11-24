@@ -240,23 +240,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             dynamicCreateTime = model.get(model.size()-1).createTime;
                                 mView.updateViewWithLoadMore(model, loadMore);
                                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                                mCirclesCache.putListEntity(model);
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                            }
-                            try {
-                                if (loadMore) {
-                                    currentData.addAll(model);
-                                } else {
-                                    currentData = new ArrayList<CircleDynamic>(model);
-                                }
-                                if (!loadMore) {
-                                    mCirclesCache.putListEntity(model);
-                                } else {
-                                    mCirclesCache.putListEntity(currentData);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.d("test", "cacheData failed " + e.getMessage());
                             }
                             return;
                         } else {
