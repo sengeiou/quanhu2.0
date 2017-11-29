@@ -20,6 +20,7 @@ import com.rz.httpapi.bean.FamousModel;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.rz.httpapi.bean.HotSubjectModel;
+import com.rz.httpapi.bean.InviteRecordBean;
 import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.LoginWayModel;
 import com.rz.httpapi.bean.MessFreeBean;
@@ -48,6 +49,7 @@ import com.rz.httpapi.bean.TransferDetail;
 import com.rz.httpapi.bean.TransferResultBean;
 import com.rz.httpapi.bean.UserInfoBean;
 import com.rz.httpapi.bean.UserInfoModel;
+import com.rz.httpapi.bean.UserInviteLinkBean;
 import com.rz.httpapi.bean.UserPermissionBean;
 import com.rz.httpapi.bean.UserSignBean;
 
@@ -127,7 +129,6 @@ public interface ApiService {
      * @param phone    手机号
      * @param password 密码
      * @param veriCode 手机验证码
-     * @param inviter  邀请者用户ID
      * @param channel  渠道编码
      * @return
      */
@@ -138,7 +139,6 @@ public interface ApiService {
             @Field("phone") String phone,
             @Field("password") String password,
             @Field("veriCode") String veriCode,
-            @Field("inviter") String inviter,
             @Field("channel") String channel,
             @Field("cityCode") String cityCode,
             @Field("location") String location
@@ -263,6 +263,35 @@ public interface ApiService {
             @Field("act") int act,
             @Field("custId") String custId
     );
+
+
+    /**
+     * 获取邀请链接和邀请码
+     *
+     * @param custId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_INVITE_LINK)
+    Call<ResponseData<UserInviteLinkBean>> getInviteLink(
+            @Field("custId") String custId
+    );
+
+
+    /**
+     * 查询自己邀请过的好友
+     *
+     * @param inviterId 被邀请人id 用于游标分页，第一页不传，其他页传前一页最后一个id
+     * @param limit     页长度
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(APIUser.GET_INVITE_RECORD)
+    Call<ResponseData<InviteRecordBean>> getInviteRecord(
+            @Field("inviterId") Integer inviterId,
+            @Field("limit") Integer limit
+    );
+
 
     /**
      * 修改登录密码
@@ -525,7 +554,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(CircleApi.CIRCLE_COLLECT_LIST)
     Observable<ResponseData<List<CollectionBean>>> getCircleCollect(
-            @Field("cid") Integer cid,
+            @Field("cid") String cid,
             @Field("custId") String custId,
             @Field("limit") int limit
     );
@@ -547,7 +576,17 @@ public interface ApiService {
     @POST(CircleApi.CIRCLE_DEL_COLLECT)
     Observable<ResponseData> delCollect(
             @Field("custId") String custId,
-            @Field("cid") int cid
+            @Field("cid") String cid
+    );
+
+    /**
+     * 批量删除收藏
+     */
+    @FormUrlEncoded
+    @POST(CircleApi.CIRCLE_DEL_SOME_COLLECT)
+    Observable<ResponseData> delSomeCollect(
+            @Field("custId") String custId,
+            @Field("cid") String cid
     );
 
     /**

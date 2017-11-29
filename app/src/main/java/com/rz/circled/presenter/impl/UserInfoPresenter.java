@@ -1,6 +1,7 @@
 package com.rz.circled.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.rz.circled.R;
 import com.rz.circled.event.EventConstant;
@@ -92,8 +93,8 @@ public class UserInfoPresenter extends GeneralPresenter {
                                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             }
                         }
-                    } else if (res.getRet() == ReturnCode.FAIL_REMIND_1) {
-                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, res.getMsg());
+                    } else {
+                        mView.onLoadingStatus(CommonCode.General.LOAD_ERROR, TextUtils.isEmpty(res.getMsg()) ? mContext.getString(R.string.send_code_failed) : res.getMsg());
                         mView.updateViewWithFlag("", IntentCode.Register.GET_REQUEST_CODE_FAIL);      //验证码获取失败发送消息，取消验证码倒计时
                     }
                 } else {
@@ -124,7 +125,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                 1002,
                 phone,
                 password,
-                veriCode, "1",
+                veriCode,
                 "",
                 cityCode,
                 location
@@ -328,7 +329,7 @@ public class UserInfoPresenter extends GeneralPresenter {
                         mView.updateView("1");
                         return;
                     } else {
-                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, "");
+                        mView.onLoadingStatus(CommonCode.General.ERROR_DATA, res.getMsg());
                         return;
                     }
                 }

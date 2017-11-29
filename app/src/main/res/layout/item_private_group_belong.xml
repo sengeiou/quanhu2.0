@@ -6,19 +6,21 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/cbx"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/px60"
-        android:button="@drawable/selector_private_group_way"
-        android:enabled="false"
-        android:gravity="center" />
+    <!--<CheckBox-->
+        <!--android:id="@+id/cbx"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/px60"-->
+        <!--android:button="@drawable/selector_private_group_way"-->
+        <!--android:enabled="false"-->
+        <!--android:gravity="center" />-->
 
-    <ImageView
+    <TextView
         android:id="@+id/img"
-        android:layout_width="@dimen/px130"
-        android:layout_height="@dimen/px130"
-        android:layout_marginLeft="@dimen/px10"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/icon_logo" />
+        android:layout_width="@dimen/px226"
+        android:layout_height="@dimen/px100"
+        android:background="@drawable/publish_circle_selector"
+        android:textColor="@color/publish_circle_color"
+        android:gravity="center"
+        android:textSize="@dimen/px44"
+         />
 </LinearLayout>

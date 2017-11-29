@@ -4,7 +4,16 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textStyle="bold"
+    android:textSize="@dimen/px46"
+    android:textColor="@color/color_000000"
+    android:layout_marginTop="@dimen/px60"
+    android:layout_marginLeft="@dimen/px60"
+    android:text="全部圈子"
+    />
     <GridView
         android:id="@+id/gv"
         android:layout_width="match_parent"

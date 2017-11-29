@@ -26,7 +26,7 @@ public class PicSaveDialog extends Dialog implements
 
     public PicSaveDialog(Context context, IPhotoSaveListener presenter
     ) {
-        super(context, R.style.comment_dialog);
+        super(context, R.style.ActionSheetDialogStyle);
         mContext = context;
         this.mPhotoSaveListener = presenter;
     }
@@ -46,15 +46,18 @@ public class PicSaveDialog extends Dialog implements
                 .getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = (int) (display.getWidth() * 0.65); // 宽度设置为屏幕的0.65
+//        lp.width = (int) (display.getWidth() * 0.65); // 宽度设置为屏幕的0.65
 
-        dialogWindow.setGravity(Gravity.CENTER);
+        dialogWindow.setGravity(Gravity.BOTTOM);
         dialogWindow.setAttributes(lp);
     }
 
     private void initView() {
-        TextView copyTv = (TextView) findViewById(R.id.copyTv);
+        TextView copyTv = (TextView) findViewById(R.id.copy_tv);
         copyTv.setOnClickListener(this);
+        TextView cancelTv = (TextView) findViewById(R.id.cancel_btn);
+        cancelTv.setOnClickListener(this);
+
         /*
 		 * if (mCommentItem != null && DatasUtil.curUser.getId().equals(
 		 * mCommentItem.getUser().getId())) {
@@ -66,8 +69,11 @@ public class PicSaveDialog extends Dialog implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.copyTv:
+            case R.id.copy_tv:
                 mPhotoSaveListener.onPhotoSave();
+                dismiss();
+                break;
+            case R.id.cancel_btn:
                 dismiss();
                 break;
             default:

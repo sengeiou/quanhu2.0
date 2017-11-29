@@ -126,7 +126,7 @@
     <string name="play_audio_fail">播放音频失败</string>
     <string name="share">分享</string>
     <string name="add_text">添加正文</string>
-    <string name="add_text_pic_here">在这里添加文字和图文...</string>
+    <string name="add_text_pic_here">在这里，输入文字或者添加图片、视频</string>
     <string name="delete">删除</string>
     <string name="text">文字</string>
     <string name="video">视频</string>
@@ -218,11 +218,11 @@
     <string name="private_group_create_tip">私圈是提供个性化服务和功能的场所,您可以在私圈内发布各类型资源、活动和话题等,用以吸引汇集其他用户成为私圈成员,形成深度互动,进一步快速实现资源变现。</string>
     <string name="private_group_create_submit">提交中···</string>
     <string name="private_group_joined_user">%1$d人加入</string>
-    <string name="private_group_status_0">待审核</string>
+    <string name="private_group_status_0">未审</string>
     <string name="private_group_status_1">通过</string>
-    <string name="private_group_status_2">未通过</string>
-    <string name="private_group_status_3">上架</string>
-    <string name="private_group_status_4">下架</string>
+    <string name="private_group_status_2">审核未通过</string>
+    <string name="private_group_status_3">上线</string>
+    <string name="private_group_status_4">下线</string>
     <string name="private_group_login_tip">登录才能创建私圈</string>
     <string name="private_group_no_create">还没有创建私圈哦~</string>
     <string name="private_group_no_join">还没有加入私圈哦~</string>
@@ -236,7 +236,7 @@
     <string name="private_group_youran_price">%1$d悠然币</string>
     <string name="private_group_essence_scan">%1$d 阅读</string>
     <string name="private_group_join_way_change">修改加入私圈方式</string>
-    <string name="private_group_choose">选择圈子</string>
+    <string name="private_group_choose">选择所属圈子</string>
     <string name="private_group_join_price_max">申请加入私圈金额不能超过500悠然币</string>
     <string name="private_group_join_price_min">申请加入私圈金额不能低于1悠然币</string>
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
@@ -281,11 +281,15 @@
     <string name="share_desc">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
     <string name="share_title1">圈子有了，一切都有了！</string>
     <string name="share_desc1">圈子有了，一切都有了！进圈乎 玩圈子 共享资源 价值变现</string>
+    <string name="invite_title">邀您一起玩圈乎赚积分啦！</string>
+    <string name="invite_desc">圈子有了，一切都有了！进圈乎，玩圈子，和好友一起赚积分！！</string>
+    <string name="share_activity_title">【圈乎】哇，那么好玩，那么多奖品，快戳！</string>
+    <string name="share_activity_desc">High翻的活动、超赞的大奖、闪亮登场的机会！想想都激动！错过=过错</string>
 
     <string name="no_more_data">没有更多数据</string>
     <string name="baiquanfencheng">百圈纷呈</string>
     <string name="editor_authority">权限</string>
-    <string name="authority_setting">权限设置</string>
+    <string name="authority_setting">设置</string>
     <string name="authority_share">允许成员分享</string>
     <string name="authority_read">付费可读</string>
     <string name="authority_popularize">允许平台免费推广</string>
@@ -320,6 +324,7 @@
     <string name="search">搜索</string>
     <string name="favorite_circle">感兴趣的圈子</string>
     <string name="more_circle">更多圈子</string>
+    <string name="find_more">更多</string>
     <string name="send_gift_success">礼物打赏成功</string>
 
     <!-- 登录-->
@@ -490,6 +495,7 @@
     <string name="s_discussion_group">的讨论组</string>
     <string name="search_friend_key">搜索我的好友</string>
     <string name="input_keyword">输入关键字</string>
+    <string name="search_circle">搜索圈子</string>
     <string name="select">已选择</string>
     <string name="press">确定</string>
     <string name="match">确认</string>
@@ -549,6 +555,7 @@
     <string name="my_circle">我的圈子</string>
     <string name="my_transfer">我的转发</string>
     <string name="my_collect">我的收藏</string>
+    <string name="my_score">我的积分</string>
     <string name="red_bag_adv">红包广告</string>
     <string name="other_login_style">其他登录方式</string>
     <string name="replace_bind_phone">更换绑定手机请联系客服</string>
@@ -573,7 +580,7 @@
     <string name="mine_my_collection">我的收藏</string>
     <string name="mine_my_ticket">我的卡券</string>
     <string name="mine_my_qrcode">我的二维码</string>
-    <string name="mine_my_invite_friend">一键邀请好友</string>
+    <string name="mine_my_invite_friend">邀请有奖</string>
     <string name="mine_notice">用户帮助</string>
     <string name="mine_know">作者须知</string>
     <string name="mine_auth">作者声明</string>
@@ -634,7 +641,8 @@
     <string name="shine_rule">“随手晒”使用规则</string>
     <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
     <string name="clear_cache">您是否要清除缓存？</string>
-    <string name="article_info">资源</string>
+    <string name="article_info">动态</string>
+    <string name="article_activity">动态</string>
     <string name="my_purchase">我的购买</string>
     <string name="my_level">我的等级</string>
     <string name="my_create_reward">我发起的悬赏</string>
@@ -718,6 +726,7 @@
     <string name="qq_friend">QQ好友</string>
     <string name="qq_zone">QQ空间</string>
     <string name="youren_firend">圈乎好友</string>
+    <string name="qr_code">二维码</string>
     <string name="select_firend">选择好友</string>
     <string name="look_detail_txt">查看明细 ></string>
 
@@ -745,7 +754,7 @@
     <string name="app_had_at">"[有人@我] "</string>
     <string name="app_lucky_money">"[红包] "</string>
 
-    <string name="choose_prove_identity">选择认证身份</string>
+    <string name="choose_prove_identity">达人认证</string>
     <string name="true_name">真实姓名</string>
     <string name="phone_number">手机号</string>
     <string name="required">(必填)</string>
@@ -829,4 +838,10 @@
     <string name="hava_updata">有更新</string>
     <string name="wifi_upload">当前无WiFi连接，继续上传视频将消耗您的自有流量</string>
     <string name="wifi_play">当前无WiFi连接，继续播放将消耗您的自有流量</string>
+    <string name="what_identity">什么是达人认证？</string>
+    <string name="what_identity_answer">达人认证是圈乎提供的一项身份识别服务，用户在通过认证后，可成为圈乎达人，达人可享有特殊的身份及权益。</string>
+    <string name="what_good">成为圈乎达人有什么好处？</string>
+    <string name="what_good_answer">在圈乎平台，达人标识是行业专家或领袖的重要标志，如果您成功认证为达人，会员等级可自动升级到LV5，有权限创建私圈，成为私圈圈主，且享有达人专属的活动及权益。</string>
+    <string name="how_identity">怎么认证？</string>
+    <string name="how_identity_answer">达人认证分为两类，个人认证和机构认证，您可根据认证需求自行选择，填写对应信息提交， 圈乎在收到认证申请后，3个工作日反馈通过或未通过认证的结果。</string>
 </resources>

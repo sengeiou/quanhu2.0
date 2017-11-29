@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -260,18 +261,25 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
         List<UploadPicManager.UploadInfo> dataList = new ArrayList<>();
         dataList.add(info);
         upManager.compressAndUploads(this, dataList, OssManager.objectNameProfile);
+        Log.e("zxw", "updateCoverPic: " + Thread.currentThread().getName());
     }
 
     @Override
     public void onResult(boolean result, List<UploadPicManager.UploadInfo> resultList) {
+        Log.e("zxw", "onResult: " + Thread.currentThread().getName());
         if (result) {
             String groupName = etvName.getText().toString().trim();
             String groupDesc = etvGroupDesc.getText().toString().trim();
             String ownDesc = etvDesc.getText().toString().trim();
             createPrivateGroupSubmit(resultList.get(0).fileSavePath, groupName, groupDesc, ownDesc);
         } else {
-            getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
-            onLoadingStatus(CommonCode.General.ERROR_DATA);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getTitleView().findViewById(R.id.tv_base_title_right).setEnabled(true);
+                    onLoadingStatus(CommonCode.General.ERROR_DATA);
+                }
+            });
         }
     }
 

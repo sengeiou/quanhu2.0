@@ -151,6 +151,10 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
     public void initView() {
         mData = (ShareModel) getIntent().getSerializableExtra(IntentKey.EXTRA_SERIALIZABLE);
         from = getIntent().getIntExtra(IntentKey.EXTRA_PAGE, Constants.DEFAULTVALUE);
+
+        if(from == 1020){
+            mTv_title.setText("分享到");
+        }
     }
 
     @Override
@@ -280,7 +284,6 @@ public class ShareNewsAty extends BaseActivity implements AdapterView.OnItemClic
             case "朋友圈":
                 if (shareAPI.isInstall(aty, SHARE_MEDIA.WEIXIN)) {
 //                    trackUser("分享", "悠然广场分享", "朋友圈");
-                    web.setTitle(mData.getDesc());//标题
                     shareAction.setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).share();
                 } else {
                     SVProgressHUD.showInfoWithStatus(aty, "沒有安装微信客户端");

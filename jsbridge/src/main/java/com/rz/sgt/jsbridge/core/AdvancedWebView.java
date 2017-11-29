@@ -81,6 +81,7 @@ public class AdvancedWebView extends WebView {
         void callPhoneNumber(String uri);
 
         void doUpdateVisitedHistory();
+
     }
 
     public static final String PACKAGE_NAME_DOWNLOAD_MANAGER = "com.android.providers.downloads";
@@ -335,11 +336,11 @@ public class AdvancedWebView extends WebView {
 
     /**
      * Adds an additional HTTP header that will be sent along with every HTTP `GET` request
-     * <p/>
+     * <p>
      * This does only affect the main requests, not the requests to included resources (e.g. images)
-     * <p/>
+     * <p>
      * If you later want to delete an HTTP header that was previously added this way, call `removeHttpHeader()`
-     * <p/>
+     * <p>
      * The `WebView` implementation may in some cases overwrite headers that you set or unset
      *
      * @param name  the name of the HTTP header to add
@@ -351,9 +352,9 @@ public class AdvancedWebView extends WebView {
 
     /**
      * Removes one of the HTTP headers that have previously been added via `addHttpHeader()`
-     * <p/>
+     * <p>
      * If you want to unset a pre-defined header, set it to an empty string with `addHttpHeader()` instead
-     * <p/>
+     * <p>
      * The `WebView` implementation may in some cases overwrite headers that you set or unset
      *
      * @param name the name of the HTTP header to remove
@@ -481,6 +482,12 @@ public class AdvancedWebView extends WebView {
 
 //        setHorizontalScrollBarEnabled(false); // 水平不显示滚动条
 //        setOverScrollMode(View.OVER_SCROLL_NEVER); // 禁止即在网页顶出现一个空白，又自动回去。
+
+        //设置WebView是否通过手势触发播放媒体，默认是true，需要手势触发。
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            webSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
+
         //yeying
         //设置支持缩放
         webSettings.setAllowFileAccess(true);
@@ -587,6 +594,11 @@ public class AdvancedWebView extends WebView {
 
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+                Log.d("WebView", "shouldOverrideUrlLoading: " + url);
+//                if (url.startsWith("quanhu:") && mListener != null) {
+//                    mListener.bannerJumpRule(url);
+//                    return true;
+//                }
                 if (url.startsWith("tel:")) {
                     if (mListener != null)
                         mListener.callPhoneNumber(url);
@@ -1271,7 +1283,7 @@ public class AdvancedWebView extends WebView {
 
     /**
      * Returns whether file uploads can be used on the current device (generally all platform versions except for 4.4)
-     * <p/>
+     * <p>
      * On Android 4.4.3/4.4.4, file uploads may be possible but will come with a wrong MIME type
      *
      * @param needsCorrectMimeType whether a correct MIME type is required for file uploads or `application/octet-stream` is acceptable
@@ -1289,9 +1301,9 @@ public class AdvancedWebView extends WebView {
 
     /**
      * Handles a download by loading the file from `fromUrl` and saving it to `toFilename` on the external storage
-     * <p/>
+     * <p>
      * This requires the two permissions `android.permission.INTERNET` and `android.permission.WRITE_EXTERNAL_STORAGE`
-     * <p/>
+     * <p>
      * Only supported on API level 9 (Android 2.3) and above
      *
      * @param context    a valid `Context` reference

@@ -3,7 +3,7 @@ package com.rz.circled.js;
 import android.app.Activity;
 
 import com.google.gson.Gson;
-import com.rz.circled.ui.activity.CommonH5Activity;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.ServerHandler;
 import com.rz.sgt.jsbridge.core.Callback;
@@ -37,7 +37,8 @@ public class OpenUrlHandler extends ServerHandler {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        CommonH5Activity.startCommonH5(mActivity, "", url);
+
+        BannerJumpHelper.bannerJumpHanderHelper(mActivity,url,false);
     }
 
     @Override
@@ -52,6 +53,6 @@ public class OpenUrlHandler extends ServerHandler {
 
     @Override
     public boolean isUi() {
-        return false;
+        return true;
     }
 }

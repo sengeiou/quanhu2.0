@@ -74,8 +74,6 @@ public class NewsCommonFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments() != null ? getArguments().getInt(EXTRA_TYPE) : 0;
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -107,8 +105,6 @@ public class NewsCommonFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.e(TAG, "onDestroyView: " + getUserVisibleHint());
-        if (EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().unregister(this);
         if (getUserVisibleHint())
             NewsHelper.clearUnreadByType(refreshType);
     }

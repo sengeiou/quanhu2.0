@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.rz.common.R;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.Constants;
 import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.inter.IViewController;
 import com.rz.common.ui.view.BaseLoadView;
@@ -143,16 +144,21 @@ public abstract class BaseFragment extends Fragment implements IViewController, 
     }
 
     /**
-     * 用户是否登录
+     * 判断用户是否登录
+     * @return
      */
-    public boolean isLogin() {
+    protected boolean isLogin() {
         if (Session.getUserIsLogin()) {
             return true;
         } else {
-//            Intent login = new Intent(mActivity, LoginActivity.class);
-//            startActivityForResult(login, IntentCode.Login.LOGIN_REQUEST_CODE);
-            return false;
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+//            bundle.putString(Constants.JUMPTYPE,Constants.BACKLOGIN);
+            intent.setAction("quanhu.login");
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
+        return false;
     }
 
     @Override

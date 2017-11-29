@@ -2,6 +2,8 @@ package com.rz.circled.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ import com.rz.circled.R;
 import com.rz.circled.constants.NewsTypeConstants;
 import com.rz.circled.dialog.DefaultTipsDialog;
 import com.rz.circled.event.EventConstant;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.SnsAuthPresenter;
 import com.rz.circled.presenter.impl.UpdateOrExitPresenter;
 import com.rz.circled.ui.fragment.FindFragment;
@@ -33,6 +36,7 @@ import com.rz.circled.ui.fragment.RewardFragment;
 import com.rz.circled.widget.CustomFragmentTabHost;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
@@ -53,8 +57,10 @@ import com.yryz.yunxinim.config.preference.UserPreferences;
 import com.yryz.yunxinim.login.LogoutHelper;
 import com.yryz.yunxinim.uikit.LoginSyncDataStatusObserver;
 import com.yryz.yunxinim.uikit.cache.DataCacheManager;
+import com.yryz.yunxinim.uikit.common.activity.UI;
 import com.yryz.yunxinim.uikit.common.ui.dialog.DialogMaker;
 import com.yryz.yunxinim.uikit.common.util.log.LogUtil;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -84,7 +90,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private Toast mToast;
 
     private String[] tabTags = new String[]{"首页", "发现", "悬赏", "私圈", "我的"};
-    private static final String TAG_EXIT = "exit";
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -123,10 +128,44 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         if (intent != null) {
-            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);
-            if (isExit) {
-                this.finish();
+            Uri uri = intent.getData();
+            if (uri != null){
+                List<String> pathSegments = uri.getPathSegments();
+//                String uriQuery = uri.getQuery();
+                if (pathSegments != null && pathSegments.size() > 0) {
+                    String scheme = this.getIntent().getScheme();//获得S称
+                    String host = uri.getHost();
+
+//                    String test  ="quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002";
+//                    Uri urlff = Uri.parse(test);
+                    if(!StringUtil.isEmpty(scheme) && !StringUtil.isEmpty(host)){
+                        String tab = uri.getQueryParameter("type");
+                        String url = uri.getQueryParameter("url");
+                        String categary = uri.getQueryParameter("category");
+                        String custId = uri.getQueryParameter("custId");
+
+                        if(BannerJumpHelper.tab_html.equals(tab)){
+                            WebContainerActivity.startActivity(this,url);
+                        }else if(BannerJumpHelper.tab_native.equals(tab)){
+                            if(BannerJumpHelper.user_info_acy.equals(categary)){    //个人中心
+                                if(!StringUtil.isEmpty(custId)){
+                                    UserInfoActivity.newFrindInfo(this,custId);
+                                }
+                            }else if(BannerJumpHelper.reward_aty.equals(categary)){  //悬赏
+                                intent.setClass(this,MainActivity.class);
+                                startActivity(intent);
+                                //发送event到
+                                EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
+                            }
+                        }else{
+                            CommonH5Activity.startCommonH5(this,"",url);
+                        }
+                    }
+                } else {
+                    finish();
+                }
             }
         }
     }
@@ -170,6 +209,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     public void onTabChanged(String tabId) {
         trackUser("入口", "导航栏", tabId);
+
+
         if (tabTags[0].equals(tabId)) {
             StatusBarUtils.setDarkStatusIcon(this, true);
         } else if (tabTags[1].equals(tabId)) {
@@ -180,12 +221,23 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             StatusBarUtils.setDarkStatusIcon(this, true);
         } else if (tabTags[4].equals(tabId)) {
             StatusBarUtils.setDarkStatusIcon(this, false);
-        }
 
+        }
     }
 
     @Override
     public boolean intercept(String tabId) {
+
+        if (!Session.getUserIsLogin()) {
+            if (TextUtils.equals(tabTags[4], tabId)) {
+                Bundle bundle = new Bundle();
+//                bundle.putString("tabIndex", tabId);
+//                bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
+                showActivity(this, LoginActivity.class, bundle);
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -293,7 +345,23 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         if (code.wontAutoLogin() && code != StatusCode.PWD_ERROR && code != StatusCode.KICKOUT)
             EventBus.getDefault().post(new BaseEvent(EventConstant.USER_BE_FROZEN));
         if (code == StatusCode.KICKOUT) {
-            EventBus.getDefault().post(new KickEvent(5));
+            Intent intent = new Intent();
+            intent.setAction(UI.KICKACTION);
+            sendBroadcast(intent);
+
+            new Thread(new Runnable(){
+
+                public void run(){
+                    try {
+                        Thread.sleep(500);
+                        EventBus.getDefault().post(new KickEvent(5));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+
         }
     }
 
@@ -347,6 +415,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             }
         });
     }
+
 
     private void parsesData(HashMap<String, String> data) {
         List<NewsUnreadBean> unreadBeanList = new ArrayList<>();
@@ -407,10 +476,18 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 DefaultTipsDialog.newInstance(getString(R.string.account_lock)).show(getSupportFragmentManager(), "");
                 break;
             case CommonCode.EventType.TYPE_LOGOUT:
-                finish();
+//                finish();
+                tabHost.setCurrentTab(0);
                 break;
             case EventConstant.USER_BE_KICKOUT_BY_HTTP:
                 kickOut(StatusCode.INVALID);
+                break;
+            case EventConstant.SET_REWARD_TAB:
+                tabHost.setCurrentTab(2);
+                break;
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                initYX(Session.getUserId(), Session.getUserId());
+                loadUnreadMessage();
                 break;
         }
     }
@@ -464,4 +541,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void refreshPage() {
 
     }
+
+
+
 }

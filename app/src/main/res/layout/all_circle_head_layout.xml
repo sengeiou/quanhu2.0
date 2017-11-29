@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/id_search_key_rela1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px78"
+        android:layout_marginBottom="@dimen/px30"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/px30"
+        android:gravity="center"
+        android:background="@drawable/shape_bg_white_stoke_f4f4f4"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/iv_sss"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/search_key_icon" />
+        <TextView
+            android:layout_toRightOf="@+id/iv_sss"
+            android:layout_marginLeft="@dimen/px25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/px42"
+            android:hint="@string/search_circle"
+            android:textColor="#aaa"
+            />
+
+
+
+        <!--<com.yryz.yunxinim.uikit.common.ui.widget.ClearableEditTextWithIcon-->
+            <!--android:id="@+id/et_search"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:focusable="false"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:hint="@string/search_circle"-->
+            <!--android:imeOptions="actionSearch"-->
+            <!--android:inputType="textImeMultiLine"-->
+            <!--android:lines="1"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:textColor="@color/color_aaa"-->
+            <!--android:textColorHint="@color/color_aaa"-->
+            <!--android:textSize="@dimen/font_40" />-->
+    </RelativeLayout>
+</LinearLayout>

@@ -22,25 +22,7 @@ def gitVersionCode() {
  * @return versionName
  */
 def gitVersionName(String buildType) {
-    def defaultVersion = "1.0.0"
-    def cmd = 'git describe --tags'
-    def version = cmd.execute().text.trim()
-    println("tag:" + version)
-    int index = version.indexOf("-")
-    if (index != -1) {
-        version = version.substring(0, index)
-    }
-    def pattern = "^v(((\\d+)[.])+)(\\d+)\$"
-    if (!version.matches(pattern)) {
-        version = defaultVersion
-    }
-    if (!buildType.equals("release")) {
-        version = version + "." + gitVersionCode()
-    }
-    println("versionName:" + version)
-    println("-----")
-    version = version.substring(1)
-    return "1.0.1"
+    return "1.0.6"
 }
 
 android {
@@ -134,6 +116,7 @@ android {
                                     //暂时填写默认值即可.
                                     JPUSH_CHANNEL: "developer-default"]
             minifyEnabled false
+            debuggable true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -147,7 +130,7 @@ android {
             buildConfigField "String", "BaseOpusUrl", "\"http://opusapi-dev.quanhu365.com/\""
             buildConfigField "String", "HomeUrl", "\"http://www-dev.quanhu365.com\""
             buildConfigField "String", "WebHomeBaseUrl", "\"http://m-dev.quanhu365.com\""
-            buildConfigField "String", "OpusBaseUrl", "\"https://opus-dev.quanhu365.com\""
+            buildConfigField "String", "OpusBaseUrl", "\"http://opus-dev.quanhu365.com\""
             buildConfigField "String", "cdn", "\"https://cdn.yryz.com/\""
             manifestPlaceholders = [NIM_KEY      : "6392d34d5e184ff729bd159c657634e6",
                                     AMAP_KEY     : "cd981557f532c1f64aa5a4abb11d5c49",
@@ -214,7 +197,7 @@ android {
     productFlavors {
 
         //应用宝
-        yryz_yingyongbao {
+        quanhu_yingyongbao {
             dimension "default"
             manifestPlaceholders = [CHANNEL: "yryz"]
             buildConfigField "String", "serverChannel", "\"YRYZ－TXYYB\""
@@ -277,4 +260,5 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.8.5'
     compile 'com.github.cpoopc:scrollablelayoutlib:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

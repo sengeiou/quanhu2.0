@@ -62,7 +62,7 @@ public class SearchCircleFragment extends BaseFragment {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
-        circleAdapter = new SearchCircleAdapter(getActivity(), R.layout.item_choose_circle);
+        circleAdapter = new SearchCircleAdapter(getActivity(), R.layout.circle_adapter_item);
         circleAdapter.setData(circleBeanList);
         gvCircle.setAdapter(circleAdapter);
 

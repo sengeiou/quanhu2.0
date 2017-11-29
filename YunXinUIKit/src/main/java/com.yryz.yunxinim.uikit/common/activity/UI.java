@@ -1,7 +1,10 @@
 package com.yryz.yunxinim.uikit.common.activity;
 
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +42,9 @@ public abstract class UI extends AppCompatActivity {
 
     private Toolbar toolbar;
 
+    public static final String KICKACTION = "kickactionbroadcast";
+    Receiver receiver;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -49,6 +55,12 @@ public abstract class UI extends AppCompatActivity {
         StatusBarUtils.transparencyBar(this);
         StatusBarUtils.setDarkStatusIcon(this, true);
         LogUtil.ui("activity: " + getClass().getSimpleName() + " onCreate()");
+
+        receiver = new Receiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(UI.KICKACTION);
+        this.registerReceiver(receiver, filter);
+
     }
 
     @Override
@@ -80,6 +92,10 @@ public abstract class UI extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if(receiver != null){
+            unregisterReceiver(receiver);
+        }
 
         LogUtil.ui("activity: " + getClass().getSimpleName() + " onDestroy()");
         destroyed = true;
@@ -361,5 +377,16 @@ public abstract class UI extends AppCompatActivity {
     protected <T extends View> T findView(int resId) {
         return (T) (findViewById(resId));
     }
+
+
+    class Receiver extends BroadcastReceiver {
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case UI.KICKACTION:
+                    finish();
+            }
+        }
+    }
+
 
 }

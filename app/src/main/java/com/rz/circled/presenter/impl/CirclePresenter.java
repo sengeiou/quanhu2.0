@@ -63,8 +63,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
     public static final int TAG_DELETE_COMMENT = 1003;
     public static final int TAG_REWARD_LIST = 1004;
     public static final int TAG_ZAN_LIST = 1005;
-    private static final int ADD_SUCESS = 600;
-    private static final int DEL_SUCESS = 601;
+    public static final int ADD_SUCESS = 600;
+    public static final int DEL_SUCESS = 601;
 
     private IViewController mView;
     private Context mContext;
@@ -187,6 +187,8 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                         if (res.getRet() == ReturnCode.SUCCESS) {
                             UserPermissionBean data = res.getData();
                             mView.updateView(data);
+                        }else {
+                            Toast.makeText(mContext,res.getMsg(),Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -238,23 +240,9 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             dynamicCreateTime = model.get(model.size()-1).createTime;
                                 mView.updateViewWithLoadMore(model, loadMore);
                                 mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                                mCirclesCache.putListEntity(model);
                             } else {
                                 mView.onLoadingStatus(CommonCode.General.DATA_EMPTY);
-                            }
-                            try {
-                                if (loadMore) {
-                                    currentData.addAll(model);
-                                } else {
-                                    currentData = new ArrayList<CircleDynamic>(model);
-                                }
-                                if (!loadMore) {
-                                    mCirclesCache.putListEntity(model);
-                                } else {
-                                    mCirclesCache.putListEntity(currentData);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Log.d("test", "cacheData failed " + e.getMessage());
                             }
                             return;
                         } else {
@@ -724,7 +712,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
-    Integer cid = null;
+    String cid = null;
     public void getCircleCollection(final boolean loadMore) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             mView.onLoadingStatus(CommonCode.General.UN_NETWORK);
@@ -749,7 +737,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
                             List<CollectionBean> data = res.getData();
                             if (data!=null&& !data.isEmpty()){
                             cid = data.get(data.size() - 1).cid;
-                            mView.updateView(data);
+                            mView.updateViewWithLoadMore(data,loadMore);
                             mView.onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                             }else {
                                 if (loadMore){
@@ -774,7 +762,7 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
      *
      * @param
      */
-    public void requestDeleteCollected(int cid) {
+    public void requestDeleteCollected(String cid) {
         if (!NetUtils.isNetworkConnected(mContext)) {
             return;
         }
@@ -794,7 +782,38 @@ public class CirclePresenter extends GeneralPresenter<List<CircleDynamic>> {
 
                     @Override
                     public void onNext(ResponseData responseData) {
+                        mView.updateView("sucess");
+                    }
+                });
 
+
+    }
+    /**
+     * 批量收藏
+     *
+     * @param
+     */
+    public void requestDeleteSomeCollected(String cid) {
+        if (!NetUtils.isNetworkConnected(mContext)) {
+            return;
+        }
+        mUserService.delSomeCollect(Session.getUserId(), cid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseData responseData) {
+                        mView.updateView("sucess");
                     }
                 });
 

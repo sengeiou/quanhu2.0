@@ -32,4 +32,6 @@ public class EventConstant {
 
     public static final int UPDATE_LOVE_CIRCLE = 200101;
 
+    public static final int SET_REWARD_TAB = 200333;
+
 }

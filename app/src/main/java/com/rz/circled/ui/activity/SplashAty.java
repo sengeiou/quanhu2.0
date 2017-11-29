@@ -1,6 +1,5 @@
 package com.rz.circled.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -17,8 +16,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.rz.circled.R;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.common.cache.preference.Session;
-import com.rz.common.constant.IntentKey;
-import com.rz.common.constant.Type;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
@@ -79,6 +76,7 @@ public class SplashAty extends BaseActivity {
     public View loadView(LayoutInflater inflater) {
         trackUser("入口", "启动", "");
 //        initMainRequest();
+        getWindow().setBackgroundDrawable(null);
         return inflater.inflate(R.layout.activity_splash, null);
     }
 
@@ -126,14 +124,16 @@ public class SplashAty extends BaseActivity {
                         skipActivity(aty, MainActivity.class);
                         return;
                     }
-                    if (!Session.getUserIsFirstGuide()) {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
-                        startActivity(intent);
-                        finish();
-                    }else{
+//                    if (!Session.getUserIsFirstGuide()) {
+//                        Intent intent = new Intent(mContext, LoginActivity.class);
+//                        intent.putExtra(IntentKey.GUIDE_KEY, Type.TYPE_LOGIN_GUIDE);
+//                        startActivity(intent);
+//                        finish();
+//
+//                    }else{
                         skipActivity(aty, GuideActivity.class);
-                    }
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+//                    }
                 }
             }
         }, 2000);
@@ -152,6 +152,9 @@ public class SplashAty extends BaseActivity {
     private void initV() throws ParseException {
 //        loadRewardGiftList();
         //当前日期
+        if (Protect.checkLoadImageStatus(aty)&&!StringUtil.isEmpty(Session.getAdv_pic_url())) {
+            Glide.with(aty).load(Session.getAdv_pic_url()).placeholder(R.drawable.page_bg_qq_new).into(mImgBg);
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long currentTime = System.currentTimeMillis();
         String format = sdf.format(new Date(currentTime));
@@ -167,7 +170,7 @@ public class SplashAty extends BaseActivity {
         if (currentTime >= startTime && currentTime < endTime) {
             recLen = 1000 * 5;
                 if (Protect.checkLoadImageStatus(aty)) {
-                    Glide.with(aty).load(Session.getAdv_pic_url()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL).into(mImgBg);
+                    Glide.with(aty).load(Session.getAdv_pic_url()).diskCacheStrategy(DiskCacheStrategy.ALL).into(mImgBg);
                 }
 
             if (!StringUtils.isEmpty(Session.getAdv_url()) && isNetUrl(Session.getAdv_url())) {
@@ -230,11 +233,13 @@ public class SplashAty extends BaseActivity {
      */
     private void jumpTo() {
         if (!isClickAdv){
-        if (Session.getUserIsLogin()) {
+//        if (Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
-        } else {
-            skipActivity(aty, LoginActivity.class);
-        }}
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+//        } else {
+//            skipActivity(aty, LoginActivity.class);
+//        }
+        }
     }
 
     @Override

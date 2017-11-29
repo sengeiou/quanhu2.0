@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,6 +38,7 @@ import com.rz.httpapi.bean.CollectionBean;
 import com.rz.httpapi.bean.ExjsonCollection;
 import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -62,7 +65,9 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
     private BaseAdapter mCollectionAdapter;
     private ImageView mIv_edit;
     boolean isEdit = false;
-    List<CollectionBean> cid = new ArrayList<>();
+    List<String> cid = new ArrayList<>();
+    List<CollectionBean> updateList = new ArrayList<>();
+    MediaPlayer mp=new MediaPlayer();
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -86,9 +91,11 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                 if (isEdit) {
                     if (isSelect) {
                         collectionBean.isSelect = false;
-                        cid.remove(collectionBean);
+                        cid.remove(collectionBean.cid);
+                        updateList.remove(collectionBean);
                     } else {
-                        cid.add(collectionBean);
+                        cid.add(collectionBean.cid);
+                        updateList.add(collectionBean);
                         collectionBean.isSelect = true;
                     }
                     mCollectionAdapter.notifyDataSetChanged();
@@ -122,6 +129,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     isEdit = false;
                     setTitleRightText(getString(R.string.edit));
                     mLlEdit.setVisibility(View.GONE);
+                    mPresenter.getCircleCollection(false);
 //                    mBtnDel.setVisibility(View.GONE);
                 } else {
                     //编辑
@@ -142,13 +150,16 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
         });
 
     }
-
     private void delCollection() {
-        for (CollectionBean cids : cid) {
-            mPresenter.requestDeleteCollected(cids.cid);
+        if (cid.isEmpty()){
+            return;
         }
-        collectionList.removeAll(cid);
+        String[]  cidArr = new String[cid.size()];
+        cid.toArray(cidArr);
+        mPresenter.requestDeleteSomeCollected(gson.toJson(cidArr));
+        collectionList.removeAll(updateList);
         mCollectionAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -194,7 +205,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                 //文章(1000)、话题(1001)、帖子(1002)、问题(1003)、答案(1004)、活动(1005)、悬赏(1006)活动作品(1007)
                 //1.0版本收藏只有文章,帖子,活动,和问答
                 if ("1003".equals(resourceType) || "1004".equals(resourceType)) {
-                    viewHold vh = new viewHold();
+                    final viewHold vh = new viewHold();
                     convertView = null;
                     if (convertView == null) {
                         convertView = View.inflate(mContext, R.layout.answer_layout, null);
@@ -206,19 +217,26 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         vh.answer_from = (TextView) convertView.findViewById(R.id.answer_from);
                         vh.iv_answer = (ImageView) convertView.findViewById(R.id.iv_answer);
                         vh.iv_edit = (ImageView) convertView.findViewById(R.id.iv_edit);
-                        vh.ll_audio = (LinearLayout) convertView.findViewById(R.id.ll_audio);
+                        vh.ivAudio = (ImageView) convertView.findViewById(R.id.iv_audio_anima);
+                        vh.ll_audio = (RelativeLayout) convertView.findViewById(R.id.ll_audio);
                     }
                     editCollection(vh.iv_edit, collectionBean);
+                    if (question.isAnonymity==0){
+                        vh.question_name.setText("匿名用户");
+                    }else {
                     vh.question_name.setText(StringUtil.isEmpty(question.nickName) ? question.userName : question.nickName);
+                    }
                     vh.answer_name.setText(StringUtil.isEmpty(question.targetNickName) ? question.targetUserName : question.targetNickName);
                     vh.answer_title.setText("Q:  " + question.content);
-                    if (StringUtils.isEmpty(answer.content)) {
-                        vh.answer_content.setVisibility(View.GONE);
-                        vh.iv_answer.setVisibility(View.GONE);
-                        vh.ll_audio.setVisibility(View.VISIBLE);
-                        int audioLength = answer.audioLength / 1000;
-                        vh.audio_tv.setText(+audioLength + "'");
-                    } else {
+
+                    if (answer.audioLength==null){
+                        vh.ll_audio.setVisibility(View.GONE);
+                        if (StringUtils.isEmpty(answer.content)) {
+                            vh.answer_content.setVisibility(View.GONE);
+                        } else {
+                            vh.answer_content.setVisibility(View.VISIBLE);
+                            vh.answer_content.setText("A:  " + answer.content);
+                        }
                         if (!StringUtils.isEmpty(answer.imgUrl)) {
                             vh.iv_answer.setVisibility(View.VISIBLE);
                             String[] pics = answer.imgUrl.split(",");
@@ -226,9 +244,12 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         } else {
                             vh.iv_answer.setVisibility(View.GONE);
                         }
-                        vh.answer_content.setVisibility(View.VISIBLE);
-                        vh.ll_audio.setVisibility(View.GONE);
-                        vh.answer_content.setText("A:  " + answer.content);
+                    }else {
+                        vh.answer_content.setVisibility(View.GONE);
+                        vh.iv_answer.setVisibility(View.GONE);
+                        vh.ll_audio.setVisibility(View.VISIBLE);
+                        int audioLength = answer.audioLength / 1000;
+                        vh.audio_tv.setText(+audioLength + "'");
                     }
                     vh.answer_from.setText(getString(R.string.from_coterie) + coterieInfo.getName());
                     vh.answer_from.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +261,7 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                     vh.question_name.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (question.isAnonymity==1)
                             UserInfoActivity.newFrindInfo(mContext, question.custId);
                         }
                     });
@@ -247,6 +269,40 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         @Override
                         public void onClick(View v) {
                             UserInfoActivity.newFrindInfo(mContext, answer.custId);
+                        }
+                    });
+                    vh.ivAudio.setImageResource(R.drawable.andio_ani);
+                    vh.audio_tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final AnimationDrawable animationDrawable= (AnimationDrawable) vh.ivAudio.getDrawable();
+                            if (mp.isPlaying()){
+                                mp.stop();
+                                animationDrawable.stop();
+                                vh.ivAudio.setImageResource(R.drawable.andio_ani);
+                            }else {
+                                try {
+                                    mp.reset();
+                                    mp.setDataSource(answer.answerAudio);
+                                    mp.prepareAsync();
+                                    mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                        @Override
+                                        public void onPrepared(MediaPlayer mp) {
+                                            mp.start();
+                                            animationDrawable.start();
+                                        }
+                                    });
+                                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                        @Override
+                                        public void onCompletion(MediaPlayer mp) {
+                                            animationDrawable.stop();
+                                            vh.ivAudio.setImageResource(R.drawable.andio_ani);
+                                        }
+                                    });
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     });
 
@@ -275,19 +331,26 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         content.setMaxLines(4);
                         title.setVisibility(View.GONE);
                     } else {
+                        content.setMaxLines(3);
                         title.setText("1001".equals(resourceType) ? "#" + resourceInfo.getTitle() + "#" : resourceInfo.getTitle());
                         title.setVisibility(View.VISIBLE);
                     }
+                    if (TextUtils.isEmpty(resourceInfo.getContent())){
+                        content.setVisibility(View.GONE);
+                    }else {
                     content.setText(resourceInfo.getContent());
+                    }
                     tv_name.setText(user.getCustNname());
                     if ("1005".equals(resourceType) || "1007".equals(resourceType)) {
                         //如果是活动隐藏头部信息和脚部信息
                         fromWhere.setVisibility(View.GONE);
                         only_iv.setVisibility(View.VISIBLE);
                         iv_layout.setVisibility(View.GONE);
+                        rl_circle_video_content.setVisibility(View.GONE);
                         String url = ImageAdaptationUtils.getZoomByWH(QHApplication.getContext(), resourceInfo.getThumnail(), R.dimen.px994, R.dimen.px558);
                         Glide.with(mContext).load(url).placeholder(R.drawable.ic_circle_img1).transform(new GlideCenterRoundImage(mContext, 10)).into(only_iv);
                     } else {
+                        rl_circle_video_content.setVisibility(View.VISIBLE);
                         fromWhere.setVisibility(View.VISIBLE);
                         //多图区域
                         String pics1 = resourceInfo.getPics();
@@ -329,7 +392,6 @@ public class MyCollectionActivity extends BaseActivity implements SwipyRefreshLa
                         }
                     }
                     if (!TextUtils.isEmpty(resourceInfo.getVideoPic())) {
-                        rl_circle_video_content.setVisibility(View.VISIBLE);
                         iv_layout.setVisibility(View.GONE);
                         Glide.with(mContext).load(resourceInfo.getVideoPic()).placeholder(R.color.black).transform(new GlideCenterRoundImage(mContext, 10)).into(mVideo_Preview);
                     } else {
@@ -383,20 +445,41 @@ onLoadingStatus(CommonCode.General.DATA_EMPTY,"您还没有收藏过内容哦~")
         TextView answer_from;
         ImageView iv_answer;
         ImageView iv_edit;
-        LinearLayout ll_audio;
+        RelativeLayout ll_audio;
+        ImageView ivAudio;
     }
 
     private void editCollection(ImageView iv_edit, CollectionBean collectionBean) {
         iv_edit.setVisibility(isEdit ? View.VISIBLE : View.GONE);
         iv_edit.setImageResource(collectionBean.isSelect ? R.drawable.edit_collection_yes : R.drawable.edit_collection_no);
     }
-
     @Override
     public <T> void updateView(T t) {
-        if (t != null)
-            collectionList.clear();
-        collectionList.addAll((Collection<? extends CollectionBean>) t);
+        if (t instanceof String){
+
+            return;
+        }
+        collectionList.clear();
+        if (collectionList.size()==0){
+            setRightGone();
+            mLlEdit.setVisibility(View.GONE);
+            onLoadingStatus(CommonCode.General.DATA_EMPTY,"您还没有收藏过内容哦~");
+        }
         mCollectionAdapter.notifyDataSetChanged();
+    }
+    @Override
+    public <T> void updateViewWithLoadMore(T t, boolean loadMore) {
+        super.updateViewWithLoadMore(t, loadMore);
+        if (t != null) {
+            if (!loadMore){
+            collectionList.clear();
+            }
+            collectionList.addAll((Collection<? extends CollectionBean>) t);
+            mCollectionAdapter.notifyDataSetChanged();
+            if (collectionList.size()>0){
+                setRightVisible();
+            }
+        }
     }
 
     @Override
@@ -406,6 +489,17 @@ onLoadingStatus(CommonCode.General.DATA_EMPTY,"您还没有收藏过内容哦~")
         ButterKnife.bind(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mp.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mp.release();
+    }
 
     @Override
     protected boolean hasDataInPage() {

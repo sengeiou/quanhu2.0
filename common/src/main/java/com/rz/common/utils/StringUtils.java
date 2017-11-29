@@ -24,17 +24,21 @@ import android.view.View;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -792,7 +796,11 @@ public class StringUtils {
         // p = Pattern
         // .compile("^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$");
 //        p = Pattern.compile("^[1][3578][0-9]{9}$");
-        p = Pattern.compile("^((13|14|15|17|18)\\d{9})$");
+
+//        String regex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$";
+
+//        p = Pattern.compile("^((13[0-9])|(14[5-9])|(15([0-9]))|(16([5-6]))|(17([0-7]))|(18[0-9]))|(19[8-9])\\d{8}$");
+        p = Pattern.compile("^((13|14|15|16|17|18|19)\\d{9})$");
         m = p.matcher(str);
         b = m.matches();
         return b;
@@ -1590,6 +1598,41 @@ public class StringUtils {
         }
         // 判断随机码是否相等
         return random[total % 11] == no.charAt(17);
+    }
+
+
+    public static Map<String, String> getParameters(String url) {
+        Map<String, String> params=new HashMap<String, String>();
+        if(url==null || "".equals(url.trim())){
+            return params;
+        }
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+        String[] split = url.split("[?]");
+        if (split.length == 2 && !"".equals(split[1].trim())) {
+            String[] parameters = split[1].split("&");
+            if (parameters != null && parameters.length != 0) {
+                for (int i = 0; i < parameters.length; i++) {
+                    if (parameters[i] != null
+                            && parameters[i].trim().contains("=")) {
+                        String[] split2 = parameters[i].split("=");
+                        //split2可能为1，可能为2
+                        if(split2.length==1){
+                            //有这个参数但是是空的
+                            params.put(split2[0], "");
+                        }else if(split2.length==2){
+                            if(!"".equals(split2[0].trim())){
+                                params.put(split2[0], split2[1]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return params;
     }
 
 }

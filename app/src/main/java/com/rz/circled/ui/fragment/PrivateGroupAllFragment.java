@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -14,17 +16,9 @@ import com.rz.circled.adapter.DefaultPricePrivateGroupAdapter;
 import com.rz.circled.adapter.DefaultPrivateGroupAdapter;
 import com.rz.circled.helper.CommonH5JumpHelper;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
-import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.common.utils.Utility;
-import com.rz.common.widget.svp.SVProgressHUD;
-import com.rz.httpapi.api.ApiPGService;
-import com.rz.httpapi.api.BaseCallback;
-import com.rz.httpapi.api.Http;
-import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.PrivateGroupBean;
-import com.rz.httpapi.bean.PrivateGroupResourceBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,11 +26,9 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Response;
+import butterknife.ButterKnife;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_SEARCH_KEY;
-import static com.rz.common.constant.CommonCode.Constant.PAGE_SIZE;
 import static com.rz.common.constant.IntentKey.EXTRA_BOOLEAN;
 
 /**
@@ -49,6 +41,8 @@ public class PrivateGroupAllFragment extends BaseFragment {
     ListView lv;
     @BindView(R.id.layout_refresh)
     SwipyRefreshLayout layoutRefresh;
+    @BindView(R.id.id_floating_button)
+    ImageButton mFloatingButton;
 
     //私圈相关
     private PrivateGroupPresenter mPresenter;
@@ -94,6 +88,12 @@ public class PrivateGroupAllFragment extends BaseFragment {
                 } else {
                     loadData(true);
                 }
+            }
+        });
+        mFloatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lv.smoothScrollToPosition(0);
             }
         });
     }
@@ -169,5 +169,13 @@ public class PrivateGroupAllFragment extends BaseFragment {
     @Override
     public void refreshPage() {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

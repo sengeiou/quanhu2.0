@@ -1,11 +1,9 @@
 package com.rz.circled.js;
 
 import android.app.Activity;
-import android.content.Intent;
 
 import com.google.gson.Gson;
-import com.rz.circled.ui.activity.WebContainerActivity;
-import com.rz.common.constant.IntentKey;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
 import com.rz.sgt.jsbridge.ServerHandler;
@@ -36,9 +34,9 @@ public class JumpUrlHandler extends ServerHandler {
         try {
             org.json.JSONObject jsonObject = new org.json.JSONObject(dataJson);
             String url = jsonObject.getString("url");
-            Intent intent = new Intent(mActivity, WebContainerActivity.class);
-            intent.putExtra(IntentKey.EXTRA_URL, url);
-            mActivity.startActivity(intent);
+
+            BannerJumpHelper.bannerJumpHanderHelper(mActivity,url,true);
+
         } catch (JSONException e) {
             e.printStackTrace();
             JsEvent.callJsEvent(null, false);
@@ -57,6 +55,6 @@ public class JumpUrlHandler extends ServerHandler {
 
     @Override
     public boolean isUi() {
-        return false;
+        return true;
     }
 }

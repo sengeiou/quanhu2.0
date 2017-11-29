@@ -111,15 +111,17 @@ public class RewardDetailAty extends BaseActivity {
 
 
                 if(item.getAmount()<0){
-                    mPay.setTextColor(Color.parseColor("#0185ff"));
-                }else{
                     mPay.setTextColor(Color.parseColor("#FF6060"));
+                    mPay.setText(Currency.returnDollar(Currency.RMB, item.getAmount() + "", 0));
+                }else{
+                    mPay.setTextColor(Color.parseColor("#0185ff"));
+                    mPay.setText("+" + Currency.returnDollar(Currency.RMB, item.getAmount() + "", 0));
                 }
 
 //                float price = Float.valueOf(item.getAmount());
 //                DecimalFormat fnum = new DecimalFormat("##0.00");
 //                String  dd = fnum.format(price/100);
-                mPay.setText(Currency.returnDollar(Currency.RMB, item.getAmount() + "", 0));
+
 
                 if(!TextUtils.isEmpty(item.getCreateTime())){
                     SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
@@ -139,13 +141,17 @@ public class RewardDetailAty extends BaseActivity {
     @Override
     public void initData() {
 
-        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
+        mRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
 
-                if(mBillDetails.size()>0 && mBillDetails.get(mBillDetails.size()-1).getRewardId()!= null){
-                    mPresenter.requestGetRewardList(direction != SwipyRefreshLayoutDirection.TOP,mBillDetails.get(mBillDetails.size()-1).getRewardId());
+                if (direction == SwipyRefreshLayoutDirection.TOP) {
+                    mPresenter.requestGetRewardList(false,"");
+                }else{
+                    if(mBillDetails.size()>0 && mBillDetails.get(mBillDetails.size()-1).getRewardId()!= null){
+                        mPresenter.requestGetRewardList(direction != SwipyRefreshLayoutDirection.TOP,mBillDetails.get(mBillDetails.size()-1).getRewardId());
+                    }
                 }
 
                 mRefresh.setRefreshing(false);

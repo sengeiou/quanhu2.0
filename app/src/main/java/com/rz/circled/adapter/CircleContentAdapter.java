@@ -94,7 +94,7 @@ public abstract class CircleContentAdapter extends CommonAdapter<CircleDynamic> 
                 if (TextUtils.isEmpty(item.title)) {
                     mdes.setVisibility(View.GONE);
                     mTitle.setVisibility(View.VISIBLE);
-                    mTitle.setMaxLines(2);
+                    mTitle.setMaxLines(3);
 
                     if(TextUtils.isEmpty(keyWord)){
                         mTitle.setText(item.content);

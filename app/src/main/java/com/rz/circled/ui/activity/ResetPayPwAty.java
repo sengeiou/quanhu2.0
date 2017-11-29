@@ -163,6 +163,10 @@ public class ResetPayPwAty extends BaseActivity {
 
     }
 
+    @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
 
     /**
      * 倒计时类

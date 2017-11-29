@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -22,6 +23,7 @@ import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
 import com.rz.circled.R;
 import com.rz.circled.adapter.DynamicAdapter;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.CirclePresenter;
 import com.rz.circled.ui.activity.RecentContactActivity;
 import com.rz.circled.ui.activity.SearchActivity;
@@ -31,7 +33,9 @@ import com.rz.circled.widget.CommomUtils;
 import com.rz.circled.widget.SwipyRefreshLayoutBanner;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
+import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
+import com.rz.common.event.BaseEvent;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
@@ -40,6 +44,10 @@ import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.BannerAddSubjectModel;
 import com.rz.httpapi.bean.CircleDynamic;
 import com.rz.httpapi.bean.UserPermissionBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -67,6 +75,8 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     ImageView mHomePublish;
     @BindView(R.id.refresh)
     SwipyRefreshLayoutBanner mRefresh;
+    @BindView(R.id.id_floating_button)
+    ImageButton mFloatBtn;
     private ImageView mUnread;
     private List<BannerAddSubjectModel> bannerList = new ArrayList<>();
     private List<CircleDynamic> circleDynamicList = new ArrayList<>();
@@ -77,6 +87,9 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
     @Nullable
     @Override
     public View loadView(LayoutInflater inflater) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return inflater.inflate(R.layout.fragment_home, null);
     }
 
@@ -113,21 +126,34 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             public void call(Void aVoid) {
                 trackUser("入口", "首页", "消息");
                 //跳最近联系人界面
-                if (NIMClient.getStatus() == StatusCode.LOGINED)
-                    startActivity(new Intent(mActivity, RecentContactActivity.class));
-                else
-                    Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
+                if (isLogin()) {
+                    if (NIMClient.getStatus() == StatusCode.LOGINED)
+                        startActivity(new Intent(mActivity, RecentContactActivity.class));
+                    else
+                        Toasty.info(mActivity, getString(R.string.im_link_error_hint)).show();
+                }
             }
         });
         RxView.clicks(mHomePublish).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
                 //跳发布
-                trackUser("入口", "首页", "发布按钮");
-                mPresenter.getUserPermession();
+//                trackUser("入口", "首页", "发布按钮");
+                if (isLogin())
+                    mPresenter.getUserPermession();
+
+//                String url = "quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002";
+//                Uri uri = Uri.parse(url);
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                getContext().startActivity(intent);
             }
         });
-
+        RxView.clicks(mFloatBtn).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                mHomeLv.smoothScrollToPosition(0);
+            }
+        });
     }
 
     private void initDynamicLv() {
@@ -156,6 +182,29 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 mRefresh.setRefreshing(false);
             }
         });
+        mAuto_viewpager.setOnItemClickLisenter(new AutoRollLayout.onItemClickLisenter() {
+            @Override
+            public void onClickLisenter(int position, String url) {
+                trackUser("推广", "Banner图", url);
+
+//                bannerJumpRule(url);
+
+                BannerJumpHelper.bannerJumpActivityHelper(mActivity,url);
+            }
+        });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(BaseEvent event) {
+        switch (event.getType()) {
+            case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
+                mPresenter.getCircleDynamicList(false);
+                break;
+            case CommonCode.EventType.TYPE_LOGOUT:
+                mPresenter.getCircleDynamicList(false);
+                break;
+        }
+
     }
 
     @Override
@@ -290,4 +339,11 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
             mUnread.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

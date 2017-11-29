@@ -314,6 +314,8 @@ public class SysSharePres {
 
     //当前请求act
     private static final String NOW_ACT = "nowAct";
+    //邀请链接
+    private static final String INVITE_LINK = "inviteLink";
 
     public SysSharePres() {
         System.out.println(BaseApplication.getContext());
@@ -978,6 +980,14 @@ public class SysSharePres {
 
     public void setCustRole(String custPoint) {
         mSharePres.edit().putString(CUST_ROLE, custPoint).apply();
+    }
+
+    public String getInviteLink() {
+        return mSharePres.getString(INVITE_LINK, "");
+    }
+
+    public void setInviteLink(String inviteLink) {
+        mSharePres.edit().putString(INVITE_LINK, inviteLink).apply();
     }
 
     private static class SysSharePresHolder {

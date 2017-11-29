@@ -28,7 +28,6 @@ import com.rz.common.application.BaseApplication;
 import com.rz.common.application.MyActivityManager;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
-import com.rz.common.constant.IntentKey;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.event.KickEvent;
 import com.rz.common.permission.EasyPermissions;
@@ -46,7 +45,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks, BaseLoadView.RefreshListener {
+public abstract class BaseActivity extends AppCompatActivity implements IViewController, EasyPermissions.PermissionCallbacks,
+        BaseLoadView.RefreshListener {
     protected static final int RC_CAMERA_PERM = 123;
     protected static final int RC_LOCATION_CONTACTS_PERM = 124;
     protected static final int RC_SETTINGS_SCREEN = 125;
@@ -74,7 +74,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StatusBarUtils.transparencyBar(this);
         mContext = this;
         this.aty = this;
         TAG = getClass().getSimpleName();
@@ -84,9 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         LinearLayout llContent = (LinearLayout) findViewById(R.id.ll_base_content);
         FrameLayout flTransTitle = (FrameLayout) findViewById(R.id.fl_base_title_transparent);
 
-        initSupportSwipeBack();
         initTint();
-        StatusBarUtils.setDarkStatusIcon(this, true);
 
         mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         initTitleView(llTitle, flTransTitle);
@@ -225,6 +222,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      */
     private void initTint() {
         if (needStatusBarTint()) {
+            StatusBarUtils.transparencyBar(this);
+            initSupportSwipeBack();
+            StatusBarUtils.setDarkStatusIcon(this, true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 SystemBarTintManager tintManager = new SystemBarTintManager(this);
                 tintManager.setStatusBarTintEnabled(true);
@@ -476,6 +476,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         }
     }
 
+    public void setRightVisible() {
+        tvCommonTitleRight.setVisibility(View.VISIBLE);
+    }
+
+    public void setRightGone() {
+        tvCommonTitleRight.setVisibility(View.GONE);
+    }
+
     public void setTitleRightBackground(int color) {
         tvCommonTitleRight.setBackgroundColor(color);
     }
@@ -666,6 +674,26 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        MyActivityManager.removeActivity(this);
+    }
+
+    /**
+     * 判断用户是否登录
+     *
+     * @return
+     */
+    protected boolean isLogin() {
+        if (Session.getUserIsLogin()) {
+            return true;
+        } else {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+//            bundle.putString(Constants.JUMPTYPE, Constants.BACKLOGIN);
+            intent.setAction("quanhu.login");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        return false;
     }
 
 
@@ -687,31 +715,29 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onKickEvent(KickEvent kickEvent) {
+        Log.d(TAG, "------test----- = " + getLocalClassName());
         if (getLocalClassName().equals(BaseApplication.getInstance().resumedLocalClassName)) {
-            Log.d(TAG, "resumedLocalClassName = " + BaseApplication.getInstance().resumedLocalClassName);
+            Log.d(TAG, "------resumedLocalClassName----- = " + BaseApplication.getInstance().resumedLocalClassName);
             Session.clearShareP();
             //弹窗重新登录
             if (kickDialog == null) {
                 kickDialog = new KickDialog(this) {
                     @Override
                     public void onClick(View v) {
+                        EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGOUT));
                         if (v.getId() == R.id.tv_kick_dialog_left) {
                             Log.d(TAG, "resumedLocalClassName = " + "closedialog");
                             closeDialog();
                             int kickOutYxCode = 200018;
                             EventBus.getDefault().post(new BaseEvent(kickOutYxCode));
-                            String className = "com.rz.circled.ui.activity.LoginActivity";
-                            Intent intent = new Intent();
-                            intent.putExtra(IntentKey.EXTRA_TYPE, CommonCode.Constant.TAB_MAIN_HOME);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.setClassName(mContext, className);
-                            startActivity(intent);
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog2222");
-                            finish();
-                            Log.d(TAG, "resumedLocalClassName = " + "closedialog3333");
+                            isLogin();
+                            MyActivityManager.finishAllUnIncludeMian();
                         } else {
                             closeDialog();
-                            MyActivityManager.finishAll();
+                            if (!BaseApplication.getInstance().resumedLocalClassName.equalsIgnoreCase(MyActivityManager.mainClass)) {
+                                startMainActivity();
+                                MyActivityManager.finishAllUnIncludeMian();
+                            }
                         }
                     }
                 };
@@ -730,6 +756,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
             kickDialog.setCancelable(false);
             kickDialog.showDialog();
         }
+    }
+
+    protected void startMainActivity() {
+        Intent intent = new Intent();
+        intent.setAction("quanhu.main");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
 import com.rz.circled.dialog.GroupLevelLessDialog;
+import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
 import com.rz.circled.ui.activity.ApplyForCreatePrivateGroupActivity;
@@ -29,10 +30,6 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
-import com.rz.httpapi.api.ApiPGService;
-import com.rz.httpapi.api.BaseCallback;
-import com.rz.httpapi.api.Http;
-import com.rz.httpapi.api.ResponseData.ResponseData;
 import com.rz.httpapi.bean.GroupBannerBean;
 import com.rz.httpapi.bean.MyLevelAcountBean;
 
@@ -48,8 +45,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_ESSENCE_MORE;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
@@ -137,6 +132,17 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     @Override
+    protected boolean needLoadingView() {
+        return true;
+    }
+
+
+    @Override
+    protected boolean hasDataInPage() {
+        return true;
+    }
+
+    @Override
     public <T> void updateView(T t) {
         super.updateView(t);
         if (t instanceof List) {
@@ -200,7 +206,7 @@ public class PrivateCircledFragment extends BaseFragment {
     }
 
     private void checkGroupNull() {
-        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE) {
+        if (layoutMyCreate.getVisibility() == View.GONE && layoutMyJoin.getVisibility() == View.GONE && Session.getUserIsLogin()) {
             layoutNoData.setVisibility(View.VISIBLE);
         } else {
             layoutNoData.setVisibility(View.GONE);
@@ -236,7 +242,9 @@ public class PrivateCircledFragment extends BaseFragment {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+//                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
+//                    bannerJumpRule(pic);
+                    BannerJumpHelper.bannerJumpActivityHelper(mActivity,pic.getUrl());
                 }
             });
         }
@@ -251,6 +259,13 @@ public class PrivateCircledFragment extends BaseFragment {
         circleNavigator.setCircleCount(pics.size());
         circleNavigator.setCircleColor(getResources().getColor(R.color.color_main));
         indicatorBanner.setNavigator(circleNavigator);
+
+        if(pics.size()<=1){
+            indicatorBanner.setVisibility(View.GONE);
+        }else{
+            indicatorBanner.setVisibility(View.VISIBLE);
+        }
+
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -304,12 +319,14 @@ public class PrivateCircledFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btn_apply_for:
                 trackUser("入口", "创建私圈", "");
-                String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
-                if (Integer.parseInt(level) < 5) {
-                    presenter.getLevelAcount();
-                } else
-                    startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
-
+                if (isLogin()) {
+                    String level = TextUtils.isEmpty(Session.getUserLevel()) ? "0" : Session.getUserLevel();
+                    if (Integer.parseInt(level) < 5) {
+                        presenter.getLevelAcount();
+                    } else {
+                        startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
+                    }
+                }
                 break;
             case R.id.btn_create_more:
                 MyPrivateGroupActivity.startMyPrivateGroup(getContext(), 0);
@@ -329,4 +346,5 @@ public class PrivateCircledFragment extends BaseFragment {
     public void refreshPage() {
 
     }
+
 }

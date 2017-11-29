@@ -45,6 +45,7 @@ public class MineRewardAdapter extends CommonAdapter {
         TextView tvTitle = (TextView) helper.getViewById(R.id.tv_title);
         ImageView rewardImg = (ImageView) helper.getViewById(R.id.reward_img);
         TextView tvContent = (TextView) helper.getViewById(R.id.tv_content);
+        ImageView ivImg = (ImageView) helper.getViewById(R.id.video_img);
 
         if (model.getUser() != null && model.getUser().getCustImg() != null) {
             Glide.with(mContext).load(model.getUser().getCustImg()).placeholder(R.drawable.ic_default_head).error(R.drawable.ic_default_head).transform(new GlideCircleImage(mContext)).into(avatar);
@@ -104,6 +105,7 @@ public class MineRewardAdapter extends CommonAdapter {
 
         if (!TextUtils.isEmpty(model.getResourceInfo().getPics())) {
             rewardImg.setVisibility(View.VISIBLE);
+            ivImg.setVisibility(View.GONE);
             if(model.getResourceInfo().getPics().contains(",")){
                 String imagePath[] = model.getResourceInfo().getPics().split(",");
 
@@ -116,12 +118,14 @@ public class MineRewardAdapter extends CommonAdapter {
             }
         }else if(!TextUtils.isEmpty(model.getResourceInfo().getVideoPic())) {
             rewardImg.setVisibility(View.VISIBLE);
+            ivImg.setVisibility(View.VISIBLE);
 
             Glide.with(mContext).load(model.getResourceInfo().getVideoPic()).
                     placeholder(R.mipmap.ic_default_bg).error(R.mipmap.ic_default_bg).crossFade().into(rewardImg);
 
         } else {
             rewardImg.setVisibility(View.GONE);
+            ivImg.setVisibility(View.GONE);
         }
 
         if (RESOURCE_TYPE.equals(model.getResourceInfo().getResourceType())

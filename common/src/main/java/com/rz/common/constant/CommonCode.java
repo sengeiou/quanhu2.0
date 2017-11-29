@@ -78,12 +78,19 @@ public interface CommonCode {
         int TYPE_EMPTY_COUNT = 300006;
         int TYPE_SAVE = 300007;
         int TYPE_ADD_LAYOUT = 300008;
-
+        int TYPE_CIRCLE_TATE=5001;
+        int TYPE_SET_CURRENT=5006;
+        int TYPE_RIGHT_CLICK=5007;
+        int TYPE_RIGHT_NOTI_CLICK=5008;
+        int TYPE_FINISH_TATE=5000002;
+        int TYPE_RECOMM_TATE=5000003;
         int TYPE_REWARD_REFRESH = 40001;
 
         int TYPE_LOGIN_WEB = 50001;
 
         int TYPE_HTTP_HEADER = 60001;
+
+        int TYPE_BACKLOGIN_REFRESH = 70001;
     }
 
     /**

@@ -59,6 +59,16 @@
             android:name="JPUSH_APPKEY"
             android:value="${JPUSH_APPKEY}"/>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
         <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
             android:name=".receiver.MyReceiver"
@@ -87,7 +97,26 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="quanhu.main"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="open"
+                    android:pathPrefix="/data"
+                    android:scheme="quanhu"/>
+            </intent-filter>
+
+        </activity>
 
         <activity
             android:name=".ui.activity.LoadResActivity"
@@ -187,7 +216,12 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
+            android:theme="@style/BaseAppTheme.Translucent">
+            <intent-filter>
+                <action android:name="quanhu.login"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait"
@@ -493,10 +527,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
         <activity
-            android:name=".ui.activity.AwesomeTabsAty"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Translucent"/>
-        <activity
             android:name=".ui.activity.VideoH5Aty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
@@ -628,6 +658,52 @@
             android:name=".ui.activity.RewardDetailAty"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.ClipImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.FullScreen"/>
+        <activity
+            android:name=".ui.activity.AllCirclesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.InviteRewardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <activity
+            android:name=".ui.activity.InviteRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.Translucent"/>
+        <!--<activity android:name=".ui.activity.NativeAppActivity">-->
+
+        <!--&lt;!&ndash;&lt;!&ndash; 要想在别的App上能成功调起App，必须添加intent过滤器 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;&lt;!&ndash; 协议部分，随便设置 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<data android:scheme="uumobile" />&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash; 下面这几行也必须得设置 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<category android:name="Android.intent.category.DEFAULT" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<category android:name="Android.intent.category.BROWSABLE" />&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<action android:name="Android.intent.action.VIEW" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com//activity/qql&category=1002&ndash;&gt;-->
+
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW"/>-->
+        <!--<category android:name="android.intent.category.DEFAULT"/>-->
+        <!--<category android:name="android.intent.category.BROWSABLE"/>-->
+
+        <!--<data-->
+        <!--android:scheme="quanhu"-->
+        <!--android:host="open"-->
+        <!--android:pathPrefix="/data"-->
+        <!--/>-->
+        <!--</intent-filter>-->
+
+        <!--</activity>-->
+        <activity android:name=".ui.activity.AllCircleSearchActivity"/>
     </application>
 
 </manifest>

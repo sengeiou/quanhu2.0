@@ -963,6 +963,14 @@ public class Session {
         return SysSharePres.getInstance().getNowAct();
     }
 
+    public static void setInviteLink(String inviteLink) {
+        SysSharePres.getInstance().setInviteLink(inviteLink);
+    }
+
+    public static String getInviteLink() {
+        return SysSharePres.getInstance().getInviteLink();
+    }
+
     /**
      * 清除数据
      */

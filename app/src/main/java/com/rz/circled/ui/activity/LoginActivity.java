@@ -1,6 +1,10 @@
 package com.rz.circled.ui.activity;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,7 +58,9 @@ import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.LoginTypeBean;
 import com.rz.httpapi.bean.UserInfoBean;
+import com.rz.sgt.jsbridge.JsEvent;
 import com.umeng.socialize.UMShareAPI;
+import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 import com.zhuge.analysis.stat.ZhugeSDK;
 
 import org.greenrobot.eventbus.EventBus;
@@ -152,6 +158,7 @@ public class LoginActivity extends BaseActivity {
      */
     private MyCount mc;
 
+
     @Override
     protected boolean needSwipeBack() {
         return false;
@@ -196,27 +203,13 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView() {
 
-
-//        mBtnSendCode.setVisibility(View.VISIBLE);
-//        mEditPass.setHint("请输入验证码");
-//        typePwd.setImageResource(R.mipmap.icon_code);
-//        mImgWatchPw.setVisibility(View.GONE);
-//        mEditPass.setText("");
-//        mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-
-//        //动态设置top图片
-//        Drawable drawable = getResources().getDrawable(R.mipmap.pwd_lock_ic);
-//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-//        layoutLoginPhone.setCompoundDrawables(null, drawable, null, null);
-//        layoutLoginPhone.setText("密码登录");
-
         if (!StringUtils.isEmpty(Session.getUserPhone())) {
             mEditPhone.setText(Session.getUserPhone());
             mImgClearPhone.setVisibility(View.VISIBLE);
         }
 
         mLoginBtn.setEnabled(true);
+
 
     }
 
@@ -227,7 +220,6 @@ public class LoginActivity extends BaseActivity {
         if (BackGroundService.time_code != 0) {
             startCount(BackGroundService.time_code);
         }
-
     }
 
     @Override
@@ -293,8 +285,11 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.titlebar_main_left_btn)
     public void onClick() {
-
-        setData();
+        if(codeType == 1){
+            this.finish();
+        }else{
+            setData();
+        }
     }
 
 
@@ -353,7 +348,6 @@ public class LoginActivity extends BaseActivity {
             mImgWatchPw.setVisibility(View.GONE);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_CLASS_NUMBER);
-            mIvBack.setVisibility(View.VISIBLE);
 
             codeType = 2;
 
@@ -372,7 +366,6 @@ public class LoginActivity extends BaseActivity {
             typePwd.setImageResource(R.mipmap.ic_login_pw);
             mEditPass.setText("");
             mEditPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            mIvBack.setVisibility(View.GONE);
 
             codeType = 1;
 
@@ -516,28 +509,37 @@ public class LoginActivity extends BaseActivity {
 
                 saveLoginData(loginModel);
 
-                if (getIntent().getBooleanExtra("isFromSplash", false)) {
-                    skipActivity(aty, MainActivity.class);
-                } else if (loginType == Type.TYPE_LOGIN_WEB) {
-                    //从圈子过来跳转登录的
-//                    JsEvent.callJsEvent(getLoginWebResultData(), true);
-                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
-                    //从向导页面过来
+                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_BACKLOGIN_REFRESH));
 
-                    skipActivity(aty, FollowCircle.class);
-                } else {
+//                if(!isExistMainActivity(MainActivity.class)) {
+//                    skipActivity(aty, MainActivity.class);
+//                }
 
-                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
+//                if (getIntent().getBooleanExtra("isFromSplash", false)) {
+//                    skipActivity(aty, MainActivity.class);
+//                } else if (loginType == Type.TYPE_LOGIN_WEB) {
+//                    //从圈子过来跳转登录的
+                JsEvent.callJsEvent(getLoginWebResultData(), true);
+//                } else if (mGuideType == Type.TYPE_LOGIN_GUIDE) {
+//                    //从向导页面过来
+//
+//                    skipActivity(aty, FollowCircle.class);
+//                } else {
+//
+//                    EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_LOGIN));
+//
+//                    setResult(IntentCode.Login.LOGIN_RESULT_CODE);
+//                    skipActivity(aty, MainActivity.class);
+//
+//                }
 
-                    setResult(IntentCode.Login.LOGIN_RESULT_CODE);
-                    skipActivity(aty, MainActivity.class);
-
-                }
                 //webCon
                 BaseEvent baseEvent = new BaseEvent(getLoginWebResultData());
                 baseEvent.type = CommonCode.EventType.TYPE_LOGIN_WEB;
                 baseEvent.key = "nativeLogin";
                 EventBus.getDefault().post(baseEvent);
+
+                this.finish();
             }
         }
     }
@@ -656,7 +658,7 @@ public class LoginActivity extends BaseActivity {
                     if (Session.getUserIsFirstDownload()) {
                         skipActivity(aty, FollowCircle.class);
 //
-                    }else {
+                    } else {
                         saveLoginData(loginModel);
                         skipActivity(aty, MainActivity.class);
                     }
@@ -869,6 +871,24 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void refreshPage() {
 
+    }
+
+
+    private boolean isExistMainActivity(Class<?> activity){
+        Intent intent = new Intent(this, activity);
+        ComponentName cmpName = intent.resolveActivity(getPackageManager());
+        boolean flag = false;
+        if (cmpName != null) { // 说明系统中存在这个activity
+            ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskInfoList = am.getRunningTasks(10);  //获取从栈顶开始往下查找的10个activity
+            for (ActivityManager.RunningTaskInfo taskInfo : taskInfoList) {
+                if (taskInfo.baseActivity.equals(cmpName)) { // 说明它已经启动了
+                    flag = true;
+                    break;  //跳出循环，优化效率
+                }
+            }
+        }
+        return flag;
     }
 
 

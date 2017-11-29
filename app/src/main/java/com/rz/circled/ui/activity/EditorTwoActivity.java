@@ -19,6 +19,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -39,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
@@ -77,6 +79,7 @@ import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.NetWorkSpeedUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.Record;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.common.widget.svp.SVProgressHUD;
 import com.rz.common.widget.toasty.Toasty;
@@ -250,6 +253,40 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     //权限
     @BindView(R.id.tv_editor_two_authority)
     TextView tvAuthority;
+    @BindView(R.id.tv_editor_title_left)
+    TextView tvEditorTitleLeft;
+    @BindView(R.id.tv_base_title)
+    TextView tvBaseTitle;
+    @BindView(R.id.tv_editor_title_right)
+    TextView tvEditorTitleRight;
+    //    @BindView(R.id.et_editor_two_title)
+//    EditText etEditorTwoTitle;
+//    @BindView(R.id.tv_editor_two_sort_name)
+//    TextView tvEditorTwoSortName;
+//    @BindView(R.id.tv_editor_two_location_name)
+//    TextView tvEditorTwoLocationName;
+    @BindView(R.id.iv_editor_two_location_arrow)
+    ImageView ivEditorTwoLocationArrow;
+    //    @BindView(R.id.tv_editor_two_time_name)
+//    TextView tvEditorTwoTimeName;
+    @BindView(R.id.iv_editor_two_time_arrow)
+    ImageView ivEditorTwoTimeArrow;
+    //    @BindView(R.id.et_editor_two_label)
+//    EditText etEditorTwoLabel;
+//    @BindView(R.id.tv_editor_two_introduction_num)
+//    TextView tvEditorTwoIntroductionNum;
+//    @BindView(R.id.tv_editor_two_content_num)
+//    TextView tvEditorTwoContentNum;
+//    @BindView(R.id.rl_editor_two_video)
+//    RelativeLayout rlEditorTwoVideo;
+//    @BindView(R.id.rl_editor_two_audio)
+//    RelativeLayout rlEditorTwoAudio;
+//    @BindView(R.id.iv_editor_two_choose_pic)
+//    ImageView ivEditorTwoChoosePic;
+//    @BindView(R.id.cb_editor_two_anonymity)
+//    CheckBox cbEditorTwoAnonymity;
+//    @BindView(R.id.tv_editor_two_authority)
+//    TextView tvEditorTwoAuthority;
     //视频
     private String[] videoItems = {"拍摄视频", "从手机相册中选取"};
     private static final int TYPE_TEXT = 1;
@@ -320,8 +357,18 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     private String videoFilePath;
 
     @Override
+    protected boolean needStatusBarTint() {
+        return false;
+    }
+
+    @Override
     protected boolean needLoadingView() {
         return true;
+    }
+
+    @Override
+    protected boolean needShowTitle() {
+        return false;
     }
 
     @Override
@@ -330,9 +377,24 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
+    public void setTitleRightText(int StringId) {
+        tvEditorTitleRight.setText(getString(StringId));
+    }
+
+    @Override
+    public void setTitleRightListener(View.OnClickListener rightListener) {
+        tvEditorTitleRight.setOnClickListener(rightListener);
+    }
+
+    @Override
+    public void setTitleLeftListener(View.OnClickListener leftListener) {
+        tvEditorTitleLeft.setOnClickListener(leftListener);
+    }
+
+    @Override
     public void initView() {
-        setTitleLeftText(R.string.cancel);
-        setTitleText("");
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        StatusBarUtils.setDarkStatusIcon(this, true);
         setTitleRightText(R.string.publish);
         setTitleRightTextColor(R.color.color_main);
         setTitleRightListener(new OnTitleRightClickListener());
@@ -941,7 +1003,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             llContentNum.setVisibility(View.VISIBLE);
             llContentText.setTag(contentModel);
             tvContentTextCount.setText("/" + contentModel.getUpperLimit());
-            initContentEditText();
+            initContentEditText(contentModel);
         }
     }
 
@@ -1341,7 +1403,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         changeChooseAudioStatus();
     }
 
-    private void initContentEditText() {
+    private void initContentEditText(EditorConfigTwoModel contentModel) {
         final EditText et = (EditText) getLayoutInflater().inflate(R.layout.layout_et_article_item, llContentText, false);
         et.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray_xl));
         et.setHintTextColor(ContextCompat.getColor(mContext, R.color.font_gray_a));
@@ -1367,10 +1429,12 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     processContentEditViewInputFilter(false);
             }
         });
-        et.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-        llContentText.addView(et);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(-1, -1);
+        et.setMinHeight((int) getResources().getDimension(R.dimen.px400));
+        et.setLineSpacing(0, 1.3f);
+        llContentText.addView(et, layoutParams);
         if (isFirstInput) {
-            et.setHint(R.string.add_text_pic_here);
+            et.setHint(TextUtils.isEmpty(contentModel.getInputPrompt()) ? getString(R.string.add_text_pic_here) : contentModel.getInputPrompt());
             isFirstInput = false;
         }
 //        et.requestFocus();
@@ -1406,6 +1470,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                     processContentEditViewInputFilter(false);
             }
         });
+        et.setLineSpacing(0, 1.3f);
         llContentText.addView(et, position);
         if (isFirstInput) {
             et.setHint(R.string.add_text);
@@ -1468,9 +1533,10 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 //                    iv.setImageDrawable(resource.getCurrent());
 //                }
 //            });
-            Glide.with(this).load(imgPath).into(iv);
+            Glide.with(this).load(imgPath).placeholder(R.drawable.circle_default).error(R.drawable.circle_default).into(iv);
         }
         initImageCount();
+
     }
 
     private void processImageEdit(int position) {
@@ -1617,7 +1683,8 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
 
     private void initImageCount() {
         contentImageCount = 0;
-        for (int i = 0; i < llContentText.getChildCount(); i++) {
+        int childCount = llContentText.getChildCount();
+        for (int i = 0; i < childCount; i++) {
             if (llContentText.getChildAt(i) instanceof FrameLayout) {
                 contentImageCount++;
             }
@@ -1626,6 +1693,13 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         changeChooseImageStatus();
         changeChooseVideoStatus();
         changeChooseAudioStatus();
+        if (childCount > 0) {
+            View childAt = llContentText.getChildAt(0);
+            if (childAt instanceof EditText) {
+                int minHeight = childCount == 1 ? R.dimen.px400 : R.dimen.px100;
+                ((EditText) childAt).setMinHeight((int) getResources().getDimension(minHeight));
+            }
+        }
     }
 
     private void initDurationText() {
@@ -1727,15 +1801,23 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
         EditText editText = null;
         isPicChange = true;
         processContentEditViewInputFilter(true);
+        boolean selectionEnd = false;
         for (int i = 0; i < llContentText.getChildCount(); i++) {
             View view = llContentText.getChildAt(i);
             if (view instanceof EditText) {
                 if (editText != null) {
                     EditText temp = (EditText) view;
+                    String afterText = editText.getText().toString() + "";
                     editText.setText(editText.getText().toString() + temp.getText().toString());
                     llContentText.removeView(temp);
                     editText.requestFocus();
-                    editText.setSelection(editText.getText().length());
+                    if (!selectionEnd) {
+                        editText.setSelection(afterText.length());
+                    } else {
+                        editText.setSelection(editText.getText().toString().trim().length());
+                        selectionEnd = true;
+                    }
+
                     break;
                 } else {
                     editText = (EditText) view;
@@ -1840,17 +1922,17 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             } else {
                 Map map = new HashMap();
                 if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//投票 走jsSdk
-                    String text = articleItem.content.replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String text = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, text);
                     jsResult.add(map);
                     if (TextUtils.isEmpty(dataSource.getContent())) dataSource.setContent(text);
                     else dataSource.setContent(dataSource.getContent() + text);
                 } else {//其他情况走后台接口 content:\n -> 空格 contentSource \n -> <br>
-                    String contentText = articleItem.content.replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String contentText = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
                     if (TextUtils.isEmpty(dataSource.getContent()))
                         dataSource.setContent(contentText);
                     else dataSource.setContent(dataSource.getContent() + contentText);
-                    String contentSourceText = articleItem.content.replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String contentSourceText = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, contentSourceText);
                     jsResult.add(map);
                 }
@@ -2197,7 +2279,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
      * 2.发布或匿名发布走 -> 调用发布接口,给js回调,且关闭页面
      */
     private void callJs() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         dataSource.setContentSource(gson.toJson(jsResult));
         rootBean.setDataSource(dataSource);
         if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//1.投票
