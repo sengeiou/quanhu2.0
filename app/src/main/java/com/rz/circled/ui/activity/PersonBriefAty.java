@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -16,6 +17,7 @@ import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.CommonCode;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
+import com.rz.common.utils.StatusBarUtils;
 import com.rz.common.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,24 +41,29 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
     protected IPresenter presenter;
 
     @Override
+    protected boolean needStatusBarTint() {
+        return false;
+    }
+
+    @Override
     public View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.aty_my_brief, null);
     }
 
     @Override
     public void initView() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        StatusBarUtils.setDarkStatusIcon(this, true);
+        if (getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_brief))) {
+            idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(300)});
+        } else {
+            idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+        }
         setTitleText(getIntent().getExtras().getString(TYPE));
         setTitleRightText(getString(R.string.mine_person_save));
         idPersonPriefEdit.setText(getIntent().getExtras().getString("content", ""));
         idPersonPriefEdit.setSelection(idPersonPriefEdit.getText().toString().length());
         idPersonPriefEdit.addTextChangedListener(this);
-
-
-        if (getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_sign))) {
-            idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
-        } else {
-            idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
-        }
 
         if (TextUtils.isEmpty(idPersonPriefEdit.getText().toString())) {
             idPersonClearImg.setVisibility(View.INVISIBLE);

@@ -1,8 +1,6 @@
 package com.rz.circled.js.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by KF on 2017/5/31.
@@ -18,7 +16,7 @@ public class EditorDataSourceTwoModel implements Serializable {
     private String contentSource;
 
     private String coverPlanUrl;
-    private int createUserId;
+    private String createUserId;
     private String date;
     private String description;
     private int functionType = 0;//业务功能类型（1：匿名，2：投票）
@@ -202,11 +200,11 @@ public class EditorDataSourceTwoModel implements Serializable {
         this.content = content;
     }
 
-    public int getCreateUserId() {
+    public String getCreateUserId() {
         return createUserId;
     }
 
-    public void setCreateUserId(int createUserId) {
+    public void setCreateUserId(String createUserId) {
         this.createUserId = createUserId;
     }
 

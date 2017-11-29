@@ -2,23 +2,25 @@ package com.rz.circled.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Layout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.util.Util;
 import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.cpoopc.scrollablelayoutlib.ScrollableLayout;
 import com.netease.nimlib.sdk.NIMClient;
@@ -26,7 +28,6 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyFragmentStatePagerAdapter;
-import com.rz.circled.constants.CommonConstants;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
@@ -98,6 +99,8 @@ public class UserInfoActivity extends BaseActivity {
     TextView userRole;
     @BindView(R.id.famous_role_layout)
     LinearLayout famousLayout;
+    @BindView(R.id.tv_user_info_head_show_more)
+    TextView tvHeadShowMore;
 
     @BindView(R.id.add_friend_layout)
     LinearLayout addFriendLayout;
@@ -152,8 +155,9 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
-        signTxt.setTextColor(Color.argb(168, 255, 255, 255)); //背景透明度
+        tvHeadShowMore.setSelected(false);
+        signTextOver();
+//        signTxt.setTextColor(Color.argb(168, 255, 255, 255)); //背景透明度
         //个人中心
         if (userId.equals(Session.getUserId())) {
             if (Protect.checkLoadImageStatus(mContext)) {
@@ -166,8 +170,11 @@ public class UserInfoActivity extends BaseActivity {
             if (TextUtils.isEmpty(Session.getUser_desc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(Session.getUser_desc());
+                signTxt.setText(getString(R.string.mine_info_head_intro) + Session.getUser_desc());
             }
+            Layout layout = signTxt.getLayout();
+            if (layout != null)
+                Log.d(TAG, "layout not null");
 
             addFriendLayout.setVisibility(View.GONE);
 
@@ -180,6 +187,24 @@ public class UserInfoActivity extends BaseActivity {
             ((V3CirclePresenter) presenter).getFamousStatus(userId);
 
         }
+    }
+
+    private void signTextOver() {
+        ViewTreeObserver vto = signTxt.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                signTxt.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                signTxt.getHeight();
+                double w0 = signTxt.getWidth();//控件宽度
+                double w1 = signTxt.getPaint().measureText(signTxt.getText().toString());//文本宽度
+                if (w1 > (w0 * 3)) {
+                    tvHeadShowMore.setVisibility(View.VISIBLE);
+                } else tvHeadShowMore.setVisibility(View.GONE);
+
+            }
+        });
     }
 
     @Override
@@ -288,7 +313,7 @@ public class UserInfoActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(BaseEvent baseEvent) {
-        switch(baseEvent.type){
+        switch (baseEvent.type) {
             case CommonCode.EventType.TYPE_USER_UPDATE:
                 setData(null);
                 break;
@@ -301,7 +326,7 @@ public class UserInfoActivity extends BaseActivity {
                 ((FriendPresenter1) friendPresenter).getFriendInfoDetail(Session.getUserId());
                 break;
             case CommonCode.EventType.TYPE_BACKLOGIN_REFRESH:
-                if(model != null && !StringUtil.isEmpty(model.getCustId())){
+                if (model != null && !StringUtil.isEmpty(model.getCustId())) {
                     ((FriendPresenter1) friendPresenter).getFriendInfoDetail(model.getCustId());
                 }
                 break;
@@ -327,7 +352,7 @@ public class UserInfoActivity extends BaseActivity {
             if (data.getAuthStatus() == 1) {
                 famousLayout.setVisibility(View.VISIBLE);
                 userRole.setText(data.getTradeField());
-            }else{
+            } else {
                 famousLayout.setVisibility(View.GONE);
             }
 
@@ -382,7 +407,7 @@ public class UserInfoActivity extends BaseActivity {
                 if (TextUtils.isEmpty(Session.getUser_desc())) {
                     signTxt.setText(getString(R.string.mine_sign_default));
                 } else {
-                    signTxt.setText(Session.getUser_desc());
+                    signTxt.setText(getString(R.string.mine_info_head_intro) + Session.getUser_desc());
                 }
 
                 addFriendLayout.setVisibility(View.GONE);
@@ -398,7 +423,7 @@ public class UserInfoActivity extends BaseActivity {
             if (TextUtils.isEmpty(model.getCustDesc())) {
                 signTxt.setText(getString(R.string.mine_sign_default));
             } else {
-                signTxt.setText(model.getCustDesc());
+                signTxt.setText(getString(R.string.mine_info_head_intro) + model.getCustDesc());
             }
 
             addFriendLayout.setClickable(true);
@@ -418,10 +443,25 @@ public class UserInfoActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.tv_user_info_head_show_more)
+    void showMore() {
+        boolean isSelected = tvHeadShowMore.isSelected();
+        if (isSelected) {
+            signTxt.setMaxLines(3);
+        } else {
+            signTxt.setMaxLines(100);
+        }
+        Drawable drawable = ContextCompat.getDrawable(mContext, isSelected ? R.mipmap.icon_user_info_open : R.mipmap.icon_user_info_close);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tvHeadShowMore.setCompoundDrawables(drawable, null, null, null);
+        tvHeadShowMore.setText(isSelected ? R.string.user_show_more_open : R.string.user_show_more_close);
+        tvHeadShowMore.setSelected(!isSelected);
+    }
+
     @OnClick(R.id.add_friend_btn)
     public void addFriendClick() {
 
-        if(isLogin()){
+        if (isLogin()) {
             if (model != null && model.getRelation() == 0) {
                 ((FriendPresenter1) friendPresenter).requireFriend(userId, "", 1, CommonCode.requireFriend.require_type_add);
             } else {
@@ -432,14 +472,14 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     @OnClick(R.id.user_avatar)
-    void avatarClick(){
+    void avatarClick() {
         List<String> imageList = new ArrayList<String>();
-        if(imageList.size()>0){
+        if (imageList.size() > 0) {
             imageList.clear();
         }
         if (userId.equals(Session.getUserId())) {
             imageList.add(Session.getUserPicUrl());
-        }else{
+        } else {
             if (model.getCustImg() != null && !TextUtils.isEmpty(model.getCustImg())) {
                 imageList.add(model.getCustImg());
             } else {

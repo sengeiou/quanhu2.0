@@ -1922,17 +1922,17 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             } else {
                 Map map = new HashMap();
                 if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//投票 走jsSdk
-                    String text = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String text = articleItem.content.replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, text);
                     jsResult.add(map);
                     if (TextUtils.isEmpty(dataSource.getContent())) dataSource.setContent(text);
                     else dataSource.setContent(dataSource.getContent() + text);
                 } else {//其他情况走后台接口 content:\n -> 空格 contentSource \n -> <br>
-                    String contentText = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String contentText = articleItem.content.replaceAll("\\n", "").replaceAll("\\r", "").replaceAll("\\t", " ");
                     if (TextUtils.isEmpty(dataSource.getContent()))
                         dataSource.setContent(contentText);
                     else dataSource.setContent(dataSource.getContent() + contentText);
-                    String contentSourceText = articleItem.content.replaceAll("\n", "").replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String contentSourceText = articleItem.content.replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, contentSourceText);
                     jsResult.add(map);
                 }

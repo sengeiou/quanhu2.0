@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/mine_blue_color"
-    >
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/mine_blue_color"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,16 +19,14 @@
                 android:layout_width="@dimen/px216"
                 android:layout_height="@dimen/px216"
                 android:layout_centerHorizontal="true"
-                android:padding="@dimen/px10"
-                >
+                android:padding="@dimen/px10">
 
                 <ImageView
                     android:id="@+id/user_avatar"
                     android:layout_width="@dimen/px188"
                     android:layout_height="@dimen/px188"
                     android:layout_centerInParent="true"
-                    android:scaleType="fitXY"
-                    />
+                    android:scaleType="fitXY"/>
 
             </RelativeLayout>
 
@@ -38,12 +34,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_right_arrow"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/px42"
-                android:visibility="gone"
-                />
+                android:src="@mipmap/ic_right_arrow"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
@@ -51,10 +46,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/px18"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/user_name_txt"
@@ -62,65 +56,80 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="@dimen/font_48"
-                />
+                android:textSize="@dimen/font_48"/>
 
             <TextView
                 android:id="@+id/level_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="@dimen/font_46"
-                android:textColor="@color/color_yellow_level"
                 android:layout_marginLeft="@dimen/px36"
-                />
+                android:text=""
+                android:textColor="@color/color_yellow_level"
+                android:textSize="@dimen/font_46"/>
 
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/sign_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="@dimen/font_34"
-            android:textColor="@color/white"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/px10"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:layout_marginLeft="@dimen/px20"
-            android:layout_marginRight="@dimen/px20"
-            />
 
         <LinearLayout
             android:id="@+id/famous_role_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/px20"
-            android:visibility="gone"
-            >
+            android:orientation="horizontal"
+            android:visibility="gone">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_famous"
                 android:layout_gravity="center_vertical"
-                />
+                android:src="@mipmap/ic_famous"/>
 
             <TextView
                 android:id="@+id/user_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="@dimen/font_38"
-                android:textColor="@color/color_yellow_level"
-                android:layout_marginLeft="@dimen/px18"
                 android:layout_gravity="center_vertical"
-                />
+                android:layout_marginLeft="@dimen/px18"
+                android:textColor="@color/color_yellow_level"
+                android:textSize="@dimen/font_38"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px1"
+            android:layout_margin="@dimen/app_base_padding"
+            android:background="@color/white"/>
+
+
+        <TextView
+            android:id="@+id/sign_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/app_base_padding"
+            android:layout_marginLeft="@dimen/app_base_padding"
+            android:layout_marginRight="@dimen/app_base_padding"
+            android:ellipsize="end"
+            android:gravity="left|right"
+            android:maxLines="3"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_38"/>
+
+        <TextView
+            android:id="@+id/tv_user_info_head_show_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:drawableLeft="@mipmap/icon_user_info_open"
+            android:drawablePadding="@dimen/px13"
+            android:paddingBottom="@dimen/app_base_padding"
+            android:paddingLeft="@dimen/px200"
+            android:paddingRight="@dimen/px200"
+            android:text="@string/user_show_more_open"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_32"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
