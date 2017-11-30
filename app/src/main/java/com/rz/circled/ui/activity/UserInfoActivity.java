@@ -136,6 +136,11 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean needSwipeBack() {
+        return false;
+    }
+
+    @Override
     protected View loadView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.activity_user_info, null);
     }
