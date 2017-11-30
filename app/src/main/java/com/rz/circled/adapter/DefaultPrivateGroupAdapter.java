@@ -54,16 +54,17 @@ public class DefaultPrivateGroupAdapter extends CommonAdapter<PrivateGroupBean> 
 //        helper.setText(R.id.tv_title, item.getName());
 
         if (TextUtils.isEmpty(keyWord)) {
-            helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
+            helper.setText(R.id.tv_desc, item.getIntro());
         } else {
-            stringFormatUtil = new StringFormatUtil(mContext, item.getOwnerName() + "  " + item.getOwnerIntro(), keyWord, R.color.colorAccent).fillColor();
+//            stringFormatUtil = new StringFormatUtil(mContext, item.getOwnerName() + "  " + item.getOwnerIntro(), keyWord, R.color.colorAccent).fillColor();
+            stringFormatUtil = new StringFormatUtil(mContext, item.getIntro(), keyWord, R.color.colorAccent).fillColor();
             if (stringFormatUtil != null && stringFormatUtil.getResult() != null) {
 //                helper.setText(R.id.tv_title, stringFormatUtil.getResult().toString());
 
                 helper.setText(R.id.tv_desc, stringFormatUtil.getResult().toString());
             } else {
 //                helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());
-                helper.setText(R.id.tv_desc, item.getOwnerIntro());
+                helper.setText(R.id.tv_desc, item.getIntro());
             }
         }
 //        helper.setText(R.id.tv_desc, item.getOwnerName() + "  " + item.getOwnerIntro());

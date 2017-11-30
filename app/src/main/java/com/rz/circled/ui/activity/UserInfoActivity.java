@@ -161,7 +161,6 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     public void initData() {
         tvHeadShowMore.setSelected(false);
-        signTextOver();
 //        signTxt.setTextColor(Color.argb(168, 255, 255, 255)); //背景透明度
         //个人中心
         if (userId.equals(Session.getUserId())) {
@@ -172,11 +171,7 @@ public class UserInfoActivity extends BaseActivity {
 
             nameTxt.setText(Session.getUserName());
             levelTxt.setText("Lv." + Session.getUserLevel());
-            if (TextUtils.isEmpty(Session.getUser_desc())) {
-                signTxt.setText(getString(R.string.mine_sign_default));
-            } else {
-                signTxt.setText(getString(R.string.mine_info_head_intro) + Session.getUser_desc());
-            }
+            setSignText(Session.getUser_desc());
             Layout layout = signTxt.getLayout();
             if (layout != null)
                 Log.d(TAG, "layout not null");
@@ -192,24 +187,6 @@ public class UserInfoActivity extends BaseActivity {
             ((V3CirclePresenter) presenter).getFamousStatus(userId);
 
         }
-    }
-
-    private void signTextOver() {
-        ViewTreeObserver vto = signTxt.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onGlobalLayout() {
-                signTxt.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                signTxt.getHeight();
-                double w0 = signTxt.getWidth();//控件宽度
-                double w1 = signTxt.getPaint().measureText(signTxt.getText().toString());//文本宽度
-                if (w1 > (w0 * 3)) {
-                    tvHeadShowMore.setVisibility(View.VISIBLE);
-                } else tvHeadShowMore.setVisibility(View.GONE);
-
-            }
-        });
     }
 
     @Override
@@ -409,12 +386,7 @@ public class UserInfoActivity extends BaseActivity {
 
                 nameTxt.setText(Session.getUserName());
                 levelTxt.setText("Lv." + Session.getUserLevel());
-                if (TextUtils.isEmpty(Session.getUser_desc())) {
-                    signTxt.setText(getString(R.string.mine_sign_default));
-                } else {
-                    signTxt.setText(getString(R.string.mine_info_head_intro) + Session.getUser_desc());
-                }
-
+                setSignText(Session.getUser_desc());
                 addFriendLayout.setVisibility(View.GONE);
             }
         } else {
@@ -425,12 +397,7 @@ public class UserInfoActivity extends BaseActivity {
 
             nameTxt.setText(model.getCustNname());
             levelTxt.setText("Lv." + model.getCustLevel());
-            if (TextUtils.isEmpty(model.getCustDesc())) {
-                signTxt.setText(getString(R.string.mine_sign_default));
-            } else {
-                signTxt.setText(getString(R.string.mine_info_head_intro) + model.getCustDesc());
-            }
-
+            setSignText(model.getCustDesc());
             addFriendLayout.setClickable(true);
             if (model.getRelation() == 0) {
                 addFriendLayout.setVisibility(View.VISIBLE);
@@ -508,6 +475,34 @@ public class UserInfoActivity extends BaseActivity {
             Toasty.info(mContext, getString(R.string.im_link_error_hint)).show();
             return false;
         }
+    }
+
+    private void setSignText(String signInfo) {
+        signTextOver();
+        if (TextUtils.isEmpty(signInfo)) {
+            signTxt.setText(getString(R.string.mine_sign_default));
+        } else {
+            signTxt.setText(getString(R.string.mine_info_head_intro) + signInfo);
+        }
+    }
+
+
+    private void signTextOver() {
+        ViewTreeObserver vto = signTxt.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                signTxt.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                signTxt.getHeight();
+                double w0 = signTxt.getWidth();//控件宽度
+                double w1 = signTxt.getPaint().measureText(signTxt.getText().toString());//文本宽度
+                if (w1 > (w0 * 3)) {
+                    tvHeadShowMore.setVisibility(View.VISIBLE);
+                } else tvHeadShowMore.setVisibility(View.GONE);
+
+            }
+        });
     }
 
 
