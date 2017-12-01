@@ -112,6 +112,7 @@
             android:layout_marginRight="@dimen/app_base_padding"
             android:ellipsize="end"
             android:gravity="left|right"
+            android:lineSpacingMultiplier="1.2"
             android:maxLines="3"
             android:textColor="@color/white"
             android:textSize="@dimen/font_38"/>

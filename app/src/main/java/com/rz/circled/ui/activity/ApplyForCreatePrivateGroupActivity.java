@@ -288,7 +288,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     private void validateSubmit() {
         if (TextUtils.isEmpty(circleId)
-                || TextUtils.isEmpty(etvDesc.getText().toString().trim())
+//                || TextUtils.isEmpty(etvDesc.getText().toString().trim())
                 || TextUtils.isEmpty(coverPath)
                 || TextUtils.isEmpty(etvName.getText().toString().trim())
                 || TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())
