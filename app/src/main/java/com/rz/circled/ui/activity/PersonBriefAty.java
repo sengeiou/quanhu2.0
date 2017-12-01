@@ -55,7 +55,7 @@ public class PersonBriefAty extends BaseActivity implements View.OnClickListener
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         StatusBarUtils.setDarkStatusIcon(this, true);
         if (getIntent().getExtras().getString(TYPE).equals(getString(R.string.mine_person_brief))) {
-            idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(300)});
+            idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
         } else {
             idPersonPriefEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
         }
