@@ -75,6 +75,14 @@ public class MsgSettringDialog extends AlertDialog {
         else
             view.setVisibility(View.GONE);
 
+        findViewById(R.id.btn_chat_menu_create_chat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, ContactsAty.class));
+                dismiss();
+            }
+        });
+
         mBtnAddFrient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +132,13 @@ public class MsgSettringDialog extends AlertDialog {
             public void onClick(View v) {
                 context.startActivity(new Intent(context, ChatSettingActivity.class));
                 dismiss();
+            }
+        });
+        findViewById(R.id.btn_chat_menu_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                new MsgHistoryClearDialog(context).show();
             }
         });
 

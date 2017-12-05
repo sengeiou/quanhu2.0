@@ -1922,7 +1922,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             } else {
                 Map map = new HashMap();
                 if (cbVote.getVisibility() == View.VISIBLE && cbVote.isChecked()) {//投票 走jsSdk
-                    String text = articleItem.content.replaceAll("\\n", "\\\\n").replaceAll("\\r", "").replaceAll("\\t", " ");
+                    String text = articleItem.content.replaceAll("\\n", "<br>").replaceAll("\\r", "").replaceAll("\\t", " ");
                     map.put(RULE_TXT, text);
                     jsResult.add(map);
                     if (TextUtils.isEmpty(dataSource.getContent())) dataSource.setContent(text);

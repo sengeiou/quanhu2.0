@@ -242,6 +242,7 @@
     <string name="private_group_my_level">当前等级为Lv.%1$s</string>
     <string name="private_group_update_icon">上传私圈\n封面图</string>
     <string name="private_group_level_tip">抱歉，您的会员等级达到Lv.5才可以创建私圈，如有疑问请联系客服</string>
+    <string name="private_group_level_tip_other">会员等级达到LV.5才能创建私圈</string>
 
     <!--消息-->
     <string name="announcement">通知公告</string>
@@ -267,6 +268,8 @@
     <string name="chat_setting">聊天设置</string>
     <string name="share_youran_chat">分享到悠然聊天</string>
     <string name="share_chat">分享到聊天</string>
+    <string name="chat_clear_all">清除所有聊天记录</string>
+    <string name="chat_create_chat">新建聊天</string>
 
     <!--分享-->
     <string name="share_object">选择分享对象</string>

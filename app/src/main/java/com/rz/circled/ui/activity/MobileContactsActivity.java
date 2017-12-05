@@ -187,7 +187,7 @@ public class MobileContactsActivity extends BaseActivity implements View.OnClick
          */
         FriendInformationBean item = mAdapter.getItem(i);
         if (item.getRelation() == Type.relation_friend) {
-            
+            UserInfoActivity.newFrindInfo(mContext, item.getCustId());
         } else {
             ((FriendPresenter1) presenter).requestSaveFriendByFriend(item);
         }

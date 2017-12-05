@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.rz.circled.R;
 import com.rz.circled.adapter.MyCircleBannerPagerAdapter;
-import com.rz.circled.dialog.GroupLevelLessDialog;
 import com.rz.circled.helper.BannerJumpHelper;
 import com.rz.circled.presenter.impl.LevelPresenter;
 import com.rz.circled.presenter.impl.PrivateGroupPresenter;
@@ -30,6 +29,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.swiperefresh.SwipyRefreshLayout;
 import com.rz.common.swiperefresh.SwipyRefreshLayoutDirection;
 import com.rz.common.ui.fragment.BaseFragment;
+import com.rz.common.widget.toasty.Toasty;
 import com.rz.httpapi.bean.GroupBannerBean;
 import com.rz.httpapi.bean.MyLevelAcountBean;
 
@@ -165,7 +165,8 @@ public class PrivateCircledFragment extends BaseFragment {
             if (acountBean == null) return;
             String level = TextUtils.isEmpty(acountBean.getGrowLevel()) ? "0" : acountBean.getGrowLevel();
             if (Integer.parseInt(level) < 5)
-                GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+//                GroupLevelLessDialog.newInstance(level).show(getFragmentManager(), "");
+                Toasty.info(mActivity, getString(R.string.private_group_level_tip_other)).show();
             else
                 startActivity(new Intent(getContext(), ApplyForCreatePrivateGroupActivity.class));
         }
@@ -244,7 +245,7 @@ public class PrivateCircledFragment extends BaseFragment {
                 public void onClick(View v) {
 //                    CommonH5Activity.startCommonH5(mActivity, "", pic.getUrl());
 //                    bannerJumpRule(pic);
-                    BannerJumpHelper.bannerJumpActivityHelper(mActivity,pic.getUrl());
+                    BannerJumpHelper.bannerJumpActivityHelper(mActivity, pic.getUrl());
                 }
             });
         }
@@ -260,9 +261,9 @@ public class PrivateCircledFragment extends BaseFragment {
         circleNavigator.setCircleColor(getResources().getColor(R.color.color_main));
         indicatorBanner.setNavigator(circleNavigator);
 
-        if(pics.size()<=1){
+        if (pics.size() <= 1) {
             indicatorBanner.setVisibility(View.GONE);
-        }else{
+        } else {
             indicatorBanner.setVisibility(View.VISIBLE);
         }
 

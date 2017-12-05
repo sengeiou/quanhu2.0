@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:id="@+id/layout_root"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,9 +12,19 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/btn_chat_menu_create_chat"
+            style="@style/MsgFragMenuBtnStyle"
+            android:text="@string/chat_create_chat"/>
+
+        <View
+            style="@style/DefaultHLineStyle"
+            android:visibility="gone"/>
+
+        <TextView
             android:id="@+id/btn_add_friend"
             style="@style/MsgFragMenuBtnStyle"
-            android:text="@string/add_friends" />
+            android:text="@string/add_friends"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:id="@+id/layout"
@@ -22,41 +32,51 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View style="@style/DefaultHLineStyle" />
+            <View style="@style/DefaultHLineStyle"/>
 
             <TextView
                 android:id="@+id/btn_contact"
                 style="@style/MsgFragMenuBtnStyle"
-                android:text="@string/mine_my_contacts" />
+                android:text="@string/mine_my_contacts"/>
 
-            <View style="@style/DefaultHLineStyle" />
+            <View style="@style/DefaultHLineStyle"/>
 
             <TextView
                 android:id="@+id/btn_create_discussion_group"
                 style="@style/MsgFragMenuBtnStyle"
-                android:text="@string/create_group" />
+                android:text="@string/create_group"/>
 
-            <View style="@style/DefaultHLineStyle" />
+            <View style="@style/DefaultHLineStyle"/>
 
             <TextView
                 android:id="@+id/btn_create_group"
                 style="@style/MsgFragMenuBtnStyle"
-                android:text="@string/create_team" />
+                android:text="@string/create_team"/>
 
-            <View style="@style/DefaultHLineStyle" />
+            <View style="@style/DefaultHLineStyle"/>
 
             <TextView
                 android:id="@+id/btn_search_group"
                 style="@style/MsgFragMenuBtnStyle"
-                android:text="@string/search_team" />
+                android:text="@string/search_team"/>
         </LinearLayout>
 
-        <View style="@style/DefaultHLineStyle" />
+        <View
+            style="@style/DefaultHLineStyle"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/btn_setting"
             style="@style/MsgFragMenuBtnStyle"
-            android:text="@string/setting" />
+            android:text="@string/setting"
+            android:visibility="gone"/>
+
+        <View style="@style/DefaultHLineStyle"/>
+
+        <TextView
+            android:id="@+id/btn_chat_menu_clear"
+            style="@style/MsgFragMenuBtnStyle"
+            android:text="@string/chat_clear_all"/>
     </LinearLayout>
 
     <TextView
@@ -66,5 +86,5 @@
         android:layout_marginTop="@dimen/px14"
         android:background="@drawable/rolle_white_bg"
         android:text="@string/cancel"
-        android:textColor="@color/color_333333" />
+        android:textColor="@color/color_333333"/>
 </LinearLayout>
