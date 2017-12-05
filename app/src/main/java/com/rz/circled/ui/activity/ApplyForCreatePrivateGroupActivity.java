@@ -42,8 +42,6 @@ import butterknife.OnClick;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_BELONG_ID;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_CREATE_REFRESH;
 import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_JOIN_WAY;
-import static com.rz.circled.event.EventConstant.PRIVATE_GROUP_TAB_REFRESH;
-import static com.rz.circled.ui.activity.PictureSelectedActivity.PUBLISH_RESULT_CAMERA;
 
 /**
  * Created by rzw2 on 2017/8/31.
@@ -107,10 +105,10 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
                     Toast.makeText(mContext, "请选择圈子", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(etvDesc.getText().toString().trim())) {
-                    Toast.makeText(mContext, "请填写身份简介", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (TextUtils.isEmpty(etvDesc.getText().toString().trim())) {
+//                    Toast.makeText(mContext, "请填写身份简介", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 if (TextUtils.isEmpty(coverPath)) {
                     Toast.makeText(mContext, "请上传私圈封面图", Toast.LENGTH_SHORT).show();
                     return;
@@ -290,7 +288,7 @@ public class ApplyForCreatePrivateGroupActivity extends BaseActivity implements 
 
     private void validateSubmit() {
         if (TextUtils.isEmpty(circleId)
-                || TextUtils.isEmpty(etvDesc.getText().toString().trim())
+//                || TextUtils.isEmpty(etvDesc.getText().toString().trim())
                 || TextUtils.isEmpty(coverPath)
                 || TextUtils.isEmpty(etvName.getText().toString().trim())
                 || TextUtils.isEmpty(etvGroupDesc.getText().toString().trim())

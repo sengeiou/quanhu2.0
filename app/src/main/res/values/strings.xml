@@ -672,7 +672,7 @@
     <string name="mine_person_ex5">个人简介</string>
     <string name="mine_person_ex6">输入昵称</string>
     <string name="mine_sign_default">这个人太懒了，什么都没留下~</string>
-
+    <string name="mine_info_head_intro">个人简介：</string>
     <string name="mine_person_camera">相机</string>
     <string name="mine_person_from_camera">从相机上传</string>
     <string name="mine_person_save_picture">保存图片</string>
@@ -844,4 +844,6 @@
     <string name="what_good_answer">在圈乎平台，达人标识是行业专家或领袖的重要标志，如果您成功认证为达人，会员等级可自动升级到LV5，有权限创建私圈，成为私圈圈主，且享有达人专属的活动及权益。</string>
     <string name="how_identity">怎么认证？</string>
     <string name="how_identity_answer">达人认证分为两类，个人认证和机构认证，您可根据认证需求自行选择，填写对应信息提交， 圈乎在收到认证申请后，3个工作日反馈通过或未通过认证的结果。</string>
+    <string name="user_show_more_open">展开</string>
+    <string name="user_show_more_close">收起</string>
 </resources>

@@ -73,6 +73,7 @@ public class PrivateGroupResourceBean implements Serializable {
     private String ownerName;
     private String ownerIntro;
     private Cust cust;
+    private String coterieName;
 
     public class Cust {
 
@@ -431,5 +432,13 @@ public class PrivateGroupResourceBean implements Serializable {
 
     public void setVideoPic(String videoPic) {
         this.videoPic = videoPic;
+    }
+
+    public String getCoterieName() {
+        return coterieName;
+    }
+
+    public void setCoterieName(String coterieName) {
+        this.coterieName = coterieName;
     }
 }

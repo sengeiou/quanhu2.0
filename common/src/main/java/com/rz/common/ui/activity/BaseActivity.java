@@ -126,6 +126,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
     }
 
     private void initCommonTitle() {
+        if (!needStatusBarTint())
+            commonTitle.setPadding(0, 0, 0, 0);
         tvCommonTitle = (TextView) commonTitle.findViewById(R.id.tv_base_title);
         tvCommonTitleLeft = (TextView) commonTitle.findViewById(R.id.tv_base_title_left);
         tvCommonTitleRight = (TextView) commonTitle.findViewById(R.id.tv_base_title_right);
