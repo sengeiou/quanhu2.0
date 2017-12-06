@@ -375,7 +375,7 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void setData(FriendInformationBean model) {
-
+        signTextOver();
         if (model == null) {
             if (userId.equals(Session.getUserId())) {
 
