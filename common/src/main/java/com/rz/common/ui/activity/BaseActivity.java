@@ -224,7 +224,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IViewCon
      */
     private void initTint() {
         if (needStatusBarTint()) {
-            StatusBarUtils.transparencyBar(this);
             initSupportSwipeBack();
             StatusBarUtils.setDarkStatusIcon(this, true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

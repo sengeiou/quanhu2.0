@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -88,6 +89,17 @@ public class PrivateGroupAllFragment extends BaseFragment {
                 } else {
                     loadData(true);
                 }
+            }
+        });
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                mFloatingButton.setVisibility(firstVisibleItem > 2 ? View.VISIBLE : View.INVISIBLE);
             }
         });
         mFloatingButton.setOnClickListener(new View.OnClickListener() {
