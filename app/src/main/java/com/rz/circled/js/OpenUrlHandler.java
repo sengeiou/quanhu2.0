@@ -38,7 +38,7 @@ public class OpenUrlHandler extends ServerHandler {
             e.printStackTrace();
         }
 
-        BannerJumpHelper.bannerJumpHanderHelper(mActivity,url,false);
+        BannerJumpHelper.bannerJumpHanderHelper(mActivity, url, false);
     }
 
     @Override

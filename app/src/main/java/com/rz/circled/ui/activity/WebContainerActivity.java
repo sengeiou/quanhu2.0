@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import com.rz.circled.BuildConfig;
 import com.rz.circled.R;
 import com.rz.circled.application.QHApplication;
-import com.rz.circled.event.EventConstant;
 import com.rz.circled.js.RequestBackHandler;
 import com.rz.circled.js.RequestJsBroadcastHandler;
 import com.rz.circled.js.model.HeaderModel;
@@ -34,7 +33,7 @@ import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.ui.view.BaseLoadView;
 import com.rz.common.utils.IntentUtil;
-import com.rz.common.utils.StringUtils;
+import com.rz.common.utils.NetUtils;
 import com.rz.common.utils.SystemUtils;
 import com.rz.sgt.jsbridge.BaseParamsObject;
 import com.rz.sgt.jsbridge.JsEvent;
@@ -44,15 +43,12 @@ import com.rz.sgt.jsbridge.core.AndroidBug5497Workaround;
 import com.rz.sgt.jsbridge.core.Callback;
 import com.rz.sgt.jsbridge.core.ParamsObject;
 import com.rz.sgt.jsbridge.core.WebViewProxy;
-import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Map;
 
 public class WebContainerActivity extends BaseActivity implements BaseLoadView.RefreshListener {
 
@@ -60,8 +56,10 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     private WebViewProxy mWebViewProxy;
 
     private boolean processBack = false;
+    private boolean isError = false;
     private WebChromeClient webChromeClient;
     private boolean processLoading = false;
+    private boolean isNetWork = false;
 
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
@@ -130,7 +128,11 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         mWebViewProxy.removeRepetLoadUrl(loadUrl);
         if (processLoading)
             processBack = false;
-
+        if (!NetUtils.isNetworkConnected(this)) {
+            onLoadingStatus(CommonCode.General.UN_NETWORK);
+            isNetWork = true;
+            return;
+        }
         onLoadingStatus(CommonCode.General.DATA_LOADING);
 
 //        mWebViewProxy.removeRepetLoadUrl("file:///android_asset/test.html");
@@ -142,7 +144,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                if (newProgress >= 98 && processLoading) {
+                if (newProgress >= 98 && processLoading && !isError) {
                     mWebView.setVisibility(View.VISIBLE);
                     onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 }
@@ -194,6 +196,13 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
     @Override
     public void refreshPage() {
         processBack = false;
+        isError = false;
+        if (!NetUtils.isNetworkConnected(this)) {
+            onLoadingStatus(CommonCode.General.UN_NETWORK);
+            isNetWork = true;
+            return;
+        }
+        isNetWork = false;
         mWebView.reload();
         onLoadingStatus(CommonCode.General.DATA_LOADING);
     }
@@ -215,6 +224,7 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
         @Override
         public void onPageError(int errorCode, String description, String failingUrl) {
             processBack = false;
+            isError = true;
             onLoadingStatus(CommonCode.General.WEB_ERROR);
         }
 
@@ -276,7 +286,9 @@ public class WebContainerActivity extends BaseActivity implements BaseLoadView.R
 //                if (mWebView != null)
 //                    mWebView.setVisibility(View.VISIBLE);
                 processBack = true;
-                onLoadingStatus(CommonCode.General.DATA_SUCCESS);
+                isError = false;
+                if (!isNetWork)
+                    onLoadingStatus(CommonCode.General.DATA_SUCCESS);
                 break;
         }
     }

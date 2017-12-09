@@ -394,7 +394,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        StatusBarUtils.setDarkStatusIcon(this, true);
+        StatusBarUtils.StatusBarLightMode(this);
         setTitleRightText(R.string.publish);
         setTitleRightTextColor(R.color.color_main);
         setTitleRightListener(new OnTitleRightClickListener());

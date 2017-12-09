@@ -1,5 +1,7 @@
 package com.rz.circled.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.rz.circled.widget.SideBar;
 import com.rz.common.cache.preference.EntityCache;
 import com.rz.common.cache.preference.Session;
 import com.rz.common.constant.IntentCode;
+import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
 import com.rz.common.ui.activity.BaseActivity;
@@ -30,6 +33,7 @@ import com.rz.httpapi.bean.FriendInformationBean;
 import com.rz.httpapi.bean.FriendRequireModel;
 import com.yryz.yunxinim.main.activity.SystemMessageActivity;
 import com.yryz.yunxinim.main.activity.TeamListActivity;
+import com.yryz.yunxinim.session.SessionHelper;
 import com.yryz.yunxinim.uikit.contact.core.item.ItemTypes;
 
 import org.greenrobot.eventbus.EventBus;
@@ -96,6 +100,14 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
     private ContactsAdp mContactsAdp;
 
     private FriendPresenter1 presenter;
+    private boolean imChat;
+
+
+    public static void startActivity(Context context, boolean imChat) {
+        Intent intent = new Intent(context, ContactsAty.class);
+        intent.putExtra(IntentKey.EXTRA_BOOLEAN, imChat);
+        context.startActivity(intent);
+    }
 
     @Override
     protected View loadView(LayoutInflater inflater) {
@@ -110,7 +122,8 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     @Override
     public void initView() {
-        setTitleText(getString(R.string.mine_my_contacts));
+        imChat = getIntent().getBooleanExtra(IntentKey.EXTRA_BOOLEAN, false);
+        setTitleText(imChat ? getString(R.string.select_firend) : getString(R.string.mine_my_contacts));
         setTitleRightText(R.string.add_friends);
         setTitleRightListener(this);
         tvSearch.setText(getString(R.string.search_key1));
@@ -305,7 +318,6 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
 
     private boolean checkLogin() {
         if (!Session.getUserIsLogin() || NIMClient.getStatus() != StatusCode.LOGINED) {
-//        if (!isLogin()) {
             Toasty.info(mContext, getString(R.string.im_link_error_hint)).show();
             return true;
         }
@@ -324,7 +336,11 @@ public class ContactsAty extends BaseActivity implements View.OnClickListener, A
          */
         if (i > 0) {
             if (item != null) {
-                UserInfoActivity.newFrindInfo(aty, item.getCustId());
+                if (!imChat)
+                    UserInfoActivity.newFrindInfo(aty, item.getCustId());
+                else if (!checkLogin()) {
+                    SessionHelper.startP2PSession(this, item.getCustId());
+                }
             }
         }
     }

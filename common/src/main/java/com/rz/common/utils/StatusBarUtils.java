@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,10 +23,10 @@ public class StatusBarUtils {
      * @param activity
      */
     @TargetApi(19)
-    public static void transparencyBar(Activity activity, boolean need) {
+    public static void transparencyBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Window window = activity.getWindow();
-            if (need) {
+            if (!OSUtils.isMIUI()) {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 window.getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -66,12 +65,9 @@ public class StatusBarUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
                 result = 1;
-                transparencyBar(activity, false);
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
                 result = 2;
-                transparencyBar(activity, false);
             } else {
-                transparencyBar(activity, true);
                 normalStatusBarLightMode(activity, true);
                 result = 3;
             }
@@ -96,12 +92,9 @@ public class StatusBarUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (MIUISetStatusBarLightMode(activity.getWindow(), false)) {
                 result = 1;
-                transparencyBar(activity, false);
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), false)) {
                 result = 2;
-                transparencyBar(activity, false);
             } else {
-                transparencyBar(activity, true);
                 normalStatusBarLightMode(activity, false);
                 result = 3;
             }
@@ -196,7 +189,6 @@ public class StatusBarUtils {
                 window.setAttributes(lp);
                 result = true;
             } catch (Exception e) {
-                Log.d("statusBar", "Flyme = " + e.toString());
             }
         }
         return result;
@@ -226,7 +218,6 @@ public class StatusBarUtils {
                 }
                 result = true;
             } catch (Exception e) {
-                Log.d("statusBar", "miui = " + e.toString());
             }
         }
         return result;

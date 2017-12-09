@@ -120,7 +120,7 @@ public class SplashAty extends BaseActivity {
                         jumpTo();
                     }
                 } else {
-                    if (Session.getUserIsLogin()){
+                    if (Session.getUserIsLogin()) {
                         skipActivity(aty, MainActivity.class);
                         return;
                     }
@@ -131,17 +131,18 @@ public class SplashAty extends BaseActivity {
 //                        finish();
 //
 //                    }else{
-                        skipActivity(aty, GuideActivity.class);
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    skipActivity(aty, GuideActivity.class);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 //                    }
                 }
             }
         }, 2000);
     }
+
     @Override
     public <T> void updateViewWithFlag(T t, int flag) {
         super.updateViewWithFlag(t, flag);
-        bannerList= (List<BannerAddSubjectModel>) t;
+        bannerList = (List<BannerAddSubjectModel>) t;
     }
 
     @Override
@@ -152,45 +153,45 @@ public class SplashAty extends BaseActivity {
     private void initV() throws ParseException {
 //        loadRewardGiftList();
         //当前日期
-        if (Protect.checkLoadImageStatus(aty)&&!StringUtil.isEmpty(Session.getAdv_pic_url())) {
+        if (Protect.checkLoadImageStatus(aty) && !StringUtil.isEmpty(Session.getAdv_pic_url())) {
             Glide.with(aty).load(Session.getAdv_pic_url()).placeholder(R.drawable.page_bg_qq_new).into(mImgBg);
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long currentTime = System.currentTimeMillis();
         String format = sdf.format(new Date(currentTime));
-        Log.i(TAG, "initV: "+format);
+        Log.i(TAG, "initV: " + format);
         //上刊日期
         String adv_upIngDate = Session.getAdv_upIngDate();
         String adv_exDate = Session.getAdv_expireDate();
-        if (!StringUtil.isEmpty(adv_upIngDate)&&!StringUtil.isEmpty(adv_exDate)){
-        long startTime = sdf.parse(adv_upIngDate).getTime();
-        long endTime = sdf.parse(adv_exDate).getTime();
-        //过期日期
-        Log.d("time-----", "当前时间" + currentTime + "上刊时间" + startTime + "过期日期" + endTime);
-        if (currentTime >= startTime && currentTime < endTime) {
-            recLen = 1000 * 5;
+        if (!StringUtil.isEmpty(adv_upIngDate) && !StringUtil.isEmpty(adv_exDate)) {
+            long startTime = sdf.parse(adv_upIngDate).getTime();
+            long endTime = sdf.parse(adv_exDate).getTime();
+            //过期日期
+            Log.d("time-----", "当前时间" + currentTime + "上刊时间" + startTime + "过期日期" + endTime);
+            if (currentTime >= startTime && currentTime < endTime) {
+                recLen = 1000 * 5;
                 if (Protect.checkLoadImageStatus(aty)) {
                     Glide.with(aty).load(Session.getAdv_pic_url()).diskCacheStrategy(DiskCacheStrategy.ALL).into(mImgBg);
                 }
 
-            if (!StringUtils.isEmpty(Session.getAdv_url()) && isNetUrl(Session.getAdv_url())) {
-                mImgBg.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        isClickAdv = true;
-                        if (!TextUtils.isEmpty(Session.getAdv_url())) {
-                            CommonH5Activity.startCommonH5(aty, "", Session.getAdv_url(),true);
+                if (!StringUtils.isEmpty(Session.getAdv_url()) && isNetUrl(Session.getAdv_url())) {
+                    mImgBg.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            isClickAdv = true;
+                            if (!TextUtils.isEmpty(Session.getAdv_url())) {
+                                CommonH5Activity.startCommonH5(aty, "", Session.getAdv_url(), true, false);
+                            }
                         }
-                    }
-                });
-            }
-        } else {
+                    });
+                }
+            } else {
 //            recLen = 1000 * 4;
 //
 //            mImgBg.setImageResource(R.drawable.bg_splash_activity);
-            jumpTo();
-        }
-        }else{
+                jumpTo();
+            }
+        } else {
             jumpTo();
             return;
         }
@@ -232,10 +233,10 @@ public class SplashAty extends BaseActivity {
      * 跳转
      */
     private void jumpTo() {
-        if (!isClickAdv){
+        if (!isClickAdv) {
 //        if (Session.getUserIsLogin()) {
             skipActivity(aty, MainActivity.class);
-            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 //        } else {
 //            skipActivity(aty, LoginActivity.class);
 //        }
@@ -264,7 +265,7 @@ public class SplashAty extends BaseActivity {
         @Override
         public void onFinish() {
             isTimeOver = true;
-            Log.i(TAG, "onFinish: "+"lixiang");
+            Log.i(TAG, "onFinish: " + "lixiang");
             jumpTo();
         }
     }

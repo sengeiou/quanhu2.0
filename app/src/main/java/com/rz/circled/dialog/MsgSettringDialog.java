@@ -78,7 +78,7 @@ public class MsgSettringDialog extends AlertDialog {
         findViewById(R.id.btn_chat_menu_create_chat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, ContactsAty.class));
+                ContactsAty.startActivity(context, true);
                 dismiss();
             }
         });
