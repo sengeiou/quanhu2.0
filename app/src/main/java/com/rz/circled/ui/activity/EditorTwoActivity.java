@@ -1293,7 +1293,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             Toasty.info(this, getString(R.string.editor_content_null)).show();
             return;
         }
-        jsResult = new ArrayList<>();
         if (!NetUtils.isNetworkConnected(mContext)) {
             Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
             return;
@@ -1910,6 +1909,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void addTextImageJsContent() {
+        dataSource.setContent("");
         for (int i = 0; i < articleItems.size(); i++) {
             ArticleItem articleItem = articleItems.get(i);
             if (articleItem.type == TYPE_IMAGE) {
@@ -2017,9 +2017,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                             UploadPicManager.UploadInfo uploadInfo = resultList.get(i);
                             articleItems.get((Integer) uploadInfo.tag).content = uploadInfo.fileSavePath;
                         }
-                        if (jsResult == null) {
-                            jsResult = new ArrayList<>();
-                        }
                         addTextImageJsContent();
                         uploadVideo();
                     } else {
@@ -2107,7 +2104,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                         public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
                             Log.d(TAG, "this is mVideoFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
                             if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
-                                if (jsResult == null) jsResult = new ArrayList<>();
                                 mVideoUrl = OssManager.CDN + OssManager.VIDEO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle :
                                         ossDir) + mVideoFileName;
                                 uploadVideoPic();
@@ -2153,9 +2149,6 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
                             Log.d(TAG, "this is mAudioFilePath upload result result is " + putObjectResult.getServerCallbackReturnBody());
                             if (!TextUtils.isEmpty(putObjectResult.getRequestId()) && !TextUtils.isEmpty(putObjectResult.getETag())) {
                                 String OSS_HOST = OssManager.CDN;
-                                if (jsResult == null) {
-                                    jsResult = new ArrayList<>();
-                                }
                                 mAudioUrl = OSS_HOST + OssManager.AUDIO + (TextUtils.isEmpty(ossDir) ? OssManager.objectNameCircle :
                                         ossDir) +
                                         mAudioFileName;
