@@ -1293,6 +1293,7 @@ public class EditorTwoActivity extends BaseActivity implements View.OnClickListe
             Toasty.info(this, getString(R.string.editor_content_null)).show();
             return;
         }
+        jsResult.clear();
         if (!NetUtils.isNetworkConnected(mContext)) {
             Toasty.error(mContext, mContext.getString(R.string.no_net_work)).show();
             return;
