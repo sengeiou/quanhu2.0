@@ -64,6 +64,7 @@ import com.yryz.yunxinim.uikit.common.util.string.StringUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -462,7 +463,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         Session.setNewsActivityNum((map.get(NewsTypeConstants.NEWS_ACTIVITY) != null && map.get(NewsTypeConstants.NEWS_ACTIVITY) != 0) ? Session.getNewsActivityNum() + map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventBus(BaseEvent event) {
         switch (event.getType()) {
             case EventConstant.NEWS_COME_UNREAD:

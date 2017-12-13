@@ -170,8 +170,8 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
     @Override
     public void initView() {
 
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+//        if (!EventBus.getDefault().isRegistered(this))
+//            EventBus.getDefault().register(this);
 
         mActivityRefresh.setDirection(SwipyRefreshLayoutDirection.BOTH);
         mActivityRefresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
@@ -250,26 +250,26 @@ public class MyActivityFragment extends BaseFragment implements SwipeRefreshLayo
         return mLv;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            View view = View.inflate(mActivity, R.layout.foot_view, null);
-            if (mLv.getFooterViewsCount() <= 0) {
-                mLv.addFooterView(view);
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEvent(BaseEvent baseEvent) {
+//        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+//            View view = View.inflate(mActivity, R.layout.foot_view, null);
+//            if (mLv.getFooterViewsCount() <= 0) {
+//                mLv.addFooterView(view);
+//
+//                mEntitiesBeanCommonAdapter.notifyDataSetChanged();
+//                mLv.setAdapter(mEntitiesBeanCommonAdapter);
+//            }
+//        }
+//    }
 
-                mEntitiesBeanCommonAdapter.notifyDataSetChanged();
-                mLv.setAdapter(mEntitiesBeanCommonAdapter);
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        if (EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
+//    }
 
 
 }

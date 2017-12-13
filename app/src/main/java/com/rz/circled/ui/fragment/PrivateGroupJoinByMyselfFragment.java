@@ -116,11 +116,11 @@ public class PrivateGroupJoinByMyselfFragment extends BaseFragment {
                 }
             });
         } else {
-            if (lv.getFooterViewsCount() <= 0) {
-                LayoutInflater inflater = LayoutInflater.from(mActivity);
-                View view = inflater.inflate(R.layout.foot_view, null);
-                lv.addFooterView(view);
-            }
+//            if (lv.getFooterViewsCount() <= 0) {
+//                LayoutInflater inflater = LayoutInflater.from(mActivity);
+//                View view = inflater.inflate(R.layout.foot_view, null);
+//                lv.addFooterView(view);
+//            }
         }
 
         lv.setAdapter(mAdapter = new DefaultPricePrivateGroupAdapter(getContext(), R.layout.item_default_private_group, DefaultPrivateGroupAdapter.TYPE_DESC));
