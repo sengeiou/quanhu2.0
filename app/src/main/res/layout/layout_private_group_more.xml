@@ -6,7 +6,7 @@
 
     <View
         android:id="@+id/line"
-        style="@style/line_horizontal_gray_s"
+        style="@style/line_horizontal_gray_s.inset"
         android:visibility="gone"/>
 
     <TextView
