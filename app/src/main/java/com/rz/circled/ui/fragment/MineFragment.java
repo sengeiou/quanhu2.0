@@ -597,21 +597,29 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             data = (ProveStatusBean) t;
 
             if (data.getAuthStatus() == ProveStatusBean.STATUS_ING) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
                 famousTxt.setText("认证审核中");
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
-                famousLayout.getBackground().setAlpha(0);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
+                    famousLayout.getBackground().setAlpha(0);
+                }
                 famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(data.getTradeField());
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
                 famousTxt.setText("认证失败");
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || data.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
                 famousTxt.setText("达人认证");
             }
 
@@ -651,14 +659,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
             famousLayout.setVisibility(View.VISIBLE);
             if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
-                if (famousLayout != null) {
+                if (famousLayout != null && famousLayout.getBackground() != null) {
                     famousLayout.getBackground().setAlpha(255);
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
 
                 }
                 famousTxt.setText("认证审核中");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                if (famousLayout != null) {
+                if (famousLayout != null  && famousLayout.getBackground() != null) {
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
                     famousLayout.setBackgroundResource(0);
                 }
@@ -666,14 +674,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(proveStatusBean.getTradeField());
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
-                if (famousLayout != null) {
+                if (famousLayout != null  && famousLayout.getBackground() != null) {
                     famousLayout.getBackground().setAlpha(255);
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 }
 
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
-                if (famousLayout != null) {
+                if (famousLayout != null  && famousLayout.getBackground() != null) {
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                     famousLayout.getBackground().setAlpha(255);
                 }
