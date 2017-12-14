@@ -22,7 +22,7 @@ def gitVersionCode() {
  * @return versionName
  */
 def gitVersionName(String buildType) {
-    return "1.0.7"
+    return "1.0.8"
 }
 
 android {
