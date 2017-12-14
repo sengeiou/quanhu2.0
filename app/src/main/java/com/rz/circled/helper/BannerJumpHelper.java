@@ -46,9 +46,9 @@ public class BannerJumpHelper {
                     }
                 }else if(reward_aty.equals(category)){  //悬赏
 
+                    mActivity.finish();
                     intent.setClass(mActivity,MainActivity.class);
                     mActivity.startActivity(intent);
-                    mActivity.finish();
                     //发送event到
                     EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
                 }
