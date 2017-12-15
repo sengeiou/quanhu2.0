@@ -96,7 +96,7 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
+            android:theme="@style/BaseAppTheme.Main"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
             <intent-filter>

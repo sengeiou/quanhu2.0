@@ -108,17 +108,28 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        processIntent();
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void initView() {
         String type = getIntent().getStringExtra(JUMP_FIND_FIRST);
         tabHost.setup(this, getSupportFragmentManager(), R.id.fl_main_content);
         tabHost.setOnTabChangedListener(this);
         tabHost.setInterceptTagChanged(this);
         tabHost.getTabWidget().setDividerDrawable(null);
-        tabHost.addTab(tabHost.newTabSpec(tabTags[0]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_home, null)), HomeFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(tabTags[1]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_find, null)), FindFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(tabTags[2]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_reward, null)), RewardFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(tabTags[3]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_private_circle, null)), PrivateCircledFragment.class, null);
-        tabHost.addTab(tabHost.newTabSpec(tabTags[4]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_mine, null)), MineFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(tabTags[0]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_home, null)),
+                HomeFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(tabTags[1]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_find, null)),
+                FindFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(tabTags[2]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_reward, null)),
+                RewardFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(tabTags[3]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_private_circle,
+                null)), PrivateCircledFragment.class, null);
+        tabHost.addTab(tabHost.newTabSpec(tabTags[4]).setIndicator(getLayoutInflater().inflate(R.layout.layout_main_tab_mine, null)),
+                MineFragment.class, null);
         if (FIRST_BLOOD.equals(type)) {
             tabHost.setCurrentTab(1);
         }
@@ -130,50 +141,53 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        if (intent != null) {
-            Uri uri = intent.getData();
-            if (uri != null){
-                List<String> pathSegments = uri.getPathSegments();
-//                String uriQuery = uri.getQuery();
-                if (pathSegments != null && pathSegments.size() > 0) {
-                    String scheme = this.getIntent().getScheme();//获得S称
-                    String host = uri.getHost();
+        processIntent();
+    }
 
+    private void processIntent() {
+        Intent intent = getIntent();
+        if (intent == null) return;
+        Uri uri = intent.getData();
+        if (uri != null) {
+            List<String> pathSegments = uri.getPathSegments();
+            if (pathSegments != null && pathSegments.size() > 0) {
+                String scheme = this.getIntent().getScheme();//获得S称
+                String host = uri.getHost();
 //                    String test  ="quanhu://open/data?type=1&url=https://opus-mo.quanhu365.com/activity/qql&category=1002";
 //                    Uri urlff = Uri.parse(test);
-                    if(!StringUtil.isEmpty(scheme) && !StringUtil.isEmpty(host)){
-                        String tab = uri.getQueryParameter("type");
-                        String url = uri.getQueryParameter("url");
-                        String categary = uri.getQueryParameter("category");
-                        String custId = uri.getQueryParameter("custId");
-
-                        if(BannerJumpHelper.tab_html.equals(tab)){
-                            WebContainerActivity.startActivity(this,url);
-                        }else if(BannerJumpHelper.tab_native.equals(tab)){
-                            if(BannerJumpHelper.user_info_acy.equals(categary)){    //个人中心
-                                if(!StringUtil.isEmpty(custId)){
-                                    UserInfoActivity.newFrindInfo(this,custId);
-                                }
-                            }else if(BannerJumpHelper.reward_aty.equals(categary)){  //悬赏
-                                intent.setClass(this,MainActivity.class);
-                                startActivity(intent);
-                                //发送event到
-                                EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
+                if (!StringUtil.isEmpty(scheme) && !StringUtil.isEmpty(host)) {
+                    String tab = uri.getQueryParameter("type");
+                    String url = uri.getQueryParameter("url");
+                    String categary = uri.getQueryParameter("category");
+                    String custId = uri.getQueryParameter("custId");
+                    if (BannerJumpHelper.tab_html.equals(tab)) {
+                        WebContainerActivity.startActivity(this, url);
+                    } else if (BannerJumpHelper.tab_native.equals(tab)) {
+                        if (BannerJumpHelper.user_info_acy.equals(categary)) {    //个人中心
+                            if (!StringUtil.isEmpty(custId)) {
+                                UserInfoActivity.newFrindInfo(this, custId);
                             }
-                        }else{
-                            CommonH5Activity.startCommonH5(this,"",url);
+                        } else if (BannerJumpHelper.reward_aty.equals(categary)) {  //悬赏
+                            intent.setClass(this, MainActivity.class);
+                            startActivity(intent);
+                            //发送event到
+                            EventBus.getDefault().post(new BaseEvent(EventConstant.SET_REWARD_TAB));
                         }
+                    } else {
+                        CommonH5Activity.startCommonH5(this, "", url);
                     }
-                } else {
-                    finish();
                 }
+            } else {
+                finish();
             }
         }
+
     }
 
     @Override
     public void initData() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.KILL_BACKGROUND_PROCESSES};
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission
+                .READ_EXTERNAL_STORAGE, Manifest.permission.KILL_BACKGROUND_PROCESSES};
         if (!EasyPermissions.hasPermissions(this, perms)) {
             EasyPermissions.requestPermissions(this, getString(R.string.carme_sd_permission), RC_VIDEO_AND_EXTENER, perms);
         }
@@ -350,9 +364,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             intent.setAction(UI.KICKACTION);
             sendBroadcast(intent);
 
-            new Thread(new Runnable(){
+            new Thread(new Runnable() {
 
-                public void run(){
+                public void run() {
                     try {
                         Thread.sleep(500);
                         EventBus.getDefault().post(new KickEvent(5));
@@ -404,9 +418,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     private void loadUnreadMessage() {
-        Http.getApiService(ApiNewsService.class).newsUnread(Session.getUserId()).enqueue(new BaseCallback<ResponseData<HashMap<String, String>>>() {
+        Http.getApiService(ApiNewsService.class).newsUnread(Session.getUserId()).enqueue(new BaseCallback<ResponseData<HashMap<String,
+                String>>>() {
             @Override
-            public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>> response) {
+            public void onResponse(Call<ResponseData<HashMap<String, String>>> call, Response<ResponseData<HashMap<String, String>>>
+                    response) {
                 super.onResponse(call, response);
                 if (response.isSuccessful() && response.body().isSuccessful()) {
                     HashMap<String, String> data = response.body().getData();
@@ -453,14 +469,25 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             }
         }
 
-        Session.setNewsAnnouncementNum((map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != null && map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != 0) ? Session.getNewsAnnouncementNum() + map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) : Session.getNewsAnnouncementNum());
-        Session.setNewsSystemInformationNum((map.get(NewsTypeConstants.NEWS_SYSTEM) != null && map.get(NewsTypeConstants.NEWS_SYSTEM) != 0) ? Session.getNewsSystemInformationNum() + map.get(NewsTypeConstants.NEWS_SYSTEM) : Session.getNewsSystemInformationNum());
-        Session.setNewsAccountInformationNum((map.get(NewsTypeConstants.NEWS_ACCOUNT) != null && map.get(NewsTypeConstants.NEWS_ACCOUNT) != 0) ? Session.getNewsAccountInformationNum() + map.get(NewsTypeConstants.NEWS_ACCOUNT) : Session.getNewsAccountInformationNum());
-        Session.setNewsRecommendNum((map.get(NewsTypeConstants.NEWS_RECOMMEND) != null && map.get(NewsTypeConstants.NEWS_RECOMMEND) != 0) ? Session.getNewsRecommendNum() + map.get(NewsTypeConstants.NEWS_RECOMMEND) : Session.getNewsRecommendNum());
-        Session.setNewsCommentNum((map.get(NewsTypeConstants.NEWS_COMMENT) != null && map.get(NewsTypeConstants.NEWS_COMMENT) != 0) ? Session.getNewsCommentNum() + map.get(NewsTypeConstants.NEWS_COMMENT) : Session.getNewsCommentNum());
-        Session.setNewsQaNum((map.get(NewsTypeConstants.NEWS_ANSWER) != null && map.get(NewsTypeConstants.NEWS_ANSWER) != 0) ? Session.getNewsQaNum() + map.get(NewsTypeConstants.NEWS_ANSWER) : Session.getNewsQaNum());
-        Session.setNewsGroupNum((map.get(NewsTypeConstants.NEWS_GROUP) != null && map.get(NewsTypeConstants.NEWS_GROUP) != 0) ? Session.getNewsGroupNum() + map.get(NewsTypeConstants.NEWS_GROUP) : Session.getNewsGroupNum());
-        Session.setNewsActivityNum((map.get(NewsTypeConstants.NEWS_ACTIVITY) != null && map.get(NewsTypeConstants.NEWS_ACTIVITY) != 0) ? Session.getNewsActivityNum() + map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
+        Session.setNewsAnnouncementNum((map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) != null && map.get(NewsTypeConstants
+                .NEWS_ANNOUNCEMENT) != 0) ? Session.getNewsAnnouncementNum() + map.get(NewsTypeConstants.NEWS_ANNOUNCEMENT) : Session
+                .getNewsAnnouncementNum());
+        Session.setNewsSystemInformationNum((map.get(NewsTypeConstants.NEWS_SYSTEM) != null && map.get(NewsTypeConstants.NEWS_SYSTEM) !=
+                0) ? Session.getNewsSystemInformationNum() + map.get(NewsTypeConstants.NEWS_SYSTEM) : Session.getNewsSystemInformationNum
+                ());
+        Session.setNewsAccountInformationNum((map.get(NewsTypeConstants.NEWS_ACCOUNT) != null && map.get(NewsTypeConstants.NEWS_ACCOUNT)
+                != 0) ? Session.getNewsAccountInformationNum() + map.get(NewsTypeConstants.NEWS_ACCOUNT) : Session
+                .getNewsAccountInformationNum());
+        Session.setNewsRecommendNum((map.get(NewsTypeConstants.NEWS_RECOMMEND) != null && map.get(NewsTypeConstants.NEWS_RECOMMEND) != 0)
+                ? Session.getNewsRecommendNum() + map.get(NewsTypeConstants.NEWS_RECOMMEND) : Session.getNewsRecommendNum());
+        Session.setNewsCommentNum((map.get(NewsTypeConstants.NEWS_COMMENT) != null && map.get(NewsTypeConstants.NEWS_COMMENT) != 0) ?
+                Session.getNewsCommentNum() + map.get(NewsTypeConstants.NEWS_COMMENT) : Session.getNewsCommentNum());
+        Session.setNewsQaNum((map.get(NewsTypeConstants.NEWS_ANSWER) != null && map.get(NewsTypeConstants.NEWS_ANSWER) != 0) ? Session
+                .getNewsQaNum() + map.get(NewsTypeConstants.NEWS_ANSWER) : Session.getNewsQaNum());
+        Session.setNewsGroupNum((map.get(NewsTypeConstants.NEWS_GROUP) != null && map.get(NewsTypeConstants.NEWS_GROUP) != 0) ? Session
+                .getNewsGroupNum() + map.get(NewsTypeConstants.NEWS_GROUP) : Session.getNewsGroupNum());
+        Session.setNewsActivityNum((map.get(NewsTypeConstants.NEWS_ACTIVITY) != null && map.get(NewsTypeConstants.NEWS_ACTIVITY) != 0) ?
+                Session.getNewsActivityNum() + map.get(NewsTypeConstants.NEWS_ACTIVITY) : Session.getNewsActivityNum());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -542,7 +569,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void refreshPage() {
 
     }
-
 
 
 }
