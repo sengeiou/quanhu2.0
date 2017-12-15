@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.cpoopc.scrollablelayoutlib.ScrollableHelper;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.rz.circled.R;
@@ -43,7 +44,7 @@ import static com.rz.common.constant.IntentKey.EXTRA_TYPE;
  * Created by rzw2 on 2017/8/31.
  */
 
-public class UserInfoCreateByMyselfFragment extends BaseFragment {
+public class UserInfoCreateByMyselfFragment extends BaseFragment implements ScrollableHelper.ScrollableContainer{
 
     public static final int TYPE_PART = 0;
     public static final int TYPE_ALL = 1;
@@ -257,4 +258,8 @@ public class UserInfoCreateByMyselfFragment extends BaseFragment {
         loadData(false);
     }
 
+    @Override
+    public View getScrollableView() {
+        return lv;
+    }
 }

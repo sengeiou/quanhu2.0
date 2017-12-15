@@ -170,7 +170,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px44"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:layout_width="2dp"
@@ -190,13 +191,13 @@
                     android:textSize="@dimen/font_46"/>
             </LinearLayout>
 
-            <View style="@style/line_horizontal_gray_s"/>
+            <!--<View style="@style/line_horizontal_gray_s"/>-->
 
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/px44"
-                android:layout_marginTop="@dimen/px44">
+                android:layout_marginTop="@dimen/px1">
 
                 <LinearLayout
                     android:id="@+id/btn_update_pic"

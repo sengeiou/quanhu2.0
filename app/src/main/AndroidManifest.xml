@@ -96,14 +96,13 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
+            android:theme="@style/BaseAppTheme.Main"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
             <intent-filter>
                 <action android:name="quanhu.main"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 

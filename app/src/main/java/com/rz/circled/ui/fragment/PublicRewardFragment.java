@@ -77,21 +77,23 @@ public class PublicRewardFragment extends BaseFragment implements ScrollableHelp
         rewardAdapter.setData(rewardBeanList);
 
         //他人中心的时候需要添加底部间距
-        if(!Session.getUserId().equals(userid)){
-            if(lvReward.getFooterViewsCount()<=0){
-
-                LayoutInflater inflater = LayoutInflater.from(mActivity);
-                View view = inflater.inflate(R.layout.foot_view, null);
-                lvReward.addFooterView(view);
-
-            }
-        }
+//        if(!Session.getUserId().equals(userid)){
+//            if(lvReward.getFooterViewsCount()<=0){
+//
+//                LayoutInflater inflater = LayoutInflater.from(mActivity);
+//                View view = inflater.inflate(R.layout.foot_view, null);
+//                lvReward.addFooterView(view);
+//
+//            }
+//        }
 
         lvReward.setAdapter(rewardAdapter);
 
         lvReward.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 CommonH5JumpHelper.startRewardDetail(mActivity,rewardBeanList.get(position).getId()+"");
             }
         });

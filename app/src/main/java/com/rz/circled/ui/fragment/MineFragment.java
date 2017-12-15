@@ -1,10 +1,12 @@
 package com.rz.circled.ui.fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,28 +16,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.StatusCode;
 import com.rz.circled.R;
 import com.rz.circled.event.EventConstant;
 import com.rz.circled.modle.CircleStatsModel;
 import com.rz.circled.modle.CustormServiceModel;
 import com.rz.circled.modle.MineFragItemModel;
-import com.rz.circled.modle.ShareModel;
 import com.rz.circled.presenter.IPresenter;
 import com.rz.circled.presenter.impl.AccountPresenter;
 import com.rz.circled.presenter.impl.FriendPresenter1;
 import com.rz.circled.presenter.impl.ProveInfoPresenter;
 import com.rz.circled.presenter.impl.V3CirclePresenter;
-import com.rz.circled.ui.activity.AccountDetailAty;
 import com.rz.circled.ui.activity.ChooseProveIdentityActivity;
 import com.rz.circled.ui.activity.CommonH5Activity;
 import com.rz.circled.ui.activity.ContactsAty;
-import com.rz.circled.ui.activity.InviteRecordActivity;
 import com.rz.circled.ui.activity.InviteRewardActivity;
-import com.rz.circled.ui.activity.LoginActivity;
 import com.rz.circled.ui.activity.MinePageActivity;
 import com.rz.circled.ui.activity.MineRewardActivity;
 import com.rz.circled.ui.activity.MyAccountAty;
@@ -47,14 +44,11 @@ import com.rz.circled.ui.activity.MyLevelActivity;
 import com.rz.circled.ui.activity.MyPrivateGroupActivity;
 import com.rz.circled.ui.activity.MyRewardActivity;
 import com.rz.circled.ui.activity.NewsActivity;
-import com.rz.circled.ui.activity.PersonInfoAty;
 import com.rz.circled.ui.activity.PersonScanAty;
 import com.rz.circled.ui.activity.ScoreDetailAty;
 import com.rz.circled.ui.activity.SettingActivity;
-import com.rz.circled.ui.activity.ShareNewsAty;
 import com.rz.circled.ui.activity.UserInfoActivity;
 import com.rz.circled.widget.GlideCircleImage;
-import com.rz.circled.widget.GlideRoundImage;
 import com.rz.circled.widget.MyScrollView;
 import com.rz.circled.widget.ObservableListView;
 import com.rz.common.adapter.CommonAdapter;
@@ -65,12 +59,13 @@ import com.rz.common.constant.CommonCode;
 import com.rz.common.constant.Constants;
 import com.rz.common.constant.H5Address;
 import com.rz.common.constant.IntentCode;
-import com.rz.common.constant.IntentKey;
 import com.rz.common.constant.Type;
 import com.rz.common.event.BaseEvent;
+import com.rz.common.permission.AfterPermissionGranted;
+import com.rz.common.permission.AppSettingsDialog;
+import com.rz.common.permission.EasyPermissions;
 import com.rz.common.ui.fragment.BaseFragment;
 import com.rz.common.utils.DensityUtils;
-import com.rz.common.utils.ImageUtils;
 import com.rz.common.utils.Protect;
 import com.rz.common.utils.StringUtils;
 import com.rz.httpapi.api.ResponseData.ResponseData;
@@ -81,11 +76,13 @@ import com.rz.httpapi.bean.UserInviteLinkBean;
 import com.rz.httpapi.bean.UserSignBean;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
-import com.zbar.lib.encoding.EncodingUtils;
+import com.zbar.lib.activity.CaptureActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -96,13 +93,14 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.rz.common.utils.SystemUtils.trackUser;
-import static com.umeng.socialize.utils.DeviceConfig.context;
 
 
 /**
  * Created by Gsm on 2017/8/29.
  */
 public class MineFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+
+    private final int REQUEST_CAMER_CODE = 100;
 
     /**
      * 用户头像
@@ -468,6 +466,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         MineFragItemModel modeTicket = new MineFragItemModel(true, getString(R.string.mine_my_ticket), R.mipmap.ic_ticket, true);
         MineFragItemModel modeAddlist = new MineFragItemModel(true, getString(R.string.mine_my_contacts), R.mipmap.ic_addlist, false);
         MineFragItemModel modeCode = new MineFragItemModel(true, getString(R.string.mine_my_qrcode), R.mipmap.ic_code, false);
+        MineFragItemModel modeScan = new MineFragItemModel(true, getString(R.string.add_friend_sweep), R.mipmap.icon_me_scan, false);
         MineFragItemModel modeFriend = new MineFragItemModel(true, getString(R.string.mine_my_invite_friend), R.mipmap.ic_friend, true);
         MineFragItemModel modeService = new MineFragItemModel(true, getString(R.string.v3_customer_service), R.mipmap.ic_custom_service, false);
         MineFragItemModel modeHelp = new MineFragItemModel(true, getString(R.string.mine_my_kefu), R.mipmap.ic_help, false);
@@ -486,6 +485,7 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
         mModelList.add(modeAddlist);//通讯录
 
         mModelList.add(modeCode);//我的二维码
+        mModelList.add(modeScan);//扫一扫
         mModelList.add(modeFriend);//一键邀请好友
         mModelList.add(modeService);//联系客服
         mModelList.add(modeHelp);//帮助
@@ -597,21 +597,29 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             data = (ProveStatusBean) t;
 
             if (data.getAuthStatus() == ProveStatusBean.STATUS_ING) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
                 famousTxt.setText("认证审核中");
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
-                famousLayout.getBackground().setAlpha(0);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
+                    famousLayout.getBackground().setAlpha(0);
+                }
                 famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(data.getTradeField());
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
                 famousTxt.setText("认证失败");
             } else if (data.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || data.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
-                famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
-                famousLayout.getBackground().setAlpha(255);
+                if (famousLayout != null && famousLayout.getBackground() != null) {
+                    famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
+                    famousLayout.getBackground().setAlpha(255);
+                }
                 famousTxt.setText("达人认证");
             }
 
@@ -651,14 +659,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
             }
             famousLayout.setVisibility(View.VISIBLE);
             if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_ING) {
-                if (famousLayout != null) {
+                if (famousLayout != null && famousLayout.getBackground() != null) {
                     famousLayout.getBackground().setAlpha(255);
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
 
                 }
                 famousTxt.setText("认证审核中");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_SUCCESS) {
-                if (famousLayout != null) {
+                if (famousLayout != null  && famousLayout.getBackground() != null) {
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg);
                     famousLayout.setBackgroundResource(0);
                 }
@@ -666,14 +674,14 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 famousTxt.setTextColor(ContextCompat.getColor(mActivity, R.color.color_fff000));
                 famousTxt.setText(proveStatusBean.getTradeField());
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_FAIL) {
-                if (famousLayout != null) {
+                if (famousLayout != null  && famousLayout.getBackground() != null) {
                     famousLayout.getBackground().setAlpha(255);
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                 }
 
                 famousTxt.setText("认证失败");
             } else if (proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_CANCEL || proveStatusBean.getAuthStatus() == ProveStatusBean.STATUS_NORMAL) {
-                if (famousLayout != null) {
+                if (famousLayout != null  && famousLayout.getBackground() != null) {
                     famousLayout.setBackgroundResource(R.drawable.shape_white_bg1);
                     famousLayout.getBackground().setAlpha(255);
                 }
@@ -771,15 +779,17 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
 
                 }
                 break;
-
             case 10:
+                toScan();
+                break;
+            case 11:
                 if (isLogin()) {
                     trackUser("我的", "入口名称", "一键邀请好友");
                     jump(InviteRewardActivity.class);
                 }
                 break;
 
-            case 11:
+            case 12:
                 if (isLogin() && null != mCustormServiceModel) {
                     trackUser("我的", "入口名称", "联系客服");
                     starCustormService();
@@ -787,15 +797,28 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                     CommonH5Activity.startCommonH5(mActivity, "", H5Address.CONECT_US);
                 }
                 break;
-            case 12:
+            case 13:
                 trackUser("我的", "帮助", "设置");
                 CommonH5Activity.startCommonH5(mActivity, "", H5Address.USER_HELP);
                 break;
-            case 13:
+            case 14:
                 trackUser("我的", "入口名称", "设置");
                 Intent intent = new Intent(mActivity, SettingActivity.class);
                 startActivityForResult(intent, IntentCode.MineFrg.MINE_REQUEST_CODE);
                 break;
+        }
+    }
+
+    @AfterPermissionGranted(REQUEST_CAMER_CODE)
+    private void toScan() {
+        trackUser("我的", "添加好友", "扫一扫");
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(mActivity, perms)) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, CaptureActivity.class);
+            startActivityForResult(intent, 0);
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.carme_sd_permission), REQUEST_CAMER_CODE, perms);
         }
     }
 
@@ -930,5 +953,46 @@ public class MineFragment extends BaseFragment implements AdapterView.OnItemClic
                 Session.getNewsActivityNum() != 0;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        super.onPermissionsGranted(requestCode, perms);
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this, getString(R.string.carme_sd_permission))
+                    .setPositiveButton(getString(R.string.setting))
+                    .setNegativeButton(getString(R.string.cancel), null /* click listener */)
+                    .setRequestCode(REQUEST_CAMER_CODE)
+                    .build()
+                    .show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            String scanResult = data.getExtras().getString("result");
+            try {
+                JSONObject object = new JSONObject(scanResult);
+                Bundle bundle = new Bundle();
+                if (object.has("uid")) {
+                    UserInfoActivity.newFrindInfo(mActivity, object.getString("uid"));
+                } else {
+                    Toast.makeText(mActivity, "不支持此类链接", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                Toast.makeText(mActivity, "不支持此类链接", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
 }

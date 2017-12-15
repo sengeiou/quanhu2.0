@@ -1,12 +1,8 @@
 package com.yryz.yunxinim.uikit.recent;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,15 +24,12 @@ import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
-import com.netease.nimlib.sdk.team.TeamService;
 import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.team.model.TeamMember;
-import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.rz.common.cache.preference.Session;
 import com.yryz.yunxinim.uikit.NimUIKit;
 import com.yryz.yunxinim.uikit.R;
 import com.yryz.yunxinim.uikit.cache.FriendDataCache;
-import com.yryz.yunxinim.uikit.cache.NimUserInfoCache;
 import com.yryz.yunxinim.uikit.cache.TeamDataCache;
 import com.yryz.yunxinim.uikit.common.adapter.TAdapterDelegate;
 import com.yryz.yunxinim.uikit.common.adapter.TViewHolder;
@@ -62,7 +55,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.yryz.yunxinim.uikit.Constants.FRIEND_ADD_ACTION;
-import static com.yryz.yunxinim.uikit.Constants.FRIEND_INFO_ACTION;
 import static com.yryz.yunxinim.uikit.common.ui.dialog.CustomAlertDialog.onSeparateItemClickListener;
 
 /**
@@ -150,6 +142,8 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
                 btnAdd.setVisibility(View.GONE);
                 emptyBg1.setImageResource(R.drawable.nim_messages_list_empty_bg);
             }
+        } else {
+            emptyBg.setVisibility(View.GONE);
         }
     }
 

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -154,6 +155,18 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
                 mHomeLv.smoothScrollToPosition(0);
             }
         });
+        mHomeLv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                mFloatBtn.setVisibility(firstVisibleItem > 2 ? View.VISIBLE : View.INVISIBLE);
+            }
+        });
+
     }
 
     private void initDynamicLv() {
@@ -189,7 +202,7 @@ public class HomeFragment extends BaseFragment implements AdapterView.OnItemClic
 
 //                bannerJumpRule(url);
 
-                BannerJumpHelper.bannerJumpActivityHelper(mActivity,url);
+                BannerJumpHelper.bannerJumpActivityHelper(mActivity, url);
             }
         });
     }

@@ -97,8 +97,8 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
     @Override
     public void initView() {
 
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+//        if (!EventBus.getDefault().isRegistered(this))
+//            EventBus.getDefault().register(this);
 
         dynamicAdapter = new ArticleAdapter(mActivity, circleDynamicList);
         mListView.setAdapter(dynamicAdapter);
@@ -163,27 +163,27 @@ public class MyArticleFragment extends BaseFragment implements ScrollableHelper.
         return mListView;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(BaseEvent baseEvent) {
-        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
-            if(mListView.getFooterViewsCount()<=0){
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEvent(BaseEvent baseEvent) {
+//        if (baseEvent.type == CommonCode.EventType.TYPE_ADD_LAYOUT) {
+//            if(mListView.getFooterViewsCount()<=0){
+//
+//                LayoutInflater inflater = LayoutInflater.from(mActivity);
+//                View view = inflater.inflate(R.layout.foot_view, null);
+//
+////                View view = LayoutInflater.inflate()inflate(R.layout.foot_view, null);
+////                mListView.addFooterView(view);
+////                dynamicAdapter.notifyDataSetChanged();
+////                mListView.setAdapter(dynamicAdapter);
+//            }
+//        }
+//    }
 
-                LayoutInflater inflater = LayoutInflater.from(mActivity);
-                View view = inflater.inflate(R.layout.foot_view, null);
-
-//                View view = LayoutInflater.inflate()inflate(R.layout.foot_view, null);
-                mListView.addFooterView(view);
-//                dynamicAdapter.notifyDataSetChanged();
-//                mListView.setAdapter(dynamicAdapter);
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        if (EventBus.getDefault().isRegistered(this)) {
+//            EventBus.getDefault().unregister(this);
+//        }
+//    }
 }

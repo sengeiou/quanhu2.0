@@ -19,7 +19,9 @@ import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.rz.circled.R;
+import com.rz.circled.modle.ShareModel;
 import com.rz.common.constant.CommonCode;
+import com.rz.common.constant.Constants;
 import com.rz.common.constant.IntentKey;
 import com.rz.common.ui.activity.BaseActivity;
 import com.rz.common.widget.ProgressWebView;
@@ -36,6 +38,22 @@ public class CommonH5Activity extends BaseActivity {
 
     @BindView(R.id.webview_common_h5)
     ProgressWebView mWebView;
+
+    /**
+     * 哪个界面
+     */
+    private int page = 0;
+
+    private boolean needShare = false;
+
+
+    /**
+     * 标题名
+     */
+    private String titleName;
+
+    private String titleDescription;
+    private String loadUrl;
 
     @Override
     protected boolean needLoadingView() {
@@ -59,11 +77,12 @@ public class CommonH5Activity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    public static void startCommonH5(Context context, String title, String url, boolean needClose) {
+    public static void startCommonH5(Context context, String title, String url, boolean needClose, boolean needShare) {
         Intent intent = new Intent(context, CommonH5Activity.class);
         intent.putExtra(IntentKey.EXTRA_TITLE, title);
         intent.putExtra(IntentKey.EXTRA_URL, url);
         intent.putExtra(IntentKey.EXTRA_BOOLEAN, needClose);
+        intent.putExtra(IntentKey.EXTRA_TYPE, needShare);
         context.startActivity(intent);
     }
 
@@ -91,7 +110,6 @@ public class CommonH5Activity extends BaseActivity {
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setHorizontalScrollbarOverlay(false);
         mWebView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        mWebView.addJavascriptInterface(this, ServerProxy.JAVA_BRIDGE);
 
         mWebView.setDownloadListener(new DownloadListener() {
             @Override
@@ -106,12 +124,17 @@ public class CommonH5Activity extends BaseActivity {
                 Bundle extras = getIntent().getExtras();
                 Log.d(TAG, "webTitle = " + title);
                 if (extras != null && TextUtils.isEmpty(extras.getString(IntentKey.EXTRA_TITLE)) && !TextUtils.isEmpty(title)) {
-//                    String loadUrl = mWebView.getUrl();
-                    if (!TextUtils.isEmpty(title) && !title.startsWith("http://") && !title.startsWith("https://") && !title.startsWith("www."))
+                    if (!TextUtils.isEmpty(title) && !title.startsWith("http://") && !title.startsWith("https://") && !title.startsWith("www.")) {
                         setTitleText(title);
+                        titleName = !TextUtils.isEmpty(title) ? title : getString(R.string.share_activity_title);
+                    }
                 }
             }
         });
+
+        page = getIntent().getIntExtra("page", Constants.DEFAULTVALUE);
+        titleName = getString(R.string.share_activity_title);
+        titleDescription = getString(R.string.share_activity_desc);
 
         mWebView.setWebViewClient(new WebViewClient());
 
@@ -137,7 +160,20 @@ public class CommonH5Activity extends BaseActivity {
             if (!extras.getBoolean(IntentKey.EXTRA_BOOLEAN)) {
                 clearTitleRight();
             }
-            String loadUrl = extras.getString(IntentKey.EXTRA_URL);
+            needShare = extras.getBoolean(IntentKey.EXTRA_TYPE);
+            if (needShare) {
+                setTitleRightText("分享");
+                setTitleRightListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        injectGetContent();
+                    }
+                });
+                mWebView.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
+            } else {
+                mWebView.addJavascriptInterface(this, ServerProxy.JAVA_BRIDGE);
+            }
+            loadUrl = extras.getString(IntentKey.EXTRA_URL);
             if (!TextUtils.isEmpty(loadUrl) && (loadUrl.startsWith("http://") || loadUrl.startsWith("https://") || loadUrl.startsWith("www.")))
                 mWebView.loadUrl(loadUrl);
             else onLoadingStatus(CommonCode.General.WEB_ERROR);
@@ -152,7 +188,8 @@ public class CommonH5Activity extends BaseActivity {
             mWebView.goBack();
             if (!mWebView.canGoBack()) {
                 showClose = false;
-                clearTitleRight();
+                if (!needShare)
+                    clearTitleRight();
             }
         } else
             super.onBackPressed();
@@ -224,7 +261,7 @@ public class CommonH5Activity extends BaseActivity {
         public void onLoadResource(WebView view, String url) {
             Log.d(TAG, "url = " + url);
             super.onLoadResource(view, url);
-            if (view.canGoBack() && !showClose) {
+            if (view.canGoBack() && !showClose && !needShare) {
                 showClose = true;
                 setTitleRightImageView(R.drawable.gray_close, new View.OnClickListener() {
                     @Override
@@ -255,7 +292,31 @@ public class CommonH5Activity extends BaseActivity {
             super.onReceivedError(view, request, error);
             onLoadingStatus(CommonCode.General.WEB_ERROR);
         }
+    }
 
+    private void injectGetContent() {
+        String script = "javascript:window.local_obj.getMetaContent(function (){" +
+                "var children = document.head.children;var sons=[];" +
+                "for (var i=0; i<children.length; i++) {" +
+                "var son = children[i];sons.push(son.outerHTML);" +
+                "   if (son.tagName.toLowerCase()=='meta' && son.name == 'description') {" +
+                "       return son.content;" +
+                "       }" +
+                "   }" +
+                " return \"\"}());";
+        Log.e("zxw", "injectGetContent: " + script);
+        mWebView.loadUrl(script);
+    }
 
+    /**
+     * 获取WebView的数据:标题,描述,分享链接等
+     */
+    final class InJavaScriptLocalObj {
+        @android.webkit.JavascriptInterface
+        public void getMetaContent(String string) {
+            Log.e("zxw", "getShareTitle: " + string);
+            titleDescription = TextUtils.isEmpty(string.trim()) ? getString(R.string.share_activity_desc) : string;
+            ShareNewsAty.startShareNews(CommonH5Activity.this, new ShareModel(titleName, titleDescription, loadUrl), page);
+        }
     }
 }

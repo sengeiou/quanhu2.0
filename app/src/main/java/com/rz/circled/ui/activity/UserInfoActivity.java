@@ -114,6 +114,7 @@ public class UserInfoActivity extends BaseActivity {
     private List<Fragment> fragmentList = new ArrayList<>();
 
     ImageView editImg;
+    RelativeLayout editLayout;
 
     View newTitilbar;
     private IPresenter presenter;
@@ -177,12 +178,15 @@ public class UserInfoActivity extends BaseActivity {
                 Log.d(TAG, "layout not null");
 
             addFriendLayout.setVisibility(View.GONE);
+            editImg.setVisibility(View.VISIBLE);
+            editLayout.setVisibility(View.VISIBLE);
 
             //达人用户，另外调达人类型接口
             ((V3CirclePresenter) presenter).getFamousStatus(Session.getUserId());
         } else {   //他人中心
             //判断他人与自己的关系（是否添加好友）
             editImg.setVisibility(View.GONE);
+            editLayout.setVisibility(View.GONE);
             ((FriendPresenter1) friendPresenter).getFriendInfoDetail(userId);
             ((V3CirclePresenter) presenter).getFamousStatus(userId);
 
@@ -208,7 +212,7 @@ public class UserInfoActivity extends BaseActivity {
         TextView tv = (TextView) newTitilbar.findViewById(R.id.titlebar_main_tv);
         ImageView ib = (ImageView) newTitilbar.findViewById(R.id.titlebar_main_left_btn);
         editImg = (ImageView) newTitilbar.findViewById(R.id.scores_img);
-        RelativeLayout editLayout = (RelativeLayout) newTitilbar.findViewById(R.id.edit_layout);
+        editLayout = (RelativeLayout) newTitilbar.findViewById(R.id.edit_layout);
 
         editLayout.setVisibility(View.VISIBLE);
         ib.setVisibility(View.VISIBLE);
@@ -403,13 +407,13 @@ public class UserInfoActivity extends BaseActivity {
                 addFriendLayout.setVisibility(View.VISIBLE);
                 //陌生人
                 addFriendBtn.setText("加好友");
-                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
+//                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 
             } else {
                 addFriendLayout.setVisibility(View.VISIBLE);
                 //好友
                 addFriendBtn.setText("聊天");
-                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
+//                EventBus.getDefault().post(new BaseEvent(CommonCode.EventType.TYPE_ADD_LAYOUT));
 
             }
         }
@@ -452,7 +456,7 @@ public class UserInfoActivity extends BaseActivity {
         if (userId.equals(Session.getUserId())) {
             imageList.add(Session.getUserPicUrl());
         } else {
-            if (model.getCustImg() != null && !TextUtils.isEmpty(model.getCustImg())) {
+            if (model != null && model.getCustImg() != null && !TextUtils.isEmpty(model.getCustImg())) {
                 imageList.add(model.getCustImg());
             } else {
                 imageList.add("http://i1.piimg.com/4851/9f9fd766410b0d94.png");

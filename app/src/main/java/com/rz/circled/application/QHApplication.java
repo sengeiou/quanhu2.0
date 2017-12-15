@@ -391,7 +391,7 @@ public class QHApplication extends BaseApplication {
      * @param builder
      */
     private static void setLoggingInterceptor(OkHttpClient.Builder builder) {
-        if (builder != null) {
+        if (builder != null && BuildConfig.DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(loggingInterceptor);

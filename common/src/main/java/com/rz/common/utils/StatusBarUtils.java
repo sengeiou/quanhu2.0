@@ -2,9 +2,10 @@ package com.rz.common.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,9 +26,14 @@ public class StatusBarUtils {
     public static void transparencyBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Window window = activity.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            if (!OSUtils.isMIUI()) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.getDecorView().setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            } else {
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
@@ -65,6 +71,10 @@ public class StatusBarUtils {
                 normalStatusBarLightMode(activity, true);
                 result = 3;
             }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            activity.getWindow().setStatusBarColor(Color.parseColor("#cccccc"));
         }
         return result;
     }
@@ -109,7 +119,6 @@ public class StatusBarUtils {
                         } else {
                             vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
                         }
-                        Log.d("statusBar", "vis  =" + vis);
                         decorView.setSystemUiVisibility(vis);
                     }
                 }
@@ -180,7 +189,6 @@ public class StatusBarUtils {
                 window.setAttributes(lp);
                 result = true;
             } catch (Exception e) {
-                Log.d("statusBar", "Flyme = " + e.toString());
             }
         }
         return result;
@@ -210,10 +218,36 @@ public class StatusBarUtils {
                 }
                 result = true;
             } catch (Exception e) {
-                Log.d("statusBar", "miui = " + e.toString());
             }
         }
         return result;
+    }
+
+    public static int getHeight(Context context) {
+        int statusBarHeight = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        if (isFlymeOs4x()) {
+            return 2 * statusBarHeight;
+        }
+
+        return statusBarHeight;
+    }
+
+    public static boolean isFlymeOs4x() {
+        String sysVersion = Build.VERSION.RELEASE;
+        if ("4.4.4".equals(sysVersion)) {
+            String sysIncrement = Build.VERSION.INCREMENTAL;
+            String displayId = Build.DISPLAY;
+            if (!TextUtils.isEmpty(sysIncrement)) {
+                return sysIncrement.contains("Flyme_OS_4");
+            } else {
+                return displayId.contains("Flyme OS 4");
+            }
+        }
+        return false;
     }
 
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <View
         android:id="@+id/line"
-        style="@style/line_horizontal_gray_s"
-        android:visibility="gone" />
+        style="@style/line_horizontal_gray_s.inset"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv"
@@ -17,5 +17,5 @@
         android:padding="@dimen/px44"
         android:text="@string/private_group_no_more"
         android:textColor="@color/font_gray_s"
-        android:textSize="@dimen/font_38" />
+        android:textSize="@dimen/font_46"/>
 </LinearLayout>

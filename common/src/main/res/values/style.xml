@@ -67,6 +67,12 @@
         <item name="android:layout_height">@dimen/px2</item>
         <item name="android:background">@color/line_gray_s</item>
     </style>
+
+    <!--通用分割线-->
+    <style name="line_horizontal_gray_s.inset">
+        <item name="android:background">@drawable/divider_default_inset</item>
+    </style>
+
     <!--通用分割线-->
     <style name="line_vertical_gray_s">
         <item name="android:layout_width">@dimen/px1</item>

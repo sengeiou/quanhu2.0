@@ -168,13 +168,13 @@ public class MyCircleFragment extends BaseFragment implements ScrollableHelper.S
 
     @Override
     public View getScrollableView() {
-
+        View view = null;
         if(mFragments.get(0).isVisible()){
-            return mFragments.get(0).getView().findViewById(R.id.lv);
+            view = mFragments.get(0).getView().findViewById(R.id.lv);
         }else if(mFragments.get(1).isVisible()){
-            return mFragments.get(1).getView().findViewById(R.id.lv);
+            view = mFragments.get(1).getView().findViewById(R.id.lv);
         }
-        return mFragments.get(0).getView().findViewById(R.id.lv);
+        return view;
     }
 
 }
